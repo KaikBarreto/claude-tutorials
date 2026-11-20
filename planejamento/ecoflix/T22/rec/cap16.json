@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-65255bb0-aea3-508c-8383-5c426f18b774": "2026-11-10",
@@ -112,6 +112,17 @@
   {
    "do": "eval",
    "js": "(()=>{const a=document.querySelector('a[href=\"/gerencial/configuracoes\"]');if(!a)return 'SEM ALVO';let c=a.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)break;c=c.parentElement;}if(!c||c===document.body)return 'SEM ROLAGEM';const dy=a.getBoundingClientRect().bottom-(c.getBoundingClientRect().bottom-8);if(dy>0)c.scrollTop+=dy;return Math.round(a.getBoundingClientRect().top)})()"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "a[href=\"/gerencial/configuracoes\"]"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Código de Convite",
+   "timeout": 12
   },
   {
    "do": "click",

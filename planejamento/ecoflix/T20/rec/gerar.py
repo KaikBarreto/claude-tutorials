@@ -405,11 +405,11 @@ PDF_JS = ("(async()=>{const w=(window.__pops||[]).slice(-1)[0];if(!w)return 'SEM
           "for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'PDF:'+btoa(s)}"
           "await new Promise(r=>setTimeout(r,250))}return 'SEM PDF'})()")
 # aba Preços: no desktop o app navega a janela nova direto para o blob do PDF (location.href), sem o iframe #pdf-frame
-PDF_BLOB_JS = ("(async()=>{const w=(window.__pops||[]).slice(-1)[0];if(!w)return 'SEM JANELA';for(let i=0;i<60;i++){let h='';"
-               "try{h=String(w.location.href)}catch(e){return 'ERRO '+e}"
-               "if(h.startsWith('blob:')){const b=await (await fetch(h)).blob();const u=new Uint8Array(await b.arrayBuffer());let s='';"
-               "for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'PDF:'+btoa(s)}"
+PDF_BLOB_JS = ("(async()=>{for(let i=0;i<60;i++){const b=(window.__blobs||[]).filter(x=>x&&x.type==='application/pdf').slice(-1)[0];"
+               "if(b){const u=new Uint8Array(await b.arrayBuffer());let s='';for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'PDF:'+btoa(s)}"
                "await new Promise(r=>setTimeout(r,250))}return 'SEM PDF'})()")
+# o navegador sem cabeça baixa o PDF em vez de abri-lo na janela: o gancho guarda o blob criado pelo app (URL.createObjectURL)
+BLOB_HOOK = "(()=>{const o=URL.createObjectURL;window.__blobs=[];URL.createObjectURL=function(b){window.__blobs.push(b);return o.call(URL,b)};return 'gancho blob'})()"
 USUARIO_PORTAL = 'cooperativa.recomeco'
 
 
@@ -427,7 +427,7 @@ def portal_entra(url, senha=False, espera='Histórico de Pedidos'):
 
 def editar_portal(nome=COOP):
     """setup: Editar do parceiro > aba Portal (fora do vídeo)"""
-    return [{'do': 'wait', 'seconds': 3.0}, {'do': 'click', 'target': BTN_FICHA(nome, 'Editar')}, {'do': 'waitFor', 'target': TAB('Portal', within=DLG), 'timeout': 20},
+    return [{'do': 'wait', 'seconds': 3.0}, {'do': 'eval', 'js': js_clicar(f"section[aria-label='Detalhes de {nome}'] button", 'Editar')}, {'do': 'waitFor', 'target': TAB('Portal', within=DLG), 'timeout': 20},
             {'do': 'click', 'target': TAB('Portal', within=DLG)}, {'do': 'waitFor', 'text': 'O que exibir no portal', 'timeout': 15}, AGUARDA,
             {'do': 'wait', 'seconds': 0.6}]
 
@@ -979,6 +979,7 @@ def cap10():
     c.mark(3)
     troca_para(c, PORTAL_COOP, c.L(3) - 0.5, 'navegador da cooperativa (com sessão, corte)', 'Portal do')
     c.ev(POPS, label='gancho das janelas novas')
+    c.ev(BLOB_HOOK, label='gancho dos blobs')
     c.click(ATUALIZAR, at=c.L(3) + 0.3, label='Atualizar dados (o portal recarrega)')
     c.wait(2.0)
     c.click(TABP('precos'), at=c.A(3, 'apareceu', 0.5), label='aba Preços')

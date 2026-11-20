@@ -44,7 +44,7 @@ SANDRA_EMAIL = 'sandra.pires@reciclavalemetais.example'
 NOMES = ['Abertura', 'Como o Gerencial funciona', 'Criar o grupo e o código', 'Do lado da filial', 'Quando o código não entra',
          'O Dashboard Gerencial', 'Ranking e resumo por unidade', 'A DRE do grupo', 'Caixa e competência', 'Além da DRE',
          'O estoque do grupo', 'Corrigir o estoque de uma unidade', 'Enviar Ativos', 'Preço diferente por unidade',
-         'Transferência com aprovação', 'Lote, fila e o pedido da filial', 'Vender com o estoque da outra unidade', 'Assinaturas numa fatura só']
+         'Transferência com aprovação', 'Lote, fila e o pedido da filial', 'Vender com o estoque da outra unidade', 'Assinaturas numa fatura só', 'Recapitulando']
 # sementes de partida (nomes dos arquivos em rec/mundo/seeds-extra/t22/; os nomes apos-capNN seguem a numeração ANTIGA da cadeia, que não mudou):
 #   inicio (a filial, sem grupo) | apos-cap02 (grupo criado) | apos-cap03 (filial vinculada) | apos-cap09 (catálogo, tabelas, categorias, envio)
 #   | apos-cap10 (aprovação ligada, latinha transferida) | apos-cap11 (pagamento do grupo)
@@ -52,7 +52,7 @@ NOMES = ['Abertura', 'Como o Gerencial funciona', 'Criar o grupo e o código', '
 _E = ['t22/inicio', 't22/apos-cap02', 't22/apos-cap03', 't22/apos-cap09', 't22/apos-cap10']
 _A3 = _E[:3]
 SEMENTE = {0: _E[:1], 1: _E[:1], 2: _E[:1], 3: _E[:2], 4: ['t22/inicio', 't22/codigo-vencido'],
-           **{n: _A3 for n in (5, 6, 7, 8, 9, 10, 11, 12)}, 13: _E[:4], 14: _E[:4], 15: _E[:5], 16: _E[:5] + ['t22/venda-outra-unidade'], 17: _E[:5]}
+           **{n: _A3 for n in (5, 6, 7, 8, 9, 10, 11, 12)}, 13: _E[:4], 14: _E[:4], 15: _E[:5], 16: _E[:5] + ['t22/venda-outra-unidade'], 17: _E[:5], 18: _E[:5]}
 
 sys.path.insert(0, NARR)
 try:
@@ -695,8 +695,10 @@ def cap08():
     c.click(BTNX('Comparativo'), at=c.A(5, 'Comparativo', 0.6), label='Comparativo (em competência)')
     c.waitfor(text='DRE Comparativo por Unidade', timeout=10)
     c.ev(js_rola_texto('DRE Comparativo por Unidade', 150, 600), label='desce até a tabela do Comparativo')
-    c.hover(SEL('main tbody tr:has-text("Compras (CMV)")'), 2.5, at=c.A(5, 'CMV', 0.6), label='linha CMV de cada unidade (ZOOM)')
-    c.confere('main tbody', ['Compras (CMV)'], 'linha Compras (CMV) do Comparativo')
+    # em competência a linha se chama "CMV" (em caixa, "Compras"); cada unidade chama a mesma RPC com a unidade sozinha e mostra o CMV dela
+    c.waitfor(text='(-) CMV', timeout=12)
+    c.hover(SEL('main tbody tr:has-text("(-) CMV")'), 2.5, at=c.A(5, 'CMV', 0.6), label='linha CMV de cada unidade (ZOOM)')
+    c.confere('main tbody', ['(-) CMV'], 'linha CMV do Comparativo')
     c.mark(6)
     c.fim()
     return c
@@ -1030,8 +1032,12 @@ def cap15():
     setup = login(SANDRA_EMAIL, 'Olá, Sandra!') + vai('/materiais', 'Materiais') + [AGUARDA]
     c = Cap(15, setup, pace=0.5, start=(700, 300))
     c.mark(1)
-    c.click(SEL('main tbody tr:has-text("Papelão") button[role=checkbox]'), at=c.A(1, 'marca', 0.6), label='marca o Papelão')
-    c.click(SEL('main tbody tr:has-text("Plástico PET") button[role=checkbox]'), at=c.A(1, 'materiais', 0.5), label='marca o Plástico PET')
+    # a tabela mostra só os primeiros materiais por página: a busca traz o Papelão e o Plástico PET para a vista (a seleção continua entre buscas)
+    BUSCA = {'placeholder': 'Buscar material por código ou nome...'}
+    c.type(BUSCA, 'Papelão', at=c.A(1, 'estoque', 0.3), clear=True, label='busca Papelão')
+    c.click(SEL('main tbody tr:has-text("Papelão") button[role=checkbox]'), label='marca o Papelão')
+    c.type(BUSCA, 'Plástico', clear=True, label='busca Plástico PET')
+    c.click(SEL('main tbody tr:has-text("Plástico PET") button[role=checkbox]'), label='marca o Plástico PET')
     c.click(BTNX('Transferir Estoque'), at=c.A(1, 'Transferir', 0.6), label='Transferir Estoque (barra de baixo)')
     c.waitfor(text='Transferência em Lote', timeout=10)
     c.mark(2)
@@ -1112,7 +1118,8 @@ def cap16():
     venda-outra-unidade (aprovação desligada)."""
     c = Cap(16, setup_ger(url='/gerencial/configuracoes', espera='Código de Convite',
                           extra=vai('/gerencial', 'Dashboard Gerencial') + abre_menu_ger() + menu_mostra('/gerencial/configuracoes')
-                          + [{'do': 'click', 'target': TAB('transferencias')}, {'do': 'waitFor', 'text': 'Usar estoque de outras unidades na venda', 'timeout': 10}, AGUARDA]),
+                          + [{'do': 'click', 'target': LINK_GER('Configurações', '/gerencial/configuracoes')}, {'do': 'waitFor', 'text': 'Código de Convite', 'timeout': 12},
+                             {'do': 'click', 'target': TAB('transferencias')}, {'do': 'waitFor', 'text': 'Usar estoque de outras unidades na venda', 'timeout': 10}, AGUARDA]),
             pace=0.5, start=(700, 300))
     c.mark(1)
     c.hover(TXTP('Usar estoque de outras unidades na venda', within=MAIN), 1.2, at=c.A(1, 'Usar', 0.5, nth=0), label='Usar estoque de outras unidades na venda (ZOOM)')
@@ -1208,10 +1215,34 @@ def cap17():
     return c
 
 
+def cap18():
+    """Recapitulando: a tela é só o Dashboard Gerencial com o menu do grupo; o cursor passa pelos itens do menu conforme a fala recapitula
+    (Configurações, Dashboard, Financeiro, Estoque, Assinaturas). Sem clicar, sem mudar de tela: a ilustração do capítulo faz o resto."""
+    c = Cap(18, setup_ger(extra=vai('/dashboard', 'Olá, Rafael!') + abre_menu_ger()), pace=0.5, start=(700, 300))
+    c.mark(1)
+    c.ev(js_menu_rola('/gerencial/configuracoes'), label='a lista do menu desce até Configurações (os itens do grupo aparecem)')
+    c.hover(LINK_GER('Configurações', '/gerencial/configuracoes'), 0.6, at=c.A(1, 'criou', 0.6), label='Configurações (o grupo e o código)')
+    c.mark(2)
+    c.hover(LINK_GER('Configurações', '/gerencial/configuracoes'), 0.6, at=c.A(2, 'código', 0.6), label='Configurações (o código que vence)')
+    c.mark(3)
+    c.hover(LINK_GER('Dashboard', '/gerencial'), 0.8, at=c.A(3, 'Dashboard', 0.6), label='Dashboard')
+    c.mark(4)
+    c.hover(LINK_GER('Financeiro', '/gerencial/financeiro'), 0.8, at=c.A(4, 'Viu', 0.6), label='Financeiro')
+    c.mark(5)
+    c.hover(LINK_GER('Estoque', '/gerencial/estoque'), 0.8, at=c.A(5, 'estoque', 0.6), label='Estoque')
+    c.mark(6)
+    c.hover(LINK_GER('Estoque', '/gerencial/estoque'), 0.6, at=c.A(6, 'Transferiu', 0.6), label='Estoque (as transferências)')
+    c.mark(7)
+    c.hover(LINK_GER('Assinaturas', '/gerencial/assinaturas'), 0.8, at=c.A(7, 'assinaturas', 0.6), label='Assinaturas')
+    c.mark(8)
+    c.fim()
+    return c
+
+
 # ---------------------------------------------------------------- main
 def main():
     pedidos = [int(a) for a in sys.argv[1:] if a.isdigit()]
-    fns = {n: globals().get(f'cap{n:02d}') for n in range(18)}
+    fns = {n: globals().get(f'cap{n:02d}') for n in range(19)}
     feitos = []
     for n, fn in fns.items():
         if fn is None or (pedidos and n not in pedidos):

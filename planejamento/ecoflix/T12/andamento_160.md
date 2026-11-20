@@ -24,3 +24,9 @@ Aprovados no rápido (0 falho, sem aviso): 00-07, 09-12, 14, 15; cap08 e cap12 t
 - cap13: tela da ordem (a_caminho) mostrava "Sem sinal de GPS" (robô de mesa sem GPS): GPS_FALSO no setup responde ao watchPosition (Niterói). A tela da ordem não tem menu nem "Voltar às ordens": history.back() e reabre o grupo antes de "Rotas". NÃO reensaiado.
 - cap16: apos-cap15 duplicava collection_settings (linha nova em vez de alteração) e a tela de Configurações ficava em esqueleto; semente consertada (_patch por company_id) e t12_semente.py corrigido. Interruptor do responsável sem aria-label: seletor por parágrafo (conferido por exploração). Passos 31 em diante NÃO reensaiados.
 Falta: bash rec/t12/t12_lote.sh 08 13 16 (em /home/claude/ecoflix, TUT_SENHA no ambiente); depois cap14/15 já ok, e apos-cap15 regravado pelo cap15 se quiser. Instância 54312 derrubada.
+
+## Fechamento (20/11, lote final de T20+T12)
+- Arquivos compartilhados com a T20 conferidos: com `portal_password_enabled: false` nada fica trancado (`cfg.locked` só vale com `p.senha`; no app `isSectionLocked` exige `requires_login`). Nada a ajustar.
+- cap08: completo 0 falhos (atrasos 3, máx. 1,3 s do "Voltar às ordens"). cap13: completo 0 falhos, mas 3 atrasos (máx. 3,7 s); o seletor da ordem 7 agora abre 1,2 s antes da escolha. cap16: rápido e completo 0 falhos, 17 atrasos (máx. 6,5 s): pacing apertado nos caps de checklist (digitação a 75 cps e hovers de 0,4 s já aplicados), ainda precisa afrouxar âncoras.
+- cap09: no rápido o diálogo "Agendar coleta" abria sem data (digitação no campo de data incompleta): passo de conferência/ajuste do `#coleta-data` adicionado em `_caps2.py`. Reensaio caiu por falta de disco (ENOSPC, falhos 99). Falta: `bash rec/t12/t12_cap3.sh 09` (TUT_SENHA no ambiente, com disco livre).
+Instância 54312 derrubada.

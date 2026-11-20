@@ -1,13 +1,9 @@
-# T20 · andamento da aplicação do 1.60.18 (20/11)
+# T20 · andamento da aplicação do 1.60.18 (20/11, fechamento)
 
-**Feito:** roteiro e fala (16 caps, 2.701 palavras); `preparar_aula.sh T20`; `rec/t20/gerar.py` (caps 0 a 14 geram sem erro de âncora; 15 é
-só montagem); sementes `rec/mundo/seeds-extra/t20/*` (`t20_sementes.py`, exige `PORTAL_SENHA` no ambiente); handlers `entity-portal`,
-`entity-portal-report`, `portal-order-receipt`, `collection-request` (aceita a sessão do portal); libs `coletas.mjs` e `portal.mjs`;
-`plano.md`, `inventario.md`, `cenas/ilustracoes.json`. Os 3 lotes de ensaio rápido foram usados.
-**Ensaio rápido:** passam 0, 1, 2, 6, 7, 11, 12 (sem PDF capturado), 13, 14. Corrigidos DEPOIS do lote 3 e ainda NÃO ensaiados: 3, 4, 5 (esperar a
-aba Portal em vez do título), 8 (espera antes da aba Conta-corrente; o portal pós-pagamento precisa ser conferido), 9 (seletores Total e
-filtro Material), 10 (Atualizar dados antes da aba Preços: o handler devolve `price_list` com sessão válida, conferido por curl).
-**Falta:** ensaiar 3, 4, 5, 8, 9, 10; "SEM PDF" no cap12 (e conferir 09/10) com o ensaio completo; ler a mensagem do `wa.me` no cap13 e
-fechar o balão da ilustração; cap04 linha 9 simplificada (só hover na chave e em Remover login; a fala ainda diz "desligar a chave").
-**Comandos** (em `$TUT_HOME`, com `PORTAL_SENHA` e `TUT_SENHA` no ambiente): `python3 -I rec/t20/t20_sementes.py` · `python3 -I rec/t20/gerar.py` ·
-`bash rec/t20/t20_fila.sh --rapido NN` · `FAKE_PORT=54320 bash rec/run.sh down`
+**Feito:** roteiro e fala (16 caps), sementes, handlers, `gerar.py`, `ilustracoes.json` (cap13: texto real do wa.me, pedido #1761 de 10/11, R$ 18.714,08).
+**Ensaio rápido aprovado:** 0, 1, 2, 5, 6, 7, 8 (saldo novo no portal), 9 (relatório sai como HTML, não PDF), 11, 12 (PDF A4 capturado: #1749, Papelão..Ferro misto, Saldo R$ 3.700,00, "Escaneie para ver fotos"), 13 (wa.me lido), 14.
+**Causas achadas:** (1) `portal-order-receipt` dava 500 ("semValor antes de inicializar"): corrigido, era o "SEM PDF" do cap12. (2) Saldo "antigo" do cap08 = cache de 30 s do React Query do portal no ensaio rápido (a volta ao portal acontece em <30 s): o robô agora recarrega a página ao voltar. (3) Cap04 linha 9: o robô agora liga a chave a desligada de verdade (o botão vira "Remover login", sem clicar); a fala não mudou. (4) Cap10: o desktop navega a janela ao blob (headless baixa o PDF): gancho `BLOB_HOOK` + `PDF_BLOB_JS`. (5) Cliques em "Editar" do cadastro passaram a ser por eval (menu da linha, aberto por hover, intercepta o ponteiro e o clique esperava 60 s).
+**NÃO fechou (limite de 2 lotes):** caps 3, 4 e 10 corrigidos DEPOIS do lote 2 e não reensaiados.
+**Comando** (em `$TUT_HOME`, `TUT_SENHA` e `PORTAL_SENHA` no ambiente, 8+ caracteres; regravar antes `python3 -I rec/t20/t20_sementes.py`): `bash rec/t20/t20_fila.sh --rapido 3 4 10`
+**Disco:** `/` a 98% (ENOSPC derrubou o gravador do T12 cap09 às 21:51).
+**Instância 54320 derrubada:** `FAKE_PORT=54320 bash rec/run.sh down`.

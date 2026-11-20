@@ -192,13 +192,8 @@
    "seconds": 3.0
   },
   {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Editar",
-    "exact": true,
-    "within": "main section[aria-label='Detalhes de Cooperativa Recomeço']"
-   }
+   "do": "eval",
+   "js": "(()=>{const b=[...document.querySelectorAll(\"section[aria-label='Detalhes de Cooperativa Recome\\u00e7o'] button\")].find(b=>b.offsetParent!==null&&(b.textContent||'').includes(\"Editar\"));if(!b)return 'SEM ALVO';b.click();return 'clicado'})()"
   },
   {
    "do": "waitFor",
@@ -313,6 +308,11 @@
    "do": "eval",
    "js": "(()=>{const o=window.open;window.__pops=[];window.open=function(...a){const w=o.apply(this,a);window.__pops.push(w);return w};return 'ok'})()",
    "label": "gancho das janelas novas"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const o=URL.createObjectURL;window.__blobs=[];URL.createObjectURL=function(b){window.__blobs.push(b);return o.call(URL,b)};return 'gancho blob'})()",
+   "label": "gancho dos blobs"
   },
   {
    "do": "mark",
@@ -432,7 +432,7 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const w=(window.__pops||[]).slice(-1)[0];if(!w)return 'SEM JANELA';for(let i=0;i<60;i++){let h='';try{h=String(w.location.href)}catch(e){return 'ERRO '+e}if(h.startsWith('blob:')){const b=await (await fetch(h)).blob();const u=new Uint8Array(await b.arrayBuffer());let s='';for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'PDF:'+btoa(s)}await new Promise(r=>setTimeout(r,250))}return 'SEM PDF'})()",
+   "js": "(async()=>{for(let i=0;i<60;i++){const b=(window.__blobs||[]).filter(x=>x&&x.type==='application/pdf').slice(-1)[0];if(b){const u=new Uint8Array(await b.arrayBuffer());let s='';for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'PDF:'+btoa(s)}await new Promise(r=>setTimeout(r,250))}return 'SEM PDF'})()",
    "at": 42.26,
    "label": "PDF da tabela de preços (janela nova navegada ao blob, para a cena do PDF)"
   },

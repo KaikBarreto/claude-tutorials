@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
   "pwa-install-dismissed": "true",
   "theme": "light",
@@ -132,13 +132,8 @@
    "seconds": 3.0
   },
   {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Editar",
-    "exact": true,
-    "within": "main section[aria-label='Detalhes de Depósito Irmãos Siqueira']"
-   }
+   "do": "eval",
+   "js": "(()=>{const b=[...document.querySelectorAll(\"section[aria-label='Detalhes de Dep\\u00f3sito Irm\\u00e3os Siqueira'] button\")].find(b=>b.offsetParent!==null&&(b.textContent||'').includes(\"Editar\"));if(!b)return 'SEM ALVO';b.click();return 'clicado'})()"
   },
   {
    "do": "waitFor",

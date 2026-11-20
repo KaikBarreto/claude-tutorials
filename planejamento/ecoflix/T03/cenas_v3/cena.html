@@ -169,19 +169,19 @@ function transferir() {
   const t0 = W(3, 'transferir'), tdes = W(3, 'desmontagem'), tsai = W(3, 'sairam'), toi = W(3, 'oito'), tci = W(3, 'cintas'), tpe = W(3, 'peso'), ten = W(3, 'entrou'),
     tra = W(3, 'radiador'), tmas = W(3, 'mas'), tfm = W(3, 'ferro', 2), tmi = W(3, 'misto'), tfim = W(3, 'misto', 1, 'e');
   piso({ r: 32, x: 0, z: 0, passo: 1.3 }); U.uNevoa.value.set(.955, .975, .965, .8); ceuClaro({ halo: [.3, 3.8, -15] });
-  const XA = -3.6, XB = 5.2, ROT = [-.12, .06, 0];
+  const XA = -3.6, XB = 5.6, ROT = [-.12, .06, 0];
   const BA = baia(CENA, [XA, 0, 0], { c: 4, l: 3, h: 1.5 }); monte(BA, [0, 0, -.2], { tipo: 'cobre', n: 70, r: 1.4, h: .95, mancha: false });
   const BB = baia(CENA, [XB, 0, 0], { c: 4, l: 3, h: 1.5 }); monte(BB, [0, 0, -.2], { tipo: 'ferro', n: 80, r: 1.4, h: .9, mancha: false });
   // o ferro que saiu na desmontagem: um punhado de peças que sobe do monte e depois vai para a outra baia
   const FL = grupo(CENA, [XA, 0, 0]); pecas(FL, 'ferro', [[-.34, 0, .05], [.3, .05, -.1], [0, .16, .2], [-.12, .3, -.18], [.24, .34, .14], [-.3, .42, .1], [.05, .52, -.04], [.3, .6, .02]], { s: .82 });
-  const P0 = [XA, .75, -.1], PH = [XA + .2, 3.0, .35], PB = [XB, 1.0, -.1];
+  const P0 = [XA, .75, -.1], PH = [XA + .2, 2.8, .35], PB = [XB, 1.0, -.1];
   const CH = (html, pos, o = {}) => plano(html, { pos, rot: ROT, esc: .0125, anc: [.5, 1], ...o });
   const chA = CH(htmlChip(`${ic('package', 18)}Radiador de cobre`, 'n'), [XA, 2.0, -1.62]), chB = CH(htmlChip(`${ic('package', 18)}Ferro misto`, 'n'), [XB, 2.0, -1.62]);
-  const ch8 = CH(htmlChip(`${ic('arrow-right-left', 18)}8 kg de ferro`), [XA, 4.25, .35]), chC = CH(htmlChip(`${ic('wrench', 18)}cintas e suportes`, 'n'), [XA + 1.25, 3.3, .35], { anc: [0, .5] });
+  const ch8 = CH(htmlChip(`${ic('arrow-right-left', 18)}8 kg de ferro`), [XA, 4.25, .35]), chC = CH(htmlChip(`${ic('wrench', 18)}cintas e suportes`, 'n'), [XA + 1.25, 3.1, .35], { anc: [0, .5] });
   const an = anel(2.3, [XB, 0, .2]);
   const tit = titulo('Estoque', 'Transferir entre materiais');
-  const P1 = { x: XA - .1, y: 2.9, z: 0, d: 14, az: .1, el: .13 }, P2 = { x: .8, y: 2.6, z: 0, d: 18.4, az: .04, el: .13 };
-  camera([[t0 - 3, P1], [tmas - .9, { ...P1, d: 13.7, az: .08 }, 'lin'], [tmas + .45, P2], [tfim + 2.5, { ...P2, d: 18.1, az: .02 }, 'lin']]);
+  const P1 = { x: XA - .1, y: 2.3, z: 0, d: 15, az: .1, el: .13 }, P2 = { x: 1.0, y: 2.05, z: 0, d: 18.8, az: .04, el: .13 };
+  camera([[t0 - 3, P1], [tmas - .9, { ...P1, d: 14.7, az: .08 }, 'lin'], [tmas + .45, P2], [tfim + 2.5, { ...P2, d: 18.5, az: .02 }, 'lin']]);
   const tv0 = tmas + .1, tv1 = tmi + .25;
   return t => {
     GL.style.opacity = eo(pr(t, t0 + .08, .5)).toFixed(3); posTitulo(tit, t, t0 - .9, t0 - .45);
@@ -190,7 +190,7 @@ function transferir() {
     const s = eio(pr(t, tsai - .15, .9)), v = eio(pr(t, tv0, tv1 - tv0)), bob = .05 * Math.sin(t * 1.9) * s * (1 - v);
     const q = v > 0 ? arco(PH, PB, v, .55) : [lerp(P0[0], PH[0], s), lerp(P0[1], PH[1], s) + bob, lerp(P0[2], PH[2], s)];
     FL.position.set(q[0], q[1], q[2]); FL.rotation.y = .5 * s + 1.1 * v; some(FL, passa(pr(t, tsai - .15, .5), 1.2));
-    ch8.pos[0] = q[0]; ch8.pos[1] = q[1] + lerp(1.25, 2.5, v); ch8.pos[2] = q[2]; vis(ch8.e, t, toi - .1, NUNCA, { dy: 10, sc: .8 }); pulso(ch8.e, t, tpe + .1, .05, .8);
+    ch8.pos[0] = q[0]; ch8.pos[1] = q[1] + lerp(1.15, 2.5, v); ch8.pos[2] = q[2]; vis(ch8.e, t, toi - .1, NUNCA, { dy: 10, sc: .8 }); pulso(ch8.e, t, tpe + .1, .05, .8);
     vis(chC.e, t, tci - .1, ten - .2, { dx: -10, dy: 0, sc: .8 });
     destaque(an, t, tv1 - .1);
   };
@@ -211,7 +211,7 @@ function arquivar() {
 .t03fl{position:relative;width:300px;height:46px;border-radius:12px;background:linear-gradient(165deg,#fff,#EAF6F0);border:1.5px solid rgba(80,208,136,.8);padding:0 14px;display:flex;align-items:center;font-weight:700;font-size:17px;color:#17191A;white-space:nowrap;box-shadow:0 14px 26px -10px rgba(30,80,60,.4)}
 .t03x{text-decoration:line-through;text-decoration-thickness:2.5px}`);
   piso({ r: 30, x: .5, z: 0, passo: 1.3 }); U.uNevoa.value.set(.955, .975, .965, .8); ceuClaro({ halo: [.6, 3.6, -14] });
-  const RL = [0, .1, 0], EL = .0125, XP = 3.1;
+  const RL = [0, .1, 0], EL = .0125, XP = 2.5;
   const L = plano(`<div class="cartao" style="position:relative;width:340px;height:auto;padding:18px 20px 20px"><div class="cab">${selo('search', 'n', 42)}<div><div class="rot">Lista e buscas</div><div class="sub">do pedido</div></div></div>
     <div class="t03ln" style="margin-top:14px">Ferro misto</div><div class="t03ln">Cobre mel</div><div class="t03ln vz"></div></div>`, { pos: [-3.2, 2.05, 0], rot: RL, esc: EL });
   const vz = L.e.querySelector('.vz'), u0 = vz.offsetLeft + vz.offsetWidth / 2, v0 = vz.offsetTop + vz.offsetHeight / 2, S0 = L.ponto(u0, v0); S0[2] += .03;
@@ -220,27 +220,27 @@ function arquivar() {
   const pe = L.ponto(L.w + 30, v0), chE = plano(htmlChip(`${ic('trash-2', 18)}Excluir`, 'am'), { pos: pe, rot: RL, esc: EL, anc: [0, .5] });
   const pa = L.ponto(L.w + 30, v0 - 54), chA = plano(htmlChip(`${ic('eraser', 18)}<span>apagar</span>`, 'n'), { pos: pa, rot: RL, esc: EL, anc: [0, .5] }), txA = chA.e.querySelector('span');
   // a pasta de arquivo e a ficha que desce para dentro dela
-  const PA = pasta(CENA, [XP, 0, 0], { w: 2.3 }), DEN = mundo(PA, PA.userData.dentro), FO = folha(CENA, [0, -9, 0], { w: 1.55, h: 1.05, cor: '#50D088', linhas: 2 });
-  const B1 = [XP, 3.05, DEN[2]], an = anel(2.0, [XP, 0, .2]);
-  const chQ = plano(htmlChip(`${ic('archive', 18)}arquiva`), { pos: [XP, 2.62, 0], esc: EL, anc: [.5, 1] });
-  const fica = [['shopping-cart', 'Compras'], ['receipt', 'Vendas'], ['history', 'Histórico']].map(([i, s], k) => plano(htmlChip(`${ic(i, 18)}${s}`, 'n'), { pos: [XP + 1.75, 1.95 - k * .66, 0], esc: EL, anc: [0, .5] }));
+  const PA = pasta(CENA, [XP, 0, 0], { w: 2.6 }), DEN = mundo(PA, PA.userData.dentro), FO = folha(CENA, [0, -9, 0], { w: 1.95, h: 1.2, cor: '#50D088', linhas: 2 });
+  const B1 = [XP, 3.2, DEN[2]], an = anel(2.2, [XP, 0, .2]);
+  const chQ = plano(htmlChip(`${ic('archive', 18)}arquiva`), { pos: [XP - 1.55, 2.0, 0], esc: EL, anc: [1, .5] });
+  const fica = [['shopping-cart', 'Compras'], ['receipt', 'Vendas'], ['history', 'Histórico']].map(([i, s], k) => plano(htmlChip(`${ic(i, 18)}${s}`, 'n'), { pos: [XP + 1.8, 2.0 - k * .66, 0], esc: EL, anc: [0, .5] }));
   const tit = titulo('Materiais', 'Excluir é arquivar');
-  const C1 = { x: -1.9, y: 2.2, z: 0, d: 11.4, az: .05, el: .05 }, C2 = { x: .65, y: 1.95, z: 0, d: 16.7, az: .02, el: .06 };
-  camera([[t0 - 3, C1], [tar - .75, { ...C1, d: 11.1, az: .035 }, 'lin'], [tar + .55, C2], [tfim + 2.5, { ...C2, d: 16.45, az: -.005 }, 'lin']]);
-  const tv0 = tsai - .1, tv1 = tv0 + 1.15, td1 = tv1 + .95, ESC1 = .0047;
+  const C1 = { x: -1.9, y: 2.2, z: 0, d: 11.4, az: .05, el: .05 }, C2 = { x: .25, y: 1.95, z: 0, d: 15.6, az: .02, el: .06 };
+  camera([[t0 - 3, C1], [tar - .75, { ...C1, d: 11.1, az: .035 }, 'lin'], [tar + .55, C2], [tfim + 2.5, { ...C2, d: 15.35, az: -.005 }, 'lin']]);
+  const tv0 = tsai - .1, tv1 = tv0 + 1.15, td1 = tv1 + .95, ESC1 = .0058;
   return t => {
     GL.style.opacity = eo(pr(t, t0 - .6, .5)).toFixed(3); posTitulo(tit, t, t0 - 1.7, t0 - 1.3);   // o capítulo abre na cena: o título já está no alto no primeiro quadro
     vis(L.e, t, t0 - .2, NUNCA, { dy: 22 }); sL.material.uniforms.uOp.value = .55 * (+L.e.style.opacity || 0); pulso(L.e, t, tli, .03, .8); pulso(L.e, t, tbu, .03, .8);
     // o Excluir parece apagar
-    vis(chE.e, t, tex - .1, tv0 + .1, { dx: -10, dy: 0, sc: .8 }); vis(chA.e, t, tap - .1, tv0, { dx: -10, dy: 0, sc: .8 });
+    vis(chE.e, t, tex - .1, tar + .05, { dx: -10, dy: 0, sc: .8 }); vis(chA.e, t, tap - .1, tar - .05, { dx: -10, dy: 0, sc: .8 });   // saem quando a fala corrige: arquiva
     txA.className = t > tmas - .05 ? 't03x' : ''; foco(chA.e, t, -9, tmas + .1, { min: .55 });
     // mas na verdade arquiva: a pasta entra
-    some(PA, passa(pr(t, tar - .25, .6), 1.3)); vis(chQ.e, t, tar + .1, NUNCA, { dy: 10, sc: .8 });
+    some(PA, passa(pr(t, tar - .25, .6), 1.3)); vis(chQ.e, t, tar + .4, NUNCA, { dx: -10, dy: 0, sc: .8 });
     // a linha sai da lista, voa até a pasta e vira a ficha que desce para dentro dela
     const p = eio(pr(t, tv0, tv1 - tv0)), q = eio(pr(t, tv1 - .05, td1 - tv1)), pos = arco(S0, B1, p, .5), yF = lerp(B1[1], DEN[1], q);
     R.pos[0] = pos[0]; R.pos[1] = p < 1 ? pos[1] : yF; R.pos[2] = pos[2] + .03; R.esc = lerp(EL, ESC1, p); R.rot[1] = lerp(RL[1], 0, p);
     R.op = eo(pr(t, t0 - .05, .4)) * (1 - cl((q - .12) / .3)); pulso(R.e, t, tex, .05, .8);
-    const kf = cl((p - .55) / .4); FO.visible = kf > .002; FO.scale.setScalar(Math.max(kf, .001)); FO.position.set(pos[0], (p < 1 ? pos[1] : yF) - .14, pos[2]);
+    const kf = cl((p - .55) / .4); FO.visible = kf > .002; FO.scale.setScalar(Math.max(kf, .001)); FO.position.set(pos[0], (p < 1 ? pos[1] : yF) - .2, pos[2]);
     // e o que continua lá
     [tco, tve, thi].forEach((a, i) => { vis(fica[i].e, t, a - .1, NUNCA, { dx: -10, dy: 0, sc: .8 }); pulso(fica[i].e, t, tcn + i * .1, .05, .8); });
     destaque(an, t, tcn - .1);

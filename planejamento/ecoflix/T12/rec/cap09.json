@@ -1,6 +1,6 @@
 {
  "name": "t12-cap09",
- "title": "T12 · Cap. 9 · A coleta pedida pelo portal (narração 88,7 s ESTIMADA; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T07:00:00-03:00)",
+ "title": "T12 · Cap. 9 · A coleta pedida pelo portal (narração 72,0 s; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T07:00:00-03:00)",
  "seed": "t12-cap09",
  "pace": 0.5,
  "cps": 9,
@@ -135,12 +135,12 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 12.01
+   "at": 8.88
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 17.23
+   "at": 12.8
   },
   {
    "do": "hover",
@@ -149,7 +149,7 @@
     "exact": true
    },
    "seconds": 0.6,
-   "at": 17.23,
+   "at": 12.8,
    "label": "portal: Cooperativa Recomeço",
    "optional": true,
    "timeout": 4
@@ -159,7 +159,7 @@
    "target": {
     "selector": "#tab-btn-coletas"
    },
-   "at": 21.91,
+   "at": 16.4,
    "label": "aba Coletas"
   },
   {
@@ -169,7 +169,7 @@
     "exact": true
    },
    "seconds": 0.4,
-   "at": 22.95,
+   "at": 17.44,
    "label": "Minhas coletas",
    "optional": true,
    "timeout": 4
@@ -180,7 +180,7 @@
     "text": "Ver relatório da coleta"
    },
    "seconds": 0.9,
-   "at": 26.08,
+   "at": 19.92,
    "label": "Ver relatório da coleta (das concluídas)",
    "optional": true,
    "timeout": 4
@@ -193,7 +193,7 @@
     "exact": true
    },
    "seconds": 0.8,
-   "at": 28.14,
+   "at": 21.44,
    "label": "Solicitar coleta",
    "optional": true,
    "timeout": 4
@@ -201,7 +201,7 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 30.03
+   "at": 22.72
   },
   {
    "do": "click",
@@ -210,7 +210,7 @@
     "name": "Solicitar coleta",
     "exact": true
    },
-   "at": 30.03,
+   "at": 22.72,
    "label": "abre Solicitar coleta"
   },
   {
@@ -225,7 +225,7 @@
    "target": {
     "selector": "#coleta-material"
    },
-   "at": 32.19,
+   "at": 24.32,
    "label": "Material (campo)"
   },
   {
@@ -235,7 +235,7 @@
    },
    "text": "PET prensado",
    "cps": 40,
-   "at": 33.14,
+   "at": 25.27,
    "label": "Material: PET prensado",
    "noClick": true
   },
@@ -244,7 +244,7 @@
    "target": {
     "selector": "#coleta-qtd"
    },
-   "at": 36.46,
+   "at": 28.16,
    "label": "Quantidade estimada (campo)"
   },
   {
@@ -254,21 +254,21 @@
    },
    "text": "800 kg",
    "cps": 40,
-   "at": 37.01,
+   "at": 28.71,
    "label": "Quantidade estimada: 800 kg",
    "noClick": true
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 38.12
+   "at": 29.44
   },
   {
    "do": "click",
    "target": {
     "selector": "#coleta-data"
    },
-   "at": 38.12,
+   "at": 29.44,
    "label": "Data preferida (campo)"
   },
   {
@@ -278,7 +278,7 @@
    },
    "text": "13112026",
    "cps": 40,
-   "at": 40.22,
+   "at": 31.1,
    "label": "Data preferida 13/11/2026",
    "noClick": true
   },
@@ -307,7 +307,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Endere\\u00e7o da coleta\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-150);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 42.63,
+   "at": 33.24,
    "label": "desce ao Endereço da coleta (do cadastro)"
   },
   {
@@ -324,7 +324,7 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 45.38
+   "at": 35.44
   },
   {
    "do": "click",
@@ -334,7 +334,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 45.38,
+   "at": 35.44,
    "label": "Solicitar coleta (enviar)"
   },
   {
@@ -345,12 +345,12 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 49.75
+   "at": 39.84
   },
   {
    "do": "goto",
    "url": "/coletas/frota",
-   "at": 49.75,
+   "at": 39.84,
    "label": "de volta ao sistema (Frota)"
   },
   {
@@ -366,7 +366,7 @@
     "within": "aside, [data-sidebar=sidebar]"
    },
    "seconds": 1.4,
-   "at": 52.09,
+   "at": 42.0,
    "label": "o ponto vermelho no menu Coletas & Logística",
    "optional": true,
    "timeout": 4
@@ -392,7 +392,7 @@
     "name": "Ordens de Coleta",
     "within": "aside, [data-sidebar=sidebar]"
    },
-   "at": 55.73,
+   "at": 44.91,
    "label": "Ordens de Coleta"
   },
   {
@@ -406,7 +406,7 @@
     "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#10'))"
    },
    "seconds": 1.0,
-   "at": 57.63,
+   "at": 46.67,
    "label": "#10 na Solicitada",
    "optional": true,
    "timeout": 4
@@ -417,7 +417,7 @@
     "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#10')) :text-is('via portal')"
    },
    "seconds": 0.8,
-   "at": 60.51,
+   "at": 48.83,
    "label": "#10: via portal",
    "optional": true,
    "timeout": 4
@@ -425,7 +425,7 @@
   {
    "do": "mark",
    "name": "L8",
-   "at": 62.18
+   "at": 50.27
   },
   {
    "do": "hover",
@@ -433,7 +433,7 @@
     "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#10')) button:text-is('Aprovar')"
    },
    "seconds": 0.3,
-   "at": 64.59,
+   "at": 52.51,
    "label": "Aprovar",
    "optional": true,
    "timeout": 4
@@ -443,7 +443,7 @@
    "target": {
     "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#10')) button:text-is('Recusar')"
    },
-   "at": 66.33,
+   "at": 54.19,
    "label": "Recusar #10"
   },
   {
@@ -457,7 +457,7 @@
     "selector": "#reject-motivo"
    },
    "seconds": 2.2,
-   "at": 69.07,
+   "at": 56.27,
    "label": "Recusar solicitação: o Motivo",
    "optional": true,
    "timeout": 4
@@ -465,7 +465,7 @@
   {
    "do": "mark",
    "name": "L9",
-   "at": 75.58
+   "at": 60.83
   },
   {
    "do": "click",
@@ -475,7 +475,7 @@
     "exact": true,
     "within": "[role=alertdialog]"
    },
-   "at": 75.58,
+   "at": 60.83,
    "label": "Voltar (não recusa)"
   },
   {
@@ -483,7 +483,7 @@
    "target": {
     "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#10')) button:text-is('Aprovar')"
    },
-   "at": 76.02,
+   "at": 61.47,
    "label": "Aprovar #10"
   },
   {
@@ -506,7 +506,7 @@
   {
    "do": "mark",
    "name": "L10",
-   "at": 82.01
+   "at": 66.83
   },
   {
    "do": "click",
@@ -516,7 +516,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 82.01,
+   "at": 66.83,
    "label": "Agendar"
   },
   {
@@ -530,7 +530,7 @@
     "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#10'))"
    },
    "seconds": 1.5,
-   "at": 85.25,
+   "at": 69.63,
    "label": "#10 em Agendada",
    "optional": true,
    "timeout": 4
@@ -543,7 +543,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 88.65
+   "at": 72.0
   }
  ]
 }

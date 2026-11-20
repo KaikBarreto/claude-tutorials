@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-65255bb0-aea3-508c-8383-5c426f18b774": "2026-11-10",
@@ -280,9 +280,14 @@
    "label": "desce até a tabela do Comparativo"
   },
   {
+   "do": "waitFor",
+   "text": "(-) CMV",
+   "timeout": 12
+  },
+  {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text(\"Compras (CMV)\")"
+    "selector": "main tbody tr:has-text(\"(-) CMV\")"
    },
    "seconds": 2.5,
    "at": 54.87,
@@ -292,8 +297,8 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Compras (CMV)\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
-   "label": "confere linha Compras (CMV) do Comparativo"
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"(-) CMV\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
+   "label": "confere linha CMV do Comparativo"
   },
   {
    "do": "mark",

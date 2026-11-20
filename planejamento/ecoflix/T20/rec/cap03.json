@@ -131,13 +131,8 @@
    "seconds": 3.0
   },
   {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Editar",
-    "exact": true,
-    "within": "main section[aria-label='Detalhes de Cooperativa Recomeço']"
-   }
+   "do": "eval",
+   "js": "(()=>{const b=[...document.querySelectorAll(\"section[aria-label='Detalhes de Cooperativa Recome\\u00e7o'] button\")].find(b=>b.offsetParent!==null&&(b.textContent||'').includes(\"Editar\"));if(!b)return 'SEM ALVO';b.click();return 'clicado'})()"
   },
   {
    "do": "waitFor",
