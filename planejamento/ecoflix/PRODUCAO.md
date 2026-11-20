@@ -1032,3 +1032,7 @@ Decisões:
   início" da Ausência não aceita digitação); `apos-cap13/14` aproximadas. Valores vistos: líquido 2.168,11, INSS e saldos.
   Handlers só da T19: `rpc/set_ponto_pin`, `functions/time-clock-portal`. 6 ilustrações novas pendentes (recibos, holerite,
   relação de pagamento). Voz: respiro de 4,5 s na L2 do cap11. Tablet em 4:3; reconhecimento facial não é filmável.
+  T19 fechada (coordenador, 20/11 12:16): 13-17 com sementes regravadas na cadeia; 13, 15, 16, 17 limpos; 14 com 1 passo
+  opcional (hover da linha da Juliana). **T19: 18/18 no rápido.** Fala do cap13 corrigida: depois da saída o tablet volta
+  para a CÂMERA (não para a lista). cap13: stub de `navigator.geolocation` no setup (o tablet não tem a permissão de
+  localização do celular). cap14: "Data de início" é DateField (calendário), não aceita digitação.

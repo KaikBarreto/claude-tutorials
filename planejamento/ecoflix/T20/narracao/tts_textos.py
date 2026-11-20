@@ -104,7 +104,7 @@ Num pedido com o Comprovante sem valores, o papel sai sem os preços, igual ao p
 Se a sua empresa imprime linha de assinatura no comprovante, ela sai aqui também, do jeito que você escolheu nas Configurações, em Usabilidade. No celular, se o navegador bloquear a janela, o comprovante abre por cima do portal.""",
 13: """Em vez de esperar o parceiro abrir o portal, você pode mandar o pedido pra ele. Nos Pedidos, no menu da compra, tem o Enviar pelo uatsápe.
 O uatsápe abre com a mensagem pronta, no telefone do cadastro: o número do pedido, a data, o valor e o link.
-E esse link já abre o portal em cima daquele pedido, com os materiais e as fotos.
+E esse link já abre o portal em cima daquele pedido, com os materiais e, se o pedido tiver, as fotos.
 Uma dica: precisa do telefone no cadastro do parceiro. Num pedido com Comprovante sem valores, a mensagem avisa que o cupom é sem valor, e não mostra o total. O mesmo botão aparece no histórico da ficha do parceiro.""",
 14: """Agora, as fotos. Elas entram na compra ou na venda, em Opções avançadas, no Anexar. Dá pra escolher várias de uma vez, e tirar uma foto errada no X antes de salvar. Precisa estar com internet, e vale também no Ticket de Pesagem. Depois, nos Pedidos, o Ver fotos anexadas mostra as fotos daquela linha.
 E quem aponta o celular pro quê-érre côde do comprovante cai numa página só com as fotos daquele pedido.
