@@ -1,0 +1,517 @@
+{
+ "name": "t20-cap11",
+ "title": "T20 · Cap. 11 · O parceiro pede a coleta (narração 105,4 s ESTIMADA; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T15:00:00-03:00)",
+ "seed": "t20-cap11",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 900,
+  "y": 440
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.60.18",
+  "notification_shown_version": "1.60.18",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t12/inicio",
+  "t12/apos-cap15",
+  "t20/inicio",
+  "t20/apos-cap10"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/portal/recicla-vale-metais-cooperativa-1B2yVwaud00G8omJQvmXcn"
+  },
+  {
+   "do": "waitFor",
+   "text": "Acesso restrito",
+   "timeout": 30
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#portal-user"
+   }
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#portal-user"
+   },
+   "text": "cooperativa.recomeco",
+   "cps": 40,
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#portal-pass"
+   }
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#portal-pass"
+   },
+   "text": "$PORTAL_SENHA",
+   "cps": 40,
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Histórico de Pedidos",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "wait",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Transi[çc][ãa]o inv[áa]lida|n[ãa]o encontrad|Localiza[çc][ãa]o n[ãa]o registrada|Sem sinal de GPS/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA ECOFLIX'))window.__avisos.push('TRILHA ECOFLIX')},300);return 1})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__animFix)return 'ja';window.__animFix=setInterval(()=>{for(const a of document.getAnimations())if(a.currentTime!==null&&a.currentTime<0)a.startTime=document.timeline.currentTime},100);return 'anim fix'})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#tab-btn-coletas"
+   },
+   "at": 0.16,
+   "label": "aba Coletas"
+  },
+  {
+   "do": "waitFor",
+   "text": "Minhas coletas",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Minhas coletas",
+    "exact": true
+   },
+   "seconds": 1.2,
+   "at": 8.43,
+   "label": "Minhas coletas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 12.24
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Solicitar coleta",
+    "exact": true
+   },
+   "at": 17.03,
+   "label": "Solicitar coleta"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "#coleta-material"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 19.35
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#coleta-material"
+   },
+   "at": 19.71,
+   "label": "Material: Papelão e PET prensados (campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#coleta-material"
+   },
+   "text": "Papelão e PET prensados",
+   "cps": 40,
+   "at": 21.47,
+   "label": "Material: Papelão e PET prensados",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#coleta-qtd"
+   },
+   "at": 22.98,
+   "label": "[ZOOM] Quantidade estimada: 2.500 kg (campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#coleta-qtd"
+   },
+   "text": "2.500 kg",
+   "cps": 40,
+   "at": 25.19,
+   "label": "[ZOOM] Quantidade estimada: 2.500 kg",
+   "noClick": true
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 27.67
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#coleta-data"
+   },
+   "at": 27.83,
+   "label": "Data preferida (campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#coleta-data"
+   },
+   "text": "12112026",
+   "cps": 40,
+   "at": 29.77,
+   "label": "Data preferida 12/11/2026",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#coleta-janela"
+   },
+   "at": 29.93,
+   "label": "abre Período"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Manhã",
+    "exact": true
+   },
+   "at": 30.73,
+   "label": "Período: Manhã"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Endere\\u00e7o da coleta\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-170);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 31.01,
+   "label": "desce ao Endereço da coleta (do cadastro)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#coleta-obs"
+   },
+   "at": 37.95,
+   "label": "Observações (campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#coleta-obs"
+   },
+   "text": "Os fardos ficam na doca do galpão.",
+   "cps": 40,
+   "at": 39.85,
+   "label": "Observações: Os fardos ficam na doca do galpão.",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Solicitar coleta",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 41.11,
+   "label": "Solicitar coleta (enviar)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Solicitação enviada",
+   "timeout": 10
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 41.61
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main :text-is('Solicitada')",
+    "nth": 0
+   },
+   "seconds": 1.2,
+   "at": 44.27,
+   "label": "[ZOOM] o cartão da nova coleta com o selo Solicitada",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{location.assign('/dashboard');return 'recarrega o sistema'})()",
+   "at": 46.26,
+   "label": "navegador do sistema: recarrega a tela (sem realtime no falso)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 46.66
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[aria-label^='Notificações'], button[aria-label*='notificações não lidas']",
+    "nth": 0
+   },
+   "at": 48.57,
+   "label": "o sino de notificações"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nova solicitação de coleta",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Nova solicitação de coleta",
+    "exact": true,
+    "nth": 0
+   },
+   "seconds": 1.6,
+   "at": 49.95,
+   "label": "[ZOOM] Nova solicitação de coleta no sino",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 52.25
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 52.75,
+   "label": "fecha o sino"
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 66.49
+  },
+  {
+   "do": "goto",
+   "url": "/portal/recicla-vale-metais-cooperativa-1B2yVwaud00G8omJQvmXcn",
+   "at": 66.49,
+   "label": "navegador do parceiro: de volta ao portal (com sessão, corte)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Histórico de Pedidos",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#tab-btn-coletas"
+   },
+   "at": 66.49,
+   "label": "aba Coletas"
+  },
+  {
+   "do": "waitFor",
+   "text": "Minhas coletas",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Ver relatório da coleta",
+    "exact": true,
+    "nth": 0
+   },
+   "seconds": 1.2,
+   "at": 69.93,
+   "label": "[ZOOM] o atalho Ver relatório da coleta no cartão concluído",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ver relatório da coleta",
+    "exact": true,
+    "nth": 0
+   },
+   "at": 74.31,
+   "label": "abre o relatório da coleta"
+  },
+  {
+   "do": "waitFor",
+   "text": "Voltar ao portal",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Voltar ao portal",
+    "exact": true
+   },
+   "seconds": 1.2,
+   "at": 77.02,
+   "label": "Voltar ao portal",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Voltar ao portal",
+    "exact": true
+   },
+   "at": 78.52,
+   "label": "volta ao portal"
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 84.15
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 900,
+    "y": 440
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 84.65,
+   "label": "cursor em repouso (as regras ficam nas Configurações de Coletas)"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 105.37
+  }
+ ]
+}

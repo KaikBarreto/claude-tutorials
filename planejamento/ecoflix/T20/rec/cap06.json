@@ -1,6 +1,6 @@
 {
  "name": "t20-cap06",
- "title": "T20 · Cap. 6 · O saldo do parceiro (narração 64,8 s ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T15:00:00-03:00)",
+ "title": "T20 · Cap. 6 · Cliente e fornecedor no mesmo portal (narração 34,2 s ESTIMADA; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T15:00:00-03:00)",
  "seed": "t20-cap06",
  "pace": 0.5,
  "cps": 9,
@@ -20,100 +20,18 @@
   "initial-preferences-set": "true"
  },
  "seedExtra": [
+  "t12/inicio",
+  "t12/apos-cap15",
   "t20/inicio",
-  "t20/apos-cap04"
+  "t20/apos-cap05"
  ],
  "prewarm": [
   "/login"
  ],
  "setup": [
   {
-   "do": "waitFor",
-   "target": {
-    "label": "E-mail"
-   },
-   "timeout": 30
-  },
-  {
-   "do": "type",
-   "target": {
-    "label": "E-mail"
-   },
-   "text": "$TUT_USER",
-   "cps": 40
-  },
-  {
-   "do": "type",
-   "target": {
-    "label": "Senha",
-    "exact": true
-   },
-   "text": "$TUT_SENHA",
-   "cps": 40
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Entrar",
-    "exact": true
-   }
-  },
-  {
-   "do": "waitFor",
-   "text": "Olá, Rafael!",
-   "timeout": 30
-  },
-  {
-   "do": "waitFor",
-   "idle": true
-  },
-  {
    "do": "goto",
-   "url": "/portal/recicla-vale-metais-cooperativa-1B2yVwaud00G8omJQvmXcn"
-  },
-  {
-   "do": "waitFor",
-   "text": "Acesso restrito",
-   "timeout": 30
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "#portal-user"
-   }
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "#portal-user"
-   },
-   "text": "cooperativa.recomeco",
-   "cps": 40,
-   "noClick": true
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "#portal-pass"
-   }
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "#portal-pass"
-   },
-   "text": "$PORTAL_SENHA",
-   "cps": 40,
-   "noClick": true
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Entrar",
-    "exact": true
-   }
+   "url": "/portal/recicla-vale-metais-deposito-JPdFYgsge3iEphwmg3RJao"
   },
   {
    "do": "waitFor",
@@ -144,305 +62,93 @@
    "at": 0
   },
   {
-   "do": "click",
-   "target": {
-    "selector": "#tab-btn-saldo"
-   },
-   "at": 0.53,
-   "label": "aba Saldo"
-  },
-  {
-   "do": "waitFor",
-   "text": "Saldo Atual",
-   "timeout": 10
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"R$ 1.350,00\", \"Você tem a receber\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere Saldo Atual R$ 1.350,00 a receber"
-  },
-  {
    "do": "hover",
    "target": {
-    "text": "Saldo Atual",
+    "text": "Cliente + Fornecedor",
     "exact": true
    },
    "seconds": 2.0,
-   "at": 3.54,
-   "label": "[ZOOM] o valor R$ 1.350,00, o selo e a frase",
+   "at": 0.66,
+   "label": "[ZOOM] o selo Cliente + Fornecedor",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 8.83
+   "at": 9.74
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Total Vendido",
+    "exact": true
+   },
+   "seconds": 1.2,
+   "at": 13.16,
+   "label": "os quatro cartões: Total Comprado, Total Vendido, Total de Pedidos, Ticket Médio",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Hist\\u00f3rico de Movimenta\\u00e7\\u00f5es\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-150);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 22.16,
-   "label": "desce ao extrato"
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Hist\\u00f3rico de Pedidos\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-170);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 19.12,
+   "label": "desce ao Histórico de Pedidos"
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 22.46
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('Pedido')",
-    "nth": 0
-   },
-   "seconds": 0.6,
-   "at": 26.26,
-   "label": "linha de Pedido",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('Pagamento')",
-    "nth": 0
-   },
-   "seconds": 0.6,
-   "at": 27.39,
-   "label": "linha de Pagamento",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "goto",
-   "url": "/clientes-fornecedores",
-   "at": 28.39,
-   "label": "navegador do sistema: Clientes e Fornecedores (corte)"
-  },
-  {
-   "do": "waitFor",
-   "text": "Aços Quiririm Ltda",
-   "timeout": 30
-  },
-  {
-   "do": "waitFor",
-   "idle": true,
-   "timeout": 25
+   "at": 19.42
   },
   {
    "do": "click",
    "target": {
-    "selector": "main div.no-scrollbar > button:has-text('Fornecedores')"
+    "selector": "main button:has-text('Vendas')",
+    "nth": 0
    },
-   "at": 30.19,
-   "label": "aba Fornecedores"
+   "at": 22.41,
+   "label": "filtro Vendas"
+  },
+  {
+   "do": "waitFor",
+   "text": "Top 5 Materiais Mais Vendidos",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Top 5 Materiais Mais Vendidos",
+    "exact": true
+   },
+   "seconds": 1.4,
+   "at": 26.33,
+   "label": "cartões e gráfico de vendas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button:has-text('Todos')",
+    "nth": 0
+   },
+   "at": 27.53,
+   "label": "volta a Todos"
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 31.39
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "main aside button:has-text('Cooperativa Recomeço')"
-   },
-   "at": 31.39,
-   "label": "Cooperativa Recomeço"
-  },
-  {
-   "do": "waitFor",
-   "target": {
-    "selector": "main section[aria-label='Detalhes de Cooperativa Recomeço']"
-   },
-   "timeout": 12
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[aria-label='Seções da ficha'] button:has-text('Conta-corrente')"
-   },
-   "at": 32.19,
-   "label": "aba Conta-corrente"
-  },
-  {
-   "do": "waitFor",
-   "text": "Saldo Atual",
-   "timeout": 12
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Movimentação",
-    "exact": true,
-    "within": "main section[aria-label='Detalhes de Cooperativa Recomeço']"
-   },
-   "at": 34.98,
-   "label": "Movimentação"
-  },
-  {
-   "do": "waitFor",
-   "text": "Nova Movimentação de Saldo",
-   "timeout": 10
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] #amount"
-   },
-   "at": 36.42,
-   "label": "[ZOOM] Valor R$ 1.350,00 (campo)"
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "[role=dialog] #amount"
-   },
-   "text": "1350",
-   "cps": 40,
-   "at": 37.68,
-   "label": "[ZOOM] Valor R$ 1.350,00",
-   "noClick": true
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] #description"
-   },
-   "at": 39.01,
-   "label": "Observação (campo)"
-  },
-  {
-   "do": "eval",
-   "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM ALVO (nada em foco)';document.execCommand('insertText',false,\"Acerto da entrega de 06/11\");return e.value})()",
-   "at": 39.71,
-   "label": "Observação: Acerto da entrega de 06/11 (colado)"
+   "at": 28.19
   },
   {
    "do": "hover",
-   "target": {
-    "text": "Pix/Transferência",
-    "exact": true,
-    "within": "[role=dialog]"
-   },
-   "seconds": 0.6,
-   "at": 39.89,
-   "label": "Pix/Transferência",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Confirmar",
-    "exact": true,
-    "within": "[role=dialog]"
-   },
-   "at": 40.52,
-   "label": "Confirmar"
-  },
-  {
-   "do": "waitFor",
-   "text": "Movimentação registrada com sucesso!",
-   "timeout": 12
-  },
-  {
-   "do": "waitFor",
-   "gone": {
-    "role": "dialog"
-   },
-   "timeout": 8
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"R$ 0,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main section[aria-label='Detalhes de Cooperativa Recome\\u00e7o']\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere Saldo Atual R$ 0,00 no sistema"
-  },
-  {
-   "do": "mark",
-   "name": "L5",
-   "at": 40.92
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Saldo Atual",
-    "exact": true,
-    "within": "main section[aria-label='Detalhes de Cooperativa Recomeço']"
-   },
-   "seconds": 1.4,
-   "at": 43.51,
-   "label": "zoom: Saldo Atual R$ 0,00",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L6",
-   "at": 45.52
-  },
-  {
-   "do": "goto",
-   "url": "/portal/recicla-vale-metais-cooperativa-1B2yVwaud00G8omJQvmXcn",
-   "at": 45.52,
-   "label": "navegador do parceiro: volta ao portal da cooperativa"
-  },
-  {
-   "do": "waitFor",
-   "text": "Histórico de Pedidos",
-   "timeout": 30
-  },
-  {
-   "do": "waitFor",
-   "idle": true,
-   "timeout": 25
-  },
-  {
-   "do": "click",
    "target": {
     "selector": "#tab-btn-saldo"
    },
-   "at": 46.52,
-   "label": "aba Saldo"
-  },
-  {
-   "do": "waitFor",
-   "text": "Saldo Atual",
-   "timeout": 10
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"R$ 0,00\", \"Em dia\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere Saldo Atual R$ 0,00 Em dia no portal"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Em dia",
-    "exact": true,
-    "nth": 0
-   },
-   "seconds": 2.0,
-   "at": 49.77,
-   "label": "[ZOOM] o saldo R$ 0,00, o selo Em dia e a frase",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L7",
-   "at": 50.81
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "button[title='Atualizar dados']"
-   },
-   "seconds": 2.4,
-   "at": 61.64,
-   "label": "[ZOOM] o ícone Atualizar dados (sem clicar)",
+   "seconds": 1.6,
+   "at": 28.19,
+   "label": "a aba Saldo (única, sem clicar)",
    "optional": true,
    "timeout": 4
   },
@@ -454,7 +160,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 64.81
+   "at": 34.23
   }
  ]
 }

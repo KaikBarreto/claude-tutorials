@@ -232,6 +232,7 @@ export function linhasDRE(a, { store, companyId }, natureza) {
   const cats = new Map(store.rows('financial_categories').map((c) => [c.id, c]));
   const ccs = new Map(store.rows('cost_centers').map((c) => [c.id, c]));
   const comps = new Map(store.rows('companies').map((c) => [c.id, c.name]));
+  const contas = new Map(store.rows('bank_accounts').map((b) => [b.id, b]));
   const linhas = [];
   for (const cid of ids) {
     for (const l of lancamentosResultado(store, cid, j)) {
@@ -240,6 +241,7 @@ export function linhasDRE(a, { store, companyId }, natureza) {
       if ((natureza === 'income') !== (nat === 'income')) continue;
       const cc = ccs.get(l.cost_center_id);
       const src = l.bank_account_id ? 'bank' : 'cash';
+      const conta = src === 'bank' && contas.get(l.bank_account_id)?.company_id === cid ? contas.get(l.bank_account_id) : null;
       linhas.push({
         line_id: l.id, line_source: src, company_id: cid, company_name: comps.get(cid) || null, tx_type: l.type, amount: num(l.amount), abs_amount: l.valor,
         description: l.description, transaction_date: diaDe(l), transaction_at: l.transaction_at, occurred_at: l.transaction_at, dre_date: diaDe(l),
@@ -247,6 +249,7 @@ export function linhasDRE(a, { store, companyId }, natureza) {
         cost_center_id: l.cost_center_id || null, cost_center_name: cc?.name || null, cost_center_color: cc?.color || null,
         partner_id: l.partner_id || null, partner_type: l.partner_type || null, partner_name: null, credit_card_bill_date: null,
         nature: nat === 'tax' ? 'tax' : nat === 'income' ? 'revenue' : 'opex', is_credit_card: false, currency: 'BRL',
+        bank_account_id: src === 'bank' ? l.bank_account_id : null, bank_account_name: conta?.name || null,
       });
     }
   }

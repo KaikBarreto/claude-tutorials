@@ -109,7 +109,7 @@
   },
   {
    "do": "waitFor",
-   "text": "Demonstrativo Financeiro (DRE)",
+   "text": "Saldo atual",
    "timeout": 20
   },
   {
@@ -172,6 +172,11 @@
    "label": "Variação líquida (ZOOM)",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{for(let i=0;i<20;i++){const t=document.querySelector('main').innerText;const m=t.match(/Varia[çc][ãa]o l[íi]quida\\s*\\n?\\s*(-?R\\$\\s?[\\d.,]+)/i);if(m)return (m[1].startsWith('-')?'OK: saiu mais do que entrou: ':'DIFERENTE: entrou mais do que saiu: ')+m[1];await new Promise(r=>setTimeout(r,250));}return 'DIFERENTE: sem Variação líquida'})()",
+   "label": "confere saiu mais do que entrou em outubro"
   },
   {
    "do": "mark",

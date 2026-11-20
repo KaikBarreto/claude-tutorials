@@ -42,6 +42,7 @@ _E = T14 + [f'{AULA}/inicio', f'{AULA}/apos-cap01', f'{AULA}/apos-cap02', f'{AUL
 _N = len(T14)
 SEMENTE = {0: _E[:_N + 1], 1: _E[:_N + 1], 2: _E[:_N + 2], 14: _E[:_N + 4] + [f'{AULA}/lote-categoria'], 15: _E[:_N + 4],
             **{n: _E[:_N + 3] for n in range(3, 14)}}
+SEMENTE[11] = _E[:_N + 3] + [f'{AULA}/previsto']   # a DFC prevista precisa de contas abertas: água vencida e o telefone de outubro
 ABA = {4: 'dashboard', 5: 'dashboard', 6: 'dashboard', 7: 'dre', 8: 'dre', 9: 'dre', 10: 'dre', 11: 'dashboard', 12: 'dfc', 13: 'dre', 14: 'historico', 15: 'historico'}
 
 sys.path.insert(0, NARR)
@@ -378,6 +379,7 @@ def cap01():
     c.click(ITEM('Adicionar subcategoria'), at=c.A(5, 'subcategoria', 0.4), label='Adicionar subcategoria')
     c.waitfor(text='Nova subcategoria', timeout=8)
     c.mark(6)
+    c.ev("(()=>{const i=document.querySelector('#financial-category-name');if(!i)return 'SEM CAMPO';i.focus();return document.activeElement===i})()", label='foco no campo Nome')
     c.type(SEL('#financial-category-name'), 'Frete de entrega', at=c.A(5, 'entrega', 0.05), label='Nome: Frete de entrega', noClick=True)
     c.hover(COMBO_DLG('Frete'), seconds=0.4, at=c.A(6, 'tudo', 0.9), label='Categoria principal: Frete')
     c.hover(COMBO_DLG('Custos adicionais'), seconds=0.6, at=c.A(6, 'lugar', 1.3), label='Onde aparece no DRE: Custos adicionais (do pai)')
@@ -409,6 +411,7 @@ def cap01():
     c.ev(js_rola_texto('Categorias de despesa', 170, 500), at=c.L(11) - 0.9, label='sobe até Categorias de despesa')
     c.click(BTN('Nova', nth=1), at=c.A(11, 'categoria', 0.8), label='Nova (despesa)')
     c.waitfor(text='Nova categoria', timeout=8)
+    c.ev("(()=>{const i=document.querySelector('#financial-category-name');if(!i)return 'SEM CAMPO';i.focus();return document.activeElement===i})()", label='foco no campo Nome')
     c.type(SEL('#financial-category-name'), 'Máquinas e veículos', at=c.A(11, 'cuidado', 0.0), label='Nome: Máquinas e veículos', noClick=True)
     c.mark(12)
     c.mark(13)
@@ -485,7 +488,8 @@ def cap03():
     c.hover(TXTP('vs. período anterior', within=MAIN, nth=0), seconds=1.0, at=c.A(6, 'cartão', 0.8), label='vs. período anterior nos cartões')
     c.mark(7)
     c.ev(js_rola_texto('Receitas x despesas por centro', 120, 700), at=c.L(7) - 0.9, label='desce até o gráfico por centro')
-    c.click(SEL('main .recharts-bar-rectangle >> nth=0'), at=c.A(7, 'numa', 0.7), label='coluna do Pátio do gráfico', timeout=6)
+    c.click(SEL('main .recharts-bar-rectangle path[fill="#dc2626"]'), at=c.A(7, 'numa', 0.7), label='coluna do Pátio do gráfico (despesas)', timeout=6)
+    c.confere('main', ['Folha salarial', 'Aluguel', 'Energia elétrica'], 'categorias do Pátio no detalhe')
     c.mark(8)
     c.ev(js_rola_texto('Ranking dos centros de custo', 170, 900), at=c.L(8) - 0.9, label='desce até o Ranking dos centros de custo')
     c.hover(TXT('Pátio', within=MAIN, nth=-1), seconds=0.5, at=c.A(8, 'pátio', 0.5), label='Pátio no ranking')
@@ -795,13 +799,14 @@ def cap11():
 
 
 def cap12():
-    c = Cap(12, setup_relatorio('Demonstrativo Financeiro (DRE)'), pace=0.5)
+    c = Cap(12, setup_relatorio('Saldo atual'), pace=0.5)
     c.mark(1)
     c.click(BTN('Realizado'), at=c.A(1, 'Realizado', 0.6), label='Realizado')
     c.waitfor(text='Variação líquida', timeout=15)
     c.hover(TXTP('Realizado em', within=MAIN), seconds=0.8, at=c.A(1, 'segue', 0.8), label='Realizado em Outubro de 2026')
     c.mark(2)
     c.hover(TXT('Variação líquida', within=MAIN, nth=0), seconds=1.5, at=c.A(2, 'saiu', 0.8), label='Variação líquida (ZOOM)')
+    c.ev("(async()=>{for(let i=0;i<20;i++){const t=document.querySelector('main').innerText;const m=t.match(/Varia[çc][ãa]o l[íi]quida\\s*\\n?\\s*(-?R\\$\\s?[\\d.,]+)/i);if(m)return (m[1].startsWith('-')?'OK: saiu mais do que entrou: ':'DIFERENTE: entrou mais do que saiu: ')+m[1];await new Promise(r=>setTimeout(r,250));}return 'DIFERENTE: sem Variação líquida'})()", label='confere saiu mais do que entrou em outubro')
     c.mark(3)
     c.ev(js_rola_texto('Estrutura do DFC', 160, 900), at=c.L(3) - 0.9, label='desce até a Estrutura do DFC')
     c.mark(4)
@@ -883,7 +888,7 @@ def cap14():
     c.hover(TXT('Outras Despesas', within=MAIN, nth=0), seconds=1.0, at=c.A(1, 'Outras', 0.8), label='selo Outras Despesas')
     c.mark(2)
     c.click(BTN('Editar categoria', nth=1), at=c.A(2, 'lápis', 0.8), label='lápis da linha de 16/10')
-    c.waitfor(text='Pesquisar categoria', timeout=6, optional=True)
+    c.waitfor(text='Editar categoria', timeout=6)
     c.click(SEL('[role=dialog] button[role=combobox]'), at=c.A(2, 'escolho', 0.7), label='abre a lista de categorias')
     c.click(OPT('Combustível'), at=c.A(2, 'certa', 0.8), label='Combustível')
     c.click(BTN('Salvar', within=DLG), at=c.A(2, 'pronto', 0.7), label='Salvar')

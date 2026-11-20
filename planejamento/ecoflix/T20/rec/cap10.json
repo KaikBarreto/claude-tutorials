@@ -1,13 +1,13 @@
 {
  "name": "t20-cap10",
- "title": "T20 · Cap. 10 · As fotos do pedido (narração 58,5 s ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T15:00:00-03:00)",
+ "title": "T20 · Cap. 10 · A tabela de preços do fornecedor (narração 58,8 s ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T15:00:00-03:00)",
  "seed": "t20-cap10",
  "pace": 0.5,
  "cps": 9,
  "tail": 1.5,
  "start": {
-  "x": 900,
-  "y": 440
+  "x": 760,
+  "y": 420
  },
  "anonymous": true,
  "storage": {
@@ -20,6 +20,8 @@
   "initial-preferences-set": "true"
  },
  "seedExtra": [
+  "t12/inicio",
+  "t12/apos-cap15",
   "t20/inicio",
   "t20/apos-cap08"
  ],
@@ -28,12 +30,96 @@
  ],
  "setup": [
   {
-   "do": "goto",
-   "url": "/fotos/recicla-vale-metais-compra-1749-0Hh4VDd7MrGGLdUFZIGh1B"
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
   },
   {
    "do": "waitFor",
-   "text": "Fotos do pedido",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/portal/recicla-vale-metais-cooperativa-1B2yVwaud00G8omJQvmXcn"
+  },
+  {
+   "do": "waitFor",
+   "text": "Acesso restrito",
+   "timeout": 30
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#portal-user"
+   }
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#portal-user"
+   },
+   "text": "cooperativa.recomeco",
+   "cps": 40,
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#portal-pass"
+   }
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#portal-pass"
+   },
+   "text": "$PORTAL_SENHA",
+   "cps": 40,
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Histórico de Pedidos",
    "timeout": 30
   },
   {
@@ -43,6 +129,99 @@
   {
    "do": "wait",
    "seconds": 0.8
+  },
+  {
+   "do": "goto",
+   "url": "/clientes-fornecedores"
+  },
+  {
+   "do": "waitFor",
+   "text": "Aços Quiririm Ltda",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "header button.h-8.w-8"
+   }
+  },
+  {
+   "do": "wait",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div.no-scrollbar > button:has-text('Fornecedores')"
+   }
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "Buscar fornecedor..."
+   },
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main aside button:has-text('Cooperativa Recomeço')"
+   }
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main section[aria-label='Detalhes de Cooperativa Recomeço']"
+   },
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Editar",
+    "exact": true,
+    "within": "main section[aria-label='Detalhes de Cooperativa Recomeço']"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Editar Fornecedor",
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Portal",
+    "exact": true,
+    "within": "[role=dialog]"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "O que exibir no portal",
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "wait",
+   "seconds": 0.6
   },
   {
    "do": "eval",
@@ -60,112 +239,186 @@
    "at": 0
   },
   {
-   "do": "mark",
-   "name": "L2",
-   "at": 7.38
-  },
-  {
-   "do": "mark",
-   "name": "L3",
-   "at": 15.7
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Aba Pre\\u00e7os\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-330);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 0.3,
+   "label": "rola até Aba Preços"
   },
   {
    "do": "hover",
    "target": {
-    "text": "Fotos do pedido",
-    "exact": true,
-    "nth": 0
+    "selector": "[role=dialog] [role=radiogroup][aria-label='Aba Preços']"
    },
-   "seconds": 1.2,
-   "at": 16.14,
-   "label": "cabeçalho: Recicla Vale Metais e Fotos do pedido",
+   "seconds": 2.4,
+   "at": 4.15,
+   "label": "[ZOOM] a linha Aba Preços, em Oculto",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 14.22
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] [role=radiogroup][aria-label='Aba Preços'] button[role=radio]:has-text('Com senha')"
+   },
+   "at": 16.85,
+   "label": "Aba Preços: Com senha"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar exibição",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 17.99,
+   "label": "Salvar exibição"
+  },
+  {
+   "do": "waitFor",
+   "text": "Exibição do portal salva",
+   "timeout": 10
+  },
+  {
+   "do": "goto",
+   "url": "/portal/recicla-vale-metais-cooperativa-1B2yVwaud00G8omJQvmXcn",
+   "at": 18.97,
+   "label": "navegador da cooperativa (com sessão, corte)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Histórico de Pedidos",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const o=window.open;window.__pops=[];window.open=function(...a){const w=o.apply(this,a);window.__pops.push(w);return w};return 'ok'})()",
+   "label": "gancho das janelas novas"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 19.27
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#tab-btn-precos"
+   },
+   "at": 19.96,
+   "label": "aba Preços"
+  },
+  {
+   "do": "waitFor",
+   "text": "Preços atualizados em",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Seus materiais\", \"Papelão\", \"Plástico PET\", \"Alumínio latinha\", \"Outros materiais que compramos\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere aba Preços: Seus materiais e Outros materiais"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Seus materiais",
+    "exact": true
+   },
+   "seconds": 1.0,
+   "at": 21.81,
+   "label": "Seus materiais",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "hover",
    "target": {
-    "text": "Fotos",
-    "exact": true,
-    "nth": 0
+    "text": "Outros materiais que compramos",
+    "exact": true
    },
-   "seconds": 1.2,
-   "at": 21.25,
-   "label": "Fotos (carrossel)",
+   "seconds": 1.0,
+   "at": 26.77,
+   "label": "Outros materiais que compramos",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 23.11
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "button[aria-label='Próxima foto']",
-    "nth": 0
-   },
-   "at": 23.15,
-   "label": "Próxima foto"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "button[aria-label='Próxima foto']",
-    "nth": 0
-   },
-   "at": 24.89,
-   "label": "Próxima foto"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "button:has(img[src*='order-attachments'])",
-    "nth": 0
-   },
-   "at": 25.5,
-   "label": "abre a foto em tela cheia"
-  },
-  {
-   "do": "press",
-   "key": "Escape",
-   "at": 28.15,
-   "label": "fecha a foto"
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Dados do Pedido\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-150);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 28.33,
-   "label": "desce a Dados do Pedido"
-  },
-  {
-   "do": "mark",
-   "name": "L5",
-   "at": 28.63
+   "at": 30.1
   },
   {
    "do": "hover",
    "target": {
-    "text": "Total",
-    "exact": true,
-    "nth": 0
+    "text": "Valores sujeitos a alteração"
    },
-   "seconds": 1.8,
-   "at": 33.49,
-   "label": "[ZOOM] Total R$ 3.700,00",
+   "seconds": 2.4,
+   "at": 30.1,
+   "label": "[ZOOM] Valores sujeitos a alteração. Vale o preço do momento da pesagem.",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
-   "name": "L6",
-   "at": 37.02
+   "name": "L5",
+   "at": 37.28
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Baixar em PDF",
+    "exact": true
+   },
+   "seconds": 0.1,
+   "at": 37.28,
+   "label": "[ZOOM] o botão Baixar em PDF",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Baixar em PDF",
+    "exact": true
+   },
+   "seconds": 0.98,
+   "at": 37.28,
+   "label": "[ZOOM] o botão Baixar em PDF (continua)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Baixar em PDF",
+    "exact": true
+   },
+   "at": 39.16,
+   "label": "clica em Baixar em PDF: a tabela abre numa aba nova"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const w=(window.__pops||[]).slice(-1)[0];if(!w)return 'SEM JANELA';for(let i=0;i<40;i++){let f=null;try{f=w.document&&w.document.querySelector('#pdf-frame')}catch(e){return 'ERRO '+e}if(f&&f.src){const b=await (await fetch(f.src.split('#')[0])).blob();const u=new Uint8Array(await b.arrayBuffer());let s='';for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'PDF:'+btoa(s)}await new Promise(r=>setTimeout(r,250))}return 'SEM PDF'})()",
+   "at": 42.26,
+   "label": "PDF da tabela de preços (janela nova, para a cena do PDF)"
   },
   {
    "do": "mark",
-   "name": "L7",
-   "at": 48.91
+   "name": "L6",
+   "at": 41.58
   },
   {
    "do": "scroll",
@@ -176,8 +429,8 @@
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 49.41,
-   "label": "cursor em repouso"
+   "at": 42.08,
+   "label": "de volta à lista de preços"
   },
   {
    "do": "eval",
@@ -187,7 +440,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 58.52
+   "at": 58.78
   }
  ]
 }

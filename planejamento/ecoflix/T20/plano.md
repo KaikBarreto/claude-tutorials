@@ -11,6 +11,23 @@
 - **FAKE_NOW:** `2026-11-10T15:00:00-03:00` (terça à tarde): a venda sem valor da T7 e a nota 1250 da T16 são "de hoje" e já
   existem; o pagamento da T4 (08:35) também.
 
+## Atualização 20/11 · app 1.60.18, tela 1600x900 (vale sobre a tabela abaixo, que é a do 1.59.154)
+
+- **16 capítulos (0 a 15)**, fala de **2.701 palavras** (antes 1.518), ~17 min de voz. Novos: **5** SENHA POR SEÇÃO (Depósito Irmãos
+  Siqueira: login, Histórico Livre, cadeados), **6** CLIENTE E FORNECEDOR (portal duplo), **10** PREÇOS (aba Preços, Baixar em PDF),
+  **13** WHATSAPP (Enviar pelo WhatsApp, link `?pedido=`). Renumerados: histórico 5→7, saldo 6→8, notas e relatório 7→9, coletas
+  8→11, comprovante 9→12, fotos 10→14, recapitulação 11→15. O 1 a 4 ganharam trechos (portal do fornecedor, Abrir portal, A4 pelo
+  rótulo, Aços Quiririm sem valores/saldo, "Remover login").
+- **Semente:** `t12/inicio` + `t12/apos-cap15` + `t20/inicio`, depois `t20/apos-cap03|04|05|08|10|11` (mapa no `gerar.py`, `SEMENTE`).
+  Coletas vêm da T12. Depósito com login no cadastro de cliente (o fornecedor vinculado herda), Valdir (a pagar R$ 300,00),
+  Quiririm e Serra Fina (nota cancelada 1249), notas 1250/1253/1254, pedido 'sem valor' da Fundição.
+- **Handlers próprios** (espelham 19/11): `entity-portal` (modo parcial por seção, saldo igual ao do sistema, 'sem valor' zerado,
+  `price_list`), `entity-portal-report` (sem estornado, 'sem valor' só peso), `portal-order-receipt` ('sem valor' zerado, assinatura);
+  lib compartilhada `coletas.mjs` (`parteDoPortal`: `locked` por seção) e `portal.mjs` (só imagem nos anexos): avisar T12.
+- **PDF na tela:** cap09 (relatório, janela HTML), cap10 (tabela de preços) e cap12 (comprovante A4) devolvem o PDF (`POPS` + `PDF_JS`);
+  entradas em `cenas/ilustracoes.json` (`tipo: comprovante`, `cena: pdf`). Cap13 lê a mensagem do `wa.me` (janela interceptada).
+- **Cap14:** o "Anexar" continua só como ilustração (sem fluxo real do robô).
+
 ## Capítulos (os 10 da fonte, na ordem; cap00 abertura e cap11 recapitulando)
 
 | # | Vinheta (área / título) | O que a tela mostra | Estado de partida | Duração |

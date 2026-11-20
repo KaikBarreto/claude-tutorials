@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""T20 · Portal do Cliente e Fornecedor: gera rec/t20/cap00..cap10.json (roteiros do robô) a partir da voz (t20/narracao/capNN.json).
+"""T20 · Portal do Cliente e Fornecedor: gera rec/t20/cap00..cap14.json (roteiros do robô; cap15 é montagem) a partir da voz (t20/narracao/capNN.json).
 
-EcoSistema 1.59.154 no Supabase falso (mundo da Recicla Vale Metais), computador 1280x800, FAKE_NOW 10/11/2026 15:00 (plano.md), logado como
+EcoSistema 1.60.18 no Supabase falso (mundo da Recicla Vale Metais), computador 1600x900, FAKE_NOW 10/11/2026 15:00 (plano.md), logado como
 Rafael Nogueira (MASTER). Cada passo é preso a uma palavra da fala: `at` = início da palavra - folga (o custo do gesto, docs/04 "Custo real dos
 gestos"), e a marca Ln entra no início de cada linha. Quando a voz chegar, rodar de novo com o capNN.json da voz (nada a reescrever).
 O cap11 (Recapitulando) é montagem das gravações dos capítulos 0 a 10: sem robô.
@@ -12,8 +12,9 @@ contexto nem de aba. O "navegador do parceiro" e o "do sistema" são, aqui, o ME
 app (goto interno; o portal público e o sistema são rotas do mesmo app, o `localStorage` do portal `portal_session_<token>` fica de um lado e o
 login do Rafael do outro) e a edição trata a troca como corte entre os dois navegadores. A abertura de uma "segunda aba" (Fundição, caps 5 e 7)
 é só outra rota. Detalhes e o que falta no gravador: propostas_fala.md, "Achados do app".
-Cadeia de sementes (rec/mundo/seeds-extra/t20, geradas por t20_sementes.py, cumulativas sobre o inicio): inicio (caps 0 a 3) -> apos-cap03 (cap04)
--> apos-cap04 (caps 5 e 6) -> apos-cap06 (caps 7 e 8) -> apos-cap08 (caps 9 e 10).
+Cadeia de sementes (rec/mundo/seeds-extra/t20, geradas por t20_sementes.py, cumulativas sobre o inicio, que roda por cima de t12/inicio + t12/apos-cap15):
+inicio (caps 0 a 3) -> apos-cap03 (cap4) -> apos-cap04 (cap5) -> apos-cap05 (caps 6 a 8) -> apos-cap08 (caps 9 e 10) -> apos-cap10 (cap11)
+-> apos-cap11 (caps 12 a 15). Capítulos novos de 20/11: 5 (senha por seção), 6 (dual), 10 (preços), 13 (WhatsApp).
 """
 import hashlib
 import json
@@ -25,7 +26,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 TUT = os.path.normpath(os.path.join(HERE, '..', '..'))
 NARR = os.path.join(TUT, 't20', 'narracao')
 NOW = '2026-11-10T15:00:00-03:00'
-FAKE_NOW = {n: NOW for n in range(12)}
+FAKE_NOW = {n: NOW for n in range(16)}
 
 
 def stable_id(chave):
@@ -55,6 +56,10 @@ def encurta(uuid):
 RAFAEL = stable_id('user.rafael')
 PORTAL_COOP = '/portal/recicla-vale-metais-cooperativa-' + encurta(stable_id('t20.portal.recomeco'))
 PORTAL_FUND = '/portal/recicla-vale-metais-fundicao-' + encurta(stable_id('t20.portal.bandeira'))
+PORTAL_SIQ = '/portal/recicla-vale-metais-deposito-' + encurta(stable_id('t20.portal.siqueira_f'))       # link do cadastro de fornecedor do Depósito
+PORTAL_QUIR = '/portal/recicla-vale-metais-acos-quiririm-' + encurta(stable_id('t20.portal.quiririm'))
+PORTAL_SERRA = '/portal/recicla-vale-metais-serra-fina-' + encurta(stable_id('t20.portal.serrafina'))
+PORTAL_VALDIR = '/portal/recicla-vale-metais-valdir-' + encurta(stable_id('t20.portal.valdir'))
 FOTOS_1749 = '/fotos/recicla-vale-metais-compra-1749-' + encurta(stable_id('t20.fotos.compra1749'))
 try:
     VERSAO = open(os.path.join(TUT, 'app', 'dist', '.versao-app'), encoding='utf8').read().strip() or '1.60.18'
@@ -65,15 +70,16 @@ STORAGE = {
     'app_version': VERSAO, 'notification_shown_version': VERSAO, f'dominex:daily-tasks-shown:{RAFAEL}': HOJE,
     'pwa-install-dismissed': 'true', 'theme': 'light', f'daily-tasks-reminder-last-shown-{RAFAEL}': HOJE, 'initial-preferences-set': 'true',
 }
-NOMES = ['Abertura', 'O que o parceiro vê', 'Pegar o link do portal', 'Escolher as abas', 'Usuário e senha', 'Histórico de pedidos',
-         'O saldo do parceiro', 'Notas e relatório', 'O parceiro pede a coleta', 'O comprovante do portal', 'As fotos do pedido', 'Recapitulando']
-SEMENTE = {0: None, 1: None, 2: None, 3: None, 4: 'apos-cap03', 5: 'apos-cap04', 6: 'apos-cap04', 7: 'apos-cap06', 8: 'apos-cap06', 9: 'apos-cap08',
-           10: 'apos-cap08', 11: 'apos-cap08'}
+NOMES = ['Abertura', 'O que o parceiro vê', 'Pegar o link do portal', 'Escolher as abas', 'Usuário e senha', 'Senha só no que é sensível',
+         'Cliente e fornecedor no mesmo portal', 'Histórico de pedidos', 'O saldo do parceiro', 'Notas e relatório', 'A tabela de preços do fornecedor',
+         'O parceiro pede a coleta', 'O comprovante do portal', 'Mandar o pedido pelo WhatsApp', 'As fotos do pedido', 'Recapitulando']
+SEMENTE = {0: None, 1: None, 2: None, 3: None, 4: 'apos-cap03', 5: 'apos-cap04', 6: 'apos-cap05', 7: 'apos-cap05', 8: 'apos-cap05', 9: 'apos-cap08',
+           10: 'apos-cap08', 11: 'apos-cap10', 12: 'apos-cap11', 13: 'apos-cap11', 14: 'apos-cap11', 15: 'apos-cap11'}
 
 
 def sementes(n):
     """a semente de cada capítulo é cumulativa (tudo desde o início da aula): só a última da cadeia vai junto da base"""
-    return ['t20/inicio'] + ([f't20/{SEMENTE[n]}'] if SEMENTE[n] else [])
+    return ['t12/inicio', 't12/apos-cap15', 't20/inicio'] + ([f't20/{SEMENTE[n]}'] if SEMENTE[n] else [])
 
 def norm(s):
     s = unicodedata.normalize('NFD', s).encode('ascii', 'ignore').decode().lower()
@@ -401,11 +407,11 @@ PDF_JS = ("(async()=>{const w=(window.__pops||[]).slice(-1)[0];if(!w)return 'SEM
 USUARIO_PORTAL = 'cooperativa.recomeco'
 
 
-def portal_entra(url, senha=False):
+def portal_entra(url, senha=False, espera='Histórico de Pedidos'):
     """abre o portal `url`; com `senha`, entra pelo formulário "Acesso restrito" (usuário + $PORTAL_SENHA do ambiente; a senha nunca vai para arquivo)"""
     s = [{'do': 'goto', 'url': url}]
     if not senha:
-        return s + [{'do': 'waitFor', 'text': 'Portal do Cliente', 'timeout': 30}, AGUARDA, {'do': 'wait', 'seconds': 0.8}]
+        return s + [{'do': 'waitFor', 'text': espera, 'timeout': 30}, AGUARDA, {'do': 'wait', 'seconds': 0.8}]
     return s + [{'do': 'waitFor', 'text': 'Acesso restrito', 'timeout': 30}, {'do': 'click', 'target': SEL('#portal-user')},
                 {'do': 'type', 'target': SEL('#portal-user'), 'text': USUARIO_PORTAL, 'cps': 40, 'noClick': True},
                 {'do': 'click', 'target': SEL('#portal-pass')},
@@ -465,17 +471,21 @@ def cap01():
     """O que o parceiro vê: o portal da cooperativa (sem senha, tudo visível): cabeçalho, cartão do parceiro, as cinco abas."""
     c = cap_(1, portal_entra(PORTAL_COOP), start=(700, 420))
     c.mark(1)
-    c.hover(TXT('Recicla Vale Metais', nth=0), 1.6, at=c.A(1, 'logo,', 0.5), label='[ZOOM] cabeçalho: logo, nome e contato da Recicla Vale')
+    c.hover(TXT('Recicla Vale Metais', nth=0), 1.0, at=c.A(1, 'logo,', 0.5), label='[ZOOM] cabeçalho: logo, nome e contato da Recicla Vale')
+    c.hover(TXT('Portal do Fornecedor', nth=0), 1.0, at=c.A(1, 'título', 0.5), label='o título Portal do Fornecedor')
     c.mark(2)
     c.hover(TXT('Cooperativa Recomeço', nth=0), 1.2, at=c.A(2, 'nome', 0.5), label='[ZOOM] cartão do parceiro: Cooperativa Recomeço, Fornecedor')
     c.mark(3)
-    for palavra, aba in [('Histórico,', 'historico'), ('Saldo,', 'saldo'), ('Notas', 'notas'), ('Relatório', 'relatorio'), ('Coletas.', 'coletas')]:
-        c.hover(TABP(aba), 0.2, at=c.A(3, palavra, 0.5), label=f'aba {aba} (sem clicar)')
+    c.hover(TXT('Cooperativa Recomeço', nth=0), 1.6, at=c.A(3, 'etiquetas', 0.5), label='o cartão do parceiro (sem etiqueta no mundo)')
     c.mark(4)
-    c.cursor((700, 520), at=c.L(4) + 0.3, label='cursor em repouso (ilustração)')
+    for palavra, aba in [('Histórico,', 'historico'), ('Saldo,', 'saldo'), ('Notas', 'notas'), ('Relatório', 'relatorio'), ('Coletas.', 'coletas')]:
+        c.hover(TABP(aba), 0.2, at=c.A(4, palavra, 0.5), label=f'aba {aba} (sem clicar)')
     c.mark(5)
+    c.cursor((700, 520), at=c.L(5) + 0.3, label='cursor em repouso (ilustração do celular)')
     c.mark(6)
-    c.cursor((700, 380), at=c.L(6) + 0.3, label='plano geral do portal')
+    c.mark(7)
+    c.mark(8)
+    c.cursor((700, 380), at=c.L(8) + 0.3, label='plano geral do portal')
     c.fim()
     return c
 
@@ -506,13 +516,18 @@ def cap02():
     c.click(TAB('Portal', within=DLG), at=c.A(6, 'Portal.', 0.6), label='aba Portal')
     c.waitfor(text='Link do portal', timeout=10)
     c.hover(TXT('Link do portal', within=DLG), 1.2, at=c.A(6, 'escolhe', 0.5), label='Link do portal (sem clicar em Abrir portal)')
+    c.mark(7)
+    c.hover(SEL(f"{DLG} button[title='Abrir portal'], {DLG} a[title='Abrir portal']"), 1.6, at=c.A(7, 'ícone,', 0.6), label='[ZOOM] o ícone Abrir portal (sem clicar)')
+    c.mark(8)
+    c.cursor((760, 420), at=c.L(8) + 0.3, label='cursor em repouso (fala sobre cadastro antigo)')
     c.fim()
     return c
 
 
 @capitulo
 def cap03():
-    """Escolher as abas: Editar > Portal, "O que exibir no portal" (tudo ligado), os cartões do Histórico, Valores financeiros, as outras abas, A4, Salvar exibição."""
+    """Escolher as abas: Editar > Portal, "O que exibir no portal" (tudo ligado), os cartões do Histórico, Valores financeiros, as outras abas, A4, Salvar exibição;
+    depois a prática com a Aços Quiririm (Valores financeiros e Aba Saldo desligados) e o portal dela."""
     c = cap_(3, setup_sistema(editar_portal()), start=(760, 420), noscroll=False)
     c.mark(1)
     rola_ate(c, 'O que exibir no portal', c.L(1) + 0.1, 'rola até O que exibir no portal', y=130, dur_ms=800, escopo=DLG)
@@ -529,20 +544,42 @@ def cap03():
     rola_ate(c, 'Aba Saldo', c.L(4) - 0.9, 'rola até Aba Saldo', y=170, dur_ms=800, escopo=DLG)
     c.hover(TXT('Aba Saldo', within=DLG), 0.3, at=c.A(4, 'Saldo,', 0.5), label='Aba Saldo')
     c.hover(TXT('Aba Notas Fiscais', within=DLG), 0.3, at=c.A(4, 'Notas', 0.5), label='Aba Notas Fiscais')
-    c.hover(TXT('Aba Relatório', within=DLG), 0.3, at=c.A(4, 'Relatório,', 0.5), label='Aba Relatório')
-    c.hover(TXT('Mostrar valores (R$ e preço médio)', within=DLG), 0.3, at=c.A(4, 'Relatório,', -0.3), label='Mostrar valores (R$ e preço médio)')
+    c.hover(TXT('Aba Relatório', within=DLG), 0.3, at=c.A(4, 'Relatório', 0.5), label='Aba Relatório')
+    c.hover(TXT('Mostrar valores (R$ e preço médio)', within=DLG), 0.3, at=c.A(4, 'Relatório', -0.3), label='Mostrar valores (R$ e preço médio)')
     c.hover(TXT('Mostrar aba Coletas', within=DLG), 0.3, at=c.A(4, 'Coletas,', 0.5), label='Mostrar aba Coletas')
-    c.hover(TXT('Permitir solicitar coleta', within=DLG), 0.3, at=c.A(4, 'chave.', 0.8), label='Permitir solicitar coleta')
+    c.hover(TXT('Permitir solicitar coleta', within=DLG), 0.6, at=c.A(4, 'Permitir', 0.5), label='Permitir solicitar coleta')
     c.mark(5)
     rola_ate(c, 'Formato do comprovante no portal', c.L(5) - 0.9, 'rola até Formato do comprovante no portal', y=170, dur_ms=800, escopo=DLG)
-    c.hover(TXT('Automático (segue o formato da empresa)', within=DLG), 0.5, at=c.A(5, 'comprovante', 0.5), label='Automático (marcado)')
-    c.click(SEL(f'{DLG} label[for=rf-a4]'), at=c.A(5, 'A4.', 0.6), label='A4')
+    c.hover(TXT('Automático (segue o formato da empresa)', within=DLG), 0.5, at=c.A(5, 'Automático', 0.5), label='Automático (marcado)')
+    c.hover(SEL(f"{DLG} label[for=rf-thermal], {DLG} label:has-text('Térmico')", nth=0), 0.5, at=c.A(5, 'Térmico', 0.5), label='Térmico (80mm) (sem clicar)')
+    c.click(SEL(f"{DLG} label:has-text('A4')", nth=0), at=c.A(5, 'A4.', 0.6), label='A4')
     c.mark(6)
     c.click(BTN('Salvar exibição', within=DLG), at=c.A(6, 'Salvar', 0.6), label='Salvar exibição')
     c.waitfor(text='Exibição do portal salva', timeout=10)
+    # a prática: a Aços Quiririm (cliente) com Valores financeiros e a Aba Saldo desligados
     c.mark(7)
+    c.press('Escape', at=c.A(6, 'embaixo', 0.2) if False else c.L(7) - 2.8, label='fecha o Editar Fornecedor')
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.click(ABA('Clientes'), at=c.L(7) - 2.0, label='aba Clientes')
+    c.waitfor(target=BUSCA('cliente'), timeout=15)
+    c.click(LINHA('Aços Quiririm Ltda'), at=c.L(7) - 1.0, label='Aços Quiririm Ltda')
+    c.waitfor(target=SEL(FICHA_DE('Aços Quiririm Ltda')), timeout=12)
+    c.click(BTN_FICHA('Aços Quiririm Ltda', 'Editar'), at=c.A(7, 'Aços', 0.6), label='Editar')
+    c.waitfor(text='Editar Cliente', timeout=12)
+    c.click(TAB('Portal', within=DLG), at=c.A(7, 'Quiririm.', -0.2), label='aba Portal')
+    c.waitfor(text='O que exibir no portal', timeout=10)
+    rola_ate(c, 'Valores financeiros (preços e totais)', c.A(7, 'desligo', 0.9), 'rola até Valores financeiros', y=300, dur_ms=700, escopo=DLG)
+    c.click(SEL(f"{DLG} div:has(> span:text-is('Valores financeiros (preços e totais)')) button[role=switch]"), at=c.A(7, 'Valores', 0.6), label='desliga Valores financeiros')
+    c.click(SEL(f'{DLG} #cfg-saldo'), at=c.A(7, 'Saldo,', 0.6), label='desliga Aba Saldo')
+    c.click(BTN('Salvar exibição', within=DLG), at=c.A(7, 'salvo', 0.6), label='Salvar exibição (Aços Quiririm)')
+    c.waitfor(text='Exibição do portal salva', timeout=10)
     c.mark(8)
-    c.cursor((760, 420), at=c.L(7) + 0.5, label='cursor em repouso (ilustração)')
+    troca_para(c, PORTAL_QUIR, c.L(8) - 0.4, 'navegador do parceiro: o portal da Aços Quiririm', 'Total de Pedidos')
+    c.hover(SEL("main tbody tr:has-text('R$ 0,00') [aria-label='Valores deste comprovante estão ocultos']", nth=0), 1.8, at=c.A(8, 'zerados', 0.5),
+            label='[ZOOM] R$ 0,00 e o cadeado')
+    c.mark(9)
+    c.mark(10)
+    c.cursor((760, 420), at=c.L(9) + 0.5, label='cursor em repouso (ilustração)')
     c.fim()
     return c
 
@@ -580,6 +617,22 @@ def cap04():
     c.waitfor(text='Histórico de Pedidos', timeout=20)
     c.mark(8)
     c.hover(SAIR, 2.2, at=c.A(8, 'ícone.', 0.9), label='[ZOOM] o ícone Sair no cartão do parceiro (sem clicar)')
+    c.mark(9)
+    # esqueceu a senha: no sistema, Editar > Portal da cooperativa com o acesso já salvo ("deixe em branco p/ manter"; a chave liga/desliga e o Remover login)
+    troca_para(c, '/clientes-fornecedores', c.L(9) - 7.0, 'navegador do sistema: Clientes e Fornecedores (corte)', 'Aços Quiririm Ltda')
+    c.click(ABA('Fornecedores'), at=c.L(9) - 5.0, label='aba Fornecedores')
+    c.click(LINHA(COOP), at=c.L(9) - 4.0, label='Cooperativa Recomeço')
+    c.waitfor(target=SEL(FC), timeout=12)
+    c.click(BTN_FICHA(COOP, 'Editar'), at=c.L(9) - 2.8, label='Editar')
+    c.waitfor(text='Editar Fornecedor', timeout=12)
+    c.click(TAB('Portal', within=DLG), at=c.L(9) - 1.6, label='aba Portal')
+    c.waitfor(text='Pedir login no portal', timeout=10)
+    rola_ate(c, 'Exigir senha', c.L(9) - 0.4, 'rola até Exigir senha', y=130, dur_ms=700, escopo=DLG)
+    c.hover(SEL('#portal-password'), 2.2, at=c.A(9, 'nova', 0.7), label='[ZOOM] Senha: deixe em branco p/ manter')
+    c.hover(SEL('#portal-password-enabled'), 1.0, at=c.A(9, 'chave', 0.7), label='a chave Pedir login no portal')
+    c.click(SEL('#portal-password-enabled'), at=c.A(9, 'desligar', 0.4), label='desliga a chave (sem salvar)')
+    c.hover(BTN('Remover login', within=DLG), 1.4, at=c.A(9, 'Remover', 0.6), label='o botão Remover login (sem clicar)')
+    c.click(SEL('#portal-password-enabled'), at=c.A(9, 'login.', -0.8), label='religa a chave (nada foi salvo)')
     c.fim()
     return c
 
@@ -627,7 +680,7 @@ def cap07():
 
 @capitulo
 def cap08():
-    """O saldo do parceiro: Saldo R$ 1.350,00 a receber, o extrato; no sistema o Pix de R$ 1.350,00; de volta ao portal, Em dia; Atualizar dados."""
+    """O saldo do parceiro: Saldo R$ 1.350,00 a receber, o extrato; no sistema o Pix de R$ 1.350,00; de volta ao portal, Em dia; Atualizar dados; o Valdir que deve."""
     c = cap_(8, setup_portal_coop(sistema=True), start=(900, 440))
     c.mark(1)
     c.click(TABP('saldo'), at=c.A(1, 'saldo', 0.7), label='aba Saldo')
@@ -640,40 +693,56 @@ def cap08():
     c.hover(SEL("main tbody tr:has-text('Pedido')", nth=0), 0.6, at=c.A(3, 'entrega', 0.5), label='linha de Pedido')
     c.hover(SEL("main tbody tr:has-text('Pagamento')", nth=0), 0.6, at=c.A(3, 'pagamento,', 0.5), label='linha de Pagamento')
     c.mark(4)
-    troca_para(c, '/clientes-fornecedores', c.L(4) - 3.2, 'navegador do sistema: Clientes e Fornecedores (corte)', 'Aços Quiririm Ltda')
-    c.click(ABA('Fornecedores'), at=c.L(4) - 1.4, label='aba Fornecedores')
-    c.click(LINHA(COOP), at=c.L(4) - 0.4, label='Cooperativa Recomeço')
-    c.waitfor(target=SEL(FC), timeout=12)
-    c.click(ABA_FICHA('Conta-corrente'), at=c.L(4) + 0.6, label='aba Conta-corrente')
-    c.waitfor(text='Saldo Atual', timeout=12)
-    c.click(BTN('Movimentação', within=FC), at=c.A(4, 'Movimentação,', 0.7), label='Movimentação')
-    c.waitfor(text='Nova Movimentação de Saldo', timeout=10)
-    c.digita(SEL(f'{DLG} #amount'), '1350', c.A(4, 'pago', 0.7), c.A(4, 'mil', 0.05), '[ZOOM] Valor R$ 1.350,00')
-    c.click(SEL(f'{DLG} #description'), at=c.A(4, 'reais', 0.7), label='Observação (campo)')
-    c.ev(js_colar('Acerto da entrega de 06/11'), at=c.A(4, 'reais', 0.0), label='Observação: Acerto da entrega de 06/11 (colado)')
-    c.hover(TXT('Pix/Transferência', within=DLG), 0.6, at=c.A(4, 'Pix.', 0.5), label='Pix/Transferência')
+    c.hover(TXT('Últimos 90 dias', nth=0), 1.4, at=c.A(4, 'Ajuste,', 0.7), label='o selo Últimos 90 dias e o rodapé do extrato')
     c.mark(5)
-    c.click(BTN('Confirmar', within=DLG), at=c.A(5, 'Confirmar,', 0.6), label='Confirmar')
+    troca_para(c, '/clientes-fornecedores', c.L(5) - 3.2, 'navegador do sistema: Clientes e Fornecedores (corte)', 'Aços Quiririm Ltda')
+    c.click(ABA('Fornecedores'), at=c.L(5) - 1.4, label='aba Fornecedores')
+    c.click(LINHA(COOP), at=c.L(5) - 0.4, label='Cooperativa Recomeço')
+    c.waitfor(target=SEL(FC), timeout=12)
+    c.click(ABA_FICHA('Conta-corrente'), at=c.L(5) + 0.6, label='aba Conta-corrente')
+    c.waitfor(text='Saldo Atual', timeout=12)
+    c.click(BTN('Movimentação', within=FC), at=c.A(5, 'Movimentação,', 0.7), label='Movimentação')
+    c.waitfor(text='Nova Movimentação de Saldo', timeout=10)
+    c.digita(SEL(f'{DLG} #amount'), '1350', c.A(5, 'pago', 0.7), c.A(5, 'mil', 0.05), '[ZOOM] Valor R$ 1.350,00')
+    c.click(SEL(f'{DLG} #description'), at=c.A(5, 'reais', 0.7), label='Observação (campo)')
+    c.ev(js_colar('Acerto da entrega de 06/11'), at=c.A(5, 'reais', 0.0), label='Observação: Acerto da entrega de 06/11 (colado)')
+    c.hover(TXT('Pix/Transferência', within=DLG), 0.6, at=c.A(5, 'Pix.', 0.5), label='Pix/Transferência')
+    c.mark(6)
+    c.click(BTN('Confirmar', within=DLG), at=c.A(6, 'Confirmar,', 0.6), label='Confirmar')
     c.waitfor(text='Movimentação registrada com sucesso!', timeout=12)
     c.waitfor(gone={'role': 'dialog'}, timeout=8)
     c.confere(FC, ['R$ 0,00'], 'Saldo Atual R$ 0,00 no sistema')
-    c.hover(TXT('Saldo Atual', within=FC), 1.4, at=c.A(5, 'zerou', 0.5), label='zoom: Saldo Atual R$ 0,00')
-    c.mark(6)
-    troca_para(c, PORTAL_COOP, c.L(6) - 0.2, 'navegador do parceiro: volta ao portal da cooperativa', 'Histórico de Pedidos')
-    c.click(TABP('saldo'), at=c.L(6) + 0.8, label='aba Saldo')
+    c.hover(TXT('Saldo Atual', within=FC), 1.4, at=c.A(6, 'zerou', 0.5), label='zoom: Saldo Atual R$ 0,00')
+    c.mark(7)
+    troca_para(c, PORTAL_COOP, c.L(7) - 0.2, 'navegador do parceiro: volta ao portal da cooperativa', 'Histórico de Pedidos')
+    c.click(TABP('saldo'), at=c.L(7) + 0.8, label='aba Saldo')
     c.waitfor(text='Saldo Atual', timeout=10)
     c.confere('main', ['R$ 0,00', 'Em dia'], 'Saldo Atual R$ 0,00 Em dia no portal')
-    c.hover(TXT('Em dia', nth=0), 2.0, at=c.A(6, 'dia.', 0.5), label='[ZOOM] o saldo R$ 0,00, o selo Em dia e a frase')
-    c.mark(7)
-    c.hover(ATUALIZAR, 2.4, at=c.A(7, 'botão', 0.6), label='[ZOOM] o ícone Atualizar dados (sem clicar)')
+    c.hover(TXT('Em dia', nth=0), 2.0, at=c.A(7, 'dia.', 0.5), label='[ZOOM] o saldo R$ 0,00, o selo Em dia e a frase')
+    c.mark(8)
+    c.hover(ATUALIZAR, 2.4, at=c.A(8, 'botão', 0.6), label='[ZOOM] o ícone Atualizar dados (sem clicar)')
+    c.mark(9)
+    troca_para(c, PORTAL_VALDIR, c.L(9) - 0.5, 'navegador do parceiro: o portal do Valdir Pereira (sem senha)', 'Histórico de Pedidos')
+    c.click(TABP('saldo'), at=c.A(9, 'portal', 0.9), label='aba Saldo')
+    c.waitfor(text='Saldo Atual', timeout=10)
+    c.confere('main', ['Você tem a pagar', 'Valdir Pereira deve R$ 300,00 para Recicla Vale Metais'], 'Valdir: saldo a pagar de R$ 300,00')
+    c.hover(TXT('Saldo Atual'), 2.4, at=c.A(9, 'vermelho,', 0.5), label='[ZOOM] o valor em vermelho, o selo Você tem a pagar e a frase')
     c.fim()
     return c
 
 
+# a janela nova do relatório (HTML escrito pelo app com window.open('', '_blank')): o robô devolve o documento da janela (molde POPS + PDF_JS do T8)
+HTML_JS = ("(async()=>{const w=(window.__pops||[]).slice(-1)[0];if(!w)return 'SEM JANELA';for(let i=0;i<40;i++){let t='';"
+           "try{t=(w.document&&w.document.body&&w.document.body.innerText)||''}catch(e){return 'ERRO '+e}"
+           "if(/Relat[óo]rio por Material|Total/.test(t)&&t.length>200)return 'HTML:'+t.slice(0,1500);"
+           "await new Promise(r=>setTimeout(r,250))}return 'SEM HTML'})()")
+
+
 @capitulo
 def cap09():
-    """Notas e relatório: NF-e 1250 da Fundição; na cooperativa o Relatório de Mês passado, o total R$ 18.755,00 e o Baixar PDF (sem clicar)."""
-    setup = portal_entra(PORTAL_COOP, senha=True) + portal_entra(PORTAL_FUND)
+    """Notas e relatório: as notas da Fundição (1250 e a de entrada 1253), a cancelada da Serra Fina; na cooperativa o Relatório de Mês passado, o total
+    R$ 18.755,00, o filtro de Material, o Período Personalizado e o Baixar PDF (clicado: a janela nova é capturada)."""
+    setup = portal_entra(PORTAL_COOP, senha=True) + portal_entra(PORTAL_FUND) + [{'do': 'eval', 'js': POPS}]
     c = cap_(9, setup, start=(900, 440))
     c.mark(1)
     c.click(TABP('notas'), at=c.A(1, 'Notas', 0.7), label='aba Notas Fiscais')
@@ -681,21 +750,43 @@ def cap09():
     c.confere('main', ['1250', 'R$ 23.950,00', 'Autorizada'], 'NF-e 1250')
     c.hover(SEL("main tbody tr:has-text('1250')", nth=0), 1.6, at=c.A(1, 'mil', 0.5), label='[ZOOM] o número 1250 e o valor')
     c.mark(2)
-    c.hover(TXT('Série'), 0.5, at=c.A(2, 'série,', 0.5), label='a tabela inteira (Tipo, Nº, Série, Data, Valor, Status)')
+    c.confere('main', ['1253', 'Entrada'], 'NF-e 1253 de entrada')
+    c.hover(SEL("main tbody tr:has-text('1253')", nth=0), 1.8, at=c.A(2, 'selo', 0.5), label='[ZOOM] a linha de Entrada: 1253')
     c.mark(3)
-    troca_para(c, PORTAL_COOP, c.L(3) - 1.6, 'navegador da cooperativa (com sessão, corte)', 'Histórico de Pedidos')
-    c.click(TABP('relatorio'), at=c.A(3, 'Relatório', 0.7), label='aba Relatório')
-    c.waitfor(text='Relatório por Material', timeout=10)
+    c.hover(TXT('Série'), 0.5, at=c.A(3, 'série,', 0.5), label='a tabela inteira (Tipo, Nº, Série, Data, Valor, Status)')
     c.mark(4)
-    c.click(TXTX('Últimos 30 dias', nth=0), at=c.A(4, 'escolho', 0.8), label='Período')
-    c.click(OPT('Mês passado'), at=c.A(4, 'passado.', 0.7), label='Mês passado')
-    c.waitfor(text='Papelão', timeout=10)
-    c.hover(SEL("main tbody tr:has-text('Papelão')", nth=0), 0.8, at=c.A(4, 'papelão', 0.5), label='papelão: oito mil e quatrocentos quilos')
-    c.hover(SEL("main tbody tr:has-text('PET')", nth=0), 0.8, at=c.A(4, 'PET,', 0.5), label='PET: dois mil e seiscentos')
+    troca_para(c, PORTAL_SERRA, c.L(4) - 0.6, 'navegador do parceiro: o portal da Serra Fina Alumínio Reciclagem', 'Histórico de Pedidos')
+    c.click(TABP('notas'), at=c.A(4, 'cancelada', 0.0) if False else c.L(4) + 0.3, label='aba Notas Fiscais')
+    c.waitfor(text='Cancelada', timeout=10)
+    c.hover(SEL("main tbody tr:has-text('1249')", nth=0), 1.6, at=c.A(4, 'Cancelada.', 0.6), label='[ZOOM] a nota 1249 com o selo Cancelada')
     c.mark(5)
-    c.hover(SEL("main tfoot tr, main tr:has-text('Total')", nth=-1), 2.0, at=c.A(5, 'No', 0.3), label='[ZOOM] a linha Total: R$ 18.755,00')
+    troca_para(c, PORTAL_COOP, c.L(5) - 1.6, 'navegador da cooperativa (com sessão, corte)', 'Histórico de Pedidos')
+    c.click(TABP('relatorio'), at=c.A(5, 'Relatório', 0.7), label='aba Relatório')
+    c.waitfor(text='Relatório por Material', timeout=10)
     c.mark(6)
-    c.hover(BTN('Baixar PDF'), 2.4, at=c.A(6, 'Baixar', 0.6), label='[ZOOM] o botão Baixar PDF (sem clicar)')
+    c.click(TXTX('Últimos 30 dias', nth=0), at=c.A(6, 'escolho', 0.8), label='Período')
+    c.click(OPT('Mês passado'), at=c.A(6, 'passado.', 0.7), label='Mês passado')
+    c.waitfor(text='Papelão', timeout=10)
+    c.hover(SEL("main tbody tr:has-text('Papelão')", nth=0), 0.8, at=c.A(6, 'papelão', 0.5), label='papelão: oito mil e quatrocentos quilos')
+    c.hover(SEL("main tbody tr:has-text('PET')", nth=0), 0.8, at=c.A(6, 'PET,', 0.5), label='PET: dois mil e seiscentos')
+    c.mark(7)
+    c.hover(SEL("main tfoot tr, main tr:has-text('Total')", nth=-1), 2.0, at=c.A(7, 'No', 0.3), label='[ZOOM] a linha Total: R$ 18.755,00')
+    c.mark(8)
+    c.click(SEL("main button:text-is('Material')"), at=c.A(8, 'material,', 0.8), label='abre o filtro Material')
+    c.click(SEL("[data-radix-popper-content-wrapper] :text('Papelão')", nth=0), at=c.A(8, 'material,', -0.3), label='marca Papelão (a tabela fica com uma linha)')
+    c.press('Escape', at=c.A(8, 'período', 1.0), label='fecha o filtro')
+    c.click(SEL("main button:has-text('Material ·'), main button:has-text('Papelão')", nth=0), at=c.A(8, 'período', 0.7), label='abre o filtro de novo para limpar')
+    c.click(SEL("[data-radix-popper-content-wrapper] :text('Papelão')", nth=0), at=c.A(8, 'período', 0.2), label='desmarca Papelão (limpa)')
+    c.press('Escape', at=c.A(8, 'outras', 0.7), label='fecha o filtro')
+    c.click(SEL("main button:has-text('Mês passado')", nth=0), at=c.A(8, 'outras', 0.4), label='abre o Período')
+    c.hover(OPT('Personalizado'), 1.4, at=c.A(8, 'Personalizado,', 0.6), label='[ZOOM] Personalizado (sem escolher)')
+    c.press('Escape', at=c.A(8, 'jeito.', -0.1), label='fecha o Período')
+    c.mark(9)
+    c.hover(SEL("main tbody tr:has-text('Papelão')", nth=0), 1.0, at=c.A(9, 'estornado', 0.5), label='a tabela do relatório (estornado fora; sem valor entra só o peso)')
+    c.mark(10)
+    c.hover(BTN('Baixar PDF'), 1.4, at=c.A(10, 'Baixar', 0.6), label='[ZOOM] o botão Baixar PDF')
+    c.click(BTN('Baixar PDF'), at=c.A(10, 'abre', 0.4), label='clica em Baixar PDF: o relatório abre numa aba nova')
+    c.ev(HTML_JS, at=c.A(10, 'abre', -1.5), label='relatório (janela nova, texto para a cena do PDF)')
     c.fim()
     return c
 
@@ -736,6 +827,17 @@ def cap11():
     c.hover(TXT('Nova solicitação de coleta', nth=0), 1.6, at=c.A(6, 'solicitação', 0.4), label='[ZOOM] Nova solicitação de coleta no sino')
     c.mark(7)
     c.press('Escape', at=c.L(7) + 0.3, label='fecha o sino')
+    c.mark(8)
+    troca_para(c, PORTAL_COOP, c.L(8) - 0.4, 'navegador do parceiro: de volta ao portal (com sessão, corte)', 'Histórico de Pedidos')
+    c.click(TABP('coletas'), at=c.L(8) - 0.2, label='aba Coletas')
+    c.waitfor(text='Minhas coletas', timeout=10)
+    c.hover(BTN('Ver relatório da coleta', nth=0), 1.2, at=c.A(8, 'atalho.', 0.4), label='[ZOOM] o atalho Ver relatório da coleta no cartão concluído')
+    c.click(BTN('Ver relatório da coleta', nth=0), at=c.A(8, 'recolhido', 0.2), label='abre o relatório da coleta')
+    c.waitfor(text='Voltar ao portal', timeout=15)
+    c.hover(TXT('Voltar ao portal'), 1.2, at=c.A(8, 'Voltar', 0.3), label='Voltar ao portal')
+    c.click(TXT('Voltar ao portal'), at=c.A(8, 'Voltar', -1.2), label='volta ao portal')
+    c.mark(9)
+    c.cursor((900, 440), at=c.L(9) + 0.3, label='cursor em repouso (as regras ficam nas Configurações de Coletas)')
     c.fim()
     return c
 
@@ -752,7 +854,8 @@ def cap12():
     c.ev(PDF_JS, at=c.L(2) + 2.5, label='PDF do comprovante A4 (janela nova, para a ilustração)')
     c.mark(3)
     c.mark(4)
-    c.cursor((900, 440), at=c.L(4) + 0.3, label='de volta ao portal')
+    c.mark(5)
+    c.cursor((900, 440), at=c.L(5) + 0.3, label='de volta ao portal')
     c.fim()
     return c
 
@@ -781,6 +884,134 @@ def cap14():
     return c
 
 
+# ---------------------------------------------------------------- capítulos novos de 20/11 (1.60.18)
+DEP = 'Depósito Irmãos Siqueira'
+PILULA = lambda aba, opcao: SEL(f"{DLG} [role=radiogroup][aria-label='{aba}'] button[role=radio]:has-text('{opcao}')")
+
+
+def setup_sistema_portal(portal_url, ficha=COOP, extra=(), aba='Fornecedores'):
+    """login do Rafael, a sessão do portal da cooperativa aberta (fora do vídeo; fica no localStorage), e a tela Clientes e Fornecedores com a ficha"""
+    base = setup_tela(aba, ficha, extra)
+    n = len(LOGIN)
+    return base[:n] + portal_entra(portal_url, senha=True) + base[n:]
+
+
+@capitulo
+def cap05():
+    """Senha só no que é sensível: Depósito Irmãos Siqueira (cliente e fornecedor): login, o aviso do par, Histórico Livre, o portal com o Histórico aberto e o cadeado nas outras abas."""
+    c = cap_(5, setup_tela('Fornecedores', DEP, editar_portal(DEP)), start=(760, 420))
+    c.mark(1)
+    rola_ate(c, 'Exigir senha', c.L(1) - 0.1, 'rola até Exigir senha', y=130, dur_ms=700, escopo=DLG)
+    c.click(SEL('#portal-password-enabled'), at=c.A(1, 'ligo', 0.6), label='liga Pedir login no portal')
+    c.waitfor(target=SEL('#portal-username'), timeout=8)
+    c.digita(SEL('#portal-username'), 'deposito.siqueira', c.A(1, 'usuário', 0.8), c.A(1, 'usuário', 0.05), 'Usuário: deposito.siqueira')
+    c.click(SEL('#portal-password'), at=c.A(1, 'senha,', 0.6), label='Senha (campo)')
+    c.type(SEL('#portal-password'), '$PORTAL_SENHA', at=c.A(1, 'senha,', 0.05), label='Senha (pontinhos)', cps=40, noClick=True)
+    c.click(BTN('Salvar acesso', within=DLG), at=c.A(1, 'salvo', 0.6), label='Salvar acesso')
+    c.waitfor(text='Acesso salvo', timeout=10)
+    c.hover(TXT('Este parceiro é cliente e fornecedor: o acesso vale pros dois links.', within=DLG), 2.2, at=c.A(1, 'aviso:', 0.6), label='[ZOOM] o aviso: o acesso vale pros dois links')
+    c.mark(2)
+    rola_ate(c, 'O que exibir no portal', c.L(2) - 0.8, 'rola até O que exibir no portal', y=130, dur_ms=700, escopo=DLG)
+    c.click(PILULA('Aba Histórico', 'Livre'), at=c.A(2, 'Livre.', 0.6), label='Aba Histórico: Livre')
+    c.hover(SEL(f"{DLG} [role=radiogroup][aria-label='Aba Saldo']"), 1.0, at=c.A(2, 'Saldo,', 0.5), label='Aba Saldo segue Com senha')
+    c.click(BTN('Salvar exibição', within=DLG), at=c.A(2, 'Salvar', 0.5), label='Salvar exibição')
+    c.waitfor(text='Exibição do portal salva', timeout=10)
+    c.mark(3)
+    troca_para(c, PORTAL_SIQ, c.L(3) - 0.5, 'navegador do parceiro, sem nada salvo: o link do Depósito', 'Histórico de Pedidos')
+    c.hover(TABP('saldo'), 0.4, at=c.A(3, 'cadeado.', 1.6), label='[ZOOM] as abas com cadeado: Saldo')
+    c.hover(TABP('notas'), 0.3, at=c.A(3, 'cadeado.', 1.0), label='Notas Fiscais com cadeado')
+    c.hover(TABP('relatorio'), 0.3, at=c.A(3, 'cadeado.', 0.5), label='Relatório com cadeado')
+    c.hover(TABP('coletas'), 0.3, at=c.A(3, 'cadeado.', 0.0), label='Coletas com cadeado')
+    c.mark(4)
+    c.click(TABP('saldo'), at=c.A(4, 'Saldo,', 0.7), label='aba Saldo (travada)')
+    c.waitfor(text='Acesso com senha', timeout=10)
+    c.hover(TXT('Acesso com senha'), 2.4, at=c.A(4, 'usuário', 0.5), label='[ZOOM] o cartão Acesso com senha: o resto do portal continua aberto')
+    c.mark(5)
+    c.click(TABP('historico'), at=c.L(5) + 0.2, label='volta ao Histórico (aberto)')
+    c.fim()
+    return c
+
+
+@capitulo
+def cap06():
+    """Cliente e fornecedor no mesmo portal: o selo, os quatro cartões, o filtro Todos/Compras/Vendas, a aba Saldo (única)."""
+    c = cap_(6, portal_entra(PORTAL_SIQ), start=(900, 440))
+    c.mark(1)
+    c.hover(TXT('Cliente + Fornecedor'), 2.0, at=c.A(1, 'selo', 0.5), label='[ZOOM] o selo Cliente + Fornecedor')
+    c.mark(2)
+    c.hover(TXT('Total Vendido'), 1.2, at=c.A(2, 'vendeu', 0.8), label='os quatro cartões: Total Comprado, Total Vendido, Total de Pedidos, Ticket Médio')
+    c.mark(3)
+    rola_ate(c, 'Histórico de Pedidos', c.L(3) - 0.5, 'desce ao Histórico de Pedidos', y=170, dur_ms=800)
+    c.click(SEL("main button:has-text('Vendas')", nth=0), at=c.A(3, 'Vendas,', 0.7), label='filtro Vendas')
+    c.waitfor(text='Top 5 Materiais Mais Vendidos', timeout=8)
+    c.hover(TXT('Top 5 Materiais Mais Vendidos'), 1.4, at=c.A(3, 'acompanham.', 0.8), label='cartões e gráfico de vendas')
+    c.click(SEL("main button:has-text('Todos')", nth=0), at=c.A(3, 'acompanham.', -0.4), label='volta a Todos')
+    c.mark(4)
+    c.hover(TABP('saldo'), 1.6, at=c.A(4, 'saldo', 0.6), label='a aba Saldo (única, sem clicar)')
+    c.fim()
+    return c
+
+
+@capitulo
+def cap10():
+    """A tabela de preços do fornecedor: Editar > Portal da cooperativa, Aba Preços de Oculto para Com senha, Salvar exibição; no portal, a aba Preços e o Baixar em PDF."""
+    c = cap_(10, setup_sistema_portal(PORTAL_COOP, extra=editar_portal()), start=(760, 420))
+    c.mark(1)
+    rola_ate(c, 'Aba Preços', c.L(1) - 0.1, 'rola até Aba Preços', y=330, dur_ms=800, escopo=DLG)
+    c.hover(SEL(f"{DLG} [role=radiogroup][aria-label='Aba Preços']"), 2.4, at=c.A(1, 'Dá', 0.5), label='[ZOOM] a linha Aba Preços, em Oculto')
+    c.mark(2)
+    c.click(PILULA('Aba Preços', 'Com senha'), at=c.A(2, 'Com', 0.6), label='Aba Preços: Com senha')
+    c.click(BTN('Salvar exibição', within=DLG), at=c.A(2, 'salvo', 0.6), label='Salvar exibição')
+    c.waitfor(text='Exibição do portal salva', timeout=10)
+    c.mark(3)
+    troca_para(c, PORTAL_COOP, c.L(3) - 0.5, 'navegador da cooperativa (com sessão, corte)', 'Histórico de Pedidos')
+    c.ev(POPS, label='gancho das janelas novas')
+    c.click(TABP('precos'), at=c.A(3, 'apareceu', 0.5), label='aba Preços')
+    c.waitfor(text='Preços atualizados em', timeout=10)
+    c.confere('main', ['Seus materiais', 'Papelão', 'Plástico PET', 'Alumínio latinha', 'Outros materiais que compramos'], 'aba Preços: Seus materiais e Outros materiais')
+    c.hover(TXT('Seus materiais'), 1.0, at=c.A(3, 'Primeiro,', 0.4), label='Seus materiais')
+    c.hover(TXT('Outros materiais que compramos'), 1.0, at=c.A(3, 'outros', 0.6), label='Outros materiais que compramos')
+    c.mark(4)
+    c.hover(TXTX('Valores sujeitos a alteração'), 2.4, at=c.A(4, 'aviso', 0.5), label='[ZOOM] Valores sujeitos a alteração. Vale o preço do momento da pesagem.')
+    c.mark(5)
+    c.hover(BTN('Baixar em PDF'), 1.0, at=c.A(5, 'Baixar', 0.8), label='[ZOOM] o botão Baixar em PDF')
+    c.click(BTN('Baixar em PDF'), at=c.A(5, 'leva', 0.6), label='clica em Baixar em PDF: a tabela abre numa aba nova')
+    c.ev(PDF_JS, at=c.A(5, 'leva', -2.5), label='PDF da tabela de preços (janela nova, para a cena do PDF)')
+    c.mark(6)
+    c.cursor((900, 440), at=c.L(6) + 0.3, label='de volta à lista de preços')
+    c.fim()
+    return c
+
+
+WA_JS = ("(()=>{window.__wa=[];window.open=function(u){window.__wa.push(String(u));return null};return 'gancho wa.me'})()")
+WA_LER = ("(()=>{const u=(window.__wa||[]).slice(-1)[0];if(!u)return 'SEM wa.me';const m=u.match(/[?&]text=([^&]*)/);return 'WA:'+u.split('?')[0]+'|'+(m?decodeURIComponent(m[1].replace(/\\+/g,' ')):'')})()")
+ID_1749 = stable_id('compra.1749')
+
+
+@capitulo
+def cap13():
+    """Mandar o pedido pelo WhatsApp: Pedidos > o "⋮" da compra de 06/11 > Enviar pelo WhatsApp (wa.me interceptado); o link do portal já aberto no pedido (?pedido=)."""
+    # a tela de Pedidos (fora do vídeo): Rafael logado, menu recolhido
+    setup = list(LOGIN)[:] + portal_entra(PORTAL_COOP, senha=True) + [{'do': 'goto', 'url': '/pedidos'}, {'do': 'waitFor', 'text': 'Histórico completo de compras e vendas', 'timeout': 30},
+             {'do': 'waitFor', 'idle': True, 'timeout': 25}, {'do': 'click', 'target': TOGGLE}, {'do': 'wait', 'seconds': 0.8}, {'do': 'eval', 'js': WA_JS}]
+    c = cap_(13, setup, start=(900, 440))
+    c.mark(1)
+    linha = "main tbody tr:has-text('#1749')"
+    c.hover(SEL(f'{linha} button', nth=-1), 0.3, at=c.A(1, 'menu', 0.8), label='o "⋮" da compra de 06/11: o menu do pedido abre', optional=False, timeout=8)
+    c.waitfor(target=ITEM('Enviar pelo WhatsApp'), timeout=6)
+    c.hover(ITEM('Enviar pelo WhatsApp'), 1.2, at=c.A(1, 'Enviar', 0.6), label='[ZOOM] Enviar pelo WhatsApp')
+    c.mark(2)
+    c.click(ITEM('Enviar pelo WhatsApp'), at=c.L(2) - 0.2, label='clica em Enviar pelo WhatsApp (a janela do wa.me é interceptada)')
+    c.ev(WA_LER, at=c.L(2) + 1.5, label='a mensagem do WhatsApp (texto lido do endereço interceptado)')
+    c.mark(3)
+    troca_para(c, PORTAL_COOP + '?pedido=' + ID_1749, c.L(3) - 0.5, 'navegador do parceiro: o link do pedido (?pedido=)', 'Total do Pedido:')
+    c.hover(SEL("main tbody tr:has-text('3.700,00')", nth=0), 2.4, at=c.A(3, 'pedido,', 0.6), label='[ZOOM] a linha do pedido aberta e contornada')
+    c.mark(4)
+    c.cursor((900, 440), at=c.L(4) + 0.3, label='de volta à tela de Pedidos (cortes)')
+    c.fim()
+    return c
+
+
 @capitulo
 def cap15():
     """Recapitulando: montagem das gravações dos capítulos 0 a 10, sem robô (só o relógio das marcas)."""
@@ -792,9 +1023,9 @@ def cap15():
 
 
 def main():
-    quais = [int(a) for a in sys.argv[1:] if a.isdigit()] or sorted(k for k in CAPS_ROBO if k != 11)
+    quais = [int(a) for a in sys.argv[1:] if a.isdigit()] or sorted(k for k in CAPS_ROBO if k != 15)
     for n in quais:
-        if n == 11:
+        if n == 15:
             continue
         c = CAPS_ROBO[n]()
         caminho = os.path.join(HERE, f'cap{n:02d}.json')

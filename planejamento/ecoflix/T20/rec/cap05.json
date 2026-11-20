@@ -1,13 +1,13 @@
 {
  "name": "t20-cap05",
- "title": "T20 · Cap. 5 · Histórico de pedidos (narração 68,6 s ESTIMADA; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T15:00:00-03:00)",
+ "title": "T20 · Cap. 5 · Senha só no que é sensível (narração 56,7 s ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T15:00:00-03:00)",
  "seed": "t20-cap05",
  "pace": 0.5,
  "cps": 9,
  "tail": 1.5,
  "start": {
-  "x": 900,
-  "y": 440
+  "x": 760,
+  "y": 420
  },
  "anonymous": true,
  "storage": {
@@ -20,6 +20,8 @@
   "initial-preferences-set": "true"
  },
  "seedExtra": [
+  "t12/inicio",
+  "t12/apos-cap15",
   "t20/inicio",
   "t20/apos-cap04"
  ],
@@ -28,43 +30,28 @@
  ],
  "setup": [
   {
-   "do": "goto",
-   "url": "/portal/recicla-vale-metais-cooperativa-1B2yVwaud00G8omJQvmXcn"
-  },
-  {
    "do": "waitFor",
-   "text": "Acesso restrito",
+   "target": {
+    "label": "E-mail"
+   },
    "timeout": 30
   },
   {
-   "do": "click",
+   "do": "type",
    "target": {
-    "selector": "#portal-user"
-   }
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
   },
   {
    "do": "type",
    "target": {
-    "selector": "#portal-user"
+    "label": "Senha",
+    "exact": true
    },
-   "text": "cooperativa.recomeco",
-   "cps": 40,
-   "noClick": true
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "#portal-pass"
-   }
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "#portal-pass"
-   },
-   "text": "$PORTAL_SENHA",
-   "cps": 40,
-   "noClick": true
+   "text": "$TUT_SENHA",
+   "cps": 40
   },
   {
    "do": "click",
@@ -76,7 +63,7 @@
   },
   {
    "do": "waitFor",
-   "text": "Histórico de Pedidos",
+   "text": "Olá, Rafael!",
    "timeout": 30
   },
   {
@@ -84,8 +71,97 @@
    "idle": true
   },
   {
+   "do": "goto",
+   "url": "/clientes-fornecedores"
+  },
+  {
+   "do": "waitFor",
+   "text": "Aços Quiririm Ltda",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "header button.h-8.w-8"
+   }
+  },
+  {
    "do": "wait",
    "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div.no-scrollbar > button:has-text('Fornecedores')"
+   }
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "Buscar fornecedor..."
+   },
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main aside button:has-text('Depósito Irmãos Siqueira')"
+   }
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main section[aria-label='Detalhes de Depósito Irmãos Siqueira']"
+   },
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Editar",
+    "exact": true,
+    "within": "main section[aria-label='Detalhes de Depósito Irmãos Siqueira']"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Editar Fornecedor",
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Portal",
+    "exact": true,
+    "within": "[role=dialog]"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "O que exibir no portal",
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "wait",
+   "seconds": 0.6
   },
   {
    "do": "eval",
@@ -103,138 +179,148 @@
    "at": 0
   },
   {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Exigir senha\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-130);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 0.3,
+   "label": "rola até Exigir senha"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#portal-password-enabled"
+   },
+   "at": 4.43,
+   "label": "liga Pedir login no portal"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "#portal-username"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#portal-username"
+   },
+   "at": 6.2,
+   "label": "Usuário: deposito.siqueira (campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#portal-username"
+   },
+   "text": "deposito.siqueira",
+   "cps": 40,
+   "at": 6.95,
+   "label": "Usuário: deposito.siqueira",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#portal-password"
+   },
+   "at": 1.32,
+   "label": "Senha (campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#portal-password"
+   },
+   "text": "$PORTAL_SENHA",
+   "cps": 40,
+   "at": 1.87,
+   "label": "Senha (pontinhos)",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar acesso",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 8.15,
+   "label": "Salvar acesso"
+  },
+  {
+   "do": "waitFor",
+   "text": "Acesso salvo",
+   "timeout": 10
+  },
+  {
    "do": "hover",
    "target": {
-    "text": "Total Comprado",
-    "exact": true
+    "text": "Este parceiro é cliente e fornecedor: o acesso vale pros dois links.",
+    "exact": true,
+    "within": "[role=dialog]"
    },
-   "seconds": 1.0,
-   "at": 4.23,
-   "label": "[ZOOM] os três cartões do Histórico (linhas 1 e 2)",
+   "seconds": 2.2,
+   "at": 10.12,
+   "label": "[ZOOM] o aviso: o acesso vale pros dois links",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"O que exibir no portal\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-130);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 15.97,
+   "label": "rola até O que exibir no portal"
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 9.96
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Total de Pedidos",
-    "exact": true
-   },
-   "seconds": 1.0,
-   "at": 15.74,
-   "label": "Total de Pedidos: 15",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Top 5 Materiais Mais Comprados\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-140);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 17.38,
-   "label": "desce ao gráfico"
-  },
-  {
-   "do": "mark",
-   "name": "L3",
-   "at": 17.68
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Papelão: 55%"
-   },
-   "seconds": 0.3,
-   "at": 22.24,
-   "label": "Papelão: 55%",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Plástico PET: 17%"
-   },
-   "seconds": 0.3,
-   "at": 25.42,
-   "label": "Plástico PET: 17%",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Alumínio latinha: 15%"
-   },
-   "seconds": 0.3,
-   "at": 26.03,
-   "label": "Alumínio latinha: 15%",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Hist\\u00f3rico de Pedidos\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-150);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 27.07,
-   "label": "desce ao Histórico de Pedidos"
-  },
-  {
-   "do": "mark",
-   "name": "L4",
-   "at": 27.37
+   "at": 16.57
   },
   {
    "do": "click",
    "target": {
-    "selector": "main tbody tr:has-text('R$ 3.700,00')",
-    "nth": 0
+    "selector": "[role=dialog] [role=radiogroup][aria-label='Aba Histórico'] button[role=radio]:has-text('Livre')"
    },
-   "at": 30.43,
-   "label": "clica na compra de 06/11"
+   "at": 18.74,
+   "label": "Aba Histórico: Livre"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] [role=radiogroup][aria-label='Aba Saldo']"
+   },
+   "seconds": 1.0,
+   "at": 19.38,
+   "label": "Aba Saldo segue Com senha",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar exibição",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 24.46,
+   "label": "Salvar exibição"
   },
   {
    "do": "waitFor",
-   "text": "Total do Pedido:",
+   "text": "Exibição do portal salva",
    "timeout": 10
   },
   {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Fotos do pedido\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-360);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 35.84,
-   "label": "desce às fotos do pedido"
-  },
-  {
-   "do": "mark",
-   "name": "L5",
-   "at": 36.14
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "main button:has(img[src*='order-attachments'])",
-    "nth": 0
-   },
-   "at": 36.14,
-   "label": "abre a primeira foto em tela cheia"
-  },
-  {
-   "do": "press",
-   "key": "Escape",
-   "at": 40.29,
-   "label": "fecha a foto"
-  },
-  {
    "do": "goto",
-   "url": "/portal/recicla-vale-metais-fundicao-DEPV2GmJjGkErlVUpEkTKD",
-   "at": 40.64,
-   "label": "outra aba do navegador do parceiro: o portal da Fundição Bandeira do Vale"
+   "url": "/portal/recicla-vale-metais-deposito-JPdFYgsge3iEphwmg3RJao",
+   "at": 26.1,
+   "label": "navegador do parceiro, sem nada salvo: o link do Depósito"
   },
   {
    "do": "waitFor",
-   "text": "Total Vendido",
+   "text": "Histórico de Pedidos",
    "timeout": 30
   },
   {
@@ -244,76 +330,95 @@
   },
   {
    "do": "mark",
-   "name": "L6",
-   "at": 41.04
+   "name": "L3",
+   "at": 26.4
   },
   {
    "do": "hover",
    "target": {
-    "text": "Fundição Bandeira do Vale",
-    "exact": true,
-    "nth": 0
+    "selector": "#tab-btn-saldo"
    },
-   "seconds": 1.0,
-   "at": 43.55,
-   "label": "Fundição Bandeira do Vale (Cliente)",
+   "seconds": 0.4,
+   "at": 33.05,
+   "label": "[ZOOM] as abas com cadeado: Saldo",
    "optional": true,
    "timeout": 4
   },
   {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Hist\\u00f3rico de Pedidos\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-150);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 48.53,
-   "label": "desce ao Histórico de Pedidos"
+   "do": "hover",
+   "target": {
+    "selector": "#tab-btn-notas"
+   },
+   "seconds": 0.3,
+   "at": 33.65,
+   "label": "Notas Fiscais com cadeado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#tab-btn-relatorio"
+   },
+   "seconds": 0.3,
+   "at": 34.15,
+   "label": "Relatório com cadeado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#tab-btn-coletas"
+   },
+   "seconds": 0.3,
+   "at": 34.65,
+   "label": "Coletas com cadeado",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "mark",
-   "name": "L7",
-   "at": 48.83
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('R$ 0,00') [aria-label='Valores deste comprovante estão ocultos']",
-    "nth": 0
-   },
-   "seconds": 1.8,
-   "at": 56.27,
-   "label": "[ZOOM] R$ 0,00 e o cadeado",
-   "optional": true,
-   "timeout": 4
+   "name": "L4",
+   "at": 35.48
   },
   {
    "do": "click",
    "target": {
-    "selector": "main tbody tr:has-text('R$ 0,00')",
-    "nth": 0
+    "selector": "#tab-btn-saldo"
    },
-   "at": 58.02,
-   "label": "abre a venda de hoje"
+   "at": 35.89,
+   "label": "aba Saldo (travada)"
   },
   {
    "do": "waitFor",
-   "text": "Total do Pedido:",
+   "text": "Acesso com senha",
    "timeout": 10
-  },
-  {
-   "do": "mark",
-   "name": "L8",
-   "at": 58.37
   },
   {
    "do": "hover",
    "target": {
-    "text": "Cobre mel",
-    "exact": true,
-    "nth": 0
+    "text": "Acesso com senha",
+    "exact": true
    },
-   "seconds": 1.0,
-   "at": 65.73,
-   "label": "latão e cobre mel com o peso e R$ 0,00",
+   "seconds": 2.4,
+   "at": 37.99,
+   "label": "[ZOOM] o cartão Acesso com senha: o resto do portal continua aberto",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 43.35
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#tab-btn-historico"
+   },
+   "at": 43.75,
+   "label": "volta ao Histórico (aberto)"
   },
   {
    "do": "eval",
@@ -323,7 +428,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 68.58
+   "at": 56.67
   }
  ]
 }

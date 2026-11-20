@@ -1,6 +1,6 @@
 {
  "name": "t20-cap03",
- "title": "T20 · Cap. 3 · Escolher as abas (narração 70,1 s ESTIMADA; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T15:00:00-03:00)",
+ "title": "T20 · Cap. 3 · Escolher as abas (narração 106,4 s ESTIMADA; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T15:00:00-03:00)",
  "seed": "t20-cap03",
  "pace": 0.5,
  "cps": 9,
@@ -20,6 +20,8 @@
   "initial-preferences-set": "true"
  },
  "seedExtra": [
+  "t12/inicio",
+  "t12/apos-cap15",
   "t20/inicio"
  ],
  "prewarm": [
@@ -365,8 +367,8 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "seconds": 0.3,
-   "at": 30.33,
+   "seconds": 0.6,
+   "at": 31.62,
    "label": "Permitir solicitar coleta",
    "optional": true,
    "timeout": 4
@@ -374,13 +376,13 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Formato do comprovante no portal\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-170);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 33.84,
+   "at": 41.66,
    "label": "rola até Formato do comprovante no portal"
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 34.54
+   "at": 42.36
   },
   {
    "do": "hover",
@@ -390,23 +392,36 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.5,
-   "at": 36.22,
+   "at": 46.92,
    "label": "Automático (marcado)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] label[for=rf-thermal], [role=dialog] label:has-text('Térmico')",
+    "nth": 0
+   },
+   "seconds": 0.5,
+   "at": 50.64,
+   "label": "Térmico (80mm) (sem clicar)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] label[for=rf-a4]"
+    "selector": "[role=dialog] label:has-text('A4')",
+    "nth": 0
    },
-   "at": 43.03,
+   "at": 57.91,
    "label": "A4"
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 44.54
+   "at": 59.42
   },
   {
    "do": "click",
@@ -416,7 +431,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 44.82,
+   "at": 59.7,
    "label": "Salvar exibição"
   },
   {
@@ -425,9 +440,160 @@
    "timeout": 10
   },
   {
+   "do": "press",
+   "key": "Escape",
+   "at": 63.62,
+   "label": "fecha o Editar Fornecedor"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div.no-scrollbar > button:has-text('Clientes')"
+   },
+   "at": 64.42,
+   "label": "aba Clientes"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "Buscar cliente..."
+   },
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main aside button:has-text('Aços Quiririm Ltda')"
+   },
+   "at": 65.42,
+   "label": "Aços Quiririm Ltda"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main section[aria-label='Detalhes de Aços Quiririm Ltda']"
+   },
+   "timeout": 12
+  },
+  {
    "do": "mark",
    "name": "L7",
-   "at": 47.77
+   "at": 66.22
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Editar",
+    "exact": true,
+    "within": "main section[aria-label='Detalhes de Aços Quiririm Ltda']"
+   },
+   "at": 68.1,
+   "label": "Editar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Editar Cliente",
+   "timeout": 12
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Portal",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 69.28,
+   "label": "aba Portal"
+  },
+  {
+   "do": "waitFor",
+   "text": "O que exibir no portal",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Valores financeiros (pre\\u00e7os e totais)\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 69.16,
+   "label": "rola até Valores financeiros"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div:has(> span:text-is('Valores financeiros (preços e totais)')) button[role=switch]"
+   },
+   "at": 70.3,
+   "label": "desliga Valores financeiros"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #cfg-saldo"
+   },
+   "at": 72.43,
+   "label": "desliga Aba Saldo"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar exibição",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 73.26,
+   "label": "Salvar exibição (Aços Quiririm)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Exibição do portal salva",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 74.54
+  },
+  {
+   "do": "goto",
+   "url": "/portal/recicla-vale-metais-acos-quiririm-IxULGLYEpfeEE65iXX3sLJ",
+   "at": 74.54,
+   "label": "navegador do parceiro: o portal da Aços Quiririm"
+  },
+  {
+   "do": "waitFor",
+   "text": "Total de Pedidos",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('R$ 0,00') [aria-label='Valores deste comprovante estão ocultos']",
+    "nth": 0
+   },
+   "seconds": 1.8,
+   "at": 79.86,
+   "label": "[ZOOM] R$ 0,00 e o cadeado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 84.08
   },
   {
    "do": "scroll",
@@ -438,13 +604,13 @@
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 48.47,
+   "at": 84.78,
    "label": "cursor em repouso (ilustração)"
   },
   {
    "do": "mark",
-   "name": "L8",
-   "at": 61.94
+   "name": "L10",
+   "at": 98.24
   },
   {
    "do": "eval",
@@ -454,7 +620,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 70.1
+   "at": 106.41
   }
  ]
 }

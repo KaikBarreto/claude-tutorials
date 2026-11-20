@@ -123,3 +123,11 @@ Código 1.59.154 (`/home/claude/ecoflix/app-src-1.59.154/`, `src/config/version.
 4. **QR do comprovante do sistema** vai para o portal quando o parceiro tem link (todos têm no mundo); o link de fotos aparece no
    comprovante tirado **do portal**.
 5. O cabeçalho do portal diz "Portal do Cliente" também para fornecedor (nome do produto).
+
+## 7. Atualização 1.60.18 (20/11)
+
+- Portal por seção: `locked`/`free_sections`, modo parcial (`requires_login`): seção livre abre sem senha, as demais ganham cadeado e o cartão
+  "Acesso com senha". Cliente e fornecedor (dual): o saldo é uma conta só (sinal invertido no link do fornecedor); vale a seção mais trancada.
+- Aba Preços (`get_entity_portal_price_list`: preço combinado > tabela > compra base), chave no Editar > Portal (Aba Preços: Oculto, Livre, Com senha).
+- Relatório do portal sem pedido estornado; pedido 'sem valor' entra só com o peso. Comprovante 'sem valor' sem preços; linha de assinatura
+  segue a configuração. Fornecedor vê "Portal do Fornecedor". Mensagem do WhatsApp em Pedidos > "⋮" > Enviar pelo WhatsApp (precisa de telefone).

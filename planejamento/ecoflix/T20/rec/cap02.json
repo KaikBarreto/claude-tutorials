@@ -1,6 +1,6 @@
 {
  "name": "t20-cap02",
- "title": "T20 · Cap. 2 · Pegar o link do portal (narração 48,4 s ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T15:00:00-03:00)",
+ "title": "T20 · Cap. 2 · Pegar o link do portal (narração 72,2 s ESTIMADA; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T15:00:00-03:00)",
  "seed": "t20-cap02",
  "pace": 0.5,
  "cps": 9,
@@ -20,6 +20,8 @@
   "initial-preferences-set": "true"
  },
  "seedExtra": [
+  "t12/inicio",
+  "t12/apos-cap15",
   "t20/inicio"
  ],
  "prewarm": [
@@ -307,6 +309,39 @@
    "timeout": 4
   },
   {
+   "do": "mark",
+   "name": "L7",
+   "at": 47.77
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button[title='Abrir portal'], [role=dialog] a[title='Abrir portal']"
+   },
+   "seconds": 1.6,
+   "at": 47.77,
+   "label": "[ZOOM] o ícone Abrir portal (sem clicar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 56.62
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 420
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 57.12,
+   "label": "cursor em repouso (fala sobre cadastro antigo)"
+  },
+  {
    "do": "eval",
    "js": "JSON.stringify(window.__avisos || \"sem observador\")",
    "label": "avisos de erro na tela"
@@ -314,7 +349,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 48.37
+   "at": 72.23
   }
  ]
 }
