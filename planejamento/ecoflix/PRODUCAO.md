@@ -1044,3 +1044,10 @@ Decisões:
   `á-quatro` → `A4` no `config_narracao.json`). T03, T20 e T22 entram na voz quando fecharem. Ajudantes: voz (Sonnet),
   T03 (Sonnet), T20 retomado depois do lote 3; T22 no lote 1. Saldo de créditos: a ferramenta de uso da conta pede
   permissão nova (não deu para consultar); se faltar crédito, a geração falha sem cobrar.
+- 20/11 12:4x **T20 aplicada (agente, 3 lotes gastos)**: 16 capítulos (novos 5 senha por seção, 6 cliente e fornecedor, 10
+  preços, 13 WhatsApp; 7, 8, 9, 11, 12, 14, 15 renumerados), fala 1.518 → 2.701 palavras. Rápido ok: 0, 1, 2, 6, 7, 11, 13,
+  14; cap12 passa mas sem PDF; 3, 4, 5, 8, 9, 10 corrigidos sem ensaio; cap08 com saldo antigo no portal depois do pagamento
+  (causa não achada); cap04 L9 fala "desligar a chave" e o robô só passa o mouse. Handlers `entity-portal`,
+  `entity-portal-report`, `portal-order-receipt` no 1.60.18; o agente mexeu também em arquivos compartilhados com a T12
+  (`lib/coletas.mjs` com `cfg.locked`, `lib/portal.mjs`, `collection-request` aceitando sessão). Achado: o portal 1.60.18 não
+  tem `<main>`. Ajudante novo (Sonnet) fecha T20 e confere a T12 (cap09 no portal + `t12_lote.sh 08 13 16`).

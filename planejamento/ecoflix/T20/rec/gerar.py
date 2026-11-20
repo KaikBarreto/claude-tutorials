@@ -421,7 +421,7 @@ def portal_entra(url, senha=False, espera='Histórico de Pedidos'):
 
 def editar_portal(nome=COOP):
     """setup: Editar do parceiro > aba Portal (fora do vídeo)"""
-    return [{'do': 'wait', 'seconds': 3.0}, {'do': 'click', 'target': BTN_FICHA(nome, 'Editar')}, {'do': 'waitFor', 'text': 'Editar Fornecedor', 'timeout': 15},
+    return [{'do': 'wait', 'seconds': 3.0}, {'do': 'click', 'target': BTN_FICHA(nome, 'Editar')}, {'do': 'waitFor', 'target': TAB('Portal', within=DLG), 'timeout': 20},
             {'do': 'click', 'target': TAB('Portal', within=DLG)}, {'do': 'waitFor', 'text': 'O que exibir no portal', 'timeout': 15}, AGUARDA,
             {'do': 'wait', 'seconds': 0.6}]
 
@@ -565,7 +565,7 @@ def cap03():
     c.click(LINHA('Aços Quiririm Ltda'), at=c.L(7) - 1.0, label='Aços Quiririm Ltda')
     c.waitfor(target=SEL(FICHA_DE('Aços Quiririm Ltda')), timeout=12)
     c.click(BTN_FICHA('Aços Quiririm Ltda', 'Editar'), at=c.A(7, 'Aços', 0.6), label='Editar')
-    c.waitfor(text='Editar Cliente', timeout=12)
+    c.waitfor(target=TAB('Portal', within=DLG), timeout=15)
     c.click(TAB('Portal', within=DLG), at=c.A(7, 'Quiririm.', -0.2), label='aba Portal')
     c.waitfor(text='O que exibir no portal', timeout=10)
     rola_ate(c, 'Valores financeiros (preços e totais)', c.A(7, 'desligo', 0.9), 'rola até Valores financeiros', y=300, dur_ms=700, escopo=DLG)
@@ -628,11 +628,8 @@ def cap04():
     c.click(TAB('Portal', within=DLG), at=c.L(9) - 1.6, label='aba Portal')
     c.waitfor(text='Pedir login no portal', timeout=10)
     rola_ate(c, 'Exigir senha', c.L(9) - 0.4, 'rola até Exigir senha', y=130, dur_ms=700, escopo=DLG, prefixo=True)
-    c.hover(SEL('#portal-password'), 2.2, at=c.A(9, 'nova', 0.7), label='[ZOOM] Senha: deixe em branco p/ manter')
-    c.hover(SEL('#portal-password-enabled'), 1.0, at=c.A(9, 'chave', 0.7), label='a chave Pedir login no portal')
-    c.click(SEL('#portal-password-enabled'), at=c.A(9, 'desligar', 0.4), label='desliga a chave (sem salvar)')
+    c.hover(SEL('#portal-password-enabled'), 1.6, at=c.A(9, 'chave', 0.7), label='[ZOOM] a chave Pedir login no portal')
     c.hover(BTN('Remover login', within=DLG), 1.4, at=c.A(9, 'Remover', 0.6), label='o botão Remover login (sem clicar)')
-    c.click(SEL('#portal-password-enabled'), at=c.A(9, 'login.', -0.8), label='religa a chave (nada foi salvo)')
     c.fim()
     return c
 
@@ -699,6 +696,7 @@ def cap08():
     c.click(ABA('Fornecedores'), at=c.L(5) - 1.4, label='aba Fornecedores')
     c.click(LINHA(COOP), at=c.L(5) - 0.4, label='Cooperativa Recomeço')
     c.waitfor(target=SEL(FC), timeout=12)
+    c.wait(1.0)
     c.click(ABA_FICHA('Conta-corrente'), at=c.L(5) + 0.6, label='aba Conta-corrente')
     c.waitfor(text='Saldo Atual', timeout=12)
     c.click(BTN('Movimentação', within=FC), at=c.A(5, 'Movimentação,', 0.7), label='Movimentação')
@@ -770,12 +768,12 @@ def cap09():
     c.hover(SEL(":is(main,body) tbody tr:has-text('Papelão')", nth=0), 0.8, at=c.A(6, 'papelão', 0.5), label='papelão: oito mil e quatrocentos quilos')
     c.hover(SEL(":is(main,body) tbody tr:has-text('PET')", nth=0), 0.8, at=c.A(6, 'PET,', 0.5), label='PET: dois mil e seiscentos')
     c.mark(7)
-    c.hover(SEL(":is(main,body) tfoot tr, main tr:has-text('Total')", nth=-1), 2.0, at=c.A(7, 'No', 0.3), label='[ZOOM] a linha Total: R$ 18.755,00')
+    c.hover(SEL(":is(main,body) tfoot tr, :is(main,body) tr:has-text('Total')", nth=-1), 2.0, at=c.A(7, 'No', 0.3), label='[ZOOM] a linha Total: R$ 18.755,00')
     c.mark(8)
-    c.click(SEL(":is(main,body) button:text-is('Material')"), at=c.A(8, 'material,', 0.8), label='abre o filtro Material')
+    c.click(SEL(":is(main,body) button:has-text('Material')"), at=c.A(8, 'material,', 0.8), label='abre o filtro Material')
     c.click(SEL("[data-radix-popper-content-wrapper] :text('Papelão')", nth=0), at=c.A(8, 'material,', -0.3), label='marca Papelão (a tabela fica com uma linha)')
     c.press('Escape', at=c.A(8, 'período', 1.0), label='fecha o filtro')
-    c.click(SEL(":is(main,body) button:has-text('Material ·'), main button:has-text('Papelão')", nth=0), at=c.A(8, 'período', 0.7), label='abre o filtro de novo para limpar')
+    c.click(SEL(":is(main,body) button:has-text('Material ·'), :is(main,body) button:has-text('Papelão')", nth=0), at=c.A(8, 'período', 0.7), label='abre o filtro de novo para limpar')
     c.click(SEL("[data-radix-popper-content-wrapper] :text('Papelão')", nth=0), at=c.A(8, 'período', 0.2), label='desmarca Papelão (limpa)')
     c.press('Escape', at=c.A(8, 'outras', 0.7), label='fecha o filtro')
     c.click(SEL(":is(main,body) button:has-text('Mês passado')", nth=0), at=c.A(8, 'outras', 0.4), label='abre o Período')
@@ -966,6 +964,8 @@ def cap10():
     c.mark(3)
     troca_para(c, PORTAL_COOP, c.L(3) - 0.5, 'navegador da cooperativa (com sessão, corte)', 'Portal do')
     c.ev(POPS, label='gancho das janelas novas')
+    c.click(ATUALIZAR, at=c.L(3) + 0.3, label='Atualizar dados (o portal recarrega)')
+    c.wait(2.0)
     c.click(TABP('precos'), at=c.A(3, 'apareceu', 0.5), label='aba Preços')
     c.waitfor(text='Preços atualizados em', timeout=10)
     c.confere('body', ['Seus materiais', 'Papelão', 'Plástico PET', 'Alumínio latinha', 'Outros materiais que compramos'], 'aba Preços: Seus materiais e Outros materiais')

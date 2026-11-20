@@ -29,6 +29,8 @@ Uma dica: a importação é tudo ou nada. Se uma linha tiver erro, nenhum materi
 Se você já tem os seus códigos, do caderno ou de outro sistema, pode usar os mesmos. No caderno do Rafael, o radiador sempre foi o setenta.
 Abro o Editar e digito zero, sete, zero. Olha só: o zero da frente não fica.
 Uma dica: o código é só número, e zero na frente não é guardado. Se no caderno era zero zero sete, aqui fica só o sete.
+Ao lado do código fica o Prefixo, pra quem separa os materiais por letra. Digito pê, e a linha embaixo mostra pê setenta.
+O prefixo aparece na tela, no comprovante e na nota fiscal. O número no banco não muda. Aqui eu não preciso dele, então apago.
 Atualizar, e o radiador agora é o setenta. Cada número vale pra um material só: se ele já estiver em uso, o sistema avisa na hora de salvar.""",
 4: """Pra quem emite nota fiscal, cada material precisa do ene-cê-ême. É um código de oito dígitos que diz pra Receita que mercadoria é aquela, e ele vai dentro da nota.
 No cadastro, ele fica no campo ene-cê-ême. Dá pra digitar, ou clicar na interrogação do lado pra buscar.
@@ -122,7 +124,9 @@ Pronto: a tabela com o preço de compra de cada material, do jeito que se entreg
 15: """Por último, o Excluir. Ele parece apagar, mas na verdade arquiva. O material sai da lista e das buscas do pedido, e as compras, as vendas e o histórico dele continuam lá.
 Repara no aviso: o radiador ainda tem cento e dez quilos. Excluindo, o sistema registra a saída desse saldo, como exclusão, e o estoque dele zera.
 Sim, Excluir. Saiu da lista, e o aviso traz um Desfazer.
-Clicando nele, o material volta com o saldo que tinha. Como a Recicla Vale vai continuar comprando radiador, ele fica.""",
+Clicando nele, o material volta com o saldo que tinha. Como a Recicla Vale vai continuar comprando radiador, ele fica.
+Quando precisa mexer em vários materiais de uma vez, é só marcar as caixinhas da esquerda. Marquei dois, e sobe uma barra com Transferir Estoque, Definir prefixo e Excluir.
+O Definir prefixo põe o mesmo prefixo no código de todos os selecionados. Desmarco, e a barra some.""",
 16: """Pronto! Recapitulando: a gente conheceu a tela Estoque, cadastrou o radiador de cobre, com os preços e o estoque inicial, e trocou o código pelo do caderno.
 Escolheu o ene-cê-ême, que o contador confirma, e criou o grupo Radiadores.
 Reajustou o cobre de uma vez no Editar Preços, ligou a margem automática, pra tabela toda e por material, em porcentagem e em reais, e viu o resumo, o selo fora da margem e a calculadora no cadastro.

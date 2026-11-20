@@ -1,6 +1,6 @@
 {
  "name": "t03-cap03",
- "title": "T03 · Cap. 3 · O código do material (narração 59,1 s ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário rafael)",
+ "title": "T03 · Cap. 3 · O código do material (narração 79,4 s ESTIMADA; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário rafael)",
  "seed": "t03-cap03",
  "pace": 0.5,
  "cps": 14,
@@ -272,6 +272,53 @@
    "at": 46.34
   },
   {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] #code_prefix"
+   },
+   "text": "P",
+   "at": 52.59,
+   "label": "campo Prefixo: P"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Fica assim: P70\", \"O prefixo aparece na tela, no comprovante e na nota fiscal. O número no banco não muda.\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Fica assim: P70 e o aviso do prefixo"
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 56.26
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "O prefixo aparece na tela",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.4,
+   "at": 56.76,
+   "label": "aviso: o prefixo aparece na tela, no comprovante e na nota fiscal",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 66.55
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const el=document.querySelector(\"[role=dialog] #code_prefix\");if(!el)return 'SEM ALVO';const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;set.call(el,\"\");el.dispatchEvent(new Event('input',{bubbles:true}));el.dispatchEvent(new Event('change',{bubbles:true}));return el.value})()",
+   "at": 66.57,
+   "label": "apaga o P (sem cursor)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Fica assim: 70\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere volta a Fica assim: 70"
+  },
+  {
    "do": "click",
    "target": {
     "role": "button",
@@ -279,7 +326,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 46.54,
+   "at": 66.75,
    "label": "Atualizar"
   },
   {
@@ -300,7 +347,7 @@
     "selector": "main tbody tr:has-text('Radiador de cobre') td:nth-child(2)"
    },
    "seconds": 1.4,
-   "at": 49.42,
+   "at": 69.63,
    "label": "célula Código 70",
    "optional": true,
    "timeout": 4
@@ -318,7 +365,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 59.15
+   "at": 79.36
   }
  ]
 }

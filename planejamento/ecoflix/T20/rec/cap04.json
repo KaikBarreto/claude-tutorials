@@ -142,8 +142,13 @@
   },
   {
    "do": "waitFor",
-   "text": "Editar Fornecedor",
-   "timeout": 15
+   "target": {
+    "role": "tab",
+    "name": "Portal",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "timeout": 20
   },
   {
    "do": "click",
@@ -511,32 +516,13 @@
   {
    "do": "hover",
    "target": {
-    "selector": "#portal-password"
-   },
-   "seconds": 2.2,
-   "at": 71.73,
-   "label": "[ZOOM] Senha: deixe em branco p/ manter",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
     "selector": "#portal-password-enabled"
    },
-   "seconds": 1.0,
+   "seconds": 1.6,
    "at": 79.55,
-   "label": "a chave Pedir login no portal",
+   "label": "[ZOOM] a chave Pedir login no portal",
    "optional": true,
    "timeout": 4
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "#portal-password-enabled"
-   },
-   "at": 79.01,
-   "label": "desliga a chave (sem salvar)"
   },
   {
    "do": "hover",
@@ -551,14 +537,6 @@
    "label": "o botão Remover login (sem clicar)",
    "optional": true,
    "timeout": 4
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "#portal-password-enabled"
-   },
-   "at": 79.38,
-   "label": "religa a chave (nada foi salvo)"
   },
   {
    "do": "eval",

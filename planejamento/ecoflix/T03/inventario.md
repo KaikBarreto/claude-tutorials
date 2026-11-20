@@ -179,4 +179,4 @@ onde ele e o código discordam, vale o código (marcado **≠ guia**).
 - **Menu da tabela (cap. 12):** "Configurações" ("Editar Tabela de Preços"), "Duplicar tabela" (`rpc duplicate_price_table`, 20261111192000;
   cópia independente), "Fixar para meus pedidos e tickets" / "Remover minha tabela fixada" (`rpc set_my_preferred_price_table`, 20261112162947),
   "Definir como principal da empresa" (diálogo "Definir “…” como principal?"), "Excluir" ("Excluir Tabela de Preços").
-- **Não coberto:** "Prefixo" do código (F10) e a barra de seleção em massa (F11): dependem de decisão do Kaik.
+- **Coberto desde 20/11 (decisão do Kaik):** "Prefixo" do código (F10, cap. 3: digita P, "Fica assim: P70", apaga) e a barra de seleção em massa (F11, fim do cap. 15: "Selecionar <nome>", "2 selecionados", "Transferir Estoque", "Definir prefixo", "Excluir"; o X desmarca). "Definir resíduo do MTR" não existe no mundo da aula.

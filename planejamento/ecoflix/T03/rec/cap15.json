@@ -1,6 +1,6 @@
 {
  "name": "t03-cap15",
- "title": "T03 · Cap. 15 · Excluir um material (narração 41,5 s ESTIMADA; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário rafael)",
+ "title": "T03 · Cap. 15 · Excluir um material (narração 63,6 s ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário rafael)",
  "seed": "t03-cap15",
  "pace": 0.5,
  "cps": 14,
@@ -241,6 +241,75 @@
    "label": "confere radiador de volta, 110 Kg"
   },
   {
+   "do": "mark",
+   "name": "L5",
+   "at": 40.22
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const el=document.querySelector(\"main input[placeholder=\\\"Buscar material por c\\u00f3digo ou nome...\\\"]\");if(!el)return 'SEM ALVO';const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;set.call(el,\"\");el.dispatchEvent(new Event('input',{bubbles:true}));el.dispatchEvent(new Event('change',{bubbles:true}));return el.value})()",
+   "at": 41.12,
+   "label": "limpa a busca (sem cursor)"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Cobre misto",
+    "within": "main"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[role=checkbox][aria-label='Selecionar Radiador de cobre']"
+   },
+   "at": 45.73,
+   "label": "marca o radiador"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[role=checkbox][aria-label='Selecionar Cobre misto']"
+   },
+   "at": 48.09,
+   "label": "marca o cobre misto"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"2 selecionados\", \"Transferir Estoque\", \"Definir prefixo\", \"Excluir\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"body\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere barra: 2 selecionados, Transferir Estoque, Definir prefixo, Excluir"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div.fixed.left-1\\/2"
+   },
+   "seconds": 2.0,
+   "at": 50.44,
+   "label": "a barra de seleção (zoom)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 54.16
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "div.fixed.left-1\\/2 button.ml-2"
+   },
+   "at": 59.98,
+   "label": "X da barra: desmarca tudo"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Radiador de cobre\", \"Cobre misto\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere lista inteira de volta, sem seleção"
+  },
+  {
    "do": "eval",
    "js": "JSON.stringify(window.__avisos || \"sem observador\")",
    "label": "avisos de erro na tela"
@@ -248,7 +317,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 41.52
+   "at": 63.55
   }
  ]
 }

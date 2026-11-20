@@ -28,7 +28,7 @@
 | 12 | PREÇOS / Duplicar, fixar e trocar a principal | Menu "..." da tabela: "Configurações", "Duplicar tabela" (excluída em seguida), "Fixar para meus pedidos e tickets" (removida), "Definir como principal da empresa" (cancelada) | ILUSTRAÇÃO qual tabela o pedido abre | 2:40 |
 | 13 | ESTOQUE / Movimentar, transferir e zerar | Saída de 2 kg; transferência de 8 kg; "Zerar Estoque" só mostrado | ILUSTRAÇÃO transferência | 2:00 |
 | 14 | EXPORTAR / Estoque e tabela | "Estoque (PDF)" e "Tabela de Preços (PDF)" A4: PDFs **na tela** (aba nova) | PDFs `comprovante`/`pdf` | 1:10 |
-| 15 | MATERIAIS / Excluir um material | "Confirmar Exclusão" (110 kg), "Desfazer" | ILUSTRAÇÃO arquivar × apagar | 1:00 |
+| 15 | MATERIAIS / Excluir um material | "Confirmar Exclusão" (110 kg), "Desfazer"; seleção em massa (barra com "Transferir Estoque", "Definir prefixo", "Excluir") | ILUSTRAÇÃO arquivar × apagar | 1:00 |
 | 16 | RESUMO / Recapitulando | Montagem (6 linhas); cartão "Próximo"; cartela | | 1:00 |
 
 Transições faladas: 1→2 "Vamos cadastrar um material novo"; 2→3 "Agora, o código"; 3→4 "Pra quem emite nota fiscal..."; 4→5 "Agora, os grupos";
@@ -41,7 +41,7 @@ Transições faladas: 1→2 "Vamos cadastrar um material novo"; 2→3 "Agora, o 
 2. Cada capítulo deixa o mundo coerente com o `MUNDO_FICTICIO.md`: o reajuste do cap. 6 **leva o cobre aos preços do
    MUNDO** (a aula parte do cobre da semana passada); o "Excluir" é desfeito (o radiador continua); o "Zerar" só é mostrado.
 3. A compra do cap. 7 só escolhe fornecedor e material (o preço chega e o aviso aparece); nada é incluído nem finalizado.
-4. Sem prefixo de código (a fonte deixa de fora), sem "Posição de Estoque" (T10), sem "Desde 07/11" da planilha (produção,
+4. O "Prefixo" entra em trecho curto no cap. 3 (digita P, "Fica assim: P70", apaga antes de Atualizar: o código segue 70) e a seleção em massa no fim do cap. 15 (duas caixinhas, barra, desmarca; sem "Definir resíduo do MTR"; decisão do Kaik de 20/11). Sem "Posição de Estoque" (T10), sem "Desde 07/11" da planilha (produção,
    T11), sem o aviso de parceiro duplo na fala (T4). Exportação por grupo com subtotal fica para a Posição de Estoque (T10).
 
 ## Mundo: o que esta aula precisa
