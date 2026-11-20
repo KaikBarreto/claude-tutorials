@@ -1272,8 +1272,8 @@ def cap15():
     c.mark(8)
     c.click(ABA_NOTA('Itens'), at=round(c.L(8) + 0.1, 2), label='aba Itens')
     c.click(NCM(1), at=c.A(8, 'NCM', 0.7, nth=0), label='zoom: NCM 7602.00.99 (clique no campo)')
-    c.press(['Control+A', 'Backspace'], label='apaga o NCM errado')
-    c.type(NCM(1), '76020000', at=c.A(8, 'Corrijo', 0.05), label='NCM 7602.00.00', cps=30, noClick=True)
+    c.press('Control+A', label='seleciona o NCM errado')
+    c.ev(js_colar('76020000'), at=c.A(8, 'Corrijo', 0.05), label='NCM 7602.00.00 (colado de uma vez: digitando, o selo acusaria NCM inválido no meio)')
     c.confere_campos(['7602.00.00'], 'NCM corrigido')
     c.mark(9)
     emite_e_espera(c, 1252, c.A(9, 'Reemitir', 0.7), 'Reemitir NF-e', linha_aut=True, at_aut=c.A(9, 'autorizada.', 0.6), botao='Reemitir NF-e')
@@ -1455,11 +1455,12 @@ def cap19():
 # PDF que o app abre na aba nova (openPdfInTab: <iframe id="pdf-frame">; a gravação filma uma aba só): o robô devolve o PDF em base64
 # no `value` do passo (rótulo "PDF ..."), e o t16_pdf.py grava rec/t16/arquivos/ para a cena do comprovante (padrão do T08)
 POPS = "(()=>{const o=window.open;window.__pops=[];window.open=function(...a){const w=o.apply(this,a);window.__pops.push(w);return w};return 'ok'})()"
-PDF_JS = ("(async()=>{const w=(window.__pops||[]).slice(-1)[0];if(!w)return 'SEM JANELA';for(let i=0;i<60;i++){let f=null;"
-          "try{f=w.document&&w.document.querySelector('#pdf-frame')}catch(e){return 'ERRO '+e}"
-          "if(f&&f.src){const b=await (await fetch(f.src.split('#')[0])).blob();const u=new Uint8Array(await b.arrayBuffer());let s='';"
-          "for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'PDF:'+btoa(s)}"
-          "await new Promise(r=>setTimeout(r,250))}return 'SEM PDF'})()")
+# espera até 20 s por uma aba NOVA (o Comprovante (Notinha) só abre a aba depois da RPC get_invoice_for_print; o DANFE abre no clique)
+PDF_JS = ("(async()=>{window.__lidos=window.__lidos||[];for(let i=0;i<80;i++){for(const w of (window.__pops||[]).filter(x=>!window.__lidos.includes(x))){"
+          "let f=null;try{f=w.document&&w.document.querySelector('#pdf-frame')}catch(e){return 'ERRO '+e}"
+          "if(f&&f.src){window.__lidos.push(w);const b=await (await fetch(f.src.split('#')[0])).blob();const u=new Uint8Array(await b.arrayBuffer());let s='';"
+          "for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'PDF:'+btoa(s)}}"
+          "await new Promise(r=>setTimeout(r,250))}return (window.__pops||[]).length?'SEM PDF':'SEM JANELA'})()")
 
 
 def cap20():

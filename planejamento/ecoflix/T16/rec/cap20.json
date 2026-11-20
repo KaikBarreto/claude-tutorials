@@ -147,7 +147,7 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const w=(window.__pops||[]).slice(-1)[0];if(!w)return 'SEM JANELA';for(let i=0;i<60;i++){let f=null;try{f=w.document&&w.document.querySelector('#pdf-frame')}catch(e){return 'ERRO '+e}if(f&&f.src){const b=await (await fetch(f.src.split('#')[0])).blob();const u=new Uint8Array(await b.arrayBuffer());let s='';for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'PDF:'+btoa(s)}await new Promise(r=>setTimeout(r,250))}return 'SEM PDF'})()",
+   "js": "(async()=>{window.__lidos=window.__lidos||[];for(let i=0;i<80;i++){for(const w of (window.__pops||[]).filter(x=>!window.__lidos.includes(x))){let f=null;try{f=w.document&&w.document.querySelector('#pdf-frame')}catch(e){return 'ERRO '+e}if(f&&f.src){window.__lidos.push(w);const b=await (await fetch(f.src.split('#')[0])).blob();const u=new Uint8Array(await b.arrayBuffer());let s='';for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'PDF:'+btoa(s)}}await new Promise(r=>setTimeout(r,250))}return (window.__pops||[]).length?'SEM PDF':'SEM JANELA'})()",
    "label": "PDF do Comprovante (Notinha) da 1250 (aba nova, para a cena do comprovante)"
   },
   {
@@ -182,7 +182,7 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const w=(window.__pops||[]).slice(-1)[0];if(!w)return 'SEM JANELA';for(let i=0;i<60;i++){let f=null;try{f=w.document&&w.document.querySelector('#pdf-frame')}catch(e){return 'ERRO '+e}if(f&&f.src){const b=await (await fetch(f.src.split('#')[0])).blob();const u=new Uint8Array(await b.arrayBuffer());let s='';for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'PDF:'+btoa(s)}await new Promise(r=>setTimeout(r,250))}return 'SEM PDF'})()",
+   "js": "(async()=>{window.__lidos=window.__lidos||[];for(let i=0;i<80;i++){for(const w of (window.__pops||[]).filter(x=>!window.__lidos.includes(x))){let f=null;try{f=w.document&&w.document.querySelector('#pdf-frame')}catch(e){return 'ERRO '+e}if(f&&f.src){window.__lidos.push(w);const b=await (await fetch(f.src.split('#')[0])).blob();const u=new Uint8Array(await b.arrayBuffer());let s='';for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'PDF:'+btoa(s)}}await new Promise(r=>setTimeout(r,250))}return (window.__pops||[]).length?'SEM PDF':'SEM JANELA'})()",
    "label": "PDF do DANFE da 1250 (aba nova, para a cena do comprovante)"
   },
   {

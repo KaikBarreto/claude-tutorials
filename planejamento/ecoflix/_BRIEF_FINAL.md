@@ -47,6 +47,8 @@ Sem aprovação no meio: termine e relate.
   só no ambiente). Nunca gere nem peça voz nova (frase errada: relate com a frase exata; o coordenador corrige por frase).
 - Não mexa em `perfis/`, `ferramentas/`, outras aulas, mundo base, `PRODUCAO.md`. Sem commit. Nada de `pkill`/`killall`,
   `git stash/reset/clean/checkout`; `rm` só com caminho absoluto literal. Derrube a sua instância no fim.
+- Scripts e logs com o nome da aula (`rec/tNN/...`, `/dev/shm/tNN_...`), nunca `lote.sh` genérico no scratchpad: outro agente
+  pode usar o mesmo caminho (20/11 a T01 apagou o lote da T12 assim).
 - Economize contexto: acorde pouco (lotes em segundo plano, olhe tudo junto), não despeje log inteiro.
 
 ## Relatório final (até 200 palavras)

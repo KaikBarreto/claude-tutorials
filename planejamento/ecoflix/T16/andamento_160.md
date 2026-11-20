@@ -32,4 +32,10 @@ FAKE_PORT=54316 bash rec/run.sh down
 ## Estado dos ensaios
 - Lote 1 (20/11, 1.60.22, uma senha da fila por capítulo): morreu nas 2 h com só cap00 e cap01 feitos (rápido, 0 falho); cada
   capítulo esperava ~50 min na fila.
-- Lote 2 (`--junto`, uma senha só): 2 a 24 no rápido + completos 15, 16, 20. Resultado: (pendente)
+- Lote 2 (`--junto`, uma senha só): **25 de 25 no rápido com 0 passo falho**, conferências tela × fala sem DIFERENTE, sementes
+  `apos-cap03` a `apos-cap23` recapturadas no 1.60.22 (a cadeia 1252 → 1253 → 1254 fechou). Completos 15, 16 e 20: 0 falho; maxLate
+  1,76 s (cap15, "#1252 Autorizada": espera da consulta de status de 5 s), 1,03 s (cap16, reabrir a Carta de Correção), 1,67 s
+  (cap20, L9). Avisos na tela só os pedidos pelo roteiro (cap12 "Nenhum caixa...", cap14 NCM), mais o cap15 (NCM inválido no meio da
+  digitação: agora o NCM é colado de uma vez). O PDF do Comprovante (Notinha) não veio ("SEM JANELA": a aba abre depois da RPC; o
+  `PDF_JS` agora espera até 20 s). O DANFE veio: `rec/t16/arquivos/cap20-danfe-1250.pdf` (o fictício do backend falso).
+- Lote 3 (`--junto`): rápido 15 e 20, completos 05 09 11 12 13 14 15 17 18 20 22 24 (o `prever.py` acusou ≥ 0,4 s). Resultado: (pendente)

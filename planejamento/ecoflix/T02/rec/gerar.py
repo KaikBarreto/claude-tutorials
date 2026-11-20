@@ -967,15 +967,15 @@ def cap10():
 def cap11():
     """Esconder o valor: Editar do Marcos; Geral > Ver Totais e Valores Financeiros; Caixa (Ver Dinheiro Total ligado, Projeção de Lucro
     desligada); Ticket de Pesagem (Criar Ticket de Pesagem com Valores desligado); Cancelar."""
-    c = cap_novo(11, start=(560, 470))
+    # voz real (20/11): a 1ª linha (9,2 s) não dá tempo de abrir o detalhe, o Editar e chegar ao Ver Totais antes da ilustração:
+    # o detalhe do Marcos já vem aberto (setup, como o cap05 o deixou) e o vídeo começa no Editar
+    c = cap_novo(11, setup=SETUP_USUARIOS + [{'do': 'click', 'target': TXT('Marcos Antunes')}, {'do': 'waitFor', 'target': TXT('Perfil de acesso'), 'timeout': 8}, AGUARDA],
+                 start=(1500, 560))
     c.mark(1)
-    c.click(LINHA('Marcos Antunes'), at=0.3, label='clica no Marcos')
-    c.waitfor(target=TXT('Perfil de acesso'), timeout=8)
-    c.click(EDITAR, at=c.A(1, 'valores.', 0.6, nth=0), label='Editar (detalhe do Marcos)')
+    c.click(EDITAR, at=0.3, label='Editar (detalhe do Marcos)')
     c.waitfor(text='Atualize os dados e permissões deste usuário', timeout=10)
-    c.ev(js_corpo_abaixo(600), at=c.A(1, 'topo', -0.6), label='desce o corpo da janela: Geral no topo da lista')
-    c.hover(TXT('Geral', DLG), 0.6, at=c.A(1, 'Geral,', 0.5), label='grupo Geral')
-    c.hover(ACAO('Ver Totais e Valores Financeiros'), 3.0, at=c.A(1, 'Ver', 0.5), label='ZOOM Ver Totais e Valores Financeiros (ligado)')
+    c.ev(js_corpo_abaixo(600), at=c.A(1, 'topo', 0.0), label='desce o corpo da janela: Geral no topo da lista')
+    c.hover(ACAO('Ver Totais e Valores Financeiros'), 2.6, at=c.A(1, 'Ver', 0.5), label='ZOOM Ver Totais e Valores Financeiros (ligado)')
     for i in (2, 3, 4):
         c.mark(i)
     # sob a ilustração (o que some e o que fica): abre as ações do Caixa e põe as duas de valor no meio da lista

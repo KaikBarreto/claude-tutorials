@@ -424,23 +424,14 @@
   },
   {
    "do": "press",
-   "key": [
-    "Control+A",
-    "Backspace"
-   ],
-   "label": "apaga o NCM errado"
+   "key": "Control+A",
+   "label": "seleciona o NCM errado"
   },
   {
-   "do": "type",
-   "target": {
-    "selector": "[role=dialog] input[placeholder='0000.00.00']",
-    "nth": 1
-   },
-   "text": "76020000",
-   "cps": 30,
+   "do": "eval",
+   "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM ALVO (nada em foco)';document.execCommand('insertText',false,\"76020000\");return e.value})()",
    "at": 95.49,
-   "label": "NCM 7602.00.00",
-   "noClick": true
+   "label": "NCM 7602.00.00 (colado de uma vez: digitando, o selo acusaria NCM inválido no meio)"
   },
   {
    "do": "eval",
