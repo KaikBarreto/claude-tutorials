@@ -384,6 +384,10 @@
    "timeout": 8
   },
   {
+   "do": "eval",
+   "js": "(()=>{if(window.__cupons)return 'ja';window.__cupons=[];const o=WebSocket.prototype.send;WebSocket.prototype.send=function(m){try{const d=typeof m==='string'?JSON.parse(m):null;if(d&&(d.action==='print'||d.action==='print_image')&&typeof d.data==='string'&&d.data.length>200)window.__cupons.push({ext:d.action==='print_image'?(d.format==='jpeg'?'jpg':'png'):(d.format||'pdf'),b64:d.data.replace(/^data:[^,]+,/,''),mm:d.paper_width_mm||null})}catch(e){}return o.apply(this,arguments)};return 'gancho'})()"
+  },
+  {
    "do": "click",
    "target": {
     "role": "button",
@@ -466,6 +470,11 @@
    "do": "waitFor",
    "text": "Comprovante enviado para a impressora",
    "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{for(let i=0;i<30&&!(window.__cupons&&window.__cupons.length);i++)await new Promise(r=>setTimeout(r,200));const c=window.__cupons&&window.__cupons[window.__cupons.length-1];if(!c)return 'SEM CUPOM';return {pdf:\"cupom-compra-vale-forte\",ext:c.ext,largura_mm:c.mm,bytes:Math.floor(c.b64.length*3/4),b64:c.b64}})()",
+   "label": "cupom da compra (o que foi para a impressora, para a ilustração)"
   },
   {
    "do": "mark",

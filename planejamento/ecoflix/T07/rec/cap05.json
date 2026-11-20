@@ -1,6 +1,6 @@
 {
  "name": "t07-cap05",
- "title": "T07 · Cap. 5 · O peso da balança (narração 118,6 s ESTIMADA; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:35:00-03:00; usuário rafael)",
+ "title": "T07 · Cap. 5 · O peso da balança (narração 127,4 s ESTIMADA; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:35:00-03:00; usuário rafael)",
  "seed": "t07-cap05",
  "pace": 0.5,
  "cps": 14,
@@ -383,7 +383,7 @@
   {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text('Cobre misto') span.truncate.text-muted-foreground",
+    "selector": "main tbody tr:has-text('Cobre misto') span[class*='max-w-[5rem]'][title]",
     "nth": 0
    },
    "seconds": 1.2,
@@ -526,6 +526,44 @@
    "label": "tira a latinha da balança"
   },
   {
+   "do": "mark",
+   "name": "L9",
+   "at": 117.31
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th:has-text('Peso Bruto')"
+   },
+   "seconds": 1.6,
+   "at": 120.47,
+   "label": "cabeçalho Peso Bruto (zoom)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"21,6\", \"0,6\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody tr\")].filter(e=>!true||e.innerText.includes(\"Alumínio latinha\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere latinha: 21,6 de peso bruto e 0,6 de tara"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Peso Bruto\", \"Tara/Imp.\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere cabeçalhos Peso Bruto e Tara/Imp."
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Alumínio latinha')",
+    "nth": 0
+   },
+   "seconds": 1.4,
+   "at": 124.64,
+   "label": "a linha da latinha: 21,6 e a tara 0,6 (zoom)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
    "do": "eval",
    "js": "JSON.stringify(window.__avisos || \"sem observador\")",
    "label": "avisos de erro na tela"
@@ -533,7 +571,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 118.61
+   "at": 127.38
   }
  ]
 }

@@ -385,6 +385,19 @@ JS_PDF_GANCHO = ("(()=>{if(window.__pdfs)return 'ja';window.__pdfs=[];const o=UR
                  "URL.createObjectURL=(b)=>{try{if(b&&b.type==='application/pdf')window.__pdfs.push(b)}catch(e){}return o(b)};return 'gancho'})()")
 
 
+# 1.60.18: o que o app manda para a impressora térmica (EcoTray: print / print_image) fica guardado na página; js_cupom devolve o último
+JS_WS_GANCHO = ("(()=>{if(window.__cupons)return 'ja';window.__cupons=[];const o=WebSocket.prototype.send;WebSocket.prototype.send=function(m){"
+                "try{const d=typeof m==='string'?JSON.parse(m):null;if(d&&(d.action==='print'||d.action==='print_image')&&typeof d.data==='string'&&d.data.length>200)"
+                "window.__cupons.push({ext:d.action==='print_image'?(d.format==='jpeg'?'jpg':'png'):(d.format||'pdf'),b64:d.data.replace(/^data:[^,]+,/,''),mm:d.paper_width_mm||null})}catch(e){}"
+                "return o.apply(this,arguments)};return 'gancho'})()")
+
+
+def js_cupom(nome):
+    """devolve (base64) o último cupom que o app mandou para a impressora térmica, para a ilustração do comprovante"""
+    return ("(async()=>{for(let i=0;i<30&&!(window.__cupons&&window.__cupons.length);i++)await new Promise(r=>setTimeout(r,200));"
+            "const c=window.__cupons&&window.__cupons[window.__cupons.length-1];if(!c)return 'SEM CUPOM';return {pdf:%s,ext:c.ext,largura_mm:c.mm,bytes:Math.floor(c.b64.length*3/4),b64:c.b64}})()") % json.dumps(nome)
+
+
 def js_pdf(k, nome):
     """devolve o k-ésimo PDF que o app gerou (base64) para o actions.json: t03_pdfs.py grava o arquivo para a edição"""
     return ("(async()=>{for(let i=0;i<30&&!(window.__pdfs&&window.__pdfs.length>%d);i++)await new Promise(r=>setTimeout(r,200));"
@@ -533,8 +546,8 @@ LINHA_SEM_VALOR = SEL(f"{POP} div:has(> div > p:text-is('Comprovante sem valores
 
 # 1.60.18: busca que oferece cadastrar, legenda da origem do preço, barra de pedidos, rascunhos apagados, troca de fornecedor com itens
 CAD_BUSCA = SEL("[role=dialog] button:has-text('Cadastrar «')")
-VKG_LINHA = lambda nome: SEL(f"main tbody tr:has-text('{nome}') td:has(span.truncate.text-muted-foreground) input")
-LEGENDA = lambda nome, k=0: SEL(f"main tbody tr:has-text('{nome}') span.truncate.text-muted-foreground", nth=k)
+VKG_LINHA = lambda nome: SEL(f"main tbody tr:has-text('{nome}') td:has(span[class*='max-w-[5rem]'][title]) input")
+LEGENDA = lambda nome, k=0: SEL(f"main tbody tr:has-text('{nome}') span[class*='max-w-[5rem]'][title]", nth=k)
 NOVO_PEDIDO = SEL("button[aria-label='Novo pedido de compra']")
 BARRA = SEL("div:has(> button[aria-label='Novo pedido de compra']) > button:not([aria-label])")
 BARRA_LINHA = lambda nome: SEL(f"div:has(> button[aria-label='Descartar pedido']) > button:has-text('{nome}')")
@@ -559,7 +572,7 @@ JS_FECHA_DLG = ("(async()=>{await new Promise(r=>setTimeout(r,600));const d=docu
 
 def js_vkg_linha(nome, valor):
     """Valor/Kg da linha (OrderUnitPriceInput, modo inteligente): o texto inteiro entra de uma vez (seleciona e insere)"""
-    return ("(()=>{const tr=[...document.querySelectorAll('main tbody tr')].find(r=>r.innerText.includes(%s));const sp=tr&&tr.querySelector('span.truncate.text-muted-foreground');"
+    return ("(()=>{const tr=[...document.querySelectorAll('main tbody tr')].find(r=>r.innerText.includes(%s));const sp=tr&&tr.querySelector(\"span[class*='max-w-[5rem]'][title]\");"
             "const el=sp&&sp.closest('td').querySelector('input');if(!el)return 'SEM ALVO';el.focus();el.select();document.execCommand('insertText',false,%s);return el.value})()") % (
         json.dumps(nome, ensure_ascii=False), json.dumps(valor))
 
@@ -667,7 +680,7 @@ ZE = st_parceiro('moreira', 'José Carlos Moreira')
 
 
 def st_deposito():
-    """1.60.18: o 2º pedido (Novo pedido), Não informado + cobre misto 10 kg, troca para o Depósito Irmãos Siqueira com "Atualizar 1 item"
+    """1.60.18: o 2º pedido (Novo pedido), Não informado + cobre misto 10 kg, troca para o Depósito Irmãos Siqueira com "Atualizar 1 preço"
     (37,44, Tabela Depósitos) e volta ao pedido do Zé pela barra"""
     return ([{'do': 'click', 'target': NOVO_PEDIDO}, {'do': 'pause', 'seconds': 1.2}, {'do': 'click', 'target': FORN},
              {'do': 'waitFor', 'target': NAO_INF, 'timeout': 10}, {'do': 'click', 'target': NAO_INF},
@@ -675,7 +688,7 @@ def st_deposito():
             + st_item('cobre mi', 'Cobre misto', 10)
             + [{'do': 'click', 'target': FORN}, {'do': 'waitFor', 'target': BUSCA_PARC, 'timeout': 10},
                {'do': 'type', 'target': BUSCA_PARC, 'text': 'siqueira', 'cps': 40}, {'do': 'click', 'target': PARCEIRO('Depósito Irmãos Siqueira')},
-               {'do': 'waitFor', 'text': 'Trocar fornecedor?', 'timeout': 8}, {'do': 'click', 'target': BTNX('Atualizar 1 item')},
+               {'do': 'waitFor', 'text': 'Atualizar os preços?', 'timeout': 8}, {'do': 'click', 'target': BTNX('Atualizar 1 preço')},
                {'do': 'waitFor', 'gone': {'role': 'dialog'}, 'timeout': 8}, {'do': 'pause', 'seconds': 0.8},
                {'do': 'click', 'target': BARRA}, {'do': 'click', 'target': BARRA_LINHA('José Carlos')}, {'do': 'pause', 'seconds': 1.0}])
 ZE_DOIS = ZE + st_item('cobre mi', 'Cobre misto', 12.4) + st_item('latinha', 'Alumínio latinha', 21.6, '0,6')
@@ -847,6 +860,10 @@ def cap05():
     c.click(INCLUIR, w=(8, 'Incluir'), label='Incluir Item (latinha)')
     c.waitfor(text='Itens do Pedido (2)', timeout=8)
     c.add({'do': 'balanca', 'peso': 0, 'subir': 0.5, 'oscilar': 0.3, 'label': 'tira a latinha da balança'})
+    c.hover(SEL("main thead th:has-text('Peso Bruto')"), 1.6, w=(9, 'Peso', 1), label='cabeçalho Peso Bruto (zoom)')
+    c.confere('row:Alumínio latinha', ['21,6', '0,6'], 'latinha: 21,6 de peso bruto e 0,6 de tara')
+    c.confere('main', ['Peso Bruto', 'Tara/Imp.'], 'cabeçalhos Peso Bruto e Tara/Imp.')
+    c.hover(LINHA('Alumínio latinha'), 1.4, w=(9, 'tara'), label='a linha da latinha: 21,6 e a tara 0,6 (zoom)')
     c.fim()
     return c
 
@@ -956,7 +973,7 @@ def cap08():
 
 def cap09():
     """1.60.18 · A barra de pedidos; Novo pedido (#1760); Não informado + cobre 10 kg (legenda Principal); troca para o Depósito Irmãos
-    Siqueira: "Trocar fornecedor?" -> Atualizar 1 item (37,44, Tabela Depósitos, R$ 374,40); volta ao pedido do Zé pela barra."""
+    Siqueira: "Atualizar os preços?" -> Atualizar 1 preço (37,44, Tabela Depósitos, R$ 374,40); volta ao pedido do Zé pela barra."""
     c = Cap(9, setup_tela(extra=ZE_COMPLETO))
     c.hover(BARRA, 2.0, w=(1, 'barra'), label='barra de pedidos: #1759, R$ 913,20, José Carlos Moreira (zoom)')
     c.confere('main', ['#1759', '913,20', 'José Carlos Moreira'], 'barra com o pedido do Zé')
@@ -983,14 +1000,14 @@ def cap09():
     c.click(FORN, w=round(c.L(4) - 1.2, 2), label='campo Fornecedor')
     c.type(BUSCA_PARC, 'siqueira', w=(4, 'carga'), cps=40, label='busca siqueira')
     c.click(PARCEIRO('Depósito Irmãos Siqueira'), w=(4, 'Siqueira,'), label='Depósito Irmãos Siqueira')
-    c.waitfor(text='Trocar fornecedor?', timeout=8)
-    c.hover(PD('Itens que mudam'), 1.4, w=(4, 'quantos'), label='Itens que mudam 1 de 1 e Total se atualizar (zoom)')
-    c.hover(PD('Total se atualizar'), 1.6, w=(4, 'quanto'), label='Total se atualizar: R$ 360,00 riscado e R$ 374,40')
-    c.confere('dlg', ['O pedido já tem 1 item lançado. Escolha o que fazer com os preços atuais.', 'Não informado', 'Depósito Irmãos Siqueira',
-                      '1 de 1', 'R$ 360,00', 'R$ 374,40'], 'janela Trocar fornecedor?')
-    c.hover(BTN('Só nos próximos'), 2.2, w=(5, 'So'), label='Só nos próximos')
-    c.hover(BTNX('Atualizar 1 item'), 1.8, w=(5, 'Atualizar'), label='Atualizar 1 item')
-    c.click(BTNX('Atualizar 1 item'), w=(6, 'Atualizar.'), label='Atualizar 1 item (clique)')
+    c.waitfor(text='Atualizar os preços?', timeout=8)
+    c.hover(PD('Cobre misto'), 1.6, w=(4, 'cada'), label='a linha do cobre misto: R$ 36,00 → R$ 37,44/kg (zoom)')
+    c.hover(PD('Total dos itens'), 1.6, w=(4, 'total'), label='Total dos itens: R$ 360,00 riscado e R$ 374,40')
+    c.confere('dlg', ['Atualizar os preços?', 'Com Depósito Irmãos Siqueira, o preço de 1 item é diferente.', 'Cobre misto', 'R$ 36,00', 'R$ 37,44',
+                      'Total dos itens', 'R$ 360,00', 'R$ 374,40'], 'janela Atualizar os preços?')
+    c.hover(BTN('Manter preços'), 2.2, w=(5, 'Manter'), label='Manter preços')
+    c.hover(BTNX('Atualizar 1 preço'), 1.8, w=(5, 'Atualizar'), label='Atualizar 1 preço')
+    c.click(BTNX('Atualizar 1 preço'), w=(6, 'Atualizar.'), label='Atualizar 1 preço (clique)')
     c.waitfor(gone={'role': 'dialog'}, timeout=8)
     c.hover(LINHA('Cobre misto'), 1.2, w=(6, 'cobre'), label='a linha: 37,44 e Tabela Depósitos, total R$ 374,40 (zoom)')
     c.hover(LEGENDA('Cobre misto'), 1.6, w=(6, 'legenda'), label='legenda Tabela Depósitos')
@@ -1220,13 +1237,14 @@ def cap14():
 
 def cap15():
     """Imprimir Comprovante (Imprimir direto / Visualizar), (ilustração L3) Opções avançadas: Comprovante sem valores e o balão."""
-    c = Cap(15, setup_tela(extra=VALE_FORTE + TRES_FORMAS + PARCELAS + [
+    c = Cap(15, setup_tela(extra=VALE_FORTE + TRES_FORMAS + PARCELAS + [{'do': 'eval', 'js': JS_WS_GANCHO},
         {'do': 'click', 'target': CONFIRMA_PAG}, {'do': 'waitFor', 'text': 'Compra registrada!', 'timeout': 12},
         {'do': 'waitFor', 'text': 'Deseja imprimir o comprovante', 'timeout': 10}, {'do': 'pause', 'seconds': 1.0}]))
     c.hover(BTNX('Imprimir direto'), 1.2, w=(1, 'Imprimir'), label='Imprimir direto')
     c.hover(BTN('Visualizar', within=DLG), 1.2, w=(1, 'Visualizar,'), label='Visualizar')
     c.click(BTNX('Imprimir direto'), w=(2, 'Imprimir'), label='Imprimir direto')
     c.waitfor(text='Comprovante enviado para a impressora', timeout=10)
+    c.ev(js_cupom('cupom-compra-vale-forte'), label='cupom da compra (o que foi para a impressora, para a ilustração)')
     c.ev(js_rola_form(dur_ms=500), w=(3, 'Pronto.'), label='rola o formulário (sob a ilustração do cupom)')
     c.click(OPCOES, w=(4, 'preco?'), label='Opções avançadas')
     c.waitfor(text='Ajustes usados de vez em quando', timeout=8)

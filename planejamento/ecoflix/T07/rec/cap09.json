@@ -1,6 +1,6 @@
 {
  "name": "t07-cap09",
- "title": "T07 · Cap. 9 · Dois pedidos ao mesmo tempo (narração 86,3 s ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:35:00-03:00; usuário rafael)",
+ "title": "T07 · Cap. 9 · Dois pedidos ao mesmo tempo (narração 95,6 s ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:35:00-03:00; usuário rafael)",
  "seed": "t07-cap09",
  "pace": 0.5,
  "cps": 14,
@@ -752,7 +752,7 @@
   {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text('Cobre misto') span.truncate.text-muted-foreground",
+    "selector": "main tbody tr:has-text('Cobre misto') span[class*='max-w-[5rem]'][title]",
     "nth": 0
    },
    "seconds": 3.0,
@@ -804,65 +804,65 @@
   },
   {
    "do": "waitFor",
-   "text": "Trocar fornecedor?",
+   "text": "Atualizar os preços?",
    "timeout": 8
   },
   {
    "do": "hover",
    "target": {
-    "text": "Itens que mudam",
+    "text": "Cobre misto",
     "within": "[role=dialog]"
    },
-   "seconds": 1.4,
-   "at": 47.51,
-   "label": "Itens que mudam 1 de 1 e Total se atualizar (zoom)",
+   "seconds": 1.6,
+   "at": 49.48,
+   "label": "a linha do cobre misto: R$ 36,00 → R$ 37,44/kg (zoom)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "hover",
    "target": {
-    "text": "Total se atualizar",
+    "text": "Total dos itens",
     "within": "[role=dialog]"
    },
-   "seconds": 1.05,
-   "at": 49.18,
-   "label": "Total se atualizar: R$ 360,00 riscado e R$ 374,40",
+   "seconds": 0.75,
+   "at": 51.15,
+   "label": "Total dos itens: R$ 360,00 riscado e R$ 374,40",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 50.78
+   "at": 52.45
   },
   {
    "do": "hover",
    "target": {
-    "text": "Total se atualizar",
+    "text": "Total dos itens",
     "within": "[role=dialog]"
    },
-   "seconds": 0.35,
-   "at": 50.78,
-   "label": "Total se atualizar: R$ 360,00 riscado e R$ 374,40 (continua)",
+   "seconds": 0.65,
+   "at": 52.45,
+   "label": "Total dos itens: R$ 360,00 riscado e R$ 374,40 (continua)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"O pedido já tem 1 item lançado. Escolha o que fazer com os preços atuais.\", \"Não informado\", \"Depósito Irmãos Siqueira\", \"1 de 1\", \"R$ 360,00\", \"R$ 374,40\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere janela Trocar fornecedor?"
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Atualizar os preços?\", \"Com Depósito Irmãos Siqueira, o preço de 1 item é diferente.\", \"Cobre misto\", \"R$ 36,00\", \"R$ 37,44\", \"Total dos itens\", \"R$ 360,00\", \"R$ 374,40\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere janela Atualizar os preços?"
   },
   {
    "do": "hover",
    "target": {
     "role": "button",
-    "name": "Só nos próximos",
+    "name": "Manter preços",
     "exact": true
    },
    "seconds": 2.2,
-   "at": 51.13,
-   "label": "Só nos próximos",
+   "at": 52.8,
+   "label": "Manter preços",
    "optional": true,
    "timeout": 4
   },
@@ -870,27 +870,27 @@
    "do": "hover",
    "target": {
     "role": "button",
-    "name": "Atualizar 1 item"
+    "name": "Atualizar 1 preço"
    },
    "seconds": 1.8,
-   "at": 57.2,
-   "label": "Atualizar 1 item",
+   "at": 57.12,
+   "label": "Atualizar 1 preço",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 61.15
+   "at": 70.41
   },
   {
    "do": "click",
    "target": {
     "role": "button",
-    "name": "Atualizar 1 item"
+    "name": "Atualizar 1 preço"
    },
-   "at": 61.35,
-   "label": "Atualizar 1 item (clique)"
+   "at": 70.61,
+   "label": "Atualizar 1 preço (clique)"
   },
   {
    "do": "waitFor",
@@ -906,7 +906,7 @@
     "nth": 0
    },
    "seconds": 1.2,
-   "at": 62.49,
+   "at": 71.75,
    "label": "a linha: 37,44 e Tabela Depósitos, total R$ 374,40 (zoom)",
    "optional": true,
    "timeout": 4
@@ -914,11 +914,11 @@
   {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text('Cobre misto') span.truncate.text-muted-foreground",
+    "selector": "main tbody tr:has-text('Cobre misto') span[class*='max-w-[5rem]'][title]",
     "nth": 0
    },
    "seconds": 1.6,
-   "at": 66.89,
+   "at": 76.15,
    "label": "legenda Tabela Depósitos",
    "optional": true,
    "timeout": 4
@@ -939,7 +939,7 @@
     "selector": "main button:has-text('Tabela Depósitos')"
    },
    "seconds": 0.82,
-   "at": 73.27,
+   "at": 82.53,
    "label": "Tabela de Preços: Tabela Depósitos",
    "optional": true,
    "timeout": 4
@@ -947,7 +947,7 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 74.64
+   "at": 83.9
   },
   {
    "do": "hover",
@@ -955,7 +955,7 @@
     "selector": "main button:has-text('Tabela Depósitos')"
    },
    "seconds": 0.38,
-   "at": 74.64,
+   "at": 83.9,
    "label": "Tabela de Preços: Tabela Depósitos (continua)",
    "optional": true,
    "timeout": 4
@@ -965,7 +965,7 @@
    "target": {
     "selector": "div:has(> button[aria-label='Novo pedido de compra']) > button:not([aria-label])"
    },
-   "at": 77.49,
+   "at": 86.75,
    "label": "barra de pedidos (abre a lista)"
   },
   {
@@ -980,7 +980,7 @@
    "target": {
     "selector": "div:has(> button[aria-label='Descartar pedido']) > button:has-text('José Carlos')"
    },
-   "at": 78.1,
+   "at": 87.36,
    "label": "o pedido do Zé na lista"
   },
   {
@@ -994,7 +994,7 @@
     "selector": "main :text-matches('^Itens do Pedido')"
    },
    "seconds": 2.0,
-   "at": 81.82,
+   "at": 91.08,
    "label": "o pedido do Zé de volta: 3 itens, R$ 913,20",
    "optional": true,
    "timeout": 4
@@ -1012,7 +1012,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 86.31
+   "at": 95.57
   }
  ]
 }

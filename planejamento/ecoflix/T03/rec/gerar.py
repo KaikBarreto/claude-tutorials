@@ -1202,14 +1202,14 @@ def cap15():
     c.confere('row:Radiador de cobre', ['70', 'Radiador de cobre', '110'], 'radiador de volta, 110 Kg')
     # F11 (decisão de 20/11): seleção em massa. Limpa a busca (sem cursor), marca dois materiais, mostra a barra, desmarca pelo X. Nada é aberto nem excluído.
     c.ev(js_valor('main input[placeholder="Buscar material por código ou nome..."]', ''), w=(5, 'Quando', None, 0.0), label='limpa a busca (sem cursor)')
-    c.waitfor(target=P('Cobre misto'), timeout=10)
+    c.waitfor(target=P('Ferro misto'), timeout=10)
     CK = lambda nome: SEL(f"main button[role=checkbox][aria-label='Selecionar {nome}']")
-    c.click(CK('Radiador de cobre'), w=(5, 'caixinhas'), label='marca o radiador')
-    c.click(CK('Cobre misto'), w=(5, 'dois,'), label='marca o cobre misto')
+    c.click(CK('Ferro pesado'), w=(5, 'caixinhas'), label='marca o ferro pesado')
+    c.click(CK('Ferro misto'), w=(5, 'dois,'), label='marca o ferro misto')
     c.confere('body', ['2 selecionados', 'Transferir Estoque', 'Definir prefixo', 'Excluir'], 'barra: 2 selecionados, Transferir Estoque, Definir prefixo, Excluir')
     c.hover(SEL('div.fixed.left-1\\/2'), 2.0, w=(5, 'Transferir'), label='a barra de seleção (zoom)')
     c.click(SEL('div.fixed.left-1\\/2 button.ml-2'), w=(6, 'Desmarco,'), label='X da barra: desmarca tudo')
-    c.confere('main', ['Radiador de cobre', 'Cobre misto'], 'lista inteira de volta, sem seleção')
+    c.confere('main', ['Ferro pesado', 'Ferro misto'], 'lista inteira de volta, sem seleção')
     c.fim()
     return c
 
