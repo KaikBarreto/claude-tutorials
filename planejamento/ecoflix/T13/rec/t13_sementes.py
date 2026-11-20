@@ -3,6 +3,8 @@
 
   python3 -I rec/t13/t13_sementes.py inicio
       escreve t13/inicio.json (à mão, abaixo): o que a aula precisa e o mundo base não traz.
+  python3 -I rec/t13/t13_sementes.py internet
+      escreve t13/internet.json: o fornecedor Vale Fibra e as 3 contas pagas "Internet do escritório" (só o capítulo 6).
   python3 -I rec/t13/t13_sementes.py pdf
       escreve rec/t13/assets/comprovante-pix-energia-outubro.pdf (uma página, texto fictício, sem marca de banco).
   python3 -I rec/t13/t13_sementes.py api NN [--porta 54313]      (NN = 7 a 11)
@@ -40,6 +42,38 @@ def inicio():
             'created_by': '@id:user.rafael', 'created_at': '2026-11-06T17:20:00.000Z', 'updated_at': '2026-11-06T17:20:00.000Z',
         }],
     }
+
+
+def internet():
+    """cap06 (o preenchimento inteligente): o fornecedor "Vale Fibra Telecom Ltda" e três contas a pagar JÁ PAGAS "Internet do escritório"
+    (17/08, 15/09 e 15/10/2026, R$ 289,90, "Telefone e internet", boleto, Conta Principal), cada uma ligada por bill_payments ao lançamento do
+    banco que o mundo base já tem (bt.28, bt.82 e bt.143: sem dinheiro novo). Só entra no capítulo 6 (variante lateral): nos outros a
+    lista não ganha três linhas pagas de meses atrás. O padrão que a tela mostra sai daqui (handler get_financial_description_suggestions)."""
+    forn = {
+        'id': '@id:fornecedor.valefibra', 'company_id': EMP, 'code': '7', 'name': 'Vale Fibra Telecom Ltda', 'nome_fantasia': None,
+        'razao_social': 'Vale Fibra Telecom Ltda', 'cpf_cnpj': '93.518.274/0001-58', 'phone': '(12) 90000-4242', 'phone_unavailable': False,
+        'email': 'contato@valefibra.example', 'contact_name': None, 'address': None, 'logradouro': None, 'numero': None,
+        'bairro': None, 'cep': None, 'cidade': 'Taubaté', 'uf': 'SP', 'codigo_ibge': '3554102', 'pix_key': None, 'is_mei': False,
+        'indicador_ie': 9, 'inscricao_estadual': None, 'linked_customer_id': None, 'is_industry': False, 'default_price_table_id': None,
+        'created_by': '@id:user.rafael', 'created_at': '2026-08-17T12:00:00.000Z', 'updated_at': '2026-08-17T12:00:00.000Z',
+    }
+    contas, baixas = [], []
+    for k, (dia, bt) in enumerate((('2026-08-17', 'bt.28'), ('2026-09-15', 'bt.82'), ('2026-10-15', 'bt.143'))):
+        cid = f'@id:titulo.internet{k + 1}'
+        contas.append({
+            'id': cid, 'company_id': EMP, 'direction': 'payable', 'description': 'Internet do escritório', 'amount': 289.9, 'currency': 'BRL',
+            'due_date': dia, 'status': 'paid', 'paid_amount': 289.9, 'paid_at': dia, 'created_by': '@id:user.rafael',
+            'created_at': f'{dia}T12:00:00.000Z', 'updated_at': f'{dia}T12:30:00.000Z', 'is_projection': False,
+            'category_id': '@id:categoria.telefone', 'cost_center_id': None, 'partner_type': 'supplier', 'partner_id': '@id:fornecedor.valefibra',
+            'expected_payment_method': 'boleto', 'expected_bank_account_id': '@id:banco.principal'})
+        baixas.append({
+            'id': f'@id:baixa.internet{k + 1}', 'bill_id': cid, 'company_id': EMP, 'amount': 289.9, 'paid_date': dia, 'payment_method': 'transfer',
+            'bank_account_id': '@id:banco.principal', 'cash_register_id': None, 'fee_amount': 0, 'interest_amount': 0, 'created_by': '@id:user.rafael',
+            'bank_transaction_id': f'@id:{bt}', 'cash_transaction_id': None, 'group_id': None, 'previous_due_date': dia, 'currency': 'BRL',
+            'created_at': f'{dia}T12:30:00.000Z'})
+    return {'_doc': ('T13 · cap06: Vale Fibra Telecom Ltda e as três contas pagas "Internet do escritório" (lançamentos do mundo base bt.28, bt.82 e '
+                     'bt.143). Variante lateral: só o capítulo 6 carrega. Gerado por rec/t13/t13_sementes.py internet.'),
+            'suppliers': [forn], 'financial_bills': contas, 'bill_payments': baixas}
 
 
 def pdf():
@@ -237,6 +271,8 @@ if __name__ == '__main__':
         sys.exit(0)
     if sys.argv[1:2] == ['inicio']:
         nome, d = 'inicio', inicio()
+    elif sys.argv[1:2] == ['internet']:
+        nome, d = 'internet', internet()
     elif sys.argv[1:2] == ['api']:
         nn = int(sys.argv[2])
         porta = int(sys.argv[sys.argv.index('--porta') + 1]) if '--porta' in sys.argv else 54313

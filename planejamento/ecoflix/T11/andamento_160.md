@@ -10,7 +10,11 @@
   (`add_production_entry_atomic.mjs` com `note`, `register_production_atomic.mjs` novo).
 - Lote de ensaio lançado: `bash rec/t11/t11_lote160.sh` (resumo em `rec/t11/_ens/.lote160.txt`; logs `/dev/shm/t11/lote-NN.log`).
 
+## Ensaio (1 lote, 20/11)
+- 19 capítulos no rápido com MP4: 0 passos falhos, 0 atrasos, 0 DIFERENTE, 0 erros de página/console. Conferido na tela: Conversão
+  (10 Kg de Cobre mel → fio 16 Kg, R$ 288,00, R$ 28,80), Perda padrão (37,5%, capa 24 Kg, fio 64), PDF do relatório devolvido pelo robô.
+- Gravação final (sem `--rapido`): ainda não rodada (`bash rec/t11/t11_rodar.sh NN` por capítulo, na fila `--prio 11`).
+
 ## Falta
-- Ler o lote, corrigir o que falhou, 2º lote só dos que falharam: `bash rec/t11/t11_lote160.sh 03 06 ...`.
-- Confirmar na tela e ajustar a fala: Conversão (16 kg de fio, R$ 28,80), perda padrão (37,5%, 24 kg), estoque do fio.
-- `cenas/tempos/` e `cenas.html` ainda na numeração antiga. Derrubar a instância: `cd /home/claude/ecoflix && FAKE_PORT=54311 bash rec/run.sh down`.
+- Opcional: `cenas/tempos/` e `cenas.html` ainda na numeração antiga (coordenador).
+- Instância 54311 derrubada.

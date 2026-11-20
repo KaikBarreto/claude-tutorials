@@ -987,3 +987,8 @@ Decisões:
   Handlers: `delete_collection_order`, `get_collection_live_positions`, rede externa cdnjs e arcgis (mapa). Lote de
   ensaio lançado pelo agente; coordenador recolhe (`rec/t12/_ens/lote.log`). **A T20 parte de `apos-cap15`** (cap06 +10
   bags ao Depósito, cap11 cria "Palete de madeira" e põe a Caçamba 02 em manutenção, cap12 +10 bags à Cooperativa).
+- **T11**: 19 capítulos (novos 10 editar ordem em andamento, 15 Conversão, 16 Perda padrão, 17 Máquinas; 10-13 antigos
+  viraram 11-14, 14→18). Fala 2.044 → 3.087 palavras. 19/19 no rápido num lote só, sem atraso. Valores vistos na tela:
+  Conversão 16 kg de fio, R$ 28,80; Perda padrão 37,5%, capa 24 kg. Handlers só da T11: `add_production_entry_atomic`
+  (grava `note`), `register_production_atomic` (novo). Capa de fio com código 17 (o 16 é o Fardo de alumínio).
+  Ilustrações pendentes: ilu12_pdf (comprovante), ilu15_conversao, ilu16_perda_padrao.

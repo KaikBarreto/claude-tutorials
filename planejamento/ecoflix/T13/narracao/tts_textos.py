@@ -18,6 +18,8 @@ A água de outubro venceu dia cinco e não foi paga. Por isso ela está Vencida,
 A energia vence hoje e está Pendente. E o aluguel do galpão foi pago no dia cinco: está Paga.
 Parando o mouse em cima do status, o sistema conta mais: há quantos dias a conta venceu, ou quanto já foi pago.
 E clicando na linha, abrem os Detalhes da conta: tipo, valor, vencimento, categoria, de quem é, a parcela e a observação.
+Parando o mouse em cima do status, o sistema conta mais: há quantos dias a conta venceu, ou quanto já foi pago.
+E clicando na linha, abrem os Detalhes da conta: tipo, valor, vencimento, categoria, de quem é, a parcela e a observação.
 Pra lançar uma conta nova, o botão é este: Nova conta.""",
 2: """Antes da lista, os quatro cartões lá de cima. Eles mostram quanto a empresa deve, quanto tem pra receber e o que está apertando.
 O Total a Pagar soma as contas que a empresa ainda deve, mais o que ela deve no saldo, o fiado. O Total a Receber é o contrário: as contas a receber, mais o que devem pra ela no saldo.
@@ -54,45 +56,42 @@ Digito duzentos e oitenta e nove e noventa, e ajusto o Vencimento pro dia quinze
 Uma dica: o padrão só preenche campo vazio. O que você já escolheu, ele não troca. E se não era isso, tem o Desfazer preenchimento, logo embaixo.
 Dá pra fazer tudo pelo teclado: as setas escolhem o padrão, e o Enter ou o Tab preenchem.
 Criar conta. E de onde vêm os padrões? Das contas e dos lançamentos do último ano com a mesma descrição. Vale também nas contas a receber e nas entradas e saídas do caixa e do banco.""",
-7: """Agora uma compra dividida em vezes. Os pneus novos do caminhão truck saíram por sete mil e oitenta reais na Auto Peças Vale Forte, em três vezes.
+7: """Tem conta que volta todo mês com os mesmos dados. A internet do escritório, por exemplo. Pra essas, o sistema ajuda a preencher.
+Primeiro a descrição e o Vencimento: a data da primeira parcela, vinte e três de novembro.
+No Valor vai o total da compra, sete mil e oitenta, e não o valor da parcela. Categoria e fornecedor, como antes.
+Clico em Preencher. Pronto: categoria, fornecedor e pagamento previsto, tudo de uma vez. E o cursor já pula pro Valor.
+Digito duzentos e oitenta e nove e noventa, e ajusto o Vencimento pro dia quinze.
+Uma dica: o padrão só preenche campo vazio. O que você já escolheu, ele não troca. E se não era isso, tem o Desfazer preenchimento, logo embaixo.
+Dá pra fazer tudo pelo teclado: as setas escolhem o padrão, e o Enter ou o Tab preenchem.
+Criar conta. E de onde vêm os padrões? Das contas e dos lançamentos do último ano com a mesma descrição. Vale também nas contas a receber e nas entradas e saídas do caixa e do banco.""",
+8: """Agora uma compra dividida em vezes. Os pneus novos do caminhão truck saíram por sete mil e oitenta reais na Auto Peças Vale Forte, em três vezes.
 No Valor vai o total da compra, sete mil e oitenta, e não o valor da parcela.
 No Vencimento, a data da primeira parcela: vinte e três de novembro. Categoria e fornecedor, como antes.
 Embaixo, em Parcelar ou repetir, ligo o Parcelar.
 Escolho três parcelas. O sistema divide o valor e põe uma por mês, no mesmo dia: dois mil trezentos e sessenta reais cada. A soma fecha com o total, por isso a faixa fica verde.
-Aplicar faturamento. O resumo mostra as três vezes, a primeira data e o total.
-Criar conta. Pronto, três parcelas criadas.
+Criar conta. Repara: já entraram todas, de novembro até abril.
+O sistema guarda um molde da conta. Com data de parar, ele já cria todas até ela. Sem data, ele mantém sempre os próximos três meses na lista e cria a seguinte sozinho, conforme o tempo passa.
 Cada parcela vira uma conta separada. Dá pra pagar uma sem mexer nas outras.
 Parcelar é pra dívida com fim, como esses pneus. Pro gasto que volta todo mês, é o Repetir, que vem agora.""",
-8: """A empilhadeira da Recicla Vale é alugada: dois mil e trezentos reais todo dia doze, num contrato até abril.
-Valor, descrição e categoria, como sempre. O Vencimento é o da primeira: doze de novembro.
-Em Parcelar ou repetir, agora eu ligo o Repete. Ele gera as contas sozinho, na frequência que você escolher.
-Pode ser semanal, mensal ou anual. Aqui é mensal, a cada um mês.
-E no Repetir até, a data de parar: doze de abril, o fim do contrato. Sem data, ele repete sem fim.
-Criar conta. Repara: já entraram todas, de novembro até abril.
-O sistema guarda um molde da conta. Com data de parar, ele já cria todas até ela. Sem data, ele mantém sempre os próximos três meses na lista e cria a seguinte sozinho, conforme o tempo passa.""",
-9: """E se uma delas mudar? A locadora pediu pra passar o vencimento pro dia quinze, a partir de dezembro.
+9: """A empilhadeira da Recicla Vale é alugada: dois mil e trezentos reais todo dia doze, num contrato até abril.
 Clico em editar na de dezembro. Como ela faz parte de uma recorrência, o sistema pergunta antes: só esta conta, ou esta e as próximas?
 Só esta conta mexe só na de dezembro. Esta e as próximas muda esta, as seguintes que ainda não foram pagas e o molde, pras novas já nascerem certas.
 Escolho Esta e as próximas e mudo o vencimento pra quinze de dezembro. Repara no aviso: as próximas andam o mesmo tanto.
 Salvar. Novembro ficou no dia doze, e de dezembro em diante foi tudo pro dia quinze.
-Excluir faz a mesma pergunta. Esta e as próximas encerra a recorrência daqui pra frente, e as contas já pagas ficam no histórico. Aqui eu só cancelo.""",
+Excluir faz a mesma pergunta. Esta e as próximas encerra a recorrência daqui pra frente, e as contas já pagas ficam no histórico. Aqui eu só cancelo.
+O sistema guarda um molde da conta. Com data de parar, ele já cria todas até ela. Sem data, ele mantém sempre os próximos três meses na lista e cria a seguinte sozinho, conforme o tempo passa.""",
 10: """As parcelas dos pneus funcionam parecido. A Auto Peças pediu pra passar o vencimento pro dia vinte e oito, a partir da segunda.
 Clico em editar na parcela dois. Aqui são três opções: Só esta conta, Esta e as próximas, ou Todas as parcelas pendentes.
 Escolho Esta e as próximas e troco o vencimento pra vinte e oito de dezembro.
 Salvar. A segunda e a terceira andaram juntas, e a primeira ficou como estava.
 Uma dica: nessa edição em grupo, o valor e os outros campos da tela vão pra todas as parcelas escolhidas. Se as parcelas têm valores diferentes, mude uma de cada vez, com Só esta conta.
 Excluir faz a mesma pergunta. E parcela que já foi paga não é apagada: fica no histórico.""",
-11: """Chegou a hora de pagar. Dar baixa é registrar que a conta foi paga. A energia vence hoje: mil oitocentos e setenta e quatro reais e trinta.
-Clico em Marcar pago. A janela já vem com o Pix e a Conta Principal, que estavam no previsto, e com o valor inteiro.
-Uma dica: quem não tem permissão pra mexer no banco não vê o Pix aqui. A baixa sai do caixa, e um aviso amarelo explica isso.
-Embaixo, a tela confirma que esse valor quita a conta.
-A data é hoje. Confirmar pagamento. Pronto, a energia está Paga.
-Uma dica: dar baixa mexe em dinheiro de verdade. No Pix, o valor sai da conta do banco; em dinheiro, sai do caixa aberto. E o lançamento leva a categoria da conta, por isso aparece certinho na dê-érri-ê, o relatório do resultado da empresa.
-E é tudo junto: ou a baixa grava inteira, ou nada muda.
-Agora um pagamento em parte. A Hidráulica Moréti pediu metade na entrega das peças, e o resto no fim do mês.
-No valor, mil setecentos e quarenta reais. A tela mostra quanto falta pra quitar.
-Como sobrou uma parte, aparece o Novo vencimento do restante. Coloco trinta de novembro.
-Confirmar. A conta ficou Parcial: mostra quanto já foi pago e quanto era, e agora vence dia trinta.
+11: """E se uma delas mudar? A locadora pediu pra passar o vencimento pro dia quinze, a partir de dezembro.
+Clico em editar na de dezembro. Como ela faz parte de uma recorrência, o sistema pergunta antes: só esta conta, ou esta e as próximas?
+Só esta conta mexe só na de dezembro. Esta e as próximas muda esta, as seguintes que ainda não foram pagas e o molde, pras novas já nascerem certas.
+Escolho Esta e as próximas e mudo o vencimento pra quinze de dezembro. Repara no aviso: as próximas andam o mesmo tanto.
+Salvar. Novembro ficou no dia doze, e de dezembro em diante foi tudo pro dia quinze.
+Excluir faz a mesma pergunta. Esta e as próximas encerra a recorrência daqui pra frente, e as contas já pagas ficam no histórico. Aqui eu só cancelo.
 E a conta que atrasou? A água venceu dia cinco e veio com multa. Clico em Marcar pago.
 O valor da conta continua o mesmo. A multa vai no campo Juros ou multa: quatro reais e setenta e sete. Ela entra como uma despesa separada, na categoria Juros e Multas.
 Tem também o campo Tarifa, pra quando o banco cobra pelo boleto ou pela transferência.
@@ -117,30 +116,38 @@ E dá pra marcar linha de saldo também: o fiado entra no lote, e você ainda es
 A tela mostra de onde o dinheiro saiu e avisa que ele volta pra lá: os cento e oitenta reais voltam pra Conta Principal, e a conta fica pendente de novo.
 Excluir uma conta paga faz o mesmo caminho: o botão vira Excluir e estornar, e o dinheiro volta antes de a conta sumir.
 Uma dica: se o pagamento já foi conciliado com o extrato do banco, desfaça a conciliação primeiro. Aqui eu só cancelo.""",
-15: """Agora, o fiado. Ele aparece na mesma lista, com a etiqueta roxa Saldo. A Aços Quiririm levou ferro e chaparia a prazo: quatro mil oitocentos e setenta reais.
-A linha de saldo não tem vencimento nem categoria. É o total que o cliente deve, como o caderninho do balcão.
-A baixa dele é própria. Clico em Receber. A Aços Quiririm mandou um Pix, então troco pro Pix e escolho a Conta Principal.
-Ela pagou dois mil reais. Embaixo, a tela já mostra o saldo depois da baixa: dois mil oitocentos e setenta.
-Confirmar recebimento. O saldo da Aços Quiririm caiu pra dois mil oitocentos e setenta.
-Agora repara na Fundição Bandeira do Vale. Ela comprou trezentos quilos de cobre mel a prazo, em três vezes. E aqui só aparecem as parcelas.
-Uma dica: se o saldo de um cliente sumir da lista, olha se a venda foi parcelada. Na venda a prazo em parcelas, o mesmo dinheiro fica no saldo e nas parcelas. Pra não cobrar duas vezes, a lista desconta do saldo o que já virou parcela.
-Se tudo virou parcela, a linha de saldo some. Se só uma parte virou, ela mostra só o que sobra.
-Uma dica: essas parcelas vieram do pedido de venda. Aqui dá pra mudar a descrição, o vencimento e a categoria; o valor e o cliente se mudam no próprio pedido.""",
-16: """E o comprovante daquele Pix da energia? Ele fica guardado na própria conta.
-Clico em editar e abro o Mais detalhes. Aqui ficam as observações e os anexos.
+15: """As parcelas dos pneus funcionam parecido. A Auto Peças pediu pra passar o vencimento pro dia vinte e oito, a partir da segunda.
+Clico em editar na parcela dois. Aqui são três opções: Só esta conta, Esta e as próximas, ou Todas as parcelas pendentes.
+Escolho Esta e as próximas e troco o vencimento pra vinte e oito de dezembro.
+Salvar. A segunda e a terceira andaram juntas, e a primeira ficou como estava.
+Uma dica: nessa edição em grupo, o valor e os outros campos da tela vão pra todas as parcelas escolhidas. Se as parcelas têm valores diferentes, mude uma de cada vez, com Só esta conta.
+Excluir faz a mesma pergunta. E parcela que já foi paga não é apagada: fica no histórico.""",
+16: """Chegou a hora de pagar. Dar baixa é registrar que a conta foi paga. A energia vence hoje: mil oitocentos e setenta e quatro reais e trinta.
+Clico em Marcar pago. A janela já vem com o Pix e a Conta Principal, que estavam no previsto, e com o valor inteiro.
 Anexar, e escolho o comprovante. O arquivo sobe na hora, com o aviso Anexo adicionado. Pode ser pê-dê-éfe ou foto, até do celular.
-Salvar. O comprovante já está na conta.
-E onde ele aparece depois? Aqui mesmo: é só abrir a conta e o Mais detalhes. Clicando na miniatura, o arquivo abre.
-Uma dica: se o comprovante já estiver com você na hora de dar baixa, anexa ali mesmo, no campo Comprovante. Aí ele fica na conta e também no lançamento do banco ou do caixa.""",
-17: """Com a lista cheia, os filtros ajudam a achar o que você procura. Na aba A Receber, repara nas linhas de saldo, lá no fim.
-Clico em Filtros. Dá pra filtrar por status, categoria, Cliente ou Fornecedor, centro de custo, banco previsto e período de vencimento.
-No Status, marco Pendente e aplico. A lista mostra só as pendentes, e o botão Filtros avisa que tem um filtro ligado.
-Uma dica: repara que as linhas de saldo saíram. O saldo não tem status nem vencimento. Então, com filtro de status, período, categoria, centro de custo ou banco, ele fica de fora.
+Embaixo, a tela confirma que esse valor quita a conta.
+A data é hoje. Confirmar pagamento. Pronto, a energia está Paga.
+Uma dica: dar baixa mexe em dinheiro de verdade. No Pix, o valor sai da conta do banco; em dinheiro, sai do caixa aberto. E o lançamento leva a categoria da conta, por isso aparece certinho na dê-érri-ê, o relatório do resultado da empresa.
+E é tudo junto: ou a baixa grava inteira, ou nada muda.
+Agora um pagamento em parte. A Hidráulica Moréti pediu metade na entrega das peças, e o resto no fim do mês.
+No valor, mil setecentos e quarenta reais. A tela mostra quanto falta pra quitar.
+Como sobrou uma parte, aparece o Novo vencimento do restante. Coloco trinta de novembro.
+Confirmar. A conta ficou Parcial: mostra quanto já foi pago e quanto era, e agora vence dia trinta.
+E a conta que atrasou? A água venceu dia cinco e veio com multa. Clico em Marcar pago.
+O valor da conta continua o mesmo. A multa vai no campo Juros ou multa: quatro reais e setenta e sete. Ela entra como uma despesa separada, na categoria Juros e Multas.
+Tem também o campo Tarifa, pra quando o banco cobra pelo boleto ou pela transferência.
+E se você paga uma parte em dinheiro e outra por Pix, liga o Múltiplas formas de pagamento e coloca o valor de cada uma.
+Uma dica: se pagar a mais numa conta com fornecedor, a sobra vira crédito dele, e a tela avisa antes de confirmar. Aqui eu só cancelo.""",
+17: """Nem toda conta que se repete vem sempre igual. Este mês, o aluguel da empilhadeira veio com horas a mais: dois mil quatrocentos e quinze reais, em vez de dois mil e trezentos.
+Clico em Marcar pago na de novembro. Como ela é de uma recorrência, aparece um campo lá em cima: Valor desta ocorrência.
+Troco pra dois mil quatrocentos e quinze. O valor do pagamento acompanha sozinho.
+Embaixo, o resumo mostra o previsto e o valor deste mês. E avisa: as próximas contas mantêm o valor previsto.
 E os cartões lá em cima mudaram junto: agora somam só as pendentes.
-Junto com o status, escolho a Fundição Bandeira do Vale. Pronto: as três parcelas dela.
-Pra ver tudo de novo, Limpar filtros. E as linhas de saldo voltam.
+Aqui foi só este mês, então deixo desligado. Escolho o Pix, a Conta Secundária, e confirmo.
+Pronto. Novembro ficou paga por dois mil quatrocentos e quinze, e dezembro continua com dois mil e trezentos.
 No período de vencimento, tem três atalhos: Este mês, Próximos sete dias e Até o fim do mês.
-Com um período ligado, os cartões mudam de nome: A receber no período e Recebido no período.""",
+Com um período ligado, os cartões mudam de nome: A receber no período e Recebido no período.
+Uma dica: isso é diferente de pagar em parte. Aqui você corrige quanto a conta vale. O pagamento parcial é quando você paga menos do que ela vale.""",
 18: """Precisa mandar essa lista pro contador ou imprimir? O botão Exportar gera um pê-dê-éfe ou uma planilha do Excel.
 A janela já vem com os filtros que você está usando na tela, e dá pra mudar ali mesmo.
 Em Opções do arquivo, você escolhe se o saldo dos clientes e fornecedores entra, e como agrupar: por status, por categoria ou por mês.
@@ -149,9 +156,9 @@ Aqui eu só fecho.""",
 Lançou a manutenção da prensa, o conserto do pneu já pago e os pneus do caminhão em três vezes. E deixou o sistema preencher a internet do escritório pelo padrão.
 Montou o aluguel da empilhadeira todo mês, até abril, e mudou o vencimento desta e das próximas. E fez o mesmo nas parcelas dos pneus.
 Deu baixa na energia inteira e em metade da prensa, com o resto pro fim do mês. Pagou o aluguel da empilhadeira pelo valor real do mês e duas parcelas dos pneus num lançamento só.
-Recebeu parte do saldo da Aços Quiririm e viu por que o fiado parcelado aparece só nas parcelas. E viu como estornar uma baixa e exportar a lista.
-E anexou o comprovante e filtrou a lista.
-No próximo tutorial, a gente faz o extrato do banco bater com o sistema. Até lá!""",
+Pronto: as duas parcelas estão pagas, com um único lançamento no banco. E viu como estornar uma baixa e exportar a lista.
+Uma dica: junte contas da mesma categoria. Com categorias diferentes, o pagamento entra no relatório sem categoria, e a tela avisa antes.
+E dá pra marcar linha de saldo também: o fiado entra no lote, e você ainda escolhe quanto abater de cada um.""",
 }
 
 # Títulos falados das vinhetas de capítulo (um nó no ElevenLabs, separados por [pause]); cap00 sem vinheta.

@@ -126,3 +126,5 @@ as gravações). Cada item diz a aula em que apareceu. **No fim da produção, v
 - **T09 · Pedidos**: peso "24.00 Kg" com ponto; o selo "Estornado" só explica no `title` nativo; trocar o fornecedor ao
   editar um pedido em dinheiro não abre "Atualizar os preços?"; textos "caixa de hoje" continuam em telas de outro dia.
 - **T12 · Coletas**: "Cancelar ordem em vez disso" aparece na recusa de exclusão até em ordem concluída, que não pode ser cancelada.
+- **T11 · Produção**: o gráfico do relatório diz "Total: N peças" fixo, mesmo em produto por quilo; ainda há "Custo
+  estimado por peça" (ordem e Conversão) e "Custo/peça" (relatório) em produto por quilo.
