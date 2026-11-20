@@ -3,6 +3,8 @@
 const CEPS = {
   // T1: sede da Recicla Vale Metais (MUNDO_LINHA_DO_TEMPO.md, seção 3: Parque Industrial)
   12086410: { logradouro: 'Rua das Oficinas', bairro: 'Parque Industrial', cidade: 'Taubaté', uf: 'SP', codigoIbge: '3554102' },
+  // T4 cap. 4 (1.60.18): o CEP do Rogério Alves Costa e da Serralheria Bem-Te-Vi (completar o cadastro pelo CEP)
+  12062150: { logradouro: 'Rua das Palmeiras', bairro: 'Jardim Santa Luzia', cidade: 'Taubaté', uf: 'SP', codigoIbge: '3554102' },
 };
 
 export default (body) => {
