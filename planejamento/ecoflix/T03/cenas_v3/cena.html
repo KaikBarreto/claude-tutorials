@@ -91,11 +91,11 @@ function ordemPreco() {
     tpri = W(9, 'primeiro'), tper = W(9, 'personalizado'), tdep = W(9, 'depois'), ttab = W(9, 'tabela'), tult = W(9, 'ultimo'), tpm = W(9, 'preco', 3), tfim = W(9, 'material', 2, 'e');
   chipAmbar();
   const { EIXO, X, ret, fundo } = escuro(1500), MW = 236, XM = -372, CW = 372, XC = 151, DY = 122, XL = XM + MW / 2, XR = XC - CW / 2;   // XL = borda direita do material, XR = borda esquerda dos preços
-  estilo('t03-vg', `.t03vg{position:absolute;inset:0;border-radius:var(--r3);border:2px dashed rgba(190,245,218,.36);display:flex;align-items:center;padding:0 20px;gap:13px}
+  estilo('t03-vg', `.t03vg{position:absolute;inset:0;border-radius:var(--r3);border:1.5px solid rgba(190,245,218,.3);background:rgba(255,255,255,.035);display:flex;align-items:center;padding:0 20px;gap:13px}
 .t03vg i{display:block;width:150px;height:12px;border-radius:6px;background:rgba(255,255,255,.14)}`);
   const cM = X(degrau('package', 'Um material', '', { w: MW }), XM, 0);
   const chQ = X(htmlChip(`${ic('circle-help', 18)}qual vale?`, 'am'), XM, 42 + 16, { anc: [.5, 0] });
-  // os três preços: primeiro só o lugar (tracejado, com a etiqueta); o nome entra quando a fala o diz
+  // os três preços: primeiro só o lugar (contorno liso, com a etiqueta; tracejado cintila com a câmera em deriva e o piscadas.py acusa); o nome entra quando a fala o diz
   const preco = (i, icone, rot, sub, res) => { const p = X(`<div style="position:relative;width:${CW}px;height:84px">${degrau(icone, rot, sub, { w: CW, res })}<div class="t03vg">${selo('tag', 'n', 46)}<i></i></div></div>`, XC, (i - 1) * DY);
     p.c = p.e.firstElementChild; p.v = p.e.lastElementChild; p.od = p.c.querySelector('.onda'); return p; };
   const c = [preco(0, 'user-round', 'Preço personalizado', 'do cliente ou fornecedor', true), preco(1, 'table', 'Tabela escolhida', 'no pedido'), preco(2, 'package', 'Preço do material', '')];
