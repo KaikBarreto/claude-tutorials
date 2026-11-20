@@ -271,12 +271,15 @@
    "timeout": 4
   },
   {
-   "do": "click",
+   "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text('187,50') button"
+    "selector": "main tbody tr:has-text('187,50') button[aria-label^='Abrir ações']"
    },
+   "seconds": 0.3,
    "at": 51.95,
-   "label": "menu da compra (⋮, abre ao clicar no Caixa)"
+   "label": "menu da compra (⋮, abre ao passar o mouse)",
+   "optional": false,
+   "timeout": 8
   },
   {
    "do": "waitFor",
@@ -363,19 +366,6 @@
    },
    "at": 61.86,
    "label": "Aparecida Ramos"
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Manter preços",
-    "exact": true,
-    "within": "[role=dialog]"
-   },
-   "at": 62.76,
-   "label": "Manter preços (só se a pergunta aparecer)",
-   "optional": true,
-   "timeout": 3
   },
   {
    "do": "waitFor",
@@ -538,7 +528,8 @@
   {
    "do": "hover",
    "target": {
-    "selector": "main [role=tab]:has-text('Todas')"
+    "selector": "main button:has-text('Todas')",
+    "nth": 0
    },
    "seconds": 1.0,
    "at": 84.31,

@@ -123,3 +123,5 @@ as gravações). Cada item diz a aula em que apareceu. **No fim da produção, v
   o menu da linha abre só de passar o mouse (hover).
 - **T06 · Caixa / EcoFlix**: o link do aviso de saldo insuficiente aponta para a aula 5.5 da EcoFlix antiga
   (`TUTORIAL_DINHEIRO_FISICO_URL`): trocar quando a trilha nova for publicada.
+- **T09 · Pedidos**: peso "24.00 Kg" com ponto; o selo "Estornado" só explica no `title` nativo; trocar o fornecedor ao
+  editar um pedido em dinheiro não abre "Atualizar os preços?"; textos "caixa de hoje" continuam em telas de outro dia.

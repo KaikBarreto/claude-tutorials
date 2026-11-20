@@ -974,3 +974,10 @@ Decisões:
   10→12, 11→13, 12→14). ~2.470 palavras. 15/15 no rápido (0 DIFERENTE); cap11 com passo novo (ordem do Resultado) em
   ensaio pelo coordenador. View nova no mundo base: `handlers/views/orders_with_payments.mjs` (mantida no base). PDFs com
   cena pendente: pdf07_kardex, pdf13_posicao, pdf13_relatorio (`rec/t10/t10_pdfs.py` extrai).
+- **T09**: 12 capítulos (novo 07 "Exportar a lista"; 07-10 antigos viraram 08-11). Fala 1.702 → 2.252 palavras. 12/12 no
+  rápido (6 lotes pela fila). A varredura falhava por falta de `fake_now.json` (com 10/11 a janela "Tarefas para hoje"
+  cobria a tela); agora 11/11 08:30. Atrasos previstos a tratar com a voz: cap04 (L2 ~4 s, L6 ~5 s), cap07 L4 (espera do
+  PDF), cap08 L6. Mundo base (aditivo): `lib/eco.mjs` (`p_force_cash_register`) e `lib/pedido_estorno.mjs`. Sementes do
+  `t09_sementes.py` seguem a T06 (#85 957,10, #86 15.000,00). Ilustrações pendentes: ilu04_soma, ilu04_caixa_fechado e 6
+  PDFs (comprovantes Vale Forte, Aparecida, Valdir; relatório de pedidos; fechamento; estoque do caixa). "Imprimir direto"
+  depende do EcoTray (só falado).

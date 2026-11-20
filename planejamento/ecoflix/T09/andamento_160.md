@@ -15,9 +15,13 @@ Correção: `rec/t09/fake_now.json` (11/11/2026 08:30 em todos os capítulos) e 
   `mundo/lib/pedido_estorno.mjs` (revert mantém o caixa original fechado quando o pedido não tem dinheiro; auditoria com IP/navegador).
 - `cenas/ilustracoes.json`: ilu04_soma reindexada; novas ilu04_caixa_fechado e as cenas de PDF/relatório (cap04, 06, 07, 09), todas `v3: pendente`.
 
+## Ensaio (20/11, só rápido, pela fila --prio 09)
+Lote 1 (00..11), lote 2 (02, 03, 04, 07, 10), lotes 3 a 6 (02, 07, 10, 06, 10 de novo): todos os 12 capítulos fecham no rápido, 0 falhos.
+Correções: JS do filtro (aspas), ordem de Data (2 cliques com pausa), toast do relatório antes do HTML, menu do Caixa (botão "Abrir ações", passar o mouse),
+PDF do Valdir (índice 2), cap04 L6 com uma busca só ("166"). Em cap10 a troca de fornecedor NÃO abre "Atualizar os preços?" (passo tirado).
+Sobra: atrasos de prever (gestos além da janela da fala): cap04 L2 (~4 s) e L6 (~5 s), cap07 L4 (espera do PDF), cap08 L6 (Aplicar/Limpar).
+Completos (BRIEF_ROBO item 3) NÃO rodados: `bash rec/t09/t09_ciclo3.sh NN`.
 ## Falta / comandos exatos
-- Ver o resultado do lote 1: `tail -80 /home/claude/ecoflix/rec/t09/_ens_lote2.out` e `/home/claude/ecoflix/rec/t09/_ens/.resumo-NN.txt`.
-- Um capítulo: `cd /home/claude/ecoflix; TUT_USER=rafael@reciclavalemetais.example TUT_SENHA=<8+ caracteres> bash rec/t09/t09_lote1.sh NN`
-  (só rápido, pela fila `--prio 09`); com o completo pela regra: `bash rec/t09/t09_ciclo3.sh NN`.
-- Instância: `FAKE_NOW=2026-11-11T08:30:00-03:00 FAKE_PORT=54309 bash rec/run.sh fake` (derrubar: `FAKE_PORT=54309 bash rec/run.sh down`).
-- Depois do ensaio: conferir os textos exatos dos PDFs/relatórios em `rec/t09/pdfs/` e ajustar `mostra` das cenas de PDF.
+- Completos e ajuste de tempos dos caps com atraso: `cd /home/claude/ecoflix; TUT_USER=rafael@reciclavalemetais.example TUT_SENHA=<8+ caracteres> bash rec/t09/t09_ciclo3.sh NN`.
+- Instância (derrubada ao fim): `FAKE_NOW=2026-11-11T08:30:00-03:00 FAKE_PORT=54309 bash rec/run.sh fake`.
+- PDFs/HTML em `rec/t09/pdfs/` conferidos; `mostra` das cenas de PDF atualizado.

@@ -13,7 +13,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 FAKE = 'http://127.0.0.1:54312'
 SAIDA = os.path.normpath(os.path.join(HERE, '..', 'mundo', 'seeds-extra', 't12'))
 BASE = ['t12/inicio']
-FORA = ('presence', 'editing', 'heartbeat', 'audit', 'request_log', 'session')
+FORA = ('presence', 'editing', 'heartbeat', 'audit', 'request_log', 'session', 'driver_locations')
 
 
 def get(u):
