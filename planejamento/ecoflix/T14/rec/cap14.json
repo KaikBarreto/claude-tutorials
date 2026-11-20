@@ -1,6 +1,6 @@
 {
  "name": "t14-cap14",
- "title": "T14 · Cap. 14 · Fechar a conciliação (narração ESTIMADA 63,3 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T14 · Cap. 14 · Valores repetidos (narração ESTIMADA 53,0 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t14-cap14",
  "pace": 0.5,
  "cps": 40,
@@ -28,8 +28,7 @@
   "t14/apos-cap08",
   "t14/apos-cap09",
   "t14/apos-cap10",
-  "t14/apos-cap11",
-  "t14/apos-cap12"
+  "t14/apos-cap11"
  ],
  "prewarm": [
   "/login"
@@ -136,7 +135,7 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"PIX ENVIADO DEPOSITO IRMAOS SIQUEIRA\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-250);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;c.scrollTop=y0+dy;return Math.round(el.getBoundingClientRect().top)})()"
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"PIX ENVIADO APARECIDA RAMOS\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-250);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;c.scrollTop=y0+dy;return Math.round(el.getBoundingClientRect().top)})()"
   },
   {
    "do": "wait",
@@ -156,166 +155,175 @@
   {
    "do": "hover",
    "target": {
-    "text": "Saldo do banco",
-    "exact": true,
-    "within": "main"
+    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX ENVIADO APARECIDA RAMOS\")) :text(\"Atenção: há 2 lançamentos\")"
    },
-   "seconds": 0.5,
-   "at": 2.25,
-   "label": "Saldo do banco e Saldo conciliado (ZOOM)",
+   "seconds": 0.6,
+   "at": 1.49,
+   "label": "aviso âmbar da primeira linha (ZOOM)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "hover",
    "target": {
-    "text": "Saldo conciliado",
-    "exact": true,
-    "within": "main"
+    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX ENVIADO APARECIDA RAMOS\")) :text-is(\"PIX ENVIADO APARECIDA RAMOS\")"
    },
-   "seconds": 0.6,
-   "at": 6.81,
-   "label": "Saldo conciliado",
+   "seconds": 0.3,
+   "at": 6.43,
+   "label": "Pix de um",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX ENVIADO AUTO PECAS VALE FORTE\")) :text-is(\"PIX ENVIADO AUTO PECAS VALE FORTE\")"
+   },
+   "seconds": 0.6,
+   "at": 8.86,
+   "label": "Pix do outro",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"há 2 lançamentos de R$ 380,00\", \"PIX ENVIADO APARECIDA RAMOS\", \"PIX ENVIADO AUTO PECAS VALE FORTE\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
+   "label": "confere dois Pix de 380,00"
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 11.32
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Diferença",
-    "exact": true,
-    "within": "main"
-   },
-   "seconds": 0.8,
-   "at": 16.2,
-   "label": "Diferença R$ 0,00",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"R$ 44.933,47\", \"R$ 0,00\", \"Diferenças casadas\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
-   "label": "confere rodapé: banco = conciliado, diferença zero"
+   "at": 11.54
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 20.47
+   "at": 19.64
   },
   {
    "do": "click",
    "target": {
-    "selector": "main div:has(> p:text-is(\"Diferenças casadas\")) button"
+    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX ENVIADO APARECIDA RAMOS\")) button:has-text(\"Escolher lançamento\")"
    },
-   "at": 21.0,
-   "label": "Diferenças casadas"
+   "at": 19.93,
+   "label": "Escolher lançamento"
   },
   {
-   "do": "waitFor",
-   "text": "Diferenças de valor casadas",
-   "timeout": 8
+   "do": "hover",
+   "target": {
+    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX ENVIADO APARECIDA RAMOS\")) [aria-label=\"Lançamentos que podem casar\"]"
+   },
+   "seconds": 0.5,
+   "at": 21.78,
+   "label": "as duas compras",
+   "optional": true,
+   "timeout": 4
   },
   {
-   "do": "press",
-   "key": "Escape",
-   "at": 26.87,
-   "label": "fecha o quadro"
+   "do": "hover",
+   "target": {
+    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX ENVIADO APARECIDA RAMOS\")) :text-is(\"PIX ENVIADO APARECIDA RAMOS\")"
+   },
+   "seconds": 0.3,
+   "at": 25.12,
+   "label": "o nome no extrato",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX ENVIADO APARECIDA RAMOS\")) [aria-label=\"Lançamentos que podem casar\"] :text(\"Aparecida Ramos\")"
+   },
+   "seconds": 0.5,
+   "at": 26.13,
+   "label": "a compra da Aparecida",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 28.11
+   "at": 28.41
   },
   {
-   "do": "hover",
+   "do": "click",
    "target": {
-    "role": "button",
-    "name": "Finalizar conciliação",
-    "exact": true
+    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX ENVIADO APARECIDA RAMOS\")) [aria-label=\"Lançamentos que podem casar\"] :text(\"Aparecida Ramos\")"
    },
-   "seconds": 1.0,
-   "at": 28.82,
-   "label": "Finalizar conciliação habilitado",
-   "optional": true,
-   "timeout": 4
+   "at": 28.71,
+   "label": "marca a compra da Aparecida"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX ENVIADO APARECIDA RAMOS\")) button:has-text(\"Casar com o selecionado\")"
+   },
+   "at": 31.22,
+   "label": "Casar com o selecionado"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX ENVIADO APARECIDA RAMOS\")) :text-is(\"Casada\")"
+   },
+   "timeout": 10
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 46.15
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Finalizar conciliação",
-    "exact": true
-   },
-   "at": 46.45,
-   "label": "Finalizar conciliação"
-  },
-  {
-   "do": "waitFor",
-   "text": "Conciliação finalizada",
-   "timeout": 10
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const c=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;if(y0<3)return 'ok';const dy=-y0;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo'})()",
-   "label": "sobe a página"
+   "at": 33.16
   },
   {
    "do": "hover",
    "target": {
-    "text": "Conciliação finalizada",
-    "within": "main"
+    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX ENVIADO AUTO PECAS VALE FORTE\")) :text-is(\"Casa com um lançamento no sistema\")"
    },
    "seconds": 0.6,
-   "at": 50.42,
-   "label": "faixa Conciliação finalizada",
+   "at": 34.48,
+   "label": "a outra linha com a sugestão certa",
    "optional": true,
    "timeout": 4
   },
   {
+   "do": "click",
+   "target": {
+    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX ENVIADO AUTO PECAS VALE FORTE\")) button:has-text(\"Casar com\")"
+   },
+   "at": 39.46,
+   "label": "Casar com Compra (Auto Peças Vale Forte)"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX ENVIADO AUTO PECAS VALE FORTE\")) :text-is(\"Casada\")"
+   },
+   "timeout": 10
+  },
+  {
    "do": "mark",
    "name": "L6",
-   "at": 52.34
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Fechar",
-    "exact": true,
-    "within": "main"
-   },
-   "at": 52.64,
-   "label": "Fechar"
-  },
-  {
-   "do": "click",
-   "target": {
-    "text": "Conciliações anteriores (1)",
-    "within": "main"
-   },
-   "at": 54.54,
-   "label": "Conciliações anteriores (1)"
+   "at": 40.04
   },
   {
    "do": "hover",
    "target": {
-    "text": "Conciliado",
-    "exact": true,
-    "within": "main"
+    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX ENVIADO APARECIDA RAMOS\")) :text-is(\"Casada\")"
+   },
+   "seconds": 0.5,
+   "at": 40.75,
+   "label": "os dois selos Casada",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX ENVIADO AUTO PECAS VALE FORTE\")) :text-is(\"Casada\")"
    },
    "seconds": 0.8,
-   "at": 56.54,
-   "label": "selo Conciliado",
+   "at": 44.62,
+   "label": "Casada (Auto Peças)",
    "optional": true,
    "timeout": 4
   },
@@ -327,7 +335,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 63.33
+   "at": 53.01
   }
  ]
 }

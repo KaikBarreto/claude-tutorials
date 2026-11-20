@@ -1,6 +1,6 @@
 {
  "name": "t14-cap08",
- "title": "T14 · Cap. 8 · Baixar uma conta (narração ESTIMADA 38,9 s; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T14 · Cap. 8 · Importar o extrato (narração ESTIMADA 76,9 s; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t14-cap08",
  "pace": 0.5,
  "cps": 40,
@@ -22,9 +22,7 @@
   "t14/inicio",
   "t14/apos-cap02",
   "t14/apos-cap03",
-  "t14/apos-cap04",
-  "t14/apos-cap06",
-  "t14/apos-cap07"
+  "t14/apos-cap04"
  ],
  "prewarm": [
   "/login"
@@ -101,41 +99,12 @@
   },
   {
    "do": "waitFor",
-   "text": "Conta para conciliar",
-   "timeout": 20
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Continuar",
-    "exact": true
-   }
-  },
-  {
-   "do": "waitFor",
-   "text": "Linha do extrato",
+   "text": "Nenhum extrato em conciliação",
    "timeout": 20
   },
   {
    "do": "waitFor",
    "idle": true
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const c=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,dy=c.scrollHeight-c.clientHeight-y0;if(dy<3)return 'ok';c.scrollTop=y0+dy;return 'fim:'+Math.round(c.scrollTop)})()"
-  },
-  {
-   "do": "wait",
-   "seconds": 0.3
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"PAGTO BOLETO AGUA E ESGOTO\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-250);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;c.scrollTop=y0+dy;return Math.round(el.getBoundingClientRect().top)})()"
-  },
-  {
-   "do": "wait",
-   "seconds": 0.4
   },
   {
    "do": "eval",
@@ -149,114 +118,314 @@
    "at": 0
   },
   {
-   "do": "hover",
-   "target": {
-    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PAGTO BOLETO AGUA E ESGOTO\")) :text-is(\"PAGTO BOLETO AGUA E ESGOTO\")"
-   },
-   "seconds": 0.5,
-   "at": 1.04,
-   "label": "boleto da água",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PAGTO BOLETO AGUA E ESGOTO\")) :text-is(\"−R$ 238,40\")"
-   },
-   "seconds": 0.6,
-   "at": 2.4,
-   "label": "R$ 238,40",
-   "optional": true,
-   "timeout": 4
-  },
-  {
    "do": "mark",
    "name": "L2",
-   "at": 12.98
+   "at": 13.21
   },
   {
    "do": "click",
    "target": {
-    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PAGTO BOLETO AGUA E ESGOTO\")) button:has-text(\"Baixar conta\")"
+    "role": "button",
+    "name": "Importar novo extrato",
+    "exact": true
    },
-   "at": 13.29,
-   "label": "Baixar conta"
+   "at": 13.74,
+   "label": "Importar novo extrato"
+  },
+  {
+   "do": "waitFor",
+   "text": "Importar extrato OFX",
+   "timeout": 10
   },
   {
    "do": "click",
    "target": {
-    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PAGTO BOLETO AGUA E ESGOTO\")) [role=combobox]"
+    "text": "Como pegar o arquivo do seu banco?",
+    "exact": true,
+    "within": "[role=dialog]"
    },
-   "at": 14.1,
-   "label": "Selecione a conta"
+   "at": 16.4,
+   "label": "Como pegar o arquivo do seu banco?"
   },
   {
    "do": "hover",
    "target": {
-    "role": "option",
-    "name": "Água e esgoto de outubro"
+    "text": "Escolha o formato OFX",
+    "within": "[role=dialog]"
    },
-   "seconds": 0.6,
-   "at": 18.7,
-   "label": "Água e esgoto de outubro",
+   "seconds": 1.2,
+   "at": 19.31,
+   "label": "passo a passo (ZOOM)",
    "optional": true,
    "timeout": 4
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "option",
-    "name": "Água e esgoto de outubro"
-   },
-   "label": "escolhe a água"
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 20.62
+   "at": 26.01
   },
   {
-   "do": "click",
+   "do": "upload",
    "target": {
-    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PAGTO BOLETO AGUA E ESGOTO\")) button:has-text(\"Dar baixa\")"
+    "text": "Arraste o arquivo .ofx aqui ou clique para selecionar",
+    "exact": true,
+    "within": "[role=dialog]"
    },
-   "at": 20.92,
-   "label": "Dar baixa de R$ 238,40 (ZOOM)"
+   "file": "arquivos/Extrato_20261101_20261110.ofx",
+   "at": 26.21,
+   "label": "entrega o Extrato_20261101_20261110.ofx"
   },
   {
    "do": "waitFor",
-   "target": {
-    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PAGTO BOLETO AGUA E ESGOTO\")) :text-is(\"Baixada\")"
-   },
+   "text": "Prévia do extrato",
    "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 30.69
   },
   {
    "do": "hover",
    "target": {
-    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PAGTO BOLETO AGUA E ESGOTO\")) :text-is(\"Baixada\")"
+    "text": "Prévia do extrato",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "at": 32.84,
+   "label": "Prévia do extrato",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Período",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "at": 33.74,
+   "label": "Período, Transações e Saldo final (ZOOM)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Transações",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "at": 34.58,
+   "label": "Transações 17",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Saldo final do extrato",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "at": 36.48,
+   "label": "Saldo final do extrato",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"01/11/2026 — 10/11/2026\", \"17\", \"R$ 44.933,47\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
+   "label": "confere prévia: período, 17 transações e saldo final"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 39.01
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Importar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 39.31,
+   "label": "Importar"
+  },
+  {
+   "do": "waitFor",
+   "text": "17 de 17 linhas importadas",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Tudo certo — nenhuma linha estava repetida.",
+    "exact": true,
+    "within": "[role=dialog]"
    },
    "seconds": 0.8,
-   "at": 23.23,
-   "label": "selo Baixada",
+   "at": 44.57,
+   "label": "nenhuma linha repetida",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Concluir",
+    "exact": true
+   },
+   "at": 46.9,
+   "label": "Concluir"
+  },
+  {
+   "do": "waitFor",
+   "text": "Linha do extrato",
+   "timeout": 15
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 47.64
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const c=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,dy=c.scrollHeight-c.clientHeight-y0;if(dy<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'fim:'+Math.round(c.scrollTop)})()",
+   "at": 48.24,
+   "label": "desce a página até a tabela"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "PIX ENVIADO DEPOSITO IRMAOS SIQUEIRA",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.3,
+   "at": 48.8,
+   "label": "linha do banco (esquerda)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "−R$ 2.250,00",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.3,
+   "at": 52.59,
+   "label": "data e valor da linha",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Casa com um lançamento no sistema",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 53.27,
+   "label": "o que fazer com ela (direita)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
-   "name": "L4",
-   "at": 28.49
+   "name": "L7",
+   "at": 55.65
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"PIX RECEBIDO SERRA FINA ALUMINIO\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-330);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 56.56,
+   "label": "rola até o Pix da Serra Fina"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PAGTO BOLETO AGUA E ESGOTO\")) :text-is(\"Baixada\")"
+    "text": "+R$ 4.815,00",
+    "exact": true,
+    "within": "main"
    },
-   "seconds": 1.0,
-   "at": 31.78,
-   "label": "baixa do valor inteiro",
+   "seconds": 0.5,
+   "at": 59.39,
+   "label": "entrada em verde, com mais",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "−R$ 180,00",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 61.74,
+   "label": "saída em vermelho, com menos",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 69.51
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Saldo do banco",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.4,
+   "at": 70.14,
+   "label": "rodapé: os três números",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Diferença",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.4,
+   "at": 71.45,
+   "label": "Diferença",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Finalizar conciliação",
+    "exact": true
+   },
+   "seconds": 0.6,
+   "at": 75.23,
+   "label": "Finalizar conciliação (desabilitado)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Saldo do banco\", \"R$ 44.933,47\", \"Ainda há 17 linhas pendentes\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
+   "label": "confere rodapé depois da importação"
   },
   {
    "do": "eval",
@@ -266,7 +435,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 38.87
+   "at": 76.86
   }
  ]
 }

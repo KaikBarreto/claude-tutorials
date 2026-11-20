@@ -1,4 +1,4 @@
-# Inventário · T13 Contas a Pagar e Receber (EcoSistema 1.59.154)
+# Inventário · T13 Contas a Pagar e Receber (EcoSistema 1.60.18; seções 1 a 12 levantadas na 1.59.154, a seção 13 traz o que mudou)
 
 Levantado em 10/11/2026 contra `/home/claude/ecoflix/app-src-1.59.154/` (análise estática, só leitura). Caminhos relativos
 a `src/`. Rótulo entre aspas = texto exato da tela. Só o que a aula usa. Não há `supabase/migrations` na cópia: o que as
@@ -162,3 +162,29 @@ RPCs fazem por dentro vem dos comentários do front e da fonte (conferida pela e
 
 Pela fonte (conferida pela equipe): a baixa em dinheiro lança um movimento no caixa aberto, a baixa por Pix lança na conta
 bancária, o lançamento herda a categoria da conta (por isso aparece na DRE) e tudo acontece junto ou nada é gravado.
+
+## 13. Novidades da 1.60.18 usadas nos capítulos novos (fonte lida em `/dev/shm/ecoflix-src/src`, só leitura)
+- **Cartões** (`components/contas/BillsSummaryCards.tsx`): acompanham a lista (aba, busca, filtros). Na aba "A Pagar" o 2º cartão é
+  "Total pago" e na "A Receber" é "Total recebido"; com período de vencimento ligado viram "A receber no período" e "Recebido no período".
+- **Dica do status** (`BillStatusTooltip.tsx`): "Vencimento 05/11/2026" e "Vencida há 5 dia(s)" (ou quanto já foi pago).
+- **"Detalhes da conta"** (`BillsList.tsx:736`): clique na linha (fora dos botões): tipo, valor, vencimento, categoria, cliente/fornecedor, parcela, observação.
+- **Formulário** (`BillFormModal.tsx`): ordem Descrição, Vencimento, Valor; "Forma de pagamento" ao lado do "Pagamento previsto".
+- **Padrões de preenchimento** (`financial/FinancialDescriptionField.tsx`): ao digitar 3+ letras na Descrição abre um `listbox` "Padrões de preenchimento":
+  "Padrão encontrado: <descrição>", linha com fornecedor · categoria · centro · conta · forma ("Boleto", "Pix / Transferência"),
+  "Usado N vezes · última vez em ...", botão "Preencher"; depois "Campos preenchidos." + "Desfazer preenchimento". RPC `get_financial_description_suggestions`.
+  Só preenche campo vazio; setas e Enter/Tab; Esc dispensa.
+- **Parcelas em grupo** (`BillsList.tsx:672-720`): alerta "Editar parcelas" / "Excluir parcelas" com "Só esta conta", "Esta e as próximas",
+  "Todas as parcelas pendentes" e, na exclusão, "Parcelas pagas ou com baixa permanecem no histórico e não serão excluídas." RPCs `update_installment_bill_group`,
+  `delete_installment_bill_group`; toast "N parcelas pendentes atualizadas" (`ContasPagarReceber.tsx:1060`) quando o escopo é "todas".
+- **Recorrência**: o alerta passou a dizer "Esta e as próximas" (era "Esta e as futuras"); toasts "Recorrência encerrada" / "Esta e as futuras excluídas".
+- **Pagamento** (`PayBillModal.tsx`): "Valor desta ocorrência" (`#pay-occurrence-amount`, só conta recorrente) + interruptor "Atualizar o valor previsto das próximas contas"
+  (`#pay-update-future`); "Juros / multa (opcional)" (`#pay-interest`: "A conta continua valendo R$ X. Este valor entra como despesa separada."), "Tarifa (opcional)"
+  (`#pay-fee`), interruptor "Múltiplas formas de pagamento" (`#pay-multiple-methods`, "Valor em <forma>"), "Total informado". RPC `pay_recurring_financial_bill`.
+- **Lote** (`BillsBulkPayBar.tsx`, `PayBillsBatchModal.tsx`): caixinha "Selecionar conta <descrição>" em cada linha; barra "N linhas selecionadas / Total: R$ X"
+  com "Limpar" e "Quitar em lote" (em A receber, "Receber em lote"); a janela diz "Total R$ X — vira um único lançamento, que casa 1-pra-1 na conciliação bancária."
+  (`#batch-description`, `#batch-date`, `#batch-interest`, `#batch-fee`). RPC `pay_financial_bills_batch`.
+- **Estorno** (`UndoBillPaymentModal.tsx`, `BillsList.tsx:603-615`): na conta Paga/Parcial, "Mais ações" → "Estornar pagamento": "Valor da baixa", "Saiu de", "Voltam R$ X para <conta>";
+  excluir conta paga vira "Excluir e estornar" (`DeleteBillDialog.tsx`). Toast "Pagamento estornado".
+- **Exportar** (`ContasPagarReceber.tsx:1215-1250`, `BillsExportDialog.tsx`): "Exportar" → menu "Exportar contas" com "PDF" e "Excel" → janela "Exportar contas (PDF)" ("Os filtros já vêm com o que você está usando na tela.");
+  "Opções do arquivo" (Fiado / saldo de cliente e fornecedor; Faturas de cartão; agrupar por status, categoria ou mês); "Cancelar" / "Exportar".
+- **Anexo**: toast "Anexo adicionado" assim que o arquivo sobe (antes só ao salvar).

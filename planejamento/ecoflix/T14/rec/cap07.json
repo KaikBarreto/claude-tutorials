@@ -1,6 +1,6 @@
 {
  "name": "t14-cap07",
- "title": "T14 · Cap. 7 · Casar com o sistema (narração ESTIMADA 72,2 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T14 · Cap. 7 · O que é conciliar (narração ESTIMADA 42,4 s; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t14-cap07",
  "pace": 0.5,
  "cps": 40,
@@ -22,8 +22,7 @@
   "t14/inicio",
   "t14/apos-cap02",
   "t14/apos-cap03",
-  "t14/apos-cap04",
-  "t14/apos-cap06"
+  "t14/apos-cap04"
  ],
  "prewarm": [
   "/login"
@@ -91,52 +90,6 @@
    "timeout": 20
   },
   {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Conciliação",
-    "exact": true
-   }
-  },
-  {
-   "do": "waitFor",
-   "text": "Conta para conciliar",
-   "timeout": 20
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Continuar",
-    "exact": true
-   }
-  },
-  {
-   "do": "waitFor",
-   "text": "Linha do extrato",
-   "timeout": 20
-  },
-  {
-   "do": "waitFor",
-   "idle": true
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const c=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,dy=c.scrollHeight-c.clientHeight-y0;if(dy<3)return 'ok';c.scrollTop=y0+dy;return 'fim:'+Math.round(c.scrollTop)})()"
-  },
-  {
-   "do": "wait",
-   "seconds": 0.3
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"PIX ENVIADO DEPOSITO IRMAOS SIQUEIRA\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-250);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;c.scrollTop=y0+dy;return Math.round(el.getBoundingClientRect().top)})()"
-  },
-  {
-   "do": "wait",
-   "seconds": 0.4
-  },
-  {
    "do": "eval",
    "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&!/fica indispon/i.test(m[0])&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
   }
@@ -148,362 +101,92 @@
    "at": 0
   },
   {
-   "do": "hover",
-   "target": {
-    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX ENVIADO DEPOSITO IRMAOS SIQUEIRA\")) :text-is(\"PIX ENVIADO DEPOSITO IRMAOS SIQUEIRA\")"
-   },
-   "seconds": 0.4,
-   "at": 2.18,
-   "label": "Pix do Depósito Irmãos Siqueira",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX ENVIADO DEPOSITO IRMAOS SIQUEIRA\")) :text-is(\"Casa com um lançamento no sistema\")"
-   },
-   "seconds": 1.0,
-   "at": 9.69,
-   "label": "sugestão da compra (ZOOM)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"PIX ENVIADO DEPOSITO IRMAOS SIQUEIRA\", \"−R$ 2.250,00\", \"Depósito Irmãos Siqueira\", \"03/11/2026\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
-   "label": "confere Pix de 2.250,00 e a compra do dia 3"
-  },
-  {
    "do": "mark",
    "name": "L2",
-   "at": 12.45
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX ENVIADO DEPOSITO IRMAOS SIQUEIRA\")) :text(\"Depósito Irmãos Siqueira\")"
-   },
-   "seconds": 0.4,
-   "at": 14.29,
-   "label": "data e parceiro",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX ENVIADO DEPOSITO IRMAOS SIQUEIRA\")) button:has-text(\"Casar com\")"
-   },
-   "at": 15.26,
-   "label": "Casar com Compra (Depósito Irmãos Siqueira)"
-  },
-  {
-   "do": "waitFor",
-   "target": {
-    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX ENVIADO DEPOSITO IRMAOS SIQUEIRA\")) :text-is(\"Casada\")"
-   },
-   "timeout": 10
+   "at": 9.04
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 17.74
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"PIX ENVIADO ALUGUEL GALPAO NOV\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 17.96,
-   "label": "rola até PIX ENVIADO ALUGUEL GALPAO NOV"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX ENVIADO ALUGUEL GALPAO NOV\")) button:has-text(\"Confirmar\"), div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX ENVIADO ALUGUEL GALPAO NOV\")) button:has-text(\"Casar com \")"
-   },
-   "label": "Confirmar o aluguel"
-  },
-  {
-   "do": "waitFor",
-   "target": {
-    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX ENVIADO ALUGUEL GALPAO NOV\")) :text-is(\"Casada\")"
-   },
-   "timeout": 10
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"PIX ENVIADO BORRACHARIA DOIS IRMAOS\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "label": "rola até PIX ENVIADO BORRACHARIA DOIS IRMAOS"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX ENVIADO BORRACHARIA DOIS IRMAOS\")) button:has-text(\"Confirmar\"), div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX ENVIADO BORRACHARIA DOIS IRMAOS\")) button:has-text(\"Casar com \")"
-   },
-   "label": "Confirmar (PIX ENVIADO BORRACHARIA DOIS IRMAOS)"
-  },
-  {
-   "do": "waitFor",
-   "target": {
-    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX ENVIADO BORRACHARIA DOIS IRMAOS\")) :text-is(\"Casada\")"
-   },
-   "timeout": 10
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"PIX ENVIADO CONCESSIONARIA ENERGIA\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "label": "rola até PIX ENVIADO CONCESSIONARIA ENERGIA"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX ENVIADO CONCESSIONARIA ENERGIA\")) button:has-text(\"Confirmar\"), div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX ENVIADO CONCESSIONARIA ENERGIA\")) button:has-text(\"Casar com \")"
-   },
-   "label": "Confirmar (PIX ENVIADO CONCESSIONARIA ENERGIA)"
-  },
-  {
-   "do": "waitFor",
-   "target": {
-    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX ENVIADO CONCESSIONARIA ENERGIA\")) :text-is(\"Casada\")"
-   },
-   "timeout": 10
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"PIX ENVIADO HIDRAULICA MORETTI LTDA\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "label": "rola até PIX ENVIADO HIDRAULICA MORETTI LTDA"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX ENVIADO HIDRAULICA MORETTI LTDA\")) button:has-text(\"Confirmar\"), div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX ENVIADO HIDRAULICA MORETTI LTDA\")) button:has-text(\"Casar com \")"
-   },
-   "label": "Confirmar (PIX ENVIADO HIDRAULICA MORETTI LTDA)"
-  },
-  {
-   "do": "waitFor",
-   "target": {
-    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX ENVIADO HIDRAULICA MORETTI LTDA\")) :text-is(\"Casada\")"
-   },
-   "timeout": 10
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"PIX ENVIADO AUTO POSTO BOA VIAGEM\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "label": "rola até PIX ENVIADO AUTO POSTO BOA VIAGEM"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX ENVIADO AUTO POSTO BOA VIAGEM\")) button:has-text(\"Confirmar\"), div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX ENVIADO AUTO POSTO BOA VIAGEM\")) button:has-text(\"Casar com \")"
-   },
-   "label": "Confirmar (PIX ENVIADO AUTO POSTO BOA VIAGEM)"
-  },
-  {
-   "do": "waitFor",
-   "target": {
-    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX ENVIADO AUTO POSTO BOA VIAGEM\")) :text-is(\"Casada\")"
-   },
-   "timeout": 10
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"PIX RECEBIDO ACOS QUIRIRIM LTDA\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "label": "rola até PIX RECEBIDO ACOS QUIRIRIM LTDA"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX RECEBIDO ACOS QUIRIRIM LTDA\")) button:has-text(\"Confirmar\"), div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX RECEBIDO ACOS QUIRIRIM LTDA\")) button:has-text(\"Casar com \")"
-   },
-   "label": "Confirmar (PIX RECEBIDO ACOS QUIRIRIM LTDA)"
-  },
-  {
-   "do": "waitFor",
-   "target": {
-    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX RECEBIDO ACOS QUIRIRIM LTDA\")) :text-is(\"Casada\")"
-   },
-   "timeout": 10
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"SAQUE CAIXA ELETRONICO\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "label": "rola até SAQUE CAIXA ELETRONICO"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"SAQUE CAIXA ELETRONICO\")) button:has-text(\"Confirmar\"), div[class*=\"md:grid-cols-2\"]:has(:text-is(\"SAQUE CAIXA ELETRONICO\")) button:has-text(\"Casar com \")"
-   },
-   "label": "Confirmar (SAQUE CAIXA ELETRONICO)"
-  },
-  {
-   "do": "waitFor",
-   "target": {
-    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"SAQUE CAIXA ELETRONICO\")) :text-is(\"Casada\")"
-   },
-   "timeout": 10
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"TARIFA SAQUE\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "label": "rola até TARIFA SAQUE"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"TARIFA SAQUE\")) button:has-text(\"Confirmar\"), div[class*=\"md:grid-cols-2\"]:has(:text-is(\"TARIFA SAQUE\")) button:has-text(\"Casar com \")"
-   },
-   "label": "Confirmar (TARIFA SAQUE)"
-  },
-  {
-   "do": "waitFor",
-   "target": {
-    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"TARIFA SAQUE\")) :text-is(\"Casada\")"
-   },
-   "timeout": 10
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"PIX RECEBIDO RECICLA VALE METAIS LTDA\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-260);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "label": "rola até os oito mil"
+   "at": 16.45
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 31.14
+   "at": 26.67
   },
   {
-   "do": "hover",
+   "do": "click",
    "target": {
-    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX RECEBIDO RECICLA VALE METAIS LTDA\")) :text-is(\"PIX RECEBIDO RECICLA VALE METAIS LTDA\")"
+    "role": "button",
+    "name": "Conciliação",
+    "exact": true,
+    "within": "main"
    },
-   "seconds": 0.4,
-   "at": 32.45,
-   "label": "Pix de 8.000,00 da Conta Secundária",
-   "optional": true,
-   "timeout": 4
+   "at": 28.41,
+   "label": "aba Conciliação"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nenhum extrato em conciliação",
+   "timeout": 15
   },
   {
    "do": "hover",
    "target": {
-    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX RECEBIDO RECICLA VALE METAIS LTDA\")) :text-is(\"Transferência: Conta Secundária → Conta Principal\")"
+    "selector": "main button[role=combobox]:has-text(\"Conta Principal\")"
    },
    "seconds": 0.6,
-   "at": 38.6,
-   "label": "a transferência registrada",
+   "at": 30.64,
+   "label": "Conta para conciliar: Conta Principal",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 41.36
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX RECEBIDO RECICLA VALE METAIS LTDA\")) button:has-text(\"Mais ações\")"
-   },
-   "at": 42.5,
-   "label": "Mais ações (linha da transferência)"
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "menuitem",
-    "name": "Casar com transferência"
-   },
-   "at": 43.56,
-   "label": "Casar com transferência"
-  },
-  {
-   "do": "waitFor",
-   "text": "Escolha a transferência entre suas contas que corresponde às linhas do extrato.",
-   "timeout": 10
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "[role=dialog] :text(\"Conta Secundária → Conta Principal\")"
-   },
-   "seconds": 0.6,
-   "at": 46.88,
-   "label": "a candidata (ZOOM)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] :text(\"Conta Secundária → Conta Principal\")"
-   },
-   "label": "marca a candidata"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Isso só cria o vínculo da conciliação",
-    "within": "[role=dialog]"
-   },
-   "seconds": 0.6,
-   "label": "só cria o vínculo",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"+R$ 8.000,00\", \"Conta Secundária\", \"Conta Principal\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
-   "label": "confere candidata da transferência de 8.000,00"
-  },
-  {
-   "do": "mark",
-   "name": "L6",
-   "at": 51.12
+   "at": 33.02
   },
   {
    "do": "click",
    "target": {
     "role": "button",
-    "name": "Casar transferência",
+    "name": "Como funciona?",
     "exact": true
    },
-   "at": 51.42,
-   "label": "Casar transferência"
+   "at": 35.06,
+   "label": "Como funciona?"
   },
   {
    "do": "waitFor",
-   "target": {
-    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX RECEBIDO RECICLA VALE METAIS LTDA\")) :text-is(\"Casada\")"
-   },
+   "text": "Como funciona a conciliação bancária",
    "timeout": 10
   },
   {
    "do": "hover",
    "target": {
-    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX RECEBIDO RECICLA VALE METAIS LTDA\")) :text-is(\"Casada\")"
-   },
-   "seconds": 0.8,
-   "at": 53.73,
-   "label": "selo Casada",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L7",
-   "at": 59.07
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX RECEBIDO RECICLA VALE METAIS LTDA\")) :text-is(\"PIX RECEBIDO RECICLA VALE METAIS LTDA\")"
+    "text": "O que é conciliar?",
+    "exact": true,
+    "within": "[role=dialog]"
    },
    "seconds": 1.0,
-   "at": 59.77,
-   "label": "dica: transferência",
+   "at": 35.73,
+   "label": "O que é conciliar? (ZOOM)",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 38.93,
+   "label": "fecha o Como funciona"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
   },
   {
    "do": "eval",
@@ -513,7 +196,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 72.18
+   "at": 42.41
   }
  ]
 }

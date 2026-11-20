@@ -1,6 +1,6 @@
 {
  "name": "t14-cap10",
- "title": "T14 · Cap. 10 · Buscar e aceitar centavos (narração ESTIMADA 56,9 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T14 · Cap. 10 · Baixar uma conta (narração ESTIMADA 38,9 s; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t14-cap10",
  "pace": 0.5,
  "cps": 40,
@@ -24,9 +24,7 @@
   "t14/apos-cap03",
   "t14/apos-cap04",
   "t14/apos-cap06",
-  "t14/apos-cap07",
-  "t14/apos-cap08",
-  "t14/apos-cap09"
+  "t14/apos-cap07"
  ],
  "prewarm": [
   "/login"
@@ -133,7 +131,7 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"PIX RECEBIDO SERRA FINA ALUMINIO\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-250);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;c.scrollTop=y0+dy;return Math.round(el.getBoundingClientRect().top)})()"
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"PAGTO BOLETO AGUA E ESGOTO\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-250);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;c.scrollTop=y0+dy;return Math.round(el.getBoundingClientRect().top)})()"
   },
   {
    "do": "wait",
@@ -153,187 +151,115 @@
   {
    "do": "hover",
    "target": {
-    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX RECEBIDO SERRA FINA ALUMINIO\")) :text-is(\"PIX RECEBIDO SERRA FINA ALUMINIO\")"
+    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PAGTO BOLETO AGUA E ESGOTO\")) :text-is(\"PAGTO BOLETO AGUA E ESGOTO\")"
    },
-   "seconds": 0.4,
-   "at": 0.28,
-   "label": "Pix da Serra Fina",
+   "seconds": 0.5,
+   "at": 1.04,
+   "label": "boleto da água",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "hover",
    "target": {
-    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX RECEBIDO SERRA FINA ALUMINIO\")) :text-is(\"+R$ 4.815,00\")"
-   },
-   "seconds": 0.4,
-   "at": 3.85,
-   "label": "R$ 4.815,00",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX RECEBIDO SERRA FINA ALUMINIO\")) :text(\"Sem casamento automático\")"
+    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PAGTO BOLETO AGUA E ESGOTO\")) :text-is(\"−R$ 238,40\")"
    },
    "seconds": 0.6,
-   "at": 8.56,
-   "label": "sem sugestão",
+   "at": 2.4,
+   "label": "R$ 238,40",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 8.96
+   "at": 12.98
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PAGTO BOLETO AGUA E ESGOTO\")) button:has-text(\"Baixar conta\")"
+   },
+   "at": 13.29,
+   "label": "Baixar conta"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PAGTO BOLETO AGUA E ESGOTO\")) [role=combobox]"
+   },
+   "at": 14.1,
+   "label": "Selecione a conta"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Água e esgoto de outubro"
+   },
+   "seconds": 0.6,
+   "at": 18.7,
+   "label": "Água e esgoto de outubro",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Água e esgoto de outubro"
+   },
+   "label": "escolhe a água"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"−R$ 238,40\", \"Dar baixa de R$ 238,40\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
+   "label": "confere boleto de 238,40"
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 20.7
+   "at": 20.62
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PAGTO BOLETO AGUA E ESGOTO\")) button:has-text(\"Dar baixa\")"
+   },
+   "at": 20.92,
+   "label": "Dar baixa de R$ 238,40 (ZOOM)"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PAGTO BOLETO AGUA E ESGOTO\")) :text-is(\"Baixada\")"
+   },
+   "timeout": 10
   },
   {
    "do": "hover",
    "target": {
-    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX RECEBIDO SERRA FINA ALUMINIO\")) button:has-text(\"Criar receita\")"
+    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PAGTO BOLETO AGUA E ESGOTO\")) :text-is(\"Baixada\")"
    },
-   "seconds": 0.4,
-   "at": 21.86,
-   "label": "Criar receita (não)",
+   "seconds": 0.8,
+   "at": 23.23,
+   "label": "selo Baixada",
    "optional": true,
    "timeout": 4
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX RECEBIDO SERRA FINA ALUMINIO\")) button:has-text(\"Mais ações\")"
-   },
-   "at": 26.47,
-   "label": "Mais ações"
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "menuitem",
-    "name": "Buscar lançamento"
-   },
-   "at": 27.53,
-   "label": "Buscar lançamento"
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 29.02
-  },
-  {
-   "do": "click",
-   "target": {
-    "placeholder": "Nome do cliente/fornecedor, nº do pedido..."
-   },
-   "at": 29.22,
-   "label": "campo da busca"
-  },
-  {
-   "do": "type",
-   "target": {
-    "placeholder": "Nome do cliente/fornecedor, nº do pedido..."
-   },
-   "text": "Serra",
-   "at": 30.4,
-   "label": "digita Serra",
-   "noClick": true
+   "at": 28.49
   },
   {
    "do": "hover",
    "target": {
-    "text": "Mostra lançamentos de R$ 4.815,00",
-    "within": "main"
+    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PAGTO BOLETO AGUA E ESGOTO\")) :text-is(\"Baixada\")"
    },
-   "seconds": 0.5,
-   "at": 30.64,
-   "label": "até R$ 2,00 de diferença",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX RECEBIDO SERRA FINA ALUMINIO\")) [aria-label=\"Lançamentos encontrados\"] :text(\"Serra Fina\")"
-   },
-   "seconds": 0.6,
-   "at": 36.94,
-   "label": "a venda com dif. −R$ 0,20 (ZOOM)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX RECEBIDO SERRA FINA ALUMINIO\")) [aria-label=\"Lançamentos encontrados\"] :text(\"Serra Fina\")"
-   },
-   "label": "marca a venda"
-  },
-  {
-   "do": "mark",
-   "name": "L5",
-   "at": 39.7
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX RECEBIDO SERRA FINA ALUMINIO\")) button:has-text(\"Casar com selecionado\")"
-   },
-   "at": 40.0,
-   "label": "Casar com selecionado"
-  },
-  {
-   "do": "waitFor",
-   "text": "Casar com valor diferente?",
-   "timeout": 10
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Casar com valor diferente?",
-    "exact": true
-   },
-   "seconds": 0.6,
-   "at": 42.61,
-   "label": "Casar com valor diferente?",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L6",
-   "at": 45.52
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Casar assim",
-    "exact": true
-   },
-   "at": 45.52,
-   "label": "Casar assim"
-  },
-  {
-   "do": "waitFor",
-   "target": {
-    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX RECEBIDO SERRA FINA ALUMINIO\")) :text-is(\"Casada\")"
-   },
-   "timeout": 10
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main div:has(> p:text-is(\"Diferenças casadas\")) button"
-   },
-   "seconds": 0.8,
-   "at": 51.01,
-   "label": "Diferenças casadas (ZOOM)",
+   "seconds": 1.0,
+   "at": 31.78,
+   "label": "baixa do valor inteiro",
    "optional": true,
    "timeout": 4
   },
@@ -345,7 +271,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 56.88
+   "at": 38.87
   }
  ]
 }

@@ -1,6 +1,6 @@
 {
  "name": "t13-cap10",
- "title": "T13 · Cap. 10 · O fiado na mesma lista (narração ESTIMADA 99,0 s; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T13 · Cap. 10 · E as parcelas? (narração ESTIMADA 56,3 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t13-cap10",
  "pace": 0.5,
  "cps": 40,
@@ -102,319 +102,244 @@
  ],
  "steps": [
   {
-   "do": "mark",
-   "name": "L1",
-   "at": 0.4
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "main button:text-is('A Receber')"
-   },
-   "at": 0.53,
-   "label": "aba A Receber"
-  },
-  {
    "do": "click",
    "target": {
     "selector": "main input[aria-label='Buscar contas']"
    },
-   "at": 1.17,
-   "label": "busca Quiririm (clique no campo)"
+   "at": 0.03,
+   "label": "busca pneus (clique no campo)"
+  },
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.4
   },
   {
    "do": "type",
    "target": {
     "selector": "main input[aria-label='Buscar contas']"
    },
-   "text": "Quiririm",
+   "text": "pneus",
    "cps": 40,
-   "at": 2.02,
-   "label": "busca Quiririm",
+   "at": 1.56,
+   "label": "busca pneus",
    "noClick": true
   },
   {
    "do": "waitFor",
    "target": {
-    "selector": "main tbody tr:has-text('Aços Quiririm Ltda')"
+    "selector": "main tbody tr:has-text('Pneus do caminhão truck (parcela 3/3)')"
    },
    "timeout": 8
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text('Aços Quiririm Ltda') :text-is('Saldo')"
+    "selector": "main tbody tr:has-text('Pneus do caminhão truck (parcela 2/3)') :text-is('23/12/2026')"
    },
-   "seconds": 0.8,
-   "at": 4.96,
-   "label": "chip roxo Saldo",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('Aços Quiririm Ltda') :text-is('R$ 4.870,00')"
-   },
-   "seconds": 1.2,
-   "at": 9.29,
-   "label": "R$ 4.870,00",
+   "seconds": 1.0,
+   "at": 6.86,
+   "label": "parcela 2, 23/12/2026",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 12.3
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('Aços Quiririm Ltda') :text-is('Saldo')"
-   },
-   "seconds": 1.6,
-   "at": 12.75,
-   "label": "ZOOM o chip Saldo e o valor R$ 4.870,00",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('Aços Quiririm Ltda') :text-is('Cliente')"
-   },
-   "seconds": 1.0,
-   "at": 17.69,
-   "label": "Aços Quiririm Ltda, Cliente",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Saldo\", \"R$ 4.870,00\", \"Cliente\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody tr\")].filter(e=>!true||e.innerText.includes(\"A\\u00e7os Quiririm Ltda\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere linha de saldo da Aços Quiririm"
-  },
-  {
-   "do": "mark",
-   "name": "L3",
-   "at": 21.15
+   "at": 9.72
   },
   {
    "do": "click",
    "target": {
-    "selector": "main tbody tr:has-text('Aços Quiririm Ltda') button[title='Receber']"
+    "selector": "main tbody tr:has-text('Pneus do caminhão truck (parcela 2/3)') button[title='Editar']"
    },
-   "at": 23.86,
-   "label": "Receber (saldo da Aços Quiririm)"
+   "at": 10.61,
+   "label": "lápis Editar na parcela 2"
   },
   {
    "do": "waitFor",
-   "text": "Receber de Aços Quiririm Ltda",
+   "text": "Editar parcelas",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=alertdialog] button:has-text('Só esta conta')"
+   },
+   "seconds": 0.15,
+   "at": 14.35,
+   "label": "Só esta conta",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=alertdialog] button:has-text('Esta e as próximas')"
+   },
+   "seconds": 0.6,
+   "at": 14.58,
+   "label": "Esta e as próximas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=alertdialog] button:has-text('Todas as parcelas pendentes')"
+   },
+   "seconds": 1.0,
+   "at": 17.54,
+   "label": "Todas as parcelas pendentes",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 19.79
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=alertdialog] button:has-text('Esta e as próximas')"
+   },
+   "at": 20.09,
+   "label": "Esta e as próximas"
+  },
+  {
+   "do": "waitFor",
+   "text": "Altere os dados da conta.",
    "timeout": 8
   },
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] button[role=combobox]:has-text('Dinheiro (Caixa)')"
+    "selector": "#bill-due"
    },
-   "at": 27.35,
-   "label": "Forma de recebimento (abre a lista)"
+   "at": 22.19,
+   "label": "Vencimento 28/12/2026 (abre o calendário)"
   },
   {
    "do": "click",
    "target": {
-    "role": "option",
-    "name": "Pix / Transferência (Banco)"
+    "selector": "[data-radix-popper-content-wrapper] button[name='day']:not(.day-outside):text-is('28')"
    },
-   "at": 28.3,
-   "label": "Pix / Transferência (Banco)"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] button[role=combobox]",
-    "nth": 1
-   },
-   "at": 28.86,
-   "label": "Conta bancária (abre a lista)"
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "option",
-    "name": "Conta Principal"
-   },
-   "at": 30.04,
-   "label": "Conta Principal"
+   "at": 24.14,
+   "label": "Vencimento 28/12/2026"
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 30.92
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "#pay-fiado-amount"
-   },
-   "at": 31.42,
-   "label": "ZOOM Valor 2.000,00 e Saldo após esta baixa (clique no campo)"
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "#pay-fiado-amount"
-   },
-   "text": "2000,00",
-   "cps": 40,
-   "at": 32.53,
-   "label": "ZOOM Valor 2.000,00 e Saldo após esta baixa",
-   "noClick": true,
-   "clear": true
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Saldo após esta baixa",
-    "within": "[role=dialog]"
-   },
-   "seconds": 1.6,
-   "at": 35.47,
-   "label": "Saldo após esta baixa: R$ 2.870,00",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Saldo após esta baixa: R$ 2.870,00\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere saldo depois da baixa"
-  },
-  {
-   "do": "mark",
-   "name": "L5",
-   "at": 39.77
+   "at": 26.06
   },
   {
    "do": "click",
    "target": {
     "role": "button",
-    "name": "Confirmar recebimento",
+    "name": "Salvar",
     "exact": true
    },
-   "at": 39.97,
-   "label": "Confirmar recebimento",
+   "at": 26.26,
+   "label": "Salvar",
    "noScroll": true
   },
   {
    "do": "waitFor",
-   "text": "Recebimento registrado",
+   "text": "Conta atualizada",
    "timeout": 10
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text('Aços Quiririm Ltda') :text-is('R$ 2.870,00')"
+    "selector": "main tbody tr:has-text('Pneus do caminhão truck (parcela 2/3)') :text-is('28/12/2026')"
    },
-   "seconds": 1.4,
-   "at": 43.82,
-   "label": "o saldo caiu para R$ 2.870,00",
+   "seconds": 0.15,
+   "at": 27.12,
+   "label": "a segunda foi pro dia 28",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Pneus do caminhão truck (parcela 3/3)') :text-is('28/01/2027')"
+   },
+   "seconds": 0.6,
+   "at": 28.03,
+   "label": "a terceira acompanhou",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Pneus do caminhão truck (parcela 1/3)') :text-is('23/11/2026')"
+   },
+   "seconds": 1.0,
+   "at": 30.38,
+   "label": "a primeira ficou no dia 23",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"R$ 2.870,00\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody tr\")].filter(e=>!true||e.innerText.includes(\"A\\u00e7os Quiririm Ltda\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere saldo de 2.870,00"
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"23/11/2026\", \"28/12/2026\", \"28/01/2027\", \"R$ 2.360,00\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere vencimentos depois do Salvar"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 32.56
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Pneus do caminhão truck (parcela 2/3)') :text-is('R$ 2.360,00')"
+   },
+   "seconds": 2.2,
+   "at": 35.82,
+   "label": "o valor da parcela (a dica do grupo)",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 46.81
+   "at": 47.64
   },
   {
    "do": "click",
    "target": {
-    "selector": "main input[aria-label='Buscar contas']"
+    "selector": "main tbody tr:has-text('Pneus do caminhão truck (parcela 3/3)') button[title='Excluir']"
    },
-   "at": 47.51,
-   "label": "busca Fundição (clique no campo)"
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "main input[aria-label='Buscar contas']"
-   },
-   "text": "Fundição",
-   "cps": 40,
-   "at": 48.11,
-   "label": "busca Fundição",
-   "noClick": true,
-   "clear": true
+   "at": 47.84,
+   "label": "lixeira Excluir na parcela 3"
   },
   {
    "do": "waitFor",
-   "target": {
-    "selector": "main tbody tr:has-text('18/01/2027')"
-   },
+   "text": "Excluir parcelas",
    "timeout": 8
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text('17/11/2026') :text-is('Fundição Bandeira do Vale')"
+    "text": "Parcelas pagas ou com baixa permanecem no histórico e não serão excluídas.",
+    "within": "[role=alertdialog]"
    },
-   "seconds": 0.8,
-   "at": 49.0,
-   "label": "Fundição Bandeira do Vale",
+   "seconds": 1.43,
+   "at": 51.81,
+   "label": "parcela paga fica no histórico",
    "optional": true,
    "timeout": 4
   },
   {
-   "do": "hover",
+   "do": "click",
    "target": {
-    "selector": "main tbody tr:has-text('17/12/2026') :text-is('17/12/2026')"
+    "selector": "[role=alertdialog] button:has-text('Cancelar')"
    },
-   "seconds": 0.15,
-   "at": 57.21,
-   "label": "só as três parcelas, nenhuma linha Saldo",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"R$ 4.790,00\", \"17/11/2026\", \"17/12/2026\", \"18/01/2027\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere as três parcelas de R$ 4.790,00"
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{await new Promise(r=>setTimeout(r,600));const el=document.querySelector(\"main tbody\");const t=(el?el.innerText:'').replace(/[\\s\\u00a0]+/g,' ').toLowerCase();return t.includes(\"saldo\")?'DIFERENTE: apareceu '+\"Saldo\":'OK: ausente '+\"Saldo\"})()",
-   "label": "confere nenhuma linha Saldo da Fundição"
-  },
-  {
-   "do": "mark",
-   "name": "L7",
-   "at": 58.01
-  },
-  {
-   "do": "mark",
-   "name": "L8",
-   "at": 76.89
-  },
-  {
-   "do": "mark",
-   "name": "L9",
-   "at": 84.83
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('17/11/2026') button[title='Editar']"
-   },
-   "seconds": 3.0,
-   "at": 86.5,
-   "label": "o lápis Editar de uma parcela (sem clicar)",
-   "optional": true,
-   "timeout": 4
+   "at": 54.19,
+   "label": "Cancelar"
   },
   {
    "do": "eval",
@@ -424,7 +349,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 99.01
+   "at": 56.27
   }
  ]
 }

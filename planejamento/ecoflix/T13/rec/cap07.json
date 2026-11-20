@@ -1,6 +1,6 @@
 {
  "name": "t13-cap07",
- "title": "T13 · Cap. 7 · A conta que se repete (narração ESTIMADA 59,4 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T13 · Cap. 7 · Parcelar uma conta (narração ESTIMADA 73,6 s; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t13-cap07",
  "pace": 0.5,
  "cps": 40,
@@ -20,7 +20,7 @@
  },
  "seedExtra": [
   "t13/inicio",
-  "t13/apos-cap06"
+  "t13/apos-cap05"
  ],
  "prewarm": [
   "/login"
@@ -114,7 +114,7 @@
     "exact": true,
     "within": "main"
    },
-   "at": 3.04,
+   "at": 1.9,
    "label": "Nova conta"
   },
   {
@@ -125,45 +125,73 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 8.35
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "#bill-amount"
-   },
-   "at": 8.35,
-   "label": "ZOOM Valor 2.300,00 (clique no campo)"
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "#bill-amount"
-   },
-   "text": "2300,00",
-   "cps": 40,
-   "at": 8.95,
-   "label": "ZOOM Valor 2.300,00",
-   "noClick": true
+   "at": 11.09
   },
   {
    "do": "click",
    "target": {
     "selector": "#bill-description"
    },
-   "at": 10.03,
+   "at": 11.49,
    "label": "Descrição (colada) (clique no campo)"
   },
   {
    "do": "eval",
-   "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM ALVO (nada em foco)';document.execCommand('insertText',false,\"Aluguel da empilhadeira\");return e.value})()",
-   "at": 10.69,
+   "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM ALVO (nada em foco)';document.execCommand('insertText',false,\"Pneus do caminh\\u00e3o truck\");return e.value})()",
+   "at": 12.82,
    "label": "Descrição (colada)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#bill-due"
+   },
+   "at": 13.19,
+   "label": "Vencimento 23/11/2026 (1ª parcela) (abre o calendário)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button[name='day']:not(.day-outside):text-is('23')"
+   },
+   "at": 16.73,
+   "label": "Vencimento 23/11/2026 (1ª parcela)"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 18.65
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#bill-amount"
+   },
+   "at": 18.98,
+   "label": "ZOOM Valor 7.080,00 (clique no campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#bill-amount"
+   },
+   "text": "7080,00",
+   "cps": 40,
+   "at": 22.08,
+   "label": "ZOOM Valor 7.080,00",
+   "noClick": true
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "selector": "[data-radix-popper-content-wrapper] table[role=grid]"
+   },
+   "timeout": 4
   },
   {
    "do": "eval",
    "js": "(async()=>{const acha=()=>[...document.querySelectorAll(\"#bill-category\")].find(e=>e.offsetParent);let el=acha();for(let i=0;i<30&&!el;i++){await new Promise(r=>setTimeout(r,100));el=acha();}if(!el)return 'SEM ALVO';el.click();const viu=async()=>{for(let i=0;i<10;i++){if([...document.querySelectorAll(\"input[placeholder='Pesquisar categoria...']\")].some(e=>e.offsetParent))return true;await new Promise(r=>setTimeout(r,100));}return false};if(!(await viu())){const e2=acha();if(e2){e2.click();return 'ok: '+e2.textContent.trim().slice(0,60)+' (2º clique)'+((await viu())?'':' SEM ALVO: não abriu')}}return 'ok: '+el.textContent.trim().slice(0,60)})()",
-   "at": 10.85,
+   "at": 25.77,
    "label": "Categoria (abre a lista, sem cursor)"
   },
   {
@@ -171,37 +199,43 @@
    "target": {
     "placeholder": "Pesquisar categoria..."
    },
-   "text": "Aluguel",
-   "at": 10.95,
-   "label": "Aluguel (busca + Enter)",
+   "text": "veículos",
+   "at": 26.17,
+   "label": "Manutenção de veículos (busca + Enter)",
    "noClick": true,
    "submit": true
   },
   {
-   "do": "click",
-   "target": {
-    "selector": "#bill-due"
-   },
-   "at": 12.47,
-   "label": "Vencimento 12/11/2026 (abre o calendário)"
+   "do": "eval",
+   "js": "(async()=>{const acha=()=>[...document.querySelectorAll(\"[role=dialog] button[role=combobox]\")].find(e=>e.offsetParent&&e.textContent.includes(\"Selecione o fornecedor\"));let el=acha();for(let i=0;i<30&&!el;i++){await new Promise(r=>setTimeout(r,100));el=acha();}if(!el)return 'SEM ALVO';el.click();const viu=async()=>{for(let i=0;i<10;i++){if([...document.querySelectorAll(\"input[placeholder='Pesquisar fornecedor...']\")].some(e=>e.offsetParent))return true;await new Promise(r=>setTimeout(r,100));}return false};if(!(await viu())){const e2=acha();if(e2){e2.click();return 'ok: '+e2.textContent.trim().slice(0,60)+' (2º clique)'+((await viu())?'':' SEM ALVO: não abriu')}}return 'ok: '+el.textContent.trim().slice(0,60)})()",
+   "at": 26.68,
+   "label": "Selecione o fornecedor (sem cursor)"
   },
   {
-   "do": "click",
+   "do": "type",
    "target": {
-    "selector": "[data-radix-popper-content-wrapper] button[name='day']:not(.day-outside):text-is('12')"
+    "placeholder": "Pesquisar fornecedor..."
    },
-   "at": 14.75,
-   "label": "Vencimento 12/11/2026"
+   "text": "Vale",
+   "at": 26.98,
+   "label": "busca Vale",
+   "noClick": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const acha=()=>[...document.querySelectorAll(\"[cmdk-item],[role=option]\")].find(e=>e.offsetParent&&e.textContent.includes(\"Auto Pe\\u00e7as Vale Forte\"));let el=acha();for(let i=0;i<30&&!el;i++){await new Promise(r=>setTimeout(r,100));el=acha();}if(!el)return 'SEM ALVO';el.click();return 'ok: '+el.textContent.trim().slice(0,60)})()",
+   "at": 27.75,
+   "label": "Auto Peças Vale Forte (sem cursor)"
   },
   {
    "do": "mark",
-   "name": "L3",
-   "at": 16.06
+   "name": "L4",
+   "at": 28.11
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim()===\"Parcelar ou repetir\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-260);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 16.06,
+   "at": 29.01,
    "label": "desce a janela até Parcelar ou repetir"
   },
   {
@@ -209,128 +243,100 @@
    "target": {
     "selector": "[role=dialog] button[aria-expanded]:has-text('Parcelar ou repetir')"
    },
-   "at": 16.59,
+   "at": 29.77,
    "label": "abre Parcelar ou repetir"
   },
   {
    "do": "click",
    "target": {
-    "selector": "#recurrence-toggle"
+    "selector": "#installment-toggle"
    },
-   "at": 18.92,
-   "label": "liga Repete?"
+   "at": 31.12,
+   "label": "liga Parcelar"
   },
   {
    "do": "waitFor",
-   "target": {
-    "selector": "#recurrence-frequency"
-   },
-   "timeout": 6
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim()===\"Repetir at\\u00e9 (opcional)\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-420);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 21.06,
-   "label": "desce até Frequência e Repetir até"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Gera contas automaticamente",
-    "within": "[role=dialog]"
-   },
-   "seconds": 1.0,
-   "at": 22.66,
-   "label": "Gera contas automaticamente na frequência escolhida",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L4",
-   "at": 24.99
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "#recurrence-frequency"
-   },
-   "at": 25.88,
-   "label": "Frequência (abre: Semanal, Mensal, Anual)"
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "option",
-    "name": "Mensal"
-   },
-   "at": 28.63,
-   "label": "Mensal"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "#recurrence-interval"
-   },
-   "seconds": 0.15,
-   "at": 29.54,
-   "label": "A cada 1",
-   "optional": true,
-   "timeout": 4
+   "text": "Configurar faturamento",
+   "timeout": 8
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 30.58
+   "at": 32.56
   },
   {
    "do": "click",
    "target": {
-    "selector": "#recurrence-end"
+    "selector": "[role=dialog]:has-text('Nº de parcelas') button:text-is('3')"
    },
-   "at": 31.16,
-   "label": "Repetir até 12/04/2027 (abre o calendário)"
+   "at": 33.36,
+   "label": "Nº de parcelas: 3"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "[data-radix-popper-content-wrapper] button[name='next-month']"
+    "selector": "[role=dialog]:has-text('Nº de parcelas') input[aria-label='Valor da parcela 2']"
    },
-   "seconds": 0.15,
-   "at": 32.07,
-   "label": "Repetir até 12/04/2027: o cursor no próximo mês",
+   "seconds": 1.6,
+   "at": 39.31,
+   "label": "ZOOM as três linhas e a faixa Soma das parcelas",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "eval",
-   "js": "(async()=>{const b=()=>document.querySelector(\"[data-radix-popper-content-wrapper] button[name='next-month']\");if(!b())return 'SEM ALVO';for(let i=0;i<5;i++){b().click();await new Promise(r=>setTimeout(r,170));}const c=document.querySelector('[data-radix-popper-content-wrapper] [aria-live], [data-radix-popper-content-wrapper] .rdp-caption_label');return c?c.textContent.trim():'ok'})()",
-   "label": "Repetir até 12/04/2027: avança 5 meses"
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Soma das parcelas\", \"R$ 7.080,00\", \"23/11/2026\", \"23/12/2026\", \"23/01/2027\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere as três datas e a soma R$ 7.080,00"
   },
   {
-   "do": "click",
-   "target": {
-    "selector": "[data-radix-popper-content-wrapper] button[name='day']:not(.day-outside):text-is('12')"
-   },
-   "at": 34.65,
-   "label": "Repetir até 12/04/2027"
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"2.360\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog]\"+' input, '+\"[role=dialog]\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere parcelas de 2.360 (o campo mostra sem centavos)"
   },
   {
    "do": "hover",
    "target": {
-    "text": "Deixe vazio para repetir sem data-fim.",
-    "within": "[role=dialog]"
+    "text": "Soma das parcelas",
+    "within": "[role=dialog]:has-text('Nº de parcelas')"
    },
-   "seconds": 1.4,
-   "at": 36.57,
-   "label": "Deixe vazio para repetir sem data-fim.",
+   "seconds": 0.46,
+   "at": 45.46,
+   "label": "faixa verde Soma das parcelas",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 39.05
+   "at": 46.87
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Aplicar faturamento",
+    "exact": true
+   },
+   "at": 47.07,
+   "label": "Aplicar faturamento",
+   "noScroll": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "3x — 1º venc. 23/11/2026",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.6,
+   "at": 48.92,
+   "label": "resumo 3x — 1º venc. 23/11/2026 — total R$ 7.080,00",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 53.37
   },
   {
    "do": "click",
@@ -339,13 +345,13 @@
     "name": "Criar conta",
     "exact": true
    },
-   "at": 39.25,
+   "at": 53.57,
    "label": "Criar conta",
    "noScroll": true
   },
   {
    "do": "waitFor",
-   "text": "Conta recorrente criada",
+   "text": "3 parcelas criadas",
    "timeout": 10
   },
   {
@@ -353,69 +359,52 @@
    "target": {
     "selector": "main input[aria-label='Buscar contas']"
    },
-   "at": 40.34,
-   "label": "busca aluguel da (clique no campo)"
+   "at": 54.66,
+   "label": "busca pneus (clique no campo)"
   },
   {
    "do": "type",
    "target": {
     "selector": "main input[aria-label='Buscar contas']"
    },
-   "text": "aluguel da",
+   "text": "pneus",
    "cps": 40,
-   "at": 41.64,
-   "label": "busca aluguel da",
+   "at": 55.97,
+   "label": "busca pneus",
    "noClick": true
   },
   {
    "do": "waitFor",
    "target": {
-    "selector": "main tbody tr:has-text('12/01/2027')"
+    "selector": "main tbody tr:has-text('Pneus do caminhão truck (parcela 3/3)')"
    },
    "timeout": 8
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text('12/11/2026') :text-is('12/11/2026')"
+    "selector": "main tbody tr:has-text('Pneus do caminhão truck (parcela 2/3)') :text-is('23/12/2026')"
    },
    "seconds": 0.15,
-   "at": 43.09,
-   "label": "a conta de novembro",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('12/12/2026') :text-is('12/12/2026')"
-   },
-   "seconds": 0.15,
-   "at": 44.0,
-   "label": "a de dezembro",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('12/04/2027') :text-is('12/04/2027')"
-   },
-   "seconds": 0.15,
-   "at": 44.84,
-   "label": "até a de abril (a RPC cria todas até a data de parar)",
+   "at": 56.58,
+   "label": "as três parcelas",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"12/11/2026\", \"12/12/2026\", \"12/01/2027\", \"12/02/2027\", \"12/03/2027\", \"12/04/2027\", \"R$ 2.300,00\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere as seis contas do aluguel da empilhadeira"
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"23/11/2026\", \"23/12/2026\", \"23/01/2027\", \"R$ 2.360,00\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere três parcelas de R$ 2.360,00"
   },
   {
    "do": "mark",
-   "name": "L7",
-   "at": 45.47
+   "name": "L8",
+   "at": 57.22
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 63.41
   },
   {
    "do": "eval",
@@ -425,7 +414,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 59.42
+   "at": 73.64
   }
  ]
 }

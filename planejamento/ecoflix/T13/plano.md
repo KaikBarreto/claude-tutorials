@@ -6,46 +6,54 @@
 - **Antes:** T10 "Estoque: saldo, histórico e posição". **Próximo:** T14 "Bancos, cofre e conciliação bancária"
   (fonte: "fazer o extrato do banco bater com o sistema").
 - **Vinhetas (áreas):** CONTAS · LANÇAMENTO · RECORRÊNCIA · BAIXA · FIADO · COMPROVANTE · FILTROS · RESUMO.
-- **Alvo da fonte:** ~16 min. Estimativa: 1.951 palavras de fala (~12,5 min de voz) + vinhetas, cartela e as esperas dos
-  formulários (acelerados sem fala) ≈ 14,5 min.
-- Base: `T13/inventario.md` (código 1.59.154). Sem 🔒 (Fase 1) e sem 🚫 na fonte desta aula.
+- **Alvo da fonte:** ~16 min. Estimativa 1.60.18: 3.076 palavras de fala (~19,7 min de voz, 1.951 antes) + vinhetas, cartela e as esperas dos
+  formulários (acelerados sem fala) ≈ 22 min (a aula cresceu com os 6 capítulos novos; o alvo de 16 min foi estourado de propósito).
+- Base: `T13/inventario.md` (código 1.60.18). Sem 🔒 (Fase 1) e sem 🚫 na fonte desta aula.
 - **FAKE_NOW:** `2026-11-10T08:30:00-03:00` (terça) em todos os capítulos. Desktop, Rafael Nogueira (MASTER) logado.
 
-## Capítulos (os da fonte, na ordem)
+## Capítulos (1.60.18: 20, na ordem; 6, 10, 12, 13, 14 e 18 são novos)
 
 | # | Vinheta (área / título) | O que a tela mostra | ⚠️ e ilustração | Estado de partida |
 |---|---|---|---|---|
 | 0 | (abertura) | Dashboard → menu "Financeiro" → "Contas a Pagar/Receber". Cartão "Antes". | [ILUSTRAÇÃO: as contas espalhadas viram uma lista com data] | `inicio` |
-| 1 | CONTAS / A tela e as abas | Abas "Todas", "A Pagar", "A Receber"; colunas; status "Vencida", "Pendente", "Paga"; botão "Nova conta". | | `inicio` |
-| 2 | CONTAS / Os quatro cartões | "Total a Pagar", "Total a Receber", "Vencidas", "Vence em 7 dias"; a água vencida e a energia de hoje. | [ILUSTRAÇÃO: linha do tempo vencidas × próximos 7 dias]; cartões = empresa inteira (dito aqui, dica no 12) | `inicio` |
-| 3 | CONTAS / Lista e calendário | "Calendário": novembro; dia 5 com triângulo; clique no dia 10 ("Contas de 10/11/2026"); volta a "Lista". | ⚠️ calendário sem saldo (aviso na tela) | `inicio` |
-| 4 | LANÇAMENTO / Lançar uma conta | "Nova conta": manutenção da prensa (Hidráulica Moretti), R$ 3.480,00, vence 19/11, "Manutenção de máquinas", "Pátio", previsto "Conta Principal". | | `inicio` |
-| 5 | LANÇAMENTO / A conta que já nasce paga | "Já paguei essa conta": conserto do pneu da empilhadeira, R$ 180,00, pago ontem por Pix. | | `apos-cap04` |
-| 6 | LANÇAMENTO / Parcelar uma conta | Pneus do caminhão truck, Auto Peças Vale Forte, R$ 7.080,00 em 3x de R$ 2.360,00 ("Configurar faturamento"). | [ILUSTRAÇÃO: uma compra vira três contas; parcelar × repetir] | `apos-cap05` |
-| 7 | RECORRÊNCIA / A conta que se repete | "Repete?": aluguel da empilhadeira, R$ 2.300,00, mensal, dia 12, até 12/04/2027. | [ILUSTRAÇÃO: o molde e a janela de três meses] | `apos-cap06` |
-| 8 | RECORRÊNCIA / Só esta ou esta e as futuras | Editar a de dezembro: "Esta e as futuras", vencimento 12/12 → 15/12 (dezembro e janeiro mudam); diálogo de excluir mostrado e cancelado. | [ILUSTRAÇÃO: só esta × esta e as futuras] | `apos-cap07` |
-| 9 | BAIXA / Dar baixa | Energia R$ 1.874,30 inteira por Pix; manutenção da prensa: R$ 1.740,00 agora e o resto para 30/11 ("Parcial"). | ⚠️ baixa mexe em dinheiro (dica) + [ILUSTRAÇÃO: o caminho do dinheiro]; ⚠️ sem permissão bancária (dica) | `apos-cap08` |
-| 10 | FIADO / O fiado na mesma lista | Aba "A Receber", busca "Quiririm": linha "Saldo" R$ 4.870,00 → "Receber" R$ 2.000,00 por Pix, sobra R$ 2.870,00; busca "Fundição": só as três parcelas. | ⚠️ fiado some quando vira parcela (dica) + [ILUSTRAÇÃO: fiado parcelado]; ⚠️ título de pedido (dica) | `apos-cap09` |
-| 11 | COMPROVANTE / Anexar o comprovante | Energia paga → "Editar" → "Mais detalhes" → "Anexar" o PDF do Pix → "Salvar"; reabre e o PDF está lá. | dica: comprovante na hora da baixa vai também para o lançamento do banco ou do caixa | `apos-cap10` |
-| 12 | FILTROS / Filtrar a lista | "Filtros": "Status" "Pendente" + "Cliente/Fornecedor" "Auto Peças Vale Forte" → as três parcelas dos pneus; passa por "Categoria", "Centro de custo", "Vencimento (período)"; "Limpar filtros". | ⚠️ cartões não mudam (dica); ⚠️ saldo sai com filtro (dica) | `apos-cap11` |
-| 13 | RESUMO / Recapitulando | Montagem dos capítulos; cartão "Próximo". | | (montagem) |
+| 1 | CONTAS / A tela e as abas | Abas; colunas; status; **novo:** dica do status ("Vencida há 5 dia(s)") e "Detalhes da conta" ao clicar na linha. | | `inicio` |
+| 2 | CONTAS / Os quatro cartões | Cartões; **novo:** na aba A Pagar o 2º cartão vira "Total pago" e na A Receber "Total recebido"; cartões acompanham a lista. | [ILUSTRAÇÃO: vencidas × 7 dias] | `inicio` |
+| 3 | CONTAS / Lista e calendário | Calendário de novembro, dia 5 com triângulo, dia 10; volta a "Lista". | ⚠️ calendário sem saldo | `inicio` |
+| 4 | LANÇAMENTO / Lançar uma conta | Nova ordem: Descrição, Vencimento, Valor; manutenção da prensa R$ 3.480,00; **novo:** "Forma de pagamento" ao lado do previsto; dica do botão de mais e do aviso de conta igual. | | `inicio` |
+| 5 | LANÇAMENTO / A conta que já nasce paga | "Já paguei essa conta": conserto do pneu R$ 180,00 (mesma ordem de campos). | | `apos-cap04` |
+| **6** | LANÇAMENTO / O sistema preenche pra você | **Novo.** Descrição "Internet do escritório" → "Padrão encontrado" (Vale Fibra Telecom Ltda, Telefone e internet, Conta Principal, Boleto, "Usado 3 vezes") → "Preencher" → Valor 289,90, vencimento dia 15 → hover "Desfazer preenchimento". Lateral: não segue a cadeia. | só preenche campo vazio; vale na receita e no caixa/banco | `apos-cap05` + `internet` |
+| 7 | LANÇAMENTO / Parcelar uma conta | Pneus do caminhão truck 3x R$ 2.360,00 (Descrição, Vencimento, Valor). | [ILUSTRAÇÃO: uma compra, três contas] | `apos-cap05` |
+| 8 | RECORRÊNCIA / A conta que se repete | Aluguel da empilhadeira, R$ 2.300,00, mensal, até 12/04/2027. | [ILUSTRAÇÃO: o molde] | `apos-cap07` |
+| 9 | RECORRÊNCIA / Só esta ou esta e as próximas | Editar a de dezembro: "Esta e as próximas", 12/12 → 15/12; excluir mostrado e cancelado. | [ILUSTRAÇÃO: só esta × esta e as próximas] | `apos-cap08` |
+| **10** | LANÇAMENTO / E as parcelas? | **Novo.** Editar a parcela 2 dos pneus: "Só esta conta", "Esta e as próximas", "Todas as parcelas pendentes"; vencimento 28/12 (28/01 acompanha); excluir mostrado e cancelado. Lateral. | valor e campos vão para todas as escolhidas | `apos-cap09` |
+| 11 | BAIXA / Dar baixa | Energia inteira por Pix; prensa parcial R$ 1.740,00 (resto 30/11); **novo:** a água vencida com "Juros / multa" 4,77, "Tarifa", "Múltiplas formas de pagamento" (cancela). | ⚠️ baixa mexe em dinheiro + [ILUSTRAÇÃO: o caminho do dinheiro]; sobra vira crédito do fornecedor | `apos-cap09` |
+| **12** | BAIXA / O valor real do mês | **Novo.** "Marcar pago" no aluguel de novembro: "Valor desta ocorrência" 2.415,00; as próximas mantêm o previsto; Pix, Conta Secundária; dezembro segue R$ 2.300,00. | diferente de pagar em parte | `apos-cap11` |
+| **13** | BAIXA / Pagar várias de uma vez | **Novo.** Marca as parcelas 1 e 2 dos pneus; barra "2 linhas selecionadas / Total: R$ 4.720,00"; "Quitar em lote"; Pix, Conta Secundária; um lançamento no banco. | mesma categoria; linha de saldo entra no lote + [ILUSTRAÇÃO: lote = um lançamento] | `apos-cap12` |
+| **14** | BAIXA / Desfazer uma baixa | **Novo.** "Mais ações" → "Estornar pagamento" no conserto do pneu (R$ 180,00 voltam à Conta Principal); "Excluir e estornar"; cancela. Sem mudar o banco. | pagamento conciliado: desfazer a conciliação antes | `apos-cap13` |
+| 15 | FIADO / O fiado na mesma lista | Aços Quiririm "Saldo" R$ 4.870,00 → Receber R$ 2.000,00; Fundição só nas parcelas. | ⚠️ fiado some quando vira parcela + [ILUSTRAÇÃO] | `apos-cap13` |
+| 16 | COMPROVANTE / Anexar o comprovante | Energia paga → Editar → Mais detalhes → Anexar o PDF (**novo:** aviso "Anexo adicionado") → Salvar; reabre. | comprovante na baixa vai ao lançamento | `apos-cap15` |
+| 17 | FILTROS / Filtrar a lista | Status Pendente, Cliente/Fornecedor; **novo:** os cartões mudam junto; atalhos de período e cartões "A receber no período" / "Recebido no período"; "Limpar filtros". | ⚠️ saldo sai com filtro | `apos-cap16` |
+| **18** | FILTROS / Exportar a lista | **Novo.** "Exportar" → "PDF" → janela "Exportar contas" com os filtros da tela e "Opções do arquivo"; cancela. | | `apos-cap16` |
+| 19 | RESUMO / Recapitulando | Montagem dos capítulos; cartão "Próximo". | | (montagem) |
 
-Transições faladas: 0→1 "Vamos à tela"; 1→2 "Antes da lista, os cartões lá de cima"; 2→3 "E dá pra ver as mesmas contas
-num calendário"; 3→4 "Agora, lançar uma conta nova"; 4→5 "E quando a conta chega já paga?"; 5→6 "Agora uma compra
-dividida em vezes"; 6→7 "E a conta que volta todo mês?"; 7→8 "E se uma delas mudar?"; 8→9 "Chegou a hora de pagar";
-9→10 "Agora, o fiado"; 10→11 "E o comprovante daquele Pix da energia?"; 11→12 "Com a lista cheia, os filtros"; 12→13
-"Recapitulando".
+Transições faladas: 0→1 "Vamos conhecer a tela"; 1→2 "Antes da lista, os cartões lá de cima"; 2→3 "E dá pra ver as mesmas
+contas num calendário"; 3→4 "Agora, lançar uma conta nova"; 4→5 "E quando a conta chega já paga?"; 5→6 "Tem conta que
+volta todo mês com os mesmos dados"; 6→7 "Agora uma compra dividida em vezes"; 7→8 (fim do 7, "o Repetir, que vem agora");
+8→9 "E se uma delas mudar?"; 9→10 "As parcelas dos pneus funcionam parecido"; 10→11 "Chegou a hora de pagar"; 11→12 "Nem
+toda conta que se repete vem sempre igual"; 12→13 "E quando um Pix só paga várias contas?"; 13→14 "Deu baixa na conta
+errada?"; 14→15 "Agora, o fiado"; 15→16 "E o comprovante daquele Pix da energia?"; 16→17 "Com a lista cheia, os filtros";
+17→18 "Precisa mandar essa lista pro contador ou imprimir?"; 18→19 "Recapitulando".
 
 ## Falas dos cuidados ⚠️ (fonte → aula)
 | ⚠️ da fonte | Onde | Fala (resumo) |
 |---|---|---|
-| Dar baixa mexe em dinheiro de verdade; herda a categoria; tudo ou nada | cap09 | "Uma dica: dar baixa mexe em dinheiro de verdade..." + ilustração |
-| Cartões = empresa inteira | cap02 (informação) e cap12 ("Uma dica:") | "os quatro cartões não mudam com o filtro" |
-| Por que o fiado às vezes some da lista | cap10 | "Uma dica: se o saldo de um cliente sumir da lista, olha se a venda foi parcelada" + ilustração |
-| Fiado sai com filtro de status, período, categoria, centro de custo, banco previsto | cap12 | "Uma dica: ... é só limpar os filtros" |
+| Dar baixa mexe em dinheiro de verdade; herda a categoria; tudo ou nada | cap11 | "Uma dica: dar baixa mexe em dinheiro de verdade..." + ilustração |
+| Cartões = empresa inteira | cap02 ("Uma dica": acompanham a lista) | "os cartões acompanham o que está na lista" (1.60.18: mudam com busca e filtro) |
+| Por que o fiado às vezes some da lista | cap15 | "Uma dica: se o saldo de um cliente sumir da lista, olha se a venda foi parcelada" + ilustração |
+| Fiado sai com filtro de status, período, categoria, centro de custo, banco previsto | cap17 | "Uma dica: ... é só limpar os filtros" |
 | Calendário só com contas que vencem | cap03 | "Uma dica: o saldo não tem vencimento, então não entra no calendário" (aviso na tela) |
-| Título de pedido não muda valor nem parceiro aqui | cap10 | "Uma dica: essas parcelas vieram do pedido de venda..." |
-| Sem permissão bancária: só dinheiro, aviso amarelo | cap09 | "Uma dica: quem não tem permissão de banco..." |
+| Título de pedido não muda valor nem parceiro aqui | cap15 | "Uma dica: essas parcelas vieram do pedido de venda..." |
+| Sem permissão bancária: só dinheiro, aviso amarelo | cap11 | "Uma dica: quem não tem permissão de banco..." |
 | Em Despesas, o segundo valor da linha de cartão é subtotal | fora | O mundo não tem cartão e a aula não abre a aba Despesas (Relatório Financeiro). Fica para o T14/T15 (relatório). |
 Nenhuma mensagem de erro encenada: todas as baixas dão certo; os avisos são falados como informação.
 
@@ -56,8 +64,11 @@ Além do `MUNDO_FICTICIO.md` (proposta; nomes de parceiro novos a conferir na se
 - **Centros de custo ativos:** "Pátio", "Escritório", "Frota" (com centro ativo o campo aparece no bloco "O que é").
 - **Categorias de despesa:** "Energia elétrica", "Água e esgoto", "Aluguel", "Manutenção de máquinas", "Manutenção de
   veículos", mais as de sistema "Tarifas" e "Juros e Multas". **Receita:** "Venda de sucata" (a das vendas).
-- **Fornecedor novo:** Hidráulica Moretti Ltda, PJ, CNPJ 41.739.625/0001-57, Taubaté, SP, contato@hidraulicamoretti.example,
+- **Fornecedor novo:** Hidráulica Moretti Ltda (fala: Moréti), PJ, CNPJ 41.739.625/0001-57, Taubaté, SP, contato@hidraulicamoretti.example,
   (12) 9 0000-3131 (manutenção da prensa enfardadeira).
+- **Semente `t13/internet` (só o cap06):** fornecedor Vale Fibra Telecom Ltda e 3 contas pagas "Internet do escritório" de R$ 289,90
+  (17/08, 15/09, 15/10; boleto; Conta Principal; categoria "Telefone e internet") com seus `bill_payments`: dão "Usado 3 vezes" ao padrão.
+  Fica fora da cadeia para as contas e a lista não vazarem para T14/T15.
 - **Contas no início (financial_bills):**
   | Descrição | Tipo | Valor | Vencimento | Situação | Categoria · centro · previsto | Parceiro |
   |---|---|---|---|---|---|---|
@@ -81,6 +92,7 @@ Além do `MUNDO_FICTICIO.md` (proposta; nomes de parceiro novos a conferir na se
 
 ## Gravação
 - **Rotas:** `/dashboard` (só no cap00), `/contas-pagar-receber`. Desktop, sem celular, sem página pública, um usuário só.
+- **RPCs novas no backend falso (1.60.18, handlers só do T13):** `update_installment_bill_group`, `delete_installment_bill_group`, `pay_recurring_financial_bill` (valor da ocorrência), `pay_financial_bills_batch` (um lançamento por lote); `create_installment_bills` passou a gravar `installment_group_id`.
 - **RPCs e tabelas a simular no backend falso:** `generate_due_recurring_bills` (no-op que devolve ok),
   `get_financial_bill_origin_dates`, `get_usable_bank_accounts`, `create_installment_bills`,
   `create_recurring_bill_template` (molde + contas da janela de 3 meses: 12/11, 12/12, 12/01),
@@ -92,8 +104,8 @@ Além do `MUNDO_FICTICIO.md` (proposta; nomes de parceiro novos a conferir na se
   `createSignedUrls`).
 - **Arquivo do comprovante:** `comprovante-pix-energia-outubro.pdf`, PDF fictício de uma página (o robô o entrega ao
   `input[type=file]` do "Anexar"); a câmera não abre o PDF (ele abriria em outra aba).
-- **Ilustrações** (cenas HTML no estilo da marca, `docs/09-aula-ilustrada.md`): cap00 contas espalhadas → lista; cap02 linha do
-  tempo; cap06 uma compra → três contas (parcelar × repetir); cap07 o molde e a janela de três meses; cap08 só esta × esta e
-  as futuras; cap09 o caminho do dinheiro na baixa; cap10 o fiado parcelado.
+- **Ilustrações** (cenas a cargo do coordenador; aqui só `cenas/ilustracoes.json`, kit v3 pendente): cap00 contas → lista; cap02 vencidas × 7 dias;
+  cap07 uma compra → três contas; cap08 o molde; cap09 só esta × esta e as próximas; cap11 o caminho do dinheiro; cap13 lote = um lançamento;
+  cap15 o fiado parcelado; PDF do comprovante (cap16) e da lista exportada (cap18).
 - Datas pelo calendário do campo (desktop: botão + calendário). Formulários sem fala podem ser acelerados na edição.
 - A tela não tem cartão de crédito no mundo: a seção "Faturas de Cartão" não aparece.

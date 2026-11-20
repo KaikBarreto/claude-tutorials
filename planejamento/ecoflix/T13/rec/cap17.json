@@ -1,0 +1,561 @@
+{
+ "name": "t13-cap17",
+ "title": "T13 · Cap. 17 · Filtrar a lista (narração ESTIMADA 80,6 s; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "seed": "t13-cap17",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 400
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.60.18",
+  "notification_shown_version": "1.60.18",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t13/inicio",
+  "t13/apos-cap16"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/contas-pagar-receber"
+  },
+  {
+   "do": "waitFor",
+   "text": "Água e esgoto de outubro",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "header button.h-8.w-8"
+   },
+   "noScroll": true
+  },
+  {
+   "do": "wait",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const a=document.getAnimations().filter(x=>x.currentTime<0);a.forEach(x=>x.startTime=document.timeline.currentTime);return a.length})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|inv[áa]lid/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button:text-is('A Receber')"
+   },
+   "at": 5.47,
+   "label": "aba A Receber"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"main tbody tr:last-child\")].filter(e=>e.offsetParent)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-600);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 6.7,
+   "label": "desce a tela até o fim da lista"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Aços Quiririm Ltda') :text-is('Saldo')"
+   },
+   "seconds": 0.62,
+   "at": 8.0,
+   "label": "as linhas de saldo, lá no fim",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 9.57
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button:has-text('Filtros')"
+   },
+   "at": 10.45,
+   "label": "Filtros (abre o painel)"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "[role=dialog] label:text-is('Status')"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] label:text-is('Status')"
+   },
+   "seconds": 0.15,
+   "at": 12.78,
+   "label": "Status",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] label:text-is('Categoria')"
+   },
+   "seconds": 0.15,
+   "at": 13.53,
+   "label": "Categoria",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] label:text-is('Cliente/Fornecedor')"
+   },
+   "seconds": 0.25,
+   "at": 14.52,
+   "label": "Cliente/Fornecedor",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] label:text-is('Centro de custo')"
+   },
+   "seconds": 0.25,
+   "at": 16.19,
+   "label": "Centro de custo",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] label:has-text('Banco previsto')"
+   },
+   "seconds": 0.25,
+   "at": 17.63,
+   "label": "Banco previsto",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] label:text-is('Vencimento (período)')"
+   },
+   "seconds": 0.6,
+   "at": 18.92,
+   "label": "Vencimento (período)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 20.62
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:text-is('Status')) button"
+   },
+   "at": 21.05,
+   "label": "Status (abre a lista)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] label:has(span:text-is('Pendente'))"
+   },
+   "at": 22.36,
+   "label": "marca Pendente"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 23.34,
+   "label": "fecha a lista do Status (Esc)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Aplicar",
+    "exact": true
+   },
+   "at": 23.49,
+   "label": "Aplicar",
+   "noScroll": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button:has-text('Filtros')"
+   },
+   "seconds": 1.6,
+   "at": 26.68,
+   "label": "ZOOM Filtros verde com o número 1",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 30.23
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr",
+    "nth": "last"
+   },
+   "seconds": 1.6,
+   "at": 33.72,
+   "label": "o fim da lista: sem as linhas de saldo",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{await new Promise(r=>setTimeout(r,600));const el=document.querySelector(\"main tbody\");const t=(el?el.innerText:'').replace(/[\\s\\u00a0]+/g,' ').toLowerCase();return t.includes(\"saldo\")?'DIFERENTE: apareceu '+\"Saldo\":'OK: ausente '+\"Saldo\"})()",
+   "label": "confere as linhas de saldo saíram"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 45.15
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const c=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,dy=-y0;if(y0<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
+   "at": 45.45,
+   "label": "sobe a tela até os cartões"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Total a Receber",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.6,
+   "at": 46.03,
+   "label": "os cartões mudaram junto: somam só as pendentes",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 50.82
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button:has-text('Filtros')"
+   },
+   "at": 51.32,
+   "label": "Filtros (de novo)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]:has-text('Todos')",
+    "nth": 0
+   },
+   "at": 52.68,
+   "label": "Cliente/Fornecedor (abre a busca)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar parceiro..."
+   },
+   "text": "Fundição",
+   "at": 53.99,
+   "label": "busca Fundição",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Fundição Bandeira do Vale"
+   },
+   "at": 55.14,
+   "label": "Fundição Bandeira do Vale"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Aplicar",
+    "exact": true
+   },
+   "at": 55.89,
+   "label": "Aplicar",
+   "noScroll": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr",
+    "nth": 1
+   },
+   "seconds": 0.24,
+   "at": 56.96,
+   "label": "as três parcelas dela",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Fundição Bandeira do Vale\", \"17/11/2026\", \"17/12/2026\", \"18/01/2027\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere as três parcelas da Fundição"
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 58.15
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button:has-text('Filtros')"
+   },
+   "at": 58.75,
+   "label": "Filtros (de novo)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Limpar filtros",
+    "exact": true
+   },
+   "at": 60.27,
+   "label": "Limpar filtros",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Aplicar",
+    "exact": true
+   },
+   "at": 61.2,
+   "label": "Aplicar",
+   "noScroll": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"main tbody tr:last-child\")].filter(e=>e.offsetParent)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-600);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 61.88,
+   "label": "desce a tela até o fim da lista"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Aços Quiririm Ltda') :text-is('Saldo')"
+   },
+   "seconds": 0.15,
+   "at": 63.08,
+   "label": "as linhas de saldo voltam",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 63.74
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const c=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,dy=-y0;if(y0<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
+   "at": 63.74,
+   "label": "sobe a tela até os cartões e o botão Filtros"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button:has-text('Filtros')"
+   },
+   "at": 64.16,
+   "label": "Filtros (período de vencimento)"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "[role=dialog] label:text-is('Vencimento (período)')"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Este mês')"
+   },
+   "at": 67.68,
+   "label": "atalho Este mês"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"01/11/2026\", \"30/11/2026\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog]\"+' input, '+\"[role=dialog]\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere De 01/11/2026 e Até 30/11/2026 (Este mês)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Próximos 7 dias')"
+   },
+   "seconds": 0.5,
+   "at": 68.59,
+   "label": "atalho Próximos 7 dias",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Até o fim do mês')"
+   },
+   "seconds": 0.47,
+   "at": 70.18,
+   "label": "atalho Até o fim do mês",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Aplicar",
+    "exact": true
+   },
+   "at": 71.6,
+   "label": "Aplicar",
+   "noScroll": true
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 71.6
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const c=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,dy=-y0;if(y0<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
+   "at": 72.5,
+   "label": "sobe aos cartões"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"A receber no período\", \"Recebido no período\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere os cartões com o período"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "A receber no período",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.6,
+   "at": 74.63,
+   "label": "ZOOM A receber no período e Recebido no período",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Recebido no período",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "at": 77.67,
+   "label": "Recebido no período",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 80.61
+  }
+ ]
+}

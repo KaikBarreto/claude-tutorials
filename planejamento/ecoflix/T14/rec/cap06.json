@@ -1,6 +1,6 @@
 {
  "name": "t14-cap06",
- "title": "T14 · Cap. 6 · Importar o extrato (narração ESTIMADA 76,9 s; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T14 · Cap. 6 · Corrigir e excluir lançamentos (narração ESTIMADA 117,2 s; marcas L1..L12 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t14-cap06",
  "pace": 0.5,
  "cps": 40,
@@ -22,7 +22,8 @@
   "t14/inicio",
   "t14/apos-cap02",
   "t14/apos-cap03",
-  "t14/apos-cap04"
+  "t14/apos-cap04",
+  "t14/lote"
  ],
  "prewarm": [
   "/login"
@@ -90,21 +91,8 @@
    "timeout": 20
   },
   {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Conciliação",
-    "exact": true
-   }
-  },
-  {
-   "do": "waitFor",
-   "text": "Nenhum extrato em conciliação",
-   "timeout": 20
-  },
-  {
-   "do": "waitFor",
-   "idle": true
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Hist\\u00f3rico de Movimenta\\u00e7\\u00f5es\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-120);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;c.scrollTop=y0+dy;return Math.round(el.getBoundingClientRect().top)})()"
   },
   {
    "do": "eval",
@@ -118,314 +106,518 @@
    "at": 0
   },
   {
-   "do": "mark",
-   "name": "L2",
-   "at": 13.21
-  },
-  {
-   "do": "click",
+   "do": "hover",
    "target": {
-    "role": "button",
-    "name": "Importar novo extrato",
-    "exact": true
-   },
-   "at": 13.74,
-   "label": "Importar novo extrato"
-  },
-  {
-   "do": "waitFor",
-   "text": "Importar extrato OFX",
-   "timeout": 10
-  },
-  {
-   "do": "click",
-   "target": {
-    "text": "Como pegar o arquivo do seu banco?",
+    "text": "Internet do pátio (teste)",
     "exact": true,
-    "within": "[role=dialog]"
+    "within": "main"
    },
-   "at": 16.4,
-   "label": "Como pegar o arquivo do seu banco?"
+   "seconds": 0.4,
+   "at": 3.47,
+   "label": "Internet do pátio (teste)",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "hover",
    "target": {
-    "text": "Escolha o formato OFX",
-    "within": "[role=dialog]"
+    "text": "Seguro da picape (teste)",
+    "exact": true,
+    "within": "main"
    },
-   "seconds": 1.2,
-   "at": 19.31,
-   "label": "passo a passo (ZOOM)",
+   "seconds": 0.4,
+   "at": 3.85,
+   "label": "Seguro da picape (teste)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Rastreador (teste)",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.5,
+   "at": 4.76,
+   "label": "Rastreador (teste)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const c=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;if(y0<3)return 'ok';const dy=-y0;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo'})()",
+   "at": 8.99,
+   "label": "sobe ao cartão"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.text-4xl.font-bold"
+   },
+   "seconds": 0.6,
+   "at": 9.39,
+   "label": "o saldo menor do que devia",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"R$ 44.684,77\", \"Rastreador (teste)\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
+   "label": "confere saldo de 44.684,77 e as três linhas de teste"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Hist\\u00f3rico de Movimenta\\u00e7\\u00f5es\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-120);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "label": "desce ao histórico"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 11.77
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Rastreador (teste)",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.3,
+   "at": 12.55,
+   "label": "linha Rastreador (teste)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tr:has-text(\"Rastreador (teste)\") button[aria-label=\"Ações do lançamento\"]"
+   },
+   "at": 14.95,
+   "label": "três pontinhos (Ações do lançamento)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Excluir"
+   },
+   "seconds": 0.6,
+   "at": 17.41,
+   "label": "Editar e Excluir",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 26.01
+   "at": 18.04
   },
   {
-   "do": "upload",
+   "do": "click",
    "target": {
-    "text": "Arraste o arquivo .ofx aqui ou clique para selecionar",
-    "exact": true,
-    "within": "[role=dialog]"
+    "role": "menuitem",
+    "name": "Editar"
    },
-   "file": "arquivos/Extrato_20261101_20261110.ofx",
-   "at": 26.21,
-   "label": "entrega o Extrato_20261101_20261110.ofx"
+   "at": 18.49,
+   "label": "Editar"
   },
   {
    "do": "waitFor",
-   "text": "Prévia do extrato",
+   "text": "Editar lançamento",
    "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Valor (R$)",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "at": 19.88,
+   "label": "Valor (R$) (ZOOM)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Conta",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "at": 20.72,
+   "label": "Conta",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 27.0,
+   "label": "Cancelar"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 30.69
+   "at": 27.5
   },
   {
    "do": "hover",
    "target": {
-    "text": "Prévia do extrato",
-    "exact": true,
-    "within": "[role=dialog]"
+    "selector": "main tr:has-text(\"Rastreador (teste)\") button[title=\"Transferir para outra conta\"]"
    },
-   "seconds": 0.3,
-   "at": 32.84,
-   "label": "Prévia do extrato",
+   "seconds": 1.0,
+   "at": 28.28,
+   "label": "Transferir para outra conta (sem clicar)",
    "optional": true,
    "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Período",
-    "exact": true,
-    "within": "[role=dialog]"
-   },
-   "seconds": 0.3,
-   "at": 33.74,
-   "label": "Período, Transações e Saldo final (ZOOM)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Transações",
-    "exact": true,
-    "within": "[role=dialog]"
-   },
-   "seconds": 0.3,
-   "at": 34.58,
-   "label": "Transações 17",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Saldo final do extrato",
-    "exact": true,
-    "within": "[role=dialog]"
-   },
-   "seconds": 0.6,
-   "at": 36.48,
-   "label": "Saldo final do extrato",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"01/11/2026 — 10/11/2026\", \"17\", \"R$ 44.933,47\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
-   "label": "confere prévia: período, 17 transações e saldo final"
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 39.01
+   "at": 32.26
   },
   {
    "do": "click",
    "target": {
-    "role": "button",
-    "name": "Importar",
-    "exact": true,
-    "within": "[role=dialog]"
+    "selector": "main tr:has-text(\"Rastreador (teste)\") button[aria-label=\"Ações do lançamento\"]"
    },
-   "at": 39.31,
-   "label": "Importar"
+   "at": 32.26,
+   "label": "três pontinhos"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Excluir"
+   },
+   "at": 32.71,
+   "label": "Excluir"
   },
   {
    "do": "waitFor",
-   "text": "17 de 17 linhas importadas",
-   "timeout": 15
+   "text": "Excluir lançamento?",
+   "timeout": 10
   },
   {
    "do": "hover",
    "target": {
-    "text": "Tudo certo — nenhuma linha estava repetida.",
-    "exact": true,
-    "within": "[role=dialog]"
+    "text": "Essa ação não pode ser desfeita.",
+    "within": "[role=alertdialog]"
    },
    "seconds": 0.8,
-   "at": 44.57,
-   "label": "nenhuma linha repetida",
+   "at": 35.01,
+   "label": "o texto da janela (ZOOM)",
    "optional": true,
    "timeout": 4
   },
   {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Rastreador (teste) será removido\", \"R$ 89,90\", \"Essa ação não pode ser desfeita.\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"body\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
+   "label": "confere janela Excluir lançamento? com R$ 89,90"
+  },
+  {
    "do": "click",
    "target": {
-    "role": "button",
-    "name": "Concluir",
-    "exact": true
+    "selector": "[role=alertdialog] button:text-is(\"Cancelar\")"
    },
-   "at": 46.9,
-   "label": "Concluir"
+   "at": 40.45,
+   "label": "Cancelar"
   },
   {
    "do": "waitFor",
-   "text": "Linha do extrato",
-   "timeout": 15
+   "gone": {
+    "role": "alertdialog"
+   },
+   "timeout": 8
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 47.64
+   "at": 41.87
   },
   {
-   "do": "eval",
-   "js": "(async()=>{const c=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,dy=c.scrollHeight-c.clientHeight-y0;if(dy<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'fim:'+Math.round(c.scrollTop)})()",
-   "at": 48.24,
-   "label": "desce a página até a tabela"
-  },
-  {
-   "do": "hover",
+   "do": "click",
    "target": {
-    "text": "PIX ENVIADO DEPOSITO IRMAOS SIQUEIRA",
-    "exact": true,
-    "within": "main"
+    "placeholder": "Buscar por descrição ou valor..."
    },
-   "seconds": 0.3,
-   "at": 48.8,
-   "label": "linha do banco (esquerda)",
-   "optional": true,
-   "timeout": 4
+   "at": 43.54,
+   "label": "busca"
   },
   {
-   "do": "hover",
+   "do": "type",
    "target": {
-    "text": "−R$ 2.250,00",
-    "exact": true,
-    "within": "main"
+    "placeholder": "Buscar por descrição ou valor..."
    },
-   "seconds": 0.3,
-   "at": 52.59,
-   "label": "data e valor da linha",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Casa com um lançamento no sistema",
-    "exact": true,
-    "within": "main"
-   },
-   "seconds": 0.6,
-   "at": 53.27,
-   "label": "o que fazer com ela (direita)",
-   "optional": true,
-   "timeout": 4
+   "text": "teste",
+   "at": 45.15,
+   "label": "digita teste",
+   "noClick": true
   },
   {
    "do": "mark",
    "name": "L7",
-   "at": 55.65
+   "at": 46.85
   },
   {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"PIX RECEBIDO SERRA FINA ALUMINIO\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-330);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 56.56,
-   "label": "rola até o Pix da Serra Fina"
+   "do": "click",
+   "target": {
+    "selector": "main button:has-text(\"Selecionar lançamentos\")"
+   },
+   "at": 47.83,
+   "label": "Selecionar lançamentos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Selecione até 100 itens",
+   "timeout": 8
   },
   {
    "do": "hover",
    "target": {
-    "text": "+R$ 4.815,00",
-    "exact": true,
-    "within": "main"
+    "selector": "main :text(\"Selecione até 100 itens\")"
    },
-   "seconds": 0.5,
-   "at": 59.39,
-   "label": "entrada em verde, com mais",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "−R$ 180,00",
-    "exact": true,
-    "within": "main"
-   },
-   "seconds": 0.6,
-   "at": 61.74,
-   "label": "saída em vermelho, com menos",
+   "seconds": 1.0,
+   "at": 53.4,
+   "label": "a barra de seleção (ZOOM)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L8",
-   "at": 69.51
+   "at": 58.36
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main [aria-label=\"Selecionar lançamentos elegíveis desta página\"]"
+   },
+   "at": 59.95,
+   "label": "marca todas pelo cabeçalho"
+  },
+  {
+   "do": "waitFor",
+   "text": "3 lançamentos selecionados",
+   "timeout": 8
   },
   {
    "do": "hover",
    "target": {
-    "text": "Saldo do banco",
-    "exact": true,
-    "within": "main"
+    "selector": "main :text(\"3 lançamentos selecionados\")"
    },
-   "seconds": 0.4,
-   "at": 70.14,
-   "label": "rodapé: os três números",
+   "seconds": 0.8,
+   "at": 62.71,
+   "label": "3 lançamentos selecionados",
    "optional": true,
    "timeout": 4
   },
   {
-   "do": "hover",
-   "target": {
-    "text": "Diferença",
-    "exact": true,
-    "within": "main"
-   },
-   "seconds": 0.4,
-   "at": 71.45,
-   "label": "Diferença",
-   "optional": true,
-   "timeout": 4
+   "do": "mark",
+   "name": "L9",
+   "at": 63.72
   },
   {
-   "do": "hover",
+   "do": "click",
    "target": {
     "role": "button",
-    "name": "Finalizar conciliação",
-    "exact": true
+    "name": "Alterar categoria",
+    "exact": true,
+    "within": "main"
    },
-   "seconds": 0.6,
-   "at": 75.23,
-   "label": "Finalizar conciliação (desabilitado)",
+   "at": 67.66,
+   "label": "Alterar categoria"
+  },
+  {
+   "do": "waitFor",
+   "text": "Alterar categoria de 3 lançamentos",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Despesas selecionadas",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "at": 69.13,
+   "label": "Despesas selecionadas (ZOOM)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Nova categoria (despesa)",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "at": 73.76,
+   "label": "Nova categoria (despesa)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Saldo do banco\", \"R$ 44.933,47\", \"Ainda há 17 linhas pendentes\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
-   "label": "confere rodapé depois da importação"
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Despesas selecionadas\", \"Valores e saldos não mudam.\", \"Nova categoria (despesa)\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
+   "label": "confere janela Alterar categoria"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 77.92,
+   "label": "Cancelar"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L10",
+   "at": 81.61
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Excluir selecionados",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 82.9,
+   "label": "Excluir selecionados"
+  },
+  {
+   "do": "waitFor",
+   "text": "Excluir 3 lançamentos?",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Saídas selecionadas",
+    "within": "[role=alertdialog]"
+   },
+   "seconds": 1.0,
+   "at": 88.01,
+   "label": "Saídas selecionadas (ZOOM)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Excluir 3 lançamentos?\", \"Entradas selecionadas\", \"Saídas selecionadas\", \"R$ 552,20\", \"em uma única operação\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"body\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
+   "label": "confere janela Excluir 3 lançamentos? com R$ 552,20"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Essa ação não pode ser desfeita.",
+    "within": "[role=alertdialog]"
+   },
+   "seconds": 0.5,
+   "at": 91.43,
+   "label": "aviso âmbar e Essa ação não pode ser desfeita",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L11",
+   "at": 93.5
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=alertdialog] button:text-is(\"Excluir selecionados\"), [role=dialog] button:text-is(\"Excluir selecionados\")"
+   },
+   "at": 93.8,
+   "label": "Excluir selecionados (confirma)"
+  },
+  {
+   "do": "waitFor",
+   "text": "3 lançamentos excluídos.",
+   "timeout": 12
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.text-4xl.font-bold"
+   },
+   "seconds": 1.0,
+   "at": 96.64,
+   "label": "o saldo volta pro lugar (ZOOM)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"R$ 45.236,97\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
+   "label": "confere saldo da Conta Principal de volta em 45.236,97"
+  },
+  {
+   "do": "mark",
+   "name": "L12",
+   "at": 99.02
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Buscar por descrição ou valor..."
+   },
+   "at": 101.93,
+   "label": "busca"
+  },
+  {
+   "do": "press",
+   "key": "Control+a",
+   "label": "seleciona o texto"
+  },
+  {
+   "do": "press",
+   "key": "Backspace",
+   "label": "limpa a busca"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tr:has-text(\"Compra #\") , main tr:has-text(\"Venda #\")"
+   },
+   "seconds": 1.0,
+   "at": 104.27,
+   "label": "linha de pedido sem caixa (ZOOM)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 111.18,
+   "label": "fecha a seleção"
   },
   {
    "do": "eval",
@@ -435,7 +627,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 76.86
+   "at": 117.22
   }
  ]
 }

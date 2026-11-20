@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""T14 · Bancos, cofre e conciliação bancária (EcoFlix, EcoSistema 1.59.154): gera rec/t14/cap00..cap14.json (roteiros do robô) a partir
-da fala ($TUT_HOME/t14/narracao/capNN.json: o estimado até a voz chegar; com a voz, o da voz, sem mudar nada aqui). O cap15
+"""T14 · Bancos, cofre e conciliação bancária (EcoFlix, EcoSistema 1.60.18): gera rec/t14/cap00..cap17.json (roteiros do robô) a partir
+da fala ($TUT_HOME/t14/narracao/capNN.json: o estimado até a voz chegar; com a voz, o da voz, sem mudar nada aqui). O cap18
 (Recapitulando) é montagem das gravações dos outros capítulos: não tem robô.
 
-Computador 1280x800, Rafael Nogueira (MASTER) na Recicla Vale Metais; FAKE_NOW 2026-11-10T08:30:00-03:00 em todos os capítulos (o mesmo
+Computador 1600x900 (padrão do mundo.json), Rafael Nogueira (MASTER) na Recicla Vale Metais; FAKE_NOW 2026-11-10T08:30:00-03:00 em todos os capítulos (o mesmo
 no Supabase falso e no robô). Rodar de qualquer pasta: `python3 -I rec/t14/gerar.py [NN ...]` (ANCORAS=1 lista as âncoras). Depois:
 `node rec/record.mjs rec/t14/capNN.json --check`; ensaio: `python3 -I rec/t14/ensaio.py NN` + `--rapido`; gravação: `rec/t14/t14_rodar.sh NN`.
 
@@ -35,13 +35,19 @@ NARR = os.path.join(TUT, AULA, 'narracao')
 FAKE_NOW = '2026-11-10T08:30:00-03:00'
 VERSAO = '1.60.18'
 HOJE = FAKE_NOW[:10]
-NOMES = ['Abertura', 'A tela e as contas', 'Cadastrar e arquivar contas', 'O cofre e o ajuste de saldo', 'Movimentação, transferência e saque',
-         'O que é conciliar', 'Importar o extrato', 'Casar com o sistema', 'Baixar uma conta', 'Criar um lançamento', 'Buscar e aceitar centavos',
-         'Ignorar uma linha', 'Valores repetidos', 'Desfazer e cancelar', 'Fechar a conciliação']
+# Numeração de 20/11/2026 (1.60.18): as funções capNN abaixo guardam o número ANTIGO (o das sementes apos-capNN) e NOVO leva ao capítulo de hoje;
+# os três capítulos novos têm nome (cartao, corrigir, outros). 0 1 2 | 3 cartão | 4 cofre(3) | 5 movimentação(4) | 6 corrigir | 7 (5) ... 16 (14) | 17 outros | 18 recap
+NOVO = {0: 0, 1: 1, 2: 2, 'cartao': 3, 3: 4, 4: 5, 'corrigir': 6, 5: 7, 6: 8, 7: 9, 8: 10, 9: 11, 10: 12, 11: 13, 12: 14, 13: 15, 14: 16, 'outros': 17}
+NOMES = ['Abertura', 'A tela e as contas', 'Cadastrar e arquivar contas', 'O cartão de crédito da empresa', 'O cofre e o ajuste de saldo',
+         'Movimentação, transferência e saque', 'Corrigir e excluir lançamentos', 'O que é conciliar', 'Importar o extrato', 'Casar com o sistema',
+         'Baixar uma conta', 'Criar um lançamento', 'Buscar e aceitar centavos', 'Ignorar uma linha', 'Valores repetidos', 'Desfazer e cancelar',
+         'Fechar a conciliação', 'Outros casos do extrato']
 _E = [f'{AULA}/inicio', f'{AULA}/apos-cap02', f'{AULA}/apos-cap03', f'{AULA}/apos-cap04', f'{AULA}/apos-cap06', f'{AULA}/apos-cap07', f'{AULA}/apos-cap08',
       f'{AULA}/apos-cap09', f'{AULA}/apos-cap10', f'{AULA}/apos-cap11', f'{AULA}/apos-cap12']
+_LOTE = f'{AULA}/lote'
+_FIM14 = f'{AULA}/apos-cap14'
 SEMENTE = {0: _E[:1], 1: _E[:1], 2: _E[:1], 3: _E[:2], 4: _E[:3], 5: _E[:4], 6: _E[:4], 7: _E[:5], 8: _E[:6], 9: _E[:7], 10: _E[:8], 11: _E[:9],
-           12: _E[:10], 13: _E[:11], 14: _E[:11]}
+           12: _E[:10], 13: _E[:11], 14: _E[:11], 'cartao': _E[:2], 'corrigir': _E[:4] + [_LOTE], 'outros': _E[:11] + [_FIM14]}
 # respiro na fala ESTIMADA: {cap: [(depois da linha N (1..), segundos)]} (o pausas.py põe o mesmo silêncio na voz de verdade)
 RESPIRO = {}
 
@@ -116,8 +122,9 @@ OBS = ("(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tent
 
 class Cap:
     def __init__(s, n, setup, pace=0.5, cps=40, start=(760, 470)):
-        s.n = n
-        s.words, s.linhas, s.dur, s.estimado = carregar_voz(n)
+        s.old = n                      # chave antiga/nome (sementes); s.n = número de hoje (fala, arquivos)
+        s.n = NOVO[n]
+        s.words, s.linhas, s.dur, s.estimado = carregar_voz(s.n)
         s.steps, s.pending, s.anchors = [], [], []
         s.pace, s.cps, s.start = pace, cps, start
         s.setup = list(setup) + [{'do': 'eval', 'js': OBS}]
@@ -229,7 +236,7 @@ class Cap:
             'seed': f'{AULA}-cap{s.n:02d}', 'pace': s.pace, 'cps': s.cps, 'tail': 1.5,
             'start': {'x': s.start[0], 'y': s.start[1]},
             'anonymous': True, 'storage': storage(),
-            'seedExtra': list(SEMENTE[s.n]),
+            'seedExtra': list(SEMENTE[s.old]),
             'prewarm': ['/login'], 'setup': s.setup, 'steps': s.steps,
         }
 
@@ -252,6 +259,14 @@ PONTOS = lambda nome: SEL(f'div[class*="group/tab"]:has(span:text-is("{nome}")) 
 LINHA = lambda memo: f'div[class*="md:grid-cols-2"]:has(:text-is("{memo}"))'
 NA_LINHA = lambda memo, botao: SEL(f'{LINHA(memo)} button:has-text("{botao}")')
 DIF_CASADAS = SEL('main div:has(> p:text-is("Diferenças casadas")) button')   # o valor âmbar do rodapé abre o quadro
+
+
+# o relatório do Extrato abre numa aba nova (HTML com "Salvar PDF") e a gravação filma uma aba só: o robô devolve o HTML da aba (base64) para a ilustração da edição
+POPS = "(()=>{const o=window.open;window.__pops=[];window.open=function(...a){const w=o.apply(this,a);window.__pops.push(w);return w};return 'ok'})()"
+HTML_JS = ("(async()=>{const w=(window.__pops||[]).slice(-1)[0];if(!w)return 'SEM JANELA';for(let i=0;i<40;i++){let h='';"
+           "try{h=w.document&&w.document.body?w.document.documentElement.outerHTML:''}catch(e){return 'ERRO '+e}"
+           "if(h.length>2000)return 'HTML:'+btoa(unescape(encodeURIComponent(h)));await new Promise(r=>setTimeout(r,250))}return 'SEM HTML'})()")
+FECHA_POP = "(()=>{const w=(window.__pops||[]).slice(-1)[0];try{w&&w.close()}catch(e){}return 'fechada'})()"
 
 
 def login():
@@ -325,7 +340,7 @@ def cap00():
 
 
 def cap01():
-    c = Cap(1, login(), pace=0.55)
+    c = Cap(1, login() + [{'do': 'eval', 'js': POPS}], pace=0.55)
     c.mark(1)
     c.click(BTN('Financeiro'), at=c.A(1, 'Financeiro', 1.0), label='menu Financeiro', unless={'role': 'link', 'name': 'Movimentações Financeiras'})
     c.click({'role': 'link', 'name': 'Movimentações Financeiras'}, at=c.A(1, 'Movimentações', 0.9), label='menu Movimentações Financeiras')
@@ -346,16 +361,37 @@ def cap01():
     c.hover(BTNX('Extrato', within=MAIN), seconds=0.15, at=c.A(3, 'Extrato', 0.5), label='Extrato')
     c.mark(4)
     c.hover(TXT('Histórico de Movimentações', within=MAIN), seconds=0.4, at=c.A(4, 'histórico', 0.5), label='Histórico de Movimentações')
-    c.hover(SEL('main button[role=combobox]:has-text("Este mês")'), seconds=0.2, at=c.A(4, 'mês', 0.5), label='período Este mês')
-    c.hover({'placeholder': 'Buscar por descrição ou valor...'}, seconds=0.4, at=c.A(4, 'busca', 0.5), label='busca por descrição ou valor')
+    c.hover(SEL('main button[role=combobox]:has-text("Este mês")'), seconds=0.2, at=c.A(4, 'período', 0.5), label='período Este mês')
+    c.hover({'placeholder': 'Buscar por descrição ou valor...'}, seconds=0.4, at=c.A(4, 'buscar', 0.5), label='busca por descrição ou valor')
+    c.hover(SEL('main button:has-text("Selecionar lançamentos")'), seconds=0.6, at=c.A(4, 'Selecionar', 0.5), label='botão Selecionar lançamentos')
     c.mark(5)
-    c.click(CONTA('Resumo'), at=c.A(5, 'Resumo', 0.6), label='Resumo')
-    c.hover(TXT('Dinheiro e contas bancárias', within=MAIN), seconds=0.4, at=c.A(5, 'total', 0.5), label='total da empresa')
-    c.hover(TXT('Dinheiro', within=MAIN), seconds=0.3, at=c.A(5, 'cofre', 0.5), label='Dinheiro (cofre)')
-    c.hover(TXT('Contas bancárias', within=MAIN), seconds=0.3, at=c.A(5, 'contas', 0.5), label='Contas bancárias')
+    c.click(SEL('main button[aria-label="Ver detalhes"]'), at=c.A(5, 'abre', 0.6), label='abre a linha de pedido (itens)')
+    c.hover(SEL('main button[aria-label="Ocultar detalhes"]'), seconds=0.8, at=c.A(5, 'itens', 0.5), label='itens do pedido e forma de pagamento')
+    c.click(SEL('main button[aria-label="Ocultar detalhes"]'), at=c.A(5, 'E', 0.7, nth=1), label='fecha a linha')
+    c.hover(SEL('main button[aria-label="Ocultar valores"]'), seconds=0.8, at=c.A(5, 'olho', 0.5), label='o olho que esconde os valores')
     c.mark(6)
-    c.hover(BTN('Movimentações Financeiras', within=MAIN), seconds=0.4, at=c.A(6, 'Nesta', 0.5), label='aba Movimentações Financeiras')
-    c.hover(BTN('Conciliação', within=MAIN), seconds=0.6, at=c.A(6, 'Conciliação', 0.5), label='aba Conciliação')
+    c.click(BTNX('Extrato', within=MAIN), at=c.A(6, 'Extrato', 0.6), label='Extrato')
+    c.waitfor(text='Exportar Extrato Bancário', timeout=10)
+    c.hover({'text': 'Formato', 'exact': True, 'within': DLG}, seconds=0.5, at=c.A(6, 'PDF', 0.5), label='Formato PDF ou Excel (ZOOM Formato e Período)')
+    c.click(SEL('[role=dialog] button[role=combobox]:has-text("Este mês")'), at=c.A(6, 'período', 0.6), label='lista do período')
+    c.hover(OPT('Mês passado'), seconds=0.6, at=c.A(6, 'escolher', 0.4), label='Mês passado, Personalizado')
+    c.press('Escape', at=c.A(6, 'contador', 0.9), label='fecha a lista')
+    c.click(BTN('Exportar', within=DLG), at=c.A(6, 'arquivo', 0.6), label='Exportar o PDF (aba nova)')
+    c.ev(HTML_JS, label='HTML do relatório do Extrato (aba nova, para a ilustração)', optional=True)
+    c.ev(FECHA_POP, at=c.A(6, 'fechamento', 0.2), label='fecha a aba do relatório', optional=True)
+    c.press('Escape', label='fecha a janela', optional=True)
+    c.waitfor(gone={'role': 'dialog'}, timeout=8, optional=True)
+    c.mark(7)
+    c.hover(CONTA('Conta Principal'), seconds=0.4, at=c.A(7, 'Usuários', 0.5), label='lista lateral (contas liberadas)')
+    c.hover(CONTA('DINHEIRO (COFRE)'), seconds=0.4, at=c.A(7, 'cofre', 0.5), label='o cofre não muda')
+    c.mark(8)
+    c.click(CONTA('Resumo'), at=c.A(8, 'Resumo', 0.6), label='Resumo')
+    c.hover(TXT('Dinheiro e contas bancárias', within=MAIN), seconds=0.4, at=c.A(8, 'total', 0.5), label='total da empresa')
+    c.hover(TXT('Dinheiro', within=MAIN), seconds=0.3, at=c.A(8, 'cofre', 0.5), label='Dinheiro (cofre)')
+    c.hover(TXT('Contas bancárias', within=MAIN), seconds=0.3, at=c.A(8, 'contas', 0.5), label='Contas bancárias')
+    c.mark(9)
+    c.hover(BTN('Movimentações Financeiras', within=MAIN), seconds=0.4, at=c.A(9, 'Nesta', 0.5), label='aba Movimentações Financeiras')
+    c.hover(BTN('Conciliação', within=MAIN), seconds=0.6, at=c.A(9, 'Conciliação', 0.5), label='aba Conciliação')
     c.fim()
     return c
 
@@ -480,43 +516,47 @@ def cap04():
     c.click(BTN('Salvar', within=DLG), at=c.A(4, 'Salvar', 0.6), label='Salvar')
     c.waitfor(text='Movimentação registrada com sucesso!', timeout=10)
     c.mark(5)
-    c.mark(6)
-    c.click(BTNX('Nova Movimentação', within=MAIN), at=c.A(6, 'Por', 0.2), label='Nova Movimentação (transferência)')
+    c.click(BTNX('Nova Movimentação', within=MAIN), at=c.A(5, 'Entrada', 1.8), label='Nova Movimentação (Entrada)')
     c.waitfor(text='Nova Movimentação Financeira', timeout=10)
-    c.click(BTN('Transferência', within=DLG), at=c.A(6, 'transferência', 0.9), label='tipo Transferência')
-    c.click(SEL('[role=dialog] button[role=combobox]', hasText='Conta Principal'), at=c.A(6, 'saiu', 0.6), label='Conta de origem')
-    c.click(OPT('Conta Secundária'), at=c.A(6, 'Secundária', 0.5), label='Conta Secundária')
-    c.click(SEL('[role=dialog] button[role=combobox]', hasText='Selecione a conta de destino'), at=c.A(6, 'foi', 0.6), label='Conta de destino')
-    c.click(OPT('Conta Principal'), at=c.A(6, 'Principal', 0.5), label='Conta Principal')
-    c.click(SEL('#amount'), at=c.A(6, 'Oito', 0.6), label='Valor da transferência')
-    c.type(SEL('#amount'), '8000,00', at=c.A(6, 'mil', 0.4), noClick=True, clear=True, label='digita 8.000,00')
-    c.hover({'text': 'Prévia da transferência:', 'within': DLG}, seconds=0.8, at=c.A(6, 'prévia', 0.5), label='Prévia da transferência (ZOOM)')
-    c.confere('dlg', ['Conta Secundária', 'Conta Principal', 'R$ 8.000,00'], 'prévia da transferência')
+    c.hover(BTN('Entrada', within=DLG), seconds=0.4, at=c.A(5, 'Entrada', 0.5), label='tipo Entrada (verde)')
+    c.hover({'text': 'Data/hora do lançamento', 'within': DLG}, seconds=0.5, at=c.A(5, 'data', 0.5), label='Data/hora do lançamento')
+    c.hover({'text': 'Vincular a fornecedor/cliente (opcional)', 'within': DLG}, seconds=0.6, at=c.A(5, 'vincular', 0.5), label='vincular a cliente ou fornecedor')
+    c.mark(6)
     c.mark(7)
-    c.click(BTN('Transferir', within=DLG), at=c.A(7, 'Transferir', 0.6), label='Transferir')
-    c.waitfor(text='Transferência realizada com sucesso!', timeout=10)
+    c.click(BTN('Transferência', within=DLG), at=c.A(7, 'transferência', 0.9), label='tipo Transferência')
+    c.click(SEL('[role=dialog] button[role=combobox]', hasText='Conta Principal'), at=c.A(7, 'saiu', 0.6), label='Conta de origem')
+    c.click(OPT('Conta Secundária'), at=c.A(7, 'Secundária', 0.5), label='Conta Secundária')
+    c.click(SEL('[role=dialog] button[role=combobox]', hasText='Selecione a conta de destino'), at=c.A(7, 'foi', 0.6), label='Conta de destino')
+    c.click(OPT('Conta Principal'), at=c.A(7, 'Principal', 0.5), label='Conta Principal')
+    c.click(SEL('#amount'), at=c.A(7, 'Oito', 0.6), label='Valor da transferência')
+    c.type(SEL('#amount'), '8000,00', at=c.A(7, 'mil', 0.4), noClick=True, clear=True, label='digita 8.000,00')
+    c.hover({'text': 'Prévia da transferência:', 'within': DLG}, seconds=0.8, at=c.A(7, 'prévia', 0.5), label='Prévia da transferência (ZOOM)')
+    c.confere('dlg', ['Conta Secundária', 'Conta Principal', 'R$ 8.000,00'], 'prévia da transferência')
     c.mark(8)
-    c.click(BTNX('Saque', within=MAIN), at=c.A(8, 'saque', 0.6), label='Saque')
-    c.waitfor(text='Destino do saque', timeout=10)
-    c.hover({'text': 'Destino do saque', 'within': DLG}, seconds=0.6, at=c.A(8, 'cofre', 0.6), label='Destino do saque: o cofre')
+    c.click(BTN('Transferir', within=DLG), at=c.A(8, 'Transferir', 0.6), label='Transferir')
+    c.waitfor(text='Transferência realizada com sucesso!', timeout=10)
     c.mark(9)
-    c.click(SEL('#amount'), at=c.A(9, 'Dois', 0.9), label='Valor do Saque')
-    c.type(SEL('#amount'), '2000,00', at=c.A(9, 'mil', 0.4), noClick=True, clear=True, label='digita 2.000,00 (ZOOM Saque e Tarifa)')
-    c.click(SEL('[role=dialog] button[role=combobox]', hasText='Não'), at=c.A(9, 'tarifa', 0.6), label='Tem tarifa no saque?')
-    c.click(OPT('Sim', exact=True), at=c.A(9, 'Sim', 0.5), label='Sim')
-    c.click(SEL('#fee'), at=c.A(9, 'seis', 0.6), label='Valor da Tarifa')
-    c.type(SEL('#fee'), '6,50', at=c.A(9, 'cinquenta', 0.4), noClick=True, clear=True, label='digita 6,50')
+    c.click(BTNX('Saque', within=MAIN), at=c.A(9, 'saque', 0.6), label='Saque')
+    c.waitfor(text='Destino do saque', timeout=10)
+    c.hover({'text': 'Destino do saque', 'within': DLG}, seconds=0.6, at=c.A(9, 'cofre', 0.6), label='Destino do saque: o cofre')
     c.mark(10)
-    c.hover({'text': 'Efeitos desta transação:', 'within': DLG}, seconds=0.5, at=c.A(10, 'efeitos', 0.5), label='Efeitos desta transação (ZOOM)')
-    c.hover({'text': 'Saldo da Conta Bancária', 'within': DLG}, seconds=0.6, at=c.A(10, 'banco', 0.5), label='banco perde saque + tarifa')
-    c.hover({'text': 'Cofre (Conta DINHEIRO)', 'exact': True, 'within': DLG, 'nth': 'last'}, seconds=0.6, at=c.A(10, 'cofre', 0.5), label='cofre ganha só o saque')
-    c.confere('dlg', ['Saque: R$ 2.000,00 + Tarifa: R$ 6,50', 'Aumentará em R$ 2.000,00'], 'efeitos do saque')
+    c.click(SEL('#amount'), at=c.A(10, 'Dois', 0.9), label='Valor do Saque')
+    c.type(SEL('#amount'), '2000,00', at=c.A(10, 'mil', 0.4), noClick=True, clear=True, label='digita 2.000,00 (ZOOM Saque e Tarifa)')
+    c.click(SEL('[role=dialog] button[role=combobox]', hasText='Não'), at=c.A(10, 'tarifa', 0.6), label='Tem tarifa no saque?')
+    c.click(OPT('Sim', exact=True), at=c.A(10, 'Sim', 0.5), label='Sim')
+    c.click(SEL('#fee'), at=c.A(10, 'seis', 0.6), label='Valor da Tarifa')
+    c.type(SEL('#fee'), '6,50', at=c.A(10, 'cinquenta', 0.4), noClick=True, clear=True, label='digita 6,50')
     c.mark(11)
-    c.click(BTN('Confirmar Saque'), at=c.A(11, 'Confirmar', 0.6), label='Confirmar Saque')
-    c.waitfor(text='Saque realizado com sucesso!', timeout=10)
-    c.hover(BTNX('Sangria', within=MAIN), seconds=0.8, at=c.A(11, 'Sangria', 0.5), label='Sangria, aqui do lado')
+    c.hover({'text': 'Efeitos desta transação:', 'within': DLG}, seconds=0.5, at=c.A(11, 'efeitos', 0.5), label='Efeitos desta transação (ZOOM)')
+    c.hover({'text': 'Saldo da Conta Bancária', 'within': DLG}, seconds=0.6, at=c.A(11, 'banco', 0.5), label='banco perde saque + tarifa')
+    c.hover({'text': 'Cofre (Conta DINHEIRO)', 'exact': True, 'within': DLG, 'nth': 'last'}, seconds=0.6, at=c.A(11, 'cofre', 0.5), label='cofre ganha só o saque')
+    c.confere('dlg', ['Saque: R$ 2.000,00 + Tarifa: R$ 6,50', 'Aumentará em R$ 2.000,00'], 'efeitos do saque')
     c.mark(12)
-    c.hover(BTNX('Saque', within=MAIN), seconds=1.0, at=c.A(12, 'saque', 0.5), label='Saque (dica do caixa aberto)')
+    c.click(BTN('Confirmar Saque'), at=c.A(12, 'Confirmar', 0.6), label='Confirmar Saque')
+    c.waitfor(text='Saque realizado com sucesso!', timeout=10)
+    c.hover(BTNX('Sangria', within=MAIN), seconds=0.8, at=c.A(12, 'Sangria', 0.5), label='Sangria, aqui do lado')
+    c.mark(13)
+    c.hover(BTNX('Saque', within=MAIN), seconds=1.0, at=c.A(13, 'saque', 0.5), label='Saque (dica do caixa aberto)')
     c.fim()
     return c
 
@@ -668,6 +708,8 @@ def cap09():
     c.mark(2)
     c.click(NA_LINHA(TARIFA, 'Mais ações'), at=c.A(2, 'Mais', 0.6), label='Mais ações (todos os destinos)')
     c.hover(ITEM('Funcionário'), seconds=0.6, at=c.A(2, 'Funcionário', 0.5), label='Funcionário')
+    c.hover(ITEM('Ajuste'), seconds=1.0, at=c.A(2, 'Ajuste', 0.5), label='Ajuste (não contar na DRE)')
+    c.hover(ITEM('Saldo do cliente/fornecedor'), seconds=0.8, at=c.A(2, 'Saldo', 0.5), label='Saldo do cliente ou fornecedor (fiado)')
     c.mark(3)
     c.hover(ITEM('Buscar lançamento'), seconds=0.5, at=c.A(3, 'Buscar', 0.5), label='Buscar lançamento')
     c.hover(ITEM('Funcionário'), seconds=0.5, at=c.A(3, 'painel', 0.5), label='o painel do Funcionário')
@@ -717,6 +759,8 @@ def cap10():
     c.click(BTN('Casar assim'), at=c.A(6, 'Casar', 1.0), label='Casar assim')
     c.waitfor(target=SEL(f'{LINHA(SERRA)} :text-is("Casada")'), timeout=10)
     c.hover(DIF_CASADAS, seconds=0.8, at=c.A(6, 'rodapé', 0.5), label='Diferenças casadas (ZOOM)')
+    c.mark(7)
+    c.hover(SEL(f'{LINHA(SERRA)} :text-is("Casada")'), seconds=1.2, at=c.A(7, 'aviso', 0.5), label='selo Casada (dica dos avisos automáticos)')
     c.fim()
     return c
 
@@ -836,12 +880,219 @@ def cap14():
     return c
 
 
+# ---------------------------------------------------------------- capítulos novos (1.60.18)
+def cap_cartao():
+    """cap03 · O cartão de crédito da empresa (variante: parte de apos-cap02; o cartão criado não segue adiante)"""
+    c = Cap('cartao', setup_mov(), pace=0.5)
+    c.mark(1)
+    c.click(BTNX('Novo Cartão'), at=c.A(1, 'Novo', 0.6), label='Novo Cartão')
+    c.waitfor(text='Novo Cartão de Crédito', timeout=10)
+    c.mark(2)
+    c.click(SEL('#card-name'), at=c.A(2, 'nome', 0.6), label='Nome do cartão')
+    c.type(SEL('#card-name'), 'Cartão Empresa', at=c.A(2, 'nome', 0.0), noClick=True, label='digita Cartão Empresa')
+    c.click(SEL('#card-closing-day'), at=c.A(2, 'fecha', 0.6), label='Dia do fechamento')
+    c.type(SEL('#card-closing-day'), '25', at=c.A(2, 'vinte', 0.4), noClick=True, label='digita 25')
+    c.click(SEL('#card-due-day'), at=c.A(2, 'vence', 0.6, nth=1), label='Dia do vencimento')
+    c.type(SEL('#card-due-day'), '5', at=c.A(2, 'cinco', 0.4, nth=1), noClick=True, label='digita 5')
+    c.hover({'text': 'A fatura que fecha no dia 25 vence no dia 5', 'within': DLG}, seconds=1.0, at=c.A(2, 'explica', 0.6), label='a frase da fatura (ZOOM)')
+    c.confere('dlg', ['Cartão Empresa', 'A fatura que fecha no dia 25 vence no dia 5 do mês seguinte'], 'nome, fechamento e vencimento')
+    c.mark(3)
+    c.click(SEL('#card-limit'), at=c.A(3, 'limite', 0.6), label='Limite do cartão')
+    c.type(SEL('#card-limit'), '10000,00', at=c.A(3, 'opcional', 0.3), noClick=True, clear=True, label='digita 10.000,00')
+    c.confere('dlg', ['R$ 10.000,00'], 'limite de 10.000,00')
+    c.click(BTN('Criar Cartão', within=DLG), at=c.A(3, 'Criar', 0.6), label='Criar Cartão')
+    c.waitfor(gone={'role': 'dialog'}, timeout=10)
+    c.mark(4)
+    c.click(CONTA('Cartão Empresa'), at=c.A(4, 'Ele', 0.6), label='abre o Cartão Empresa')
+    c.hover(TXT('Fatura em aberto', within=MAIN), seconds=0.6, at=c.A(4, 'fatura', 0.5), label='Fatura em aberto')
+    c.hover(SEL('main :text("Limite total:")'), seconds=0.4, at=c.A(4, 'limite', 0.5), label='Limite total e Disponível')
+    c.confere('main', ['Fatura em aberto', 'R$ 0,00', 'Limite total:', 'R$ 10.000,00', 'fecha dia 25 · vence dia 5'], 'cartão novo: fatura zerada e limite')
+    c.mark(5)
+    c.click(BTNX('Nova despesa', within=MAIN), at=c.A(5, 'Nova', 0.6), label='Nova despesa')
+    c.waitfor(target=SEL('#description'), timeout=10)
+    c.click(SEL('#description'), at=c.A(5, 'comecei', 1.0), label='Descrição')
+    c.type(SEL('#description'), 'Con', at=c.A(5, 'comecei', 0.05), noClick=True, label='digita Con')
+    c.waitfor(text='Padrão encontrado: Conserto do pneu da empilhadeira', timeout=12)
+    c.hover({'text': 'Padrão encontrado', 'within': DLG}, seconds=0.8, at=c.A(5, 'lembrou', 0.5), label='o padrão encontrado (ZOOM)')
+    c.confere('dlg', ['Padrão encontrado: Conserto do pneu da empilhadeira', 'Preencher'], 'sugestão do conserto do pneu')
+    c.mark(6)
+    c.click(BTN('Preencher', within=DLG), at=c.A(6, 'Preencher', 0.6), label='Preencher')
+    c.waitfor(text='Campos preenchidos.', timeout=8)
+    c.hover({'text': 'Campos preenchidos.', 'within': DLG}, seconds=0.8, at=c.A(6, 'respeita', 0.5), label='Pagou com e a frase (ZOOM)')
+    c.confere('dlg', ['Cartão Empresa', 'Campos preenchidos.', 'Desfazer preenchimento'], 'o pagamento continua no cartão')
+    c.mark(7)
+    c.click(SEL('#amount'), at=c.A(7, 'Cento', 0.6), label='Valor')
+    c.type(SEL('#amount'), '180,00', at=c.A(7, 'oitenta', 0.4), noClick=True, clear=True, label='digita 180,00')
+    c.click(BTN('Confirmar Despesa'), at=c.A(7, 'Confirmar', 0.6), label='Confirmar Despesa')
+    c.waitfor(gone={'role': 'dialog'}, timeout=12)
+    c.waitfor(text='Aberta', timeout=12)
+    c.hover(SEL('main :text("Disponível:")'), seconds=0.8, at=c.A(7, 'fatura', 0.5), label='a fatura Aberta e o Disponível (ZOOM)')
+    c.confere('main', ['Aberta', 'R$ 180,00', 'R$ 9.820,00'], 'fatura de 180,00 e disponível de 9.820,00')
+    c.mark(8)
+    c.click(BTN('Pagar Fatura', within=MAIN), at=c.A(8, 'Pagar', 0.6), label='Pagar Fatura')
+    c.waitfor(text='Origem do pagamento', timeout=10)
+    c.hover(TXT('Origem do pagamento', within=DLG), seconds=0.8, at=c.A(8, 'conta', 0.5), label='Origem do pagamento (ZOOM)')
+    c.hover({'text': 'Este pagamento quita a fatura.', 'within': DLG}, seconds=0.8, at=c.A(8, 'tudo', 0.5), label='quita a fatura')
+    c.confere('dlg', ['Origem do pagamento', 'Este pagamento quita a fatura.'], 'janela Pagar Fatura')
+    c.click(BTN('Cancelar', within=DLG), at=c.A(8, 'Aqui', 0.6), label='Cancelar (só mostrei)')
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.mark(9)
+    c.hover(SEL('main :text("Aberta")'), seconds=1.2, at=c.A(9, 'fatura', 0.5), label='a fatura Aberta')
+    c.fim()
+    return c
+
+
+BTN_EXCL = SEL('[role=alertdialog] button:text-is("Excluir selecionados"), [role=dialog] button:text-is("Excluir selecionados")')
+LOTE = ('Internet do pátio (teste)', 'Seguro da picape (teste)', 'Rastreador (teste)')
+PONTOS_LINHA = lambda desc: SEL(f'main tr:has-text("{desc}") button[aria-label="Ações do lançamento"]')
+
+
+def cap_corrigir():
+    """cap06 · Corrigir e excluir lançamentos (variante `lote`: apos-cap04 + três despesas de teste; não segue adiante)"""
+    c = Cap('corrigir', setup_mov([{'do': 'eval', 'js': js_rola_texto('Histórico de Movimentações', 120, 0)}]), pace=0.5)
+    c.mark(1)
+    c.hover(TXT(LOTE[0], within=MAIN), seconds=0.4, at=c.A(1, 'três', 0.5), label='Internet do pátio (teste)')
+    c.hover(TXT(LOTE[1], within=MAIN), seconds=0.4, at=c.A(1, 'despesas', 0.5), label='Seguro da picape (teste)')
+    c.hover(TXT(LOTE[2], within=MAIN), seconds=0.5, at=c.A(1, 'teste', 0.5), label='Rastreador (teste)')
+    c.ev(js_main_topo(500), at=c.A(1, 'saldo', 0.9), label='sobe ao cartão')
+    c.hover(SEL('main div.text-4xl.font-bold'), seconds=0.6, at=c.A(1, 'saldo', 0.5), label='o saldo menor do que devia')
+    c.confere('main', ['R$ 44.684,77', 'Rastreador (teste)'], 'saldo de 44.684,77 e as três linhas de teste')
+    c.mark(2)
+    c.ev(js_rola_texto('Histórico de Movimentações', 120, 600), label='desce ao histórico')
+    c.hover(TXT('Rastreador (teste)', within=MAIN), seconds=0.3, at=c.A(2, 'lançamento', 0.5), label='linha Rastreador (teste)')
+    c.click(PONTOS_LINHA('Rastreador (teste)'), at=c.A(2, 'três', 0.6), label='três pontinhos (Ações do lançamento)')
+    c.hover(ITEM('Excluir'), seconds=0.6, at=c.A(2, 'Excluir', 0.5), label='Editar e Excluir')
+    c.mark(3)
+    c.click(ITEM('Editar'), at=c.A(3, 'Editar', 0.6), label='Editar')
+    c.waitfor(text='Editar lançamento', timeout=10)
+    c.hover({'text': 'Valor (R$)', 'within': DLG}, seconds=0.6, at=c.A(3, 'valor', 0.5), label='Valor (R$) (ZOOM)')
+    c.hover({'text': 'Conta', 'exact': True, 'within': DLG}, seconds=0.6, at=c.A(3, 'conta', 0.5), label='Conta')
+    c.click(BTN('Cancelar', within=DLG), at=c.A(3, 'aqui', 0.6), label='Cancelar')
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.mark(4)
+    c.hover(SEL('main tr:has-text("Rastreador (teste)") button[title="Transferir para outra conta"]'), seconds=1.0, at=c.A(4, 'ícone', 0.5), label='Transferir para outra conta (sem clicar)')
+    c.mark(5)
+    c.click(PONTOS_LINHA('Rastreador (teste)'), at=c.A(5, 'Excluir', 1.2), label='três pontinhos')
+    c.click(ITEM('Excluir'), at=c.A(5, 'Excluir', 0.6), label='Excluir')
+    c.waitfor(text='Excluir lançamento?', timeout=10)
+    c.hover({'text': 'Essa ação não pode ser desfeita.', 'within': ALERTA}, seconds=0.8, at=c.A(5, 'devolve', 0.5), label='o texto da janela (ZOOM)')
+    c.confere('body', ['Rastreador (teste) será removido', 'R$ 89,90', 'Essa ação não pode ser desfeita.'], 'janela Excluir lançamento? com R$ 89,90')
+    c.click(SEL('[role=alertdialog] button:text-is("Cancelar")'), at=c.A(5, 'vamos', 0.6), label='Cancelar')
+    c.waitfor(gone={'role': 'alertdialog'}, timeout=8)
+    c.mark(6)
+    c.click({'placeholder': 'Buscar por descrição ou valor...'}, at=c.A(6, 'busco', 0.9), label='busca')
+    c.type({'placeholder': 'Buscar por descrição ou valor...'}, 'teste', at=c.A(6, 'teste', 0.05), noClick=True, label='digita teste')
+    c.mark(7)
+    c.click(SEL('main button:has-text("Selecionar lançamentos")'), at=c.A(7, 'Selecionar', 0.6), label='Selecionar lançamentos')
+    c.waitfor(text='Selecione até 100 itens', timeout=8)
+    c.hover(SEL('main :text("Selecione até 100 itens")'), seconds=1.0, at=c.A(7, 'barra', 0.5), label='a barra de seleção (ZOOM)')
+    c.mark(8)
+    c.click(SEL('main [aria-label="Selecionar lançamentos elegíveis desta página"]'), at=c.A(8, 'caixinha', 0.6), label='marca todas pelo cabeçalho')
+    c.waitfor(text='3 lançamentos selecionados', timeout=8)
+    c.hover(SEL('main :text("3 lançamentos selecionados")'), seconds=0.8, at=c.A(8, 'selecionados', 0.5), label='3 lançamentos selecionados')
+    c.mark(9)
+    c.click(BTN('Alterar categoria', within=MAIN), at=c.A(9, 'Alterar', 0.6), label='Alterar categoria')
+    c.waitfor(text='Alterar categoria de 3 lançamentos', timeout=10)
+    c.hover({'text': 'Despesas selecionadas', 'within': DLG}, seconds=0.8, at=c.A(9, 'troca', 0.5), label='Despesas selecionadas (ZOOM)')
+    c.hover({'text': 'Nova categoria (despesa)', 'within': DLG}, seconds=0.8, at=c.A(9, 'rápido', 0.5), label='Nova categoria (despesa)')
+    c.confere('dlg', ['Despesas selecionadas', 'Valores e saldos não mudam.', 'Nova categoria (despesa)'], 'janela Alterar categoria')
+    c.click(BTN('Cancelar', within=DLG), at=c.A(9, 'Só', 0.6), label='Cancelar')
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.mark(10)
+    c.click(BTN('Excluir selecionados', within=MAIN), at=c.A(10, 'Excluir', 0.6), label='Excluir selecionados')
+    c.waitfor(text='Excluir 3 lançamentos?', timeout=10)
+    c.hover({'text': 'Saídas selecionadas', 'within': ALERTA}, seconds=1.0, at=c.A(10, 'quinhentos', 0.5), label='Saídas selecionadas (ZOOM)')
+    c.confere('body', ['Excluir 3 lançamentos?', 'Entradas selecionadas', 'Saídas selecionadas', 'R$ 552,20', 'em uma única operação'], 'janela Excluir 3 lançamentos? com R$ 552,20')
+    c.mark(11)
+    c.hover({'text': 'Essa ação não pode ser desfeita.', 'within': ALERTA}, seconds=0.5, at=c.A(10, 'Confiro', 0.5), label='aviso âmbar e Essa ação não pode ser desfeita')
+    c.click(BTN_EXCL, at=c.A(11, 'Excluir', 0.6), label='Excluir selecionados (confirma)')
+    c.waitfor(text='3 lançamentos excluídos.', timeout=12)
+    c.hover(SEL('main div.text-4xl.font-bold'), seconds=1.0, at=c.A(11, 'saldo', 0.5), label='o saldo volta pro lugar (ZOOM)')
+    c.confere('main', ['R$ 45.236,97'], 'saldo da Conta Principal de volta em 45.236,97')
+    c.mark(12)
+    c.click({'placeholder': 'Buscar por descrição ou valor...'}, at=c.A(12, 'caixinha', 1.4), label='busca')
+    c.press('Control+a', label='seleciona o texto')
+    c.press('Backspace', label='limpa a busca')
+    c.hover(SEL('main tr:has-text("Compra #") , main tr:has-text("Venda #")'), seconds=1.0, at=c.A(12, 'pedido', 0.5), label='linha de pedido sem caixa (ZOOM)')
+    c.press('Escape', at=c.A(12, 'conciliado', 0.5), label='fecha a seleção')
+    c.fim()
+    return c
+
+
+def cap_outros():
+    """cap17 · Outros casos do extrato (Conta Secundária; extrato de 8 linhas; não finaliza e não segue para a T15)"""
+    c = Cap('outros', setup_mov([{'do': 'click', 'target': BTN('Conciliação')}, {'do': 'waitFor', 'text': 'Conta para conciliar', 'timeout': 20}, AGUARDA]), pace=0.5)
+    SERR1, ACOS, COOPR, FUND, SIQ2 = 'PIX RECEBIDO SERRA FINA ALUMINIO RECICLAGEM', 'PIX RECEBIDO ACOS QUIRIRIM LTDA', 'PIX ENVIADO COOPERATIVA RECOMECO', 'PIX RECEBIDO FUNDICAO BANDEIRA DO VALE', 'PIX ENVIADO DEPOSITO IRMAOS SIQUEIRA'
+    F1, F2 = 'PIX ENVIADO FOLHA DE PAGAMENTO LOTE 1', 'PIX ENVIADO FOLHA DE PAGAMENTO LOTE 2'
+    c.mark(1)
+    c.click(SEL('main button[role=combobox]:has-text("Conta Principal")'), at=c.A(1, 'Secundária', 0.9), label='Conta para conciliar')
+    c.click(OPT('Conta Secundária'), label='Conta Secundária')
+    c.click(BTN('Importar novo extrato'), at=c.A(1, 'importo', 0.6), label='Importar novo extrato')
+    c.waitfor(text='Importar extrato OFX', timeout=10)
+    c.upload(TXT('Arraste o arquivo .ofx aqui ou clique para selecionar', within=DLG), 'arquivos/Extrato_Secundaria_20261106_20261109.ofx', at=c.A(1, 'arquivo', 0.7),
+             label='entrega o Extrato_Secundaria_20261106_20261109.ofx')
+    c.waitfor(text='Prévia do extrato', timeout=10)
+    c.click(BTN('Importar', within=DLG), label='Importar')
+    c.waitfor(text='8 de 8 linhas importadas', timeout=15)
+    c.click(BTN('Concluir'), label='Concluir')
+    c.waitfor(text='Linha do extrato', timeout=15)
+    c.ev(js_main_fim(0), label='desce até a tabela')
+    for m in (SERR1, COOPR, FUND, '__SIQ_817__'):
+        if m == '__SIQ_817__':
+            c.click(SEL(f'{LINHA(SIQ2)}:has(:text-is("−R$ 817,00")) button:has-text("Casar com"), {LINHA(SIQ2)}:has(:text-is("−R$ 817,00")) button:has-text("Confirmar")'), label='Confirmar (R$ 817,00)')
+            c.waitfor(target=SEL(f'{LINHA(SIQ2)}:has(:text-is("−R$ 817,00")) :text-is("Casada")'), timeout=10)
+        else:
+            confirma(c, m, label=f'Confirmar ({m})')
+    c.mark(2)
+    c.ev(js_rola_texto(SIQ2, 260, 600), at=c.A(2, 'acerto', 0.9), label='rola até o Pix de R$ 340,00')
+    c.click(SEL(f'{LINHA(SIQ2)}:has(:text-is("−R$ 340,00")) button:has-text("Mais ações")'), at=c.A(2, 'Mais', 0.6), label='Mais ações (R$ 340,00)')
+    c.click(ITEM('Saldo do cliente/fornecedor'), at=c.A(2, 'Saldo', 0.6, nth=0), label='Saldo do cliente/fornecedor')
+    c.waitfor(text='Baixar na conta-corrente', timeout=10)
+    c.click(SEL('main [role=combobox]:has-text("Selecione")'), at=c.A(2, 'Escolho', 0.7), label='Cliente ou fornecedor')
+    c.click(OPT('Depósito Irmãos Siqueira', exact=False), label='escolhe o Depósito Irmãos Siqueira')
+    c.hover(SEL('main :text("Dar baixa de R$ 340,00")'), seconds=0.8, at=c.A(2, 'saldo', 0.5, nth=1), label='o saldo do parceiro e o botão Dar baixa (ZOOM)')
+    c.confere('main', ['Baixar na conta-corrente', 'Dar baixa de R$ 340,00'], 'painel Baixar na conta-corrente')
+    c.mark(3)
+    c.click(SEL('main button:has-text("Dar baixa de R$ 340,00")'), at=c.A(3, 'Dar', 0.6), label='Dar baixa de R$ 340,00')
+    c.waitfor(text='Baixa na conta-corrente registrada', timeout=10)
+    c.mark(4)
+    c.ev(js_rola_texto(ACOS, 260, 600), at=c.A(4, 'segundo', 0.9), label='rola até o Pix da Aços Quiririm')
+    c.click(NA_LINHA(ACOS, 'Mais ações'), at=c.A(4, 'Mais', 0.6), label='Mais ações (R$ 50.215,00)')
+    c.click(ITEM('Casar com vários lançamentos'), at=c.A(4, 'Casar', 0.6), label='Casar com vários lançamentos')
+    c.waitfor(text='Um Pix que pagou dois pedidos', timeout=10, optional=True)
+    c.hover(TXT('Casar com vários lançamentos', within=MAIN), seconds=0.4, label='o painel')
+    c.click({'placeholder': 'Nome do cliente/fornecedor, nº do pedido...'}, label='campo da busca')
+    c.type({'placeholder': 'Nome do cliente/fornecedor, nº do pedido...'}, 'Quiririm', noClick=True, label='digita Quiririm')
+    c.click(SEL(f'{LINHA(ACOS)} [role=checkbox], {LINHA(ACOS)} :text("48.740,00")', nth=0), at=c.A(4, 'marco', 0.6), label='marca a venda de 48.740,00')
+    c.click(SEL(f'{LINHA(ACOS)} :text("1.475,00")'), label='marca a venda de 1.475,00')
+    c.hover(SEL(f'{LINHA(ACOS)} button:has-text("Casar com 2 lançamentos")'), seconds=0.8, at=c.A(4, 'soma', 0.5), label='as duas vendas e a soma (ZOOM)')
+    c.click(SEL(f'{LINHA(ACOS)} button:has-text("Casar com 2 lançamentos")'), at=c.A(4, 'libera', 0.9), label='Casar com 2 lançamentos')
+    c.waitfor(target=SEL(f'{LINHA(ACOS)} :text-is("Casada")'), timeout=10)
+    c.mark(5)
+    c.ev(js_rola_texto(F1, 260, 600), at=c.A(5, 'contrário', 0.9), label='rola até a folha')
+    c.click(SEL(f'{LINHA(F1)} button[role=checkbox]'), at=c.A(5, 'Marco', 0.6), label='marca LOTE 1')
+    c.click(SEL(f'{LINHA(F2)} button[role=checkbox]'), label='marca LOTE 2')
+    c.hover({'text': 'Soma:', 'within': MAIN}, seconds=0.8, at=c.A(5, 'soma', 0.5), label='Soma e Casar 2 linhas com um lançamento (ZOOM)', noScroll=True)
+    c.click(BTNX('Casar 2 linhas com um lançamento', within=MAIN), at=c.A(5, 'Casar', 0.6), label='Casar 2 linhas com um lançamento')
+    c.waitfor(text='Escolha o lançamento no sistema', timeout=10)
+    c.click(SEL('[role=dialog] :text("Folha de outubro")'), label='escolhe o lançamento da folha')
+    c.click(BTN('Casar 2 linhas', within=DLG), label='Casar 2 linhas')
+    c.waitfor(target=SEL(f'{LINHA(F1)} :text-is("Casada")'), timeout=10)
+    c.mark(6)
+    c.hover(SEL(f'{LINHA(F1)} :text-is("Casada")'), seconds=1.5, at=c.A(6, 'outra', 0.5), label='(ilustração) o Pix na conta errada')
+    c.mark(7)
+    c.ev(js_rola_texto('Linha do extrato', 120, 400), label='sobe à tabela')
+    c.fim()
+    return c
+
+
 # ---------------------------------------------------------------- main
 def main():
     pedidos = [int(a) for a in sys.argv[1:] if a.isdigit()]
-    fns = {n: globals().get(f'cap{n:02d}') for n in range(15)}
+    chaves = {chave: (globals().get(f'cap{chave:02d}') if isinstance(chave, int) else globals().get(f'cap_{chave}')) for chave in NOVO}
+    fns = {NOVO[k]: fn for k, fn in chaves.items()}
     feitos = []
-    for n, fn in fns.items():
+    for n, fn in sorted(fns.items()):
         if fn is None or (pedidos and n not in pedidos):
             continue
         c = fn()

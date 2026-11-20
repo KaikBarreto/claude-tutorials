@@ -1,0 +1,265 @@
+{
+ "name": "t13-cap14",
+ "title": "T13 · Cap. 14 · Desfazer uma baixa (narração ESTIMADA 41,0 s; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "seed": "t13-cap14",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 400
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.60.18",
+  "notification_shown_version": "1.60.18",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t13/inicio",
+  "t13/apos-cap13"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/contas-pagar-receber"
+  },
+  {
+   "do": "waitFor",
+   "text": "Água e esgoto de outubro",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "header button.h-8.w-8"
+   },
+   "noScroll": true
+  },
+  {
+   "do": "wait",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const a=document.getAnimations().filter(x=>x.currentTime<0);a.forEach(x=>x.startTime=document.timeline.currentTime);return a.length})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|inv[áa]lid/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "click",
+   "target": {
+    "selector": "main input[aria-label='Buscar contas']"
+   },
+   "at": 0.1,
+   "label": "busca conserto (clique no campo)"
+  },
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.4
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main input[aria-label='Buscar contas']"
+   },
+   "text": "conserto",
+   "cps": 40,
+   "at": 1.79,
+   "label": "busca conserto",
+   "noClick": true
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main tbody tr:has-text('Conserto do pneu da empilhadeira')"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Conserto do pneu da empilhadeira') :text-is('Paga')"
+   },
+   "seconds": 0.35,
+   "at": 3.82,
+   "label": "a conta paga",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('Conserto do pneu da empilhadeira') button[aria-label='Mais ações']"
+   },
+   "at": 5.12,
+   "label": "Mais ações"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=menuitem]:has-text('Estornar pagamento')"
+   },
+   "at": 6.23,
+   "label": "Estornar pagamento"
+  },
+  {
+   "do": "waitFor",
+   "text": "Valor da baixa",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Valor da baixa\", \"R$ 180,00\", \"Saiu de\", \"Conta Principal\", \"Voltam R$ 180,00\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere o que o estorno desfaz"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 7.9
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Saiu de",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.6,
+   "at": 10.71,
+   "label": "ZOOM Saiu de: a conta de onde o dinheiro saiu",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Voltam R$ 180,00",
+    "within": "[role=dialog]",
+    "exact": false
+   },
+   "seconds": 2.2,
+   "at": 13.74,
+   "label": "ZOOM Voltam R$ 180,00 e a conta volta a ficar pendente",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Cancelar')"
+   },
+   "at": 20.24,
+   "label": "Cancelar o estorno",
+   "noScroll": true
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 20.24
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('Conserto do pneu da empilhadeira') button[title='Excluir']"
+   },
+   "at": 20.45,
+   "label": "lixeira Excluir na conta paga"
+  },
+  {
+   "do": "waitFor",
+   "text": "Excluir e estornar",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "button:has-text('Excluir e estornar')"
+   },
+   "seconds": 1.8,
+   "at": 24.64,
+   "label": "ZOOM o botão Excluir e estornar",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 30.01
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Cancelar'), [role=alertdialog] button:has-text('Cancelar')"
+   },
+   "at": 39.06,
+   "label": "Cancelar",
+   "noScroll": true
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 41.0
+  }
+ ]
+}

@@ -1,6 +1,6 @@
 {
  "name": "t13-cap08",
- "title": "T13 · Cap. 8 · Só esta ou esta e as futuras (narração ESTIMADA 59,7 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T13 · Cap. 8 · A conta que se repete (narração ESTIMADA 61,2 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t13-cap08",
  "pace": 0.5,
  "cps": 40,
@@ -109,9 +109,251 @@
   {
    "do": "click",
    "target": {
+    "role": "button",
+    "name": "Nova conta",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 3.04,
+   "label": "Nova conta"
+  },
+  {
+   "do": "waitFor",
+   "text": "Cadastre uma conta a pagar ou a receber com vencimento.",
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 8.35
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#bill-amount"
+   },
+   "at": 8.35,
+   "label": "ZOOM Valor 2.300,00 (clique no campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#bill-amount"
+   },
+   "text": "2300,00",
+   "cps": 40,
+   "at": 8.95,
+   "label": "ZOOM Valor 2.300,00",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#bill-description"
+   },
+   "at": 10.03,
+   "label": "Descrição (colada) (clique no campo)"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM ALVO (nada em foco)';document.execCommand('insertText',false,\"Aluguel da empilhadeira\");return e.value})()",
+   "at": 10.69,
+   "label": "Descrição (colada)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const acha=()=>[...document.querySelectorAll(\"#bill-category\")].find(e=>e.offsetParent);let el=acha();for(let i=0;i<30&&!el;i++){await new Promise(r=>setTimeout(r,100));el=acha();}if(!el)return 'SEM ALVO';el.click();const viu=async()=>{for(let i=0;i<10;i++){if([...document.querySelectorAll(\"input[placeholder='Pesquisar categoria...']\")].some(e=>e.offsetParent))return true;await new Promise(r=>setTimeout(r,100));}return false};if(!(await viu())){const e2=acha();if(e2){e2.click();return 'ok: '+e2.textContent.trim().slice(0,60)+' (2º clique)'+((await viu())?'':' SEM ALVO: não abriu')}}return 'ok: '+el.textContent.trim().slice(0,60)})()",
+   "at": 10.85,
+   "label": "Categoria (abre a lista, sem cursor)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Pesquisar categoria..."
+   },
+   "text": "Aluguel",
+   "at": 10.95,
+   "label": "Aluguel (busca + Enter)",
+   "noClick": true,
+   "submit": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#bill-due"
+   },
+   "at": 12.47,
+   "label": "Vencimento 12/11/2026 (abre o calendário)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button[name='day']:not(.day-outside):text-is('12')"
+   },
+   "at": 14.75,
+   "label": "Vencimento 12/11/2026"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 16.06
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim()===\"Parcelar ou repetir\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-260);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 16.06,
+   "label": "desce a janela até Parcelar ou repetir"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[aria-expanded]:has-text('Parcelar ou repetir')"
+   },
+   "at": 16.59,
+   "label": "abre Parcelar ou repetir"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#recurrence-toggle"
+   },
+   "at": 18.92,
+   "label": "liga Repete?"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "#recurrence-frequency"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim()===\"Repetir at\\u00e9 (opcional)\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-420);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 21.06,
+   "label": "desce até Frequência e Repetir até"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Gera contas automaticamente",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "at": 22.66,
+   "label": "Gera contas automaticamente na frequência escolhida",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 24.99
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#recurrence-frequency"
+   },
+   "at": 25.88,
+   "label": "Frequência (abre: Semanal, Mensal, Anual)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Mensal"
+   },
+   "at": 28.63,
+   "label": "Mensal"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#recurrence-interval"
+   },
+   "seconds": 0.15,
+   "at": 29.54,
+   "label": "A cada 1",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 30.58
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#recurrence-end"
+   },
+   "at": 31.16,
+   "label": "Repetir até 12/04/2027 (abre o calendário)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button[name='next-month']"
+   },
+   "seconds": 0.15,
+   "at": 32.07,
+   "label": "Repetir até 12/04/2027: o cursor no próximo mês",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const b=()=>document.querySelector(\"[data-radix-popper-content-wrapper] button[name='next-month']\");if(!b())return 'SEM ALVO';for(let i=0;i<5;i++){b().click();await new Promise(r=>setTimeout(r,170));}const c=document.querySelector('[data-radix-popper-content-wrapper] [aria-live], [data-radix-popper-content-wrapper] .rdp-caption_label');return c?c.textContent.trim():'ok'})()",
+   "label": "Repetir até 12/04/2027: avança 5 meses"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button[name='day']:not(.day-outside):text-is('12')"
+   },
+   "at": 34.65,
+   "label": "Repetir até 12/04/2027"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Deixe vazio para repetir sem data-fim.",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.4,
+   "at": 36.57,
+   "label": "Deixe vazio para repetir sem data-fim.",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 39.05
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar conta",
+    "exact": true
+   },
+   "at": 39.25,
+   "label": "Criar conta",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Conta recorrente criada",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
     "selector": "main input[aria-label='Buscar contas']"
    },
-   "at": 1.62,
+   "at": 40.34,
    "label": "busca aluguel da (clique no campo)"
   },
   {
@@ -121,16 +363,27 @@
    },
    "text": "aluguel da",
    "cps": 40,
-   "at": 2.86,
+   "at": 41.64,
    "label": "busca aluguel da",
    "noClick": true
   },
   {
    "do": "waitFor",
    "target": {
-    "selector": "main tbody tr:has-text('12/12/2026')"
+    "selector": "main tbody tr:has-text('12/01/2027')"
    },
    "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('12/11/2026') :text-is('12/11/2026')"
+   },
+   "seconds": 0.15,
+   "at": 43.01,
+   "label": "a conta de novembro",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "hover",
@@ -138,197 +391,31 @@
     "selector": "main tbody tr:has-text('12/12/2026') :text-is('12/12/2026')"
    },
    "seconds": 0.15,
-   "at": 6.86,
-   "label": "a conta de dezembro",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L2",
-   "at": 7.67
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "main tbody tr:has-text('12/12/2026') button[title='Editar']"
-   },
-   "at": 8.55,
-   "label": "lápis Editar na de dezembro"
-  },
-  {
-   "do": "waitFor",
-   "text": "Editar conta recorrente",
-   "timeout": 8
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "[role=alertdialog] button:has-text('Só esta conta')"
-   },
-   "seconds": 0.56,
-   "at": 15.64,
-   "label": "Só esta conta",
+   "at": 43.4,
+   "label": "a de dezembro",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "hover",
    "target": {
-    "selector": "[role=alertdialog] button:has-text('Esta e as futuras')"
-   },
-   "seconds": 0.55,
-   "at": 17.15,
-   "label": "Esta e as futuras",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L3",
-   "at": 18.65
-  },
-  {
-   "do": "mark",
-   "name": "L4",
-   "at": 30.46
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=alertdialog] button:has-text('Esta e as futuras')"
-   },
-   "at": 30.76,
-   "label": "Esta e as futuras"
-  },
-  {
-   "do": "waitFor",
-   "text": "Altere os dados da conta.",
-   "timeout": 8
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "#bill-due"
-   },
-   "at": 32.79,
-   "label": "Vencimento 15/12/2026 (abre o calendário)"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[data-radix-popper-content-wrapper] button[name='day']:not(.day-outside):text-is('15')"
-   },
-   "at": 34.66,
-   "label": "Vencimento 15/12/2026"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Esta data e as futuras serão deslocadas pelo mesmo período.",
-    "within": "[role=dialog]"
-   },
-   "seconds": 1.4,
-   "at": 36.84,
-   "label": "ZOOM aviso: as futuras andam o mesmo tanto",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L5",
-   "at": 40.08
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Salvar",
-    "exact": true
-   },
-   "at": 40.28,
-   "label": "Salvar",
-   "noScroll": true
-  },
-  {
-   "do": "waitFor",
-   "text": "Conta atualizada",
-   "timeout": 10
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('12/11/2026') :text-is('12/11/2026')"
-   },
-   "seconds": 0.4,
-   "at": 41.08,
-   "label": "novembro ficou no dia 12",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('15/12/2026') :text-is('15/12/2026')"
+    "selector": "main tbody tr:has-text('12/04/2027') :text-is('12/04/2027')"
    },
    "seconds": 0.15,
-   "at": 43.51,
-   "label": "dezembro no dia 15",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('15/04/2027') :text-is('15/04/2027')"
-   },
-   "seconds": 0.8,
-   "at": 44.35,
-   "label": "de dezembro em diante no dia 15",
+   "at": 44.0,
+   "label": "até a de abril (a RPC cria todas até a data de parar)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"12/11/2026\", \"15/12/2026\", \"15/01/2027\", \"15/02/2027\", \"15/03/2027\", \"15/04/2027\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere vencimentos depois do Salvar"
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"12/11/2026\", \"12/12/2026\", \"12/01/2027\", \"12/02/2027\", \"12/03/2027\", \"12/04/2027\", \"R$ 2.300,00\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere as seis contas do aluguel da empilhadeira"
   },
   {
    "do": "mark",
-   "name": "L6",
-   "at": 46.58
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "main tbody tr:has-text('15/01/2027') button[title='Excluir']"
-   },
-   "at": 46.78,
-   "label": "lixeira Excluir na de janeiro"
-  },
-  {
-   "do": "waitFor",
-   "text": "Excluir conta recorrente",
-   "timeout": 8
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "[role=alertdialog] button:has-text('Esta e as futuras')"
-   },
-   "seconds": 1.2,
-   "at": 49.16,
-   "label": "Esta e as futuras (vermelho)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=alertdialog] button:has-text('Cancelar')"
-   },
-   "at": 57.66,
-   "label": "Cancelar"
+   "name": "L7",
+   "at": 44.48
   },
   {
    "do": "eval",
@@ -338,7 +425,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 59.69
+   "at": 61.24
   }
  ]
 }

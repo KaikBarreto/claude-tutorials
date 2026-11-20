@@ -1,6 +1,6 @@
 {
  "name": "t13-cap12",
- "title": "T13 · Cap. 12 · Filtrar a lista (narração ESTIMADA 64,7 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T13 · Cap. 12 · O valor real do mês (narração ESTIMADA 82,9 s; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t13-cap12",
  "pace": 0.5,
  "cps": 40,
@@ -109,329 +109,241 @@
   {
    "do": "click",
    "target": {
-    "selector": "main button:text-is('A Receber')"
+    "selector": "main input[aria-label='Buscar contas']"
    },
-   "at": 5.47,
-   "label": "aba A Receber"
+   "at": 6.94,
+   "label": "busca aluguel da (clique no campo)"
   },
   {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"main tbody tr:last-child\")].filter(e=>e.offsetParent)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-600);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 6.7,
-   "label": "desce a tela até o fim da lista"
-  },
-  {
-   "do": "hover",
+   "do": "type",
    "target": {
-    "selector": "main tbody tr:has-text('Aços Quiririm Ltda') :text-is('Saldo')"
+    "selector": "main input[aria-label='Buscar contas']"
    },
-   "seconds": 0.62,
-   "at": 8.0,
-   "label": "as linhas de saldo, lá no fim",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L2",
-   "at": 9.57
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "main button:has-text('Filtros')"
-   },
-   "at": 10.45,
-   "label": "Filtros (abre o painel)"
+   "text": "aluguel da",
+   "cps": 40,
+   "at": 7.54,
+   "label": "busca aluguel da",
+   "noClick": true
   },
   {
    "do": "waitFor",
    "target": {
-    "selector": "[role=dialog] label:text-is('Status')"
+    "selector": "main tbody tr:has-text('12/11/2026')"
    },
    "timeout": 8
   },
   {
    "do": "hover",
    "target": {
-    "selector": "[role=dialog] label:text-is('Status')"
+    "selector": "main tbody tr:has-text('12/11/2026') :text-is('R$ 2.300,00')"
    },
    "seconds": 0.15,
    "at": 12.78,
-   "label": "Status",
+   "label": "a de novembro: R$ 2.300,00",
    "optional": true,
    "timeout": 4
   },
   {
-   "do": "hover",
+   "do": "mark",
+   "name": "L2",
+   "at": 13.67
+  },
+  {
+   "do": "click",
    "target": {
-    "selector": "[role=dialog] label:text-is('Categoria')"
+    "selector": "main tbody tr:has-text('12/11/2026') button[title='Marcar pago']"
    },
-   "seconds": 0.15,
-   "at": 13.53,
-   "label": "Categoria",
-   "optional": true,
-   "timeout": 4
+   "at": 13.87,
+   "label": "Marcar pago na de novembro"
+  },
+  {
+   "do": "waitFor",
+   "text": "Valor desta ocorrência",
+   "timeout": 8
   },
   {
    "do": "hover",
    "target": {
-    "selector": "[role=dialog] label:text-is('Cliente/Fornecedor')"
+    "selector": "#pay-occurrence-amount"
    },
-   "seconds": 0.25,
-   "at": 14.52,
-   "label": "Cliente/Fornecedor",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "[role=dialog] label:text-is('Centro de custo')"
-   },
-   "seconds": 0.25,
-   "at": 16.42,
-   "label": "Centro de custo",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "[role=dialog] label:has-text('Banco previsto')"
-   },
-   "seconds": 0.25,
-   "at": 17.86,
-   "label": "Banco previsto",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "[role=dialog] label:text-is('Vencimento (período)')"
-   },
-   "seconds": 0.6,
-   "at": 19.15,
-   "label": "Vencimento (período)",
+   "seconds": 0.93,
+   "at": 21.63,
+   "label": "Valor desta ocorrência",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 20.85
+   "at": 23.51
   },
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] div:has(> label:text-is('Status')) button"
+    "selector": "#pay-occurrence-amount"
    },
-   "at": 21.27,
-   "label": "Status (abre a lista)"
+   "at": 23.71,
+   "label": "ZOOM Valor desta ocorrência 2.415,00 (clique no campo)"
   },
   {
-   "do": "click",
+   "do": "type",
    "target": {
-    "selector": "[data-radix-popper-content-wrapper] label:has(span:text-is('Pendente'))"
+    "selector": "#pay-occurrence-amount"
    },
-   "at": 22.59,
-   "label": "marca Pendente"
-  },
-  {
-   "do": "press",
-   "key": "Escape",
-   "at": 23.57,
-   "label": "fecha a lista do Status (Esc)"
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Aplicar",
-    "exact": true
-   },
-   "at": 23.72,
-   "label": "Aplicar",
-   "noScroll": true
+   "text": "2415,00",
+   "cps": 40,
+   "at": 25.12,
+   "label": "ZOOM Valor desta ocorrência 2.415,00",
+   "noClick": true,
+   "clear": true
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main button:has-text('Filtros')"
+    "selector": "#pay-amount-transfer"
    },
-   "seconds": 1.6,
-   "at": 26.91,
-   "label": "ZOOM Filtros verde com o número 1",
+   "seconds": 0.54,
+   "at": 28.59,
+   "label": "o valor do pagamento acompanha",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Previsto: R$ 2.300,00 · Valor desta ocorrência: R$ 2.415,00\", \"As próximas contas mantêm o valor previsto.\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere o resumo da ocorrência"
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 30.46
+   "at": 30.08
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr",
-    "nth": "last"
+    "text": "As próximas contas mantêm o valor previsto.",
+    "within": "[role=dialog]"
    },
-   "seconds": 1.6,
-   "at": 33.95,
-   "label": "o fim da lista: sem as linhas de saldo",
+   "seconds": 2.2,
+   "at": 31.37,
+   "label": "ZOOM resumo: previsto, valor deste mês e as próximas mantêm",
    "optional": true,
    "timeout": 4
   },
   {
-   "do": "eval",
-   "js": "(async()=>{await new Promise(r=>setTimeout(r,600));const el=document.querySelector(\"main tbody\");const t=(el?el.innerText:'').replace(/[\\s\\u00a0]+/g,' ').toLowerCase();return t.includes(\"saldo\")?'DIFERENTE: apareceu '+\"Saldo\":'OK: ausente '+\"Saldo\"})()",
-   "label": "confere as linhas de saldo saíram"
-  },
-  {
    "do": "mark",
    "name": "L5",
-   "at": 45.38
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const c=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,dy=-y0;if(y0<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
-   "at": 45.68,
-   "label": "sobe a tela até os cartões"
+   "at": 39.09
   },
   {
    "do": "hover",
    "target": {
-    "text": "Total a Receber",
-    "exact": true,
-    "within": "main"
+    "selector": "[role=dialog] #pay-update-future"
    },
-   "seconds": 1.6,
-   "at": 46.26,
-   "label": "os cartões continuam iguais",
+   "seconds": 2.6,
+   "at": 43.26,
+   "label": "o interruptor Atualizar o valor previsto das próximas contas (desligado)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 50.44
+   "at": 53.33
   },
   {
    "do": "click",
    "target": {
-    "selector": "main button:has-text('Filtros')"
+    "selector": "[role=dialog] button[aria-label='Pix / Transferência (Banco)']"
    },
-   "at": 50.94,
-   "label": "Filtros (de novo)"
+   "at": 57.86,
+   "label": "Pix / Transferência (Banco)"
   },
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] button[role=combobox]:has-text('Todos')",
-    "nth": 0
+    "selector": "[role=dialog] button[role=combobox]"
    },
-   "at": 52.3,
-   "label": "Cliente/Fornecedor (abre a busca)"
-  },
-  {
-   "do": "type",
-   "target": {
-    "placeholder": "Buscar parceiro..."
-   },
-   "text": "Fundição",
-   "at": 53.61,
-   "label": "busca Fundição",
-   "noClick": true
+   "at": 58.54,
+   "label": "Conta bancária (abre a lista)"
   },
   {
    "do": "click",
    "target": {
     "role": "option",
-    "name": "Fundição Bandeira do Vale"
+    "name": "Conta Secundária"
    },
-   "at": 54.76,
-   "label": "Fundição Bandeira do Vale"
+   "at": 59.2,
+   "label": "Conta Secundária"
   },
   {
    "do": "click",
    "target": {
     "role": "button",
-    "name": "Aplicar",
+    "name": "Confirmar pagamento",
     "exact": true
    },
-   "at": 55.51,
-   "label": "Aplicar",
+   "at": 60.41,
+   "label": "Confirmar pagamento",
    "noScroll": true
   },
   {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr",
-    "nth": 1
-   },
-   "seconds": 0.24,
-   "at": 56.58,
-   "label": "as três parcelas dela",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Fundição Bandeira do Vale\", \"17/11/2026\", \"17/12/2026\", \"18/01/2027\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere as três parcelas da Fundição"
+   "do": "waitFor",
+   "text": "Pagamento registrado",
+   "timeout": 10
   },
   {
    "do": "mark",
    "name": "L7",
-   "at": 57.77
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "main button:has-text('Filtros')"
-   },
-   "at": 58.37,
-   "label": "Filtros (de novo)"
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Limpar filtros",
-    "exact": true
-   },
-   "at": 59.89,
-   "label": "Limpar filtros",
-   "noScroll": true
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Aplicar",
-    "exact": true
-   },
-   "at": 60.82,
-   "label": "Aplicar",
-   "noScroll": true
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"main tbody tr:last-child\")].filter(e=>e.offsetParent)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-600);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 61.5,
-   "label": "desce a tela até o fim da lista"
+   "at": 61.12
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text('Aços Quiririm Ltda') :text-is('Saldo')"
+    "selector": "main tbody tr:has-text('12/11/2026') :text-is('Paga')"
    },
-   "seconds": 1.0,
-   "at": 62.7,
-   "label": "as linhas de saldo voltam",
+   "seconds": 0.87,
+   "at": 62.03,
+   "label": "novembro Paga",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('12/11/2026') :text-is('R$ 2.415,00')"
+   },
+   "seconds": 1.4,
+   "at": 63.85,
+   "label": "R$ 2.415,00",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('15/12/2026') :text-is('R$ 2.300,00')"
+   },
+   "seconds": 1.4,
+   "at": 66.58,
+   "label": "dezembro continua R$ 2.300,00",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Paga\", \"R$ 2.415,00\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody tr\")].filter(e=>!true||e.innerText.includes(\"12/11/2026\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere novembro paga com o valor real"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"R$ 2.300,00\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody tr\")].filter(e=>!true||e.innerText.includes(\"15/12/2026\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere dezembro continua com o previsto"
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 69.97
   },
   {
    "do": "eval",
@@ -441,7 +353,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 64.66
+   "at": 82.94
   }
  ]
 }

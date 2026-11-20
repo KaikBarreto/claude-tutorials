@@ -1,6 +1,6 @@
 {
  "name": "t13-cap02",
- "title": "T13 · Cap. 2 · Os quatro cartões do topo (narração ESTIMADA 58,0 s; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T13 · Cap. 2 · Os quatro cartões do topo (narração ESTIMADA 65,3 s; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t13-cap02",
  "pace": 0.5,
  "cps": 40,
@@ -221,19 +221,50 @@
    "target": {
     "selector": "main button:text-is('A Pagar')"
    },
-   "at": 48.47,
-   "label": "troca para a aba A Pagar"
+   "at": 51.36,
+   "label": "aba A Pagar: o segundo cartão vira Total pago"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Total a Pagar\", \"Total pago\", \"Vencidas\", \"Vence em 7 dias\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere cartões da aba A Pagar"
   },
   {
    "do": "hover",
    "target": {
-    "text": "Total a Pagar",
+    "text": "Total pago",
     "exact": true,
     "within": "main"
    },
-   "seconds": 0.8,
-   "at": 50.09,
-   "label": "os números não mudaram",
+   "seconds": 0.24,
+   "at": 54.65,
+   "label": "Total pago",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button:text-is('A Receber')"
+   },
+   "at": 55.84,
+   "label": "aba A Receber: o segundo cartão vira Total recebido"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Total a Receber\", \"Total recebido\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere cartões da aba A Receber"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Total recebido",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "at": 58.9,
+   "label": "Total recebido",
    "optional": true,
    "timeout": 4
   },
@@ -242,7 +273,7 @@
    "target": {
     "selector": "main button:text-is('Todas')"
    },
-   "at": 54.32,
+   "at": 63.12,
    "label": "volta para Todas"
   },
   {
@@ -253,7 +284,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 58.05
+   "at": 65.33
   }
  ]
 }

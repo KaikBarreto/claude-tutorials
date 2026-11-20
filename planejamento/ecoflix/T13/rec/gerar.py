@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """T13 · gera rec/t13/cap00..cap13.json (roteiros do robô) a partir da voz (t13/narracao/capNN.json).
 
-Contas a Pagar e Receber no COMPUTADOR (janela 1280x800), logado como Rafael Nogueira (MASTER, Recicla Vale Metais), EcoSistema
-1.59.154. FAKE_NOW 2026-11-10T08:30:00-03:00 (terça) em todos os capítulos.
+Contas a Pagar e Receber no COMPUTADOR (tela 1600x900), logado como Rafael Nogueira (MASTER, Recicla Vale Metais), EcoSistema
+1.60.18. FAKE_NOW 2026-11-10T08:30:00-03:00 (terça) em todos os capítulos.
 Cada passo é preso a uma palavra da fala: `at` = início da palavra − o custo do gesto (A(linha, palavra, folga)), para o cursor CHEGAR
 na palavra (docs/04, "Custo real dos gestos"). Hoje a voz é ESTIMADA (capNN.json do preparar_aula.sh); com a voz real, rode de novo.
 Rodar de qualquer pasta: `python3 -I rec/t13/gerar.py [NN ...]`. Depois: t13_ensaio.sh NN (ensaio rápido), prever.py NN --ens,
@@ -12,7 +12,7 @@ Cadeia de sementes (rec/mundo/seeds-extra/t13/, t13_sementes.py): `inicio` (Hidr
 0 a 4; depois cada capítulo parte do `apos-capNN` do anterior que mexeu no banco (SEMENTE abaixo). O `apos-capNN` sai do ensaio do
 capítulo NN com 0 falho (`t13_ensaio.sh NN rapido --semente`, na mesma instância, logo depois).
 
-Particularidades (lidas no código da 1.59.154 e conferidas na exploração rec/t13/_ex/):
+Particularidades (lidas no código da 1.60.18 e conferidas na exploração rec/t13/_ex/):
  - Abas da tela ("Todas", "A Pagar", "A Receber") são <button> simples; Lista/Calendário são ToggleGroup (role radio, "Visão em lista").
  - Busca: duas cópias do campo (celular e computador); o robô pega a visível (aria-label "Buscar contas").
  - Ações da linha: "Marcar pago"/"Receber" (texto), lápis title="Editar", lixeira title="Excluir".
@@ -34,12 +34,16 @@ TUT_HOME = os.path.normpath(os.path.join(HERE, '..', '..'))
 NARR = os.path.join(TUT_HOME, 't13', 'narracao')
 FAKE_NOW = '2026-11-10T08:30:00-03:00'
 NOMES = ['Abertura', 'A tela e as abas', 'Os quatro cartões do topo', 'Lista e calendário', 'Lançar uma conta', 'A conta que já nasce paga',
-         'Parcelar uma conta', 'A conta que se repete', 'Só esta ou esta e as futuras', 'Dar baixa', 'O fiado na mesma lista',
-         'Anexar o comprovante', 'Filtrar a lista', 'Recapitulando']
+         'O sistema preenche pra você', 'Parcelar uma conta', 'A conta que se repete', 'Só esta ou esta e as próximas', 'E as parcelas?', 'Dar baixa',
+         'O valor real do mês', 'Pagar várias de uma vez', 'Desfazer uma baixa', 'O fiado na mesma lista', 'Anexar o comprovante', 'Filtrar a lista',
+         'Exportar a lista', 'Recapitulando']
 _I = ['t13/inicio']
-SEMENTE = {0: _I, 1: _I, 2: _I, 3: _I, 4: _I, 5: _I + ['t13/apos-cap04'], 6: _I + ['t13/apos-cap05'], 7: _I + ['t13/apos-cap06'],
-           8: _I + ['t13/apos-cap07'], 9: _I + ['t13/apos-cap08'], 10: _I + ['t13/apos-cap09'], 11: _I + ['t13/apos-cap10'],
-           12: _I + ['t13/apos-cap11'], 13: _I + ['t13/apos-cap11']}
+# cadeia: cada capítulo parte do apos-capNN do último capítulo da cadeia que mexeu no banco; 06 (preenchimento) e 10 (parcelas em grupo) são
+# variantes laterais (não seguem), 14 (estorno) e 18 (exportar) cancelam e não mudam nada
+SEMENTE = {0: _I, 1: _I, 2: _I, 3: _I, 4: _I, 5: _I + ['t13/apos-cap04'], 6: _I + ['t13/apos-cap05', 't13/internet'], 7: _I + ['t13/apos-cap05'],
+           8: _I + ['t13/apos-cap07'], 9: _I + ['t13/apos-cap08'], 10: _I + ['t13/apos-cap09'], 11: _I + ['t13/apos-cap09'],
+           12: _I + ['t13/apos-cap11'], 13: _I + ['t13/apos-cap12'], 14: _I + ['t13/apos-cap13'], 15: _I + ['t13/apos-cap13'],
+           16: _I + ['t13/apos-cap15'], 17: _I + ['t13/apos-cap16'], 18: _I + ['t13/apos-cap16'], 19: _I + ['t13/apos-cap16']}
 PDF = 'assets/comprovante-pix-energia-outubro.pdf'   # relativo ao roteiro (rec/t13/), fictício (t13_sementes.py pdf)
 
 sys.path.insert(0, NARR)
@@ -478,15 +482,26 @@ def cap01():
     c.hover(TXT_LINHA('Aluguel do galpão de novembro', 'Aluguel do galpão de novembro'), 0.6, at=c.A(5, 'aluguel', 0.3), label='o aluguel do galpão')
     c.hover(TXT_LINHA('Aluguel do galpão de novembro', 'Paga'), 0.8, at=c.A(5, 'Paga.', 0.6), label='status Paga e Quitada em 05/11/2026')
     c.mark(6)
-    c.ev(js_topo(700), at=c.L(6) - 0.9, label='sobe a tela até o topo')
-    c.hover(NOVA, 1.4, at=c.A(6, 'este:', 0.6), label='botão Nova conta')
+    c.ev(js_rola_linha('Água e esgoto de outubro', 360), at=c.L(6) - 0.9, label='sobe a tela até a água de outubro')
+    c.hover(TXT_LINHA('Água e esgoto de outubro', 'Vencida'), 2.2, at=c.A(6, 'status,', 0.6), label='ZOOM dica do status: Vencimento 05/11/2026 e Vencida há 5 dia(s)')
+    c.confere('body', ['Vencida há 5 dia(s)', 'Vencimento 05/11/2026'], 'a dica do status Vencida')
+    c.mark(7)
+    c.click(TXT_LINHA('Energia elétrica de outubro', 'Energia elétrica'), at=c.A(7, 'clicando', 0.7), label='clique no meio da linha da energia (categoria)')
+    c.waitfor(text='Informações completas do lançamento', timeout=8)
+    c.confere('dlg', ['Detalhes da conta', 'Energia elétrica de outubro', 'Conta a pagar', 'R$ 1.874,30', '10/11/2026', 'Energia elétrica',
+                      'Cliente/fornecedor', 'Não parcelada', 'Nenhuma observação informada.'], 'os Detalhes da conta da energia')
+    c.hover(SEL(f"{DLG} :text-is('Parcela')"), 1.6, at=c.A(7, 'parcela', 0.6), label='ZOOM Detalhes da conta: Tipo, Valor, Vencimento, Categoria, Parcela e Observação')
+    c.press('Escape', at=c.L(8) - 1.0, label='fecha os Detalhes da conta (Esc)')
+    c.mark(8)
+    c.ev(js_topo(700), at=c.L(8) - 0.9, label='sobe a tela até o topo')
+    c.hover(NOVA, 1.4, at=c.A(8, 'este:', 0.6), label='botão Nova conta')
     c.fim()
     return c
 
 
 def cap02():
     """Os quatro cartões: o que cada um soma (zoom em Total a Pagar/Receber e em Vencidas/Vence em 7 dias), a ilustração da linha do
-    tempo (L3) e a troca de aba com os números iguais."""
+    tempo (L3) e a troca de aba (os cartões acompanham a lista)."""
     c = Cap(2, setup=setup_tela(), start=(760, 400))
     c.mark(1)
     c.hover(CARTAO('Total a Pagar'), 0.6, at=c.A(1, 'cartões', 0.6), label='os quatro cartões lá de cima')
@@ -500,9 +515,13 @@ def cap02():
     c.hover(CARTAO('Vencidas'), 1.4, at=c.A(4, 'Esses', 0.4), label='ZOOM cartões Vencidas e Vence em 7 dias')
     c.hover(CARTAO('Vence em 7 dias'), 1.4, at=c.A(4, 'receber.', 0.6), label='Vence em 7 dias')
     c.mark(5)
-    c.click(ABA('A Pagar'), at=c.A(5, 'troquei', 0.7), label='troca para a aba A Pagar')
-    c.hover(CARTAO('Total a Pagar'), 0.8, at=c.A(5, 'números', 0.6), label='os números não mudaram')
-    c.click(ABA('Todas'), at=c.A(5, 'inteira,', 0.7), label='volta para Todas')
+    c.click(ABA('A Pagar'), at=c.A(5, 'Pagar,', 0.7, nth=0), label='aba A Pagar: o segundo cartão vira Total pago')
+    c.confere('main', ['Total a Pagar', 'Total pago', 'Vencidas', 'Vence em 7 dias'], 'cartões da aba A Pagar')
+    c.hover(CARTAO('Total pago'), 1.0, at=c.A(5, 'Total', 0.6, nth=1), label='Total pago')
+    c.click(ABA('A Receber'), at=c.A(5, 'Receber,', 0.7, nth=0), label='aba A Receber: o segundo cartão vira Total recebido')
+    c.confere('main', ['Total a Receber', 'Total recebido'], 'cartões da aba A Receber')
+    c.hover(CARTAO('Total recebido'), 1.0, at=c.A(5, 'recebido.', 0.6), label='Total recebido')
+    c.click(ABA('Todas'), at=c.A(5, 'apareceu.', 0.7), label='volta para Todas')
     c.fim()
     return c
 
@@ -542,7 +561,7 @@ def cap03():
 
 def cap04():
     """Lançar uma conta: Nova conta da manutenção da prensa (Hidráulica Moretti, R$ 3.480,00, 19/11, Manutenção de máquinas, Pátio,
-    previsto Conta Principal) e a linha nova na lista."""
+    previsto Conta Principal, Forma de pagamento Pix) e a linha nova na lista. Ordem 1.60.18: Descrição, Vencimento, Valor."""
     c = Cap(4, setup=setup_tela(), start=(760, 400))
     c.mark(1)
     c.click(NOVA, at=c.A(1, 'Nova', 0.7, nth=1), label='Nova conta')
@@ -550,10 +569,10 @@ def cap04():
     c.mark(2)
     c.hover(COMBO('A pagar (despesa)'), 1.6, at=c.A(2, 'Tipo', 0.8), label='Tipo: A pagar (despesa)')
     c.mark(3)
-    c.digita(CAMPO('bill-amount'), '3480,00', c.A(3, 'Valor,', 0.8), c.A(3, 'três', 0.05), 'ZOOM Valor 3.480,00')
+    c.digita(CAMPO('bill-description'), 'Manutenção da prensa enfardadeira', c.A(3, 'Descrição,', 0.7), c.A(3, 'o', 0.0, nth=0), 'Descrição (o cursor já nasce nela)')
+    escolhe_dia(c, CAMPO('bill-due'), '19', c.A(3, 'Vencimento,', 0.7), c.A(3, 'dezenove', 0.5), 'Vencimento 19/11/2026')
     c.mark(4)
-    c.digita(CAMPO('bill-description'), 'Manutenção da prensa enfardadeira', c.A(4, 'Descrição,', 0.7), c.A(4, 'o', 0.0, nth=0), 'Descrição')
-    escolhe_dia(c, CAMPO('bill-due'), '19', c.A(4, 'Vencimento,', 0.7), c.A(4, 'dezenove', 0.5), 'Vencimento 19/11/2026')
+    c.digita(CAMPO('bill-amount'), '3480,00', c.A(4, 'Valor,', 0.8), c.A(4, 'três', 0.05), 'ZOOM Valor 3.480,00')
     c.mark(5)
     c.click(CAMPO('bill-category'), at=c.A(5, 'Categoria', 0.7), label='Categoria (abre a lista)')
     c.type({'placeholder': 'Pesquisar categoria...'}, 'Manut', at=c.A(5, 'gasto', 0.05), label='busca Manut', noClick=True)
@@ -572,7 +591,9 @@ def cap04():
     c.ev(js_rola_texto('Pagamento previsto', 300), at=c.L(8) - 0.9, label='desce a janela até o bloco Dinheiro')
     c.click(COMBO('Não definido'), at=c.A(8, 'previsto,', 0.7), label='Pagamento previsto (abre a lista)')
     c.click(OPT('Conta Principal'), at=c.A(8, 'Principal.', 0.6), label='Conta Principal (grupo Contas)')
-    c.hover(COMBO('Conta Principal'), 1.5, at=c.A(8, 'sugerida.', 0.8), label='previsto: Conta Principal')
+    c.hover(COMBO('Conta Principal'), 1.0, at=c.A(8, 'sugerida.', 0.8), label='previsto: Conta Principal')
+    c.hover({'text': 'Forma de pagamento', 'within': DLG}, 1.8, at=c.A(8, 'Forma', 0.6), label='ZOOM Forma de pagamento: Pix / Transferência (padrão), Boleto e Cheque')
+    c.confere('dlg', ['Forma de pagamento', 'Pix / Transferência'], 'Forma de pagamento ao lado do previsto')
     c.mark(9)
     c.click(RODAPE('Criar conta'), at=c.A(9, 'Criar', 0.7), label='Criar conta', noScroll=True)
     c.waitfor(text='Conta criada', timeout=10)
@@ -585,6 +606,8 @@ def cap04():
     c.hover(TXT_LINHA('Manutenção da prensa enfardadeira', 'Manutenção de máquinas'), 0.4, at=c.A(9, 'categoria', 0.6), label='categoria e Conta Principal')
     c.hover(TXT_LINHA('Manutenção da prensa enfardadeira', 'Hidráulica Moretti Ltda'), 0.8, at=c.A(9, 'fornecedor.', 0.6), label='Hidráulica Moretti Ltda')
     c.confere('row:Manutenção da prensa enfardadeira', ['19/11/2026', 'R$ 3.480,00', 'Pendente', 'Hidráulica Moretti Ltda'], 'a linha nova')
+    c.mark(10)
+    c.hover(NOVA, 1.0, at=c.A(10, 'Uma', 0.4, nth=0), label='a câmera fica na lista (dica: o botão de mais e o aviso de conta igual)')
     c.fim()
     return c
 
@@ -596,17 +619,17 @@ def cap05():
     c.mark(1)
     c.click(NOVA, at=c.A(1, 'paga?', 0.7), label='Nova conta')
     c.waitfor(text='Cadastre uma conta a pagar ou a receber com vencimento.', timeout=8)
-    c.digita(CAMPO('bill-amount'), '180,00', c.A(1, 'Pix:', 0.6), c.A(1, 'cento', 0.05), 'Valor 180,00')
     c.mark(2)
     colar(c, CAMPO('bill-description'), 'Conserto do pneu da empilhadeira', c.A(2, 'Preencho', 0.2), c.A(2, 'como', 0.0), 'Descrição (colada)')
-    escolhe_dia(c, CAMPO('bill-due'), '9', c.A(2, 'conta:', 0.3), c.A(2, 'valor,', 0.0), 'Vencimento 09/11/2026 (ontem)')
+    escolhe_dia(c, CAMPO('bill-due'), '9', c.A(2, 'conta:', 0.3), c.A(2, 'ontem,', 0.2), 'Vencimento 09/11/2026 (ontem)')
     c.waitfor(gone=SEL(f"{POP} table[role=grid]"), timeout=4)
-    c.ev(js_clica('#bill-category', confirma="input[placeholder='Pesquisar categoria...']"), at=c.A(2, 'descrição,', -0.3), label='Categoria (abre a lista, sem cursor)')
-    c.type({'placeholder': 'Pesquisar categoria...'}, 'máquinas', at=c.A(2, 'descrição,', -0.4), label='Manutenção de máquinas (busca + Enter)',
+    c.digita(CAMPO('bill-amount'), '180,00', c.A(2, 'valor,', 0.8), c.A(2, 'valor,', 0.0), 'Valor 180,00')
+    c.ev(js_clica('#bill-category', confirma="input[placeholder='Pesquisar categoria...']"), at=c.A(2, 'categoria', 0.0), label='Categoria (abre a lista, sem cursor)')
+    c.type({'placeholder': 'Pesquisar categoria...'}, 'máquinas', at=c.A(2, 'categoria', -0.1), label='Manutenção de máquinas (busca + Enter)',
            noClick=True, submit=True)
-    c.click(CAMPO('bill-cost-center'), at=c.A(2, 'categoria', -0.3), label='Centro de custo (abre a lista)')
+    c.click(CAMPO('bill-cost-center'), at=c.A(2, 'centro', -0.3), label='Centro de custo (abre a lista)')
     c.mark(3)
-    c.click(OPT('Pátio'), at=c.A(2, 'custo.', 0.4), label='Pátio')
+    c.click(OPT('Pátio'), at=c.A(2, 'custo.', 0.0), label='Pátio')
     c.ev(js_rola_texto('Pagamento previsto', 300), at=c.A(3, 'No', 0.3), label='desce a janela até o bloco Dinheiro')
     c.click(COMBO('Não definido'), at=c.A(3, 'previsto,', 0.3), label='Pagamento previsto (abre a lista)')
     c.click(OPT('Conta Principal'), at=c.A(3, 'Principal.', 0.6), label='Conta Principal')
@@ -629,21 +652,56 @@ def cap05():
 
 
 def cap06():
+    """O sistema preenche pra você: Nova conta, Descrição "Internet do escritório" (3 letras abrem o Padrão encontrado: Vale Fibra Telecom Ltda,
+    Telefone e internet, Conta Principal, Boleto, Usado 3 vezes), Preencher, Valor 289,90, Vencimento 15/11, hover em Desfazer preenchimento,
+    Criar conta. Variante lateral (semente t13/internet): a conta pendente e o texto não vazam pra T14/T15."""
+    c = Cap(6, setup=setup_tela(), start=(760, 400))
+    c.mark(1)
+    c.click(NOVA, at=c.A(1, 'preencher.', 0.7), label='Nova conta')
+    c.waitfor(text='Cadastre uma conta a pagar ou a receber com vencimento.', timeout=8)
+    c.mark(2)
+    c.digita(CAMPO('bill-description'), 'Internet do escritório', c.A(2, 'Descrição', 0.7), c.A(2, 'Internet', 0.2), 'Descrição Internet do escritório')
+    c.waitfor(target=SEL("[role=listbox][aria-label='Padrões de preenchimento']"), timeout=10)
+    c.hover(SEL("[role=listbox][aria-label='Padrões de preenchimento']"), 1.6, at=c.A(2, 'Padrão', 0.6), label='ZOOM Padrão encontrado: Internet do escritório')
+    c.mark(3)
+    c.confere('dlg', ['Padrão encontrado: Internet do escritório', 'Vale Fibra Telecom Ltda', 'Telefone e internet', 'Conta Principal', 'Boleto', 'Usado 3 vezes'],
+              'o padrão encontrado com os dados das outras vezes')
+    c.hover(SEL("[role=option] p.text-xs"), 2.4, at=c.A(3, 'fornecedor,', 0.6), label='ZOOM fornecedor, categoria, conta e forma de pagamento')
+    c.hover(SEL("[role=option] p.text-xs", nth=1), 1.2, at=c.A(3, 'quantas', 0.6), label='Usado 3 vezes')
+    c.mark(4)
+    c.click(DLG_BTN('Preencher'), at=c.A(4, 'Preencher.', 0.7), label='Preencher')
+    c.confere('dlg', ['Campos preenchidos', 'Desfazer preenchimento', 'Vale Fibra Telecom Ltda', 'Telefone e internet'], 'campos preenchidos pelo padrão')
+    c.hover(COMBO('Vale Fibra Telecom Ltda'), 1.4, at=c.A(4, 'fornecedor', 0.6), label='fornecedor e categoria já preenchidos')
+    c.mark(5)
+    c.digita(CAMPO('bill-amount'), '289,90', c.A(5, 'Digito', 0.2), c.A(5, 'duzentos', 0.2), 'Valor 289,90 (o cursor já pulou pra ele)')
+    escolhe_dia(c, CAMPO('bill-due'), '15', c.A(5, 'Vencimento', 0.7), c.A(5, 'quinze.', 0.5), 'Vencimento 15/11/2026')
+    c.mark(6)
+    c.hover(SEL(f"{DLG} button:text-is('Desfazer preenchimento')"), 2.6, at=c.A(6, 'Desfazer', 0.6), label='Desfazer preenchimento (sem clicar)')
+    c.mark(7)
+    c.hover(CAMPO('bill-description'), 2.0, at=c.A(7, 'teclado:', 0.6), label='o teclado: setas, Enter ou Tab (só falado)')
+    c.mark(8)
+    c.click(RODAPE('Criar conta'), at=c.A(8, 'Criar', 0.7), label='Criar conta', noScroll=True)
+    c.waitfor(text='Conta criada', timeout=10)
+    c.fim()
+    return c
+
+
+def cap07():
     """Parcelar: pneus do caminhão truck, Auto Peças Vale Forte, R$ 7.080,00 em 3x (Configurar faturamento); três contas na busca
     "pneus". L8 e L9 sob a ilustração."""
-    c = Cap(6, setup=setup_tela(), start=(760, 400))
+    c = Cap(7, setup=setup_tela(), start=(760, 400))
     c.mark(1)
     c.click(NOVA, at=c.A(1, 'vezes.', 0.7, nth=0), label='Nova conta')
     c.waitfor(text='Cadastre uma conta a pagar ou a receber com vencimento.', timeout=8)
     c.mark(2)
-    c.digita(CAMPO('bill-amount'), '7080,00', c.A(2, 'Valor', 0.8, nth=0), c.A(2, 'sete', 0.05), 'ZOOM Valor 7.080,00')
-    colar(c, CAMPO('bill-description'), 'Pneus do caminhão truck', c.A(2, 'não', 0.6), c.A(2, 'valor', 0.0, nth=1), 'Descrição (colada)')
+    colar(c, CAMPO('bill-description'), 'Pneus do caminhão truck', c.A(2, 'Primeiro', 0.5), c.A(2, 'descrição', 0.0), 'Descrição (colada)')
+    escolhe_dia(c, CAMPO('bill-due'), '23', c.A(2, 'Vencimento:', 0.7), c.A(2, 'vinte', 0.5), 'Vencimento 23/11/2026 (1ª parcela)')
     c.mark(3)
-    escolhe_dia(c, CAMPO('bill-due'), '23', c.A(3, 'Vencimento,', 0.7), c.A(3, 'vinte', 0.5), 'Vencimento 23/11/2026 (1ª parcela)')
+    c.digita(CAMPO('bill-amount'), '7080,00', c.A(3, 'Valor', 0.8, nth=0), c.A(3, 'sete', 0.05), 'ZOOM Valor 7.080,00')
     # "Categoria e fornecedor, como antes": abre e escolhe por eval (sem cursor; a busca digitada aparece na tela)
     c.waitfor(gone=SEL(f"{POP} table[role=grid]"), timeout=4)
-    c.ev(js_clica('#bill-category', confirma="input[placeholder='Pesquisar categoria...']"), at=c.A(3, 'novembro.', 0.0), label='Categoria (abre a lista, sem cursor)')
-    c.type({'placeholder': 'Pesquisar categoria...'}, 'veículos', at=c.A(3, 'Categoria', 0.05), label='Manutenção de veículos (busca + Enter)',
+    c.ev(js_clica('#bill-category', confirma="input[placeholder='Pesquisar categoria...']"), at=c.A(3, 'Categoria', 0.0), label='Categoria (abre a lista, sem cursor)')
+    c.type({'placeholder': 'Pesquisar categoria...'}, 'veículos', at=c.A(3, 'Categoria', -0.4), label='Manutenção de veículos (busca + Enter)',
            noClick=True, submit=True)
     c.ev(js_clica('[role=dialog] button[role=combobox]', 'Selecione o fornecedor', confirma="input[placeholder='Pesquisar fornecedor...']"), at=c.A(3, 'fornecedor,', 0.0), label='Selecione o fornecedor (sem cursor)')
     c.type({'placeholder': 'Pesquisar fornecedor...'}, 'Vale', at=c.A(3, 'fornecedor,', -0.3), label='busca Vale', noClick=True)
@@ -676,10 +734,10 @@ def cap06():
     return c
 
 
-def cap07():
+def cap08():
     """Repetir: aluguel da empilhadeira, R$ 2.300,00, mensal, a partir de 12/11/2026 até 12/04/2027; na busca "aluguel da", as contas
     criadas. L7 sob a ilustração."""
-    c = Cap(7, setup=setup_tela(), start=(760, 400))
+    c = Cap(8, setup=setup_tela(), start=(760, 400))
     c.mark(1)
     c.click(NOVA, at=c.A(1, 'dois', 0.7), label='Nova conta')
     c.waitfor(text='Cadastre uma conta a pagar ou a receber com vencimento.', timeout=8)
@@ -709,19 +767,19 @@ def cap07():
     c.waitfor(text='Conta recorrente criada', timeout=10)
     c.digita(BUSCA, 'aluguel da', c.A(6, 'Repara:', 0.6), c.A(6, 'já', 0.05), 'busca aluguel da')
     c.waitfor(target=LINHA('12/01/2027'), timeout=8)
-    c.hover(TXT_LINHA('12/11/2026', '12/11/2026'), 0.4, at=c.A(6, 'novembro,', 0.5), label='a conta de novembro')
-    c.hover(TXT_LINHA('12/12/2026', '12/12/2026'), 0.4, at=c.A_ou(6, ['dezembro', 'até'], 0.5), label='a de dezembro')
-    c.hover(TXT_LINHA('12/04/2027', '12/04/2027'), 1.0, at=c.A_ou(6, ['abril.', 'janeiro.'], 0.5), label='até a de abril (a RPC cria todas até a data de parar)')
+    c.hover(TXT_LINHA('12/11/2026', '12/11/2026'), 0.4, at=c.A(6, 'novembro', 0.5), label='a conta de novembro')
+    c.hover(TXT_LINHA('12/12/2026', '12/12/2026'), 0.4, at=c.A(6, 'até', 0.8), label='a de dezembro')
+    c.hover(TXT_LINHA('12/04/2027', '12/04/2027'), 1.0, at=c.A_ou(6, ['abril', 'janeiro'], 0.5), label='até a de abril (a RPC cria todas até a data de parar)')
     c.confere('main tbody', ['12/11/2026', '12/12/2026', '12/01/2027', '12/02/2027', '12/03/2027', '12/04/2027', 'R$ 2.300,00'], 'as seis contas do aluguel da empilhadeira')
     c.mark(7)
     c.fim()
     return c
 
 
-def cap08():
+def cap09():
     """Só esta ou esta e as futuras: na busca "aluguel da", Editar na de 12/12 (a pergunta da recorrência), Esta e as futuras com o
     vencimento 15/12 (o aviso do deslocamento), Salvar; Excluir mostra a mesma pergunta e é cancelado. L3 sob a ilustração."""
-    c = Cap(8, setup=setup_tela(), start=(760, 400))
+    c = Cap(9, setup=setup_tela(), start=(760, 400))
     c.mark(1)
     c.digita(BUSCA, 'aluguel da', c.A(1, 'locadora', 0.6), c.A(1, 'pediu', 0.05), 'busca aluguel da')
     c.waitfor(target=LINHA('12/12/2026'), timeout=8)
@@ -730,10 +788,10 @@ def cap08():
     c.click(NA_LINHA('12/12/2026', "button[title='Editar']"), at=c.A(2, 'editar', 0.7), label='lápis Editar na de dezembro')
     c.waitfor(text='Editar conta recorrente', timeout=8)
     c.hover(ALERTA_BTN('Só esta conta'), 0.6, at=c.A(2, 'só', 0.6), label='Só esta conta')
-    c.hover(ALERTA_BTN('Esta e as futuras'), 0.8, at=c.A(2, 'esta', 0.6, nth=1), label='Esta e as futuras')
+    c.hover(ALERTA_BTN('Esta e as próximas'), 0.8, at=c.A(2, 'próximas?', 0.9), label='Esta e as próximas')
     c.mark(3)
     c.mark(4)
-    c.click(ALERTA_BTN('Esta e as futuras'), at=c.A(4, 'Escolho', 0.6), label='Esta e as futuras')
+    c.click(ALERTA_BTN('Esta e as próximas'), at=c.A(4, 'Escolho', 0.6), label='Esta e as próximas')
     c.waitfor(text='Altere os dados da conta.', timeout=8)
     escolhe_dia(c, CAMPO('bill-due'), '15', c.A(4, 'mudo', 0.7), c.A(4, 'quinze', 0.5), 'Vencimento 15/12/2026')
     c.hover({'text': 'Esta data e as futuras serão deslocadas pelo mesmo período.', 'within': DLG}, 1.4, at=c.A(4, 'aviso:', 0.6),
@@ -748,16 +806,53 @@ def cap08():
     c.mark(6)
     c.click(NA_LINHA('15/01/2027', "button[title='Excluir']"), at=c.A(6, 'Excluir', 0.7), label='lixeira Excluir na de janeiro')
     c.waitfor(text='Excluir conta recorrente', timeout=8)
-    c.hover(ALERTA_BTN('Esta e as futuras'), 1.2, at=c.A(6, 'Esta', 0.6), label='Esta e as futuras (vermelho)')
+    c.hover(ALERTA_BTN('Esta e as próximas'), 1.2, at=c.A(6, 'Esta', 0.6), label='Esta e as próximas (vermelho)')
     c.click(ALERTA_BTN('Cancelar'), at=c.A(6, 'cancelo.', 0.6), label='Cancelar')
     c.fim()
     return c
 
 
-def cap09():
+def cap10():
+    """E as parcelas?: na busca "pneus", Editar a parcela 2 (Editar parcelas: Só esta conta, Esta e as próximas, Todas as parcelas pendentes),
+    Esta e as próximas com o vencimento 28/12, Salvar (parcelas 2 e 3 andam: 28/12 e 28/01); Excluir só mostra a pergunta e cancela. Variante lateral."""
+    c = Cap(10, setup=setup_tela(), start=(760, 400))
+    c.mark(1)
+    c.digita(BUSCA, 'pneus', c.A(1, 'parcelas', 0.6), c.A(1, 'pneus', 0.05), 'busca pneus')
+    c.waitfor(target=LINHA('Pneus do caminhão truck (parcela 3/3)'), timeout=8)
+    c.hover(TXT_LINHA('Pneus do caminhão truck (parcela 2/3)', '23/12/2026'), 1.0, at=c.A(1, 'vinte', 0.6), label='parcela 2, 23/12/2026')
+    c.mark(2)
+    c.click(NA_LINHA('Pneus do caminhão truck (parcela 2/3)', "button[title='Editar']"), at=c.A(2, 'editar', 0.7), label='lápis Editar na parcela 2')
+    c.waitfor(text='Editar parcelas', timeout=8)
+    c.hover(ALERTA_BTN('Só esta conta'), 0.6, at=c.A(2, 'Só', 0.6), label='Só esta conta')
+    c.hover(ALERTA_BTN('Esta e as próximas'), 0.6, at=c.A(2, 'Esta', 0.6, nth=0), label='Esta e as próximas')
+    c.hover(ALERTA_BTN('Todas as parcelas pendentes'), 1.0, at=c.A(2, 'Todas', 0.6), label='Todas as parcelas pendentes')
+    c.mark(3)
+    c.click(ALERTA_BTN('Esta e as próximas'), at=c.A(3, 'Escolho', 0.6), label='Esta e as próximas')
+    c.waitfor(text='Altere os dados da conta.', timeout=8)
+    escolhe_dia(c, CAMPO('bill-due'), '28', c.A(3, 'troco', 0.7), c.A(3, 'vinte', 0.5), 'Vencimento 28/12/2026')
+    c.mark(4)
+    c.click(RODAPE('Salvar'), at=c.A(4, 'Salvar.', 0.7), label='Salvar', noScroll=True)
+    c.waitfor(text='Conta atualizada', timeout=10)
+    c.hover(TXT_LINHA('Pneus do caminhão truck (parcela 2/3)', '28/12/2026'), 0.6, at=c.A(4, 'segunda', 0.6), label='a segunda foi pro dia 28')
+    c.hover(TXT_LINHA('Pneus do caminhão truck (parcela 3/3)', '28/01/2027'), 0.6, at=c.A(4, 'terceira', 0.6), label='a terceira acompanhou')
+    c.hover(TXT_LINHA('Pneus do caminhão truck (parcela 1/3)', '23/11/2026'), 1.0, at=c.A(4, 'primeira', 0.6), label='a primeira ficou no dia 23')
+    c.confere('main tbody', ['23/11/2026', '28/12/2026', '28/01/2027', 'R$ 2.360,00'], 'vencimentos depois do Salvar')
+    c.mark(5)
+    c.hover(TXT_LINHA('Pneus do caminhão truck (parcela 2/3)', 'R$ 2.360,00'), 2.2, at=c.A(5, 'valor', 0.6), label='o valor da parcela (a dica do grupo)')
+    c.mark(6)
+    c.click(NA_LINHA('Pneus do caminhão truck (parcela 3/3)', "button[title='Excluir']"), at=c.A(6, 'Excluir', 0.7), label='lixeira Excluir na parcela 3')
+    c.waitfor(text='Excluir parcelas', timeout=8)
+    c.hover({'text': 'Parcelas pagas ou com baixa permanecem no histórico e não serão excluídas.', 'within': '[role=alertdialog]'}, 1.6,
+            at=c.A(6, 'paga', 0.6), label='parcela paga fica no histórico')
+    c.click(ALERTA_BTN('Cancelar'), at=c.A(6, 'histórico.', 0.5), label='Cancelar')
+    c.fim()
+    return c
+
+
+def cap11():
     """Dar baixa: a energia inteira por Pix (Conta Principal) e a prensa em parte (R$ 1.740,00, o resto para 30/11). L6 e L7 sob a
     ilustração (a busca troca de "energia" para "prensa" por baixo dela)."""
-    c = Cap(9, setup=setup_tela(), start=(760, 400))
+    c = Cap(11, setup=setup_tela(), start=(760, 400))
     c.mark(1)
     c.click(ABA('A Pagar'), at=c.A(1, 'pagar.', 0.7), label='aba A Pagar')
     c.digita(BUSCA, 'energia', c.A(1, 'Dar', 0.6), c.A(1, 'baixa', 0.05), 'busca energia')
@@ -808,14 +903,136 @@ def cap09():
     c.hover({'text': 'pago R$ 1.740,00 de R$ 3.480,00', 'within': MAIN}, 1.0, at=c.A(11, 'quanto', 0.5, nth=0), label='pago R$ 1.740,00 de R$ 3.480,00')
     c.hover(TXT_LINHA('Manutenção da prensa enfardadeira', '30/11/2026'), 0.8, at=c.A(11, 'trinta.', 0.6), label='vence dia 30')
     c.confere('row:Manutenção da prensa enfardadeira', ['Parcial', 'pago R$ 1.740,00 de R$ 3.480,00', '30/11/2026'], 'prensa parcial')
+    c.mark(12)
+    c.digita(BUSCA, 'esgoto', c.A(12, 'conta', 0.6), c.A(12, 'atrasou?', 0.05), 'busca esgoto (a água vencida)', clear=True)
+    c.waitfor(target=LINHA('Água e esgoto de outubro'), timeout=8)
+    c.click(NA_LINHA('Água e esgoto de outubro', "button[title='Marcar pago']"), at=c.A(12, 'Marcar', 0.7), label='Marcar pago (água)')
+    c.waitfor(text='Água e esgoto de outubro · Restante', timeout=8)
+    c.confere('dlg', ['Água e esgoto de outubro · Restante R$ 238,40'], 'o restante da água')
+    c.mark(13)
+    c.digita(CAMPO('pay-interest'), '4,77', c.A(13, 'multa', 0.7, nth=1), c.A(13, 'quatro', 0.05), 'ZOOM Juros / multa 4,77 e o aviso')
+    c.hover({'text': 'A conta continua valendo', 'within': DLG}, 1.6, at=c.A(13, 'despesa', 0.8), label='A conta continua valendo R$ 238,40. Este valor entra como despesa separada.')
+    c.confere('dlg', ['A conta continua valendo R$ 238,40', 'Categoria do juros', 'Juros e Multas'], 'o aviso do juros e a categoria')
+    c.mark(14)
+    c.hover(CAMPO('pay-fee'), 1.4, at=c.A(14, 'Tarifa,', 0.6), label='Tarifa (opcional)')
+    c.mark(15)
+    c.click(CAMPO('pay-multiple-methods'), at=c.A(15, 'Múltiplas', 0.7), label='liga Múltiplas formas de pagamento')
+    c.confere('dlg', ['Formas de pagamento', 'Valor em'], 'os dois cartões aceitam valor')
+    c.hover(CARTAO_PAG('Dinheiro (Caixa)'), 1.0, at=c.A(15, 'valor', 0.6, nth=0), label='Valor em cada forma')
+    c.click(CAMPO('pay-multiple-methods'), at=c.L(16) - 0.9, label='desliga Múltiplas formas de pagamento')
+    c.mark(16)
+    c.hover({'text': 'Total informado', 'within': DLG}, 1.6, at=c.A(16, 'sobra', 0.6), label='o resumo Total informado (a sobra vira crédito)')
+    c.click(DLG_BTN('Cancelar'), at=c.A(16, 'cancelo.', 0.6), label='Cancelar', noScroll=True)
     c.fim()
     return c
 
 
-def cap10():
+def cap12():
+    """O valor real do mês: na busca "aluguel da", Marcar pago na de novembro, Valor desta ocorrência 2.415,00 (resumo Previsto R$ 2.300,00 e
+    as próximas mantêm o valor previsto), o interruptor Atualizar o valor previsto das próximas contas só mostrado, Pix, Conta Secundária, Confirmar;
+    novembro Paga com R$ 2.415,00 e dezembro com R$ 2.300,00."""
+    c = Cap(12, setup=setup_tela(), start=(760, 400))
+    c.mark(1)
+    c.digita(BUSCA, 'aluguel da', c.A(1, 'horas', 0.6), c.A(1, 'horas', 0.0), 'busca aluguel da')
+    c.waitfor(target=LINHA('12/11/2026'), timeout=8)
+    c.hover(TXT_LINHA('12/11/2026', 'R$ 2.300,00'), 1.2, at=c.A(1, 'trezentos', 0.6), label='a de novembro: R$ 2.300,00')
+    c.mark(2)
+    c.click(NA_LINHA('12/11/2026', "button[title='Marcar pago']"), at=c.A(2, 'Clico', 0.7), label='Marcar pago na de novembro')
+    c.waitfor(text='Valor desta ocorrência', timeout=8)
+    c.hover(CAMPO('pay-occurrence-amount'), 1.4, at=c.A(2, 'Valor', 0.6, nth=0), label='Valor desta ocorrência')
+    c.mark(3)
+    c.digita(CAMPO('pay-occurrence-amount'), '2415,00', c.A(3, 'Troco', 0.7), c.A(3, 'dois', 0.05), 'ZOOM Valor desta ocorrência 2.415,00', clear=True)
+    c.hover(CAMPO('pay-amount-transfer'), 1.0, at=c.A(3, 'acompanha', 0.6), label='o valor do pagamento acompanha')
+    c.mark(4)
+    c.confere('dlg', ['Previsto: R$ 2.300,00 · Valor desta ocorrência: R$ 2.415,00', 'As próximas contas mantêm o valor previsto.'], 'o resumo da ocorrência')
+    c.hover({'text': 'As próximas contas mantêm o valor previsto.', 'within': DLG}, 2.2, at=c.A(4, 'resumo', 0.6), label='ZOOM resumo: previsto, valor deste mês e as próximas mantêm')
+    c.mark(5)
+    c.hover(SEL(f"{DLG} #pay-update-future"), 2.6, at=c.A(5, 'Atualizar', 0.6), label='o interruptor Atualizar o valor previsto das próximas contas (desligado)')
+    c.mark(6)
+    c.click(CARTAO_PAG('Pix / Transferência (Banco)'), at=c.A(6, 'Pix,', 0.7), label='Pix / Transferência (Banco)')
+    c.click(SEL(f"{DLG} button[role=combobox]"), at=c.A(6, 'Conta', 0.7), label='Conta bancária (abre a lista)')
+    c.click(OPT('Conta Secundária'), at=c.A(6, 'Secundária,', 0.5), label='Conta Secundária')
+    c.click(RODAPE('Confirmar pagamento'), at=c.A(6, 'confirmo.', 0.5), label='Confirmar pagamento', noScroll=True)
+    c.waitfor(text='Pagamento registrado', timeout=10)
+    c.mark(7)
+    c.hover(TXT_LINHA('12/11/2026', 'Paga'), 1.0, at=c.A(7, 'Novembro', 0.6), label='novembro Paga')
+    c.hover(TXT_LINHA('12/11/2026', 'R$ 2.415,00'), 1.4, at=c.A(7, 'dois', 0.6, nth=0), label='R$ 2.415,00')
+    c.hover(TXT_LINHA('15/12/2026', 'R$ 2.300,00'), 1.4, at=c.A(7, 'dezembro', 0.6), label='dezembro continua R$ 2.300,00')
+    c.confere('row:12/11/2026', ['Paga', 'R$ 2.415,00'], 'novembro paga com o valor real')
+    c.confere('row:15/12/2026', ['R$ 2.300,00'], 'dezembro continua com o previsto')
+    c.mark(8)
+    c.fim()
+    return c
+
+
+def cap13():
+    """Pagar várias de uma vez: na busca "pneus", marca as parcelas 1 e 2, a barra "2 linhas selecionadas / Total: R$ 4.720,00", Quitar em lote,
+    Pix, Conta Secundária, descrição e data, Confirmar pagamento; as duas Pagas."""
+    c = Cap(13, setup=setup_tela(), start=(760, 400))
+    c.mark(1)
+    c.digita(BUSCA, 'pneus', c.A(1, 'adiantar', 0.6), c.A(1, 'pneus', 0.05), 'busca pneus')
+    c.waitfor(target=LINHA('Pneus do caminhão truck (parcela 3/3)'), timeout=8)
+    c.hover(TXT_LINHA('Pneus do caminhão truck (parcela 1/3)', 'Pendente'), 0.8, at=c.A(1, 'vez', 0.2), label='as parcelas, Pendentes')
+    c.mark(2)
+    c.click(NA_LINHA('Pneus do caminhão truck (parcela 1/3)', "button[role=checkbox]"), at=c.A(2, 'Marco', 0.3), label='caixinha da parcela 1')
+    c.click(NA_LINHA('Pneus do caminhão truck (parcela 2/3)', "button[role=checkbox]"), at=c.A(2, 'duas', 0.3, nth=0), label='caixinha da parcela 2')
+    c.waitfor(text='2 linhas selecionadas', timeout=6)
+    c.confere('body', ['2 linhas selecionadas', 'Total: R$ 4.720,00'], 'a barra com duas linhas e o total')
+    c.hover({'text': 'Total: R$ 4.720,00'}, 2.0, at=c.A(2, 'barra', 0.6), label='ZOOM a barra: 2 linhas selecionadas e Total R$ 4.720,00')
+    c.mark(3)
+    c.click(BTN('Quitar em lote'), at=c.A(3, 'Quitar', 0.7), label='Quitar em lote')
+    c.waitfor(target=CAMPO('batch-description'), timeout=8)
+    c.hover({'text': 'vira um único lançamento', 'within': DLG}, 1.6, at=c.A(3, 'lançamento', 0.6), label='ZOOM vira um único lançamento, que casa 1-pra-1 na conciliação')
+    c.mark(4)
+    c.click(SEL(f"{DLG} button[role=combobox]", nth=0), at=c.A(4, 'Pix,', 0.7), label='Forma de pagamento (abre a lista)')
+    c.click(OPT('Pix / Transferência (Banco)'), at=c.A(4, 'Pix,', 0.2), label='Pix / Transferência (Banco)')
+    c.click(SEL(f"{DLG} button[role=combobox]", nth=1), at=c.A(4, 'Conta', 0.7), label='Conta bancária (abre a lista)')
+    c.click(OPT('Conta Secundária'), at=c.A(4, 'Secundária,', 0.5), label='Conta Secundária')
+    c.hover(CAMPO('batch-description'), 1.0, at=c.A(4, 'descrição', 0.6), label='descrição do lançamento')
+    c.hover(CAMPO('batch-date'), 0.8, at=c.A(4, 'data,', 0.6), label='data do pagamento')
+    c.click(RODAPE('Confirmar pagamento'), at=c.A(4, 'confirmo.', 0.5), label='Confirmar pagamento', noScroll=True)
+    c.waitfor(text='Pagamento', timeout=10)
+    c.mark(5)
+    c.hover(TXT_LINHA('Pneus do caminhão truck (parcela 1/3)', 'Paga'), 0.8, at=c.A(5, 'pagas,', 0.6), label='a parcela 1 Paga')
+    c.hover(TXT_LINHA('Pneus do caminhão truck (parcela 2/3)', 'Paga'), 1.0, at=c.A(5, 'único', 0.6), label='a parcela 2 Paga')
+    c.confere('row:Pneus do caminhão truck (parcela 1/3)', ['Paga'], 'parcela 1 paga')
+    c.confere('row:Pneus do caminhão truck (parcela 2/3)', ['Paga'], 'parcela 2 paga')
+    c.mark(6)
+    c.mark(7)
+    c.fim()
+    return c
+
+
+def cap14():
+    """Desfazer uma baixa: na busca "conserto", Mais ações, Estornar pagamento: a janela mostra a conta, o valor da baixa R$ 180,00, de onde saiu
+    e "Voltam R$ 180,00 para ..."; Cancelar. Depois a lixeira de uma conta paga mostra Excluir e estornar; Cancelar."""
+    c = Cap(14, setup=setup_tela(), start=(760, 400))
+    c.mark(1)
+    c.digita(BUSCA, 'conserto', c.A(1, 'baixa', 0.6), c.A(1, 'errada?', 0.05), 'busca conserto')
+    c.waitfor(target=LINHA('Conserto do pneu da empilhadeira'), timeout=8)
+    c.hover(TXT_LINHA('Conserto do pneu da empilhadeira', 'Paga'), 0.8, at=c.A(1, 'paga,', 0.6), label='a conta paga')
+    c.click(NA_LINHA('Conserto do pneu da empilhadeira', "button[aria-label='Mais ações']"), at=c.A(1, 'Mais', 0.6), label='Mais ações')
+    c.click(SEL("[role=menuitem]:has-text('Estornar pagamento')"), at=c.A(1, 'Estornar', 0.7), label='Estornar pagamento')
+    c.waitfor(text='Valor da baixa', timeout=8)
+    c.mark(2)
+    c.confere('dlg', ['Valor da baixa', 'R$ 180,00', 'Saiu de', 'Conta Principal', 'Voltam R$ 180,00'], 'o que o estorno desfaz')
+    c.hover({'text': 'Saiu de', 'within': DLG}, 1.6, at=c.A(2, 'saiu', 0.6), label='ZOOM Saiu de: a conta de onde o dinheiro saiu')
+    c.hover({'text': 'Voltam R$ 180,00', 'within': DLG, 'exact': False}, 2.2, at=c.A(2, 'cento', 0.6), label='ZOOM Voltam R$ 180,00 e a conta volta a ficar pendente')
+    c.click(DLG_BTN('Cancelar'), at=c.L(3) - 0.9, label='Cancelar o estorno', noScroll=True)
+    c.mark(3)
+    c.click(NA_LINHA('Conserto do pneu da empilhadeira', "button[title='Excluir']"), at=c.A(3, 'Excluir', 0.7, nth=0), label='lixeira Excluir na conta paga')
+    c.waitfor(text='Excluir e estornar', timeout=8)
+    c.hover(SEL("button:has-text('Excluir e estornar')"), 1.8, at=c.A(3, 'vira', 0.6), label='ZOOM o botão Excluir e estornar')
+    c.mark(4)
+    c.click(SEL("[role=dialog] button:has-text('Cancelar'), [role=alertdialog] button:has-text('Cancelar')"), at=c.A(4, 'cancelo.', 0.5), label='Cancelar', noScroll=True)
+    c.fim()
+    return c
+
+
+def cap15():
     """O fiado: aba A Receber, busca "Quiririm" (linha Saldo R$ 4.870,00), Receber R$ 2.000,00 por Pix na Conta Principal (sobra
     R$ 2.870,00); busca "Fundição" (só as parcelas); L7 e L8 sob a ilustração; o lápis de uma parcela (sem clicar)."""
-    c = Cap(10, setup=setup_tela(), start=(760, 400))
+    c = Cap(15, setup=setup_tela(), start=(760, 400))
     c.mark(1)
     c.click(ABA('A Receber'), at=c.A(1, 'fiado.', 0.7), label='aba A Receber')
     c.digita(BUSCA, 'Quiririm', c.A(1, 'Ele', 0.6), c.A(1, 'aparece', 0.05), 'busca Quiririm')
@@ -857,9 +1074,9 @@ def cap10():
     return c
 
 
-def cap11():
+def cap16():
     """Comprovante: busca "energia", Editar, Mais detalhes, Anexar o PDF fictício, Salvar; reabre e mostra a miniatura PDF."""
-    c = Cap(11, setup=setup_tela(), start=(760, 400))
+    c = Cap(16, setup=setup_tela(), start=(760, 400))
     c.mark(1)
     c.digita(BUSCA, 'energia', c.A(1, 'comprovante', 0.5), c.A(1, 'daquele', 0.05), 'busca energia')
     c.waitfor(target=LINHA('Energia elétrica de outubro'), timeout=8)
@@ -875,7 +1092,8 @@ def cap11():
     c.mark(3)
     c.upload(DLG_BTN('Anexar'), PDF, at=c.A(3, 'Anexar,', 0.7), label='Anexar: comprovante-pix-energia-outubro.pdf')
     c.waitfor(target=SEL(f"{DLG} button[aria-label='Baixar anexo']"), timeout=10)
-    c.hover(SEL(f"{DLG} button[aria-label='Baixar anexo']"), 1.2, at=c.A(3, 'PDF', 0.6), label='ZOOM a miniatura PDF')
+    c.confere('body', ['Anexo adicionado'], 'o aviso Anexo adicionado (o arquivo sobe na hora)', tentativas=6)
+    c.hover(SEL(f"{DLG} button[aria-label='Baixar anexo']"), 1.2, at=c.A(3, 'PDF', 0.6), label='ZOOM a miniatura PDF e o aviso Anexo adicionado')
     c.mark(4)
     c.click(RODAPE('Salvar'), at=c.A(4, 'Salvar.', 0.7), label='Salvar', noScroll=True)
     c.waitfor(text='Conta atualizada', timeout=10)
@@ -892,10 +1110,10 @@ def cap11():
     return c
 
 
-def cap12():
+def cap17():
     """Filtros: aba A Receber (linhas Saldo no fim), o painel Filtros, Status Pendente (as linhas de saldo saem, os cartões não mudam),
     Cliente/Fornecedor Fundição (as três parcelas) e Limpar filtros."""
-    c = Cap(12, setup=setup_tela(), start=(760, 400))
+    c = Cap(17, setup=setup_tela(), start=(760, 400))
     PAINEL = DLG
     ROT = lambda t: SEL(f"{PAINEL} label:text-is('{t}')")
     c.mark(1)
@@ -907,7 +1125,7 @@ def cap12():
     c.waitfor(target=ROT('Status'), timeout=8)
     c.hover(ROT('Status'), 0.25, at=c.A(2, 'status,', 0.5), label='Status')
     c.hover(ROT('Categoria'), 0.25, at=c.A(2, 'categoria,', 0.5), label='Categoria')
-    c.hover(ROT('Cliente/Fornecedor'), 0.25, at=c.A(2, 'Cliente', 0.5), label='Cliente/Fornecedor')
+    c.hover(ROT('Cliente/Fornecedor'), 0.25, at=c.A(2, 'Cliente/Fornecedor', 0.5), label='Cliente/Fornecedor')
     c.hover(ROT('Centro de custo'), 0.25, at=c.A(2, 'centro', 0.5), label='Centro de custo')
     c.hover(SEL(f"{PAINEL} label:has-text('Banco previsto')"), 0.25, at=c.A(2, 'banco', 0.5), label='Banco previsto')
     c.hover(ROT('Vencimento (período)'), 0.6, at=c.A(2, 'período', 0.5), label='Vencimento (período)')
@@ -922,7 +1140,7 @@ def cap12():
     c.confere_ausente('main tbody', 'Saldo', 'as linhas de saldo saíram')
     c.mark(5)
     c.ev(js_topo(700), at=c.L(5) - 0.6, label='sobe a tela até os cartões')
-    c.hover(CARTAO('Total a Receber'), 1.6, at=c.A(5, 'cartões', 0.4), label='os cartões continuam iguais')
+    c.hover(CARTAO('Total a Receber'), 1.6, at=c.A(5, 'cartões', 0.4), label='os cartões mudaram junto: somam só as pendentes')
     c.mark(6)
     c.click(FILTROS, at=c.A(6, 'Junto', 0.4), label='Filtros (de novo)')
     c.click(SEL(f"{PAINEL} button[role=combobox]:has-text('Todos')", nth=0), at=c.A(6, 'escolho', 0.7), label='Cliente/Fornecedor (abre a busca)')
@@ -937,13 +1155,50 @@ def cap12():
     c.click(RODAPE('Aplicar'), at=c.A(7, 'filtros.', 0.2), label='Aplicar', noScroll=True)
     c.ev(js_rola('main tbody tr:last-child', 600), at=c.A(7, 'E', 0.2), label='desce a tela até o fim da lista')
     c.hover(TXT_LINHA('Aços Quiririm Ltda', 'Saldo'), 1.0, at=c.A(7, 'voltam.', 0.6), label='as linhas de saldo voltam')
+    c.mark(8)
+    c.ev(js_topo(700), at=c.L(8) - 0.9, label='sobe a tela até os cartões e o botão Filtros')
+    c.click(FILTROS, at=c.A(8, 'período', 0.7), label='Filtros (período de vencimento)')
+    c.waitfor(target=ROT('Vencimento (período)'), timeout=8)
+    c.click(SEL(f"{PAINEL} button:text-is('Este mês')"), at=c.A(8, 'Este', 0.6), label='atalho Este mês')
+    c.confere_campos(['01/11/2026', '30/11/2026'], 'De 01/11/2026 e Até 30/11/2026 (Este mês)')
+    c.hover(SEL(f"{PAINEL} button:text-is('Próximos 7 dias')"), 0.5, at=c.A(8, 'Próximos', 0.6), label='atalho Próximos 7 dias')
+    c.hover(SEL(f"{PAINEL} button:text-is('Até o fim do mês')"), 0.8, at=c.A(8, 'Até', 0.6, nth=0), label='atalho Até o fim do mês')
+    c.click(RODAPE('Aplicar'), at=c.L(9) - 0.9, label='Aplicar', noScroll=True)
+    c.mark(9)
+    c.ev(js_topo(700), at=c.L(9), label='sobe aos cartões')
+    c.confere('main', ['A receber no período', 'Recebido no período'], 'os cartões com o período')
+    c.hover(CARTAO('A receber no período'), 1.6, at=c.A(9, 'mudam', 0.6), label='ZOOM A receber no período e Recebido no período')
+    c.hover(CARTAO('Recebido no período'), 1.0, at=c.A(9, 'Recebido', 0.6), label='Recebido no período')
     c.fim()
     return c
 
 
-def cap13():
+def cap18():
+    """Exportar a lista: botão Exportar, menu Exportar contas (PDF e Excel), PDF; a janela Exportar contas (PDF) com os filtros da tela e
+    Opções do arquivo (fiado e agrupar); Cancelar (nada é baixado)."""
+    c = Cap(18, setup=setup_tela(), start=(760, 400))
+    c.mark(1)
+    c.click(SEL("main button:has-text('Exportar')"), at=c.A(1, 'Exportar', 0.7, nth=0), label='Exportar (abre o menu)')
+    c.waitfor(text='Exportar contas', timeout=6)
+    c.hover(SEL("[role=menuitem]:has-text('PDF')"), 0.8, at=c.A(1, 'PDF', 0.6), label='PDF')
+    c.hover(SEL("[role=menuitem]:has-text('Excel')"), 0.8, at=c.A(1, 'Excel.', 0.9), label='Excel')
+    c.click(SEL("[role=menuitem]:has-text('PDF')"), at=c.L(2) - 0.95, label='PDF (abre a janela)')
+    c.waitfor(text='Opções do arquivo', timeout=8)
+    c.mark(2)
+    c.hover({'text': 'Os filtros já vêm com o que você está usando na tela.', 'within': DLG}, 2.4, at=c.A(2, 'filtros', 0.6), label='os filtros já vêm da tela')
+    c.mark(3)
+    c.hover({'text': 'Opções do arquivo', 'within': DLG}, 1.2, at=c.A(3, 'Opções', 0.6), label='Opções do arquivo')
+    c.hover({'text': 'Fiado / saldo de cliente e fornecedor', 'within': DLG}, 1.4, at=c.A(3, 'saldo', 0.6), label='Fiado / saldo de cliente e fornecedor')
+    c.hover({'text': 'Agrupar', 'within': DLG, 'exact': False}, 1.6, at=c.A(3, 'agrupar:', 0.6), label='como agrupar')
+    c.mark(4)
+    c.click(DLG_BTN('Cancelar'), at=c.A(4, 'fecho.', 0.5), label='Cancelar', noScroll=True)
+    c.fim()
+    return c
+
+
+def cap19():
     """Recapitulando (a montagem da edição usa trechos dos capítulos; este passeio pelo estado final fica de reserva). L7: cartão Próximo."""
-    c = Cap(13, setup=setup_tela(), start=(760, 400))
+    c = Cap(19, setup=setup_tela(), start=(760, 400))
     c.mark(1)
     c.hover(ABA('Todas'), 0.4, at=c.A(1, 'abas,', 0.6), label='as abas')
     c.hover(CARTAO('Total a Pagar'), 0.4, at=c.A(1, 'cartões', 0.6), label='os quatro cartões')
@@ -965,7 +1220,7 @@ def cap13():
     return c
 
 
-CAPS_ROBO = {n: globals()[f'cap{n:02d}'] for n in range(14) if f'cap{n:02d}' in globals()}
+CAPS_ROBO = {n: globals()[f'cap{n:02d}'] for n in range(20) if f'cap{n:02d}' in globals()}
 
 if __name__ == '__main__':
     quais = [int(a) for a in sys.argv[1:]] or sorted(CAPS_ROBO)

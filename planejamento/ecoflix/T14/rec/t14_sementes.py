@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """T14 · escreve o estado de partida de cada capítulo em rec/mundo/seeds-extra/t14/ (deltas aplicados em ordem pelo `seedExtra`):
-inicio (o fim do T13 que o T14 usa) → apos-cap02 → apos-cap03 → apos-cap04 → apos-cap06 → apos-cap07 → ... → apos-cap12 → apos-cap14.
+inicio (o fim do T13 que o T14 usa) → apos-cap02 → apos-cap03 → apos-cap04 → apos-cap06 → apos-cap07 → ... → apos-cap12 → apos-cap14; `lote` (apos-cap04 + 3 despesas de teste) só para o cap06. Capítulos de 20/11: as sementes seguem o nome do capítulo ANTIGO (apos-cap03 = depois do cofre, cap04 novo).
 Cada arquivo traz só o que o capítulo fez na tela (linhas novas e `_patch`), com os saldos gravados das contas recalculados aqui (as
 sementes entram cruas, sem os "triggers"). Os lançamentos do mundo base são achados por conta, dia e valor: rode de novo sempre que o
 mundo base mudar (`python3 -I rec/t14/t14_sementes.py`). Os campos de cada linha são os que o app 1.59.154 grava (inventario.md) e o
@@ -102,6 +102,8 @@ pneu = {'id': '@id:t14.conta.pneu', 'company_id': EMP, 'direction': 'payable', '
         'expected_bank_account_id': PRINC, 'is_projection': False, 'created_by': RAFA, 'created_at': iso('2026-11-10 07:55'),
         'updated_at': iso('2026-11-10 07:55'), 'paid_at': iso('2026-11-09 11:00')}
 t13 = [
+    bt('t13.aluguel_emp', SEC, 'withdrawal', 2415, 'Pagamento: Aluguel da empilhadeira', iso('2026-11-10 08:12'), payment_method='transfer'),
+    bt('t13.pneus_emp', SEC, 'withdrawal', 4720, 'Pagamento: Pneus da empilhadeira (2 parcelas)', iso('2026-11-10 08:14'), payment_method='transfer'),
     bt('t13.pneu', PRINC, 'withdrawal', 180, 'Pagamento: Conserto do pneu da empilhadeira', iso('2026-11-09 11:00'), category_id=manut,
        cost_center_id=CC.get('Pátio'), payment_method='transfer', created_at=iso('2026-11-10 07:55')),
     bt('t13.energia', PRINC, 'withdrawal', 1874.30, 'Pagamento: Energia elétrica de outubro', iso('2026-11-10 08:05'), category_id=energia.get('category_id'),
@@ -116,7 +118,7 @@ inicio = {
     '_patch': {'financial_bills': [{'match': {'id': energia['id']}, 'set': {'status': 'paid', 'paid_amount': energia['amount'], 'paid_at': iso('2026-11-10 08:05'),
                                                                         'updated_at': iso('2026-11-10 08:05')}}],
                'balances': [{'match': {'id': quiririm['id']}, 'set': {'balance': r2(quiririm['balance'] - 2000), 'updated_at': iso('2026-11-10 08:15')}}],
-               'bank_accounts': patch_saldos(PRINC)},
+               'bank_accounts': patch_saldos(PRINC, SEC)},
 }
 NUM = {'inicio': {k: saldo[k] for k in (PRINC, SEC, COFRE)}}
 
@@ -155,6 +157,14 @@ cap04_bt = [
 ]
 cap04 = {'bank_transactions': cap04_bt, '_patch': {'bank_accounts': patch_saldos(PRINC, SEC, COFRE)}}
 NUM['apos-cap04'] = {k: saldo[k] for k in (PRINC, SEC, COFRE, COOP)}
+
+# ---------------------------------------------------------------- lote (cap06, só o capítulo "Corrigir e excluir lançamentos"): apos-cap04 + três despesas de teste de ontem; não segue adiante
+_s0, _u0 = dict(saldo), dict(ultimo)
+LOTE_BT = [bt(f'bt.teste{i}', PRINC, 'withdrawal', v, d, iso(f'2026-11-09 18:{10 + 5 * i:02d}'), category_id=CAT['Outras Despesas'], payment_method='transfer')
+           for i, (d, v) in enumerate([('Internet do pátio (teste)', 149.90), ('Seguro da picape (teste)', 312.40), ('Rastreador (teste)', 89.90)])]
+lote = {'bank_transactions': LOTE_BT, '_patch': {'bank_accounts': patch_saldos(PRINC)}}
+NUM['lote'] = {k: saldo[k] for k in (PRINC, SEC, COFRE, COOP)}
+saldo.update(_s0); ultimo.clear(); ultimo.update(_u0)
 
 # ---------------------------------------------------------------- cap06: o extrato importado (17 linhas pendentes)
 LINHAS = json.load(open(os.path.join(HERE, 'arquivos', 'linhas.json'), encoding='utf8'))
@@ -247,7 +257,7 @@ def depois_do_import():
     NUM['apos-cap12'] = {k: saldo[k] for k in (PRINC, SEC, COFRE, COOP)}
 
 
-ESTADOS = [('inicio', 'inicio'), ('apos-cap02', 'cap02'), ('apos-cap03', 'cap03'), ('apos-cap04', 'cap04'), ('apos-cap06', 'cap06')]
+ESTADOS = [('inicio', 'inicio'), ('apos-cap02', 'cap02'), ('apos-cap03', 'cap03'), ('apos-cap04', 'cap04'), ('lote', 'lote'), ('apos-cap06', 'cap06')]
 try:
     depois_do_import()
     ESTADOS += [('apos-cap07', 'cap07'), ('apos-cap08', 'cap08'), ('apos-cap09', 'cap09'), ('apos-cap10', 'cap10'), ('apos-cap11', 'cap11'), ('apos-cap12', 'cap12'), ('apos-cap14', 'cap14')]

@@ -1,6 +1,6 @@
 {
  "name": "t14-cap03",
- "title": "T14 · Cap. 3 · O cofre e o ajuste de saldo (narração ESTIMADA 67,0 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T14 · Cap. 3 · O cartão de crédito da empresa (narração ESTIMADA 94,9 s; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t14-cap03",
  "pace": 0.5,
  "cps": 40,
@@ -99,252 +99,430 @@
    "at": 0
   },
   {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo Cartão"
+   },
+   "at": 5.34,
+   "label": "Novo Cartão"
+  },
+  {
+   "do": "waitFor",
+   "text": "Novo Cartão de Crédito",
+   "timeout": 10
+  },
+  {
    "do": "mark",
    "name": "L2",
-   "at": 13.59
+   "at": 6.38
   },
   {
    "do": "click",
    "target": {
-    "selector": "div[class*=\"group/tab\"] button:has(span:text-is(\"DINHEIRO (COFRE)\"))"
+    "selector": "#card-name"
    },
-   "at": 14.58,
-   "label": "DINHEIRO (COFRE)"
-  },
-  {
-   "do": "waitFor",
-   "text": "O cofre da empresa",
-   "timeout": 10
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main p.text-3xl"
-   },
-   "seconds": 0.8,
-   "at": 16.57,
-   "label": "R$ 18.500,00 e Saldo Total em Dinheiro (ZOOM)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Disponível no cofre",
-    "within": "main"
-   },
-   "seconds": 0.5,
-   "at": 20.52,
-   "label": "Disponível no cofre",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"O cofre da empresa\", \"R$ 18.500,00\", \"Saldo Total em Dinheiro\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
-   "label": "confere cofre com R$ 18.500,00"
-  },
-  {
-   "do": "mark",
-   "name": "L3",
-   "at": 23.59
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main p.text-3xl"
-   },
-   "seconds": 0.8,
-   "at": 26.34,
-   "label": "o saldo que o sistema mostra",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L4",
-   "at": 33.43
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "div[class*=\"group/tab\"] button:has(span:text-is(\"DINHEIRO (COFRE)\"))"
-   },
-   "seconds": 0.2,
-   "at": 34.82,
-   "label": "cofre (mostra os três pontinhos)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "div[class*=\"group/tab\"]:has(span:text-is(\"DINHEIRO (COFRE)\")) div.absolute button"
-   },
-   "label": "três pontinhos do cofre"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "role": "menuitem",
-    "name": "Ajustar saldo"
-   },
-   "seconds": 0.3,
-   "label": "Ajustar saldo (a única opção)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "menuitem",
-    "name": "Ajustar saldo"
-   },
-   "at": 37.57,
-   "label": "Ajustar saldo"
-  },
-  {
-   "do": "waitFor",
-   "text": "Saldo atual",
-   "timeout": 10
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Saldo atual",
-    "within": "[role=dialog]"
-   },
-   "seconds": 0.6,
-   "at": 38.91,
-   "label": "Saldo atual R$ 18.500,00",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L5",
-   "at": 43.72
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "#new-balance"
-   },
-   "at": 43.85,
-   "label": "Novo saldo"
+   "at": 6.83,
+   "label": "Nome do cartão"
   },
   {
    "do": "type",
    "target": {
-    "selector": "#new-balance"
+    "selector": "#card-name"
    },
-   "text": "18560,00",
-   "at": 45.76,
-   "label": "digita 18.560,00 (ZOOM Novo saldo e Diferença)",
-   "noClick": true,
-   "clear": true
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Diferença",
-    "within": "[role=dialog]"
-   },
-   "seconds": 0.8,
-   "at": 46.85,
-   "label": "Diferença +R$ 60,00",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"R$ 18.500,00\", \"+R$ 60,00\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
-   "label": "confere saldo atual e diferença +60"
-  },
-  {
-   "do": "mark",
-   "name": "L6",
-   "at": 51.51
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "#motivo"
-   },
-   "at": 51.96,
-   "label": "Motivo"
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "#motivo"
-   },
-   "text": "Contagem do cofre",
-   "at": 53.24,
-   "label": "digita Contagem do cofre",
+   "text": "Cartão Empresa",
+   "at": 7.43,
+   "label": "digita Cartão Empresa",
    "noClick": true
   },
   {
    "do": "click",
    "target": {
-    "role": "button",
-    "name": "Confirmar ajuste",
-    "exact": true
+    "selector": "#card-closing-day"
    },
-   "at": 55.23,
-   "label": "Confirmar ajuste"
+   "at": 9.11,
+   "label": "Dia do fechamento"
   },
   {
-   "do": "waitFor",
-   "text": "Saldo ajustado",
-   "timeout": 10
-  },
-  {
-   "do": "mark",
-   "name": "L7",
-   "at": 56.64
-  },
-  {
-   "do": "scroll",
-   "point": {
-    "x": 900,
-    "y": 520
+   "do": "type",
+   "target": {
+    "selector": "#card-closing-day"
    },
-   "by": 320,
-   "duration": 0.5,
-   "after": 100,
-   "at": 57.93,
-   "label": "desce ao histórico do cofre"
+   "text": "25",
+   "at": 12.88,
+   "label": "digita 25",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#card-due-day"
+   },
+   "at": 13.89,
+   "label": "Dia do vencimento"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#card-due-day"
+   },
+   "text": "5",
+   "at": 15.08,
+   "label": "digita 5",
+   "noClick": true
   },
   {
    "do": "hover",
    "target": {
-    "text": "Ajuste de saldo — Contagem do cofre",
-    "within": "main"
-   },
-   "seconds": 0.5,
-   "at": 59.45,
-   "label": "a linha do ajuste",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Ajuste",
-    "exact": true,
-    "within": "main"
+    "text": "A fatura que fecha no dia 25 vence no dia 5",
+    "within": "[role=dialog]"
    },
    "seconds": 1.0,
-   "at": 60.99,
-   "label": "etiqueta Ajuste",
+   "at": 16.4,
+   "label": "a frase da fatura (ZOOM)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"R$ 18.560,00\", \"Ajuste de saldo — Contagem do cofre\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
-   "label": "confere cofre com R$ 18.560,00 e o ajuste no histórico"
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Cartão Empresa\", \"A fatura que fecha no dia 25 vence no dia 5 do mês seguinte\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
+   "label": "confere nome, fechamento e vencimento"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 19.49
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#card-limit"
+   },
+   "at": 19.94,
+   "label": "Limite do cartão"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#card-limit"
+   },
+   "text": "10000,00",
+   "at": 20.92,
+   "label": "digita 10.000,00",
+   "noClick": true,
+   "clear": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"R$ 10.000,00\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
+   "label": "confere limite de 10.000,00"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar Cartão",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 25.78,
+   "label": "Criar Cartão"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 26.9
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "div[class*=\"group/tab\"] button:has(span:text-is(\"Cartão Empresa\"))"
+   },
+   "at": 27.2,
+   "label": "abre o Cartão Empresa"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Fatura em aberto",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 30.18,
+   "label": "Fatura em aberto",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main :text(\"Limite total:\")"
+   },
+   "seconds": 0.4,
+   "at": 31.77,
+   "label": "Limite total e Disponível",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Fatura em aberto\", \"R$ 0,00\", \"Limite total:\", \"R$ 10.000,00\", \"fecha dia 25 · vence dia 5\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
+   "label": "confere cartão novo: fatura zerada e limite"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 33.17
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova despesa",
+    "within": "main"
+   },
+   "at": 34.91,
+   "label": "Nova despesa"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "#description"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#description"
+   },
+   "at": 36.48,
+   "label": "Descrição"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#description"
+   },
+   "text": "Con",
+   "at": 37.43,
+   "label": "digita Con",
+   "noClick": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Padrão encontrado: Conserto do pneu da empilhadeira",
+   "timeout": 12
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Padrão encontrado",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "at": 39.26,
+   "label": "o padrão encontrado (ZOOM)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Padrão encontrado: Conserto do pneu da empilhadeira\", \"Preencher\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
+   "label": "confere sugestão do conserto do pneu"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 44.83
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Preencher",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 45.13,
+   "label": "Preencher"
+  },
+  {
+   "do": "waitFor",
+   "text": "Campos preenchidos.",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Campos preenchidos.",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "at": 48.65,
+   "label": "Pagou com e a frase (ZOOM)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Cartão Empresa\", \"Campos preenchidos.\", \"Desfazer preenchimento\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
+   "label": "confere o pagamento continua no cartão"
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 60.37
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#amount"
+   },
+   "at": 60.67,
+   "label": "Valor"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#amount"
+   },
+   "text": "180,00",
+   "at": 61.47,
+   "label": "digita 180,00",
+   "noClick": true,
+   "clear": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Confirmar Despesa",
+    "exact": true
+   },
+   "at": 62.56,
+   "label": "Confirmar Despesa"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 12
+  },
+  {
+   "do": "waitFor",
+   "text": "Aberta",
+   "timeout": 12
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main :text(\"Disponível:\")"
+   },
+   "seconds": 0.8,
+   "at": 68.36,
+   "label": "a fatura Aberta e o Disponível (ZOOM)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Aberta\", \"R$ 180,00\", \"R$ 9.820,00\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
+   "label": "confere fatura de 180,00 e disponível de 9.820,00"
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 68.91
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Pagar Fatura",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 70.05,
+   "label": "Pagar Fatura"
+  },
+  {
+   "do": "waitFor",
+   "text": "Origem do pagamento",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Origem do pagamento",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "at": 73.79,
+   "label": "Origem do pagamento (ZOOM)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Este pagamento quita a fatura.",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "at": 76.3,
+   "label": "quita a fatura",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Origem do pagamento\", \"Este pagamento quita a fatura.\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
+   "label": "confere janela Pagar Fatura"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 80.98,
+   "label": "Cancelar (só mostrei)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 82.55
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main :text(\"Aberta\")"
+   },
+   "seconds": 1.2,
+   "at": 84.47,
+   "label": "a fatura Aberta",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "eval",
@@ -354,7 +532,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 67.03
+   "at": 94.9
   }
  ]
 }
