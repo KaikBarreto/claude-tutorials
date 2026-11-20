@@ -1,6 +1,6 @@
-# T00 · andamento da aplicação do 1.60.10 (notas para retomar)
+# T00 · andamento da aplicação do 1.60.10 e 1.60.18 (notas para retomar)
 
-Atualizado em 18/11. Quem continuar: leia só este arquivo, o `_BRIEF_APLICAR_160.md` e o cabeçalho do `rec/t00/gerar.py`.
+Atualizado em 20/11 (1.60.18, tela 1600x900). Quem continuar: leia só este arquivo, o `_BRIEF_APLICAR_160.md` e o cabeçalho do `rec/t00/gerar.py`.
 
 ## Feito
 - **Fala e roteiro** no 1.60.10: `narracao/tts_textos.py` e `roteiro.md` com 16 capítulos (1.544 → 2.066 palavras). Novos: **8** (o Cato,
@@ -57,3 +57,12 @@ Ver a tabela no fim deste arquivo (atualizada a cada capítulo).
 - Fim da aula: "A próxima aula começa em 4 segundos" avança sozinho; só pausa se o mouse passar por cima.
 - Cancelar: o botão "Falar com o Sucesso do Cliente" só aparece em 4 dos 8 motivos (em "Pausa temporária", por exemplo, não).
 - Antigo, continua: o histórico chama o pagamento de "Cobrança • empresa" (não "Renovação").
+
+## 1.60.18 (20/11)
+- Única mudança que atinge a T00: o menu Fiscal & Ambiental tem agora **"Relatório/Estoque Fiscal"** (`routes.ts:510`) no lugar de "Estoque Fiscal" +
+  "Relatórios Fiscais" (varredura: cap06 falhava no hover "Estoque Fiscal"). Fala do cap06 L4 mudada (1 linha): "...os documentos ambientais e o
+  relatório e estoque fiscal." Mexidos: `tts_textos.py`, `roteiro.md`, `plano.md`, `inventario.md`, `rec/t00/gerar.py` (FISCAIS: 5 itens, âncora "relatório").
+- `preparar_aula.sh T00` e `gerar.py --ens` rodados. Fala sem PDF/comprovante (nada a devolver na tela). Sem margem automática na aula.
+- Lote em segundo plano: `rec/t00/_ens/lote_rapido.log` (36 rápidos) e depois `lote_completo.log` (06, 07, 06b completos); resultados em `rec/t00/_ens/lote/*.txt`.
+  Instância 54300 ligada para o lote (derrubar: `FAKE_PORT=54300 bash rec/run.sh down`).
+- Corrigidos pelo app (achados antigos do MELHORIAS): plural do plano, "Sucesso do Cliente" nos 8 motivos, botões de 10 s do player com nome.

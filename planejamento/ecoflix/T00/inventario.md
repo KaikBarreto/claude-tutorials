@@ -68,7 +68,7 @@ A cópia não traz `supabase/migrations`: o que as RPCs fazem por dentro vem da 
   "Dashboard"; "Financeiro" (Caixa, Histórico do Caixa, Movimentações Bancárias ou "Movimentações Financeiras" com a Conta
   Dinheiro ligada (`hooks/useFinancialMovementsLabel.ts`), Relatório Financeiro, Contas a Pagar/Receber, Categorias
   Financeiras); "Pedidos"; "Fiscal & Ambiental" (Notas Fiscais (NF-e), SPED Fiscal "BETA", Notas de Serviço (NFS-e),
-  Transporte (MDF-e), Ambiental (MTR/CDF), Estoque Fiscal, **Relatórios Fiscais** (1.60: `routes.ts:511`, rota `/fiscal-ambiental/relatorios/nfe`; o SPED não aparece no mundo)); "Materiais" (Estoque, "Histórico (Kardex)", Relatório, Ticket de
+  Transporte (MDF-e), Ambiental (MTR/CDF), **Relatório/Estoque Fiscal** (1.60.18: `routes.ts:510`, rota `/fiscal-ambiental/estoque-fiscal/posicao`; substitui "Estoque Fiscal" e "Relatórios Fiscais"; o SPED não aparece no mundo)); "Materiais" (Estoque, "Histórico (Kardex)", Relatório, Ticket de
   Pesagem, Produção); "Coletas & Logística" (Ordens de Coleta, Frota, Equipamentos, Rastreamento, Rotas, Relatório,
   Configurações); "Clientes e Fornecedores"; "Funcionários (RH)"; "CRM/Kanban"; "Agenda"; depois de um traço, "Gerencial
   (Filiais)" (só com o módulo `modulo_gerencial`, `SidebarMenuContent.tsx:260`). Um grupo aberto por vez (`:234-238`).

@@ -43,7 +43,7 @@ Cada parte desse caminho tem a sua aula na trilha.""",
 6: """Agora, onde fica cada coisa. O menu tem as áreas do sistema. Primeiro, o Dashboard, com o resumo dos números.
 No Financeiro ficam o caixa, as contas a pagar e a receber, os bancos e os relatórios.
 Em Pedidos, cada compra e cada venda.
-Em Fiscal e Ambiental ficam as notas fiscais de mercadoria e de serviço, o transporte, os documentos ambientais, o estoque fiscal e os relatórios fiscais.
+Em Fiscal e Ambiental ficam as notas fiscais de mercadoria e de serviço, o transporte, os documentos ambientais e o relatório e estoque fiscal.
 Em Materiais, o estoque, o ticket de pesagem e a produção.
 Em Coletas e Logística, as ordens de coleta e a frota.
 Depois, os cadastros em Clientes e Fornecedores, a equipe em Funcionários e as negociações no cê-érre-ême.

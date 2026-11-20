@@ -1082,3 +1082,7 @@ Decisões:
   `apos-cap18` nova. **Bloqueios**: cap17 (PDF com valores apesar do "sem valores": bug do app CONFIRMADO no código,
   handoff `handoffs/2026-11-20_correcoes_T07.md`) e cap15 (cupom 58 mm com "Material não identificado": ajudante apurando
   se é do app ou do simulador). Voz da T07 só depois disso.
+- 20/11 14:xx **T00 no 1.60.18 (agente)**: só o menu Fiscal & Ambiental mudou ("Relatório/Estoque Fiscal", `routes.ts:510`, no
+  lugar de "Estoque Fiscal" e "Relatórios Fiscais"); 1 linha de fala (cap06: "...os documentos ambientais e o relatório e
+  estoque fiscal."). Lote de 36 rápidos + completos 06, 07, 06b rodando (`rec/t00/_ens/lote_*.log`, LOTE-FIM); instância 54300
+  fica de pé até o fim. Cupom 58 mm sem nome do material: bug do app confirmado (handoff T07, item 2).

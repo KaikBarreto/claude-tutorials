@@ -23,7 +23,7 @@ Renumeração de 18/11: entraram o **8** (o Cato) e o **12** (Montar o plano); o
 | 3 | TRILHA / Aulas de outros módulos | CRM/Kanban "Não tem no seu plano" → "Consultar esta aula" → "Conheça agora. Ative quando fizer sentido."; **novo:** a frase do selo "Liberado no teste". Ilustração da barra. | S3 |
 | 4 | TRILHA / Assistir e tirar dúvidas | **Novo:** o player ("Legendas" com a faixa "Português" e "Tamanho da legenda", "Velocidade", "Voltar/Avançar 10 segundos", "Abrir em tela cheia"), o quadro "Aula concluída" → "Ficar nesta aula", "Materiais e extras"; depois o botão "Tirar dúvidas com o suporte" e a ilustração da mensagem pronta. | S2 |
 | 5 | O SISTEMA / Do portão até a conta | Ilustração (igual). | (só ilustração) |
-| 6 | MENU / Um passeio pelo menu | Menu lateral: "Financeiro", **"Fiscal & Ambiental" aberto (com "Relatórios Fiscais")** e "Materiais"; "Configurações"; **novo:** "Buscar" e "Notificações" no alto. | S2 |
+| 6 | MENU / Um passeio pelo menu | Menu lateral: "Financeiro", **"Fiscal & Ambiental" aberto (com "Relatório/Estoque Fiscal")** e "Materiais"; "Configurações"; **novo:** "Buscar" e "Notificações" no alto. | S2 |
 | 7 | MENU / Os menus e a sua conta | Menu da conta; **novo:** "Tema" com "Sistema", a gaveta da "Central de Ajuda", a janela "Falar com o suporte" (sem enviar), "Trocar de conta" e "Sair"; Aparência → "Menu Superior"; o celular com o leque do "Novo". | S2 |
 | 8 | O SISTEMA / O Cato, o seu agente (**novo**) | O botão do Cato, o balão de dica com "Abrir Cato", a janela "Antes da primeira conversa com o Cato" (sem aceitar). Apresentação curta: o resto é a T21. | S2 (balão ligado) |
 | 9 | VOCABULÁRIO / As palavras do pátio | Igual ao antigo 8. | S2 |

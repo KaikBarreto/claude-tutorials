@@ -568,7 +568,7 @@ ITEM_MENU = lambda n: {'role': 'link', 'name': n, 'exact': True}
 
 
 FISCAIS = [('Notas Fiscais (NF-e)', 'notas'), ('Notas de Serviço (NFS-e)', 'serviço,'), ('Transporte (MDF-e)', 'transporte,'), ('Ambiental (MTR/CDF)', 'documentos'),
-           ('Estoque Fiscal', 'estoque'), ('Relatórios Fiscais', 'relatórios')]
+           ('Relatório/Estoque Fiscal', 'relatório')]
 
 
 def cap06(v):

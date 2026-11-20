@@ -1,6 +1,6 @@
 {
  "name": "t00-cap06",
- "title": "T0 · Cap. 6 · Um passeio pelo menu (computador 1280x800; narração 83,3 s, ESTIMADA; marcas L1..L11 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T0 · Cap. 6 · Um passeio pelo menu (computador 1280x800; narração 82,3 s, ESTIMADA; marcas L1..L11 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "fakeNow": "2026-11-10T08:30:00-03:00",
  "seed": "t00-cap06",
  "pace": 0.5,
@@ -233,32 +233,19 @@
    "do": "hover",
    "target": {
     "role": "link",
-    "name": "Estoque Fiscal",
+    "name": "Relatório/Estoque Fiscal",
     "exact": true
    },
    "seconds": 0.3,
-   "at": 28.48,
-   "label": "Fiscal & Ambiental: Estoque Fiscal",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "role": "link",
-    "name": "Relatórios Fiscais",
-    "exact": true
-   },
-   "seconds": 0.3,
-   "at": 30.0,
-   "label": "Fiscal & Ambiental: Relatórios Fiscais",
+   "at": 28.41,
+   "label": "Fiscal & Ambiental: Relatório/Estoque Fiscal",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 31.87
+   "at": 30.89
   },
   {
    "do": "click",
@@ -267,7 +254,7 @@
     "name": "Materiais",
     "exact": true
    },
-   "at": 32.0,
+   "at": 31.01,
    "label": "Materiais (abre o grupo; o Fiscal & Ambiental fecha)"
   },
   {
@@ -279,7 +266,7 @@
    },
    "text": "",
    "noClick": true,
-   "at": 34.92,
+   "at": 33.93,
    "label": "subitens de Materiais",
    "optional": true,
    "timeout": 4
@@ -287,13 +274,13 @@
   {
    "do": "eval",
    "js": "(async()=>{const vis=e=>e.getClientRects().length>0&&getComputedStyle(e).visibility!=='hidden';const nz=t=>t.replace(/[\\s\\u00a0]+/g,' ').trim();const rolagem=(el)=>{let c=el.parentElement;while(c&&c!==document.body&&c!==document.documentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const root=document.querySelector(\"body\")||document.body;const el=[...root.querySelectorAll('*')].filter(e=>vis(e)&&nz(e.textContent)===\"Coletas & Log\\u00edstica\"&&![...e.children].some(k=>nz(k.textContent)===\"Coletas & Log\\u00edstica\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const r0=el.getBoundingClientRect();const cr=c.getBoundingClientRect?c.getBoundingClientRect():{top:0,bottom:innerHeight};const top0=c===document.scrollingElement?0:cr.top,bot0=c===document.scrollingElement?innerHeight:cr.bottom;if(r0.top>=top0+8&&r0.bottom<=bot0-8)return 'ok';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 36.5,
+   "at": 35.52,
    "label": "o menu desce a Coletas & Logística"
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 37.0
+   "at": 36.02
   },
   {
    "do": "hover",
@@ -303,7 +290,7 @@
     "exact": true
    },
    "seconds": 0.5,
-   "at": 37.23,
+   "at": 36.24,
    "label": "menu: Coletas & Logística (sem abrir)",
    "optional": true,
    "timeout": 4
@@ -311,7 +298,7 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 41.68
+   "at": 40.69
   },
   {
    "do": "hover",
@@ -321,7 +308,7 @@
     "exact": true
    },
    "seconds": 0.4,
-   "at": 43.65,
+   "at": 42.67,
    "label": "menu: Clientes e Fornecedores",
    "optional": true,
    "timeout": 4
@@ -334,7 +321,7 @@
     "exact": true
    },
    "seconds": 0.4,
-   "at": 46.61,
+   "at": 45.63,
    "label": "menu: Funcionários (RH)",
    "optional": true,
    "timeout": 4
@@ -347,7 +334,7 @@
     "exact": true
    },
    "seconds": 0.1,
-   "at": 49.12,
+   "at": 48.13,
    "label": "menu: CRM/Kanban",
    "optional": true,
    "timeout": 4
@@ -355,13 +342,13 @@
   {
    "do": "eval",
    "js": "(async()=>{const vis=e=>e.getClientRects().length>0&&getComputedStyle(e).visibility!=='hidden';const nz=t=>t.replace(/[\\s\\u00a0]+/g,' ').trim();const rolagem=(el)=>{let c=el.parentElement;while(c&&c!==document.body&&c!==document.documentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const root=document.querySelector(\"body\")||document.body;const el=[...root.querySelectorAll('*')].filter(e=>vis(e)&&nz(e.textContent)===\"Gerencial (Filiais)\"&&![...e.children].some(k=>nz(k.textContent)===\"Gerencial (Filiais)\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const r0=el.getBoundingClientRect();const cr=c.getBoundingClientRect?c.getBoundingClientRect():{top:0,bottom:innerHeight};const top0=c===document.scrollingElement?0:cr.top,bot0=c===document.scrollingElement?innerHeight:cr.bottom;if(r0.top>=top0+8&&r0.bottom<=bot0-8)return 'ok';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 49.85,
+   "at": 48.87,
    "label": "o menu desce ao Gerencial (Filiais)"
   },
   {
    "do": "mark",
    "name": "L8",
-   "at": 50.45
+   "at": 49.47
   },
   {
    "do": "hover",
@@ -371,7 +358,7 @@
     "exact": true
    },
    "seconds": 0.4,
-   "at": 50.68,
+   "at": 49.7,
    "label": "menu: Agenda",
    "optional": true,
    "timeout": 4
@@ -384,7 +371,7 @@
     "exact": true
    },
    "seconds": 0.4,
-   "at": 53.57,
+   "at": 52.58,
    "label": "menu: Gerencial (Filiais)",
    "optional": true,
    "timeout": 4
@@ -392,7 +379,7 @@
   {
    "do": "mark",
    "name": "L9",
-   "at": 57.18
+   "at": 56.2
   },
   {
    "do": "hover",
@@ -402,7 +389,7 @@
     "exact": true
    },
    "seconds": 0.6,
-   "at": 58.63,
+   "at": 57.64,
    "label": "rodapé: Configurações",
    "noScroll": true,
    "optional": true,
@@ -411,7 +398,7 @@
   {
    "do": "mark",
    "name": "L10",
-   "at": 60.95
+   "at": 59.97
   },
   {
    "do": "hover",
@@ -421,7 +408,7 @@
     "exact": true
    },
    "seconds": 0.6,
-   "at": 62.77,
+   "at": 61.79,
    "label": "alto da tela: Buscar (sem abrir)",
    "noScroll": true,
    "optional": true,
@@ -435,7 +422,7 @@
     "exact": true
    },
    "seconds": 0.6,
-   "at": 68.31,
+   "at": 67.33,
    "label": "alto da tela: Notificações (sem abrir)",
    "noScroll": true,
    "optional": true,
@@ -444,12 +431,12 @@
   {
    "do": "mark",
    "name": "L11",
-   "at": 70.18
+   "at": 69.2
   },
   {
    "do": "eval",
    "js": "(async()=>{const vis=e=>e.getClientRects().length>0&&getComputedStyle(e).visibility!=='hidden';const nz=t=>t.replace(/[\\s\\u00a0]+/g,' ').trim();const rolagem=(el)=>{let c=el.parentElement;while(c&&c!==document.body&&c!==document.documentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const root=document.querySelector(\"body\")||document.body;const el=[...root.querySelectorAll('*')].filter(e=>vis(e)&&nz(e.textContent)===\"Dashboard\"&&![...e.children].some(k=>nz(k.textContent)===\"Dashboard\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const r0=el.getBoundingClientRect();const cr=c.getBoundingClientRect?c.getBoundingClientRect():{top:0,bottom:innerHeight};const top0=c===document.scrollingElement?0:cr.top,bot0=c===document.scrollingElement?innerHeight:cr.bottom;if(r0.top>=top0+8&&r0.bottom<=bot0-8)return 'ok';const dy=Math.round(el.getBoundingClientRect().top-120);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 70.28,
+   "at": 69.3,
    "label": "o menu volta ao topo"
   },
   {
@@ -461,7 +448,7 @@
    "by": 0,
    "duration": 0.2,
    "after": 0,
-   "at": 77.47,
+   "at": 76.48,
    "label": "cursor sai do menu"
   },
   {
@@ -472,7 +459,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 83.29
+   "at": 82.31
   }
  ]
 }
