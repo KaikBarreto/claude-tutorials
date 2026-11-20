@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
   "pwa-install-dismissed": "true",
   "theme": "light",
@@ -412,6 +412,22 @@
    "url": "/portal/recicla-vale-metais-cooperativa-1B2yVwaud00G8omJQvmXcn",
    "at": 62.88,
    "label": "navegador do parceiro: volta ao portal da cooperativa"
+  },
+  {
+   "do": "waitFor",
+   "text": "Portal do",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "eval",
+   "js": "setTimeout(()=>location.reload(),50);'ok'",
+   "at": 62.98,
+   "label": "recarrega o portal (no ensaio rápido o cache de 30 s do app guardaria o saldo velho)"
   },
   {
    "do": "waitFor",

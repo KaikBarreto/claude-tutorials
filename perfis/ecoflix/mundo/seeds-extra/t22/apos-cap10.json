@@ -1,0 +1,94 @@
+{
+ "group_stock_transfers": [
+  {
+   "group_id": "49bbaeff-d8eb-5edb-b150-438636ed4767",
+   "from_company_id": "4142bd54-99ac-5f2c-ac18-91200f24db93",
+   "to_company_id": "38814e47-876a-5977-a5f7-53af364c17bb",
+   "group_material_id": "7ba8feb7-e799-4b31-a9b7-e36a7224c058",
+   "from_material_id": "148343c1-e57f-5a79-acf9-c13cf1153dd0",
+   "to_material_id": "1c8b5fe3-dc07-51f0-9863-a660e6450576",
+   "quantity": 1200,
+   "unit": "Kg",
+   "notes": "Lote para a Serra Fina Alumínio Reciclagem",
+   "status": "completed",
+   "created_by": "34c36c63-0890-5e89-8963-7c77b7996908",
+   "client_request_id": "d99ac8f0-8173-4d82-9610-0b9ccf42ce93",
+   "created_at": "2026-11-10T11:30:37.467Z",
+   "id": "ceba0acc-64f7-4f42-a828-ace3b0ee1bac",
+   "completed_at": "2026-11-10T11:30:45.727Z",
+   "sale_id": null
+  }
+ ],
+ "stock_movements": [
+  {
+   "company_id": "4142bd54-99ac-5f2c-ac18-91200f24db93",
+   "material_id": "148343c1-e57f-5a79-acf9-c13cf1153dd0",
+   "type": "TRANSFERENCIA",
+   "quantity": -1200,
+   "stock_before": 1850,
+   "stock_after": 650,
+   "description": "Transferência entre unidades (saída)",
+   "created_by": "34c36c63-0890-5e89-8963-7c77b7996908",
+   "transaction_at": "2026-11-10T11:30:45.727Z",
+   "created_at": "2026-11-10T11:30:45.727Z",
+   "transaction_date": "2026-11-10",
+   "id": "c64de2a8-3d7f-4d83-afbc-71c9d30879e9",
+   "client_request_id": null,
+   "entry_id": null,
+   "invoice_id": null,
+   "order_id": null,
+   "order_type": null,
+   "related_movement_id": null
+  },
+  {
+   "company_id": "38814e47-876a-5977-a5f7-53af364c17bb",
+   "material_id": "1c8b5fe3-dc07-51f0-9863-a660e6450576",
+   "type": "TRANSFERENCIA",
+   "quantity": 1200,
+   "stock_before": 640,
+   "stock_after": 1840,
+   "description": "Transferência entre unidades (entrada)",
+   "related_movement_id": "c64de2a8-3d7f-4d83-afbc-71c9d30879e9",
+   "created_by": "34c36c63-0890-5e89-8963-7c77b7996908",
+   "transaction_at": "2026-11-10T11:30:45.727Z",
+   "created_at": "2026-11-10T11:30:45.727Z",
+   "transaction_date": "2026-11-10",
+   "id": "fac9fbee-c3ab-4248-8d3a-af890773b891",
+   "client_request_id": null,
+   "entry_id": null,
+   "invoice_id": null,
+   "order_id": null,
+   "order_type": null
+  }
+ ],
+ "_patch": {
+  "company_groups": [
+   {
+    "match": {
+     "id": "49bbaeff-d8eb-5edb-b150-438636ed4767"
+    },
+    "set": {
+     "require_transfer_approval": true
+    }
+   }
+  ],
+  "materials": [
+   {
+    "match": {
+     "id": "1c8b5fe3-dc07-51f0-9863-a660e6450576"
+    },
+    "set": {
+     "current_stock": 1840
+    }
+   },
+   {
+    "match": {
+     "id": "148343c1-e57f-5a79-acf9-c13cf1153dd0"
+    },
+    "set": {
+     "current_stock": 650
+    }
+   }
+  ]
+ }
+}

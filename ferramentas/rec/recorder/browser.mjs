@@ -94,6 +94,13 @@ export function buildStorageState(session, extra = {}) {
     ...mundoStorage(session, v),
     ...extra,
   };
+  // A versão "já vista" é sempre a do build servido: roteiro gerado numa versão anterior (ex.: 1.60.18 gravado no 1.60.22)
+  // traria o aviso "Sistema atualizado" para dentro do vídeo. Só um roteiro que queira MOSTRAR o aviso põe "__mostrarAvisoVersao" no storage.
+  if (!extra.__mostrarAvisoVersao) {
+    entries.app_version = v;
+    entries.notification_shown_version = v;
+  }
+  delete entries.__mostrarAvisoVersao;
   return {
     cookies: [],
     origins: [{ origin: new URL(APP_URL).origin, localStorage: Object.entries(entries).map(([name, value]) => ({ name, value })) }],

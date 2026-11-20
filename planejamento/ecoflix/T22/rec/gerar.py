@@ -34,7 +34,10 @@ TUT = os.path.normpath(os.path.join(HERE, '..', '..'))
 AULA = 't22'
 NARR = os.path.join(TUT, AULA, 'narracao')
 FAKE_NOW = '2026-11-10T08:30:00-03:00'
-VERSAO = '1.60.18'
+try:
+    VERSAO = open(os.path.join(TUT, 'app', 'dist', '.versao-app'), encoding='utf8').read().strip() or '1.60.18'
+except OSError:
+    VERSAO = '1.60.18'
 HOJE = FAKE_NOW[:10]
 CODIGO = 'GRP-7C4E9A'   # generate_group_invite_code: 'GRP-' + 6 hexadecimais (o handler fixa este)
 SANDRA_EMAIL = 'sandra.pires@reciclavalemetais.example'

@@ -1109,3 +1109,4 @@ Decisões:
   **Robô do celular** (T00): com a escala 1,8 do computador 16:9, o screencast do celular pedia 702x1519,2 e o Chrome recusava;
   `DEVICES.phone.scale = 2` + tamanho arredondado (skill + `$TUT_HOME/rec/recorder`). cap00b passou (780x1688); os 18 de
   celular da T00 regravando no rápido (`rec/t00/_ens/lote_celular_2011.log`).
+- 20/11 17:1x **Aviso "Sistema atualizado · v1.60.22" dentro das gravações**: os roteiros traziam a versão 1.60.18 no localStorage. T02 final: cap00..07 saíram com o toast (pedido ao ajudante regravar). T00 celular: a gaveta do aviso tapava a barra de baixo (11 de 18 falharam). Correção no gravador (`buildStorageState` força a versão do build); T00 celular regravando (`rec/t00/_ens/lote_celular_2011b.log`); T07, T20/T12 e T22 avisados.

@@ -404,6 +404,12 @@ PDF_JS = ("(async()=>{const w=(window.__pops||[]).slice(-1)[0];if(!w)return 'SEM
           "if(f&&f.src){const b=await (await fetch(f.src.split('#')[0])).blob();const u=new Uint8Array(await b.arrayBuffer());let s='';"
           "for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'PDF:'+btoa(s)}"
           "await new Promise(r=>setTimeout(r,250))}return 'SEM PDF'})()")
+# aba Preços: no desktop o app navega a janela nova direto para o blob do PDF (location.href), sem o iframe #pdf-frame
+PDF_BLOB_JS = ("(async()=>{const w=(window.__pops||[]).slice(-1)[0];if(!w)return 'SEM JANELA';for(let i=0;i<60;i++){let h='';"
+               "try{h=String(w.location.href)}catch(e){return 'ERRO '+e}"
+               "if(h.startsWith('blob:')){const b=await (await fetch(h)).blob();const u=new Uint8Array(await b.arrayBuffer());let s='';"
+               "for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'PDF:'+btoa(s)}"
+               "await new Promise(r=>setTimeout(r,250))}return 'SEM PDF'})()")
 USUARIO_PORTAL = 'cooperativa.recomeco'
 
 
@@ -560,6 +566,7 @@ def cap03():
     c.mark(7)
     c.press('Escape', at=c.A(6, 'embaixo', 0.2) if False else c.L(7) - 2.8, label='fecha o Editar Fornecedor')
     c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.wait(1.0)
     c.click(ABA('Clientes'), at=c.L(7) - 2.0, label='aba Clientes')
     c.waitfor(target=BUSCA('cliente'), timeout=15)
     c.click(LINHA('Aços Quiririm Ltda'), at=c.L(7) - 1.0, label='Aços Quiririm Ltda')
@@ -623,6 +630,8 @@ def cap04():
     c.click(ABA('Fornecedores'), at=c.L(9) - 5.0, label='aba Fornecedores')
     c.click(LINHA(COOP), at=c.L(9) - 4.0, label='Cooperativa Recomeço')
     c.waitfor(target=SEL(FC), timeout=12)
+    c.press('Escape', at=c.L(9) - 3.0, label='fecha o menu da linha (o mouse o abriu)')
+    c.wait(0.8)
     c.click(BTN_FICHA(COOP, 'Editar'), at=c.L(9) - 2.8, label='Editar')
     c.waitfor(text='Editar Fornecedor', timeout=12)
     c.click(TAB('Portal', within=DLG), at=c.L(9) - 1.6, label='aba Portal')
@@ -715,6 +724,9 @@ def cap08():
     c.hover(TXT('Saldo Atual', within=FC), 1.4, at=c.A(6, 'zerou', 0.5), label='zoom: Saldo Atual R$ 0,00')
     c.mark(7)
     troca_para(c, PORTAL_COOP, c.L(7) - 0.2, 'navegador do parceiro: volta ao portal da cooperativa', 'Portal do')
+    c.ev("setTimeout(()=>location.reload(),50);'ok'", at=c.L(7) - 0.1, label='recarrega o portal (no ensaio rápido o cache de 30 s do app guardaria o saldo velho)')
+    c.waitfor(text='Portal do', timeout=30)
+    c.waitfor(idle=True, timeout=25)
     c.click(TABP('saldo'), at=c.L(7) + 0.8, label='aba Saldo')
     c.waitfor(text='Saldo Atual', timeout=10)
     c.confere('body', ['R$ 0,00', 'Em dia'], 'Saldo Atual R$ 0,00 Em dia no portal')
@@ -978,7 +990,7 @@ def cap10():
     c.mark(5)
     c.hover(BTN('Baixar em PDF'), 1.0, at=c.A(5, 'Baixar', 0.8), label='[ZOOM] o botão Baixar em PDF')
     c.click(BTN('Baixar em PDF'), at=c.A(5, 'leva', 0.6), label='clica em Baixar em PDF: a tabela abre numa aba nova')
-    c.ev(PDF_JS, at=c.A(5, 'leva', -2.5), label='PDF da tabela de preços (janela nova, para a cena do PDF)')
+    c.ev(PDF_BLOB_JS, at=c.A(5, 'leva', -2.5), label='PDF da tabela de preços (janela nova navegada ao blob, para a cena do PDF)')
     c.mark(6)
     c.cursor((900, 440), at=c.L(6) + 0.3, label='de volta à lista de preços')
     c.fim()
@@ -986,7 +998,8 @@ def cap10():
 
 
 WA_JS = ("(()=>{window.__wa=[];window.open=function(u){window.__wa.push(String(u));return null};return 'gancho wa.me'})()")
-WA_LER = ("(()=>{const u=(window.__wa||[]).slice(-1)[0];if(!u)return 'SEM wa.me';const m=u.match(/[?&]text=([^&]*)/);return 'WA:'+u.split('?')[0]+'|'+(m?decodeURIComponent(m[1].replace(/\\+/g,' ')):'')})()")
+WA_LER = ("(async()=>{for(let i=0;i<40&&!(window.__wa||[]).length;i++)await new Promise(r=>setTimeout(r,250));const u=(window.__wa||[]).slice(-1)[0];if(!u)return 'SEM wa.me';"
+          "const m=u.match(/[?&]text=([^&]*)/);return 'WA:'+u.split('?')[0]+'|'+(m?decodeURIComponent(m[1].replace(/\\+/g,' ')):'')})()")
 ID_1749 = stable_id('t20.compra.1761')
 
 

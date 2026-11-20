@@ -33,7 +33,7 @@ TUT = os.path.normpath(os.path.join(HERE, '..', '..'))
 NARR = os.path.join(TUT, 't01', 'narracao')
 RAFAEL = '34c36c63-0890-5e89-8963-7c77b7996908'
 EMPRESA_ID = '38814e47-876a-5977-a5f7-53af364c17bb'
-VERSAO = '1.60.18'
+VERSAO = '1.60.22'
 FAKE_NOW = '2026-11-10T08:30:00-03:00'
 # localStorage de quem abre o navegador sem sessão: sem aviso de versão nova, sem o convite para instalar o app, sem a janela
 # "Personalize sua experiência" e sem o lembrete das tarefas do dia (a mesma lista que o robô põe numa sessão logada)

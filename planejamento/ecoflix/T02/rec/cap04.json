@@ -1,6 +1,6 @@
 {
  "name": "t02-cap04",
- "title": "T2 · Cap. 4 · Telas e ações (narração 101,0 s; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T2 · Cap. 4 · Telas e ações (narração 104,8 s; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t02-cap04",
  "pace": 0.5,
  "cps": 30,
@@ -167,7 +167,7 @@
     "within": "[role=dialog]"
    },
    "note": "L1 Personalizado",
-   "at": 7.84,
+   "at": 9.44,
    "label": "perfil Personalizado (a lista libera, tudo desligado)"
   },
   {
@@ -178,13 +178,13 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 11.3
+   "at": 12.9
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] input[placeholder=\\\"Buscar tela ou a\\u00e7\\u00e3o...\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-150);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
    "note": "L2 lista",
-   "at": 11.86,
+   "at": 13.46,
    "label": "desce o corpo da janela: a lista aparece inteira"
   },
   {
@@ -196,7 +196,7 @@
    },
    "seconds": 0.15,
    "note": "L2 separada",
-   "at": 12.52,
+   "at": 14.12,
    "label": "grupo Geral",
    "optional": true,
    "timeout": 4
@@ -210,7 +210,7 @@
    },
    "seconds": 0.2,
    "note": "L2 grupos.",
-   "at": 13.14,
+   "at": 14.74,
    "label": "grupo Financeiro",
    "optional": true,
    "timeout": 4
@@ -229,7 +229,7 @@
    },
    "seconds": 0.15,
    "note": "L2 sistema,",
-   "at": 15.54,
+   "at": 17.14,
    "label": "uma linha = uma tela (Clientes e Fornecedores)",
    "optional": true,
    "timeout": 4
@@ -243,7 +243,7 @@
    },
    "seconds": 0.15,
    "note": "L2 interruptor",
-   "at": 16.18,
+   "at": 17.78,
    "label": "o interruptor do lado",
    "optional": true,
    "timeout": 4
@@ -251,18 +251,18 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 17.14
+   "at": 18.74
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] [role=switch][aria-label=\\\"Acesso \\u00e0 tela Contas a Pagar/Receber\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-330);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 18.84,
+   "at": 20.44,
    "label": "a lista volta até Contas a Pagar/Receber (sob a ilustração)"
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 22.74
+   "at": 24.34
   },
   {
    "do": "click",
@@ -272,7 +272,7 @@
     "exact": true
    },
    "note": "L4 Contas",
-   "at": 24.96,
+   "at": 26.56,
    "label": "liga a tela Contas a Pagar/Receber"
   },
   {
@@ -284,7 +284,7 @@
     "within": "[role=dialog]"
    },
    "note": "L4 Abro",
-   "at": 26.96,
+   "at": 28.56,
    "label": "Clique para ver 4 ações (Contas a Pagar/Receber)"
   },
   {
@@ -295,7 +295,7 @@
     "exact": true
    },
    "note": "L4 Criar",
-   "at": 29.36,
+   "at": 30.96,
    "label": "liga Criar Conta a Pagar/Receber"
   },
   {
@@ -306,7 +306,7 @@
     "exact": true
    },
    "note": "L4 Dar",
-   "at": 30.56,
+   "at": 32.16,
    "label": "liga Dar Baixa em Conta"
   },
   {
@@ -321,7 +321,7 @@
    },
    "seconds": 1.8,
    "note": "L4 contador",
-   "at": 32.26,
+   "at": 33.86,
    "label": "ZOOM selo 2/4 e as duas ações ligadas",
    "optional": true,
    "timeout": 4
@@ -329,7 +329,7 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 34.1
+   "at": 35.7
   },
   {
    "do": "hover",
@@ -340,7 +340,7 @@
    },
    "seconds": 0.15,
    "note": "L5 tela,",
-   "at": 36.1,
+   "at": 37.7,
    "label": "primeiro a tela (interruptor de Contas a Pagar/Receber)",
    "optional": true,
    "timeout": 4
@@ -354,7 +354,7 @@
    },
    "seconds": 0.15,
    "note": "L5 ações.",
-   "at": 37.3,
+   "at": 38.9,
    "label": "depois as ações",
    "optional": true,
    "timeout": 4
@@ -363,7 +363,7 @@
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] [role=switch][aria-label=\\\"Acesso \\u00e0 tela Caixa\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-330);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
    "note": "L5 acontece",
-   "at": 38.86,
+   "at": 40.46,
    "label": "a lista sobe até o Caixa"
   },
   {
@@ -375,7 +375,7 @@
     "within": "[role=dialog]"
    },
    "note": "L5 Registrar",
-   "at": 39.76,
+   "at": 41.36,
    "label": "Clique para ver 10 ações (Caixa, desligada)"
   },
   {
@@ -386,7 +386,7 @@
     "exact": true
    },
    "note": "L5 Venda",
-   "at": 40.32,
+   "at": 41.92,
    "label": "liga Registrar Venda (a tela Caixa segue desligada)"
   },
   {
@@ -398,7 +398,7 @@
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim()===\"Confira esta combina\\u00e7\\u00e3o\").sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-230);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
    "note": "L5 avisa",
-   "at": 43.0,
+   "at": 44.6,
    "label": "sobe até o aviso"
   },
   {
@@ -410,7 +410,7 @@
    },
    "seconds": 2.0,
    "note": "L5 conferir",
-   "at": 44.02,
+   "at": 45.62,
    "label": "ZOOM aviso Confira esta combinação: Registrar Venda está ligado, mas a tela Caixa está desligada.",
    "optional": true,
    "timeout": 4
@@ -419,7 +419,7 @@
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] input[placeholder=\\\"Buscar tela ou a\\u00e7\\u00e3o...\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-150);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
    "note": "L5 caixa #1",
-   "at": 47.72,
+   "at": 49.32,
    "label": "desce até a lista de novo"
   },
   {
@@ -430,7 +430,7 @@
     "exact": true
    },
    "note": "L5 Desligo,",
-   "at": 48.14,
+   "at": 49.74,
    "label": "desliga Registrar Venda"
   },
   {
@@ -445,7 +445,7 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 50.08
+   "at": 51.68
   },
   {
    "do": "click",
@@ -454,7 +454,7 @@
     "within": "[role=dialog]"
    },
    "note": "L6 busca.",
-   "at": 51.98,
+   "at": 53.58,
    "label": "Buscar tela ou ação..."
   },
   {
@@ -466,7 +466,7 @@
    "text": "nota",
    "cps": 12,
    "note": "L6 nota,",
-   "at": 53.81,
+   "at": 55.41,
    "label": "busca: nota",
    "noClick": true
   },
@@ -479,7 +479,7 @@
    },
    "seconds": 0.15,
    "note": "L6 Fiscal",
-   "at": 54.64,
+   "at": 56.24,
    "label": "aparece o Fiscal & Ambiental",
    "optional": true,
    "timeout": 4
@@ -492,7 +492,7 @@
     "exact": true
    },
    "note": "L6 tela",
-   "at": 56.62,
+   "at": 58.22,
    "label": "liga a tela Fiscal & Ambiental"
   },
   {
@@ -503,8 +503,6 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "note": "L6 ações",
-   "at": 57.34,
    "label": "Clique para ver 4 ações (Fiscal & Ambiental)"
   },
   {
@@ -514,8 +512,6 @@
     "name": "Emitir NF-e (Produto)",
     "exact": true
    },
-   "note": "L6 NF-e",
-   "at": 58.3,
    "label": "liga Emitir NF-e (Produto)"
   },
   {
@@ -525,14 +521,12 @@
     "name": "Emitir NFS-e (Serviço)",
     "exact": true
    },
-   "note": "L6 NFS-e.",
-   "at": 59.1,
    "label": "liga Emitir NFS-e (Serviço)"
   },
   {
    "do": "mark",
    "name": "L7",
-   "at": 60.0
+   "at": 62.6
   },
   {
    "do": "click",
@@ -541,21 +535,21 @@
     "name": "Limpar busca"
    },
    "note": "L7 mesmo",
-   "at": 60.54,
+   "at": 63.14,
    "label": "Limpar busca"
   },
   {
    "do": "eval",
    "js": "(()=>{const r=[];for(const n of [\"Ver Totais e Valores Financeiros\", \"Acesso à tela Dashboard\"]){const s=document.querySelector('[role=dialog] [role=switch][aria-label=\"'+n+'\"]');if(!s){r.push('SEM ALVO '+n);continue}if(s.getAttribute('data-state')!=='checked'){s.click();r.push('ligou '+n)}else r.push('já '+n)}return r.join(' | ')})()",
    "note": "L7 resto",
-   "at": 61.94,
+   "at": 64.54,
    "label": "liga Ver Totais e Dashboard (sem cursor)"
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] [role=switch][aria-label=\\\"Acesso \\u00e0 tela Movimenta\\u00e7\\u00f5es Banc\\u00e1rias\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-300);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/450),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
    "note": "L7 escritório:",
-   "at": 62.32,
+   "at": 64.92,
    "label": "a lista desce até o banco"
   },
   {
@@ -566,7 +560,7 @@
     "exact": true
    },
    "note": "L7 banco,",
-   "at": 63.18,
+   "at": 65.78,
    "label": "liga Movimentações Bancárias (o banco)"
   },
   {
@@ -586,8 +580,6 @@
     "name": "Acesso à tela Relatório Financeiro",
     "exact": true
    },
-   "note": "L7 relatório",
-   "at": 63.3,
    "label": "liga Relatório Financeiro"
   },
   {
@@ -603,7 +595,7 @@
     "exact": true
    },
    "note": "L7 pedidos",
-   "at": 65.78,
+   "at": 70.18,
    "label": "liga Pedidos"
   },
   {
@@ -619,7 +611,7 @@
     "exact": true
    },
    "note": "L7 clientes",
-   "at": 68.02,
+   "at": 71.82,
    "label": "liga Clientes e Fornecedores"
   },
   {
@@ -636,7 +628,7 @@
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] [role=switch][aria-label=\\\"Acesso \\u00e0 tela Caixa\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-400);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
    "note": "L7 Caixa",
-   "at": 70.52,
+   "at": 74.32,
    "label": "a lista sobe até o Caixa"
   },
   {
@@ -648,7 +640,7 @@
    },
    "seconds": 0.15,
    "note": "L7 Caixa",
-   "at": 71.22,
+   "at": 75.02,
    "label": "o Caixa fica desligado",
    "optional": true,
    "timeout": 4
@@ -661,17 +653,17 @@
   {
    "do": "mark",
    "name": "L8",
-   "at": 72.54
+   "at": 76.34
   },
   {
    "do": "mark",
    "name": "L9",
-   "at": 88.3
+   "at": 92.1
   },
   {
    "do": "mark",
    "name": "L10",
-   "at": 97.18
+   "at": 100.98
   },
   {
    "do": "click",
@@ -682,7 +674,7 @@
     "within": "[role=dialog]"
    },
    "note": "L10 Criar",
-   "at": 97.48,
+   "at": 101.28,
    "label": "Criar Usuário (rodapé da janela)"
   },
   {
@@ -708,7 +700,7 @@
    },
    "seconds": 0.15,
    "note": "L10 Juliana",
-   "at": 98.94,
+   "at": 102.74,
    "label": "Juliana entra na equipe",
    "optional": true,
    "timeout": 4
@@ -722,7 +714,7 @@
    },
    "seconds": 0.15,
    "note": "L10 equipe.",
-   "at": 100.16,
+   "at": 103.96,
    "label": "selo 3 / 3 usuários",
    "optional": true,
    "timeout": 4
@@ -735,7 +727,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 101.04
+   "at": 104.84
   }
  ]
 }
