@@ -788,6 +788,10 @@ def cap09():
     c.mark(5)
     c.click(SEL('#coleta-data'), at=c.L(5) - 0.2, label='Data preferida (campo)')
     c.type(SEL('#coleta-data'), '13112026', at=c.A(5, 'sexta', 0.3), label='Data preferida 13/11/2026', cps=40, noClick=True)
+    # o clique no meio do campo de data pode cair no segmento do ano e a digitação sai incompleta (dd/mm/2026): confere e ajusta pelo valor
+    c.ev("(()=>{const i=document.querySelector('#coleta-data');if(!i)return 'SEM CAMPO';if(i.value==='2026-11-13')return 'ok';"
+         "Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set.call(i,'2026-11-13');i.dispatchEvent(new Event('input',{bubbles:true}));"
+         "i.dispatchEvent(new Event('change',{bubbles:true}));return 'ajustado'})()", label='confere a data preferida (13/11/2026)')
     c.click(SEL('#coleta-janela'), label='abre Período')
     c.type(SEL('[role=listbox]'), 'T', label='Período: procura Tarde', cps=40, noClick=True)
     c.press('Enter', label='Período: Tarde')
@@ -1063,7 +1067,8 @@ def cap13():
     c.mark(3)
     c.cursor(NEUTRO, at=c.A(3, 'selo', 0.3), label='cursor em repouso (os selos)')
     c.mark(4)
-    c.click(SEL("main button[role=combobox]"), at=c.A(4, 'Trajeto', FC), label='Trajeto de uma coleta')
+    # o seletor aberto 5 s antes fechava com o refresh da tela (completo): abre 1,2 s antes da escolha
+    c.click(SEL("main button[role=combobox]"), at=c.A(4, 'sete', FC) - 1.2, label='Trajeto de uma coleta')
     c.click(OPT('Ordem #7 · a_caminho'), at=c.A(4, 'sete', FC), label='escolhe a ordem 7')
     c.hover(SEL('main .leaflet-container'), 2.5, label='o trajeto da ordem 7 no mapa')
     c.mark(5)
@@ -1162,19 +1167,19 @@ def cap16():
     c.click(BTN('Criar modelo', within=DLG), at=c.A(1, 'Criar', FC), label='Criar modelo')
     c.waitfor(gone=SEL(DLG), timeout=10)
     c.mark(2)
-    c.hover(SEL("main tbody tr button:visible >> nth=0"), 0.4, at=c.A(2, 'Gerenciar', FC + 1.0), label='menu da linha do modelo')   # menu por hover
+    c.hover(SEL("main tbody tr button:visible >> nth=0"), 0.4, at=c.A(2, 'Gerenciar', FC + 2.5), label='menu da linha do modelo')   # menu por hover
     c.click({'role': 'menuitem', 'name': 'Gerenciar perguntas'}, at=c.A(2, 'Gerenciar', FC), label='Gerenciar perguntas')
     c.click(BTN('Nova pergunta', within=DLG), at=c.A(2, 'Nova', FC), label='Nova pergunta')
     c.waitfor(text='Pergunta *', timeout=10)
     c.click(SEL(f"{DLG} textarea, {DLG} input[placeholder*='Pergunta'] >> nth=0"), label='Pergunta (campo)')
     c.type(SEL(f"{DLG} textarea, {DLG} input[placeholder*='Pergunta'] >> nth=0"), 'Local estava acessível para o veículo?', at=c.A(2, 'local', 0.1),
-           label='Pergunta: Local estava acessível para o veículo?', cps=40, noClick=True)
-    c.hover(TXTX('Tipo de resposta', within=DLG), 0.8, at=c.A(2, 'sim', FH), label='Tipo de resposta: Sim ou não')
-    c.hover(TXTX('Pergunta obrigatória', within=DLG), 0.8, at=c.A(2, 'obrigatória', FH), label='Pergunta obrigatória')
+           label='Pergunta: Local estava acessível para o veículo?', cps=75, noClick=True)
+    c.hover(TXTX('Tipo de resposta', within=DLG), 0.4, at=c.A(2, 'sim', FH), label='Tipo de resposta: Sim ou não')
+    c.hover(TXTX('Pergunta obrigatória', within=DLG), 0.4, at=c.A(2, 'obrigatória', FH), label='Pergunta obrigatória')
     c.click(BTN('Adicionar pergunta', within=DLG), label='Adicionar pergunta')
     c.waitfor(text='Local estava acessível para o veículo?', timeout=10)
     c.mark(3)
-    c.click(BTN('Nova pergunta', within=DLG), at=c.A(3, 'foto', FC + 1.0), label='Nova pergunta (para mostrar os tipos)')   # o tipo só aparece no formulário
+    c.click(BTN('Nova pergunta', within=DLG), at=c.A(3, 'foto', FC + 2.5), label='Nova pergunta (para mostrar os tipos)')   # o tipo só aparece no formulário
     c.waitfor(target=SEL('#pergunta-tipo'), timeout=10)
     c.click(SEL('#pergunta-tipo'), at=c.A(3, 'foto', FC), label='abre Tipo de resposta')
     c.hover(OPT('Foto'), 0.6, label='tipo Foto')
