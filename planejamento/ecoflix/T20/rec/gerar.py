@@ -632,7 +632,8 @@ def cap04():
     c.waitfor(target=SEL(FC), timeout=12)
     c.press('Escape', at=c.L(9) - 3.0, label='fecha o menu da linha (o mouse o abriu)')
     c.wait(0.8)
-    c.click(BTN_FICHA(COOP, 'Editar'), at=c.L(9) - 2.8, label='Editar')
+    # clique por eval: o menu da linha (hover) intercepta o ponteiro e o clique do robô esperava 60 s sem abrir o cadastro
+    c.ev(js_clicar(f"section[aria-label='Detalhes de {COOP}'] button", 'Editar'), at=c.L(9) - 2.8, label='Editar (clique por eval)')
     c.waitfor(text='Editar Fornecedor', timeout=12)
     c.click(TAB('Portal', within=DLG), at=c.L(9) - 1.6, label='aba Portal')
     c.waitfor(text='Pedir login no portal', timeout=10)

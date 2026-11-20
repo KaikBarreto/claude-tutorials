@@ -38,4 +38,18 @@ FAKE_PORT=54316 bash rec/run.sh down
   (cap20, L9). Avisos na tela só os pedidos pelo roteiro (cap12 "Nenhum caixa...", cap14 NCM), mais o cap15 (NCM inválido no meio da
   digitação: agora o NCM é colado de uma vez). O PDF do Comprovante (Notinha) não veio ("SEM JANELA": a aba abre depois da RPC; o
   `PDF_JS` agora espera até 20 s). O DANFE veio: `rec/t16/arquivos/cap20-danfe-1250.pdf` (o fictício do backend falso).
-- Lote 3 (`--junto`): rápido 15 e 20, completos 05 09 11 12 13 14 15 17 18 20 22 24 (o `prever.py` acusou ≥ 0,4 s). Resultado: (pendente)
+- Lote 3 (`--junto`): rápido 15 e 20 com 0 falho (cap15 sem aviso; os dois PDFs do cap20 em `rec/t16/arquivos/`: o Comprovante
+  (Notinha) real da 1250 e o DANFE fictício). Completos 05 09 11 12 13 14 15 17 18 20 22 24 (e 16 do lote 2): **0 passo falho em
+  todos**, conferências sem DIFERENTE. Atraso acima de ~1 s, com a voz ESTIMADA e a máquina dividida: cap11 4,2 s ("Soma das
+  parcelas", depois do calendário dos vencimentos), cap12 5,7 s (o caixa do Marcos, depois da troca de data), cap13 5,4 s (Incluir o
+  papelão, trecho acelerado), cap14 3,3 s (os itens), cap20 1,9 s (L9), caps 15, 17 e 18 ~1,6 s (a autorização chega na consulta de
+  status de 5 s), cap22 1,3 s, caps 05 e 24 1,2 s; 09 e 16 ~1,0 s.
+- Só no rápido: 00 01 02 03 04 06 07 08 10 19 21 23.
+
+## Falta
+- Voz de verdade: depois do ElevenLabs, `python3 -I rec/t16/gerar.py` e completos dos capítulos acima de 1 s (11, 12, 13, 14 primeiro).
+- Mundo base (pedido): `plugnotas-emit` falso atender `action: "preview_danfe_fiscal"` (a Pré-visualização do 1.60.21+ só tem a DANFE
+  real; proposta de fala em `propostas_fala.md`) e um DANFE realista no `plugnotas-download` (o de hoje é um PDF de 5 linhas, no
+  modelo de antes de 01/12). A IE da Fundição no mundo (6846208254) tem 10 dígitos e aparece no comprovante; SP usa 12.
+- Ilustrações: as 3 entradas `comprovante` estão com `"v3": "pendente"` (a cena é do coordenador).
+- Instância 54316 derrubada no fim de 20/11.
