@@ -1,6 +1,6 @@
 {
  "name": "t15-cap06",
- "title": "T15 · Cap. 6 · Lendo o DRE (narração ESTIMADA 70,9 s; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T15 · Cap. 6 · Lendo o DRE (narração ESTIMADA 87,4 s; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t15-cap06",
  "pace": 0.5,
  "cps": 40,
@@ -204,9 +204,60 @@
    "at": 55.72
   },
   {
+   "do": "click",
+   "target": {
+    "text": "Energia elétrica",
+    "exact": true,
+    "within": "main",
+    "nth": 0
+   },
+   "at": 56.32,
+   "label": "abre a Energia elétrica (centros de custo)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Pátio",
+    "exact": true,
+    "within": "main",
+    "nth": 0
+   },
+   "seconds": 1.2,
+   "at": 59.39,
+   "label": "linhas dos centros de custo (ZOOM)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 67.92
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[aria-label^=\"Recolher\"][aria-label*=\"Despesas Operacionais\"]"
+   },
+   "at": 70.77,
+   "label": "Recolher a faixa 06"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[aria-label^=\"Expandir\"][aria-label*=\"Despesas Operacionais\"]"
+   },
+   "at": 71.51,
+   "label": "Expandir a faixa 06"
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 72.21
+  },
+  {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.getClientRects().length&&(e=>e.children.length===0?e.textContent.trim():[...e.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent).join('').trim())(e)===\"= Resultado do Per\\u00edodo\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-420);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 55.72,
+   "at": 72.21,
    "label": "desce até o resultado"
   },
   {
@@ -218,7 +269,7 @@
     "nth": -1
    },
    "seconds": 1.2,
-   "at": 58.45,
+   "at": 74.95,
    "label": "08 = Resultado do Período R$ 6.500,00 (ZOOM)",
    "optional": true,
    "timeout": 4
@@ -230,8 +281,8 @@
   },
   {
    "do": "mark",
-   "name": "L8",
-   "at": 62.37
+   "name": "L10",
+   "at": 78.86
   },
   {
    "do": "hover",
@@ -242,7 +293,7 @@
     "nth": 0
    },
    "seconds": 0.8,
-   "at": 68.62,
+   "at": 85.11,
    "label": "a tabela",
    "optional": true,
    "timeout": 4
@@ -255,7 +306,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 70.93
+   "at": 87.42
   }
  ]
 }

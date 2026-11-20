@@ -1,6 +1,6 @@
 {
  "name": "t15-cap01",
- "title": "T15 · Cap. 1 · O plano de contas (narração ESTIMADA 165,2 s; marcas L1..L13 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T15 · Cap. 1 · O plano de contas (narração ESTIMADA 199,3 s; marcas L1..L16 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t15-cap01",
  "pace": 0.5,
  "cps": 40,
@@ -381,9 +381,136 @@
    "at": 96.02
   },
   {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ações de Frete de entrega",
+    "exact": true
+   },
+   "at": 96.7,
+   "label": "Ações de Frete de entrega"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Editar"
+   },
+   "seconds": 0.3,
+   "at": 99.33,
+   "label": "menu: Editar",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Tornar principal"
+   },
+   "seconds": 0.8,
+   "at": 102.22,
+   "label": "menu: Tornar principal",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 108.41,
+   "label": "fecha o menu sem escolher"
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 108.6
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.getClientRects().length&&(e=>e.children.length===0?e.textContent.trim():[...e.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent).join('').trim())(e)===\"Telefone e internet\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-330);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 108.6,
+   "label": "desce até Telefone e internet"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ações de Telefone e internet",
+    "exact": true
+   },
+   "at": 109.3,
+   "label": "Ações de Telefone e internet"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Excluir"
+   },
+   "at": 108.8,
+   "label": "Excluir"
+  },
+  {
+   "do": "waitFor",
+   "text": "Excluir categoria?",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Os lançamentos não serão apagados",
+    "within": "[role=alertdialog]"
+   },
+   "seconds": 1.5,
+   "at": 110.57,
+   "label": "texto do Excluir categoria? (ZOOM)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true,
+    "within": "[role=alertdialog]"
+   },
+   "at": 123.22,
+   "label": "Cancelar"
+  },
+  {
+   "do": "mark",
+   "name": "L10",
+   "at": 124.05
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.getClientRects().length&&(e=>e.children.length===0?e.textContent.trim():[...e.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent).join('').trim())(e)===\"Categorias de despesa\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-170);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 124.05,
+   "label": "sobe até Categorias de despesa"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "arraste para reordenar",
+    "within": "main",
+    "nth": -1
+   },
+   "seconds": 1.0,
+   "at": 124.46,
+   "label": "arraste para reordenar",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L11",
+   "at": 130.1
+  },
+  {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.getClientRects().length&&(e=>e.children.length===0?e.textContent.trim():[...e.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent).join('').trim())(e)===\"Categorias de despesa\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-170);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 96.02,
+   "at": 130.1,
    "label": "sobe até Categorias de despesa"
   },
   {
@@ -394,7 +521,7 @@
     "exact": true,
     "nth": 1
    },
-   "at": 97.11,
+   "at": 131.19,
    "label": "Nova (despesa)"
   },
   {
@@ -408,36 +535,36 @@
     "selector": "#financial-category-name"
    },
    "text": "Máquinas e veículos",
-   "at": 99.35,
+   "at": 133.43,
    "label": "Nome: Máquinas e veículos",
    "noClick": true
   },
   {
    "do": "mark",
-   "name": "L9",
-   "at": 102.37
-  },
-  {
-   "do": "mark",
-   "name": "L10",
-   "at": 110.54
-  },
-  {
-   "do": "mark",
-   "name": "L11",
-   "at": 124.86
-  },
-  {
-   "do": "mark",
    "name": "L12",
-   "at": 130.3
+   "at": 136.45
+  },
+  {
+   "do": "mark",
+   "name": "L13",
+   "at": 144.62
+  },
+  {
+   "do": "mark",
+   "name": "L14",
+   "at": 158.94
+  },
+  {
+   "do": "mark",
+   "name": "L15",
+   "at": 164.38
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] button[role=combobox]:has-text(\"Despesas operacionais\")"
    },
-   "at": 132.65,
+   "at": 166.72,
    "label": "abre Onde aparece no DRE"
   },
   {
@@ -446,7 +573,7 @@
     "role": "option",
     "name": "Não compõe o DRE"
    },
-   "at": 133.08,
+   "at": 167.16,
    "label": "Não compõe o DRE"
   },
   {
@@ -457,7 +584,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.8,
-   "at": 137.66,
+   "at": 171.73,
    "label": "prévia: informativo, não altera o resultado (ZOOM)",
    "optional": true,
    "timeout": 4
@@ -465,7 +592,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('[role=dialog] *')].find(e=>e.getClientRects().length&&(e=>e.children.length===0?e.textContent.trim():[...e.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent).join('').trim())(e)===\"Grupo no Fluxo de Caixa (DFC)\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-330);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 139.15,
+   "at": 173.23,
    "label": "desce a janela até o DFC"
   },
   {
@@ -473,7 +600,7 @@
    "target": {
     "selector": "[role=dialog] button[role=combobox]:has-text(\"Atividades operacionais\")"
    },
-   "at": 140.72,
+   "at": 174.8,
    "label": "abre Grupo no Fluxo de Caixa (DFC)"
   },
   {
@@ -482,13 +609,13 @@
     "role": "option",
     "name": "Atividades de investimento"
    },
-   "at": 144.74,
+   "at": 178.82,
    "label": "Atividades de investimento"
   },
   {
    "do": "mark",
-   "name": "L13",
-   "at": 146.97
+   "name": "L16",
+   "at": 181.05
   },
   {
    "do": "click",
@@ -497,7 +624,7 @@
     "name": "Criar categoria",
     "exact": true
    },
-   "at": 146.97,
+   "at": 181.05,
    "label": "Criar categoria"
   },
   {
@@ -518,7 +645,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.getClientRects().length&&(e=>e.children.length===0?e.textContent.trim():[...e.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent).join('').trim())(e)===\"M\\u00e1quinas e ve\\u00edculos\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-420);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 149.54,
+   "at": 183.62,
    "label": "desce até Não compõe o DRE"
   },
   {
@@ -530,7 +657,7 @@
     "within": "main"
    },
    "seconds": 0.8,
-   "at": 150.37,
+   "at": 184.45,
    "label": "Máquinas e veículos em Não compõe o DRE",
    "optional": true,
    "timeout": 4
@@ -548,7 +675,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 165.25
+   "at": 199.32
   }
  ]
 }

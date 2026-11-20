@@ -174,3 +174,12 @@ período" (`:330-344`).
 | Centros de Custo (aba) | `cost_centers` | `get_financial_dre_summary` do período anterior (`FinancialReport.tsx:213-238`) |
 | Histórico | `purchases`, `sales` (status `completed`, por `transaction_date`) | `get_dre_expense_lines`, `get_dre_revenue_lines`; excluir: leituras de `bank_transactions`, `bill_payments`, `bill_payment_groups`, `cash_transactions`, `balance_movements` do grupo + `delete_bank_transaction_atomic` |
 | Fechamento completo (não clicado) | — | `get_financial_accounting_report`, `get_accounting_closing_open_bills`, `get_stock_balance_at_date` |
+
+## 5. Acréscimos do 1.60.18 (ver `cobertura_160.md` para o código e as linhas)
+- **Relatório com cinco abas**: Dashboard, Centros de Custo, DRE, DFC, Histórico. A DFC tem visão prevista (contas a pagar e a
+  receber por data) e realizada (por atividade); RPCs `get_accounting_closing_open_bills` e `get_financial_accounting_report`.
+- **DRE**: botão "Organizar categorias" (troca de grupo; RPC `get_company_dre_configuration`); no Histórico, troca de categoria
+  de um lançamento e em lote (`update_financial_transaction_category`, `update_financial_transaction_categories_batch`).
+- **Histórico**: seta "Ver detalhes" por linha (substitui o clipe), busca por valor, filtro "Conta bancária"; "Ver todos" nos tops
+  do Dashboard; comparação com ano passado/outro período e "Remover comparações" na Evolução.
+- **Tela 1600×900**: sem mudança de lugar dos menus relevantes; conferir nas folhas de contato do ensaio.

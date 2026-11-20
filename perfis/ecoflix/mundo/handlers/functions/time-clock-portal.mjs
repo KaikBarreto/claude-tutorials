@@ -32,8 +32,45 @@ export default (body, ctx) => {
   const { store, db, FunctionError } = ctx;
   const acao = body?.action;
   const slug = typeof body?.slug === 'string' ? body.slug : null;
-  if (!slug) throw new FunctionError('link inválido ou desativado', 404);
-  const emp = store.rows('employees').find((e) => e.ponto_slug === slug && e.ponto_enabled === true);
+  const kioskSlug = typeof body?.kiosk_slug === 'string' ? body.kiosk_slug.trim() : null;
+  // 1.60.18: a hora do ponto pode andar (o robô do celular manda `__avanco_min`; só o falso lê): almoço às 11:00, saída às 16:00
+  const avanco = (Number(body?.__avanco_min) || 0) * 60000;
+
+  // ---- tablet da empresa: a lista da equipe (get_kiosk), como supabase/functions/time-clock-portal/index.ts
+  if (acao === 'get_kiosk') {
+    const empresa = store.rows('companies').find((c) => c.ponto_kiosk_slug === kioskSlug);
+    if (!empresa) throw new FunctionError('link inválido ou desativado', 404);
+    const ativo = store.rows('company_modules').some((m) => m.company_id === empresa.id && m.module_code === 'funcionarios' && !m.removed_at);
+    if (!ativo) throw new FunctionError('module_inactive', 403);
+    const tz = empresa.timezone || TZ;
+    const cfg = store.rows('time_settings').find((t) => t.company_id === empresa.id) || null;
+    const dia = dataTz(agoraMs() + avanco, tz);
+    const pinados = new Set(store.rows('employee_ponto_pins').map((p) => p.employee_id));
+    const lista = store.rows('employees').filter((e) => e.company_id === empresa.id && e.ponto_enabled === true && e.is_active !== false)
+      .sort((a, b) => String(a.name).localeCompare(String(b.name), 'pt-BR'));
+    return {
+      company: { name: empresa.name ?? 'Empresa', logo_url: empresa.logo_url ?? null, timezone: tz },
+      settings: { kiosk_require_face: cfg?.kiosk_require_face === true },
+      employees: lista.map((e) => {
+        const tipos = store.rows('time_records').filter((r) => r.employee_id === e.id && r.date === dia && r.is_valid !== false)
+          .sort((x, y) => String(x.recorded_at).localeCompare(String(y.recorded_at))).map((r) => r.type);
+        const u = ultimo(tipos);
+        const status = u === 'clock_in' || u === 'break_end' ? 'working' : u === 'break_start' ? 'on_break' : u === 'clock_out' ? 'finished' : 'not_started';
+        return { id: e.id, name: e.name, position: e.position ?? null, photo_url: e.photo_url ?? null, status, has_pin: pinados.has(e.id), absence_label: null };
+      }),
+    };
+  }
+
+  // ---- identidade: link pessoal (slug) ou tablet (kiosk_slug + employee_id)
+  let emp = null;
+  if (slug) {
+    emp = store.rows('employees').find((e) => e.ponto_slug === slug && e.ponto_enabled === true) || null;
+    // 1.60.18 (3aa83d88c): funcionário arquivado não bate mais ponto pelo link pessoal
+    if (emp && emp.is_active === false) throw new FunctionError('employee_inactive', 404);
+  } else if (kioskSlug && body?.employee_id) {
+    const empresaK = store.rows('companies').find((c) => c.ponto_kiosk_slug === kioskSlug);
+    emp = empresaK ? store.rows('employees').find((e) => e.id === body.employee_id && e.company_id === empresaK.id && e.ponto_enabled === true && e.is_active !== false) || null : null;
+  }
   if (!emp) throw new FunctionError('link inválido ou desativado', 404);
   const cid = emp.company_id;
   const ativo = store.rows('company_modules').some((m) => m.company_id === cid && m.module_code === 'funcionarios' && !m.removed_at);
@@ -41,7 +78,7 @@ export default (body, ctx) => {
   const empresa = store.rows('companies').find((c) => c.id === cid) || {};
   const tz = empresa.timezone || TZ;
   const cfg = store.rows('time_settings').find((t) => t.company_id === cid) || null;
-  const agora = agoraMs();
+  const agora = agoraMs() + avanco;
   let dia = dataTz(agora, tz);
   const madrugada = String(cfg?.overnight_until || '05:00').slice(0, 5);
   if (horaTz(agora, tz) < madrugada) {
@@ -59,10 +96,21 @@ export default (body, ctx) => {
   const tipos = registros.map((r) => r.type);
   const acoes = permitidas(tipos, intervalo);
   const pessoa = { id: emp.id, name: emp.name, position: emp.position ?? null, photo_url: emp.photo_url ?? null };
+  // gate de PIN (verify_ponto_pin): quem tem PIN só entra com ele; sem o PIN a tela recebe só o cartão
+  const pinRow = store.rows('employee_ponto_pins').find((p) => p.employee_id === emp.id && p.pin_hash) || null;
+  const temPin = !!pinRow;
+  if (temPin) {
+    const dado = typeof body?.pin === 'string' ? body.pin : null;
+    if (dado !== String(pinRow.pin_hash).replace(/^falso:/, '')) {
+      if (dado) throw new FunctionError('pin_invalid', 401);
+      return { pin_required: true, employee: pessoa, company: { name: empresa.name ?? 'Empresa', logo_url: empresa.logo_url ?? null, timezone: tz },
+        settings: null, today: [], allowed_actions: [], next_action: null };
+    }
+  }
 
   if (acao === 'get_state') {
     return {
-      absence_label: null, pin_required: false, has_pin: false, employee: pessoa,
+      absence_label: null, pin_required: false, has_pin: temPin, employee: pessoa,
       company: { name: empresa.name ?? 'Empresa', logo_url: empresa.logo_url ?? null, timezone: tz },
       settings, date: dia, today: registros.map((r) => ({ type: r.type, recorded_at: r.recorded_at, address: r.address ?? null })),
       allowed_actions: acoes, next_action: acoes[0] ?? null,
@@ -86,7 +134,7 @@ export default (body, ctx) => {
     }
     const quando = new Date(agora).toISOString();
     db.insert('time_records', {
-      company_id: cid, employee_id: emp.id, date: dia, type: tipo, recorded_at: quando, source: 'link_publico', created_by: null,
+      company_id: cid, employee_id: emp.id, date: dia, type: tipo, recorded_at: quando, source: slug ? 'link_publico' : 'quiosque', created_by: null,
       latitude: body?.latitude ?? null, longitude: body?.longitude ?? null, address: typeof body?.address === 'string' ? body.address : null,
       photo_path: caminho, device_info: body?.device_info ?? null, is_valid: true, face_match: false, created_at: quando,
     }, { companyId: cid });

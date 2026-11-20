@@ -2,7 +2,7 @@
 # T15: ensaio de UM capítulo pela fila justa da trava pesada (rec/fila.sh --prio 15; uma tarefa por vez na fila). Uso:
 #   bash rec/t15/t15_ens.sh NN            ensaio rápido (sem `at`, sem MP4) -> rec/t15/_ens/  (+ resumo --ens)
 #   bash rec/t15/t15_ens.sh NN completo   gravação com os tempos estimados -> rec/t15/       (+ resumo)
-# Os capítulos 01, 02 e 10 regravam a semente apos-capNN a partir do que o app gravou (dentro da mesma trava).
+# Os capítulos 01, 02 e 13 regravam (apos-cap01, apos-cap02 e apos-cap10) a semente apos-capNN a partir do que o app gravou (dentro da mesma trava).
 # A senha vem do ambiente (TUT_SENHA); se faltar, usa uma aleatória (o Supabase falso aceita qualquer uma) e nunca a grava.
 set -u
 cd "$(dirname "$0")/../.."
@@ -18,7 +18,7 @@ else
   python3 -I rec/t15/ensaio.py "$NN" >/dev/null; ROT=rec/t15/_ens/cap$NN.json; OUT=rec/t15/_ens/.cap$NN.out; EXTRA="--rapido --preset ultrafast --crf 30"; RES="--ens"
 fi
 SEM=""
-case "$NN" in 01|02|10) SEM="python3 -I rec/t15/t15_sementes.py $NN";; esac
+case "$NN" in 01|02) SEM="python3 -I rec/t15/t15_sementes.py $NN";; 13) SEM="python3 -I rec/t15/t15_sementes.py 10";; esac   # o Histórico era o cap 10: a semente se chama apos-cap10
 bash /home/claude/ecoflix/rec/fila.sh --prio 15 -- bash -c "timeout 900 node rec/record.mjs $ROT $EXTRA > $OUT 2>&1; echo saida=\$? >> $OUT; if ! grep -q 'FALHOU no passo' $OUT; then $SEM >> $OUT 2>&1; fi"
 echo "== cap$NN $MODO: $(grep -c 'SEM ALVO' $OUT) SEM ALVO; $(tail -1 $OUT)"
 python3 -I rec/t15/resumo.py "$NN" $RES 2>&1 | head -60

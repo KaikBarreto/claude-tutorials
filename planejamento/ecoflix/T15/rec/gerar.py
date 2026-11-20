@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""T15 · Relatório Financeiro e DRE (EcoFlix, EcoSistema 1.59.154): gera rec/t15/cap00..cap11.json (roteiros do robô) a partir da fala
-($TUT_HOME/t15/narracao/capNN.json: o estimado até a voz chegar; com a voz, o da voz, sem mudar nada aqui). O cap12 (Recapitulando) é
+"""T15 · Relatório Financeiro e DRE (EcoFlix, EcoSistema 1.60.18): gera rec/t15/cap00..cap15.json (roteiros do robô) a partir da fala
+($TUT_HOME/t15/narracao/capNN.json: o estimado até a voz chegar; com a voz, o da voz, sem mudar nada aqui). O cap16 (Recapitulando) é
 montagem das gravações dos outros capítulos: não tem robô.
 
 Computador 1280x800, Rafael Nogueira (MASTER) na Recicla Vale Metais; FAKE_NOW 2026-11-10T08:30:00-03:00 em todos os capítulos (o mesmo
@@ -17,8 +17,8 @@ marca a puxa para o início dele.
 
 Estado de partida (rec/mundo/seeds-extra/t15/): o fim do T14 (`t14/inicio` + os `apos-capNN` do T14, na ordem) → `t15/inicio` (a cópia
 da "Conta de energia" das 16:40 de 13/10, só no estado do T15) → `apos-cap01` (Frete de entrega e Máquinas e veículos, como o app grava)
-→ `apos-cap02` (o centro de custo Produção) → `apos-cap10` (a cópia excluída: estado final, de onde o T21 parte).
-Capítulos 4 a 11: o setup abre o relatório (aba de partida pelo localStorage "financial-report-tab") e escolhe "Mês passado" fora do vídeo.
+→ `apos-cap02` (o centro de custo Produção) → `apos-cap10` (a cópia excluída: estado final, de onde o T21 parte) → `lote-categoria` (só o cap14: três diesel em Outras Despesas).
+Capítulos 4 a 15: o setup abre o relatório (aba de partida pelo localStorage "financial-report-tab") e escolhe "Mês passado" fora do vídeo.
 """
 import json
 import os
@@ -34,12 +34,15 @@ FAKE_NOW = '2026-11-10T08:30:00-03:00'
 VERSAO = '1.60.18'
 HOJE = FAKE_NOW[:10]
 NOMES = ['Abertura', 'O plano de contas', 'Centros de custo', 'O Relatório Financeiro', 'O Dashboard do mês', 'Fornecedores, clientes e ticket médio',
-         'Lendo o DRE', 'Caixa ou competência', 'O patrimônio de hoje', 'Mês a mês', 'O Histórico', 'Exportar em Excel e PDF']
+         'Lendo o DRE', 'Organizando o DRE', 'Caixa ou competência', 'O patrimônio de hoje', 'Mês a mês', 'Vai ter dinheiro? A DFC prevista',
+         'Por onde o dinheiro passou: a DFC realizada', 'O Histórico', 'Vários lançamentos de uma vez', 'Exportar em Excel e PDF']
 T14 = ['t14/inicio'] + [f't14/apos-cap{n:02d}' for n in (2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 14)]
 _E = T14 + [f'{AULA}/inicio', f'{AULA}/apos-cap01', f'{AULA}/apos-cap02', f'{AULA}/apos-cap10']
+# o nome apos-capNN é o do capítulo de ORIGEM (Histórico era o cap 10) e não muda: a T21 e a T25 leem `t15/apos-cap10`
 _N = len(T14)
-SEMENTE = {0: _E[:_N + 1], 1: _E[:_N + 1], 2: _E[:_N + 2], 11: _E[:_N + 4], **{n: _E[:_N + 3] for n in range(3, 11)}}
-ABA = {4: 'dashboard', 5: 'dashboard', 6: 'dashboard', 7: 'dre', 8: 'dre', 9: 'dre', 10: 'dre', 11: 'historico'}
+SEMENTE = {0: _E[:_N + 1], 1: _E[:_N + 1], 2: _E[:_N + 2], 14: _E[:_N + 4] + [f'{AULA}/lote-categoria'], 15: _E[:_N + 4],
+            **{n: _E[:_N + 3] for n in range(3, 14)}}
+ABA = {4: 'dashboard', 5: 'dashboard', 6: 'dashboard', 7: 'dre', 8: 'dre', 9: 'dre', 10: 'dre', 11: 'dashboard', 12: 'dfc', 13: 'dre', 14: 'historico', 15: 'historico'}
 
 sys.path.insert(0, NARR)
 try:
@@ -318,6 +321,15 @@ def js_rola_dlg(texto, y=300, dur_ms=600):
             + "return Math.round(el.getBoundingClientRect().top)})()")
 
 
+BUSCA = SEL('input[placeholder^="Buscar por descrição"]')
+CHECK = lambda n: SEL(f'main [role=checkbox][aria-label^="Selecionar lançamento "] >> nth={n}')   # linhas marcáveis do Histórico (ordem da lista)
+# o app abre PDF em aba nova e a gravação filma uma aba só: POPS guarda cada window.open e PDF_JS devolve o PDF em base64 (padrão do t08/gerar.py)
+POPS = "(()=>{const o=window.open;window.__pops=[];window.open=function(...a){const w=o.apply(this,a);window.__pops.push(w);return w};return 'ok'})()"
+PDF_JS = ("(async()=>{const w=(window.__pops||[]).slice(-1)[0];if(!w)return 'SEM JANELA';for(let i=0;i<40;i++){let f=null;"
+          "try{f=w.document&&w.document.querySelector('#pdf-frame')}catch(e){return 'ERRO '+e}"
+          "if(f&&f.src){const b=await (await fetch(f.src.split('#')[0])).blob();const u=new Uint8Array(await b.arrayBuffer());let s='';"
+          "for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'PDF:'+btoa(s)}"
+          "await new Promise(r=>setTimeout(r,250))}return 'SEM PDF'})()")
 COMBO_DLG = lambda t: SEL(f'[role=dialog] button[role=combobox]:has-text("{t}")')
 PERIODO = lambda t: SEL(f'main button[role=combobox]:has-text("{t}")')
 LINK = lambda n: {'role': 'link', 'name': n}
@@ -379,26 +391,41 @@ def cap01():
     c.confere('main', ['Frete de entrega', 'Subcategorias podem pertencer a outro grupo DRE'], 'subcategoria com o selo')
     c.hover(TXTP('Subcategorias podem pertencer a outro grupo DRE', within=MAIN), seconds=0.6, at=c.A(7, 'selo', 1.0), label='a nota do selo')
     c.mark(8)
-    c.ev(js_rola_texto('Categorias de despesa', 170, 500), at=c.L(8) - 0.9, label='sobe até Categorias de despesa')
-    c.click(BTN('Nova', nth=1), at=c.A(8, 'categoria', 0.8), label='Nova (despesa)')
-    c.waitfor(text='Nova categoria', timeout=8)
-    c.type(SEL('#financial-category-name'), 'Máquinas e veículos', at=c.A(8, 'cuidado', 0.0), label='Nome: Máquinas e veículos', noClick=True)
+    c.click(PONTOS('Frete de entrega'), at=c.A(8, 'pontos', 0.9), label='Ações de Frete de entrega')
+    c.hover(ITEM('Editar'), seconds=0.3, at=c.A(8, 'editar', 0.7), label='menu: Editar')
+    c.hover(ITEM('Tornar principal'), seconds=0.8, at=c.A(8, 'Tornar', 0.7), label='menu: Tornar principal')
+    c.press('Escape', at=c.A(8, 'lista', 0.2), label='fecha o menu sem escolher')
     c.mark(9)
+    c.ev(js_rola_texto('Telefone e internet', 330, 700), at=c.L(9) - 0.9, label='desce até Telefone e internet')
+    c.click(PONTOS('Telefone e internet'), at=c.L(9) - 0.2, label='Ações de Telefone e internet')
+    c.click(ITEM('Excluir'), at=c.A(9, 'Excluir', 0.7), label='Excluir')
+    c.waitfor(text='Excluir categoria?', timeout=8)
+    c.hover(TXTP('Os lançamentos não serão apagados', within=ALERTA), seconds=1.5, at=c.A(9, 'apaga', 0.9), label='texto do Excluir categoria? (ZOOM)')
+    c.click(BTN('Cancelar', within=ALERTA), at=c.A(9, 'Excluir', 0.7, nth=1), label='Cancelar')
     c.mark(10)
+    c.ev(js_rola_texto('Categorias de despesa', 170, 600), at=c.L(10) - 0.9, label='sobe até Categorias de despesa')
+    c.hover(TXTP('arraste para reordenar', within=MAIN, nth=-1), seconds=1.0, at=c.A(10, 'ordem', 0.8), label='arraste para reordenar')
     c.mark(11)
+    c.ev(js_rola_texto('Categorias de despesa', 170, 500), at=c.L(11) - 0.9, label='sobe até Categorias de despesa')
+    c.click(BTN('Nova', nth=1), at=c.A(11, 'categoria', 0.8), label='Nova (despesa)')
+    c.waitfor(text='Nova categoria', timeout=8)
+    c.type(SEL('#financial-category-name'), 'Máquinas e veículos', at=c.A(11, 'cuidado', 0.0), label='Nome: Máquinas e veículos', noClick=True)
     c.mark(12)
-    c.click(COMBO_DLG('Despesas operacionais'), at=c.A(12, 'vai', 0.6), label='abre Onde aparece no DRE')
-    c.click(OPT('Não compõe o DRE'), at=c.A(12, 'Não', 0.7), label='Não compõe o DRE')
-    c.hover(TXT('Prévia no DRE padrão', within=DLG), seconds=0.8, at=c.A(12, 'resultado', 0.6), label='prévia: informativo, não altera o resultado (ZOOM)')
-    c.ev(js_rola_dlg('Grupo no Fluxo de Caixa (DFC)', 330, 500), at=c.A(12, 'fluxo', 1.0), label='desce a janela até o DFC')
-    c.click(COMBO_DLG('Atividades operacionais'), at=c.A(12, 'acompanha', 1.1), label='abre Grupo no Fluxo de Caixa (DFC)')
-    c.click(OPT('Atividades de investimento'), at=c.A(12, 'Atividades', 0.65), label='Atividades de investimento')
     c.mark(13)
-    c.click(BTN('Criar categoria'), at=c.L(13) - 1.1, label='Criar categoria')
+    c.mark(14)
+    c.mark(15)
+    c.click(COMBO_DLG('Despesas operacionais'), at=c.A(15, 'vai', 0.6), label='abre Onde aparece no DRE')
+    c.click(OPT('Não compõe o DRE'), at=c.A(15, 'Não', 0.7), label='Não compõe o DRE')
+    c.hover(TXT('Prévia no DRE padrão', within=DLG), seconds=0.8, at=c.A(15, 'resultado', 0.6), label='prévia: informativo, não altera o resultado (ZOOM)')
+    c.ev(js_rola_dlg('Grupo no Fluxo de Caixa (DFC)', 330, 500), at=c.A(15, 'fluxo', 1.0), label='desce a janela até o DFC')
+    c.click(COMBO_DLG('Atividades operacionais'), at=c.A(15, 'acompanha', 1.1), label='abre Grupo no Fluxo de Caixa (DFC)')
+    c.click(OPT('Atividades de investimento'), at=c.A(15, 'Atividades', 0.65), label='Atividades de investimento')
+    c.mark(16)
+    c.click(BTN('Criar categoria'), at=c.L(16) - 1.1, label='Criar categoria')
     c.waitfor(text='Categoria criada', timeout=8)
     c.waitfor(target=CARD('Máquinas e veículos'), timeout=6)
-    c.ev(js_rola_texto('Máquinas e veículos', 420, 700), at=c.A(13, 'registra', 0.0), label='desce até Não compõe o DRE')
-    c.hover(CARD('Máquinas e veículos'), seconds=0.8, at=c.A(13, 'compra', 0.0), label='Máquinas e veículos em Não compõe o DRE')
+    c.ev(js_rola_texto('Máquinas e veículos', 420, 700), at=c.A(16, 'registra', 0.0), label='desce até Não compõe o DRE')
+    c.hover(CARD('Máquinas e veículos'), seconds=0.8, at=c.A(16, 'compra', 0.0), label='Máquinas e veículos em Não compõe o DRE')
     c.confere('main', ['Não compõe o DRE', 'Máquinas e veículos'], 'Máquinas e veículos na divisória Não compõe o DRE')
     c.fim()
     return c
@@ -423,6 +450,8 @@ def cap02():
     c.click(BTN('Salvar'), at=c.A(5, 'Salvei', 0.7), label='Salvar')
     c.waitfor(text='Centro de custo criado', timeout=8)
     c.hover(TXT('Produção', within=MAIN), seconds=0.8, at=c.A(5, 'Centro', 0.5), label='Produção na lista')
+    c.hover(BTN('Editar centro de custo', nth=-1), seconds=0.5, at=c.A(5, 'lápis', 0.8), label='lápis Editar centro de custo')
+    c.hover(BTN('Excluir centro de custo', nth=-1), seconds=0.5, at=c.A(5, 'lixeira', 0.8), label='lixeira Excluir centro de custo')
     c.confere('main', ['Produção', 'Prensa de latinha e papelão'], 'Produção criado')
     c.fim()
     return c
@@ -438,26 +467,41 @@ def cap03():
     c.waitfor(text='Visão completa das finanças do seu negócio', timeout=15)
     c.hover(PERIODO('Este mês'), seconds=0.5, at=c.A(2, 'período', 0.5), label='filtro de período: Este mês')
     c.click(PERIODO('Este mês'), at=c.A(2, 'novembro', 0.0), label='abre o filtro de período')
+    c.hover(OPT('Personalizado'), seconds=0.5, at=c.A(2, 'Personalizado', 0.7), label='Personalizado')
+    c.hover(OPT('Todos os tempos'), seconds=0.5, at=c.A(2, 'Todos', 0.7), label='Todos os tempos')
     c.click(OPT('Mês passado'), at=c.A(2, 'Mês', 1.0, nth=1), label='Mês passado')
     c.mark(3)
     c.hover(PERIODO('Mês passado'), seconds=0.5, at=c.A(3, 'período', 1.0), label='filtro em Mês passado')
     c.mark(4)
     c.hover(ABA_R('dashboard'), seconds=0.3, at=c.A(4, 'Dashboard', 0.5), label='aba Dashboard')
     c.hover(ABA_R('dre'), seconds=0.3, at=c.A(4, 'DRE', 0.5), label='aba DRE')
+    c.hover(ABA_R('dfc'), seconds=0.3, at=c.A(4, 'DFC', 0.5), label='aba DFC')
     c.hover(ABA_R('centros-custo'), seconds=0.3, at=c.A(4, 'Centros', 0.5), label='aba Centros de Custo')
     c.hover(ABA_R('historico'), seconds=0.4, at=c.A(4, 'Histórico', 0.5), label='aba Histórico')
     c.mark(5)
     c.click(ABA_R('centros-custo'), at=c.A(5, 'Centros', 0.6), label='Centros de Custo')
     c.waitfor(text='Ranking dos centros de custo', timeout=10)
-    c.ev(js_rola_texto('Ranking dos centros de custo', 170, 900), at=c.A(5, 'outubro', 0.3), label='desce até o Ranking dos centros de custo')
-    c.hover(TXT('Pátio', within=MAIN, nth=-1), seconds=0.5, at=c.A(5, 'pátio', 0.5), label='Pátio no ranking')
-    c.hover(TXT('Coleta', within=MAIN, nth=-1), seconds=0.5, at=c.A(5, 'coleta', 0.5), label='Coleta no ranking')
     c.mark(6)
-    c.ev(js_rola_contem('Esta visão considera receitas', 420, 700), at=c.L(6) - 0.9, label='desce até o aviso azul')
-    c.hover(TXTP('Esta visão considera receitas', within=MAIN), seconds=1.0, at=c.A(6, 'aviso', 0.5), label='aviso azul dos centros de custo (ZOOM)')
+    c.hover(TXTP('vs. período anterior', within=MAIN, nth=0), seconds=1.0, at=c.A(6, 'cartão', 0.8), label='vs. período anterior nos cartões')
     c.mark(7)
-    c.ev(js_topo(800), at=c.A(7, 'dica', 0.4), label='sobe ao cabeçalho')
-    c.hover(SEL('main h1'), seconds=0.8, at=c.A(7, 'permissão', 0.5), label='cabeçalho do Relatório Financeiro')
+    c.ev(js_rola_texto('Receitas x despesas por centro', 120, 700), at=c.L(7) - 0.9, label='desce até o gráfico por centro')
+    c.click(SEL('main .recharts-bar-rectangle >> nth=0'), at=c.A(7, 'numa', 0.7), label='coluna do Pátio do gráfico', timeout=6)
+    c.mark(8)
+    c.ev(js_rola_texto('Ranking dos centros de custo', 170, 900), at=c.L(8) - 0.9, label='desce até o Ranking dos centros de custo')
+    c.hover(TXT('Pátio', within=MAIN, nth=-1), seconds=0.5, at=c.A(8, 'pátio', 0.5), label='Pátio no ranking')
+    c.hover(TXT('Coleta', within=MAIN, nth=-1), seconds=0.5, at=c.A(8, 'coleta', 0.5), label='Coleta no ranking')
+    c.mark(9)
+    c.click(BTN('Movimentações', within=MAIN, nth=0), at=c.A(9, 'Movimentações', 0.7), label='Movimentações (histórico do centro)')
+    c.waitfor(text='Buscar por descrição, categoria ou valor', timeout=10)
+    c.hover(TXTP('lançamentos', within=MAIN), seconds=0.6, at=c.A(9, 'filtrado', 0.8), label='o Histórico já filtrado')
+    c.click(ABA_R('centros-custo'), at=c.L(10) - 1.4, label='volta para Centros de Custo')
+    c.waitfor(text='Ranking dos centros de custo', timeout=10)
+    c.mark(10)
+    c.ev(js_rola_contem('Esta visão considera receitas', 420, 700), at=c.L(10) - 0.9, label='desce até o aviso azul')
+    c.hover(TXTP('Esta visão considera receitas', within=MAIN), seconds=1.0, at=c.A(10, 'aviso', 0.5), label='aviso azul dos centros de custo (ZOOM)')
+    c.mark(11)
+    c.ev(js_topo(800), at=c.A(11, 'dica', 0.4), label='sobe ao cabeçalho')
+    c.hover(SEL('main h1'), seconds=0.8, at=c.A(11, 'permissão', 0.5), label='cabeçalho do Relatório Financeiro')
     c.fim()
     return c
 
@@ -516,7 +560,10 @@ def cap05():
     c.click(LINHA('Kg', nth=1), at=c.A(6, 'quilos', 0.7), label='Kg no Top Clientes')
     c.hover(LINHA('Aços Quiririm Ltda'), seconds=1.0, at=c.A(6, 'Aços', 0.9), label='1º cliente em kg: Aços Quiririm Ltda (ZOOM)')
     c.mark(7)
-    c.hover(LINHA('Ver todos', nth=1), seconds=0.6, at=c.A(7, 'Ver', 0.8), label='Ver todos (Top Clientes)')
+    c.click(LINHA('Ver todos', nth=1), at=c.A(7, 'Ver', 0.8), label='Ver todos (Top Clientes)')
+    c.waitfor(target=SEL('[role=dialog]'), timeout=8)
+    c.hover(SEL('[role=dialog]'), seconds=1.0, label='a lista completa')
+    c.press('Escape', label='fecha a lista')
     c.mark(8)
     c.ev(js_rola_texto('Materiais + Comprados', 150, 900), at=c.L(8) - 0.9, label='desce até os materiais')
     c.hover(LINHA('Ferro pesado'), seconds=1.2, at=c.A(8, 'ferro', 0.8), label='Ferro pesado 50.000 kg R$ 47.500,00 (ZOOM)')
@@ -542,17 +589,63 @@ def cap06():
     c.mark(6)
     c.hover(LINHA('Folha salarial'), seconds=1.0, at=c.A(6, 'pesa', 0.8), label='% da receita da Folha salarial (ZOOM)')
     c.mark(7)
-    c.ev(js_rola_texto('= Resultado do Período', 420, 900), at=c.L(7) - 0.9, label='desce até o resultado')
-    c.hover(LINHA('R$ 6.500,00', nth=-1), seconds=1.2, at=c.A(7, 'seis', 0.9), label='08 = Resultado do Período R$ 6.500,00 (ZOOM)')
-    c.confere('main', ['= Resultado do Período', 'R$ 6.500,00'], 'resultado de outubro em competência')
+    c.click(LINHA('Energia elétrica'), at=c.A(7, 'categoria', 0.6), label='abre a Energia elétrica (centros de custo)')
+    c.hover(LINHA('Pátio'), seconds=1.2, at=c.A(7, 'quanto', 0.8), label='linhas dos centros de custo (ZOOM)')
     c.mark(8)
-    c.hover(LINHA('(-) Despesas Operacionais'), seconds=0.8, at=c.A(8, 'aparece', 0.5), label='a tabela')
+    c.click(SEL('main button[aria-label^="Recolher"][aria-label*="Despesas Operacionais"]'), at=c.A(8, 'recolhe', 0.7), label='Recolher a faixa 06')
+    c.click(SEL('main button[aria-label^="Expandir"][aria-label*="Despesas Operacionais"]'), at=c.L(9) - 1.6, label='Expandir a faixa 06')
+    c.mark(9)
+    c.ev(js_rola_texto('= Resultado do Período', 420, 900), at=c.L(9) - 0.9, label='desce até o resultado')
+    c.hover(LINHA('R$ 6.500,00', nth=-1), seconds=1.2, at=c.A(9, 'seis', 0.9), label='08 = Resultado do Período R$ 6.500,00 (ZOOM)')
+    c.confere('main', ['= Resultado do Período', 'R$ 6.500,00'], 'resultado de outubro em competência')
+    c.mark(10)
+    c.hover(LINHA('(-) Despesas Operacionais'), seconds=0.8, at=c.A(10, 'aparece', 0.5), label='a tabela')
     c.fim()
     return c
 
 
 def cap07():
     c = Cap(7, setup_relatorio('Demonstrativo Financeiro (DRE)'), pace=0.5)
+    c.mark(1)
+    c.click(BTN('Organizar categorias'), at=c.A(1, 'Organizar', 0.6), label='Organizar categorias')
+    c.waitfor(text='Prévia da estrutura', timeout=10)
+    c.mark(2)
+    c.ev(js_rola_dlg('Receita Bruta', 200, 700), at=c.A(2, 'faixas', 0.3), label='a prévia: 01 Receita Bruta')
+    c.ev(js_rola_dlg('Despesas Operacionais', 150, 1200), at=c.A(2, 'grupos', 0.3), label='a prévia: 06 Despesas Operacionais')
+    c.mark(3)
+    c.ev(js_rola_dlg('Novo subgrupo', 160, 700), at=c.L(3) - 0.9, label='sobe ao Novo subgrupo')
+    c.click(SEL('[role=dialog] button[role=combobox] >> nth=0'), at=c.A(3, 'subgrupo', 0.9), label='abre Natureza')
+    c.click(OPT('06 · Despesas Operacionais'), at=c.A(3, 'Despesas', 0.7), label='06 · Despesas Operacionais')
+    c.type(SEL('#new-dre-group'), 'Despesas com pessoal', at=c.A(3, 'Despesas', 0.2, nth=1), label='Novo subgrupo: Despesas com pessoal')
+    c.click(BTN('Adicionar', within=DLG), at=c.A(3, 'pessoal', 0.0, nth=0), label='Adicionar')
+    c.waitfor(text='Grupo criado', timeout=8)
+    c.mark(4)
+    c.ev(js_rola_dlg('Folha salarial', 300, 700), at=c.L(4) - 0.9, label='desce até a Folha salarial')
+    c.click(SEL('[role=dialog] button[aria-label="Mover Folha salarial para outro grupo DRE"]'), at=c.A(4, 'escolhendo', 0.8), label='lista Mover Folha salarial')
+    c.click(OPT('06 · Despesas com pessoal'), at=c.A(4, 'lista', 0.8), label='06 · Despesas com pessoal')
+    c.waitfor(text='Categoria movida', timeout=8)
+    c.hover(TXT('Despesas com pessoal', within=DLG, nth=-1), seconds=1.5, at=c.A(4, 'Nenhum', 0.8), label='o grupo novo com a folha dentro (ZOOM)')
+    c.mark(5)
+    c.hover(SEL('[role=dialog] button[aria-label="Editar grupo Despesas com pessoal"]'), seconds=0.6, at=c.A(5, 'renomear', 0.8), label='lápis do grupo')
+    c.hover(SEL('[role=dialog] button[aria-label="Excluir grupo Despesas com pessoal"]'), seconds=0.8, at=c.A(5, 'excluir', 0.8), label='lixeira do grupo')
+    c.mark(6)
+    c.ev(js_rola_dlg('Precisa enxergar este DRE de outra forma?', 300, 800), at=c.L(6) - 0.9, label='desce até Outras visões')
+    c.click(BTN('Outras visões', within=DLG), at=c.A(6, 'Outras', 0.7), label='Outras visões')
+    c.waitfor(text='Outras visões do mesmo DRE', timeout=10)
+    c.hover(TXT('DRE padrão do sistema', within=DLG), seconds=0.8, at=c.A(6, 'padrão', 0.8, nth=0), label='DRE padrão do sistema (Em uso)')
+    c.hover(TXT('Criar outra visão', within=DLG), seconds=0.8, at=c.A(6, 'Quem', 0.8), label='Criar outra visão')
+    c.mark(7)
+    c.click(BTN('Voltar à organização padrão', within=DLG), at=c.L(7) - 0.4, label='Voltar à organização padrão')
+    c.click(BTN('Fechar', within=DLG), at=c.A(7, 'Fecho', 0.6), label='Fechar')
+    c.ev(js_rola_texto('Despesas com pessoal', 300, 900), at=c.A(7, 'DRE', 0.4), label='o grupo novo no DRE')
+    c.hover(LINHA('Despesas com pessoal'), seconds=1.0, at=c.A(7, 'grupo', 0.8), label='Despesas com pessoal na faixa 06')
+    c.confere('main', ['Despesas com pessoal', 'Folha salarial'], 'grupo novo no DRE')
+    c.fim()
+    return c
+
+
+def cap08():
+    c = Cap(8, setup_relatorio('Demonstrativo Financeiro (DRE)'), pace=0.5)
     c.mark(1)
     c.hover(REGIME('Regime de Caixa'), seconds=0.4, at=c.A(1, 'Caixa', 0.5), label='Regime de Caixa')
     c.hover(REGIME('Regime de Competência'), seconds=0.6, at=c.A(1, 'Competência', 0.5), label='Regime de Competência (marcado)')
@@ -579,25 +672,30 @@ def cap07():
     c.hover(LINHA('-R$ 31.500,00'), seconds=1.0, at=c.A(10, 'trinta', 0.5), label='caixa: -R$ 31.500,00 (ZOOM)')
     c.confere('main', ['-R$ 31.500,00'], 'resultado de outubro em caixa')
     c.mark(11)
-    c.ev(js_rola_texto('04.01', 330, 800), at=c.L(11) - 0.9, label='sobe até 04 Custos Operacionais')
-    c.click(GRUPO('04.01'), at=c.A(11, 'linha', 0.6), label='abre o grupo do custo')
-    c.hover(LINHA('CMV / Compras de materiais'), seconds=1.0, at=c.A(11, 'Compras', 0.5), label='CMV / Compras de materiais (ZOOM)')
-    c.confere('main', ['CMV / Compras de materiais', 'R$ 256.860,00'], 'CMV em caixa')
-    c.ev(js_tab('Regime de Competência'), at=c.A(11, 'competência', 0.2), label='troca para competência (sem cursor)')
-    c.confere('main', ['R$ 218.860,00'], 'CMV em competência')
-    c.ev(js_tab('Regime de Caixa'), at=c.A(11, 'caixa', 0.2), label='troca para caixa (sem cursor)')
-    c.confere('main', ['R$ 256.860,00'], 'CMV em caixa de novo')
+    c.ev(js_rola_contem('O detalhamento por centro de custo', 330, 800), at=c.L(11) - 0.9, label='sobe até a faixa cinza do regime de caixa')
+    c.hover(TXTP('O detalhamento por centro de custo', within=MAIN), seconds=1.5, at=c.A(11, 'divisão', 0.8), label='faixa cinza: detalhamento por centro de custo')
     c.mark(12)
-    c.hover(LINHA('CMV / Compras de materiais'), seconds=1.0, at=c.A(12, 'diferença', 0.5), label='a linha do CMV (mesmo zoom)')
+    c.ev(js_rola_texto('04.01', 330, 800), at=c.L(12) - 0.9, label='sobe até 04 Custos Operacionais')
+    c.click(GRUPO('04.01'), at=c.A(12, 'linha', 0.6), label='abre o grupo do custo')
+    c.hover(LINHA('CMV / Compras de materiais'), seconds=1.0, at=c.A(12, 'Compras', 0.5), label='CMV / Compras de materiais (ZOOM)')
+    c.confere('main', ['CMV / Compras de materiais', 'R$ 256.860,00'], 'CMV em caixa')
+    c.ev(js_tab('Regime de Competência'), at=c.A(12, 'competência', 0.2), label='troca para competência (sem cursor)')
+    c.confere('main', ['R$ 218.860,00'], 'CMV em competência')
+    c.ev(js_tab('Regime de Caixa'), at=c.A(12, 'caixa', 0.2), label='troca para caixa (sem cursor)')
+    c.confere('main', ['R$ 256.860,00'], 'CMV em caixa de novo')
     c.mark(13)
-    c.ev(js_rola_texto('(+) Receita Bruta', 150, 900), at=c.L(13) - 0.9, label='a tabela inteira')
-    c.hover(LINHA('(-) Custos Operacionais'), seconds=0.8, at=c.A(13, 'normal', 0.5), label='a tabela inteira')
+    c.hover(LINHA('CMV / Compras de materiais'), seconds=1.0, at=c.A(13, 'diferença', 0.5), label='a linha do CMV (mesmo zoom)')
+    c.mark(14)
+    c.ev(js_rola_texto('(+) Receita Bruta', 150, 900), at=c.L(14) - 0.9, label='a tabela inteira')
+    c.hover(LINHA('(-) Custos Operacionais'), seconds=0.8, at=c.A(14, 'normal', 0.5), label='a tabela inteira')
+    c.mark(15)
+    c.hover(LINHA('(-) Despesas Operacionais'), seconds=0.8, at=c.A(15, 'estoque', 0.8), label='a tabela (dica do estoque sem custo)')
     c.fim()
     return c
 
 
-def cap08():
-    c = Cap(8, setup_relatorio('Demonstrativo Financeiro (DRE)'), pace=0.5)
+def cap09():
+    c = Cap(9, setup_relatorio('Demonstrativo Financeiro (DRE)'), pace=0.5)
     c.mark(1)
     c.ev(js_rola_texto('Patrimônio Operacional Atual', 300, 1200), at=0.3, label='desce até o patrimônio')
     c.click(LINHA('Patrimônio Operacional Atual'), at=c.A(1, 'Clico', 0.6), label='abre Patrimônio Operacional Atual')
@@ -619,12 +717,12 @@ def cap08():
     return c
 
 
-def cap09():
+def cap10():
     pre = [{'do': 'click', 'target': BTN('Comparar períodos')}, {'do': 'waitFor', 'text': 'Prévia das colunas', 'timeout': 10},
            {'do': 'click', 'target': TXT('Período anterior', within=DLG)}, {'do': 'click', 'target': BTN('Aplicar comparação'), 'noScroll': True},
            {'do': 'waitFor', 'text': '31/10/26', 'timeout': 10}, {'do': 'waitFor', 'text': 'Demonstrativo Financeiro (DRE)', 'timeout': 15}, AGUARDA,
            {'do': 'eval', 'js': js_topo(0)}]
-    c = Cap(9, setup_relatorio('Demonstrativo Financeiro (DRE)', pre), pace=0.5)
+    c = Cap(10, setup_relatorio('Demonstrativo Financeiro (DRE)', pre), pace=0.5)
     c.mark(1)
     c.ev(js_rola_texto('Evolução Mensal', 110, 1500), at=0.3, label='desce até a Evolução Mensal')
     c.hover(LINHA('Evolução Mensal'), seconds=0.6, at=c.A(1, 'seis', 0.5), label='Evolução Mensal')
@@ -638,55 +736,193 @@ def cap09():
     c.hover(TXT('Período anterior', within=DLG), seconds=0.3, at=c.A(3, 'Período', 0.8), label='Período anterior (setembro)')
     c.click(TXT('Período anterior', within=DLG), label='marca Período anterior', unless={'role': 'button', 'name': 'Remover Setembro de 2026'})
     c.mark(4)
-    c.click(BTN('Aplicar comparação'), at=c.A(4, 'Aplico', 0.6), label='Aplicar comparação', noScroll=True)
-    c.ev(js_rola_texto('(+) Receita Bruta', 110, 1500), at=c.A(4, 'lado', 0.3), label='desce pelas linhas comparadas')
-    c.confere('body', ['Setembro de 2026', 'Outubro de 2026'], 'as duas colunas lado a lado')   # o cabeçalho fixo da tabela sai do <main> ao rolar
+    c.hover(TXT('Mesmo período no ano passado', within=DLG), seconds=0.6, at=c.A(4, 'ano', 0.8), label='Mesmo período no ano passado')
+    c.hover(TXT('Outro período', within=DLG), seconds=0.6, at=c.A(4, 'outras', 0.8), label='Outro período')
     c.mark(5)
-    c.click(GRUPO('06.01'), at=c.A(5, 'categoria', 0.6), label='abre as categorias das despesas operacionais')
-    c.hover(LINHA('Energia elétrica'), seconds=1.0, at=c.A(5, 'renomear', 0.5), label='linhas casadas pelo nome da categoria')
+    c.click(BTN('Aplicar comparação'), at=c.A(5, 'Aplico', 0.6), label='Aplicar comparação', noScroll=True)
+    c.ev(js_rola_texto('(+) Receita Bruta', 110, 1500), at=c.A(5, 'lado', 0.3), label='desce pelas linhas comparadas')
+    c.confere('body', ['Setembro de 2026', 'Outubro de 2026'], 'as duas colunas lado a lado')   # o cabeçalho fixo da tabela sai do <main> ao rolar
+    c.mark(6)
+    c.click(GRUPO('06.01'), at=c.A(6, 'categoria', 0.6), label='abre as categorias das despesas operacionais')
+    c.hover(LINHA('Energia elétrica'), seconds=1.0, at=c.A(6, 'renomear', 0.5), label='linhas casadas pelo nome da categoria')
+    c.mark(7)
+    c.ev(js_rola_texto('Comparar períodos', 200, 900), at=c.L(7) - 0.9, label='sobe até o cabeçalho da tabela')
+    c.click(BTN('Comparar períodos'), at=c.A(7, 'voltar', 0.8), label='Comparar períodos')
+    c.waitfor(text='Prévia das colunas', timeout=8)
+    c.click(BTN('Remover comparações'), at=c.A(7, 'Remover', 0.7), label='Remover comparações', noScroll=True)
+    c.confere('body', ['Outubro de 2026'], 'a tabela volta a uma coluna')
     c.fim()
     return c
 
 
-def cap10():
-    c = Cap(10, setup_relatorio('Demonstrativo Financeiro (DRE)'), pace=0.5)
+def cap11():
+    c = Cap(11, setup_relatorio('Superávit'), pace=0.5)
+    c.mark(1)
+    c.click(ABA_R('dfc'), at=c.A(1, 'DFC', 0.6), label='aba DFC')
+    c.waitfor(text='Saldo atual', timeout=15)
+    c.hover(BTN('Previsto'), seconds=0.6, at=c.A(1, 'Previsto', 0.6), label='Previsto (marcado)')
+    c.mark(2)
+    c.mark(3)
+    c.hover(TXT('Saldo atual', within=MAIN), seconds=0.4, at=c.A(3, 'saldo', 0.8), label='Saldo atual')
+    c.hover(TXT('A receber · 15 dias', within=MAIN), seconds=0.4, at=c.A(3, 'entra', 0.8), label='A receber · 15 dias')
+    c.hover(TXT('A pagar · 15 dias', within=MAIN), seconds=0.4, at=c.A(3, 'sai', 0.8), label='A pagar · 15 dias')
+    c.hover(TXT('Dívidas a receber', within=MAIN), seconds=1.0, at=c.A(3, 'dívidas', 0.8), label='Dívidas a receber e a pagar (ZOOM)')
+    c.mark(4)
+    c.ev(js_rola_texto('Saldo inicial', 330, 900), at=c.L(4) - 0.9, label='desce até a tabela do fluxo de caixa')
+    c.hover(TXT('Saldo inicial', within=MAIN), seconds=0.5, at=c.A(4, 'final', 1.2), label='Saldo inicial')
+    c.hover(TXT('Saldo final', within=MAIN), seconds=0.8, at=c.A(4, 'final', 0.6, nth=0), label='Saldo final')
+    c.mark(5)
+    c.click(SEL('main button[aria-label$="categorias de saída"]'), at=c.A(5, 'seta', 0.7), label='seta do Total de saídas')
+    c.mark(6)
+    c.click(SEL('main tr:has(button[aria-label$="categorias de saída"]) td[role=button] >> nth=0'), at=c.A(6, 'clicando', 0.7), label='um valor do Total de saídas')
+    c.waitfor(text='Para editar ou dar baixa, abra o lançamento em Contas a Pagar/Receber.', timeout=8)
+    c.hover(TXT('Para editar ou dar baixa, abra o lançamento em Contas a Pagar/Receber.', within=DLG), seconds=1.0, at=c.A(6, 'Pra', 0.8), label='lançamentos do dia (ZOOM)')
+    c.press('Escape', at=c.L(7) - 1.6, label='fecha a janela')
+    c.mark(7)
+    c.ev(js_rola_texto('Saldo por conta', 160, 800), at=c.L(7) - 0.9, label='desce até Saldo por conta')
+    c.ev(js_rola_texto('Evolução do saldo', 160, 900), at=c.A(7, 'gráfico', 0.9), label='Evolução do saldo')
+    c.ev(js_rola_texto('O que já venceu e não foi baixado', 160, 900), at=c.A(7, 'lista', 0.9), label='O que já venceu e não foi baixado')
+    c.mark(8)
+    c.ev(js_topo(700), at=c.L(8) - 0.9, label='sobe ao topo')
+    c.click(BTN('30 dias'), at=c.A(8, 'trinta', 0.8), label='30 dias')
+    c.mark(9)
+    c.ev(js_rola_contem('Previsão otimista', 420, 900), at=c.L(9) - 0.9, label='desce até a Previsão otimista')
+    c.hover(TXTP('Previsão otimista', within=MAIN), seconds=1.5, at=c.A(9, 'otimista', 0.8), label='Previsão otimista (ZOOM)')
+    c.mark(10)
+    c.ev(js_topo(700), at=c.L(10) - 0.9, label='sobe ao topo')
+    c.fim()
+    return c
+
+
+def cap12():
+    c = Cap(12, setup_relatorio('Demonstrativo Financeiro (DRE)'), pace=0.5)
+    c.mark(1)
+    c.click(BTN('Realizado'), at=c.A(1, 'Realizado', 0.6), label='Realizado')
+    c.waitfor(text='Variação líquida', timeout=15)
+    c.hover(TXTP('Realizado em', within=MAIN), seconds=0.8, at=c.A(1, 'segue', 0.8), label='Realizado em Outubro de 2026')
+    c.mark(2)
+    c.hover(TXT('Variação líquida', within=MAIN, nth=0), seconds=1.5, at=c.A(2, 'saiu', 0.8), label='Variação líquida (ZOOM)')
+    c.mark(3)
+    c.ev(js_rola_texto('Estrutura do DFC', 160, 900), at=c.L(3) - 0.9, label='desce até a Estrutura do DFC')
+    c.mark(4)
+    c.click(SEL('main button[data-dfc-group-icon] >> nth=0'), at=c.A(4, 'decide', 0.6), label='recolhe uma atividade')
+    c.click(SEL('main button[data-dfc-group-icon] >> nth=0'), at=c.L(5) - 1.6, label='abre a atividade de novo')
+    c.mark(5)
+    c.ev(js_rola_texto('Realizado dia a dia', 160, 1000), at=c.A(5, 'embaixo', 0.8), label='Realizado dia a dia')
+    c.mark(6)
+    ev_topo = c.ev(js_topo(700), at=c.L(6) - 0.9, label='sobe ao topo')
+    c.click(BTN('Filtros'), at=c.A(6, 'filtrar', 0.7), label='Filtros')
+    c.click(SEL('[role=menuitemcheckbox]:has-text("Coleta")'), at=c.A(6, 'centro', 0.7), label='marca Coleta')
+    c.press('Escape', at=c.A(6, 'vale', 0.4), label='fecha o menu')
+    c.hover(TXT('Filtro aplicado ao realizado e às exportações.', within=MAIN), seconds=0.8, at=c.A(6, 'arquivo', 0.8), label='Filtro aplicado (ZOOM)')
+    c.mark(7)
+    c.click(BTN('Filtros (1)'), at=c.L(7) - 1.4, label='abre Filtros')
+    c.click(ITEM('Limpar filtros'), at=c.L(7) - 0.9, label='Limpar filtros')
+    c.click(BTN('Exportar'), at=c.A(7, 'Exportar', 0.8), label='Exportar')
+    c.hover(ITEM('CSV'), seconds=1.0, at=c.A(7, 'Excel', 0.8), label='Excel, PDF e CSV')
+    c.press('Escape', at=c.A(7, 'CSV', 0.2), label='fecha sem escolher')
+    c.mark(8)
+    c.fim()
+    return c
+
+
+def cap13():
+    c = Cap(13, setup_relatorio('Demonstrativo Financeiro (DRE)'), pace=0.5)
     c.mark(1)
     c.click(ABA_R('historico'), at=0.2, label='aba Histórico')
     c.click({'role': 'tab', 'name': 'Despesas'}, at=c.A(1, 'despesas', 1.0), label='Despesas')
     c.mark(2)
     c.hover(TXTP('lançamentos', within=MAIN), seconds=0.6, at=c.A(2, 'lançamento', 0.8), label='os lançamentos de outubro')
     c.mark(3)
-    c.click(BTN('Filtros'), at=c.L(3) - 0.9, label='Filtros')
-    c.click(BTN('Categoria', within=DLG), at=c.A(3, 'categoria', 0.9), label='Categoria')
-    c.click(TXT('Energia elétrica', within=POP), at=c.A(3, 'Energia', 0.6, nth=1), label='marca Energia elétrica')
-    c.press('Escape', at=c.A(3, 'Dá', 0.1, nth=1), label='fecha a lista')
-    c.hover(TXT('Cliente/Fornecedor', within=DLG), seconds=0.4, at=c.A(3, 'cliente', 0.8), label='Cliente/Fornecedor')
-    c.hover(TXT('Centro de custo', within=DLG), seconds=0.4, at=c.A(3, 'centro', 0.8), label='Centro de custo')
+    c.type(BUSCA, '3850', at=c.A(3, 'três', 0.3), label='busca: 3850')
+    c.confere('main', ['Conta de energia', '2 lançamentos'], 'a busca por valor acha as duas contas')
+    c.press('Control+a', at=c.L(4) - 1.6, label='seleciona a busca')
+    c.press('Backspace', at=c.L(4) - 1.4, label='apaga a busca')
     c.mark(4)
-    c.click(BTN('Aplicar'), at=c.L(4) - 0.9, label='Aplicar', noScroll=True)
-    c.hover(LINHA('Conta de energia'), seconds=1.2, at=c.A(4, 'dia', 0.9), label='as duas Conta de energia (ZOOM)')
-    c.confere('main', ['2 lançamentos', '-R$ 7.700,00', 'Conta de energia'], 'duas contas de energia')
+    c.click(BTN('Filtros'), at=c.L(4) - 0.9, label='Filtros')
+    c.click(BTN('Categoria', within=DLG), at=c.A(4, 'categoria', 0.9), label='Categoria')
+    c.click(TXT('Energia elétrica', within=POP), at=c.A(4, 'Energia', 0.6, nth=1), label='marca Energia elétrica')
+    c.press('Escape', at=c.A(4, 'Dá', 0.1, nth=1), label='fecha a lista')
+    c.hover(TXT('Cliente/Fornecedor', within=DLG), seconds=0.4, at=c.A(4, 'cliente', 0.8), label='Cliente/Fornecedor')
+    c.hover(TXT('Centro de custo', within=DLG), seconds=0.4, at=c.A(4, 'centro', 0.8), label='Centro de custo')
+    c.hover(TXT('Conta bancária', within=DLG), seconds=0.4, at=c.A(4, 'conta', 0.8), label='Conta bancária', optional=True, timeout=3)
     c.mark(5)
-    c.click(BTN('Excluir lançamento', nth=0), at=c.A(5, 'lixeira', 0.9), label='lixeira da conta das 16:40')
+    c.click(BTN('Aplicar'), at=c.L(5) - 0.9, label='Aplicar', noScroll=True)
+    c.hover(LINHA('Conta de energia'), seconds=1.2, at=c.A(5, 'dia', 0.9), label='as duas Conta de energia (ZOOM)')
+    c.confere('main', ['2 lançamentos', '-R$ 7.700,00', 'Conta de energia'], 'duas contas de energia')
+    c.mark(6)
+    c.click(BTN('Ver detalhes', nth=1), at=c.A(6, 'abro', 0.7), label='seta Ver detalhes da conta das 09:12')
+    c.waitfor(text='Registrado em', timeout=8)
+    c.hover(TXT('Registrado em', within=MAIN), seconds=1.5, at=c.A(6, 'Aparece', 0.8), label='o detalhe do lançamento (ZOOM)')
+    c.click(BTN('Ocultar detalhes'), at=c.A(6, 'cópia', 0.9), label='fecha o detalhe')
+    c.mark(7)
+    c.click(BTN('Excluir lançamento', nth=0), at=c.A(7, 'lixeira', 0.9), label='lixeira da conta das 16:40')
     c.waitfor(text='Excluir lançamento?', timeout=8)
-    c.click(BTN('Excluir', within=ALERTA), at=c.A(5, 'Excluir', 0.7), label='Excluir')
+    c.click(BTN('Excluir', within=ALERTA), at=c.A(7, 'Excluir', 0.7), label='Excluir')
     c.waitfor(text='Lançamento excluído.', timeout=8)
     c.confere('main', ['1 lançamento', '-R$ 3.850,00', '09:12'], 'ficou uma conta só (a das 09:12)')
+    c.mark(8)
+    c.hover(BTN('Excluir lançamento'), seconds=0.6, at=c.L(8) - 0.6, label='lixeira (ZOOM)')
+    c.hover(BTN('Editar categoria'), seconds=0.8, at=c.A(8, 'lápis', 0.8), label='lápis Editar categoria')
+    c.mark(9)
+    c.mark(10)
+    c.click(SEL('main [role=tab]:has-text("Compras")'), at=c.L(10) - 0.2, label='aba Compras')
+    c.click(BTN('Ver detalhes do pedido', nth=0), at=c.A(10, 'seta', 0.8), label='seta Ver detalhes do pedido')
+    c.waitfor(text='Formas de pagamento', timeout=8)
+    c.hover(TXT('Formas de pagamento', within=MAIN, nth=0), seconds=1.2, at=c.A(10, 'formas', 0.8), label='itens e formas de pagamento')
+    c.fim()
+    return c
+
+
+def cap14():
+    c = Cap(14, setup_relatorio('Exportar', [{'do': 'click', 'target': {'role': 'tab', 'name': 'Despesas'}}, AGUARDA]), pace=0.5)
+    c.mark(1)
+    c.click(BUSCA, at=0.4, label='campo de busca')
+    c.type(BUSCA, 'Diesel', at=c.A(1, 'diesel', 0.9), label='busca: Diesel', noClick=True)
+    c.confere('main', ['Diesel do caminhão', 'Outras Despesas', 'Combustível'], 'os diesel com a categoria errada')
+    c.hover(TXT('Outras Despesas', within=MAIN, nth=0), seconds=1.0, at=c.A(1, 'Outras', 0.8), label='selo Outras Despesas')
+    c.mark(2)
+    c.click(BTN('Editar categoria', nth=1), at=c.A(2, 'lápis', 0.8), label='lápis da linha de 16/10')
+    c.waitfor(text='Pesquisar categoria', timeout=6, optional=True)
+    c.click(SEL('[role=dialog] button[role=combobox]'), at=c.A(2, 'escolho', 0.7), label='abre a lista de categorias')
+    c.click(OPT('Combustível'), at=c.A(2, 'certa', 0.8), label='Combustível')
+    c.click(BTN('Salvar', within=DLG), at=c.A(2, 'pronto', 0.7), label='Salvar')
+    c.waitfor(text='Categoria atualizada', timeout=8)
+    c.mark(3)
+    c.click(BTN('Selecionar lançamentos'), at=c.A(3, 'Selecionar', 0.8), label='Selecionar')
+    c.waitfor(text='Selecione até 100 lançamentos manuais de caixa ou banco.', timeout=6)
+    c.click(CHECK(2), at=c.A(3, 'marco', 0.8), label='marca o diesel de 09/10')
+    c.click(CHECK(3), at=c.A(3, 'dois', 0.3, nth=1), label='marca o diesel de 02/10')
+    c.confere('main', ['2 lançamentos selecionados'], 'dois lançamentos marcados')
+    c.mark(4)
+    c.click(BTN('Alterar categoria'), at=c.L(4) - 0.2, label='Alterar categoria')
+    c.waitfor(text='Alterar categoria de 2 lançamentos', timeout=8)
+    c.click(SEL('[role=dialog] button[role=combobox]'), at=c.A(4, 'escolho', 0.7), label='abre a lista de categorias')
+    c.click(OPT('Combustível'), at=c.A(4, 'categoria', 0.6, nth=1), label='Combustível')
+    c.hover(TXTP('Valores e saldos não mudam', within=DLG), seconds=1.5, at=c.A(4, 'janela', 0.8), label='o resumo da janela (ZOOM)')
+    c.mark(5)
+    c.click(BTN('Aplicar categoria'), at=c.L(5) - 0.2, label='Aplicar categoria')
+    c.waitfor(text='Categoria de 2 lançamentos atualizada.', timeout=8)
+    c.confere('main', ['Combustível'], 'as linhas com o selo novo')
     c.mark(6)
-    c.hover(BTN('Excluir lançamento'), seconds=0.6, at=c.L(6) - 0.6, label='lixeira (ZOOM)')
-    c.hover(BTN('Editar categoria'), seconds=0.8, at=c.A(6, 'lápis', 0.8), label='lápis Editar categoria')
+    c.click(BTN('Selecionar lançamentos'), at=c.L(6) - 0.2, label='Selecionar de novo')
+    c.click(CHECK(0), at=c.A(6, 'apagar', 0.8), label='marca uma linha de banco')
+    c.click(CHECK(1), label='marca outra linha de banco')
+    c.hover(BTN('Excluir selecionados'), seconds=1.2, at=c.A(6, 'Excluir', 0.7), label='Excluir selecionados (ativo)')
+    c.click(BTN('Cancelar seleção de lançamentos'), at=c.A(6, 'nenhum', 0.8), label='Cancelar seleção')
     c.mark(7)
     c.fim()
     return c
 
 
-def cap11():
-    c = Cap(11, setup_relatorio('Exportar', [{'do': 'click', 'target': {'role': 'tab', 'name': 'Despesas'}}, AGUARDA]), pace=0.5)
+def cap15():
+    c = Cap(15, setup_relatorio('Exportar', [{'do': 'click', 'target': {'role': 'tab', 'name': 'Despesas'}}, AGUARDA, {'do': 'eval', 'js': POPS}]), pace=0.5)
     c.mark(1)
     c.click(BTN('Exportar'), at=c.A(1, 'Exportar', 1.0), label='Exportar do Histórico')
     c.mark(2)
     c.click(ITEM('PDF'), at=c.A(2, 'PDF', 0.8), label='PDF')
     c.waitfor(text='Exportar Histórico (PDF)', timeout=8)
+    c.hover(TXT('Conta bancária', within=DLG), seconds=0.6, at=c.A(2, 'período', 0.8), label='campo Conta bancária', optional=True, timeout=3)
     c.hover(TXT('Receitas', within=DLG), seconds=0.3, at=c.A(2, 'escolho', 1.0), label='Incluir no arquivo: Receitas')
     # na aba Despesas a janela abre com Receitas e Despesas marcadas e Compras desmarcada (11/11): "eu escolho o que entra" = marcar Compras
     c.click(TXT('Compras', within=DLG), at=c.A(2, 'despesas', 0.8), label='marca Compras')
@@ -696,10 +932,12 @@ def cap11():
     c.mark(3)
     c.click(BTN('Exportar PDF'), at=c.A(3, 'PDF', 0.8), label='Exportar PDF')
     c.waitfor(text='PDF gerado em nova aba', timeout=6, optional=True)
+    c.ev(PDF_JS, at=c.L(3) + 3.0, label='PDF do histórico (aba nova, para a ilustração)')
     c.mark(4)
     c.click(BTN('Exportar'), at=c.L(4) - 1.1, label='Exportar de novo')
-    c.hover(ITEM('Fechamento completo (Excel)'), seconds=1.5, at=c.A(4, 'completo', 0.5), label='Fechamento completo (Excel) (ZOOM)')
-    c.press('Escape', at=c.A(4, 'período', 0.3), label='fecha o menu')
+    c.hover(ITEM('Fechamento completo (Excel)'), seconds=0.8, at=c.A(4, 'completo', 0.9), label='Fechamento completo (Excel)')
+    c.click(ITEM('Fechamento completo (Excel)'), at=c.A(4, 'pacote', 0.7), label='clica no Fechamento completo')
+    c.waitfor(text='Fechamento gerado', timeout=15, optional=True)
     c.mark(5)
     c.click(ABA_R('dre'), at=c.L(5) - 1.1, label='aba DRE')
     c.waitfor(text='Demonstrativo Financeiro (DRE)', timeout=10)
@@ -712,7 +950,7 @@ def cap11():
 # ---------------------------------------------------------------- main
 def main():
     pedidos = [int(a) for a in sys.argv[1:] if a.isdigit()]
-    fns = {n: globals().get(f'cap{n:02d}') for n in range(12)}
+    fns = {n: globals().get(f'cap{n:02d}') for n in range(16)}
     feitos = []
     for n, fn in fns.items():
         if fn is None or (pedidos and n not in pedidos):

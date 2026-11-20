@@ -1192,7 +1192,8 @@ def cap16():
     c.click(SEL("main div:has(> div > p:text-is('Exigir assinatura do responsável no local')) > [role=switch]"), at=c.A(4, 'assinatura', FC), label='Exigir assinatura do responsável no local')
     c.hover(TXTX('Exigir assinatura do motorista', within='main'), 1.2, at=c.A(4, 'motorista', FH), label='Exigir assinatura do motorista')
     c.mark(5)
-    c.click(ORDENS_MENU, at=c.L(5) - 0.4, label='Ordens de Coleta')
+    c.click(GRUPO, at=round(c.L(5) - 1.2, 2), label='abre Coletas & Logística', unless=ORDENS_MENU)   # em Configurações o grupo fica fechado
+    c.click(ORDENS_MENU, label='Ordens de Coleta')
     c.waitfor(text=PAGINAS['/coletas/ordens'], timeout=15)
     c.click(CARD_BTN('COL-7', 'Preencher'), label='#COL-7: Preencher')
     c.waitfor(text='Checklist', timeout=15)

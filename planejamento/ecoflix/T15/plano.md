@@ -2,31 +2,39 @@
 
 - **Título:** Relatório Financeiro e DRE (o da fonte). Sem 🔒: Relatório e Categorias são da formação básica.
 - **Áreas das vinhetas:** CATEGORIAS · CENTROS DE CUSTO · RELATÓRIO · DASHBOARD · DASHBOARD · DRE · DRE · PATRIMÔNIO ·
-  EVOLUÇÃO · HISTÓRICO · EXPORTAR · RESUMO.
+  EVOLUÇÃO · DFC · DFC · HISTÓRICO · HISTÓRICO · EXPORTAR · RESUMO.
 - **Objetivo:** responder "ganhei ou perdi dinheiro no mês, e por quê?": plano de contas e centros de custo arrumados, o
   relatório de outubro lido aba por aba, o DRE nos dois regimes com o exemplo do pátio, e o histórico conferido e exportado.
 - **Antes:** T14 · Bancos, cofre e conciliação bancária. **Próximo:** T21 · Cato, o assistente ("perguntar em português e
   receber a resposta pronta").
-- **Duração:** alvo da fonte ~17 min; estimativa ~16 min 45 s (fala de ~14,5 min, mais vinhetas e ações; soma da tabela abaixo).
-- **Base:** `T15/inventario.md` (código 1.59.154). Computador, janela de 1280×800, logado como **Rafael Nogueira** (MASTER) a
-  aula inteira. `FAKE_NOW=2026-11-10T08:30:00-03:00`; o mês lido é **outubro de 2026** ("Mês passado").
+- **Duração:** alvo da fonte ~17 min; com a cobertura do 1.60.18 (DFC, organizar categorias do DRE, lançamentos em lote) ~25 min
+  (fala de ~3.390 palavras, ~21,7 min de voz, mais 16 vinhetas; estimativa, o ensaio confirma).
+- **Base:** `T15/inventario.md` (código 1.59.154, com os acréscimos do 1.60.18 em `cobertura_160.md`). Computador, janela de
+  **1600×900**, logado como **Rafael Nogueira** (MASTER) a aula inteira. `FAKE_NOW=2026-11-10T08:30:00-03:00`; o mês lido é
+  **outubro de 2026** ("Mês passado"). App gravado: EcoSistema **1.60.18**.
 
-## Capítulos (os da fonte, na ordem)
-| # | Vinheta (área / título) | O que a tela mostra | Partida | Duração |
-|---|---|---|---|---|
-| 0 | (sem vinheta) | Dashboard do EcoSistema; ilustração do problema do pátio; cartão "Antes". | `inicio` | 0:40 |
-| 1 | CATEGORIAS / O plano de contas | Menu "Financeiro" › "Categorias Financeiras"; receitas e despesas por grupo do DRE; cria a subcategoria **Frete de entrega** (pai "Frete", em "Custos adicionais") em "Despesas operacionais (OPEX)" e vê o selo; cria **Máquinas e veículos** em "Não compõe o DRE" / "Atividades de investimento". Ilustrações: plano de contas; nem toda saída é despesa. | `inicio` | 2:35 |
-| 2 | CENTROS DE CUSTO / Centros de custo | "Centros de custo" (Coleta e Pátio); cria **Produção**; zoom no "Ativo". Ilustração: as frentes do pátio. | `apos-cap01` | 1:10 |
-| 3 | RELATÓRIO / O Relatório Financeiro | Menu "Financeiro" › "Relatório Financeiro"; "Este mês" → "Mês passado"; as cinco abas; a aba "Centros de Custo" de outubro; dica da permissão. | `apos-cap02` | 1:20 |
-| 4 | DASHBOARD / O Dashboard do mês | Banner "Resultado do Período" (R$ 6.500,00, "Superávit"); "Despesas por Categoria" (a energia em dobro: R$ 7.700,00); "Receitas por Categoria". | `apos-cap02` + `setup` | 1:00 |
-| 5 | DASHBOARD / Fornecedores, clientes e ticket médio | "Ticket Médio Compra/Venda"; "Top Fornecedores"; "Top Clientes" em "R$" e "Kg"; "Materiais + Comprados" (ferro pesado 50.000 kg) e "+ Vendidos". Ilustração: ticket médio. | idem | 1:15 |
-| 6 | DRE / Lendo o DRE | Aba "DRE" em competência; seções e resultados; um grupo aberto; "Valor · % receita"; "08 = Resultado do Período" R$ 6.500,00. Ilustração: a escada do DRE. | idem | 1:10 |
-| 7 | DRE / Caixa ou competência | Dicas dos dois botões; ilustração do exemplo do pátio (ferro pesado de outubro); troca para caixa: −R$ 31.500,00; a linha "CMV / Compras de materiais". | idem + aba "DRE" | 2:20 |
-| 8 | PATRIMÔNIO / O patrimônio de hoje | "Patrimônio Operacional Atual" aberto, linha por linha; "Exportar Patrimônio" (zoom). Ilustração: a foto de agora. | idem | 1:00 |
-| 9 | EVOLUÇÃO / Mês a mês | "Evolução Mensal" (seis meses, out/26 com as maiores compras); "Comparar períodos" › "Período anterior" (setembro) › "Aplicar comparação". | idem | 0:55 |
-| 10 | HISTÓRICO / O Histórico | Abas "Receitas", "Despesas", "Compras"; "Filtros" › "Energia elétrica": duas "Conta de energia" iguais; exclui a segunda; lápis e lixeira. Ilustração: o mesmo dinheiro não conta duas vezes. | idem + aba "DRE" | 1:30 |
-| 11 | EXPORTAR / Exportar em Excel e PDF | "Exportar" do Histórico: "PDF" → "Exportar Histórico (PDF)" → "Exportar PDF"; "Fechamento completo (Excel)" (zoom); "Exportar" do DRE ("Planilha Excel", "Documento PDF"). | `apos-cap10` + `setup` | 0:50 |
-| 12 | RESUMO / Recapitulando | Montagem do que foi feito; cartão "Próximo: Cato, o assistente". | trechos | 1:00 |
+## Capítulos (17; os da fonte mais os da cobertura 1.60.18)
+| # | Vinheta (área / título) | O que a tela mostra | Partida |
+|---|---|---|---|
+| 0 | (sem vinheta) | Dashboard do EcoSistema; ilustração do problema do pátio; cartão "Antes". | `inicio` |
+| 1 | CATEGORIAS / O plano de contas | Categorias por grupo do DRE; cria **Frete de entrega** e **Máquinas e veículos** (Não compõe o DRE). | `inicio` |
+| 2 | CENTROS DE CUSTO | Quatro centros (Coleta, Pátio, Produção criado ao vivo); lápis e lixeira; "Ativo". | `apos-cap01` |
+| 3 | RELATÓRIO / O Relatório Financeiro | Lista de períodos, **cinco abas** (inclui DFC), "vs. período anterior", clique na coluna do gráfico, "Movimentações". | `apos-cap02` |
+| 4 | DASHBOARD / O Dashboard do mês | "Resultado do Período", despesas e receitas por categoria (a energia em dobro). | `apos-cap02` + `setup` |
+| 5 | DASHBOARD / Fornecedores, clientes e ticket | Ticket, tops ("Ver todos" clicado), materiais mais comprados e vendidos. | idem |
+| 6 | DRE / Lendo o DRE | Escada do DRE; grupo aberto até o centro de custo (energia); "Valor · % receita". | idem |
+| 7 | DRE / Organizando o DRE (novo) | Botão **Organizar categorias**: mover categoria de grupo, lote de lançamentos. | idem + `lote-categoria` conforme o ensaio |
+| 8 | DRE / Caixa ou competência | Dicas, exemplo do pátio, faixa cinza, dica do CMV subestimado, troca para caixa. | idem |
+| 9 | PATRIMÔNIO | "Patrimônio Operacional Atual"; "Exportar Patrimônio" (zoom). | idem |
+| 10 | EVOLUÇÃO / Mês a mês | Evolução Mensal; comparar com ano passado / outro período; "Remover comparações". | idem |
+| 11 | DFC / A DFC prevista (novo) | Aba DFC, visão prevista: contas a pagar e a receber por data. | idem |
+| 12 | DFC / A DFC realizada (novo) | DFC realizada: de onde veio e para onde foi o dinheiro, por atividade. | idem |
+| 13 | HISTÓRICO / O Histórico | Receitas, Despesas, Compras; busca "3850"; filtros com conta bancária; seta "Ver detalhes"; exclui a duplicata. | `apos-cap02` + `setup` |
+| 14 | HISTÓRICO / Vários lançamentos de uma vez (novo) | Seleção em lote e troca de categoria (diesel), com a semente `lote-categoria`. | `apos-cap10` |
+| 15 | EXPORTAR / Exportar em Excel e PDF | PDF do Histórico aberto na tela (`POPS` + `PDF_JS`), Fechamento completo, "Exportar" do DRE. | `apos-cap10` |
+| 16 | RESUMO / Recapitulando | Montagem do que foi feito, com a DFC; cartão "Próximo: Cato". | trechos |
+
+Capítulos antigos 7 a 12 viraram 8 a 16 (renumerados); 7, 11, 12 e 14 são novos. Durações: as do ensaio (`resumo.py --ens`).
 
 Transições faladas: 0→1 "Tudo começa pelas categorias"; 1→2 "Com as categorias certas, dá pra saber em que o dinheiro foi
 gasto"; 2→3 "Plano de contas pronto. Agora, o relatório"; 3→4 "Começando pelo Dashboard, a aba pra bater o olho"; 4→5 "Mais
@@ -153,8 +161,7 @@ Da tabela do PERFIL: DRE "dê-érri-ê", PDF "pê-dê-éfe", EcoSistema "Ecossis
 curto): **CMV "cê-ême-vê"** e **Excel "ékisel"** (o da Domiflix, outra voz). "Dashboard", "Ticket" e "Top" na escrita normal.
 
 ## Riscos e decisões para o Kaik
-1. **DFC**: a tela tem cinco abas (a fonte diz quatro e não fala da DFC). Proposta: mostrar as cinco, citar quatro e não entrar
-   na DFC. Alternativa: um capítulo curto da DFC (a ajuda do app tem o conteúdo).
+1. **DFC**: decidido pela cobertura 1.60.18: dois capítulos (11 e 12). Os valores falados só depois do ensaio.
 2. **A energia em dobro**: o "lançamento errado" do capítulo 10 é uma duplicata semeada em outubro (exclusão completa, sem
    refazer nada). Se o T14 concilia outubro, ela precisa ficar fora da conciliação.
 3. **Números de outubro falados** (6.500,00 e −31.500,00; 50.000 kg; 19.800,00; 7.700,00; 2.800,00): exigem o mundo no
@@ -163,3 +170,12 @@ curto): **CMV "cê-ême-vê"** e **Excel "ékisel"** (o da Domiflix, outra voz).
 5. Handoff (a fala não depende): o diálogo de excluir do Histórico diz "o saldo da conta a conta bancária será ajustado"
    (`RevenueExpenseList.tsx:1199`); a ajuda do app cita "Configurar DRE", "Nova Categoria" e a etiqueta "Sistema", que não
    existem mais na tela.
+
+## Acréscimos do 1.60.18 (mundo desta aula)
+- Handlers novos (só T15): `get_company_dre_configuration` (modo legado), `update_financial_transaction_category`,
+  `update_financial_transaction_categories_batch`, `get_accounting_closing_open_bills`, `get_financial_accounting_report`.
+- Semente nova `lote-categoria` (três lançamentos de diesel com a categoria errada, capítulo 14); DFC prevista usa as
+  `financial_bills` do mundo (água vencida, energia, fiado da Fundição Bandeira do Vale).
+- Pedido ao mundo base: `linhasDRE` sem `bank_account_id/name`; sem isso o filtro e o campo "Conta bancária" do Histórico
+  aparecem vazios.
+- Não há o cartão "Lucro Líquido" nesta aula (só "Resultado do Período", o mesmo número da DRE em competência).

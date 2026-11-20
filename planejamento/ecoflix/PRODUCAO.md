@@ -1005,3 +1005,13 @@ Decisões:
   gravador caído como falha; cap12 abre a ficha completa `/cliente/...` (a lista só abre painel sem a aba Coletas);
   cap13 com GPS simulado e `history.back()`; cap16 com `apos-cap15` sem `collection_settings` duplicado. Coordenador
   rodando `t12_lote.sh 08 13 16`.
+  T12 fechado pelo coordenador (20/11 09:57): 08 rápido e completo; 13 rápido ok, completo com 2 passos falhos (prever 2,65 s:
+  rever com a voz); 16 rápido e completo ok (prever 5,1 s: respiro na voz). **T12: 17/17 capítulos com robô no rápido**
+  (o 17 é montagem). Cap16: em Configurações o grupo "Coletas & Logística" fica fechado; abrir o grupo antes do link.
+  Lição: dois lotes da mesma aula ao mesmo tempo (o do agente que "terminou" e o do coordenador) disputam a porta 543NN e
+  dão resultado misturado: antes de relançar, `pgrep -f tNN_lote` vazio.
+- **T15**: 17 capítulos (novos 07 Organizando o DRE, 11 DFC prevista, 12 DFC realizada, 14 Vários lançamentos).
+  ~3.392 palavras. Lote 00-15 lançado pelo agente (coordenador recolhe). 5 handlers novos e a semente `lote-categoria`.
+  Ilustrações pendentes: ilu11_dfc_previsto, ilu15_historico_pdf. **Pedido ao mundo base**: `bank_account_id/name` em
+  `linhasDRE` (senão o filtro "Conta bancária" do Histórico fica vazio). A aula não tem o cartão "Lucro Líquido".
+  **Decisão do Kaik pendente**: citar só as "Outras visões" e deixar de fora as duas moedas?

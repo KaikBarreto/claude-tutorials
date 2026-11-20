@@ -1,6 +1,6 @@
 {
  "name": "t15-cap03",
- "title": "T15 · Cap. 3 · O Relatório Financeiro (narração ESTIMADA 84,6 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T15 · Cap. 3 · O Relatório Financeiro (narração ESTIMADA 116,7 s; marcas L1..L11 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t15-cap03",
  "pace": 0.5,
  "cps": 40,
@@ -144,18 +144,42 @@
    "label": "abre o filtro de período"
   },
   {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Personalizado"
+   },
+   "seconds": 0.5,
+   "at": 14.32,
+   "label": "Personalizado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Todos os tempos"
+   },
+   "seconds": 0.5,
+   "at": 19.48,
+   "label": "Todos os tempos",
+   "optional": true,
+   "timeout": 4
+  },
+  {
    "do": "click",
    "target": {
     "role": "option",
     "name": "Mês passado"
    },
-   "at": 14.32,
+   "at": 21.76,
    "label": "Mês passado"
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 19.1
+   "at": 26.54
   },
   {
    "do": "hover",
@@ -163,7 +187,7 @@
     "selector": "main button[role=combobox]:has-text(\"Mês passado\")"
    },
    "seconds": 0.5,
-   "at": 22.72,
+   "at": 30.16,
    "label": "filtro em Mês passado",
    "optional": true,
    "timeout": 4
@@ -171,7 +195,7 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 24.54
+   "at": 31.98
   },
   {
    "do": "hover",
@@ -179,7 +203,7 @@
     "selector": "#tab-btn-dashboard"
    },
    "seconds": 0.3,
-   "at": 29.19,
+   "at": 37.09,
    "label": "aba Dashboard",
    "optional": true,
    "timeout": 4
@@ -190,8 +214,19 @@
     "selector": "#tab-btn-dre"
    },
    "seconds": 0.3,
-   "at": 30.55,
+   "at": 38.45,
    "label": "aba DRE",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#tab-btn-dfc"
+   },
+   "seconds": 0.3,
+   "at": 39.81,
+   "label": "aba DFC",
    "optional": true,
    "timeout": 4
   },
@@ -201,7 +236,7 @@
     "selector": "#tab-btn-centros-custo"
    },
    "seconds": 0.3,
-   "at": 32.0,
+   "at": 41.26,
    "label": "aba Centros de Custo",
    "optional": true,
    "timeout": 4
@@ -212,7 +247,7 @@
     "selector": "#tab-btn-historico"
    },
    "seconds": 0.4,
-   "at": 33.82,
+   "at": 43.08,
    "label": "aba Histórico",
    "optional": true,
    "timeout": 4
@@ -220,14 +255,14 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 38.55
+   "at": 47.81
   },
   {
    "do": "click",
    "target": {
     "selector": "#tab-btn-centros-custo"
    },
-   "at": 39.16,
+   "at": 48.42,
    "label": "Centros de Custo"
   },
   {
@@ -236,9 +271,52 @@
    "timeout": 10
   },
   {
+   "do": "mark",
+   "name": "L6",
+   "at": 52.49
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "vs. período anterior",
+    "within": "main",
+    "nth": 0
+   },
+   "seconds": 1.0,
+   "at": 52.97,
+   "label": "vs. período anterior nos cartões",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 58.69
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.getClientRects().length&&(e=>e.children.length===0?e.textContent.trim():[...e.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent).join('').trim())(e)===\"Receitas x despesas por centro\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-120);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 58.69,
+   "label": "desce até o gráfico por centro"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main .recharts-bar-rectangle >> nth=0"
+   },
+   "at": 59.57,
+   "label": "coluna do Pátio do gráfico",
+   "timeout": 6
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 67.01
+  },
+  {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.getClientRects().length&&(e=>e.children.length===0?e.textContent.trim():[...e.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent).join('').trim())(e)===\"Ranking dos centros de custo\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-170);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 43.71,
+   "at": 67.01,
    "label": "desce até o Ranking dos centros de custo"
   },
   {
@@ -250,7 +328,7 @@
     "nth": -1
    },
    "seconds": 0.5,
-   "at": 46.09,
+   "at": 70.22,
    "label": "Pátio no ranking",
    "optional": true,
    "timeout": 4
@@ -264,20 +342,67 @@
     "nth": -1
    },
    "seconds": 0.5,
-   "at": 49.81,
+   "at": 73.93,
    "label": "Coleta no ranking",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
-   "name": "L6",
-   "at": 55.15
+   "name": "L9",
+   "at": 79.27
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Movimentações",
+    "exact": true,
+    "within": "main",
+    "nth": 0
+   },
+   "at": 80.23,
+   "label": "Movimentações (histórico do centro)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Buscar por descrição, categoria ou valor",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "lançamentos",
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 82.87,
+   "label": "o Histórico já filtrado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#tab-btn-centros-custo"
+   },
+   "at": 86.79,
+   "label": "volta para Centros de Custo"
+  },
+  {
+   "do": "waitFor",
+   "text": "Ranking dos centros de custo",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L10",
+   "at": 87.29
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.getClientRects().length&&(e=>e.children.length===0?e.textContent.trim():[...e.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent).join('').trim())(e).includes(\"Esta vis\\u00e3o considera receitas\"));if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-420);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 55.15,
+   "at": 87.29,
    "label": "desce até o aviso azul"
   },
   {
@@ -287,20 +412,20 @@
     "within": "main"
    },
    "seconds": 1.0,
-   "at": 56.31,
+   "at": 88.45,
    "label": "aviso azul dos centros de custo (ZOOM)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
-   "name": "L7",
-   "at": 65.83
+   "name": "L11",
+   "at": 97.97
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=document.querySelector('main h1')||document.querySelector('main *');const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;if(y0<3)return 'ok';const dy=-y0;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo'})()",
-   "at": 66.63,
+   "at": 98.77,
    "label": "sobe ao cabeçalho"
   },
   {
@@ -309,7 +434,7 @@
     "selector": "main h1"
    },
    "seconds": 0.8,
-   "at": 71.31,
+   "at": 103.46,
    "label": "cabeçalho do Relatório Financeiro",
    "optional": true,
    "timeout": 4
@@ -322,7 +447,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 84.56
+   "at": 116.7
   }
  ]
 }

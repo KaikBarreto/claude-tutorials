@@ -1,0 +1,419 @@
+{
+ "name": "t15-cap14",
+ "title": "T15 · Cap. 14 · Vários lançamentos de uma vez (narração ESTIMADA 72,8 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "seed": "t15-cap14",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 470
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.60.18",
+  "notification_shown_version": "1.60.18",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true",
+  "financial-report-tab": "historico"
+ },
+ "seedExtra": [
+  "t14/inicio",
+  "t14/apos-cap02",
+  "t14/apos-cap03",
+  "t14/apos-cap04",
+  "t14/apos-cap06",
+  "t14/apos-cap07",
+  "t14/apos-cap08",
+  "t14/apos-cap09",
+  "t14/apos-cap10",
+  "t14/apos-cap11",
+  "t14/apos-cap12",
+  "t14/apos-cap14",
+  "t15/inicio",
+  "t15/apos-cap01",
+  "t15/apos-cap02",
+  "t15/apos-cap10",
+  "t15/lote-categoria"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/relatorio-financeiro"
+  },
+  {
+   "do": "waitFor",
+   "text": "Visão completa das finanças do seu negócio",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[role=combobox]:has-text(\"Este mês\")"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Mês passado"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Exportar",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Despesas"
+   }
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&!/fica indispon/i.test(m[0])&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "input[placeholder^=\"Buscar por descrição\"]"
+   },
+   "at": 0.4,
+   "label": "campo de busca"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "input[placeholder^=\"Buscar por descrição\"]"
+   },
+   "text": "Diesel",
+   "at": 0.03,
+   "label": "busca: Diesel",
+   "noClick": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Diesel do caminhão\", \"Outras Despesas\", \"Combustível\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
+   "label": "confere os diesel com a categoria errada"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Outras Despesas",
+    "exact": true,
+    "within": "main",
+    "nth": 0
+   },
+   "seconds": 1.0,
+   "at": 5.52,
+   "label": "selo Outras Despesas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 17.54
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Editar categoria",
+    "exact": true,
+    "nth": 1
+   },
+   "at": 19.54,
+   "label": "lápis da linha de 16/10"
+  },
+  {
+   "do": "waitFor",
+   "text": "Pesquisar categoria",
+   "timeout": 6,
+   "optional": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]"
+   },
+   "at": 20.32,
+   "label": "abre a lista de categorias"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Combustível"
+   },
+   "at": 21.74,
+   "label": "Combustível"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 22.44,
+   "label": "Salvar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Categoria atualizada",
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 23.2
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Selecionar lançamentos",
+    "exact": true
+   },
+   "at": 29.53,
+   "label": "Selecionar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Selecione até 100 lançamentos manuais de caixa ou banco.",
+   "timeout": 6
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main [role=checkbox][aria-label^=\"Selecionar lançamento \"] >> nth=2"
+   },
+   "at": 30.52,
+   "label": "marca o diesel de 09/10"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main [role=checkbox][aria-label^=\"Selecionar lançamento \"] >> nth=3"
+   },
+   "at": 31.7,
+   "label": "marca o diesel de 02/10"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"2 lançamentos selecionados\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
+   "label": "confere dois lançamentos marcados"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 36.23
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Alterar categoria",
+    "exact": true
+   },
+   "at": 36.93,
+   "label": "Alterar categoria"
+  },
+  {
+   "do": "waitFor",
+   "text": "Alterar categoria de 2 lançamentos",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]"
+   },
+   "at": 38.25,
+   "label": "abre a lista de categorias"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Combustível"
+   },
+   "at": 39.11,
+   "label": "Combustível"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Valores e saldos não mudam",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.5,
+   "at": 40.28,
+   "label": "o resumo da janela (ZOOM)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 45.99
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Aplicar categoria",
+    "exact": true
+   },
+   "at": 46.69,
+   "label": "Aplicar categoria"
+  },
+  {
+   "do": "waitFor",
+   "text": "Categoria de 2 lançamentos atualizada.",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Combustível\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
+   "label": "confere as linhas com o selo novo"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 53.71
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Selecionar lançamentos",
+    "exact": true
+   },
+   "at": 54.41,
+   "label": "Selecionar de novo"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main [role=checkbox][aria-label^=\"Selecionar lançamento \"] >> nth=0"
+   },
+   "at": 57.07,
+   "label": "marca uma linha de banco"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main [role=checkbox][aria-label^=\"Selecionar lançamento \"] >> nth=1"
+   },
+   "label": "marca outra linha de banco"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Excluir selecionados",
+    "exact": true
+   },
+   "seconds": 1.2,
+   "at": 55.05,
+   "label": "Excluir selecionados (ativo)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar seleção de lançamentos",
+    "exact": true
+   },
+   "at": 63.83,
+   "label": "Cancelar seleção"
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 64.84
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 72.79
+  }
+ ]
+}

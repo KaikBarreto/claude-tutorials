@@ -451,9 +451,19 @@
    "timeout": 4
   },
   {
-   "do": "mark",
-   "name": "L5",
-   "at": 54.06
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Coletas & Logística",
+    "within": "aside, [data-sidebar=sidebar]"
+   },
+   "at": 53.06,
+   "label": "abre Coletas & Logística",
+   "unless": {
+    "role": "link",
+    "name": "Ordens de Coleta",
+    "within": "aside, [data-sidebar=sidebar]"
+   }
   },
   {
    "do": "click",
@@ -462,7 +472,6 @@
     "name": "Ordens de Coleta",
     "within": "aside, [data-sidebar=sidebar]"
    },
-   "at": 54.06,
    "label": "Ordens de Coleta"
   },
   {
@@ -481,6 +490,11 @@
    "do": "waitFor",
    "text": "Checklist",
    "timeout": 15
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 54.06
   },
   {
    "do": "hover",
