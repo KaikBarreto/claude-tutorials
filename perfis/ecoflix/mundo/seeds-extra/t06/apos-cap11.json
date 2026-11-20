@@ -1,16 +1,138 @@
 {
- "_doc": "T06 · depois do cap11: caixa #85 reaberto às 17:43 (volta como estava antes do fechamento; a linha \"Fechamento de caixa\" fica, como o app faz).",
+ "_doc": "T06 · depois do cap11 (08:5x): despesa \"Gás da empilhadeira\" R$ 50,00 em dinheiro no caixa #85 e receita \"Aluguel de caçamba\" R$ 120,00 por Pix na Conta Principal; 2 contas a receber pagas \"Aluguel de caçamba\" (R$ 1.400,00, 26/08 e 10/09) que espelham as entradas de agosto e setembro (baixas das entradas @id:bt.45 e @id:bt.74: sem dinheiro novo) para o padrão da Nova Receita.",
+ "cash_transactions": [
+  {
+   "id": "@id:ct.t06.gas",
+   "company_id": "@id:company.reciclavale",
+   "cash_register_id": "@id:caixa.85",
+   "type": "withdrawal",
+   "amount": 50.0,
+   "description": "Gás da empilhadeira",
+   "transaction_at": "2026-11-10T11:56:00.000Z",
+   "transaction_date": "2026-11-10",
+   "created_at": "2026-11-10T11:56:00.000Z",
+   "created_by": "@id:user.rafael",
+   "excluded_from_dre": false,
+   "category_id": "@id:categoria.combustivel",
+   "cost_center_id": "@id:cc.patio"
+  }
+ ],
+ "bank_transactions": [
+  {
+   "id": "@id:bt.t06.aluguel",
+   "company_id": "@id:company.reciclavale",
+   "bank_account_id": "@id:banco.principal",
+   "type": "deposit",
+   "amount": 120.0,
+   "description": "Aluguel de caçamba",
+   "transaction_at": "2026-11-10T11:58:00.000Z",
+   "transaction_date": "2026-11-10",
+   "created_at": "2026-11-10T11:58:00.000Z",
+   "created_by": "@id:user.rafael",
+   "source": "manual",
+   "excluded_from_dre": false,
+   "balance_after": 38501.27,
+   "origin_company_id": "@id:company.reciclavale",
+   "category_id": "@id:categoria.aluguel_cacamba",
+   "cost_center_id": "@id:cc.coleta",
+   "payment_method": "transfer",
+   "cash_register_id": "@id:caixa.85"
+  }
+ ],
+ "financial_bills": [
+  {
+   "id": "@id:titulo.t06.aluguel1",
+   "company_id": "@id:company.reciclavale",
+   "direction": "receivable",
+   "description": "Aluguel de caçamba",
+   "amount": 1400,
+   "currency": "BRL",
+   "due_date": "2026-08-26",
+   "status": "paid",
+   "paid_amount": 1400,
+   "paid_at": "2026-08-26T13:15:00.000Z",
+   "category_id": "@id:categoria.aluguel_cacamba",
+   "cost_center_id": "@id:cc.coleta",
+   "expected_bank_account_id": "@id:banco.principal",
+   "expected_payment_method": "transfer",
+   "created_by": "@id:user.rafael",
+   "created_at": "2026-08-26T13:15:00.000Z",
+   "updated_at": "2026-08-26T13:15:00.000Z"
+  },
+  {
+   "id": "@id:titulo.t06.aluguel2",
+   "company_id": "@id:company.reciclavale",
+   "direction": "receivable",
+   "description": "Aluguel de caçamba",
+   "amount": 1400,
+   "currency": "BRL",
+   "due_date": "2026-09-10",
+   "status": "paid",
+   "paid_amount": 1400,
+   "paid_at": "2026-09-10T13:15:00.000Z",
+   "category_id": "@id:categoria.aluguel_cacamba",
+   "cost_center_id": "@id:cc.coleta",
+   "expected_bank_account_id": "@id:banco.principal",
+   "expected_payment_method": "transfer",
+   "created_by": "@id:user.rafael",
+   "created_at": "2026-09-10T13:15:00.000Z",
+   "updated_at": "2026-09-10T13:15:00.000Z"
+  }
+ ],
+ "bill_payments": [
+  {
+   "id": "@id:pgto.t06.aluguel1",
+   "company_id": "@id:company.reciclavale",
+   "bill_id": "@id:titulo.t06.aluguel1",
+   "amount": 1400,
+   "currency": "BRL",
+   "payment_method": "transfer",
+   "paid_date": "2026-08-26",
+   "bank_account_id": "@id:banco.principal",
+   "bank_transaction_id": "@id:bt.45",
+   "created_by": "@id:user.rafael",
+   "created_at": "2026-08-26T13:15:00.000Z"
+  },
+  {
+   "id": "@id:pgto.t06.aluguel2",
+   "company_id": "@id:company.reciclavale",
+   "bill_id": "@id:titulo.t06.aluguel2",
+   "amount": 1400,
+   "currency": "BRL",
+   "payment_method": "transfer",
+   "paid_date": "2026-09-10",
+   "bank_account_id": "@id:banco.principal",
+   "bank_transaction_id": "@id:bt.74",
+   "created_by": "@id:user.rafael",
+   "created_at": "2026-09-10T13:15:00.000Z"
+  }
+ ],
  "_patch": {
+  "bank_accounts": [
+   {
+    "match": {
+     "id": "@id:banco.principal"
+    },
+    "set": {
+     "balance": 38501.27
+    }
+   },
+   {
+    "match": {
+     "id": "@id:banco.cofre"
+    },
+    "set": {
+     "balance": 21450.0
+    }
+   }
+  ],
   "cash_register": [
    {
     "match": {
      "id": "@id:caixa.85"
     },
     "set": {
-     "status": "open",
-     "closing_balance": null,
-     "closed_at": null,
-     "reopened_at": "2026-11-10T20:43:00.000Z"
+     "opening_balance": 1450.0
     }
    }
   ]

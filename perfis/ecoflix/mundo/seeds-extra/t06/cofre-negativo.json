@@ -1,0 +1,33 @@
+{
+ "_doc": "T06 · cap06 (aplicada por /__dev/seed no meio do capítulo): saída de R$ 1.200,00 lançada direto no cofre (Conta DINHEIRO), sem caixa. O cofre fica R$ 1.200,00 abaixo do que está dentro dos caixas abertos: disponível −1.200,00.",
+ "bank_transactions": [
+  {
+   "id": "@id:bt.t06.cofre_negativo",
+   "company_id": "@id:company.reciclavale",
+   "bank_account_id": "@id:banco.cofre",
+   "type": "expense",
+   "amount": -1200.0,
+   "description": "Saída direta do cofre",
+   "transaction_at": "2026-11-10T11:43:00.000Z",
+   "transaction_date": "2026-11-10",
+   "created_at": "2026-11-10T11:43:00.000Z",
+   "created_by": "@id:user.rafael",
+   "source": "manual",
+   "excluded_from_dre": false,
+   "balance_after": 341337.55,
+   "origin_company_id": "@id:company.reciclavale"
+  }
+ ],
+ "_patch": {
+  "bank_accounts": [
+   {
+    "match": {
+     "id": "@id:banco.cofre"
+    },
+    "set": {
+     "balance": 341337.55
+    }
+   }
+  ]
+ }
+}

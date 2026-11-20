@@ -1,0 +1,87 @@
+{
+ "_doc": "T06 · depois do cap12 (17:3x): sangria de R$ 5.000,00 do caixa #86 (Marcos) para a Conta Principal, \"Depósito do fim do dia\".",
+ "cash_transactions": [
+  {
+   "id": "@id:ct.t06.sangria86",
+   "company_id": "@id:company.reciclavale",
+   "cash_register_id": "@id:caixa.86",
+   "type": "transfer",
+   "amount": -5000.0,
+   "description": "↑ SANGRIA · Caixa #86 → Conta Principal (Depósito do fim do dia)",
+   "transaction_at": "2026-11-10T20:31:00.000Z",
+   "transaction_date": "2026-11-10",
+   "created_at": "2026-11-10T20:31:00.000Z",
+   "created_by": "@id:user.marcos",
+   "excluded_from_dre": false,
+   "group_id": "@id:grupo.t06.sangria"
+  }
+ ],
+ "bank_transactions": [
+  {
+   "id": "@id:bt.t06.sangria_banco",
+   "company_id": "@id:company.reciclavale",
+   "bank_account_id": "@id:banco.principal",
+   "type": "transfer",
+   "amount": 5000.0,
+   "description": "↓ SANGRIA · Caixa #86 → Conta Principal (Depósito do fim do dia)",
+   "transaction_at": "2026-11-10T20:31:00.000Z",
+   "transaction_date": "2026-11-10",
+   "created_at": "2026-11-10T20:31:00.000Z",
+   "created_by": "@id:user.rafael",
+   "source": "manual",
+   "excluded_from_dre": false,
+   "balance_after": 45501.27,
+   "origin_company_id": "@id:company.reciclavale",
+   "group_id": "@id:grupo.t06.sangria",
+   "cash_register_id": "@id:caixa.86"
+  },
+  {
+   "id": "@id:bt.t06.sangria_cofre",
+   "company_id": "@id:company.reciclavale",
+   "bank_account_id": "@id:banco.cofre",
+   "type": "transfer",
+   "amount": -5000.0,
+   "description": "↓ Débito do Cofre · Sangria Caixa #86 → Conta Principal (Depósito do fim do dia)",
+   "transaction_at": "2026-11-10T20:31:00.000Z",
+   "transaction_date": "2026-11-10",
+   "created_at": "2026-11-10T20:31:00.000Z",
+   "created_by": "@id:user.rafael",
+   "source": "manual",
+   "excluded_from_dre": false,
+   "balance_after": 15957.1,
+   "origin_company_id": "@id:company.reciclavale",
+   "group_id": "@id:grupo.t06.sangria",
+   "cash_register_id": "@id:caixa.86"
+  }
+ ],
+ "_patch": {
+  "bank_accounts": [
+   {
+    "match": {
+     "id": "@id:banco.principal"
+    },
+    "set": {
+     "balance": 45501.27
+    }
+   },
+   {
+    "match": {
+     "id": "@id:banco.cofre"
+    },
+    "set": {
+     "balance": 15957.1
+    }
+   }
+  ],
+  "cash_register": [
+   {
+    "match": {
+     "id": "@id:caixa.86"
+    },
+    "set": {
+     "opening_balance": 15000.0
+    }
+   }
+  ]
+ }
+}
