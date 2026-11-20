@@ -66,7 +66,7 @@ Ele também abre em Este mês. Pra fechar outubro, escolho Mês passado.
 Uma dica: o Relatório conta só os pedidos finalizados, pela data de cada pedido. Pedido excluído ou estornado fica de fora.
 Em cima, quatro cartões: Total Comprado, Total Vendido, Lucro e Projeção de Lucro.
 Clicando num cartão, ele abre os detalhes, como o preço médio de compra e o material que mais comprou.
-O Total Vendido e o Lucro abrem do mesmo jeito: o material que mais vendeu, o mais lucrativo, a margem. E embaixo, como o mês foi pago: dinheiro, Pix, saldo e o que ficou em aberto.
+O Total Vendido e o Lucro abrem do mesmo jeito: o material que mais vendeu, o mais lucrativo, a margem. E embaixo, como o mês foi pago: dinheiro, Pix e saldo.
 A Projeção de Lucro é uma estimativa.
 Ela imagina que você vendeu tudo o que comprou no mês, pelo preço médio de venda, ou pelo da tabela se o material não teve venda. É lucro bruto, sem as despesas.
 Uma dica: o saldo da tela de Estoque não é o comprado menos o vendido daqui.

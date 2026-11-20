@@ -822,7 +822,7 @@ def cap08():
     c.hover(P('Material mais lucrativo', exact=True), 1.0, w=(6, 'lucrativo,'), label='Material mais lucrativo e a margem')
     c.ev(js_rola_ate('Distribuição por forma de pagamento', y=300, prefixo=True), w=(6, 'embaixo', None, 0.3), label='desce até a Distribuição por forma de pagamento')
     c.hover(P('Distribuição por forma de pagamento', exact=True, nth=0), 2.6, w=(6, 'dinheiro,'), label='[ZOOM] Distribuição por forma de pagamento: Dinheiro, Pix/Transferência, Saldo e Em aberto')
-    c.confere('main', ['Distribuição por forma de pagamento', 'Dinheiro', 'Pix/Transferência', 'Saldo', 'Em aberto'], 'a distribuição por forma de pagamento')
+    c.confere('main', ['Distribuição por forma de pagamento', 'Dinheiro', 'Pix/Transferência', 'Saldo'], 'a distribuição por forma de pagamento')
     c.ev(js_rola_topo(), w=(7, 'A', None, 0.9), label='volta ao topo')
     c.click(BTN('Projeção de Lucro'), w=(7, 'Projeção'), label='abre Projeção de Lucro')
     c.hover(P('Estimativa: assume a venda', exact=False), 1.6, w=(7, 'estimativa.'), label='[ZOOM] explicação da Projeção de Lucro (estimativa)')
@@ -843,7 +843,7 @@ def cap09():
     c.hover(RCEL('Cobre mel', 3), 1.0, w=(2, 'novecentos'), label='Qtd. Comprada 980,000')
     c.hover(RCEL('Cobre mel', 4), 1.4, w=(2, 'quarenta', 0), label='Valor Comprado R$ 41.650,00')
     c.hover(RCEL('Cobre mel', 5), 2.4, w=(2, 'preço'), label='Preço Médio Compra R$ 42,50')
-    c.confere('row:Cobre mel', ['980,000', 'R$ 41.650,00', 'R$ 42,50', '1.000,000', 'R$ 47.900,00', 'R$ 47,90', 'R$ 5.400,00', 'R$ 6.250,00', '13,05'],
+    c.confere('row:Cobre mel', ['980kg', 'R$ 41.650,00', 'R$ 42,50', '1.000kg', 'R$ 47.900,00', 'R$ 47,90', 'R$ 5.400,00', 'R$ 6.250,00', '13%'],
               'Cobre mel de outubro (compra, venda, lucro s/ vendas, resultado, margem)')
     # L3: ilustração do peso líquido (robô parado)
     c.hover(RCEL('Cobre mel', 6), 1.0, w=(4, 'vendeu'), label='[ZOOM] Qtd. Vendida 1.000,000')
@@ -856,7 +856,7 @@ def cap09():
     c.hover(RCEL('Bateria automotiva', 2), 0.8, w=(7, 'bateria'), label='linha Bateria automotiva')
     c.hover(RCEL('Bateria automotiva', 3), 1.4, w=(7, 'trezentos'), label='[ZOOM] Bateria automotiva: Qtd. Comprada 1.320,000')
     c.hover(RCEL('Bateria automotiva', 6), 1.4, w=(7, 'erro.'), label='[ZOOM] Bateria automotiva: Qtd. Vendida 0,000')
-    c.confere('row:Bateria automotiva', ['1.320,000', 'R$ 4.092,00', '0,000'], 'Bateria automotiva 1.320,000 comprados e 0,000 vendidos')
+    c.confere('row:Bateria automotiva', ['1.320kg', 'R$ 4.092,00', ' 0kg'], 'Bateria automotiva 1.320,000 comprados e 0,000 vendidos')
     # L8 (1.60.18): o balão do Resultado (R$ 0,00 e a conta inteira)
     c.hover(RCEL('Bateria automotiva', 10), 4.0, w=(8, 'Resultado', 0), label='[ZOOM] Resultado da bateria (R$ 0,00) e o balão da conta')
     c.confere(POP, ['vendidos', 'comprados', 'prejuízo', 'R$ 0,00'], 'o balão do Resultado: vendidos, comprados, prejuízo e Lucro exibido R$ 0,00')

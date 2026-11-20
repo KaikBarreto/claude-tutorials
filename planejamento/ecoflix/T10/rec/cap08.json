@@ -1,6 +1,6 @@
 {
  "name": "t10-cap08",
- "title": "T10 · Cap. 8 · Comprado, vendido e lucro (narração 93,0 s ESTIMADA; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário rafael)",
+ "title": "T10 · Cap. 8 · Comprado, vendido e lucro (narração 91,1 s ESTIMADA; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário rafael)",
  "seed": "t10-cap08",
  "pace": 0.5,
  "cps": 14,
@@ -405,26 +405,40 @@
     "exact": true,
     "nth": 0
    },
-   "seconds": 2.6,
+   "seconds": 1.35,
    "at": 48.81,
    "label": "[ZOOM] Distribuição por forma de pagamento: Dinheiro, Pix/Transferência, Saldo e Em aberto",
    "optional": true,
    "timeout": 4
   },
   {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Distribuição por forma de pagamento\", \"Dinheiro\", \"Pix/Transferência\", \"Saldo\", \"Em aberto\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere a distribuição por forma de pagamento"
-  },
-  {
    "do": "mark",
    "name": "L7",
-   "at": 52.61
+   "at": 50.71
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Distribuição por forma de pagamento",
+    "within": "main",
+    "exact": true,
+    "nth": 0
+   },
+   "seconds": 1.05,
+   "at": 50.71,
+   "label": "[ZOOM] Distribuição por forma de pagamento: Dinheiro, Pix/Transferência, Saldo e Em aberto (continua)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Distribuição por forma de pagamento\", \"Dinheiro\", \"Pix/Transferência\", \"Saldo\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a distribuição por forma de pagamento"
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const c=rolagem(document.querySelector(\"main\"+' *'));if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;if(y0<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0*(1-e);p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
-   "at": 52.61,
+   "at": 50.71,
    "label": "volta ao topo"
   },
   {
@@ -434,7 +448,7 @@
     "name": "Projeção de Lucro",
     "exact": true
    },
-   "at": 52.96,
+   "at": 51.06,
    "label": "abre Projeção de Lucro"
   },
   {
@@ -444,8 +458,8 @@
     "within": "main",
     "exact": false
    },
-   "seconds": 0.36,
-   "at": 54.93,
+   "seconds": 0.37,
+   "at": 53.03,
    "label": "[ZOOM] explicação da Projeção de Lucro (estimativa)",
    "optional": true,
    "timeout": 4
@@ -453,7 +467,7 @@
   {
    "do": "mark",
    "name": "L8",
-   "at": 55.84
+   "at": 53.95
   },
   {
    "do": "hover",
@@ -462,8 +476,8 @@
     "within": "main",
     "exact": false
    },
-   "seconds": 1.04,
-   "at": 55.84,
+   "seconds": 1.03,
+   "at": 53.95,
    "label": "[ZOOM] explicação da Projeção de Lucro (estimativa) (continua)",
    "optional": true,
    "timeout": 4
@@ -476,12 +490,12 @@
   {
    "do": "mark",
    "name": "L9",
-   "at": 68.95
+   "at": 67.05
   },
   {
    "do": "mark",
    "name": "L10",
-   "at": 75.29
+   "at": 73.4
   },
   {
    "do": "eval",
@@ -491,7 +505,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 92.96
+   "at": 91.07
   }
  ]
 }

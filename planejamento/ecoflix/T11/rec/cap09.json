@@ -1,6 +1,6 @@
 {
  "name": "t11-cap09",
- "title": "T11 · Cap. 9 · Perda acima da tolerância (narração 74,0 s ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T17:30:00-03:00)",
+ "title": "T11 · Cap. 9 · Perda acima da tolerância (narração 84,2 s ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T17:30:00-03:00)",
  "seed": "t11-cap09",
  "pace": 0.5,
  "cps": 9,
@@ -358,13 +358,48 @@
    "timeout": 4
   },
   {
+   "do": "mark",
+   "name": "L6",
+   "at": 62.0
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog]:has(#entry-date) *\")].filter(e=>e.textContent.trim().startsWith(\"Observa\\u00e7\\u00e3o\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-420);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 62.13,
+   "label": "desce até a Observação (opcional)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#entry-note"
+   },
+   "at": 63.78,
+   "label": "[ZOOM] campo Observação (opcional)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#entry-note"
+   },
+   "text": "Turno da tarde, prensa sem parada.",
+   "cps": 30,
+   "at": 67.55,
+   "label": "digita o recado do dia",
+   "noClick": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"Turno da tarde, prensa sem parada.\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog]:has(#entry-date)\"+' input, '+\"[role=dialog]:has(#entry-date)\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a observação digitada"
+  },
+  {
    "do": "click",
    "target": {
     "role": "button",
     "name": "Salvar lançamento",
     "exact": true
    },
-   "at": 61.5,
+   "at": 71.65,
    "label": "Salvar lançamento",
    "noScroll": true
   },
@@ -387,8 +422,8 @@
   },
   {
    "do": "mark",
-   "name": "L6",
-   "at": 62.0
+   "name": "L7",
+   "at": 72.15
   },
   {
    "do": "hover",
@@ -397,7 +432,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 1.0,
-   "at": 69.42,
+   "at": 79.57,
    "label": "o dia lançado na ordem",
    "optional": true,
    "timeout": 4
@@ -410,7 +445,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.8,
-   "at": 71.93,
+   "at": 82.07,
    "label": "Produzido até agora 480 Kg",
    "optional": true,
    "timeout": 4
@@ -423,7 +458,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 74.04
+   "at": 84.18
   }
  ]
 }

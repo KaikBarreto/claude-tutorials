@@ -1,4 +1,31 @@
-# Inventário · T11 Produção (EcoSistema 1.59.154)
+# Inventário · T11 Produção (EcoSistema 1.60.18)
+
+> **Atualização 1.60.18 (20/11).** Esta seção vale sobre o resto do arquivo, que ainda descreve o 1.59.154. Código lido em
+> `/dev/shm/ecoflix-src/src/components/producao/` (só leitura). Rótulos copiados do código.
+> - **Abas**: horizontais, no alto (`nav[aria-label="Navegação da seção"]`; `#tab-btn-orders|quick|recipes|machines|report|settings`).
+> - **Ficha técnica**: formulário em linha. Nome `#recipe-name-inline` (placeholder "Nova ficha técnica" ou o nome do produto);
+>   "Unidade produzida" (`#recipe-unit`); "Peças por jogo" (`#recipe-pack`); "Receita de produção"; "Para produzir 1 {unidade}, ...";
+>   "1 · O que entra"; seta "vira"; cartão "2 · Resultado" / "Produto final" ("Cada produção gera 1 {un}", "Produto que será produzido",
+>   botão "Cadastrar novo produto", "Rendimento", "Consumo previsto"); "Outros resultados da produção · opcional"; botão "Excluir ficha"
+>   (`aria-label`, no alto à direita). **Perda padrão**: botão dentro do cartão da matéria-prima, campo `loss-pct-*`, opção
+>   "Vira outro material", "Escolher material da sobra", selo "Vem da perda" no resultado.
+> - **Kanban**: lápis `button[aria-label='Editar ordem']` (aparece no hover); menu da coluna com "Excluir coluna"; sinal de check com
+>   título "Coluna de conclusão" (some depois de salvar a coluna: bug antigo, a verificar). Botões `Lista` / `Kanban`; `#prod-filter-status`.
+> - **Lançamento do dia**: campo "Observação" (`#entry-note`) agora grava (`p_note`). Editar um dia abre "Editar lançamento do dia"; ao
+>   fechar, "Descartar este lançamento?" com o botão "Descartar".
+> - **Finalizar**: aviso "Ordem finalizada — custo/{unidade} R$ x" (ex.: "custo/Kg R$ 6,43"); "Custo por {unidade}"; o cartão mostra
+>   "R$ x/{unidade}". A janela da ordem e a Conversão ainda dizem **"Custo estimado por peça"**; o relatório diz "Custo/peça" e o
+>   cabeçalho do gráfico diz "Total: N peças" (fixo no código: achado).
+> - **Conversão**: `#quickconv-qty`, busca "Escreva o nome ou código do produto", "Confirmar", "Histórico do período",
+>   `button[aria-label='Estornar produção']`, aviso "Produção registrada — custo/peça R$ ...".
+> - **Máquinas**: "Nova máquina" (placeholder "Ex.: Prensa 02"), aviso "Máquina adicionada"; o campo "Máquina" (`#prod-machine`) só aparece
+>   na ordem com máquinas cadastradas; filtro `#prod-report-machine` ("MÁQUINA") no relatório.
+> - **Relatório**: "Exportar" › PDF abre aba nova (`openPdfInTab`, `#pdf-frame`); "Ver matriz completa" em "Por funcionário".
+> - **Configurações**: ganhou sobras no custo, régua do custo, exigir funcionário, agrupamento ("jogo") com "Lançar produção em jogos" e
+>   `show_pack_conversion_on_orders` (sem tela).
+> - **Histórico de Materiais**: a busca tem o placeholder "Buscar código ou material" (não é texto visível: usar o placeholder).
+
+## Base (1.59.154, ainda válida onde não contradita o bloco acima)
 
 Código: `/home/claude/ecoflix/app-src-1.59.154/` (só leitura). Caminhos relativos a `src/`. Só o que a aula usa.
 A cópia não tem `supabase/migrations`: o comportamento das RPCs vem do cliente e da Central de Ajuda do próprio app

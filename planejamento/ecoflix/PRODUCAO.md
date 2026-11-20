@@ -967,3 +967,6 @@ Decisões:
   em `src/lib/caixa.ts`) aponta para a aula 5.5 da EcoFlix antiga; trocar quando a trilha nova for publicada.
   T06 cap03 fechado pelo coordenador (20/11 06:11): no 1.60.18 o menu da linha do histórico abre no HOVER (o clique o
   fechava) e Todas/Dinheiro/Pix/Transferência viraram botões (não `role=tab`). T06: 16/16 no rápido.
+  T04 fechado pelo coordenador (20/11 06:20): cadeia 04-09, 12, 17 relançada; 09 e 17 falharam uma vez por clique que não
+  pegou (instável) e passaram na repetição. **T04: 18/18 no rápido.** Completos pendentes: 04 e 16 (sem teste das correções);
+  gestos de 06, 07, 09, 12, 13 a rever com a voz.

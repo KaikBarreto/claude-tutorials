@@ -1,6 +1,6 @@
 {
  "name": "t11-cap14",
- "title": "T11 · Cap. 14 · Recapitulando (narração 54,2 s ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T17:30:00-03:00)",
+ "title": "T11 · Cap. 14 · Excluir uma ordem concluída (narração 70,5 s ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T17:30:00-03:00)",
  "seed": "t11-cap14",
  "pace": 0.5,
  "cps": 9,
@@ -27,8 +27,7 @@
   "t11/apos-cap06",
   "t11/apos-cap09",
   "t11/apos-cap10",
-  "t11/apos-cap12",
-  "t11/apos-cap13"
+  "t11/apos-cap12"
  ],
  "prewarm": [
   "/login"
@@ -77,6 +76,15 @@
   },
   {
    "do": "goto",
+   "url": "/historico-materiais"
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "goto",
    "url": "/producao"
   },
   {
@@ -109,100 +117,273 @@
    "at": 0
   },
   {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"#3\", \"#2\", \"#1\", \"Cobre mel\", \"R$ 1.440,00\", \"R$ 28,80/Kg\", \"03/11/2026\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere as ordens 1 e 2 do Cobre mel"
+  },
+  {
    "do": "type",
    "target": {
-    "selector": "main div.overflow-x-auto"
+    "selector": "main div.rounded-xl:has(span:text-is('#2'))"
    },
    "text": "",
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 0.4,
-   "label": "o quadro no estado final (base da montagem)"
+   "at": 3.16,
+   "label": "[ZOOM] os cartões #2 e #1 do Cobre mel"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.group:has(span:text-is('#1'))"
+   },
+   "seconds": 0.5,
+   "at": 4.13,
+   "label": "a ordem #1",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.group:has(span:text-is('#2')) p.font-medium"
+   },
+   "seconds": 0.8,
+   "at": 4.51,
+   "label": "a ordem #2",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 11.18
+   "at": 10.19
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main div.group:has(span:text-is('#3')) p.font-medium"
+    "selector": "main div.group:has(span:text-is('#2')) p.font-medium"
    },
-   "seconds": 1.0,
-   "at": 11.38,
-   "label": "a ordem #3 (500 kg)",
+   "seconds": 0.6,
+   "at": 15.33,
+   "label": "o mouse no cartão #2 (aparece a lixeira)",
    "optional": true,
    "timeout": 4
   },
   {
+   "do": "click",
+   "target": {
+    "selector": "main div.group:has(span:text-is('#2')) button[aria-label='Excluir ordem']"
+   },
+   "at": 16.25,
+   "label": "lixeira Excluir ordem da #2"
+  },
+  {
+   "do": "waitFor",
+   "text": "Excluir ordem de produção?",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Excluir ordem de produção?\", \"Atenção: esta produção já foi finalizada. Ao excluir, o estoque será estornado\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=alertdialog]\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere confirmação com o estorno"
+  },
+  {
    "do": "hover",
+   "target": {
+    "text": "Ao excluir, o estoque será estornado",
+    "within": "[role=alertdialog]"
+   },
+   "seconds": 1.6,
+   "at": 20.27,
+   "label": "[ZOOM] o texto da confirmação",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
    "target": {
     "role": "button",
-    "name": "Na prensa",
+    "name": "Excluir ordem",
     "exact": true,
-    "within": "main"
+    "within": "[role=alertdialog]"
    },
-   "seconds": 0.8,
-   "at": 16.17,
-   "label": "a coluna Na prensa",
-   "optional": true,
-   "timeout": 4
+   "at": 27.2,
+   "label": "Excluir ordem"
+  },
+  {
+   "do": "waitFor",
+   "text": "Ordem excluída",
+   "timeout": 10
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "selector": "[role=alertdialog]"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"#3\", \"#1\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a #2 saiu do quadro"
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 19.73
-  },
-  {
-   "do": "mark",
-   "name": "L4",
-   "at": 29.8
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "R$ 6,43/peça",
-    "exact": false,
-    "within": "main"
-   },
-   "seconds": 1.0,
-   "at": 31.22,
-   "label": "o custo de cada quilo no cartão",
-   "optional": true,
-   "timeout": 4
+   "at": 27.7
   },
   {
    "do": "hover",
    "target": {
     "role": "button",
-    "name": "Concluída",
+    "name": "Materiais",
     "exact": true,
-    "within": "main"
+    "within": "[data-sidebar=sidebar]"
    },
-   "seconds": 0.8,
-   "at": 38.05,
-   "label": "a Concluída sem a ordem lançada em dobro",
+   "seconds": 0.4,
+   "at": 35.27,
+   "label": "menu Materiais (o menu recolhido abre)",
    "optional": true,
    "timeout": 4
   },
   {
+   "do": "mark",
+   "name": "L4",
+   "at": 36.63
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Materiais",
+    "exact": true,
+    "within": "[data-sidebar=sidebar]"
+   },
+   "at": 36.63,
+   "label": "menu Materiais (abre o grupo)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Histórico (Kardex)",
+    "exact": true,
+    "within": "[data-sidebar=sidebar]"
+   },
+   "at": 37.44,
+   "label": "menu Histórico (Kardex)"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "Buscar código ou material"
+   },
+   "timeout": 12
+  },
+  {
    "do": "scroll",
    "point": {
-    "x": 780,
-    "y": 600
+    "x": 700,
+    "y": 450
    },
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 41.79,
-   "label": "cursor descansa"
+   "label": "cursor sai do menu (ele recolhe)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Buscar código ou material"
+   },
+   "at": 38.5,
+   "label": "Buscar código ou material"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar código ou material"
+   },
+   "text": "fio",
+   "cps": 20,
+   "at": 39.89,
+   "label": "digita fio",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main [role=list] button:has-text('Fio de cobre encapado')"
+   },
+   "at": 40.17,
+   "label": "Fio de cobre encapado"
+  },
+  {
+   "do": "waitFor",
+   "text": "Fio de cobre encapado",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"KARDEX\", \"Fio de cobre encapado\", \"Produção\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Kardex do fio"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Produção'):has-text('-80')",
+    "nth": 1
+   },
+   "seconds": 0.4,
+   "at": 41.24,
+   "label": "a saída da #1 (-80 Kg)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Produção'):has-text('-80')"
+   },
+   "seconds": 0.6,
+   "at": 42.68,
+   "label": "a saída da #2 (-80 Kg)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Produção'):has-text('+80')"
+   },
+   "seconds": 1.0,
+   "at": 44.2,
+   "label": "a linha do estorno (+80 Kg)",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 43.66
+   "at": 50.03
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 56.38
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('+80') td :text-is('Produção')"
+   },
+   "seconds": 1.6,
+   "at": 58.1,
+   "label": "[ZOOM] o selo Produção",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "eval",
@@ -212,7 +393,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 54.18
+   "at": 70.54
   }
  ]
 }

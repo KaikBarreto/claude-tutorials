@@ -1,6 +1,6 @@
 {
  "name": "t11-cap13",
- "title": "T11 · Cap. 13 · Excluir uma ordem concluída (narração 70,5 s ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T17:30:00-03:00)",
+ "title": "T11 · Cap. 13 · Os ajustes da Produção (narração 139,9 s ESTIMADA; marcas L1..L12 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T17:30:00-03:00)",
  "seed": "t11-cap13",
  "pace": 0.5,
  "cps": 9,
@@ -26,8 +26,7 @@
   "t11/apos-cap05",
   "t11/apos-cap06",
   "t11/apos-cap09",
-  "t11/apos-cap10",
-  "t11/apos-cap12"
+  "t11/apos-cap10"
  ],
  "prewarm": [
   "/login"
@@ -76,15 +75,6 @@
   },
   {
    "do": "goto",
-   "url": "/historico-materiais"
-  },
-  {
-   "do": "waitFor",
-   "idle": true,
-   "timeout": 25
-  },
-  {
-   "do": "goto",
    "url": "/producao"
   },
   {
@@ -117,269 +107,409 @@
    "at": 0
   },
   {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"#3\", \"#2\", \"#1\", \"Cobre mel\", \"R$ 1.440,00\", \"R$ 28,80/peça\", \"03/11/2026\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere as ordens 1 e 2 do Cobre mel"
+   "do": "click",
+   "target": {
+    "selector": "#tab-btn-settings"
+   },
+   "at": 0.38,
+   "label": "aba Configurações"
+  },
+  {
+   "do": "waitFor",
+   "text": "Custo de produção em cadeia (multinível)",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 6.85
   },
   {
    "do": "type",
    "target": {
-    "selector": "main div.rounded-xl:has(span:text-is('#2'))"
+    "selector": "main div.rounded-lg:has(p:text-is('Custo de produção em cadeia (multinível)'))"
    },
    "text": "",
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 3.16,
-   "label": "[ZOOM] os cartões #2 e #1 do Cobre mel"
+   "at": 7.0,
+   "label": "[ZOOM] Custo de produção em cadeia (multinível), desligado"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main div.group:has(span:text-is('#1'))"
-   },
-   "seconds": 0.5,
-   "at": 4.13,
-   "label": "a ordem #1",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main div.group:has(span:text-is('#2')) p.font-medium"
-   },
-   "seconds": 0.8,
-   "at": 4.51,
-   "label": "a ordem #2",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L2",
-   "at": 10.19
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main div.group:has(span:text-is('#2')) p.font-medium"
-   },
-   "seconds": 0.6,
-   "at": 15.33,
-   "label": "o mouse no cartão #2 (aparece a lixeira)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "main div.group:has(span:text-is('#2')) button[aria-label='Excluir ordem']"
-   },
-   "at": 16.25,
-   "label": "lixeira Excluir ordem da #2"
-  },
-  {
-   "do": "waitFor",
-   "text": "Excluir ordem de produção?",
-   "timeout": 8
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Excluir ordem de produção?\", \"Atenção: esta produção já foi finalizada. Ao excluir, o estoque será estornado\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=alertdialog]\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere confirmação com o estorno"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Ao excluir, o estoque será estornado",
-    "within": "[role=alertdialog]"
-   },
-   "seconds": 1.6,
-   "at": 20.27,
-   "label": "[ZOOM] o texto da confirmação",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Excluir ordem",
+    "text": "Custo de produção em cadeia (multinível)",
     "exact": true,
-    "within": "[role=alertdialog]"
+    "within": "main"
    },
-   "at": 27.2,
-   "label": "Excluir ordem"
+   "seconds": 1.0,
+   "at": 9.11,
+   "label": "multinível",
+   "optional": true,
+   "timeout": 4
   },
   {
-   "do": "waitFor",
-   "text": "Ordem excluída",
-   "timeout": 10
-  },
-  {
-   "do": "waitFor",
-   "gone": {
-    "selector": "[role=alertdialog]"
+   "do": "hover",
+   "target": {
+    "selector": "main div.rounded-lg:has(p:text-is('Custo de produção em cadeia (multinível)')) button[role=switch]"
    },
-   "timeout": 8
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"#3\", \"#1\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere a #2 saiu do quadro"
+   "seconds": 1.0,
+   "at": 16.09,
+   "label": "a chave do multinível (desligada)",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 27.7
-  },
-  {
-   "do": "hover",
-   "target": {
-    "role": "button",
-    "name": "Materiais",
-    "exact": true,
-    "within": "[data-sidebar=sidebar]"
-   },
-   "seconds": 0.4,
-   "at": 35.27,
-   "label": "menu Materiais (o menu recolhido abre)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L4",
-   "at": 36.63
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Materiais",
-    "exact": true,
-    "within": "[data-sidebar=sidebar]"
-   },
-   "at": 36.63,
-   "label": "menu Materiais (abre o grupo)"
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "link",
-    "name": "Histórico (Kardex)",
-    "exact": true,
-    "within": "[data-sidebar=sidebar]"
-   },
-   "at": 37.44,
-   "label": "menu Histórico (Kardex)"
-  },
-  {
-   "do": "waitFor",
-   "text": "Buscar código ou material",
-   "timeout": 12
-  },
-  {
-   "do": "scroll",
-   "point": {
-    "x": 700,
-    "y": 450
-   },
-   "by": 0,
-   "duration": 0.3,
-   "after": 0,
-   "label": "cursor sai do menu (ele recolhe)"
-  },
-  {
-   "do": "click",
-   "target": {
-    "placeholder": "Buscar código ou material"
-   },
-   "at": 38.5,
-   "label": "Buscar código ou material"
+   "at": 22.16
   },
   {
    "do": "type",
    "target": {
-    "placeholder": "Buscar código ou material"
+    "selector": "main div.rounded-lg:has(p:text-is('Descontar o valor das sobras do custo de produção'))"
    },
-   "text": "fio",
-   "cps": 20,
-   "at": 39.89,
-   "label": "digita fio",
-   "noClick": true
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 22.16,
+   "label": "[ZOOM] Descontar o valor das sobras do custo de produção, desligado"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.rounded-lg:has(p:text-is('Descontar o valor das sobras do custo de produção')) button[role=switch]"
+   },
+   "seconds": 1.0,
+   "at": 25.63,
+   "label": "a chave das sobras (desligada)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Qual pre\\u00e7o de compra vira o custo do produto\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 41.31,
+   "label": "desce até a régua do custo"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 41.71
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main div.rounded-lg:has(p:text-is('Qual preço de compra vira o custo do produto'))"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 41.81,
+   "label": "[ZOOM] Qual preço de compra vira o custo do produto"
   },
   {
    "do": "click",
    "target": {
-    "selector": "main [role=list] button:has-text('Fio de cobre encapado')"
+    "selector": "#prod-cost-basis"
    },
-   "at": 40.17,
-   "label": "Fio de cobre encapado"
+   "at": 45.01,
+   "label": "Como calcular (abre a lista)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Média de um período"
+   },
+   "seconds": 0.6,
+   "at": 49.74,
+   "label": "Média de um período",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Preço da última compra"
+   },
+   "seconds": 0.6,
+   "at": 53.99,
+   "label": "Preço da última compra",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 55.43,
+   "label": "fecha a lista sem trocar"
   },
   {
    "do": "waitFor",
-   "text": "Fio de cobre encapado",
-   "timeout": 10
+   "gone": {
+    "role": "listbox"
+   },
+   "timeout": 5
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"KARDEX\", \"Fio de cobre encapado\", \"Produção\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere Kardex do fio"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('Produção'):has-text('-80')",
-    "nth": 1
-   },
-   "seconds": 0.4,
-   "at": 41.24,
-   "label": "a saída da #1 (-80 Kg)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('Produção'):has-text('-80')"
-   },
-   "seconds": 0.6,
-   "at": 42.68,
-   "label": "a saída da #2 (-80 Kg)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('Produção'):has-text('+80')"
-   },
-   "seconds": 1.0,
-   "at": 44.2,
-   "label": "a linha do estorno (+80 Kg)",
-   "optional": true,
-   "timeout": 4
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Exigir funcion\\u00e1rio na ordem\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 61.98,
+   "label": "desce até Exigir funcionário na ordem"
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 50.03
+   "at": 62.48
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main div.rounded-lg:has(p:text-is('Exigir funcionário na ordem'))"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 62.48,
+   "label": "[ZOOM] Exigir funcionário na ordem, desligado"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Como voc\\u00ea chama o agrupamento de pe\\u00e7as\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-280);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 68.43,
+   "label": "desce até o nome do agrupamento"
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 56.38
+   "at": 68.83
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main div.rounded-lg:has(p:text-is('Como você chama o agrupamento de peças'))"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 68.93,
+   "label": "[ZOOM] Como você chama o agrupamento de peças (jogo)"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text('+80') td :text-is('Produção')"
+    "selector": "#prod-pack-label"
    },
-   "seconds": 1.6,
-   "at": 58.1,
-   "label": "[ZOOM] o selo Produção",
+   "seconds": 1.0,
+   "at": 74.43,
+   "label": "Nome (singular): jogo",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main div.rounded-lg:has(p:text-is('Lançar produção em jogos'))"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 76.71,
+   "label": "[ZOOM] Lançar produção em jogos"
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 85.27
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Quando dar baixa no estoque\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-200);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 85.27,
+   "label": "desce até Quando dar baixa no estoque"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Quando dar baixa no estoque\", \"Agora: baixa a cada lançamento do dia.\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere baixa a cada lançamento"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Agora: baixa a cada lançamento do dia.",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.4,
+   "at": 89.05,
+   "label": "Agora: baixa a cada lançamento do dia.",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 93.37
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 100.63
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Bloquear finalização quando faltar matéria-prima em estoque",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 100.63,
+   "label": "Bloquear finalização quando faltar matéria-prima em estoque",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div.rounded-lg:has(p:text-is('Bloquear finalização quando faltar matéria-prima em estoque')) button[role=switch]"
+   },
+   "at": 106.05,
+   "label": "liga o bloqueio"
+  },
+  {
+   "do": "waitFor",
+   "text": "Passou a bloquear finalização sem estoque",
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L10",
+   "at": 114.26
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Toler\\u00e2ncia de perda (%)\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-330);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 114.26,
+   "label": "desce até a tolerância e a meta"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"2\", \"250\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"main\"+' input, '+\"main\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere tolerância 2 e meta 250"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main div.rounded-lg:has(#prod-tolerance)"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 115.21,
+   "label": "[ZOOM 1/2] cartão Tolerância de perda (%) (o zoom pega os dois cartões, nesta frase e na seguinte)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main div.rounded-lg:has(#prod-daily-goal)"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "label": "[ZOOM 2/2] cartão Meta de produção por dia"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#prod-tolerance"
+   },
+   "seconds": 1.2,
+   "at": 116.52,
+   "label": "Tolerância de perda 2",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "0 = sempre pedir.",
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "at": 118.04,
+   "label": "0 = sempre pedir",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L11",
+   "at": 123.04
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#prod-daily-goal"
+   },
+   "seconds": 1.4,
+   "at": 128.03,
+   "label": "Meta de produção por dia 250",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L12",
+   "at": 130.98
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Padr\\u00f5es de ficha e ordem\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 130.98,
+   "label": "desce até Padrões de ficha e ordem"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main div.rounded-lg:has(p:text-is('Padrões de ficha e ordem'))"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 131.94,
+   "label": "[ZOOM] Padrões de ficha e ordem"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#prod-default-unit"
+   },
+   "seconds": 0.8,
+   "at": 132.62,
+   "label": "Unidade padrão de novas fichas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#prod-order-prefix"
+   },
+   "seconds": 1.0,
+   "at": 135.97,
+   "label": "Prefixo da numeração da OP",
    "optional": true,
    "timeout": 4
   },
@@ -391,7 +521,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 70.54
+   "at": 139.9
   }
  ]
 }

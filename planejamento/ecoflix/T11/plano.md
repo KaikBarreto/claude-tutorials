@@ -4,14 +4,14 @@
   de bloqueio (que mostra o preço por mês) não é gravada, só falada (⚠️ da fonte).
 - **Antes:** Estoque: saldo, histórico e posição (T10). **Próximo:** CRM/Kanban (T26, o "Próximo" da fonte: "nenhuma
   oportunidade se perde no caminho").
-- **Vinhetas (áreas):** PRODUÇÃO · FICHA TÉCNICA · ORDENS · LANÇAMENTO · RELATÓRIO · CONFIGURAÇÕES · RESUMO.
+- **Vinhetas (áreas):** PRODUÇÃO · FICHA TÉCNICA · ORDENS · LANÇAMENTO · RELATÓRIO · CONFIGURAÇÕES · CONVERSÃO · MÁQUINAS · RESUMO.
 - **Exemplo da aula:** a latinha que a Recicla Vale compra vira fardo de alumínio na prensa; no ímã saem as latas de aço
   misturadas, que viram chaparia (o coproduto). Ficha e produto em **Kg**: só assim o relatório calcula o rendimento
   (`ProductionReport.tsx:128-153`). Segundo exemplo, já existente: a ficha do Cobre mel (descascar fio), que mostra a
   quantidade por unidade e serve à exclusão do capítulo 13.
-- **Duração estimada:** ~16 min de vídeo (fala de ~13 min, mais 14 vinhetas, ilustrações e esperas da tela). Alvo da fonte:
-  ~20 min.
-- Base: `T11/inventario.md` (código 1.59.154). Logado como **Rafael Nogueira** (administrador MASTER: tem "Registrar
+- **Duração estimada:** ~23 min de vídeo (fala de ~20 min, 3.090 palavras, mais 18 vinhetas, ilustrações e esperas da tela).
+  Antes do 1.60.18: 19 capítulos (eram 15), 2.040 palavras.
+- Base: `T11/inventario.md` (código 1.60.18). Logado como **Rafael Nogueira** (administrador MASTER: tem "Registrar
   Produção", "Gerenciar Fichas Técnicas" e vê custo).
 
 ## Capítulos
@@ -28,25 +28,30 @@
 | 7 | LANÇAMENTO / A produção do dia. | Corte para o fim da tarde. Cartão › "Lançar produção do dia": Cláudio 260, Diego 220, "Total do dia" 480 Kg; subproduto Chaparia 14 Kg. | (a tela mostra) |
 | 8 | LANÇAMENTO / O real contra o teórico. | "Matéria-prima usada": "Sugerido pela ficha: 480 Kg"; "Real" 498; "+18" em vermelho; ⚠️ quem baixa é o real. | Teórico × real |
 | 9 | LANÇAMENTO / Perda acima da tolerância. | "Motivo da perda \*", "Informe o motivo da diferença", "Salvar lançamento" apagado (⚠️); "Material reaproveitável"; salvar. | Tolerância de perda |
-| 10 | ORDENS / Finalizar e fechar o custo. | Arrasta a #3 para "Concluída" → "Finalizar #3": 96% da meta, "Resumo do lote", "Custo total do lote" R$ 3.087,60, "Custo por peça" R$ 6,43. | Custo estimado × real |
-| 11 | RELATÓRIO / Relatório de Produção. | "PRODUTO" Fardo de alumínio: cartões, "% Perda" +3,8%, "% Rendim." 96,4%, "Custo/peça"; "Por funcionário" com "bateu" e "faltam 30"; "Exportar". | Rendimento e perda |
-| 12 | CONFIGURAÇÕES / Os ajustes da Produção. | Multinível, "Quando dar baixa no estoque", liga "Bloquear finalização quando faltar matéria-prima em estoque", tolerância 2, meta 250. | Quando o estoque baixa |
-| 13 | ORDENS / Excluir uma ordem concluída. | Exclui a #2 do Cobre mel (lançada em dobro): confirmação, "Ordem excluída"; Kardex do "Fio de cobre encapado" com as linhas "Produção" e o estorno; ⚠️ do Kardex. | Estorno |
-| 14 | RESUMO / Recapitulando. | Montagem do que foi feito; cartão "Próximo: CRM/Kanban". | (montagem) |
+| 10 | ORDENS / Mexer na ordem em andamento. | Lápis "Editar ordem": equipe, meta, data, responsável e coluna livres; ficha travada; menu do dia ("Editar este dia", "Excluir este dia"); botão "Lista" com filtros. | (a tela mostra) |
+| 11 | ORDENS / Finalizar e fechar o custo. | Arrasta a #3 para "Concluída" → "Finalizar #3": 96% da meta, "Resumo do lote", "Custo total do lote" R$ 3.087,60, "Custo por peça" R$ 6,43. | Custo estimado × real |
+| 12 | RELATÓRIO / Relatório de Produção. | "PRODUTO" Fardo de alumínio: cartões, "% Perda" +3,8%, "% Rendim." 96,4%, "Custo/peça"; "Por funcionário" com "bateu" e "faltam 30"; "Exportar" › PDF (o robô devolve o PDF), gráfico, ranking, clique na linha, detalhamento por funcionário, "Ver matriz completa", aba "Lançamentos". | Rendimento e perda |
+| 13 | CONFIGURAÇÕES / Os ajustes da Produção. | Multinível, sobras no custo, régua do custo, exigir funcionário, agrupamento em jogos, "Quando dar baixa no estoque", liga "Bloquear finalização quando faltar matéria-prima em estoque", tolerância 2, meta 250, padrões. | Quando o estoque baixa |
+| 14 | ORDENS / Excluir uma ordem concluída. | Exclui a #2 do Cobre mel (lançada em dobro): confirmação, "Ordem excluída"; Kardex do "Fio de cobre encapado" com as linhas "Produção" e o estorno; ⚠️ do Kardex. | Estorno |
+| 15 | CONVERSÃO / Conversão: produzir em um passo. | Aba "Conversão": Cobre mel 10 Kg, resultado antes de gravar, "Confirmar", "Histórico do período", estorno. | Conversão em um passo |
+| 16 | FICHA TÉCNICA / Perda padrão. | "Perda padrão" 37,5% no fio, "Vira outro material" › "Capa de fio" (selo "Vem da perda"); ordem de 40 Kg; capa 24 Kg já preenchida em "Subprodutos". | A perda vira capa |
+| 17 | MÁQUINAS / Máquinas. | Aba "Máquinas": "Nova máquina" Prensa 01; campo "Máquina" na ordem; filtro e ranking no relatório. | (a tela mostra) |
+| 18 | RESUMO / Recapitulando. | Montagem do que foi feito; cartão "Próximo: CRM/Kanban". | (montagem) |
 
 Transições faladas: 0→1 "Vamos ver o que a Produção resolve"; 1→2 "Tudo começa pela ficha técnica"; 2→3 "Agora as
 quantidades"; 3→4 "E quando sai mais de uma coisa do mesmo processo?"; 4→5 "Receita pronta, agora a ordem"; 5→6 "As
 ordens ficam neste quadro"; 6→7 "Fim do dia, hora de lançar"; 7→8 "Embaixo fica a matéria-prima usada"; 8→9 "Com a
-diferença, apareceu o campo Motivo da perda"; 9→10 "Lote prensado, hora de fechar a ordem"; 10→11 "Agora o relatório";
-11→12 "Agora as configurações"; 12→13 "E quando uma ordem foi lançada errada?".
+diferença, apareceu o campo Motivo da perda"; 9→10 "A ordem já tem um dia lançado, e mesmo assim dá pra mexer nela"; 10→11 "Lote prensado, hora de fechar a ordem";
+11→12 "Agora o relatório"; 12→13 "Agora as configurações"; 13→14 "E quando uma ordem foi lançada errada?"; 14→15 "Nem toda produção precisa de ordem";
+15→16 "Tem sobra que se repete em toda produção"; 16→17 "Se o pátio tem mais de uma máquina".
 
 Cuidados da fonte e onde entram: 🔒 (cap00); ⚠️ tela desfocada (cap01, só falado: a tela mostra preço); ⚠️ permissões
 separadas (cap05, "Uma dica:"); ⚠️ quem baixa é o real (cap08, "Uma dica:", com a diferença na tela); ⚠️ tolerância (cap09:
-o bloqueio e o motivo na tela, que é o ponto, e depois "Uma dica:" sobre o botão apagado); ⚠️ Kardex (cap13, "Uma dica:", com o selo "Produção" na tela).
+o bloqueio e o motivo na tela, que é o ponto, e depois "Uma dica:" sobre o botão apagado); ⚠️ Kardex (cap14, "Uma dica:", com o selo "Produção" na tela).
 
 ## Estado de partida
 Mundo base da Recicla Vale (`MUNDO_FICTICIO.md`), `FAKE_NOW=2026-11-10T08:30:00-03:00` nos capítulos 0 a 6 e
-**`2026-11-10T17:30:00-03:00` do capítulo 7 ao 14** (o lançamento é "no fim do dia"; a data do lançamento continua 10/11).
+**`2026-11-10T17:30:00-03:00` do capítulo 7 ao 18** (o lançamento é "no fim do dia"; a data do lançamento continua 10/11).
 Rafael logado. Módulo `producao` ligado (plano Personalizado). Mais o que vem abaixo.
 
 ## Mundo: o que esta aula precisa
@@ -76,13 +81,20 @@ Contas (conferidas): perda (498 − 480) ÷ 480 = 3,75% → "+3,8%"; rendimento 
 **Estado final:** ficha do fardo e do cobre; #3 concluída; #1 concluída; #2 excluída com o estorno; coluna "Na prensa";
 bloqueio ligado. Estoque: latinha −498, fardo +480, chaparia +14, fio +80 e cobre mel −50 em relação ao início.
 
+### Novidades do 1.60.18 no mundo
+- **Capa de fio** (material novo, semente `apos-cap13`): código **17** (o JUNCAO_160 dizia 16, mas o 16 já é o Fardo de alumínio), grupo Outros, Kg, compra R$ 0,10, venda R$ 0,30, NCM 3915.90.00, estoque 0.
+- **Prensa 01** é criada ao vivo no cap17; a ordem de 40 Kg do cap16 (#4 do Cobre mel, Diego) também é ao vivo.
+- Handlers só da T11: `add_production_entry_atomic.mjs` (agora grava `p_note` em `note`) e `register_production_atomic.mjs`
+  (novo, para a Conversão). Conversão e perda padrão: valores (16 Kg de fio, R$ 28,80/Kg, capa 24 Kg) a confirmar no ensaio.
+- A palavra "peça" ainda aparece no app: "Custo estimado por peça" (ordem e Conversão), "Custo/peça" (relatório), "Total: N peças" (gráfico); no resto vale "/Kg".
+
 ## Gravação (modo fakebase)
 - Desktop, tema claro, uma janela só, sem celular, sem página pública, sem outro usuário. Rotas: `/dashboard`,
   `/producao` (abas pelo clique), `/historico-materiais`.
 - Sementes entre capítulos (cada capítulo abre um navegador novo; quando continua uma tela do anterior, o `setup` a refaz
   fora do vídeo): `inicio` (0 a 3), `apos-cap03` (ficha do fardo sem coproduto; entra no 4), `apos-cap04` (com Chaparia;
   5), `apos-cap05` (ordem #3; 6), `apos-cap06` ("Na prensa" e a #3 nela; 7, 8 e 9, com FAKE_NOW 17:30), `apos-cap09`
-  (lançamento salvo; 10), `apos-cap10` (#3 concluída; 11 e 12), `apos-cap12` (bloqueio ligado; 13), `apos-cap13` (final).
+  (lançamento salvo, com `note` "Turno da tarde, prensa sem parada."; 10 e 11), `apos-cap10` (#3 concluída; 12 e 13), `apos-cap12` (bloqueio ligado; 14), `apos-cap13` (final; 15 a 18, com a Capa de fio e as novas peças abaixo). Os nomes das sementes ficam na numeração antiga dos capítulos: apos-cap09 = depois do lançamento (cap 9 novo); apos-cap10 = depois de finalizar (cap 11); apos-cap12 = depois dos ajustes (cap 13).
 - Backend falso, a ter (o cliente só chama isto; a cópia não tem migrations, então o comportamento vem do cliente e da
   Ajuda do app):
   1. RPC `upsert_production_recipe_atomic` (cria/atualiza cabeçalho e refaz insumos e coprodutos numa vez; devolve o id).
@@ -97,7 +109,7 @@ bloqueio ligado. Estoque: latinha −498, fardo +480, chaparia +14, fio +80 e co
      cliente depois move o cartão para a coluna `is_done`).
   6. RPC `delete_production_order_atomic` em ordem concluída: grava a movimentação inversa de cada linha de produção da
      ordem (fio +80, cobre mel −50) sem apagar as originais e tira a ordem das listas e do relatório.
-  7. `UPDATE companies` dos ajustes (o capítulo 12 liga `production_block_on_insufficient_stock`).
+  7. `UPDATE companies` dos ajustes (o capítulo 13 liga `production_block_on_insufficient_stock`).
   8. Relatório: leituras de `production_orders` (concluídas no período), `production_order_consumption`,
      `production_order_entries`, `production_order_workers`, `employees`.
 - Integrações externas: nenhuma (sem edge function nesta aula).
@@ -112,10 +124,10 @@ bloqueio ligado. Estoque: latinha −498, fardo +480, chaparia +14, fio +80 e co
 ## Pontos para o Kaik
 1. **Nomes dos ajudantes** (Cláudio Ferraz, Diego Morais) são provisórios até o T19 fechar os do pátio.
 2. **Histórico de produção antes da aula**: a ficha do Cobre mel e as ordens #1 e #2 (a #2 em dobro) existem só para o
-   capítulo 3 (exemplo de 1,6 Kg por Kg) e o 13 (excluir uma concluída sem desfazer o fardo da aula). Alternativa mais
+   capítulo 3 (exemplo de 1,6 Kg por Kg) e o 14 (excluir uma concluída sem desfazer o fardo da aula). Alternativa mais
    curta: excluir a própria #3 no fim, o que desfaria o resultado da aula.
 3. **Tolerância 2% e meta 250 já configuradas** na semente: a fonte põe as Configurações no capítulo 12, depois do motivo
    (9) e do relatório (11). A fala diz onde ficam e o capítulo 12 confirma.
 4. **"Peça" em produto por quilo**: a tela diz "Custo estimado por peça", "Custo por peça", "/peça" e "peças" mesmo no
    fardo em Kg; a fala avisa uma vez (cap05) que ali vale quilo. Handoff no inventário.
-5. **"Observação" do lançamento não é gravada** no código: a aula não usa o campo. Handoff no inventário.
+5. **"Observação" do lançamento** agora grava no 1.60.18 e entra no cap09 (e na edição do dia, cap10).

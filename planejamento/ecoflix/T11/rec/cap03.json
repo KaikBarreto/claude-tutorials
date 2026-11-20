@@ -1,6 +1,6 @@
 {
  "name": "t11-cap03",
- "title": "T11 · Cap. 3 · Quanto entra por unidade (narração 71,6 s ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T11 · Cap. 3 · Quanto entra por unidade (narração 71,7 s ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "seed": "t11-cap03",
  "pace": 0.5,
  "cps": 9,
@@ -110,7 +110,9 @@
   },
   {
    "do": "waitFor",
-   "text": "Nova ficha técnica",
+   "target": {
+    "selector": "#recipe-name-inline"
+   },
    "timeout": 10
   },
   {
@@ -167,14 +169,6 @@
   },
   {
    "do": "eval",
-   "js": "(()=>{const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);if(!m)return 'SEM ROLAGEM';m.scrollTop=100;return m.scrollTop})()"
-  },
-  {
-   "do": "wait",
-   "seconds": 0.4
-  },
-  {
-   "do": "eval",
    "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA ECOFLIX'))window.__avisos.push('TRILHA ECOFLIX')},300);return 1})()"
   }
  ],
@@ -190,7 +184,7 @@
     "selector": "#recipe-unit"
    },
    "at": 2.43,
-   "label": "Unidade de produção"
+   "label": "Unidade produzida"
   },
   {
    "do": "click",
@@ -198,25 +192,25 @@
     "role": "option",
     "name": "Kg — Quilograma"
    },
-   "at": 7.92,
+   "at": 8.98,
    "label": "Kg — Quilograma"
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"unidade de produção: Kg\", \"Consumo por Kg\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main div.ring-2\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere cartão em Kg"
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Para produzir 1 Kg\", \"Cada produção gera 1 Kg\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere receita e cartão em Kg"
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 9.2
+   "at": 10.26
   },
   {
    "do": "click",
    "target": {
     "placeholder": "Qtd"
    },
-   "at": 10.45,
+   "at": 11.51,
    "label": "[ZOOM] campo Qtd do Alumínio latinha"
   },
   {
@@ -226,35 +220,35 @@
    },
    "text": "1",
    "cps": 20,
-   "at": 21.12,
+   "at": 22.18,
    "label": "Qtd 1",
    "noClick": true
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Consumo por Kg\", \"1 Kg\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main div.ring-2 div.border-dashed\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere Consumo por Kg 1 Kg"
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Rendimento\", \"1 Kg\", \"Consumo previsto\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main .recipe-workbench-output div.border-dashed\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Rendimento 1 Kg e Consumo previsto 1 Kg"
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 21.62
+   "at": 22.68
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main div.ring-2 div.border-dashed"
+    "selector": "main .recipe-workbench-output div.border-dashed"
    },
    "seconds": 1.2,
-   "at": 21.91,
-   "label": "o cartão Produto final (Consumo por Kg)",
+   "at": 22.97,
+   "label": "o cartão Produto final (Rendimento e Consumo previsto)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 26.91
+   "at": 27.97
   },
   {
    "do": "hover",
@@ -262,16 +256,10 @@
     "selector": "#recipe-pack"
    },
    "seconds": 2.0,
-   "at": 26.91,
-   "label": "Peças por unidade de venda (vazio)",
+   "at": 27.97,
+   "label": "Peças por jogo (vazio)",
    "optional": true,
    "timeout": 4
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Salvar ficha\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-560);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 34.93,
-   "label": "desce até Salvar ficha (o campo Peças continua na tela)"
   },
   {
    "do": "click",
@@ -280,7 +268,7 @@
     "name": "Salvar ficha",
     "exact": true
    },
-   "at": 37.92,
+   "at": 38.07,
    "label": "Salvar ficha"
   },
   {
@@ -291,12 +279,12 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 38.42
+   "at": 38.57
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const raiz=document.querySelector(\"main\");let c=null;for(const e of [raiz,...(raiz?raiz.querySelectorAll('*'):[])]){if(!e)continue;const s=getComputedStyle(e);if(/(auto|scroll)/.test(s.overflowY)&&e.scrollHeight>e.clientHeight+4&&e.scrollTop>2){c=e;break}}if(!c){const se=document.scrollingElement;if(se&&se.scrollTop>2)c=se}if(!c)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0*(1-e),behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
-   "at": 39.48,
+   "at": 39.63,
    "label": "sobe à lista"
   },
   {
@@ -310,7 +298,7 @@
     "selector": "aside[aria-label='Lista de fichas técnicas'] button:has-text('Fardo de alumínio')"
    },
    "seconds": 0.9,
-   "at": 41.97,
+   "at": 42.12,
    "label": "Fardo de alumínio na lista",
    "optional": true,
    "timeout": 4
@@ -318,24 +306,26 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 43.25
+   "at": 43.4
   },
   {
    "do": "click",
    "target": {
     "selector": "aside[aria-label='Lista de fichas técnicas'] button:has-text('Cobre mel')"
    },
-   "at": 44.19,
+   "at": 44.34,
    "label": "a ficha do Cobre mel"
   },
   {
    "do": "waitFor",
-   "text": "Editar ficha técnica",
+   "target": {
+    "selector": "#recipe-name-inline"
+   },
    "timeout": 10
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Editar ficha técnica\", \"Fio de cobre encapado\", \"Cobre mel\", \"Consumo por Kg\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Fio de cobre encapado\", \"Cobre mel\", \"Consumo previsto\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
    "label": "confere ficha do Cobre mel"
   },
   {
@@ -349,7 +339,7 @@
     "selector": "main div.group:has(p:text-is('Fio de cobre encapado'))"
    },
    "seconds": 1.6,
-   "at": 51.5,
+   "at": 51.65,
    "label": "[ZOOM] cartão Fio de cobre encapado com 1,6",
    "optional": true,
    "timeout": 4
@@ -357,7 +347,7 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 55.52
+   "at": 55.67
   },
   {
    "do": "eval",
@@ -367,7 +357,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 71.58
+   "at": 71.73
   }
  ]
 }

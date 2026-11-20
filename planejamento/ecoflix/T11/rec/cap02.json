@@ -1,6 +1,6 @@
 {
  "name": "t11-cap02",
- "title": "T11 · Cap. 2 · A receita do produto (narração 54,9 s ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T11 · Cap. 2 · A receita do produto (narração 57,2 s ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "seed": "t11-cap02",
  "pace": 0.5,
  "cps": 9,
@@ -163,29 +163,31 @@
   },
   {
    "do": "waitFor",
-   "text": "Nova ficha técnica",
+   "target": {
+    "selector": "#recipe-name-inline"
+   },
    "timeout": 10
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Nova ficha técnica\", \"Monte a receita: matérias-primas entram, o produto final sai.\", \"Produto final\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Receita de produção\", \"Para produzir 1\", \"O que entra\", \"Matérias-primas consumidas\", \"vira\", \"2 · Resultado\", \"Produto final\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
    "label": "confere Nova ficha técnica"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main label:has-text('Matérias-primas')"
+    "selector": "main label:has-text('O que entra')"
    },
    "seconds": 0.5,
    "at": 21.61,
-   "label": "Matérias-primas (entram)",
+   "label": "O que entra (matérias-primas)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main div.ring-2 p:text-is('Produto final')"
+    "selector": "main .recipe-workbench-output p:text-is('Produto final')"
    },
    "seconds": 0.5,
    "at": 23.88,
@@ -261,19 +263,13 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Fardo de alumínio\", \"unidade de produção: pç\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main div.ring-2\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Fardo de alumínio\", \"Cada produção gera 1\", \"Produto que será produzido\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
    "label": "confere cartão Produto final com o fardo"
-  },
-  {
-   "do": "press",
-   "key": "Tab",
-   "at": 37.3,
-   "label": "Tab: o foco vai ao \"+\" e o painel mostra o cartão inteiro"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main div.ring-2 p.text-lg"
+    "selector": "main .recipe-workbench-output p.text-xl"
    },
    "seconds": 0.6,
    "at": 38.02,
@@ -289,28 +285,29 @@
   {
    "do": "hover",
    "target": {
-    "selector": "main button[title='Criar novo produto']"
+    "role": "button",
+    "name": "Cadastrar novo produto",
+    "within": "main"
    },
    "seconds": 1.4,
-   "at": 44.14,
-   "label": "[ZOOM] botão + (Criar novo produto), sem clicar",
-   "noScroll": true,
+   "at": 44.37,
+   "label": "[ZOOM] botão Cadastrar novo produto, sem clicar",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L7",
-   "at": 48.61
+   "at": 49.52
   },
   {
    "do": "hover",
    "target": {
-    "selector": "#recipe-name"
+    "selector": "#recipe-name-inline"
    },
    "seconds": 1.2,
-   "at": 48.61,
-   "label": "Nome da ficha (vazio, o nome do produto de exemplo)",
+   "at": 49.52,
+   "label": "o nome da ficha, no alto (o do produto, de fundo)",
    "optional": true,
    "timeout": 4
   },
@@ -322,7 +319,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 54.88
+   "at": 57.23
   }
  ]
 }

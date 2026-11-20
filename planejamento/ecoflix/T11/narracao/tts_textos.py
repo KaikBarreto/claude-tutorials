@@ -72,7 +72,7 @@ Salvar lançamento. O estoque já foi ajustado: saiu a latinha, e entraram o far
 10: """A ordem já tem um dia lançado, e mesmo assim dá pra mexer nela. O lápis do cartão abre Editar ordem em andamento: a equipe, a meta, a data, o responsável e a coluna continuam livres.
 Só a ficha técnica fica travada, porque o que já foi consumido foi calculado por ela.
 Faltou alguém, ou entrou outro no lugar? É só trocar na equipe. Quem sai continua no relatório dos dias em que produziu, e só deixa de aparecer nos próximos lançamentos.
-Dentro da ordem, cada dia lançado tem o seu menu. Editar este dia reabre o lançamento pra corrigir um número.
+Dentro da ordem, cada dia lançado tem o seu menu. Editar este dia reabre o lançamento do jeito que ficou, com a observação e tudo, pra corrigir um número.
 E Excluir este dia tira só aquele lançamento: o total é recalculado, e o estoque daquele dia volta. Os outros dias ficam como estão. Aqui eu cancelo.
 Se a produção leva mais de um dia, é só lançar de novo amanhã. Cada dia vira uma linha, e o produzido até agora vai somando.
 O quadro também vira lista. Na Lista aparecem os filtros de período, produto e status, bons pra achar uma ordem antiga.
