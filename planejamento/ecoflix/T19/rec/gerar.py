@@ -1201,7 +1201,11 @@ def cap13():
     """O tablet da empresa (1024x768, sem login do gestor na tela): a câmera, Buscar manualmente, a lista (A-Z e Quem falta), a saída do
     Diego, o cadeado do PIN; depois as configurações do ponto (reconhecimento facial) e o cadastro do Gabriel."""
     KIOSK = '/ponto/empresa/' + KIOSK_SLUG
-    setup = [{'do': 'geo', 'lat': -23.0105, 'lng': -45.5412}, {'do': 'eval', 'js': JS_CAMERA},
+    # o tablet é o computador do gravador (sem a permissão de localização do celular): a localização do pátio vem de um stub só desta página
+    JS_GEO = ("(()=>{const pos={coords:{latitude:-23.0105,longitude:-45.5412,accuracy:15,altitude:null,altitudeAccuracy:null,heading:null,speed:null},timestamp:Date.now()};"
+              "navigator.geolocation.getCurrentPosition=(ok)=>setTimeout(()=>ok(pos),400);navigator.geolocation.watchPosition=(ok)=>{setTimeout(()=>ok(pos),400);return 1};"
+              "navigator.geolocation.clearWatch=()=>{};return 'geo falsa'})()")
+    setup = [{'do': 'geo', 'lat': -23.0105, 'lng': -45.5412}, {'do': 'eval', 'js': JS_CAMERA}, {'do': 'eval', 'js': JS_GEO},
              {'do': 'eval', 'js': f"(()=>{{history.pushState({{}},'',{json.dumps(KIOSK)});window.dispatchEvent(new PopStateEvent('popstate'));return 'quiosque'}})()"},
              {'do': 'waitFor', 'text': 'Buscar manualmente', 'timeout': 40}, {'do': 'wait', 'seconds': 0.8}]
     c = cap_novo(13, setup=setup, start=(512, 400), prewarm=[KIOSK], recolhe=False)
@@ -1223,7 +1227,10 @@ def cap13():
     c.click(SEL("button:has-text('Confirmar registro')"), at=c.A(3, 'confirma', 0.5), label='Confirmar registro', noScroll=True)
     c.waitfor(text='Saída registrada', timeout=12)
     c.marcar(TXTX('Saída registrada'), at=c.A(3, 'hora', 0.3), label='Saída registrada com a hora')
-    c.waitfor(target={'placeholder': 'Buscar funcionário'}, timeout=20)
+    # o app volta sozinho em 4 s para a câmera (não para a lista): o robô reabre a busca manual (achado: a fala diz "volta pra lista")
+    c.waitfor(text='Buscar manualmente', timeout=20)
+    c.click(SEL("button:has-text('Buscar manualmente')"), at=round(c.L(4) + 0.3, 2), label='Buscar manualmente (de novo)', noScroll=True)
+    c.waitfor(target={'placeholder': 'Buscar funcionário'}, timeout=15)
     c.mark(4)
     c.hover(SEL("button:has-text('Gabriel Rocha')"), 1.6, at=c.A(4, 'cadeado,', 0.75), label='o cartão do Gabriel com o cadeado (Protegido por PIN)', noScroll=True)
     c.mark(5)
@@ -1317,9 +1324,13 @@ def cap14():
     escolhe(c, CAMPO('absence-employee'), 'Juliana Prado', c.A(11, 'inteiro', 0.9), c.A(11, 'vez.', 0.9), 'Funcionário: Juliana Prado')
     escolhe(c, CAMPO('absence-type'), 'Férias', c.A(11, 'As', 0.9), c.A(11, 'férias', 0.3), 'Tipo: Férias')
     c.wait(0.7)
-    c.digita(CAMPO('absence-start'), '07122026', c.W(11, 'sete'), 'Data de início 07/12/2026', folga_clique=1.0)
-    c.wait(0.5)
-    c.digita(CAMPO('absence-end'), '05012027', c.W(11, 'cinco'), 'Data de fim 05/01/2027', folga_clique=1.0)
+    # DateField no computador é botão + calendário (não aceita digitação): abre, avança o mês e clica o dia
+    for cid, pal, dia, rot in (('absence-start', 'sete', '7', 'Data de início 07/12/2026'), ('absence-end', 'cinco', '5', 'Data de fim 05/01/2027')):
+        t = c.W(11, pal)
+        c.click(CAMPO(cid), at=round(max(0.0, t - 1.6), 2), label=f'campo {rot} (abre o calendário)', noScroll=True)
+        c.click(SEL(f"{POP} button[name='next-month']"), at=round(max(0.0, t - 0.85), 2), label=f'{rot}: próximo mês', noScroll=True)
+        c.click(SEL(f"{POP} button[name='day']:not(.day-outside):text-is('{dia}')"), at=round(max(0.0, t - 0.05), 2), label=rot, noScroll=True)
+        c.wait(0.2)
     c.confere('dlg', ['30 dias'], '30 dias de ausência')
     c.click(SEL(f"{DLG} button:text-is('Lançar ausência')"), at=c.A(11, 'Nesses', 0.9), label='Lançar ausência')
     c.waitfor(gone={'role': 'dialog'}, timeout=10)

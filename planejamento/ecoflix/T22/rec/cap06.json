@@ -1,12 +1,12 @@
 {
  "name": "t22-cap06",
- "title": "T22 · Cap. 6 · A DRE do grupo (narração ESTIMADA 55,2 s; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira (matriz))",
+ "title": "T22 · Cap. 6 · Ranking e resumo por unidade (narração ESTIMADA 56,8 s; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira (matriz))",
  "seed": "t22-cap06",
  "pace": 0.5,
  "cps": 40,
  "tail": 1.5,
  "start": {
-  "x": 700,
+  "x": 900,
   "y": 300
  },
  "anonymous": true,
@@ -15,9 +15,9 @@
   "notification_shown_version": "1.60.18",
   "pwa-install-dismissed": "true",
   "theme": "light",
+  "daily-tasks-reminder-last-shown-65255bb0-aea3-508c-8383-5c426f18b774": "2026-11-10",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
-  "initial-preferences-set": "true",
-  "gerencial-financeiro-tab": "dre"
+  "initial-preferences-set": "true"
  },
  "seedExtra": [
   "t22/inicio",
@@ -71,19 +71,6 @@
   },
   {
    "do": "goto",
-   "url": "/gerencial/financeiro"
-  },
-  {
-   "do": "waitFor",
-   "text": "Financeiro Gerencial",
-   "timeout": 25
-  },
-  {
-   "do": "waitFor",
-   "idle": true
-  },
-  {
-   "do": "goto",
    "url": "/gerencial"
   },
   {
@@ -96,15 +83,26 @@
    "idle": true
   },
   {
-   "do": "eval",
-   "js": "(async()=>{const aberto=()=>!!document.querySelector('a[href=\"/gerencial/configuracoes\"]');const b=[...document.querySelectorAll('button')].find(e=>e.textContent.trim().startsWith('Gerencial (Filiais)'));if(!b)return 'SEM ALVO';if(aberto()!==true)b.click();await new Promise(r=>setTimeout(r,500));return aberto()?'aberto':'fechado'})()"
+   "do": "click",
+   "target": {
+    "selector": "main button[role=combobox]:has-text(\"Este mês\")"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Mês passado"
+   }
   },
   {
    "do": "waitFor",
-   "target": {
-    "selector": "a[href=\"/gerencial/configuracoes\"]"
-   },
-   "timeout": 8
+   "text": "R$ 344.040,00",
+   "timeout": 10
+  },
+  {
+   "do": "waitFor",
+   "idle": true
   },
   {
    "do": "eval",
@@ -122,231 +120,130 @@
    "at": 0
   },
   {
-   "do": "click",
+   "do": "hover",
    "target": {
-    "selector": "a[href=\"/gerencial/financeiro\"]"
+    "text": "Ranking por Saldo",
+    "within": "main"
    },
-   "at": 0.1,
-   "label": "Financeiro do Gerencial (menu)"
-  },
-  {
-   "do": "waitFor",
-   "text": "Financeiro Gerencial",
-   "timeout": 15
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "main button[role=combobox]:has-text(\"Este mês\")"
-   },
-   "at": 2.15,
-   "label": "período",
-   "noScroll": true
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "option",
-    "name": "Mês passado"
-   },
-   "at": 4.05,
-   "label": "Mês passado"
-  },
-  {
-   "do": "waitFor",
-   "text": "CMV (Custo da Mercadoria Vendida)",
-   "timeout": 15
+   "seconds": 0.8,
+   "at": 0.2,
+   "label": "Ranking por Saldo (Receita − Despesa)",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "hover",
    "target": {
-    "role": "button",
-    "name": "Consolidado"
+    "selector": "main .recharts-yAxis text:has-text(\"Filial\")"
    },
-   "seconds": 0.6,
-   "at": 6.35,
-   "label": "Consolidado: a DRE do grupo",
+   "seconds": 0.8,
+   "at": 6.58,
+   "label": "a filial na frente",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main .recharts-yAxis text:has-text(\"Recicla\")"
+   },
+   "seconds": 0.8,
+   "at": 8.86,
+   "label": "a matriz no vermelho",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 7.44
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "tab",
-    "name": "Regime de Caixa"
-   },
-   "at": 9.41,
-   "label": "Regime de Caixa"
-  },
-  {
-   "do": "waitFor",
-   "text": "Compras de Material",
-   "timeout": 10
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main :is(div,button).flex:has(> span:text-is(\"Vendas de Material\"))"
-   },
-   "seconds": 1.0,
-   "at": 12.98,
-   "label": "vendas e compras de material (ZOOM)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main :is(div,button).flex:has(> span:text-is(\"Compras de Material\"))"
-   },
-   "seconds": 1.0,
-   "at": 18.01,
-   "label": "Compras de Material",
-   "optional": true,
-   "timeout": 4
+   "at": 10.55
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"R$ 341.240,00\", \"R$ 318.860,00\", \"R$ 19.980,00\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
-   "label": "confere vendas, compras e resultado de caixa"
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Resumo por Unidade\"&&e.getClientRects().length)||[...document.querySelectorAll('main *')].find(e=>[...e.childNodes].some(n=>n.nodeType===3&&n.textContent.trim()===\"Resumo por Unidade\")&&e.getClientRects().length);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-260);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 10.85,
+   "label": "desce até Resumo por Unidade"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Resumo por Unidade",
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 12.12,
+   "label": "Resumo por Unidade",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 23.28
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"(-) Impostos e Dedu\\u00e7\\u00f5es\"&&e.getClientRects().length)||[...document.querySelectorAll('main *')].find(e=>[...e.childNodes].some(n=>n.nodeType===3&&n.textContent.trim()===\"(-) Impostos e Dedu\\u00e7\\u00f5es\")&&e.getClientRects().length);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-200);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 23.28,
-   "label": "desce até impostos e resultado"
+   "at": 14.55
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main :is(div,button).flex:has(> span:text-is(\"(-) Impostos e Deduções\"))"
+    "selector": "main tbody tr:has-text(\"Recicla Vale Metais\")"
    },
-   "seconds": 0.3,
-   "at": 24.51,
-   "label": "impostos, despesas, outras receitas e resultado (ZOOM)",
+   "seconds": 1.0,
+   "at": 15.1,
+   "label": "linha da matriz (ZOOM)",
    "optional": true,
    "timeout": 4
   },
   {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"R$ 272.040,00\", \"R$ 299.690,00\", \"R$ -27.650,00\", \"-10.2%\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
+   "label": "confere linha da matriz"
+  },
+  {
    "do": "hover",
    "target": {
-    "selector": "main :is(div,button).flex:has(> span:text-is(\"Total Despesas\"))"
+    "selector": "main tbody tr:has-text(\"Recicla Vale Metais\") td:nth-child(4)"
    },
-   "seconds": 0.8,
+   "seconds": 1.0,
    "at": 25.58,
-   "label": "Total Despesas",
+   "label": "lucro da matriz R$ -27.650,00",
    "optional": true,
    "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main :is(div,button).flex:has(> span:text-is(\"Receitas Diversas (Caixa + Banco)\"))"
-   },
-   "seconds": 0.8,
-   "at": 28.31,
-   "label": "Outras Receitas (aluguel de caçamba)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main div.flex:has(> div > div > span:text-is(\"(=) Resultado do Período\"))"
-   },
-   "seconds": 1.2,
-   "at": 31.12,
-   "label": "Resultado do Período",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"R$ 3.574,10\", \"R$ 45.855,90\", \"R$ 2.800,00\", \"R$ 26.650,00\", \"Déficit\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
-   "label": "confere impostos, despesas, outras receitas e resultado"
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 36.23
+   "at": 30.23
   },
   {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=document.querySelector('main h1')||document.querySelector('main *');const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;if(y0<3)return 'ok';const dy=-y0;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo'})()",
-   "at": 36.23,
-   "label": "sobe para o alto da DRE"
-  },
-  {
-   "do": "click",
+   "do": "hover",
    "target": {
-    "role": "button",
-    "name": "Comparativo"
+    "selector": "main tbody tr:has-text(\"Filial Pindamonhangaba\")"
    },
-   "at": 36.91,
-   "label": "Comparativo"
-  },
-  {
-   "do": "waitFor",
-   "text": "DRE Comparativo por Unidade",
-   "timeout": 10
+   "seconds": 1.0,
+   "at": 30.79,
+   "label": "linha da filial (ZOOM)",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"DRE Comparativo por Unidade\"&&e.getClientRects().length)||[...document.querySelectorAll('main *')].find(e=>[...e.childNodes].some(n=>n.nodeType===3&&n.textContent.trim()===\"DRE Comparativo por Unidade\")&&e.getClientRects().length);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-150);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "label": "desce até a tabela do Comparativo (a linha Resultado aparece)"
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"R$ 72.000,00\", \"R$ 71.000,00\", \"R$ 1.000,00\", \"1.4%\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
+   "label": "confere linha da filial"
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 41.44
+   "at": 37.72
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text(\"Resultado\")"
+    "selector": "main tbody tr:has-text(\"Recicla Vale Metais\") td:nth-child(4)"
    },
-   "seconds": 0.6,
-   "at": 41.99,
-   "label": "linha Resultado (ZOOM)",
+   "seconds": 1.2,
+   "at": 38.88,
+   "label": "o vermelho da matriz",
    "optional": true,
    "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text(\"Resultado\") td:nth-child(2)"
-   },
-   "seconds": 1.0,
-   "at": 43.89,
-   "label": "Resultado da matriz",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text(\"Resultado\") td:nth-child(3)"
-   },
-   "seconds": 1.0,
-   "at": 50.41,
-   "label": "Resultado da filial",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"R$ 27.650,00\", \"R$ 1.000,00\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
-   "label": "confere Resultado da matriz e da filial"
   },
   {
    "do": "eval",
@@ -356,7 +253,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 55.23
+   "at": 56.84
   }
  ]
 }

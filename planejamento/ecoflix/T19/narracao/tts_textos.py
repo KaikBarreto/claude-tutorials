@@ -101,7 +101,7 @@ No fim do dia, Registrar Saída, e a jornada fica concluída. Se ele voltar à n
 Uma dica: quem marca a hora é o sistema, no horário da empresa, e não o relógio do celular. Celular com a hora errada não bagunça o registro.""",
 13: """E quem não tem celular bate no tablet da empresa, aquele outro link. Ele abre a câmera pra reconhecer o rosto. Sem o rosto cadastrado, é só tocar em Buscar manualmente.
 Aparece a equipe inteira, com quem já bateu e quem ainda falta. Dá pra buscar pelo nome e ordenar por quem falta.
-O Diego toca no nome dele, registra a saída, e o tablet confirma com a hora e volta sozinho pra lista, pronto pro próximo.
+O Diego toca no nome dele, registra a saída, e o tablet confirma com a hora e volta sozinho pra câmera, pronto pro próximo.
 Quem tem pin aparece com o cadeado, e o tablet pede o pin antes.
 Se quiser que o tablet reconheça todo mundo pelo rosto, cada um faz uma ativação pelo celular, com o link gerado no cadastro. A foto não é guardada. E essa chave aqui tira a busca por nome do tablet.""",
 14: """A Folha de Ponto abre com o resumo do mês de toda a equipe. E passando o mouse no saldo, dá pra ver quanto é hora a mais e quanto é atraso ou falta.

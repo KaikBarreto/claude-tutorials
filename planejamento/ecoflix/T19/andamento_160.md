@@ -27,3 +27,10 @@ FAKE_PORT=54319 bash rec/run.sh down                                            
 
 ## Ensaio
 3 lotes rodados. Fechados no rápido (0 falhos): 0 a 8, 10, 11, 15, 16, 17; fechados com 1 passo opcional falho: 9, 12; não fecham: 13, 14. Só ensaio rápido; nenhum completo. Conferências tela x fala: 0 diferentes (INSS, líquido da folha CLT do Marcos e saldos batem com a fala).
+
+## Fechamento 20/11 (caps 13 e 14)
+- cap14: PASSOU no rápido. Causa: DateField no computador é botão + calendário (react-day-picker), não aceita digitação. `gerar.py` agora abre o calendário, clica "próximo mês" e o dia (início 07/12, fim 05/01). `apos-cap14` gravada, mas partiu de `apos-cap13` COPIADA (aproximada). Único passo falho: hover opcional da linha da Juliana (`main tr:has-text('Juliana Prado')`, não achou).
+- cap13: 2 causas achadas. (1) "Tirar foto agora" não aparecia: o tablet (computador) não tem a permissão de localização do celular -> "Localização bloqueada". Corrigido por stub de `navigator.geolocation` no setup do cap13 (`JS_GEO`, só na página; recorder intacto; a câmera falsa já funcionava). Passou: foto, confirmação, "Saída registrada". (2) Depois da saída o app volta em 4 s para a TELA DA CÂMERA, não para a lista (fala diz "volta pra lista"): o robô agora espera "Buscar manualmente", clica de novo e segue (`gerar.py`). Esta segunda correção NÃO foi ensaiada.
+- Falta (o limite de 2 lotes acabou): `PRAZO_MIN=115 bash rec/t19/t19_fila.sh 13:ens,seed 14:ens,seed 15:ens,seed 16:ens,seed 17:ens` (14 entra porque depende do banco pós-13; 15 a 17 dependem da cadeia). `apos-cap13` ainda é cópia de `apos-cap12`.
+- Proposta de fala (cap13, linha 3): "volta sozinho pra tela da câmera, e é só tocar em Buscar manualmente de novo".
+- Instância 54319 derrubada.
