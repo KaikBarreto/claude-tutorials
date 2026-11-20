@@ -36,8 +36,15 @@ def dump():
     return {t: get(f'/__dev/state?table={t}') for t in TABELAS}
 
 
+# o capítulo -> o número NO NOME da semente (a cadeia manteve os nomes apos-cap02/03/09/10/11 depois da renumeração de 20/11)
+NOME_SEMENTE = {2: 2, 3: 3, 12: 9, 14: 10, 17: 11}
+
+
 def main():
     n = int(sys.argv[1])
+    nn = NOME_SEMENTE.get(n)
+    if nn is None:
+        sys.exit(f'o capítulo {n} não deixa semente (só {sorted(NOME_SEMENTE)})')
     pos = dump()
     post('/__dev/reset')
     r = post('/__dev/seed', {'files': gerar.SEMENTE[n]})
@@ -65,11 +72,11 @@ def main():
         print(f'  alterado {t}: {len(linhas)} ' + '; '.join(','.join(sorted(x["set"])) for x in linhas[:4]))
     for t, linhas in remove.items():
         print(f'  removido {t}: {len(linhas)}')
-    if n in (2, 3):
-        fixo = json.load(open(os.path.join(DIR, f'apos-cap{n:02d}.json'), encoding='utf8'))
-        t = 'company_groups' if n == 2 else 'company_group_members'
+    if nn in (2, 3):
+        fixo = json.load(open(os.path.join(DIR, f'apos-cap{nn:02d}.json'), encoding='utf8'))
+        t = 'company_groups' if nn == 2 else 'company_group_members'
         app = (novo.get(t) or [None])[0]
-        print(f'  cap{n:02d}: a semente fixa fica (ids estáveis). O app gravou em {t}: {json.dumps(app, ensure_ascii=False)}')
+        print(f'  cap{nn:02d}: a semente fixa fica (ids estáveis). O app gravou em {t}: {json.dumps(app, ensure_ascii=False)}')
         print(f'  semente fixa: {json.dumps(fixo[t][0], ensure_ascii=False)}')
         return
     saida = dict(novo)
@@ -77,7 +84,7 @@ def main():
         saida['_patch'] = patch
     if remove:
         saida['_remove'] = remove
-    caminho = os.path.join(DIR, f'apos-cap{n:02d}.json')
+    caminho = os.path.join(DIR, f'apos-cap{nn:02d}.json')
     json.dump(saida, open(caminho, 'w', encoding='utf8'), ensure_ascii=False, indent=1)
     print('gravado', os.path.relpath(caminho, os.path.join(HERE, '..', '..')))
 

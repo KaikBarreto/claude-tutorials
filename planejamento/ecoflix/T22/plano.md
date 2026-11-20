@@ -1,5 +1,18 @@
 # Plano · T22 Gerencial: matriz e filiais
 
+> **Atualização 20/11 (app 1.60.18, tela 1600x900).** A aula passou a ter 19 capítulos (0 a 18), 2.838 palavras de fala (antes 1.410).
+> A tabela abaixo é a de 1.59.154: vale a lista de capítulos e títulos de `roteiro.md` e `narracao/tts_textos.py`.
+> Capítulos novos: 4 Quando o código não entra (semente `t22/codigo-vencido`), 9 Além da DRE, 11 Corrigir o estoque de uma unidade,
+> 13 Preço diferente por unidade, 15 Lote, fila e o pedido da filial, 16 Vender com o estoque da outra unidade (semente
+> `t22/venda-outra-unidade`: aprovação desligada). Renumeração: 4→5, 5→6, 6→7, 7→8, 8→10, 9→12, 10→14, 11→17, 12→18.
+> Sementes: nomes antigos mantidos (`inicio`, `apos-cap02`, `apos-cap03`, `apos-cap09` = fim do cap 12, `apos-cap10` = fim do cap 14,
+> `apos-cap11` = fim do cap 17); mapa em `rec/t22/t22_estado.py` (`NOME_SEMENTE`). Handlers novos só desta aula (`rec/mundo/handlers/rpc`):
+> toggle_group_category_sharing, get_group_material_stock, link_own_material_to_group_catalog, create_group_transfer_as_member,
+> execute_group_transfers_batch, apply_group_prices_to_company, get_group_order_history_lines, set_allow_branch_stock_on_sale.
+> Pontos do 1.60.18 aplicados: Lucro Líquido do Dashboard = DRE em competência; Comparativo com CMV por unidade; Histórico de Envios
+> atualiza; "Sobrescrever" desligado protege o preço da filial; gráficos sem nome cortado.
+
+
 - **Título:** Gerencial: matriz e filiais (o da fonte). 🔒 **Módulo Gerencial** (`modulo_gerencial`), contratado na matriz.
 - **Objetivo:** a matriz da Recicla Vale Metais (Taubaté) passa a enxergar a filial de Pindamonhangaba: cria o grupo, vincula a
   filial pelo código, lê o Dashboard, a DRE do grupo nos dois regimes e o estoque, padroniza o catálogo, transfere material com

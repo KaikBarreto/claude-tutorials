@@ -131,6 +131,16 @@
    "label": "Rogério Batista"
   },
   {
+   "do": "click",
+   "target": {
+    "selector": "main [role=listitem] > button:has(p:text-is('Rogério Batista'))"
+   },
+   "label": "clica de novo (só se a ficha não abriu)",
+   "unless": {
+    "selector": "main section[aria-label^='Detalhes de'] dl > div:has(> dt:text-is('Último pagamento'))"
+   }
+  },
+  {
    "do": "waitFor",
    "target": {
     "selector": "main section[aria-label^='Detalhes de'] dl > div:has(> dt:text-is('Último pagamento'))"

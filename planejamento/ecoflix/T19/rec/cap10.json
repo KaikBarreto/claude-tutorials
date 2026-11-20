@@ -231,28 +231,39 @@
    "timeout": 6
   },
   {
-   "do": "click",
+   "do": "hover",
    "target": {
     "selector": "[role=dialog] button:has-text('Visualizar / PDF')"
    },
-   "at": 24.34,
-   "label": "Visualizar / PDF (abre em aba nova)"
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{let w=null,h='';for(let i=0;i<50;i++){w=window.__abas&&window.__abas[0];try{h=w&&w.document&&w.document.documentElement.outerHTML||''}catch(e){h=''}if(h.includes(\"Marcos Antunes\"))break;await new Promise(r=>setTimeout(r,200));}if(!h.includes(\"Marcos Antunes\"))return 'SEM ABA: '+h.slice(0,120);return {html:\"relacao-de-pagamento\",chars:h.length,b64:btoa(unescape(encodeURIComponent(h)))}})()",
-   "label": "HTML da Relação de pagamento (aba nova, para a ilustração do comprovante)"
+   "seconds": 0.3,
+   "at": 23.96,
+   "label": "Visualizar / PDF",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "hover",
    "target": {
     "selector": "[role=dialog] button:text-is('Excel')"
    },
-   "seconds": 1.0,
+   "seconds": 0.6,
    "at": 25.7,
    "label": "Excel",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Visualizar / PDF')"
+   },
+   "at": 28.18,
+   "label": "Visualizar / PDF (abre em aba nova)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{let w=null,h='';for(let i=0;i<50;i++){w=window.__abas&&window.__abas[0];try{h=w&&w.document&&w.document.documentElement.outerHTML||''}catch(e){h=''}if(h.includes(\"Marcos Antunes\"))break;await new Promise(r=>setTimeout(r,200));}if(!h.includes(\"Marcos Antunes\"))return 'SEM ABA: '+h.slice(0,120);return {html:\"relacao-de-pagamento\",chars:h.length,b64:btoa(unescape(encodeURIComponent(h)))}})()",
+   "label": "HTML da Relação de pagamento (aba nova, para a ilustração do comprovante)"
   },
   {
    "do": "press",

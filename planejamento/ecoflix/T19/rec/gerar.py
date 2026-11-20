@@ -843,7 +843,7 @@ def cap06():
     c.hover(TXTX('Deseja gerar o recibo', within=ALERTA), 1.0, at=c.A(12, 'pergunta', 0.75), label='Pagamento registrado! Deseja gerar o recibo desse pagamento?')
     c.ev(js_alerta_botao('Gerar Recibo'), at=c.A(12, 'Gerar', 0.9), label='Gerar Recibo (abre o recibo em aba nova)')
     c.ev(js_aba_html(0, 'recibo-pagamento-edson', 'Edson Moura'), label='HTML do recibo do pagamento do Edson (aba nova, para a ilustração do comprovante)')
-    c.waitfor(gone={'role': 'alertdialog'}, timeout=10)
+    c.wait(1.0)
     c.mark(13)
     c.confere(FICHA, ['R$ 2.900,00'], 'saldo do Edson volta a 2.900,00')
     c.hover(RESUMO('Saldo atual'), 1.0, at=c.A(13, 'saldo', 0.75), label='Saldo atual R$ 2.900,00')
@@ -929,6 +929,7 @@ def cap08():
     c.mark(2)
     item_menu(c, 'Juliana Prado', 'Pagar férias', at=c.A(2, 'férias.', 0.9), label='Pagar férias')
     c.waitfor(text='Pagar Férias', timeout=10)
+    c.wait(0.9)
     c.hover(TXTX('Não altera o saldo de salário em aberto', within=DLG), 2.4, at=c.A(2, 'aviso:', 0.75), label='aviso: não altera o saldo de salário em aberto')
     c.mark(3)
     c.digita(CAMPO('competence-amount'), '3733,33', c.W(3, 'três'), 'Valor 3.733,33', folga_clique=1.2)
@@ -951,6 +952,7 @@ def cap08():
     menu_linha(c, 'Cláudio Ferraz', 'Pagar 13º salário', at=c.A(5, 'décimo', 0.9), label='menu ⋯ do Cláudio')
     item_menu(c, 'Cláudio Ferraz', 'Pagar 13º salário', at=c.A(5, 'terceiro', 0.6), label='Pagar 13º salário')
     c.waitfor(text='Pagar 13º Salário', timeout=10)
+    c.wait(0.9)
     c.digita(CAMPO('competence-amount'), '1050,00', c.W(5, 'mil'), 'Valor 1.050,00', folga_clique=1.2)
     c.click(SEL(f"{DLG} label[for='competence-pix']"), label='Forma de pagamento: PIX/Transferência (Banco)')
     c.click(CAMPO('competence-description'), label='campo Observação')
@@ -979,9 +981,10 @@ def cap10():
     c.mark(3)
     c.click(SEL(f"{DLG} label:has-text('Relação de pagamento')"), at=c.A(3, 'Relação', 0.9), label='Relação de pagamento')
     c.waitfor(text='quanto pagar a cada funcionário hoje', timeout=6)
-    c.click(SEL(f"{DLG} button:has-text('Visualizar / PDF')"), at=c.A(3, 'PDF', 0.9), label='Visualizar / PDF (abre em aba nova)')
+    c.hover(SEL(f"{DLG} button:has-text('Visualizar / PDF')"), 0.3, at=c.A(3, 'pê-dê-éfe', 0.75) if c.tem(3, 'pê-dê-éfe') else c.A(3, 'Sai', 0.75), label='Visualizar / PDF')
+    c.hover(SEL(f"{DLG} button:text-is('Excel')"), 0.6, at=c.A(3, 'Excel.', 0.75), label='Excel')
+    c.click(SEL(f"{DLG} button:has-text('Visualizar / PDF')"), at=round(c.Lfim(3) - 2.6, 2), label='Visualizar / PDF (abre em aba nova)')
     c.ev(js_aba_html(0, 'relacao-de-pagamento', 'Marcos Antunes'), label='HTML da Relação de pagamento (aba nova, para a ilustração do comprovante)')
-    c.hover(SEL(f"{DLG} button:text-is('Excel')"), 1.0, at=c.A(3, 'Excel.', 0.75), label='Excel')
     fechar_janela(c, at=round(c.Lfim(3) - 0.5, 2))
     c.fim()
     return c
@@ -1191,7 +1194,9 @@ def cap13():
     """O tablet da empresa (1024x768, sem login do gestor na tela): a câmera, Buscar manualmente, a lista (A-Z e Quem falta), a saída do
     Diego, o cadeado do PIN; depois as configurações do ponto (reconhecimento facial) e o cadastro do Gabriel."""
     KIOSK = '/ponto/empresa/' + KIOSK_SLUG
-    setup = [{'do': 'goto', 'url': KIOSK}, {'do': 'waitFor', 'text': 'Buscar manualmente', 'timeout': 40}, {'do': 'eval', 'js': JS_CAMERA}, {'do': 'wait', 'seconds': 0.8}]
+    setup = [{'do': 'eval', 'js': JS_CAMERA},
+             {'do': 'eval', 'js': f"(()=>{{history.pushState({{}},'',{json.dumps(KIOSK)});window.dispatchEvent(new PopStateEvent('popstate'));return 'quiosque'}})()"},
+             {'do': 'waitFor', 'text': 'Buscar manualmente', 'timeout': 40}, {'do': 'wait', 'seconds': 0.8}]
     c = cap_novo(13, setup=setup, start=(512, 400), prewarm=[KIOSK], recolhe=False)
     c.mark(1)
     c.marcar(TXTX('Buscar manualmente'), at=c.A(1, 'rosto.', 0.5), label='o tablet: câmera e Buscar manualmente')
@@ -1287,7 +1292,7 @@ def cap14():
     escolhe(c, CAMPO('punch-emp'), 'Juliana Prado', c.A(9, 'escolho', 0.9), c.A(9, 'ela,', 0.6), 'Funcionário: Juliana Prado')
     c.hover(CAMPO('punch-type'), 0.3, at=c.A(9, 'tipo,', 0.75), label='Tipo: Entrada')
     c.click(CAMPO('punch-when'), at=c.A(9, 'hora', 0.9), label='Data e hora da batida')
-    c.ev(JS_HORA('08:00'), label='hora 08:00')
+    c.ev(JS_HORA('08', '00'), label='hora 08:00')
     c.click(CAMPO('punch-notes'), label='campo Observação')
     c.ev(colar('Esqueceu de bater'), at=c.A(9, 'motivo.', 0.3), label='Observação: Esqueceu de bater')
     c.click(SEL(f"{DLG} button:text-is('Lançar')"), at=c.A(9, 'entra', 0.9), label='Lançar')
@@ -1315,10 +1320,12 @@ def cap14():
 
 
 # 08:00 no DateTimeField do "Lançar registro manual": o campo de hora do popover (input time) recebe o valor pelo setter nativo; Concluir fecha
-JS_HORA = lambda hhmm: ("(async()=>{const dorme=ms=>new Promise(r=>setTimeout(r,ms));let i=null;for(let k=0;k<30&&!i;k++){i=[...document.querySelectorAll('input')].filter(x=>x.type==='time'||/hora|--:--/i.test(x.placeholder||'')).pop();if(!i)await dorme(100)}"
-                        "if(!i)return 'SEM ALVO: campo de hora';const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;set.call(i,%s);"
-                        "i.dispatchEvent(new Event('input',{bubbles:true}));i.dispatchEvent(new Event('change',{bubbles:true}));await dorme(300);"
-                        "const ok=[...document.querySelectorAll('button')].find(b=>b.textContent.trim()==='Concluir');if(ok)ok.click();await dorme(300);return 'hora '+i.value})()") % json.dumps(hhmm)
+JS_HORA = lambda hh, mm: ("(async()=>{const dorme=ms=>new Promise(r=>setTimeout(r,ms));const pick=async(rot,val)=>{let lb=null;for(let k=0;k<30&&!lb;k++){"
+                          "lb=[...document.querySelectorAll('[role=listbox]')].find(x=>(x.getAttribute('aria-label')||'')===rot);if(!lb)await dorme(100)}"
+                          "if(!lb)return false;const op=[...lb.querySelectorAll('[role=option]')].find(o=>o.textContent.trim()===val);if(!op)return false;op.click();await dorme(300);return true};"
+                          "if(!await pick('Horas',%s))return 'SEM ALVO: Horas';if(!await pick('Minutos',%s))return 'SEM ALVO: Minutos';"
+                          "const ok=[...document.querySelectorAll('button')].find(b=>b.textContent.trim()==='Concluir');if(ok)ok.click();await dorme(300);return 'hora '+%s+':'+%s})()") % (
+    json.dumps(hh), json.dumps(mm), json.dumps(hh), json.dumps(mm))
 
 
 def cap17():
@@ -1350,7 +1357,9 @@ def cap17():
     fechar_janela(c, label='fecha o relatório')
     c.mark(5)
     menu_linha(c, 'Gabriel Rocha', 'Copiar link do ponto', at=c.A(5, 'Ligou', 0.6), label='menu ⋯ do Gabriel: Copiar link do ponto')
+    c.cursor((1000, 140), label='cursor sai do menu')
     c.press('Escape', label='fecha o menu')
+    c.wait(0.4)
     c.mark(6)
     c.click(ABA('Folha de Ponto'), at=c.A(6, 'folha', 0.9), label='Folha de Ponto')
     c.waitfor(text='Todos os funcionários', timeout=10)
@@ -1401,7 +1410,7 @@ def cap15():
     c.hover(SEL("main #work-weekday-1"), 0.3, at=c.A(4, 'segunda', 0.75), label='Dias em que a empresa trabalha: Seg')
     c.hover(SEL("main #work-weekday-5"), 1.0, at=c.A(4, 'sexta.', 0.75), label='Seg a Sex ligados')
     c.mark(5)
-    rola_ate(c, 'main', 'Jornada Individual', c.A(5, 'jornada', 0.6), 'rola até a Jornada Individual', y=160)
+    rola_ate(c, 'main', 'Jornada Individual', c.A(5, 'jornada', 0.6), 'rola até a Jornada Individual', y=90)
     LAPIS = SEL("main tr:has-text('Juliana Prado') button:has(svg.lucide-pencil)")
     c.hover(SEL("main tr:has-text('Juliana Prado')"), 0.3, at=c.A(5, 'Juliana,', 0.75), label='a linha da Juliana (horários herdados em cinza)')
     c.mark(6)
@@ -1428,6 +1437,7 @@ def cap16():
     c.mark(1)
     rola_ate(c, 'main [role=list]', 'Rogério Batista', c.A(1, 'sai', 0.4), 'rola a lista até o Rogério', y=520, dur_ms=600, prefixo=False)
     c.click(LINHA('Rogério Batista'), at=c.A(1, 'Rogério,', 0.8), label='Rogério Batista')
+    c.click(LINHA('Rogério Batista'), label='clica de novo (só se a ficha não abriu)', unless=DADO('Último pagamento'))
     c.waitfor(target=DADO('Último pagamento'), timeout=10)
     c.confere(FICHA, ['Ajudante de pátio', '30/10/2026'], 'Rogério: último pagamento 30/10')
     c.hover(DADO('Último pagamento'), 1.0, at=c.A(1, 'recebeu', 0.75), label='Último pagamento 30/10/2026')

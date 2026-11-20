@@ -602,7 +602,7 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const dorme=ms=>new Promise(r=>setTimeout(r,ms));let i=null;for(let k=0;k<30&&!i;k++){i=[...document.querySelectorAll('input')].filter(x=>x.type==='time'||/hora|--:--/i.test(x.placeholder||'')).pop();if(!i)await dorme(100)}if(!i)return 'SEM ALVO: campo de hora';const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;set.call(i,\"08:00\");i.dispatchEvent(new Event('input',{bubbles:true}));i.dispatchEvent(new Event('change',{bubbles:true}));await dorme(300);const ok=[...document.querySelectorAll('button')].find(b=>b.textContent.trim()==='Concluir');if(ok)ok.click();await dorme(300);return 'hora '+i.value})()",
+   "js": "(async()=>{const dorme=ms=>new Promise(r=>setTimeout(r,ms));const pick=async(rot,val)=>{let lb=null;for(let k=0;k<30&&!lb;k++){lb=[...document.querySelectorAll('[role=listbox]')].find(x=>(x.getAttribute('aria-label')||'')===rot);if(!lb)await dorme(100)}if(!lb)return false;const op=[...lb.querySelectorAll('[role=option]')].find(o=>o.textContent.trim()===val);if(!op)return false;op.click();await dorme(300);return true};if(!await pick('Horas',\"08\"))return 'SEM ALVO: Horas';if(!await pick('Minutos',\"00\"))return 'SEM ALVO: Minutos';const ok=[...document.querySelectorAll('button')].find(b=>b.textContent.trim()==='Concluir');if(ok)ok.click();await dorme(300);return 'hora '+\"08\"+':'+\"00\"})()",
    "label": "hora 08:00"
   },
   {

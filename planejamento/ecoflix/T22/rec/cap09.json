@@ -1,6 +1,6 @@
 {
  "name": "t22-cap09",
- "title": "T22 · Cap. 9 · Enviar Ativos (narração ESTIMADA 74,5 s; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira (matriz))",
+ "title": "T22 · Cap. 9 · Além da DRE (narração ESTIMADA 54,7 s; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira (matriz))",
  "seed": "t22-cap09",
  "pace": 0.5,
  "cps": 40,
@@ -15,8 +15,10 @@
   "notification_shown_version": "1.60.18",
   "pwa-install-dismissed": "true",
   "theme": "light",
+  "daily-tasks-reminder-last-shown-65255bb0-aea3-508c-8383-5c426f18b774": "2026-11-10",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
-  "initial-preferences-set": "true"
+  "initial-preferences-set": "true",
+  "gerencial-financeiro-tab": "dre"
  },
  "seedExtra": [
   "t22/inicio",
@@ -70,11 +72,11 @@
   },
   {
    "do": "goto",
-   "url": "/gerencial/configuracoes"
+   "url": "/gerencial/estoque"
   },
   {
    "do": "waitFor",
-   "text": "Código de Convite",
+   "text": "Estoque Gerencial",
    "timeout": 25
   },
   {
@@ -95,19 +97,43 @@
    "idle": true
   },
   {
-   "do": "eval",
-   "js": "(async()=>{const aberto=()=>!!document.querySelector('a[href=\"/gerencial/configuracoes\"]');const b=[...document.querySelectorAll('button')].find(e=>e.textContent.trim().startsWith('Gerencial (Filiais)'));if(!b)return 'SEM ALVO';if(aberto()!==true)b.click();await new Promise(r=>setTimeout(r,500));return aberto()?'aberto':'fechado'})()"
+   "do": "goto",
+   "url": "/gerencial/financeiro"
   },
   {
    "do": "waitFor",
+   "text": "Financeiro Gerencial",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
    "target": {
-    "selector": "a[href=\"/gerencial/configuracoes\"]"
-   },
-   "timeout": 8
+    "selector": "main button[role=combobox]:has-text(\"Este mês\")"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Mês passado"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "CMV (Custo da Mercadoria Vendida)",
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true
   },
   {
    "do": "eval",
-   "js": "(()=>{const a=document.querySelector('a[href=\"/gerencial/configuracoes\"]');if(!a)return 'SEM ALVO';let c=a.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)break;c=c.parentElement;}if(!c||c===document.body)return 'SEM ROLAGEM';const dy=a.getBoundingClientRect().bottom-(c.getBoundingClientRect().bottom-8);if(dy>0)c.scrollTop+=dy;return Math.round(a.getBoundingClientRect().top)})()"
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Vendas de Material\"&&e.getClientRects().length)||[...document.querySelectorAll('main *')].find(e=>[...e.childNodes].some(n=>n.nodeType===3&&n.textContent.trim()===\"Vendas de Material\")&&e.getClientRects().length);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-330);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;c.scrollTop=y0+dy;return Math.round(el.getBoundingClientRect().top)})()"
   },
   {
    "do": "eval",
@@ -125,258 +151,201 @@
    "at": 0
   },
   {
-   "do": "click",
-   "target": {
-    "selector": "a[href=\"/gerencial/configuracoes\"]"
-   },
-   "at": 0.31,
-   "label": "Configurações do Gerencial (menu)"
-  },
-  {
-   "do": "waitFor",
-   "text": "Código de Convite",
-   "timeout": 15
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Total Despesas\"&&e.getClientRects().length)||[...document.querySelectorAll('main *')].find(e=>[...e.childNodes].some(n=>n.nodeType===3&&n.textContent.trim()===\"Total Despesas\")&&e.getClientRects().length);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 1.4,
+   "label": "desce até Total Despesas"
   },
   {
    "do": "click",
    "target": {
-    "selector": "#tab-btn-materiais"
+    "selector": "main :is(div,button).flex:has(> span:text-is(\"Total Despesas\"))"
    },
-   "at": 6.56,
-   "label": "Catálogo de Materiais"
-  },
-  {
-   "do": "waitFor",
-   "text": "Importar do Estoque da Matriz",
-   "timeout": 10
-  },
-  {
-   "do": "mark",
-   "name": "L2",
-   "at": 8.35
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Importar do Estoque da Matriz"
-   },
-   "at": 10.1,
-   "label": "Importar do Estoque da Matriz"
-  },
-  {
-   "do": "waitFor",
-   "text": "importado(s) do estoque",
-   "timeout": 10
+   "at": 6.93,
+   "label": "abre Total Despesas (as categorias)"
   },
   {
    "do": "hover",
    "target": {
-    "text": "Alumínio latinha",
-    "exact": true,
+    "selector": "main :is(div,button).flex:has(> span:text-is(\"Total Despesas\"))"
+   },
+   "seconds": 1.2,
+   "at": 8.55,
+   "label": "as categorias da despesa (ZOOM)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 10.93
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main :is(div,button).flex:has(> span:text-is(\"Total Despesas\"))"
+   },
+   "at": 11.23,
+   "label": "fecha Total Despesas"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=document.querySelector('main h1')||document.querySelector('main *');const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;if(y0<3)return 'ok';const dy=-y0;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo'})()",
+   "at": 11.43,
+   "label": "sobe ao alto da DRE"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Exportar"
+   },
+   "seconds": 1.4,
+   "at": 12.07,
+   "label": "Exportar (ZOOM, sem clicar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Patrim\\u00f4nio Operacional Atual\"&&e.getClientRects().length)||[...document.querySelectorAll('main *')].find(e=>[...e.childNodes].some(n=>n.nodeType===3&&n.textContent.trim()===\"Patrim\\u00f4nio Operacional Atual\")&&e.getClientRects().length);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-380);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 19.2,
+   "label": "desce até o Patrimônio Operacional Atual"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Patrimônio Operacional Atual",
     "within": "main"
    },
-   "seconds": 0.8,
-   "at": 13.08,
-   "label": "os materiais da matriz no catálogo",
+   "at": 20.19,
+   "label": "abre o Patrimônio Operacional Atual"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Contas a Receber",
+    "within": "main"
+   },
+   "seconds": 1.2,
+   "at": 24.99,
+   "label": "Saldo em Caixa, Saldo Bancário, Contas a Receber, Estoque e Contas a Pagar (ZOOM)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 15.39
+   "at": 29.65
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=document.querySelector('main h1')||document.querySelector('main *');const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;if(y0<3)return 'ok';const dy=-y0;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo'})()",
+   "at": 29.65,
+   "label": "sobe"
   },
   {
    "do": "click",
    "target": {
-    "selector": "#tab-btn-precos"
+    "selector": "#tab-btn-dashboard"
    },
-   "at": 15.91,
-   "label": "Tabelas de Preço"
+   "at": 30.4,
+   "label": "aba Dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Despesas por Categoria",
+   "timeout": 12
   },
   {
    "do": "hover",
    "target": {
-    "text": "Tabelas de Preço do Grupo",
+    "text": "Despesas por Categoria",
     "within": "main"
    },
    "seconds": 1.0,
-   "at": 18.6,
-   "label": "as tabelas da matriz entram sozinhas",
+   "at": 32.78,
+   "label": "Despesas por Categoria",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Receitas por Categoria",
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "at": 34.45,
+   "label": "Receitas por Categoria",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 21.51
+   "at": 36.37
   },
   {
    "do": "click",
    "target": {
-    "selector": "#tab-btn-clientes"
+    "selector": "#tab-btn-historico"
    },
-   "at": 22.03,
-   "label": "Clientes e Fornecedores"
+   "at": 37.28,
+   "label": "aba Histórico"
+  },
+  {
+   "do": "waitFor",
+   "text": "Compras",
+   "timeout": 12
   },
   {
    "do": "hover",
    "target": {
-    "text": "Fundição Bandeira do Vale",
-    "exact": true,
-    "within": "main"
+    "selector": "main [role=tab]:has-text(\"Compras\")"
    },
    "seconds": 0.8,
-   "at": 28.06,
-   "label": "Fundição Bandeira do Vale",
+   "at": 38.83,
+   "label": "Receitas, Despesas e Compras",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "click",
    "target": {
-    "text": "Fundição Bandeira do Vale",
-    "exact": true,
-    "within": "main"
+    "selector": "main button:has-text(\"Filtros\")"
    },
-   "at": 32.06,
-   "label": "marca a Fundição Bandeira do Vale"
+   "at": 42.22,
+   "label": "Filtros"
   },
   {
    "do": "waitFor",
-   "text": "Disponibilizado para filiais",
+   "text": "Conta bancária",
    "timeout": 8
   },
   {
-   "do": "mark",
-   "name": "L5",
-   "at": 33.32
-  },
-  {
    "do": "click",
    "target": {
-    "selector": "#tab-btn-categorias"
+    "selector": "[role=dialog] button[role=combobox]:has-text(\"Todas as contas\")"
    },
-   "at": 34.0,
-   "label": "Categorias Financeiras"
-  },
-  {
-   "do": "mark",
-   "name": "L6",
-   "at": 38.08
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "#tab-btn-unidades"
-   },
-   "at": 38.68,
-   "label": "Unidades"
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Filial Pindamonhangaba\"&&e.getClientRects().length)||[...document.querySelectorAll('main *')].find(e=>[...e.childNodes].some(n=>n.nodeType===3&&n.textContent.trim()===\"Filial Pindamonhangaba\")&&e.getClientRects().length);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-360);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "label": "desce até a filial"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "main div.rounded-lg:has(p:text-is(\"Filial Pindamonhangaba\")) button:has-text(\"Enviar Ativos\")"
-   },
-   "at": 41.11,
-   "label": "Enviar Ativos"
-  },
-  {
-   "do": "waitFor",
-   "text": "Confirmar Envio",
-   "timeout": 8
+   "at": 44.72,
+   "label": "Conta bancária"
   },
   {
    "do": "hover",
    "target": {
-    "text": "Materiais",
-    "exact": true,
-    "within": "[role=dialog]"
-   },
-   "seconds": 0.6,
-   "at": 45.61,
-   "label": "Materiais, Categorias, Tabelas, Clientes, Fornecedores",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Sobrescrever preços existentes",
-    "exact": true,
-    "within": "[role=dialog]"
+    "selector": "[role=option]:not(:has-text(\"Todas as contas\"))"
    },
    "seconds": 1.2,
-   "at": 52.22,
-   "label": "Sobrescrever preços existentes (desligado)",
+   "at": 45.48,
+   "label": "as contas das unidades (ZOOM)",
    "optional": true,
    "timeout": 4
   },
   {
-   "do": "mark",
-   "name": "L7",
-   "at": 54.6
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Confirmar Envio",
-    "exact": true
-   },
-   "at": 54.9,
-   "label": "Confirmar Envio"
-  },
-  {
-   "do": "waitFor",
-   "text": "novo(s)",
-   "timeout": 10
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Materiais",
-    "exact": true,
-    "within": "[role=dialog]"
-   },
-   "seconds": 0.6,
-   "at": 60.01,
-   "label": "n novo(s) por linha",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Fechar",
-    "exact": true,
-    "within": "[role=dialog]"
-   },
-   "at": 61.27,
-   "label": "Fechar"
-  },
-  {
-   "do": "mark",
-   "name": "L8",
-   "at": 62.69
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main div.rounded-lg:has(p:text-is(\"Filial Pindamonhangaba\")) button.text-destructive"
-   },
-   "seconds": 1.5,
-   "at": 64.23,
-   "label": "lixeira da linha da filial (ZOOM, sem clicar)",
-   "optional": true,
-   "timeout": 4
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha a lista"
   },
   {
    "do": "eval",
@@ -386,7 +355,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 74.51
+   "at": 54.66
   }
  ]
 }

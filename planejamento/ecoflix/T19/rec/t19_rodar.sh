@@ -38,7 +38,8 @@ if [[ "$AMB" != *"FAKE_NOW=$FAKE_NOW"* ]]; then
   AMB=$( [[ -n "$PID" ]] && tr '\0' '\n' < "/proc/$PID/environ" 2>/dev/null || true)
   if [[ "$AMB" != *"FAKE_NOW=$FAKE_NOW"* ]]; then echo "instância 54319 não subiu com FAKE_NOW=$FAKE_NOW"; exit 4; fi
 fi
-[[ $((10#$NN)) -eq 13 ]] && export TUT_VIEWPORT=1024x768   # o tablet da empresa (cap13) é gravado em 4:3
+[[ $((10#$NN)) -eq 13 ]] && export TUT_VIEWPORT=1024x768
+[[ $((10#$NN)) -eq 12 || $((10#$NN)) -eq 13 ]] && export TUT_SCALE=2   # 390x844 e 1024x768 vezes 1,8 não dão quadro inteiro   # o tablet da empresa (cap13) é gravado em 4:3
 python3 -I rec/t19/gerar.py "$NN" | tail -2
 [[ $ENS == 1 ]] && python3 -I rec/t19/ensaio.py "$NN"
 mkdir -p /dev/shm/t19

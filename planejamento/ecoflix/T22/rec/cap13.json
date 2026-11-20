@@ -1,0 +1,366 @@
+{
+ "name": "t22-cap13",
+ "title": "T22 · Cap. 13 · Preço diferente por unidade (narração ESTIMADA 66,9 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira (matriz))",
+ "seed": "t22-cap13",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 700,
+  "y": 300
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.60.18",
+  "notification_shown_version": "1.60.18",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-65255bb0-aea3-508c-8383-5c426f18b774": "2026-11-10",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t22/inicio",
+  "t22/apos-cap02",
+  "t22/apos-cap03",
+  "t22/apos-cap09"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/gerencial/configuracoes"
+  },
+  {
+   "do": "waitFor",
+   "text": "Código de Convite",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/gerencial"
+  },
+  {
+   "do": "waitFor",
+   "text": "Dashboard Gerencial",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const aberto=()=>!!document.querySelector('a[href=\"/gerencial/configuracoes\"]');const b=[...document.querySelectorAll('button')].find(e=>e.textContent.trim().startsWith('Gerencial (Filiais)'));if(!b)return 'SEM ALVO';if(aberto()!==true)b.click();await new Promise(r=>setTimeout(r,500));return aberto()?'aberto':'fechado'})()"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "a[href=\"/gerencial/configuracoes\"]"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const a=document.querySelector('a[href=\"/gerencial/configuracoes\"]');if(!a)return 'SEM ALVO';let c=a.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)break;c=c.parentElement;}if(!c||c===document.body)return 'SEM ROLAGEM';const dy=a.getBoundingClientRect().bottom-(c.getBoundingClientRect().bottom-8);if(dy>0)c.scrollTop+=dy;return Math.round(a.getBoundingClientRect().top)})()"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#tab-btn-precos"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Tabelas de Preço do Grupo",
+   "timeout": 10
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|indispon[ií]vel|Access denied/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&!/fica indispon/i.test(m[0])&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__anima)return 'ja';window.__anima=setInterval(()=>{try{document.getAnimations().forEach(x=>{if(x.currentTime!==null&&x.currentTime<0)x.startTime=document.timeline.currentTime})}catch(e){}},60);return 'ok'})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div.cursor-pointer:has-text(\"Principal\")"
+   },
+   "at": 2.38,
+   "label": "abre a tabela Principal"
+  },
+  {
+   "do": "waitFor",
+   "text": "Preço Compra (R$)",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Preço Venda (R$)",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.2,
+   "at": 7.87,
+   "label": "Material, Preço Compra e Preço Venda (ZOOM)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 9.42
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Alum\\u00ednio latinha\"&&e.getClientRects().length)||[...document.querySelectorAll('main *')].find(e=>[...e.childNodes].some(n=>n.nodeType===3&&n.textContent.trim()===\"Alum\\u00ednio latinha\")&&e.getClientRects().length);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-330);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 9.42,
+   "label": "desce até a linha do Alumínio latinha"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text(\"Alumínio latinha\") td:nth-child(2) input"
+   },
+   "at": 12.3,
+   "label": "Preço Compra da latinha"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main tbody tr:has-text(\"Alumínio latinha\") td:nth-child(2) input"
+   },
+   "text": "6,30",
+   "at": 14.47,
+   "label": "compra 6,30 (ZOOM: a linha)",
+   "noClick": true,
+   "clear": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text(\"Alumínio latinha\") button:has-text(\"Salvar\")"
+   },
+   "at": 15.19,
+   "label": "Salvar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Preço atualizado",
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 15.77
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Vincula\\u00e7\\u00e3o por Unidade\"&&e.getClientRects().length)||[...document.querySelectorAll('main *')].find(e=>[...e.childNodes].some(n=>n.nodeType===3&&n.textContent.trim()===\"Vincula\\u00e7\\u00e3o por Unidade\")&&e.getClientRects().length);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-220);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 15.77,
+   "label": "desce até a Vinculação por Unidade"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Vinculação por Unidade",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 17.31,
+   "label": "Vinculação por Unidade",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div.rounded-lg:has(> div > span:text-is(\"Filial Pindamonhangaba\")) button[role=switch]"
+   },
+   "at": 23.05,
+   "label": "liga a Filial Pindamonhangaba: Vinculada"
+  },
+  {
+   "do": "waitFor",
+   "text": "Direção",
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 24.24
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div.rounded-lg:has(> div > span:text-is(\"Filial Pindamonhangaba\")) div:has(> label:text-is(\"Direção\")) button[role=combobox]"
+   },
+   "at": 34.19,
+   "label": "Direção"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=option]:has-text(\"- (abaixo)\")"
+   },
+   "at": 35.12,
+   "label": "- (abaixo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main div.rounded-lg:has(> div > span:text-is(\"Filial Pindamonhangaba\")) input[type=number]"
+   },
+   "text": "5",
+   "at": 36.21,
+   "label": "Valor 5 (ZOOM: os três campos)",
+   "clear": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div.rounded-lg:has(> div > span:text-is(\"Filial Pindamonhangaba\")) button:has-text(\"Salvar\")"
+   },
+   "at": 36.84,
+   "label": "Salvar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Configuração atualizada",
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 37.5
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div.rounded-lg:has(> div > span:text-is(\"Filial Pindamonhangaba\")) button:has-text(\"Aplicar\")"
+   },
+   "at": 38.1,
+   "label": "Aplicar"
+  },
+  {
+   "do": "waitFor",
+   "text": "aplicado(s) à unidade",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"15 preço(s) aplicado(s) à unidade\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"body\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
+   "label": "confere preços aplicados à filial"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 42.4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 54.22
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Pre\\u00e7o Compra (R$)\"&&e.getClientRects().length)||[...document.querySelectorAll('main *')].find(e=>[...e.childNodes].some(n=>n.nodeType===3&&n.textContent.trim()===\"Pre\\u00e7o Compra (R$)\")&&e.getClientRects().length);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 54.22,
+   "label": "sobe até a barra de ações da tabela"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button[role=combobox]:has-text(\"Importar da matriz\")"
+   },
+   "seconds": 1.0,
+   "at": 56.44,
+   "label": "Importar da matriz... (ZOOM, sem escolher)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button.bg-destructive:has-text(\"Excluir\"), main button:has-text(\"Excluir\")"
+   },
+   "seconds": 1.5,
+   "at": 61.07,
+   "label": "o botão vermelho Excluir (ZOOM, sem clicar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 66.88
+  }
+ ]
+}

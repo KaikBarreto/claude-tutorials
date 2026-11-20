@@ -1,157 +1,232 @@
 # Roteiro T22 · Gerencial: matriz e filiais
 
-Roteiro pronto para a voz e a gravação (molde da Domiflix, sem etapa de aprovação). Coluna Fala = texto da narração (voz Kaik
-Barreto), na grafia da legenda; a grafia de pronúncia do TTS fica em `narracao/tts_textos.py`. Coluna Tela = o que o robô faz e onde
-a câmera foca, com os rótulos entre aspas como no código 1.59.154 (`T22/inventario.md`). Mundo, números e sementes: `T22/plano.md`.
-Desktop 1280×800, menu lateral aberto, logado como Rafael Nogueira na matriz; o capítulo 3 é gravado como Sandra Pires, gerente da
-filial (outro usuário). Cada capítulo parte de um navegador novo com a semente do fim do anterior.
+Roteiro para a voz e a gravação no app 1.60.18, tela 1600x900, menu lateral aberto. A fala (coluna Fala) é a de `narracao/tts_textos.py`, na grafia da legenda (DRE e CMV; a pronúncia do TTS fica no tts). A coluna Tela resume o que o robô faz, com os rótulos copiados do código 1.60.18 (`inventario.md`); o passo a passo exato está nas docstrings e nas marcas de `rec/t22/gerar.py`. Mundo, números e sementes: `plano.md`. Cobertura aplicada: `cobertura_160.md`.
 
 - **Título:** Gerencial: matriz e filiais
 - **Antes:** Relatório Financeiro e DRE (T15)
 - **Próximo:** Coletas e Logística (T12)
-- **Vinhetas (áreas):** GERENCIAL · GRUPO · FILIAL · DASHBOARD · DASHBOARD · FINANCEIRO · FINANCEIRO · ESTOQUE · PADRONIZAÇÃO ·
-  TRANSFERÊNCIAS · ASSINATURAS · RESUMO
-- **FAKE_NOW:** `2026-11-10T08:30:00-03:00` (terça) em todos os capítulos, no backend falso e no robô.
-- **Duração estimada:** ~12 min de vídeo (1.410 palavras, ~9 min de voz a 2,6 palavras/s, mais 12 vinhetas, as ilustrações e as
-  esperas). Alvo da fonte: 16 min (a fala fecha abaixo, como na Domiflix).
-- 🔒 Módulo Gerencial: dito no cap. 0 (depende do plano, contratado na matriz). Valores de plano só na tela, sem fala nem zoom.
-- Marcas na Tela: `[BACKEND: ...]`, `[ZOOM: ...]` (dura a frase inteira), `[ILUSTRAÇÃO: ...]`, `[TESTAR: ...]`.
-- Pronúncias (TTS): DRE "dê-érri-ê" (do perfil); nova: CMV "cê-ême-vê" (testar no nó de pronúncia). Pix, CNPJ, Taubaté e
-  Pindamonhangaba na escrita normal (conferir Pindamonhangaba no teste).
+- **Capítulos:** 19 (0 a 18). Novos em 20/11: 4, 9, 11, 13, 15, 16. Renumerados: Dashboard 4→5, Ranking 5→6, DRE 6→7, Competência 7→8, Estoque 8→10, Enviar Ativos 9→12, Transferência 10→14, Assinaturas 11→17, Recapitulando 12→18.
+- **FAKE_NOW:** `2026-11-10T08:30:00-03:00` (terça) em todos os capítulos.
+- **Fala:** 2838 palavras (antes 1.410). Sem travessão; número por extenso; valores calculados só depois de vistos na tela (os que ainda dependem do ensaio estão marcados em `andamento_160.md`).
+- Não anunciar: nota de teste (homologação) e modelo novo da DANFE. Fala não cita PDF; exportações (DRE Exportar, Exportar Relatório) ficam sem filmar.
+- Marcas na Tela: `[BACKEND: ...]`, `[ZOOM: ...]`, `[ILUSTRAÇÃO: ...]` (as ilustrações estão em `cenas/ilustracoes.json`).
+
+## Capítulos
 
 ### cap00 · Abertura
 
 | Tela | Fala |
 | --- | --- |
-| Vinheta EcoFlix com o título "Gerencial: matriz e filiais". | (sem fala) |
-| Dashboard do EcoSistema da matriz, logado como Rafael Nogueira; o cursor abre, no menu lateral, o grupo "Gerencial (Filiais)": "Dashboard", "Financeiro", "Estoque", "Assinaturas" e "Configurações". [BACKEND: semente `seeds-extra/t22/inicio.json`, sem grupo (plano.md, "Mundo")] | Oi! Neste tutorial a gente vai fazer a matriz da Recicla Vale Metais, em Taubaté, enxergar a filial de Pindamonhangaba sem precisar entrar no sistema dela. |
-| [ILUSTRAÇÃO: somar na mão: dois pátios, cada um com o seu computador e o seu caderno de números; na palavra "mão", alguém copia os números dos dois num papel e soma na calculadora; na palavra "só", os dois pátios mandam setas para uma tela única, a da matriz] | Com duas unidades, pra saber quanto o grupo vendeu no mês, alguém precisava abrir os dois sistemas e somar na mão. Aqui, os números das duas chegam juntos numa tela só. |
-| De volta à tela; cartão discreto "Módulo Gerencial". | Isso é o Gerencial. Ele depende do plano contratado, e quem contrata é a matriz. |
-| Cartão discreto "Antes: Relatório Financeiro e DRE". | Como ele junta a DRE das unidades, se você ainda não viu o tutorial Relatório Financeiro e DRE, dá uma olhada antes. [pause] Vamos entender como ele funciona. |
+| Abertura: Dashboard do EcoSistema da matriz; o cursor abre o grupo "Gerencial (Filiais)" do menu (ilustração na L2). | Oi! Neste tutorial a gente vai fazer a matriz da Recicla Vale Metais, em Taubaté, enxergar a filial de Pindamonhangaba sem precisar entrar no sistema dela. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Com duas unidades, pra saber quanto o grupo vendeu no mês, alguém precisava abrir os dois sistemas e somar na mão. Aqui, os números das duas chegam juntos numa tela só. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Isso é o Gerencial. Ele depende do plano contratado, e quem contrata é a matriz. E quem pode abrir cada tela dele, você decide nas permissões de cada usuário. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Como ele junta a dê-érri-ê das unidades, se você ainda não viu o tutorial Relatório Financeiro e dê-érri-ê, dá uma olhada antes. [pause] Vamos entender como ele funciona. |
 
-### cap01 · Como o Gerencial funciona (vinheta: GERENCIAL)
-
-| Tela | Fala |
-| --- | --- |
-| Clique em "Dashboard", no grupo "Gerencial (Filiais)": "Módulo Gerencial" · "Crie um grupo gerencial para conectar suas unidades e ter uma visão consolidada de financeiro, DRE e estoque." e o botão "Configurar Grupo". | Sem grupo, o Gerencial começa assim, pedindo pra criar um. |
-| [ILUSTRAÇÃO: matriz × filial, tempo 1: dois prédios lado a lado, "Matriz · Taubaté" e "Filial · Pindamonhangaba", cada um com o seu login e a sua assinatura; na palavra "junta", um contorno abraça os dois com o nome "Grupo Recicla Vale"; na palavra "dona", uma coroa pousa na matriz] | O grupo junta as unidades. Cada unidade é uma empresa própria no sistema, com login e assinatura próprios. A matriz é a dona do grupo, e a filial entra nele. |
-| [ILUSTRAÇÃO: matriz × filial, tempo 2: da filial sobem setas com "vendas", "compras" e "estoque" até um painel somado na matriz; na palavra "padrão", desce da matriz para a filial uma caixa "catálogo de materiais"; na palavra "transfere", uma seta de ida e volta com um fardo de latinha liga os dois pátios] | A matriz enxerga os números de todas, manda o mesmo padrão de cadastro pras filiais e transfere material entre elas. |
-| [ILUSTRAÇÃO: matriz × filial, tempo 3: na filial acendem três ícones, o caixa, a balança e uma nota fiscal, com a etiqueta "da filial"; na palavra "opera", um cadeado aparece entre a matriz e esses três] | Uma dica: o Gerencial junta e padroniza, mas quem opera a filial é a filial. O caixa, as compras e as notas dela continuam com quem trabalha lá. |
-
-### cap02 · Criar o grupo e o código (vinheta: GRUPO)
+### cap01 · Como o Gerencial funciona
 
 | Tela | Fala |
 | --- | --- |
-| Clique em "Configurar Grupo": "Configurações do Grupo" · "Crie um grupo para gerenciar múltiplas unidades"; cartão "Criar Grupo Gerencial" · "Crie um grupo e compartilhe o código de convite com as filiais". | Começando pela matriz. Clico em Configurar Grupo pra criar o grupo. |
-| Em "Nome do Grupo" ("Ex: Grupo Reciclagem Silva"), digita "Grupo Recicla Vale"; clique em "Criar Grupo": aviso "Grupo gerencial criado com sucesso!". [BACKEND: RPC `generate_group_invite_code` devolve `GRP-7C4E9A`; `INSERT company_groups` com validade em 10/12/2026; vira `apos-cap02`] | Dou o nome, Grupo Recicla Vale, e clico em Criar Grupo. |
-| A tela vira "Configurações do Grupo" · "Gerencie as unidades e padronizações do grupo Grupo Recicla Vale", com o botão "Como funciona", as abas "Unidades", "Catálogo de Materiais", "Tabelas de Preço", "Clientes e Fornecedores", "Categorias Financeiras" e "Transferências" e o passo a passo "Configure o grupo" ("0 de 5 etapas concluídas"). | Pronto. Aqui ficam as abas do grupo e um passo a passo do que falta configurar. |
-| Zoom no cartão "Código de Convite": "GRP-7C4E9A" e "Válido até 10/12/2026". [ZOOM: o código e a validade, a frase toda] | E esse é o código de convite. É ele que liga a filial ao grupo, e vale por trinta dias. Se vencer, o botão do lado gera outro. |
-| Clique no botão de copiar: aviso "Código copiado!". [TESTAR: permissão `clipboard-write` no navegador do robô] | Copio o código e mando pra quem cuida da filial, por mensagem. |
-| Zoom em "Unidades Ativas": "Recicla Vale Metais" com o selo "MATRIZ" e "Nenhuma filial vinculada ainda. Compartilhe o código de convite acima.". | Por enquanto, a lista de unidades tem só a matriz. |
+| Como o Gerencial funciona: "Dashboard" do grupo Gerencial mostra "Módulo Gerencial" (sem grupo); ilustrações nas L2 a L4. | Sem grupo, o Gerencial começa assim, pedindo pra criar um. |
+| (segue a tela da linha anterior; ver `gerar.py`) | O grupo junta as unidades. Cada unidade é uma empresa própria no sistema, com login e assinatura próprios. A matriz é a dona do grupo, e a filial entra nele. |
+| (segue a tela da linha anterior; ver `gerar.py`) | A matriz enxerga os números de todas, manda o mesmo padrão de cadastro pras filiais e transfere material entre elas. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Uma dica: o Gerencial junta e padroniza, mas quem opera a filial é a filial. O caixa, as compras e as notas dela continuam com quem trabalha lá. |
 
-### cap03 · Do lado da filial (vinheta: FILIAL)
+### cap02 · Criar o grupo e o código
 
 | Tela | Fala |
 | --- | --- |
-| Capítulo gravado como Sandra Pires, no sistema da "Filial Pindamonhangaba". Rodapé do menu → "Configurações" → aba "Empresa". [BACKEND: semente `apos-cap02`; `user` = Sandra Pires (filial)] | Agora do lado da filial. A Sandra, gerente em Pindamonhangaba, entra no sistema da filial, em Configurações, na aba Empresa. |
-| Desce até o cartão "Filial" · "Se esta empresa é uma filial, vincule-a à empresa-mãe usando o código de convite"; liga "É Filial" ("Ative para vincular esta empresa a um grupo gerencial"): aparece "Código de Convite" · "Solicite o código ao administrador da empresa-mãe". | Lá embaixo fica o cartão Filial. Ela liga o É Filial. |
-| Cola "GRP-7C4E9A" no campo "GRP-XXXXXX". [ZOOM: o campo com o código] | E cola o código que recebeu da matriz. |
-| Clique em "Vincular": aviso "Empresa vinculada ao grupo com sucesso!"; o cartão mostra "Vinculada ao grupo" · "Grupo Recicla Vale" e o selo "Ativa". [BACKEND: RPC `join_group_by_invite_code`; vira `apos-cap03`] | Vincular. Pronto, a filial está no Grupo Recicla Vale. |
-| [ILUSTRAÇÃO: o código liga as unidades: o código "GRP" sai da matriz, viaja até a filial e encaixa como uma peça no contorno do grupo; na palavra "próprio", a tela da filial segue aberta ao lado, com o caixa e a balança dela] | Do lado dela, o dia a dia segue igual: a filial continua usando o próprio sistema, e a matriz passa a enxergar os números. |
+| Criar o grupo e o código: Configurar Grupo, "Grupo Recicla Vale", Criar Grupo; abas, passo a passo, o botão Como funciona (janela dos cinco passos), código de convite e validade, copiar, Unidades Ativas (1/11) só com a matriz. Vira apos-cap02. | Começando pela matriz. Clico em Configurar Grupo pra criar o grupo. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Dou o nome, Grupo Recicla Vale, e clico em Criar Grupo. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Pronto. Aqui ficam as abas do grupo e um passo a passo do que falta configurar. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Se bater dúvida no caminho, o botão Como funciona abre um resumo dos cinco passos, do convite até os resultados. |
+| (segue a tela da linha anterior; ver `gerar.py`) | E esse é o código de convite. É ele que liga a filial ao grupo, e vale por trinta dias. Se vencer, o botão do lado gera outro. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Copio o código e mando pra quem cuida da filial, por mensagem. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Por enquanto, a lista de unidades tem só a matriz. E repara no contador: um de onze, a matriz mais até dez filiais. |
 
-### cap04 · O Dashboard Gerencial (vinheta: DASHBOARD)
-
-| Tela | Fala |
-| --- | --- |
-| De volta à matriz: "Gerencial (Filiais)" → "Dashboard": "Dashboard Gerencial", o selo "MATRIZ" com "Recicla Vale Metais" e "Grupo Recicla Vale • 2 unidades". [BACKEND: semente `apos-cap03`; RPCs `get_group_financial_summary` e `get_group_stock_summary` com os números de outubro (plano.md)] | De volta à matriz. Com a filial no grupo, o Dashboard Gerencial já mostra as duas unidades. |
-| No período, escolhe "Mês passado"; o seletor de unidades fica em "Todas as Unidades". | Vou olhar outubro inteiro: em cima, Mês passado. E aqui dá pra ver todas as unidades juntas, ou uma de cada vez. |
-| Zoom nos cartões "Receita Total" R$ 344.040,00 e "Despesa Total" R$ 370.690,00, com a setinha de variação. [ZOOM: os dois cartões, a frase toda] (sem zoom no "Lucro Líquido", plano.md, risco 1) | Os cartões somam o grupo. Em outubro, a receita foi de trezentos e quarenta e quatro mil e quarenta reais, e a despesa, de trezentos e setenta mil, seiscentos e noventa. |
-| A câmera fica nas setinhas dos cartões; depois passa ao cartão "Estoque Total". | A setinha compara com o mês anterior. E o Estoque Total soma o estoque das duas unidades. |
-| Desce até "Receita vs Despesa por Unidade": as barras de "Recicla Vale Me… ★" e de "Filial Pindamon…". | No gráfico, cada unidade aparece com a receita e a despesa lado a lado. A estrela marca a matriz. |
-
-### cap05 · Ranking e resumo por unidade (vinheta: DASHBOARD)
+### cap03 · Do lado da filial
 
 | Tela | Fala |
 | --- | --- |
-| "Ranking por Lucro": a barra da filial em cima e a da matriz embaixo, negativa. | E o ranking ordena as unidades pelo lucro. Em outubro, a filial ficou na frente, e a matriz, no vermelho. |
-| Desce até "Resumo por Unidade": "Unidade", "Receita", "Despesa", "Lucro" e "Margem". | Embaixo vem o resumo por unidade, em números. |
-| Zoom na linha "Recicla Vale Metais" (MATRIZ): R$ 272.040,00, R$ 299.690,00, -R$ 27.650,00 e -10.2%. [ZOOM: a linha da matriz] | A matriz teve duzentos e setenta e dois mil e quarenta de receita e duzentos e noventa e nove mil, seiscentos e noventa de despesa. Ficou negativa em vinte e sete mil, seiscentos e cinquenta reais. |
-| Zoom na linha "Filial Pindamonhangaba": R$ 72.000,00, R$ 71.000,00, R$ 1.000,00 e 1.4%. [ZOOM: a linha da filial] | A filial vendeu setenta e dois mil, gastou setenta e um mil e lucrou mil reais. |
-| [ILUSTRAÇÃO: a compra que ainda está no pátio: um caminhão com a compra de outubro descarrega no pátio; parte do material sai vendida num caminhão do cliente e uma pilha fica no pátio com a etiqueta "ainda não vendido"; na palavra "inteira", a pilha inteira também cai na coluna da despesa] | Repara no vermelho da matriz. É que aqui entra a compra inteira do mês, até o material que ainda está no pátio esperando venda. Isso fica claro na DRE, com o regime de competência. |
+| Do lado da filial (Sandra Pires): Configurações (rodapé do menu) › Empresa › cartão Filial; liga É Filial, cola o código e Vincular. Vira apos-cap03. | Agora do lado da filial. A Sandra, gerente em Pindamonhangaba, entra no sistema da filial, em Configurações, na aba Empresa. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Lá embaixo fica o cartão Filial. Ela liga o É Filial. |
+| (segue a tela da linha anterior; ver `gerar.py`) | E cola o código que recebeu da matriz. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Vincular. Pronto, a filial está no Grupo Recicla Vale. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Do lado dela, o dia a dia segue igual: a filial continua usando o próprio sistema, e a matriz passa a enxergar os números. |
 
-### cap06 · A DRE do grupo (vinheta: FINANCEIRO)
-
-| Tela | Fala |
-| --- | --- |
-| "Gerencial (Filiais)" → "Financeiro": "Financeiro Gerencial" · "Relatório financeiro consolidado de todas as unidades"; período "Mês passado"; aba "DRE"; em cima, "Consolidado". [BACKEND: semente `apos-cap03`; RPCs `get_group_financial_dre_summary` e `get_dre_expenses_by_group` com os números de outubro] | Agora o Financeiro. Na aba DRE, com outubro escolhido, fica a DRE do grupo inteiro. |
-| No seletor do topo da DRE, clique em "Regime de Caixa": "DRE — Todas as Unidades" com "Vendas de Material" R$ 341.240,00, "Compras de Material" -R$ 318.860,00, os "Custos adicionais" (o frete, -R$ 2.400,00) e "(=) Resultado de Caixa" R$ 19.980,00. [ZOOM: as linhas de vendas, compras e resultado de caixa] | Começo pelo regime de caixa, o dinheiro que entrou e saiu. O grupo vendeu trezentos e quarenta e um mil, duzentos e quarenta, e comprou trezentos e dezoito mil, oitocentos e sessenta em material. |
-| Zoom em "(-) Impostos e Deduções" -R$ 3.574,10, "Total Despesas" -R$ 45.855,90, "(+) Outras Receitas" R$ 2.800,00 e "(=) Resultado do Período" -R$ 26.650,00 ("Déficit"). [ZOOM: as quatro linhas] | Tirando os impostos e as despesas da operação, e somando o aluguel de caçamba, o mês fecha no vermelho: menos vinte e seis mil, seiscentos e cinquenta reais. |
-| Clique em "Comparativo": "DRE Comparativo por Unidade", com a coluna "Recicla Vale…" (MATRIZ) e a coluna "Filial Pinda…"; linhas "Vendas", "(-) Compras (CMV)", "Receita Líquida", "(-) Despesas Operacionais (OPEX)" e "Resultado". | E no Comparativo fica a mesma DRE, unidade por unidade. |
-| Zoom na linha "Resultado": -R$ 27.650,00 e R$ 1.000,00. [ZOOM: a linha "Resultado"] | O vermelho do grupo vem da matriz, menos vinte e sete mil, seiscentos e cinquenta, contra mil positivos da filial. Assim você vê de onde vem o resultado. |
-
-### cap07 · Caixa e competência (vinheta: FINANCEIRO)
+### cap04 · Quando o código não entra
 
 | Tela | Fala |
 | --- | --- |
-| Financeiro › "DRE" › "Consolidado", "Mês passado", já em "Regime de Competência" (o padrão): "(-) Custo Operacional (CMV)" com "CMV (Custo da Mercadoria Vendida)" -R$ 273.860,00 e "(=) Lucro Bruto" R$ 64.980,00 ("Margem Bruta: 19.0%"). [ZOOM: o CMV e o Lucro Bruto] [BACKEND: semente `apos-cap03`] | Agora o mesmo outubro em regime de competência. No lugar das compras entra o CMV, o custo só do material que foi vendido: duzentos e setenta e três mil, oitocentos e sessenta. |
-| Zoom em "(=) Resultado do Período" R$ 18.350,00. [ZOOM: o resultado] | E o resultado do mês vira positivo: dezoito mil, trezentos e cinquenta reais. |
-| [ILUSTRAÇÃO: caixa × competência: à esquerda, "Caixa": o caminhão de compras de 319 mil sai inteiro da conta do mês; à direita, "Competência": só os 274 mil do material vendido saem; na palavra "pátio", a pilha de 45 mil fica no pátio com a etiqueta "ainda não vendido"; na última frase, os dois resultados aparecem embaixo, menos 26,6 mil e 18,3 mil] | A diferença, quarenta e cinco mil, é o material que a gente comprou em outubro e ainda está no pátio. No caixa, ele já pesa no mês. Na competência, ele só vira custo quando for vendido. |
-| Clique em "Regime de Caixa" e, de novo, em "Regime de Competência"; a câmera acompanha o resultado mudando de -R$ 26.650,00 para R$ 18.350,00. | O caixa mostra o dinheiro do mês. A competência mostra o lucro do que foi vendido. Os dois estão certos: cada um responde uma pergunta. |
-| [ILUSTRAÇÃO: o material sem custo: um fardo entra no pátio sem etiqueta de preço; na palavra "maior", a barra do CMV encolhe e a do lucro cresce com um ponto de interrogação; na palavra "Confira", uma lupa passa pelas entradas do mês] | Uma dica: se aparecer aqui o aviso de material em estoque sem custo de compra, o lucro em competência pode estar maior do que é. Confira as entradas do período antes de decidir em cima do número. |
+| Quando o código não entra: a Sandra cola o código VENCIDO e leva "Código de convite expirado"; (a ilustração cobre a troca de usuário); na matriz, o aviso vermelho "Código expirado"; o botão de girar gera GRP-3F81B2, válido por mais 30 dias. Semente codigo-vencido (não segue). | E se o código não entrar? O caso mais comum é esse: o código passou dos trinta dias, e o sistema avisa que ele expirou. |
+| (segue a tela da linha anterior; ver `gerar.py`) | As outras recusas são três. Código inválido: confira letra por letra. Empresa que já está em outro grupo: ela precisa sair de lá antes. E grupo cheio: cada grupo aceita até dez filiais. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Na matriz, o aviso também aparece em vermelho, embaixo do código. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Um clique nesse botão gera um código novo, com mais trinta dias. O antigo deixa de valer, então mande o novo pra filial. |
 
-### cap08 · O estoque do grupo (vinheta: ESTOQUE)
-
-| Tela | Fala |
-| --- | --- |
-| "Gerencial (Filiais)" → "Estoque": "Estoque Gerencial" · "Visão consolidada do estoque de todas as unidades do grupo"; aba "Visão Geral": "Valor Total em Estoque", "Unidades" (2) e "Materiais Distintos", e o cartão de cada unidade. [BACKEND: semente `apos-cap03`; RPC `get_group_inventory_report_data`] | Agora o estoque. No Estoque Gerencial, a Visão Geral junta o estoque das duas unidades. |
-| A câmera desce para "Tabela Unificada de Materiais": "Material", "Recicla Vale Metais" (MATRIZ), "Filial Pindamonhangaba" e "Total"; zoom na linha "Alumínio latinha": 640 kg, 1.850 kg e 2.490 kg (a matriz com o estoque de 10/11 do mundo base, junção). [ZOOM: a linha do alumínio latinha] [TESTAR: formato da quantidade na célula] | Na tabela, cada material numa linha e cada unidade numa coluna. O alumínio latinha: seiscentos e quarenta quilos na matriz e mil oitocentos e cinquenta na filial. No total, dois mil quatrocentos e noventa. |
-| Clique na aba "Posição de Estoque": "Data e hora (padrão: fim do dia)", com "Saldo", "Custo médio", "Valor em estoque" e "Projeção venda". | Na Posição de Estoque, você vê o saldo de cada material numa data, com o custo médio e o valor. |
-| Clique em "Histórico de Materiais": as movimentações do mês, com "Tipo" ("Compra", "Venda") e a coluna "Filial". | No Histórico de Materiais, cada entrada e cada saída, com a unidade de onde veio. |
-| Clique em "Relatório de Estoque": "Qtd. Comprada", "Valor Comprado", "Qtd. Vendida", "Valor Vendido", "Lucro" e "Margem". | E no Relatório de Estoque, quanto o grupo comprou e vendeu de cada material, com o lucro e a margem. |
-
-### cap09 · Enviar Ativos (vinheta: PADRONIZAÇÃO)
+### cap05 · O Dashboard Gerencial
 
 | Tela | Fala |
 | --- | --- |
-| "Gerencial (Filiais)" → "Configurações" → aba "Catálogo de Materiais": "Catálogo de Materiais do Grupo" · "Cadastre os materiais que serão compartilhados com todas as filiais. ..." e "Nenhum material no catálogo. Importe do estoque ou adicione manualmente.". [BACKEND: semente `apos-cap03`] | Agora a padronização. A matriz monta o padrão do grupo, e a filial recebe. Começa pelo catálogo de materiais. |
-| Clique em "Importar do Estoque da Matriz": aviso "n material(is) importado(s) do estoque"; a lista enche com os materiais da matriz (unidade, NCM e vínculos). [BACKEND: RPC `import_owner_materials_to_group`] | Com um clique, o Importar do Estoque da Matriz traz os materiais que a matriz já usa. |
-| Aba "Tabelas de Preço": "Tabelas de Preço do Grupo", com as tabelas da matriz, que entram sozinhas ao abrir a aba. [BACKEND: RPC `import_owner_price_table_to_group`] | As tabelas de preço da matriz entram sozinhas, assim que você abre a aba. |
-| Aba "Clientes e Fornecedores": "Clientes e Fornecedores da Matriz" · "Marque os clientes e fornecedores que ficarão disponíveis para as filiais importarem. A marcação é imediata."; marca "Fundição Bandeira do Vale": aviso "Disponibilizado para filiais". [BACKEND: RPC `toggle_group_shared_entity`] | Em Clientes e Fornecedores, você marca quem também faz negócio com a filial. A Fundição Bandeira do Vale compra das duas unidades, então eu marco. |
-| Aba "Categorias Financeiras": "Categorias Financeiras da Matriz", já compartilhadas ao abrir. [BACKEND: RPC `import_company_categories_to_group`] | E as categorias financeiras também vêm prontas da matriz. |
-| Aba "Unidades": na linha da "Filial Pindamonhangaba", clique em "Enviar Ativos": "Enviar Ativos para Filial Pindamonhangaba" · "Selecione quais categorias enviar. Itens já existentes na filial serão ignorados.", com "Materiais", "Categorias Financeiras", "Tabelas de Preço", "Clientes" e "Fornecedores" e o "n disponível(is)" de cada um; "Sobrescrever preços existentes" desligado. | Com tudo pronto, na aba Unidades, o Enviar Ativos manda o padrão pra filial. O que ela já tinha fica como está, e o que faltava entra. Os preços dela só mudam se você ligar o Sobrescrever preços existentes. |
-| Clique em "Confirmar Envio": cada linha mostra "n novo(s)"; aviso "n ativo(s) enviado(s) para Filial Pindamonhangaba"; clique em "Fechar". [BACKEND: RPC `push_group_assets_to_company` (liga os materiais de mesmo nome da filial ao catálogo do grupo e cria o que faltava); vira `apos-cap09`] | Confirmar Envio. Agora as duas unidades falam a mesma língua: o mesmo material, com o mesmo nome. |
-| Zoom na lixeira da linha da filial, sem clicar. (Remover só marca o vínculo como removido, `useCompanyGroup.ts:137-150`; a volta com o mesmo código vem da fonte: a RPC `join_group_by_invite_code` fica no banco, fora do código lido, ver plano.md, riscos.) | Uma dica: se tirar uma filial do grupo por engano, nenhum dado dela se perde. Pra voltar, é só a filial colar o código de novo. |
+| O Dashboard Gerencial: do menu, Dashboard; Mês passado (e o Personalizado); o seletor de unidades (só a filial e volta a todas); cartões Receita Total e Despesa Total; o Lucro Líquido (o resultado da DRE em competência); setinha; Estoque Total; gráfico por unidade. | De volta à matriz. Com a filial no grupo, o Dashboard Gerencial já mostra as duas unidades. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Vou olhar outubro inteiro: em cima, Mês passado. Além dos atalhos, o Personalizado aceita qualquer intervalo de datas. |
+| (segue a tela da linha anterior; ver `gerar.py`) | E o seletor de unidades aceita marcar uma, duas ou todas. Marcando só a filial, os cartões e os gráficos passam a mostrar só ela. Esse mesmo seletor aparece no Financeiro e no Estoque. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Os cartões somam o grupo. Em outubro, a receita foi de trezentos e quarenta e quatro mil e quarenta reais, e a despesa, de trezentos e setenta mil, seiscentos e noventa. |
+| (segue a tela da linha anterior; ver `gerar.py`) | O Lucro Líquido é o resultado da dê-érri-ê do grupo, em competência: o mesmo número que você vai encontrar no Financeiro. |
+| (segue a tela da linha anterior; ver `gerar.py`) | A setinha compara com o período anterior do mesmo tamanho, no caso, setembro. E o Estoque Total soma o estoque das duas unidades. |
+| (segue a tela da linha anterior; ver `gerar.py`) | No gráfico, cada unidade aparece com a receita e a despesa lado a lado. A estrela marca a matriz. |
 
-### cap10 · Transferência com aprovação (vinheta: TRANSFERÊNCIAS)
-
-| Tela | Fala |
-| --- | --- |
-| Configurações › aba "Transferências": liga "Exigir aprovação em transferências" ("Quando ativo, o destino precisa confirmar antes da transferência ser executada"). [BACKEND: semente `apos-cap09`; `UPDATE company_groups.require_transfer_approval`] | Agora as transferências. A filial juntou alumínio latinha, e a matriz vai vender um lote grande. Primeiro, eu ligo o Exigir aprovação em transferências. |
-| Em "Transferências Inter-Unidades", clique em "Nova": "Nova transferência em lote"; em "Origem", "Filial Pindamonhangaba"; em "Destino", "Recicla Vale Metais". | Assim, nenhum estoque se move sem confirmação. Em Nova, a origem é a filial e o destino, a matriz. |
-| Em "Materiais", busca "Alumínio latinha" e marca; em "Quantidade", 1200 (1.200 kg). [ZOOM: a quantidade] | O material é o alumínio latinha: mil e duzentos quilos. |
-| Em "Observações (opcional)", "Lote para a Serra Fina Alumínio Reciclagem"; o "Resumo" com o aviso "Este grupo exige aprovação: o estoque não se move agora. ..."; clique em "Solicitar 1 transferência": aviso "Solicitação criada — aguardando aprovação". [BACKEND: RPC `create_group_transfer_and_execute` devolve `pending`] | Repara no aviso do resumo: com a aprovação ligada, o estoque ainda não se move. Clico em Solicitar uma transferência. |
-| Na lista: "Filial Pindamonhangaba → Recicla Vale Metais", selo "Pendente", "Alumínio latinha — 1200 kg"; clique em "Executar": "Confirmar execução?" · "Este grupo exige aprovação antes de executar transferências. Confirme que o destino está ciente e de acordo com esta movimentação de estoque.". | A transferência fica pendente. Quando o caminhão chega na matriz e o material é conferido, aí sim, Executar. A tela pede pra confirmar que o destino está de acordo. |
-| Clique em "Confirmar e Executar": aviso "Transferência executada com sucesso"; o selo vira "Concluída". [BACKEND: RPC `execute_group_stock_transfer` (matriz 1.840 kg, filial 650 kg); vira `apos-cap10`] | Confirmar e Executar. Pronto: a matriz fica com mil oitocentos e quarenta quilos, e a filial com seiscentos e cinquenta. O total do grupo continua o mesmo. |
-| [ILUSTRAÇÃO: um material do grupo, dois da unidade: o cartão "Alumínio latinha do grupo" ligado a dois materiais da filial, "Alumínio latinha" e "Latinha prensada"; o total soma os dois; na palavra "só", a seta da transferência sai de um deles apenas] | Uma dica: um material do grupo pode juntar mais de um material de uma unidade. O total do grupo soma todos, e a transferência tira de um só. Se o número do grupo parecer estranho, confira material por material. |
-
-### cap11 · Assinaturas numa fatura só (vinheta: ASSINATURAS)
+### cap06 · Ranking e resumo por unidade
 
 | Tela | Fala |
 | --- | --- |
-| "Gerencial (Filiais)" → "Assinaturas": "Assinaturas do grupo" · "Acompanhe as assinaturas de todas as unidades e pague tudo de uma vez numa única fatura na matriz"; em "Unidades", "Recicla Vale Metais" ("Matriz", "Ativa") e "Filial Pindamonhangaba" ("Filial", "Ativa"), cada uma com o plano, "Mensal" e o vencimento (sem zoom nos valores). [BACKEND: semente `apos-cap10`; RPC `get_group_subscription_summary`] | Por último, as assinaturas. Cada unidade tem a sua, e aqui a matriz vê todas: o plano, se está ativa e quando vence. |
-| Zoom no botão "Pagar tudo de uma vez". | E dá pra pagar tudo de uma vez, numa fatura só, na matriz. |
-| Clique em "Pagar tudo de uma vez": "Pagamento do grupo · 2 unidades", "Unidades cobradas juntas"; zoom em "Ao pagar, as cobranças individuais das unidades são canceladas e substituídas por esta fatura única na matriz.". [ZOOM: o aviso, nesta frase e na seguinte] | Repara no aviso: ao pagar, a cobrança de cada unidade é cancelada e vira uma fatura única, na matriz. |
-| (o zoom continua no aviso) | Uma dica importante: se a filial tinha um boleto ou um Pix da assinatura dela em aberto, ela não deve mais pagar aquele documento. Quem paga agora é a matriz, nessa fatura. |
-| Em "Forma de pagamento", clique em "PIX": "Gerando QR Code PIX..." e o QR Code fictício. [BACKEND: edge `create-group-payment` simulada devolve um Pix fictício; nada vai para o Asaas] | Escolho o Pix, e a cobrança única aparece. |
-| Passo de bastidor confirma o pagamento: "Pagamento Confirmado!" · "As cobranças das unidades agora são feitas nesta fatura única na matriz." · "Voltando para as assinaturas do grupo...". [BACKEND: confirmação simulada (o checkout vê o pagamento como pago); vira `apos-cap11`] | Pagou, e pronto: as cobranças das unidades passam a vir nessa fatura da matriz. |
+| Ranking e resumo por unidade: Ranking por Saldo (Receita − Despesa; filial na frente, matriz negativa); Resumo por Unidade, linha da matriz e da filial. | E o ranking ordena as unidades pelo saldo, a receita menos a despesa. Em outubro, a filial ficou na frente, e a matriz, no vermelho. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Embaixo vem o resumo por unidade, em números. |
+| (segue a tela da linha anterior; ver `gerar.py`) | A matriz teve duzentos e setenta e dois mil e quarenta de receita e duzentos e noventa e nove mil, seiscentos e noventa de despesa. Ficou negativa em vinte e sete mil, seiscentos e cinquenta reais. |
+| (segue a tela da linha anterior; ver `gerar.py`) | A filial vendeu setenta e dois mil, gastou setenta e um mil e ficou com mil reais de saldo. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Repara no vermelho da matriz. É que aqui entra a compra inteira do mês, até o material que ainda está no pátio esperando venda. Por isso esse saldo não é igual ao Lucro Líquido do cartão, que segue a dê-érri-ê em competência. |
 
-### cap12 · Recapitulando (vinheta: RESUMO)
+### cap07 · A dê-érri-ê do grupo
 
 | Tela | Fala |
 | --- | --- |
-| Montagem rápida: "Criar Grupo", o "Código de Convite" e o cartão "Filial" com "Vinculada ao grupo". | Pronto! Recapitulando: a gente criou o grupo na matriz, gerou o código de convite e vinculou a filial de Pindamonhangaba. |
-| Montagem rápida: o "Dashboard Gerencial" e o "Resumo por Unidade". | Leu o Dashboard Gerencial, com o ranking e o resumo de cada unidade. |
-| Montagem rápida: a DRE em "Regime de Caixa" e em "Regime de Competência", e o "Comparativo". | Viu a DRE do grupo nos dois regimes e comparou unidade por unidade. |
-| Montagem rápida: a "Tabela Unificada de Materiais" e o "Enviar Ativos". | Conferiu o estoque do grupo e mandou o mesmo catálogo pra filial. |
-| Montagem rápida: a transferência "Concluída" e o "Pagamento Confirmado!". | Transferiu o alumínio com aprovação e pagou as assinaturas numa fatura só. |
-| Cartão "Próximo: Coletas e Logística"; cartela final. | No próximo tutorial, o caminhão sai do pátio pra buscar material. Até lá! |
+| A DRE do grupo: Financeiro › DRE › Mês passado (Consolidado); Regime de Caixa: vendas, compras, resultado de caixa; impostos, despesas, outras receitas e o resultado do período; Comparativo e a linha Resultado por unidade. | Agora o Financeiro. Na aba dê-érri-ê, com outubro escolhido, fica a dê-érri-ê do grupo inteiro. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Começo pelo regime de caixa, o dinheiro que entrou e saiu. O grupo vendeu trezentos e quarenta e um mil, duzentos e quarenta, e comprou trezentos e dezoito mil, oitocentos e sessenta em material. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Tirando os impostos e as despesas da operação, e somando o aluguel de caçamba, o mês fecha no vermelho: menos vinte e seis mil, seiscentos e cinquenta reais. |
+| (segue a tela da linha anterior; ver `gerar.py`) | E no Comparativo fica a mesma dê-érri-ê, unidade por unidade. |
+| (segue a tela da linha anterior; ver `gerar.py`) | O vermelho do grupo vem da matriz, menos vinte e sete mil, seiscentos e cinquenta, contra mil positivos da filial. Assim você vê de onde vem o resultado. |
+
+### cap08 · Caixa e competência
+
+| Tela | Fala |
+| --- | --- |
+| Caixa e competência: a DRE do grupo em Regime de Competência (CMV, Lucro Bruto, resultado); depois Caixa e Competência de novo, com a câmera no resultado. | Agora o mesmo outubro em regime de competência. No lugar das compras entra o cê-ême-vê, o custo só do material que foi vendido: duzentos e setenta e três mil, oitocentos e setenta e três reais e trinta centavos. |
+| (segue a tela da linha anterior; ver `gerar.py`) | E o resultado do mês vira positivo: dezoito mil, trezentos e trinta e seis reais e setenta centavos. |
+| (segue a tela da linha anterior; ver `gerar.py`) | A diferença, quase quarenta e cinco mil, é o material que a gente comprou em outubro e ainda está no pátio. No caixa, ele já pesa no mês. Na competência, ele só vira custo quando for vendido. |
+| (segue a tela da linha anterior; ver `gerar.py`) | O caixa mostra o dinheiro do mês. A competência mostra o lucro do que foi vendido. Os dois estão certos: cada um responde uma pergunta. |
+| (segue a tela da linha anterior; ver `gerar.py`) | E o Comparativo, em competência, mostra o cê-ême-vê de cada unidade, o custo só do que ela vendeu. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Uma dica: se aparecer aqui o aviso de material em estoque sem custo de compra, o lucro em competência pode estar maior do que é. Confira as entradas do período antes de decidir em cima do número. |
+
+### cap09 · Além da dê-érri-ê
+
+| Tela | Fala |
+| --- | --- |
+| Além da DRE: as linhas da DRE que abrem (Total Despesas); o Exportar (sem clicar) e o Patrimônio Operacional Atual; a aba Dashboard (por categoria); a aba Histórico (Receitas, Despesas, Compras) com o filtro Conta bancária. Semente apos-cap03. | Ainda no Financeiro, três coisas rápidas. Na dê-érri-ê, as linhas de custos, impostos e despesas abrem, e mostram do que o total é feito. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Pelo botão Exportar, a dê-érri-ê vai pro contador ou pro sócio, com as unidades que você escolheu. E embaixo, o Patrimônio Operacional soma o caixa, o banco, o que tem a receber, o estoque e o que tem a pagar, do grupo inteiro. |
+| (segue a tela da linha anterior; ver `gerar.py`) | A aba Dashboard mostra onde o grupo gasta e de onde vem a receita, por categoria. |
+| (segue a tela da linha anterior; ver `gerar.py`) | E a aba Histórico lista os lançamentos das unidades, um por um. Dá pra filtrar por categoria e até pela conta bancária de onde o dinheiro saiu. Essas telas funcionam como no tutorial Relatório Financeiro e dê-érri-ê. |
+
+### cap10 · O estoque do grupo
+
+| Tela | Fala |
+| --- | --- |
+| O estoque do grupo: Visão Geral (as duas unidades, latinha 640 + 1.850); Posição de Estoque em 31/10 (Ver posição, a linha abre por unidade, Por unidade); Histórico de Materiais com Filtros (material Alumínio latinha); Relatório de Estoque (o cartão Total Comprado abre, a linha do material abre por unidade, Usuários, Ocultar itens zerados, Exportar Relatório, sem clicar). | Agora o estoque. No Estoque Gerencial, a Visão Geral junta o estoque das duas unidades. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Na tabela, cada material numa linha e cada unidade numa coluna. O alumínio latinha: seiscentos e quarenta quilos na matriz e mil oitocentos e cinquenta na filial. No total, dois mil quatrocentos e noventa. |
+| (segue a tela da linha anterior; ver `gerar.py`) | A Posição de Estoque é uma foto do estoque numa data. Escolho trinta e um de outubro e clico em Ver posição: o saldo, o custo médio e o valor de cada material no fim daquele dia. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Clicando no material, ele abre unidade por unidade. E o botão Por unidade muda a tabela inteira pra esse jeito. |
+| (segue a tela da linha anterior; ver `gerar.py`) | No Histórico de Materiais, o botão Filtros escolhe o período e o material. Cada linha mostra o tipo do movimento, a unidade e quem fez. |
+| (segue a tela da linha anterior; ver `gerar.py`) | No Relatório de Estoque, os cartões de cima abrem. O Total Comprado mostra o preço médio e quanto saiu em dinheiro, em Pix, pelo saldo do parceiro e o que ficou em aberto. |
+| (segue a tela da linha anterior; ver `gerar.py`) | E a linha do material abre por unidade. É aqui que você descobre se uma unidade está pagando mais caro que a outra no mesmo material. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Dá pra filtrar por usuário, esconder o que não teve movimento e exportar o relatório. |
+
+### cap11 · Corrigir o estoque de uma unidade
+
+| Tela | Fala |
+| --- | --- |
+| Corrigir o estoque de uma unidade: Estoque Gerencial › Visão Geral › ⋯ da linha Papelão › Corrigir saldo (Unidade: Filial Pindamonhangaba, Saída de 30, motivo, Registrar saída); depois Transferir entre materiais (só a janela, Cancelar). A ilustração do aviso de divergência é da coordenação. Semente apos-cap03 (não segue). | Agora um caso do dia a dia. A filial contou o papelão no pátio e achou trinta quilos a menos que o sistema. A matriz resolve daqui, no menu de ações da linha. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Corrigir saldo. Escolho a unidade, a filial. |
+| (segue a tela da linha anterior; ver `gerar.py`) | É uma saída de trinta quilos. A janela mostra o saldo de agora e como ele fica depois. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Escrevo o motivo. E repara: a correção fica no histórico da filial, marcada como ajuste feito pela matriz. Ninguém fica sem saber. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Registrar saída. Pronto, o estoque da filial está certo. |
+| (segue a tela da linha anterior; ver `gerar.py`) | No mesmo menu, o Transferir entre materiais passa saldo de um material pra outro dentro da mesma unidade. Serve quando a filial lançou a compra no material errado. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Uma dica: essa tela soma as movimentações de cada unidade. Se um material tiver saldo no cadastro sem movimentação que explique, aparece um aviso embaixo, com a diferença material por material. O sistema não mexe sozinho: a conferência é sua. |
+
+### cap12 · Enviar Ativos
+
+| Tela | Fala |
+| --- | --- |
+| Enviar Ativos: Configurações do grupo (o passo a passo) › Catálogo (Importar do Estoque da Matriz; Sucata eletrônica entra e sai pela lixeira), Tabelas de Preço (entram sozinhas), Clientes e Fornecedores (marca a Fundição; Fornecedores com busca: marca e desmarca a Cooperativa Recomeço), Categorias (o cadeado); Unidades › Enviar Ativos (Desmarcar todos, Marcar todos, Sobrescrever desligado) › Confirmar Envio; Histórico de Envios; a lixeira da filial (sem clicar). Vira apos-cap09. | Agora a padronização. A matriz monta o padrão do grupo, e a filial recebe. Na aba Unidades, o passo a passo lá de cima mostra o que falta, e cada etapa leva à aba certa. Começa pelo catálogo de materiais. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Com um clique, o Importar do Estoque da Matriz traz os materiais que a matriz já usa. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Material que a matriz não trabalha também entra: é só dar o nome e a unidade. Ele aparece sem vínculos até alguma unidade usar. Foi engano? A lixeira tira do catálogo. |
+| (segue a tela da linha anterior; ver `gerar.py`) | As tabelas de preço da matriz entram sozinhas, assim que você abre a aba. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Em Clientes e Fornecedores, você marca quem também faz negócio com a filial. A Fundição Bandeira do Vale compra das duas unidades, então eu marco. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Os fornecedores ficam na outra aba, com busca. Marcou, está disponível. Desmarcou, sai da lista das filiais. |
+| (segue a tela da linha anterior; ver `gerar.py`) | E as categorias financeiras também vêm prontas da matriz. Dá pra desmarcar as que são só da matriz. As de cadeado vão sempre, porque a dê-érri-ê precisa delas. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Com tudo pronto, na aba Unidades, o Enviar Ativos manda o padrão pra filial. E não precisa mandar tudo sempre: dá pra desmarcar o que você não quer. Aqui eu mando tudo. |
+| (segue a tela da linha anterior; ver `gerar.py`) | O que ela já tinha fica como está, e o que faltava entra. O preço que a filial já tem fica protegido, a não ser que você ligue o Sobrescrever preços existentes. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Confirmar Envio. Agora as duas unidades falam a mesma língua: o mesmo material, com o mesmo nome. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Lá embaixo, o Histórico de Envios guarda pra qual filial foi, o que foi enviado e quando. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Uma dica: se tirar uma filial do grupo por engano, nenhum dado dela se perde. Pra voltar, é só a filial colar o código de novo. |
+
+### cap13 · Preço diferente por unidade
+
+| Tela | Fala |
+| --- | --- |
+| Preço diferente por unidade: Configurações do grupo › Tabelas de Preço › a tabela Principal (a grade de preços); Alumínio latinha: compra 6,20 -> 6,30 e Salvar; Vinculação por Unidade: liga a Filial Pindamonhangaba, Tipo %, Direção - (abaixo), Valor 5, Salvar; Aplicar; zoom em Importar da matriz e Excluir (sem clicar). Semente apos-cap09 (não segue: o cap14 parte do mesmo estado). | O padrão do grupo inclui o preço. Abrindo uma tabela, aparecem os materiais do catálogo com o preço de compra e o de venda. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Dá pra ajustar aqui mesmo. Subo a compra da latinha pra seis e trinta e salvo. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Embaixo fica a Vinculação por Unidade. É ela que diz como cada unidade recebe esses preços. Ligo a filial. |
+| (segue a tela da linha anterior; ver `gerar.py`) | A filial fica mais longe do comprador e tem frete, então ela trabalha cinco por cento abaixo da tabela. Tipo, porcentagem. Direção, abaixo. Valor, cinco. Salvar. |
+| (segue a tela da linha anterior; ver `gerar.py`) | E o Aplicar grava os preços na filial, já com o desconto. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Uma dica: essa variação vale para os dois preços, o de compra e o de venda. Se a diferença for em reais por quilo, troque o tipo pra valor fixo. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Nessa barra você também puxa os preços de uma tabela da matriz ou exclui a tabela. O Excluir não pede confirmação, então cuidado com o clique. |
+
+### cap14 · Transferência com aprovação
+
+| Tela | Fala |
+| --- | --- |
+| Transferência com aprovação: aba Transferências, liga "Exigir aprovação"; Nova: filial -> matriz, alumínio latinha 1.200 kg, observação; Solicitar; Pendente; Executar; Confirmar e Executar; o Estoque Gerencial com 1.840 e 650 kg. Vira apos-cap10. | Agora as transferências. A filial juntou alumínio latinha, e a matriz vai vender um lote grande. Primeiro, eu ligo o Exigir aprovação em transferências. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Assim, nenhum estoque se move sem confirmação. Em Nova, a origem é a filial e o destino, a matriz. |
+| (segue a tela da linha anterior; ver `gerar.py`) | O material é o alumínio latinha: mil e duzentos quilos. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Repara no aviso do resumo: com a aprovação ligada, o estoque ainda não se move. Clico em Solicitar uma transferência. |
+| (segue a tela da linha anterior; ver `gerar.py`) | A transferência fica pendente. Quando o caminhão chega na matriz e o material é conferido, aí sim, Executar. A tela pede pra confirmar que o destino está de acordo. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Confirmar e Executar. Pronto: a matriz fica com mil oitocentos e quarenta quilos, e a filial com seiscentos e cinquenta. O total do grupo continua o mesmo. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Uma dica: um material do grupo pode juntar mais de um material de uma unidade. O total do grupo soma todos, e a transferência tira de um só. Se o número do grupo parecer estranho, confira material por material. |
+
+### cap15 · Lote, fila e o pedido da filial
+
+| Tela | Fala |
+| --- | --- |
+| Lote, fila e o pedido da filial: a Sandra marca Papelão e Plástico PET no Materiais e pede a transferência (Transferir Estoque › Enviar 2 Transferência(s)); (a ilustração cobre a troca para o Rafael); na matriz, Estoque Gerencial › Transferências (contador); Nova: lote (Selecionar todos com saldo; só Ferro misto; quantidade acima do saldo avisa; 500 kg; Solicitar); Cancelar o Plástico PET; Executar todas (2); Visão Geral › ⋯ do Inox › Transferir entre unidades. Semente apos-cap10 (não segue). | A filial também pode pedir. No estoque dela, a Sandra marca os materiais e clica em Transferir Estoque. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Escolhe o destino e as quantidades. A tela mostra quanto tem em cada unidade e quanto vai ficar. O pedido segue pra matriz, e o estoque ainda não se move. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Esse pedido cai numa fila porque o grupo exige aprovação. Com o Exigir aprovação desligado, não existe fila: a transferência feita pela matriz move o estoque na hora. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Na matriz, o Estoque Gerencial tem uma aba Transferências, com o número de pedidos esperando. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Em Nova, a matriz monta um lote com vários materiais de uma vez. O Selecionar todos com saldo marca tudo que a origem tem. Se a quantidade passar do estoque, a linha avisa e o sistema não deixa seguir. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Corrijo e solicito. Agora são três na fila. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Uma delas não vai mais sair: Cancelar. Ela fica na lista, marcada como cancelada. |
+| (segue a tela da linha anterior; ver `gerar.py`) | E as outras duas eu executo juntas, no Executar todas. Se alguma não tiver saldo na origem, as demais seguem, e a tela lista qual falhou e por quê. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Tem também um atalho na Visão Geral: no menu da linha, Transferir entre unidades já abre a transferência com o material escolhido. |
+
+### cap16 · Vender com o estoque da outra unidade
+
+| Tela | Fala |
+| --- | --- |
+| Vender com o estoque da outra unidade: Configurações do grupo › Transferências › liga "Usar estoque de outras unidades na venda" na matriz; Venda da matriz: cliente Serra Fina, Alumínio perfil 3.585 kg (faltam 200); Incluir Item › "Estoque insuficiente" › Origem do estoque › Outras unidades › Filial Pindamonhangaba › Transferir e Adicionar (o item entra; a transferência sai ao finalizar, que o capítulo não faz). Semente apos-cap10 + venda-outra-unidade (aprovação desligada). | Último recurso das transferências. Nessa mesma aba fica o Usar estoque de outras unidades na venda, com uma chave por unidade. Ligo na matriz. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Agora, numa venda da matriz, faltam duzentos quilos de alumínio perfil. Em vez de travar, a janela pergunta de onde vem o resto. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Na lista aparece a filial, com o saldo que ela tem. Escolho, e a quantidade fica coberta. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Transferir e Adicionar. O item entra na venda, e a transferência da filial pra matriz acontece junto, quando a venda é finalizada. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Uma dica importante: isso só funciona com o Exigir aprovação desligado. Com a aprovação ligada, a venda avisa que o grupo exige aprovação e só deixa usar o estoque da própria unidade. É uma escolha do grupo: ou o controle da aprovação, ou a agilidade na venda. |
+
+### cap17 · Assinaturas numa fatura só
+
+| Tela | Fala |
+| --- | --- |
+| Assinaturas numa fatura só: Assinaturas do grupo (a matriz e a filial; o botão Gerenciar sem abrir); Pagar tudo de uma vez; o aviso das cobranças; a chave Cobrança recorrente (ligada); PIX (QR fictício); o pagamento confirmado por um passo de bastidor. Vira apos-cap11. | Por último, as assinaturas. Cada unidade tem a sua, e aqui a matriz vê todas: o plano, se está ativa e quando vence. |
+| (segue a tela da linha anterior; ver `gerar.py`) | O Gerenciar de cada linha deixa a matriz mudar o plano daquela unidade, sem precisar do login dela. |
+| (segue a tela da linha anterior; ver `gerar.py`) | E dá pra pagar tudo de uma vez, numa fatura só, na matriz. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Repara no aviso: ao pagar, a cobrança de cada unidade é cancelada e vira uma fatura única, na matriz. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Uma dica importante: se a filial tinha um boleto ou um Pix da assinatura dela em aberto, ela não deve mais pagar aquele documento. Quem paga agora é a matriz, nessa fatura. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Repara na Cobrança recorrente, que já vem ligada: o total do grupo é cobrado sozinho todo mês. Se quiser pagar só este mês, desligue antes de escolher a forma de pagamento. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Escolho o Pix, e o QR Code do grupo aparece. Também dá pra pagar no cartão ou no boleto. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Pagou, e pronto: as cobranças das unidades passam a vir nessa fatura da matriz. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Uma dica: pra pagar junto, todas as unidades precisam estar no mesmo ciclo, mensal ou anual. Se uma for anual e a outra mensal, o sistema avisa e não gera a fatura. Acerte o ciclo no Gerenciar e tente de novo. |
+
+### cap18 · Recapitulando
+
+| Tela | Fala |
+| --- | --- |
+| Sem robô: capítulo de resumo, só vinheta e ilustração. | Pronto! Recapitulando: a gente criou o grupo na matriz, gerou o código de convite e vinculou a filial de Pindamonhangaba. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Viu o que fazer quando o código vence ou não entra. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Leu o Dashboard Gerencial, com o ranking e o resumo de cada unidade. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Viu a dê-érri-ê do grupo nos dois regimes, comparou unidade por unidade e foi além, até o histórico e o patrimônio. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Conferiu o estoque do grupo, corrigiu o saldo da filial e mandou o mesmo catálogo, com o preço certo de cada unidade. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Transferiu material com aprovação, montou um lote, executou a fila e vendeu com o estoque da outra unidade. |
+| (segue a tela da linha anterior; ver `gerar.py`) | E pagou as assinaturas numa fatura só. |
+| (segue a tela da linha anterior; ver `gerar.py`) | No próximo tutorial, o caminhão sai do pátio pra buscar material. Até lá! |

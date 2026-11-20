@@ -1,5 +1,13 @@
 # Inventário · T22 Gerencial: matriz e filiais (EcoSistema 1.59.154)
 
+> **Atualização 20/11 (1.60.18).** Rótulos novos usados na aula (copiados do código; conferir em `/dev/shm/ecoflix-src`): botão "Como funciona"
+> (modal dos cinco passos); contador de unidades "1/11"; aviso "Código de convite expirado" (filial) e "Código expirado" (matriz);
+> período "Personalizado" e seletor de unidades no Dashboard, Financeiro e Estoque; "Ranking por Saldo"; Comparativo com "(-) Compras (CMV)";
+> aba Estoque com correção de saldo da filial pela matriz; Enviar Ativos com checklist, "Desmarcar todos", trava das categorias,
+> aba "Fornecedores", "Histórico de Envios"; transferência em lote ("Executar") e pedido da filial; venda com estoque da outra
+> unidade ("Transferir e Adicionar"). O restante do inventário abaixo é do 1.59.154 e vale onde o código não mudou.
+
+
 Código lido: `/home/claude/ecoflix/app-src-1.59.154/` (só leitura). Caminhos relativos a `src/`, exceto `supabase/...`.
 Rótulos entre aspas = texto exato do código (pt-BR). Gravação em 1280×800 (`xl` vale; `2xl` não).
 

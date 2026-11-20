@@ -1,6 +1,6 @@
 {
  "name": "t22-cap11",
- "title": "T22 · Cap. 11 · Assinaturas numa fatura só (narração ESTIMADA 48,7 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira (matriz))",
+ "title": "T22 · Cap. 11 · Corrigir o estoque de uma unidade (narração ESTIMADA 72,0 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira (matriz))",
  "seed": "t22-cap11",
  "pace": 0.5,
  "cps": 40,
@@ -15,15 +15,15 @@
   "notification_shown_version": "1.60.18",
   "pwa-install-dismissed": "true",
   "theme": "light",
+  "daily-tasks-reminder-last-shown-65255bb0-aea3-508c-8383-5c426f18b774": "2026-11-10",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
-  "initial-preferences-set": "true"
+  "initial-preferences-set": "true",
+  "gerencial-estoque-tab": "visao-geral"
  },
  "seedExtra": [
   "t22/inicio",
   "t22/apos-cap02",
-  "t22/apos-cap03",
-  "t22/apos-cap09",
-  "t22/apos-cap10"
+  "t22/apos-cap03"
  ],
  "prewarm": [
   "/login"
@@ -72,24 +72,11 @@
   },
   {
    "do": "goto",
-   "url": "/gerencial/assinaturas"
+   "url": "/gerencial/estoque"
   },
   {
    "do": "waitFor",
-   "text": "Assinaturas do grupo",
-   "timeout": 25
-  },
-  {
-   "do": "waitFor",
-   "idle": true
-  },
-  {
-   "do": "goto",
-   "url": "/checkout?mode=group&group=49bbaeff-d8eb-5edb-b150-438636ed4767"
-  },
-  {
-   "do": "waitFor",
-   "text": "Forma de pagamento",
+   "text": "Tabela Unificada de Materiais",
    "timeout": 25
   },
   {
@@ -121,12 +108,17 @@
    "timeout": 8
   },
   {
-   "do": "eval",
-   "js": "(()=>{const a=document.querySelector('a[href=\"/gerencial/assinaturas\"]');if(!a)return 'SEM ALVO';let c=a.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)break;c=c.parentElement;}if(!c||c===document.body)return 'SEM ROLAGEM';const dy=a.getBoundingClientRect().bottom-(c.getBoundingClientRect().bottom-8);if(dy>0)c.scrollTop+=dy;return Math.round(a.getBoundingClientRect().top)})()"
+   "do": "goto",
+   "url": "/gerencial/estoque"
   },
   {
-   "do": "eval",
-   "js": "(()=>{if(window.__polls)return 'ja';window.__polls=[];try{performance.setResourceTimingBufferSize(5000)}catch(e){}new PerformanceObserver(l=>{for(const e of l.getEntries()){if(String(e.name).includes('check-asaas-payment'))window.__polls.push(e.startTime)}}).observe({type:'resource',buffered:true});return 'ok'})()"
+   "do": "waitFor",
+   "text": "Tabela Unificada de Materiais",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
   },
   {
    "do": "eval",
@@ -144,164 +136,242 @@
    "at": 0
   },
   {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text(\"Papelão\")"
+   },
+   "seconds": 0.8,
+   "at": 3.39,
+   "label": "a linha do Papelão",
+   "optional": true,
+   "timeout": 4
+  },
+  {
    "do": "click",
    "target": {
-    "selector": "a[href=\"/gerencial/assinaturas\"]"
+    "selector": "main button[aria-label=\"Ações de Papelão\"]"
    },
-   "at": 0.99,
-   "label": "Assinaturas do Gerencial (menu)"
+   "at": 10.2,
+   "label": "⋯ da coluna Ações do Papelão"
   },
   {
    "do": "waitFor",
-   "text": "Pagar tudo de uma vez",
-   "timeout": 15
+   "target": {
+    "selector": "[role=menuitem]:has-text(\"Corrigir saldo\")"
+   },
+   "timeout": 6
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main div.divide-y > div:has(p:text-is(\"Recicla Vale Metais\")) p:text-is(\"Recicla Vale Metais\")"
+    "selector": "[role=menuitem]:has-text(\"Transferir entre materiais\")"
    },
-   "seconds": 0.4,
-   "at": 5.59,
-   "label": "a matriz e a filial",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main div.divide-y > div:has(p:text-is(\"Filial Pindamonhangaba\")) p.text-xs"
-   },
-   "seconds": 0.6,
-   "at": 6.43,
-   "label": "plano e vencimento de cada unidade (sem zoom nos valores)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main div.divide-y > div:has(p:text-is(\"Filial Pindamonhangaba\")) span:text-is(\"Ativa\")"
-   },
-   "seconds": 0.6,
-   "at": 7.71,
-   "label": "Ativa",
+   "seconds": 0.8,
+   "at": 10.91,
+   "label": "Corrigir saldo, Transferir entre unidades, Transferir entre materiais",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 9.34
-  },
-  {
-   "do": "hover",
-   "target": {
-    "role": "button",
-    "name": "Pagar tudo de uma vez"
-   },
-   "seconds": 1.2,
-   "at": 10.42,
-   "label": "Pagar tudo de uma vez (ZOOM)",
-   "optional": true,
-   "timeout": 4
+   "at": 12.08
   },
   {
    "do": "click",
    "target": {
-    "role": "button",
-    "name": "Pagar tudo de uma vez"
+    "selector": "[role=menuitem]:has-text(\"Corrigir saldo\")"
    },
-   "at": 13.98,
-   "label": "Pagar tudo de uma vez"
+   "at": 12.38,
+   "label": "Corrigir saldo"
   },
   {
    "do": "waitFor",
-   "text": "Unidades cobradas juntas",
-   "timeout": 15
+   "text": "Ajuste de entrada ou saída em Papelão",
+   "timeout": 8
   },
   {
    "do": "eval",
    "js": "(()=>{const a=document.getAnimations().filter(x=>x.currentTime<0);a.forEach(x=>x.startTime=document.timeline.currentTime);return a.length})()"
   },
   {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #adjust-unit"
+   },
+   "at": 13.59,
+   "label": "Unidade"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=option]:has-text(\"Filial Pindamonhangaba\")"
+   },
+   "at": 15.44,
+   "label": "Unidade: Filial Pindamonhangaba"
+  },
+  {
    "do": "mark",
    "name": "L3",
-   "at": 14.47
+   "at": 15.99
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has-text(\"Saída\")"
+   },
+   "at": 16.75,
+   "label": "Saída"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #adjust-quantity"
+   },
+   "at": 17.43,
+   "label": "Quantidade"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] #adjust-quantity"
+   },
+   "text": "30",
+   "at": 17.98,
+   "label": "Quantidade 30",
+   "noClick": true
   },
   {
    "do": "hover",
    "target": {
-    "text": "Ao pagar, as cobranças individuais das unidades são canceladas"
+    "text": "Depois do ajuste",
+    "exact": true,
+    "within": "[role=dialog]"
    },
-   "seconds": 1.5,
-   "at": 15.63,
-   "label": "aviso das cobranças (ZOOM)",
+   "seconds": 1.4,
+   "at": 20.04,
+   "label": "Saldo atual e Depois do ajuste (ZOOM)",
    "optional": true,
    "timeout": 4
   },
   {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Saldo atual\", \"Depois do ajuste\", \"__LER__\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
+   "label": "confere LER: saldo atual e depois do ajuste do Papelão na filial"
+  },
+  {
    "do": "mark",
    "name": "L4",
-   "at": 23.01
+   "at": 22.95
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #adjust-description"
+   },
+   "at": 23.25,
+   "label": "Motivo da correção"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const el=document.querySelector(\"[role=dialog] #adjust-description\");if(!el)return 'SEM ALVO';el.focus();el.select&&el.select();document.execCommand('insertText',false,\"Invent\\u00e1rio conferido no p\\u00e1tio\");return el.value})()",
+   "at": 24.41,
+   "label": "Motivo: Inventário conferido no pátio"
   },
   {
    "do": "hover",
    "target": {
-    "text": "Ao pagar, as cobranças individuais das unidades são canceladas"
+    "text": "A correção fica no kardex da unidade",
+    "within": "[role=dialog]"
    },
-   "seconds": 1.5,
-   "at": 25.54,
-   "label": "aviso das cobranças (continua)",
+   "seconds": 1.6,
+   "at": 25.78,
+   "label": "A correção fica no kardex da unidade (ZOOM)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 36.95
+   "at": 33.55
   },
   {
    "do": "click",
    "target": {
-    "role": "button",
-    "name": "PIX Instantâneo"
+    "selector": "[role=dialog] button:has-text(\"Registrar saída\")"
    },
-   "at": 37.45,
-   "label": "PIX"
+   "at": 33.85,
+   "label": "Registrar saída"
   },
   {
    "do": "waitFor",
-   "text": "Aguardando confirmação do pagamento",
-   "timeout": 12
-  },
-  {
-   "do": "mark",
-   "name": "L6",
-   "at": 40.72
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{await new Promise(r=>setTimeout(r,300));const p=window.__polls||[];let alvo;if(p.length){alvo=p[p.length-1]+5000-450;while(alvo<performance.now()+150)alvo+=5000;}else{alvo=performance.now()+1500;}await new Promise(r=>setTimeout(r,Math.max(0,alvo-performance.now())));const r=await fetch(\"http://127.0.0.1:54340/rest/v1/subscription_payments?status=eq.PENDING\",{method:'PATCH',headers:{'content-type':'application/json',Prefer:'return=minimal'},body:JSON.stringify({status:'RECEIVED'})});return r.status+' (consultas vistas: '+p.length+')'})()",
-   "at": 40.72,
-   "label": "bastidor: o Pix é pago (a cobrança fica RECEIVED antes da próxima consulta)"
-  },
-  {
-   "do": "waitFor",
-   "text": "Pagamento Confirmado!",
-   "timeout": 8
+   "text": "Saída de 30",
+   "timeout": 10
   },
   {
    "do": "type",
    "target": {
-    "text": "Pagamento Confirmado!",
-    "exact": true
+    "text": "Saída de 30"
    },
    "text": "",
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "label": "Pagamento Confirmado!"
+   "label": "aviso: Saída de 30 kg de Papelão"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 38.38
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[aria-label=\"Ações de Papelão\"]"
+   },
+   "at": 39.36,
+   "label": "⋯ da linha Papelão (de novo)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=menuitem]:has-text(\"Transferir entre materiais\")"
+   },
+   "at": 40.12,
+   "label": "Transferir entre materiais"
+  },
+  {
+   "do": "waitFor",
+   "text": "Move saldo de",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Move saldo de",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.4,
+   "at": 42.27,
+   "label": "Move saldo de Papelão para outro material da MESMA unidade (ZOOM)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 51.03,
+   "label": "Cancelar"
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 51.33
   },
   {
    "do": "eval",
@@ -311,7 +381,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 48.74
+   "at": 72.04
   }
  ]
 }
