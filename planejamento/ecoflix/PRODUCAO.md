@@ -1015,3 +1015,9 @@ Decisões:
   Ilustrações pendentes: ilu11_dfc_previsto, ilu15_historico_pdf. **Pedido ao mundo base**: `bank_account_id/name` em
   `linhasDRE` (senão o filtro "Conta bancária" do Histórico fica vazio). A aula não tem o cartão "Lucro Líquido".
   **Decisão do Kaik pendente**: citar só as "Outras visões" e deixar de fora as duas moedas?
+- **T14**: 19 capítulos (novos 03 cartão, 06 corrigir/excluir lote, 17 outra conta/vários lançamentos; 3→4, 4→5, 5-14→7-16,
+  recap→18 sem robô). Fala 2.211 → 3.209 palavras (~20,6 min). 18/18 no rápido; completos depois da voz
+  (`bash rec/t14/t14_cap.sh NN`); atrasos previstos em 01, 05, 06, 09, 12, 17 (`propostas_fala.md`). Valores vistos:
+  552,20, 44.684,77, 45.236,97. 8 handlers novos (conciliação, cartão, lote de banco). Ilustrações pendentes:
+  ilu01_extrato_pdf (o Extrato abre em HTML numa aba nova), ilu17_outra_conta. O pedido ao mundo base (filtro de banco das
+  sugestões) já foi aplicado.
