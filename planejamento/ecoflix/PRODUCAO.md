@@ -970,3 +970,7 @@ Decisões:
   T04 fechado pelo coordenador (20/11 06:20): cadeia 04-09, 12, 17 relançada; 09 e 17 falharam uma vez por clique que não
   pegou (instável) e passaram na repetição. **T04: 18/18 no rápido.** Completos pendentes: 04 e 16 (sem teste das correções);
   gestos de 06, 07, 09, 12, 13 a rever com a voz.
+- **T10**: 15 capítulos (novos 07 "Achar uma movimentação", 11 "Clientes, usuários e grupos"; 07-09 antigos viraram 08-10,
+  10→12, 11→13, 12→14). ~2.470 palavras. 15/15 no rápido (0 DIFERENTE); cap11 com passo novo (ordem do Resultado) em
+  ensaio pelo coordenador. View nova no mundo base: `handlers/views/orders_with_payments.mjs` (mantida no base). PDFs com
+  cena pendente: pdf07_kardex, pdf13_posicao, pdf13_relatorio (`rec/t10/t10_pdfs.py` extrai).

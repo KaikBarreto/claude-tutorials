@@ -335,7 +335,7 @@
   },
   {
    "do": "eval",
-   "js": "(()=>{const th=[...document.querySelectorAll('main thead th')].find(t=>t.innerText.trim().startsWith('Data'));if(!th)return 'SEM ALVO';th.click();th.click();return 'Data: 2 cliques (asc e desc)'})()",
+   "js": "(async()=>{const th=[...document.querySelectorAll('main thead th')].find(t=>t.innerText.trim().startsWith('Data'));if(!th)return 'SEM ALVO';th.click();await new Promise(r=>setTimeout(r,400));th.click();await new Promise(r=>setTimeout(r,400));return 'Data: 2 cliques (asc e desc)'})()",
    "at": 43.73,
    "label": "volta à ordem por data, a mais nova primeiro (Data: asc e desc; o primeiro clique numa coluna nova é crescente)"
   },

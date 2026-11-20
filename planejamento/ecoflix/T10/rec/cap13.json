@@ -337,15 +337,27 @@
    "label": "PDF da posição de 31/10 (para a edição mostrar a aba)"
   },
   {
-   "do": "waitFor",
-   "gone": {
-    "role": "dialog"
-   },
-   "timeout": 8
+   "do": "pause",
+   "seconds": 1.5
+  },
+  {
+   "do": "eval",
+   "js": "'diálogos abertos: '+document.querySelectorAll('[role=dialog]').length",
+   "label": "o diálogo fechou depois do PDF?"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha o diálogo se ele ficou aberto"
   },
   {
    "do": "pause",
-   "seconds": 0.5
+   "seconds": 0.6
+  },
+  {
+   "do": "eval",
+   "js": "'diálogos abertos depois do Escape: '+document.querySelectorAll('[role=dialog]').length",
+   "label": "diálogo depois do Escape"
   },
   {
    "do": "mark",
