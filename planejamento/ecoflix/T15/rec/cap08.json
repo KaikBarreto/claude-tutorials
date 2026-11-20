@@ -1,6 +1,6 @@
 {
  "name": "t15-cap08",
- "title": "T15 · Cap. 8 · Caixa ou competência (narração ESTIMADA 166,0 s; marcas L1..L15 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T15 · Cap. 8 · Caixa ou competência (narração ESTIMADA 166,2 s; marcas L1..L15 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t15-cap08",
  "pace": 0.5,
  "cps": 40,
@@ -325,7 +325,7 @@
     "within": "main"
    },
    "seconds": 1.5,
-   "at": 105.38,
+   "at": 106.59,
    "label": "faixa cinza: detalhamento por centro de custo",
    "optional": true,
    "timeout": 4
@@ -333,12 +333,12 @@
   {
    "do": "mark",
    "name": "L12",
-   "at": 111.85
+   "at": 112.0
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.getClientRects().length&&(e=>e.children.length===0?e.textContent.trim():[...e.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent).join('').trim())(e)===\"04.01\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-330);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 111.85,
+   "at": 112.0,
    "label": "sobe até 04 Custos Operacionais"
   },
   {
@@ -346,7 +346,7 @@
    "target": {
     "selector": "main button:has(span:text-is(\"04.01\"))"
    },
-   "at": 113.67,
+   "at": 113.82,
    "label": "abre o grupo do custo"
   },
   {
@@ -358,7 +358,7 @@
     "nth": 0
    },
    "seconds": 1.0,
-   "at": 115.21,
+   "at": 115.36,
    "label": "CMV / Compras de materiais (ZOOM)",
    "optional": true,
    "timeout": 4
@@ -371,7 +371,7 @@
   {
    "do": "eval",
    "js": "(()=>{const b=[...document.querySelectorAll('main [role=tab]')].find(e=>e.offsetParent&&e.innerText.replace(/\\s+/g,' ').trim()===\"Regime de Compet\\u00eancia\");if(!b)return 'SEM ALVO';for(const t of ['pointerdown','mousedown','pointerup','mouseup','click'])b.dispatchEvent(new (t.startsWith('pointer')?PointerEvent:MouseEvent)(t,{bubbles:true,cancelable:true,button:0}));return b.getAttribute('aria-selected')})()",
-   "at": 120.83,
+   "at": 120.98,
    "label": "troca para competência (sem cursor)"
   },
   {
@@ -382,7 +382,7 @@
   {
    "do": "eval",
    "js": "(()=>{const b=[...document.querySelectorAll('main [role=tab]')].find(e=>e.offsetParent&&e.innerText.replace(/\\s+/g,' ').trim()===\"Regime de Caixa\");if(!b)return 'SEM ALVO';for(const t of ['pointerdown','mousedown','pointerup','mouseup','click'])b.dispatchEvent(new (t.startsWith('pointer')?PointerEvent:MouseEvent)(t,{bubbles:true,cancelable:true,button:0}));return b.getAttribute('aria-selected')})()",
-   "at": 125.0,
+   "at": 125.16,
    "label": "troca para caixa (sem cursor)"
   },
   {
@@ -393,7 +393,7 @@
   {
    "do": "mark",
    "name": "L13",
-   "at": 128.14
+   "at": 128.3
   },
   {
    "do": "hover",
@@ -404,7 +404,7 @@
     "nth": 0
    },
    "seconds": 1.0,
-   "at": 128.85,
+   "at": 129.0,
    "label": "a linha do CMV (mesmo zoom)",
    "optional": true,
    "timeout": 4
@@ -412,12 +412,12 @@
   {
    "do": "mark",
    "name": "L14",
-   "at": 137.83
+   "at": 137.98
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.getClientRects().length&&(e=>e.children.length===0?e.textContent.trim():[...e.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent).join('').trim())(e)===\"(+) Receita Bruta\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-150);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 137.83,
+   "at": 137.98,
    "label": "a tabela inteira"
   },
   {
@@ -429,7 +429,7 @@
     "nth": 0
    },
    "seconds": 0.8,
-   "at": 145.9,
+   "at": 146.06,
    "label": "a tabela inteira",
    "optional": true,
    "timeout": 4
@@ -437,7 +437,7 @@
   {
    "do": "mark",
    "name": "L15",
-   "at": 149.19
+   "at": 149.35
   },
   {
    "do": "hover",
@@ -448,7 +448,7 @@
     "nth": 0
    },
    "seconds": 0.8,
-   "at": 153.54,
+   "at": 153.7,
    "label": "a tabela (dica do estoque sem custo)",
    "optional": true,
    "timeout": 4
@@ -461,7 +461,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 166.03
+   "at": 166.18
   }
  ]
 }

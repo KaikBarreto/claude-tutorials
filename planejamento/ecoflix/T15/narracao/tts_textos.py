@@ -60,7 +60,7 @@ Depois saem as despesas operacionais, entram as outras receitas e despesas, e o 
 Na tela é igual: cada degrau numa faixa, com o valor de outubro.
 Clicando num grupo, ele abre as categorias, com o valor de cada uma.
 E do lado de cada valor vem quanto ele pesa na receita do mês.
-E a categoria também abre. Dentro dela aparece quanto foi de cada centro de custo. O que ficou sem marcação vem numa linha separada, Sem centro de custo.
+Cada categoria mostra o valor do mês. A divisão por centro de custo, quem gastou o quê, fica na aba Centros de Custo, que a gente já viu.
 Pra ver só os totais, cada faixa recolhe na seta.
 No fim, o resultado de outubro: seis mil e quinhentos reais, na faixa verde.
 E lembra da categoria das máquinas? O que fica em Não compõe o dê-érri-ê não aparece aqui.""",
@@ -81,7 +81,7 @@ Na competência, o custo é só o das dez toneladas vendidas: nove mil e quinhen
 Nenhum dos dois está errado. O caixa responde quanto dinheiro sobrou. A competência responde se você está ganhando no que vende.
 Agora no dê-érri-ê de verdade, com o mês inteiro. Em competência, outubro deu seis mil e quinhentos reais de lucro.
 Clico em Regime de Caixa, e o mesmo mês vira um prejuízo de trinta e um mil e quinhentos reais.
-No regime de caixa, a divisão por centro de custo some. Ela só existe na competência, e a tela avisa.
+No regime de caixa, a tela avisa: o detalhamento por centro de custo só fica disponível na competência.
 A diferença está na linha cê-ême-vê, Compras de materiais. O cê-ême-vê é o custo da mercadoria vendida. Em competência, a linha traz só o custo do que saiu. Em caixa, traz tudo o que foi comprado no mês.
 E a diferença entre os dois resultados é de trinta e oito mil reais: o ferro que ficou no pátio, pelo preço de compra.
 Quem compra muito e segura o material esperando preço vê prejuízo no caixa e lucro na competência. É normal, e é pra isso que existem os dois.
