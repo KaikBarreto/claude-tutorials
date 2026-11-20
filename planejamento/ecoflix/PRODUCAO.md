@@ -1069,3 +1069,6 @@ Decisões:
 - 20/11 13:13 T03 cap15 com os seletores novos: rápido 0 falho; completo 0 falho com L6 5,7 s atrasada (o "Definir prefixo" e o
   desmarcar levam mais que a fala da L5): respiro de ~6 s antes da L6 com `pausas.py` depois da voz. **T03 pronta para a voz**
   (18 nós, 20.465 caracteres; `scratchpad/voz/T03.json`).
+- 20/11 13:1x **Voz disparada também**: T13 títulos, T14, T15, T19 (fila baixou; lotes de 10 a 19 aceitos) e T03 (18 nós
+  criados pelo coordenador, 20.463 créditos; custo por nó = caracteres exatos do texto). **Voz de 12 aulas no forno**
+  (T02, T03, T04, T06, T09-T15, T19; ~208 mil créditos). Falta: conferir que tudo completou e pedir ao Kaik o zip do fluxo.
