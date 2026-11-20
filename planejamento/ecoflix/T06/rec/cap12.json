@@ -1,6 +1,6 @@
 {
  "name": "t06-cap12",
- "title": "T6 · Cap. 12 · Recapitulando (narração ESTIMADA 58,4 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T17:44:00-03:00; logado como Rafael Nogueira)",
+ "title": "T6 · Cap. 12 · Sangria no fim do dia (narração ESTIMADA 44,6 s; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T17:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t06-cap12",
  "pace": 0.5,
  "cps": 40,
@@ -21,10 +21,9 @@
  "seedExtra": [
   "t06/apos-cap02",
   "t06/apos-cap05",
-  "t06/apos-cap09",
-  "t06/dia-10",
   "t06/apos-cap10",
-  "t06/apos-cap11"
+  "t06/apos-cap11",
+  "t06/dia-10"
  ],
  "prewarm": [
   "/login"
@@ -93,13 +92,13 @@
    "do": "click",
    "target": {
     "role": "button",
-    "name": "#85 | Caixa - Rafael Nogueira",
+    "name": "#86 | Caixa - Marcos Antunes",
     "within": "main"
    }
   },
   {
    "do": "waitFor",
-   "text": "Aberto em: 10/11/2026 08:31",
+   "text": "Aberto em: 10/11/2026 08:42",
    "timeout": 10
   },
   {
@@ -116,112 +115,227 @@
   {
    "do": "hover",
    "target": {
-    "role": "button",
-    "name": "#85 | Caixa - Rafael Nogueira",
+    "text": "Dinheiro em Caixa",
+    "exact": true,
     "within": "main"
    },
    "seconds": 0.6,
-   "at": 3.09,
-   "label": "aba #85",
+   "at": 1.42,
+   "label": "Dinheiro em Caixa do Marcos",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 9.79
+   "at": 9.72
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Saque / Sangria",
+    "within": "main"
+   },
+   "at": 10.25,
+   "label": "Saque / Sangria"
+  },
+  {
+   "do": "waitFor",
+   "text": "Transferir dinheiro do banco para o cofre ou para um caixa aberto",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Sangria",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 11.77,
+   "label": "opção Sangria"
+  },
+  {
+   "do": "waitFor",
+   "text": "Transferir dinheiro do cofre ou de um caixa aberto para uma conta bancária",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "nth": 0
+   },
+   "at": 13.06,
+   "label": "Origem da sangria"
   },
   {
    "do": "hover",
    "target": {
-    "text": "R$ 1.007,10",
-    "exact": true,
-    "within": "main"
+    "role": "option",
+    "name": "Cofre (Conta DINHEIRO)",
+    "exact": false
    },
-   "seconds": 0.6,
-   "at": 11.71,
-   "label": "Dinheiro em Caixa",
+   "seconds": 0.3,
+   "at": 14.52,
+   "label": "Cofre (Conta DINHEIRO) com o saldo",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Caixa de Marcos Antunes",
+    "exact": false
+   },
+   "at": 20.29,
+   "label": "Caixa de Marcos Antunes"
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 17.89
+   "at": 20.85
   },
   {
-   "do": "hover",
+   "do": "click",
    "target": {
-    "role": "button",
-    "name": "Ver movimentações do dinheiro da empresa",
-    "exact": true,
-    "within": "main"
+    "selector": "[role=dialog] button[role=combobox]",
+    "nth": 1
    },
-   "seconds": 0.6,
-   "at": 19.12,
-   "label": "Dinheiro total da empresa (o cofre)",
-   "optional": true,
-   "timeout": 4
+   "at": 21.3,
+   "label": "Conta de destino"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Conta Principal",
+    "exact": false
+   },
+   "at": 22.67,
+   "label": "Conta Principal"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #amount"
+   },
+   "at": 23.96,
+   "label": "Valor da Sangria"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] #amount"
+   },
+   "text": "5.000,00",
+   "at": 25.19,
+   "label": "ZOOM digita R$ 5.000,00 (L3)",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #description"
+   },
+   "at": 27.07,
+   "label": "Descrição (Opcional)"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=document.querySelector(\"[role=dialog] #description\");if(!e)return 'SEM ALVO';e.focus();document.execCommand('insertText',false,\"Depósito do fim do dia\");return e.value})()",
+   "label": "cola a descrição"
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 27.04
+   "at": 28.94
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.children.length===0&&e.textContent.trim()===\"Efeitos desta transa\\u00e7\\u00e3o:\")[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 28.94,
+   "label": "desce a janela até os efeitos"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Diminuirá em R$ 5.000,00\", \"Aumentará em R$ 5.000,00\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere efeitos da sangria"
   },
   {
    "do": "hover",
    "target": {
-    "role": "button",
-    "name": "#86 | Caixa - Marcos Antunes",
-    "within": "main"
+    "text": "Efeitos desta transação:",
+    "exact": true,
+    "within": "[role=dialog]"
    },
    "seconds": 0.6,
-   "at": 30.86,
-   "label": "aba do Marcos",
+   "at": 30.4,
+   "label": "ZOOM Efeitos desta transação (L4)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Diminuirá em",
+    "exact": false,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "at": 32.6,
+   "label": "Diminuirá em R$ 5.000,00",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Aumentará em",
+    "exact": false,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "at": 35.64,
+   "label": "Aumentará em R$ 5.000,00",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 34.0
+   "at": 37.03
   },
   {
-   "do": "hover",
+   "do": "click",
    "target": {
     "role": "button",
-    "name": "Saque / Sangria",
-    "within": "main"
+    "name": "Confirmar Sangria",
+    "exact": true,
+    "within": "[role=dialog]"
    },
-   "seconds": 0.6,
-   "at": 34.93,
-   "label": "Saque / Sangria",
-   "optional": true,
-   "timeout": 4
+   "at": 37.33,
+   "label": "Confirmar Sangria"
   },
   {
-   "do": "mark",
-   "name": "L6",
-   "at": 43.61
+   "do": "waitFor",
+   "text": "Sangria realizada com sucesso!",
+   "timeout": 10
   },
   {
    "do": "hover",
    "target": {
-    "role": "button",
-    "name": "Fechar Caixa",
+    "text": "Dinheiro em Caixa",
     "exact": true,
     "within": "main"
    },
    "seconds": 0.6,
-   "at": 44.16,
-   "label": "Fechar Caixa",
+   "at": 41.91,
+   "label": "Dinheiro em Caixa do #86 (menos R$ 5.000,00)",
    "optional": true,
    "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L7",
-   "at": 48.89
   },
   {
    "do": "eval",
@@ -231,7 +345,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 58.44
+   "at": 44.6
   }
  ]
 }

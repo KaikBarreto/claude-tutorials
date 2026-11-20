@@ -304,11 +304,14 @@ class Cap:
         return s.add({'do': 'eval', 'js': js, 'label': 'confere ' + label})
 
     def confere_campos(s, esperados, label, escopo='[role=dialog]'):
-        """lê o VALOR dos campos (input/textarea) do escopo e compara com o que a fala diz"""
+        """lê o VALOR dos campos (input/textarea) do escopo e compara com o que a fala diz (escopo pode ser 'CSS tr:has-text(\'X\')': linha com o texto)"""
         esp = [esperados] if isinstance(esperados, str) else list(esperados)
-        js = ("(async()=>{const esp=%s;let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(%s+' input, '+%s+' textarea')].map(e=>e.value).join(' | ');"
+        m = re.match(r"^(.*? tr):has-text\('(.*)'\)$", escopo)
+        base, txt = (m.group(1), m.group(2)) if m else (escopo, '')
+        js = ("(async()=>{const esp=%s;let out='';for(let i=0;i<12;i++){const nos=[...document.querySelectorAll(%s)].filter(n=>!%s||n.innerText.includes(%s));"
+              "const v=nos.flatMap(n=>[...n.querySelectorAll('input, textarea')]).map(e=>e.value).join(' | ');"
               "const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);"
-              "await new Promise(r=>setTimeout(r,300));}return out})()") % (json.dumps(esp, ensure_ascii=False), json.dumps(escopo), json.dumps(escopo))
+              "await new Promise(r=>setTimeout(r,300));}return out})()") % (json.dumps(esp, ensure_ascii=False), json.dumps(base), json.dumps(txt, ensure_ascii=False), json.dumps(txt, ensure_ascii=False))
         return s.add({'do': 'eval', 'js': js, 'label': 'confere ' + label})
 
     def marca(s, i):
@@ -582,7 +585,7 @@ def cap02():
     c.hover(SEL('[aria-label="Resumo do material"]'), 1.6, w=(6, 'resumo'), label='Resumo do material')
     c.click(BTN('Criar', within=DLG), w=(7, 'Criar,'), label='Criar')
     c.waitfor(text='Material criado!', timeout=10)
-    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.waitfor(gone={'text': 'Valores e estoque'}, timeout=8)
     c.type(BUSCA, 'radiador', w=(7, 'buscar'), cps=CPS, label='busca radiador')
     c.confere('row:Radiador de cobre', ['16', 'Radiador de cobre', '120', 'R$ 21,00', 'R$ 24,50'], 'linha 16 Radiador de cobre 120 Kg R$ 21,00 R$ 24,50')
     c.ev(js_valor('main input[placeholder="Buscar material por código ou nome..."]', ''), w=(8, 'E', 0, 0.0), label='limpa a busca (sem cursor)')
@@ -743,7 +746,7 @@ def cap06():
     c.hover(SEL(f"{DLG} thead th:has-text('Compra')"), 0.3, w=(2, 'compra'), label='Compra (R$)')
     c.hover(SEL(f"{DLG} thead th:has-text('Venda')"), 0.3, w=(2, 'venda'), label='Venda (R$)')
     c.hover(ASIDE, 0.6, w=(2, 'resumo'), label='Resumo da tabela (coluna da direita)')
-    c.hover(BTN('Sair', within=DLG), 0.3, w=(2, 'Sair'), label='Sair')
+    c.hover(BTN('Sair da edição', within=DLG, exact=False), 0.3, w=(2, 'Sair'), label='Sair')
     c.hover(BTN('Cancelar', within=DLG), 0.4, w=(2, 'Cancelar'), label='Cancelar')
     c.type(BUSCA_PRECOS, 'cobre', w=(3, 'Busco'), cps=CPS, label='busca cobre')
     c.confere('dlg', ['Cobre mel', 'Cobre misto', 'Fio de cobre encapado', 'Radiador de cobre'], 'ficam só os cobres')
@@ -1102,6 +1105,8 @@ def cap13():
     c.waitfor(text='Registre uma entrada ou saída manual', timeout=8)
     c.click(BTN('Saída', within=DLG), w=(2, 'escolho'), primeiro=True, label='Saída')
     c.type({'placeholder': 'Escreva o nome ou código do material'}, 'radiador', w=(2, 'radiador'), cps=40, label='Material: radiador')
+    c.waitfor(target=OPT('Radiador de cobre', exact=False), timeout=8)
+    c.waitfor(gone=PD('Ferro misto'), timeout=8)
     c.click(OPT('Radiador de cobre', exact=False), label='Radiador de cobre')
     c.type(SEL('#movement-quantity'), '2', w=(2, 'dois'), label='Quantidade 2')
     c.confere('dlg', ['Estoque de Radiador de cobre', 'Estoque atual', '120', '2 Kg', 'Após a movimentação', '118'], 'antes 120, -2 Kg, depois 118')

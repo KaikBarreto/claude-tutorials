@@ -1,6 +1,6 @@
 {
  "name": "t08-cap11",
- "title": "T08 · Cap. 11 · Pesagem avulsa com cobrança (narração 57,3 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T09:12:00-03:00)",
+ "title": "T08 · Cap. 11 · Pesagem avulsa com cobrança (narração 55,3 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T09:12:00-03:00)",
  "seed": "t08-cap11",
  "pace": 0.5,
  "cps": 9,
@@ -458,7 +458,7 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 49.1
+   "at": 47.1
   },
   {
    "do": "click",
@@ -467,7 +467,7 @@
     "name": "CONFIRMAR PAGAMENTO",
     "exact": true
    },
-   "at": 49.1,
+   "at": 47.1,
    "label": "CONFIRMAR PAGAMENTO"
   },
   {
@@ -484,13 +484,13 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 49.9,
+   "at": 47.9,
    "label": "Ticket #60 salvo, PESAGEM AVULSA (Imprimir comprovante, Fechar)"
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Ticket #60 salvo\", \"PESAGEM AVULSA\", \"não pode ser valorizada\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere pesagem avulsa #60 salva"
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Ticket #60 salvo\", \"PESAGEM AVULSA\", \"Serviço de pesagem cobrado: R$ 60,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere pesagem avulsa #60 salva (1.60.18)"
   },
   {
    "do": "type",
@@ -502,7 +502,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 51.58,
+   "at": 49.58,
    "label": "Serviço de pesagem cobrado: R$ 60,00 (não vira pedido)"
   },
   {
@@ -513,7 +513,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 52.64,
+   "at": 50.64,
    "label": "Imprimir comprovante"
   },
   {
@@ -528,7 +528,7 @@
     "name": "Térmico",
     "within": "[role=dialog]"
    },
-   "at": 53.76,
+   "at": 51.76,
    "label": "Térmico: o PDF abre na aba nova"
   },
   {
@@ -543,7 +543,7 @@
     "name": "Voltar",
     "exact": true
    },
-   "at": 55.0,
+   "at": 53.0,
    "label": "Voltar para a lista (aba Pesagens avulsas)"
   },
   {
@@ -575,7 +575,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 57.3
+   "at": 55.3
   }
  ]
 }

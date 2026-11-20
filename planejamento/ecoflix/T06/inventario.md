@@ -160,3 +160,26 @@ finalizados") → diálogo `:3377-3605`.
   e a aula ensina que dinheiro mudando de lugar (saque, sangria, suprimento) não é receita.
 - H5. Nos modais lidos não achei movimento direto cofre → caixa aberto no meio do dia (o dinheiro entra no caixa na
   abertura ou por saque do banco); a fala não fala desse caminho. Conferir com o time.
+
+## Atualização 1.60.18 (20/11/2026)
+Código lido em `/dev/shm/ecoflix-src/src` (commit `e8edc9e6d`). Números de linha do `Caixa.tsx` abaixo valem para o 1.60.18; os de antes andaram.
+
+- **Abertura zerada nunca é barrada** (`lib/caixa.ts` `deveBloquearAberturaPorCofre`: abertura ≤ 0 devolve falso; usada em `Caixa.tsx` ~1747).
+  Acima de zero e acima do disponível barra igual; primeira abertura (cofre recém-ligado) não mudou.
+- **"⚠️ Saldo insuficiente em dinheiro"** (`Caixa.tsx:3747-3845`):
+  - texto, disponível positivo ou zero: "Você tentou abrir com R$ X, mas há apenas R$ Y disponíveis (R$ Z já reservados em caixas abertos)."
+  - texto, disponível negativo: "..., mas o cofre está negativo em R$ N e não há dinheiro disponível (R$ Z já reservados em caixas abertos)."
+  - com permissão de ajustar contas: "Se há dinheiro físico que ainda não foi registrado, ajuste o saldo do dinheiro abaixo — o caixa abre em seguida com o mesmo valor."
+  - sem permissão: "Peça ao responsável para ajustar o saldo do dinheiro nas Movimentações Financeiras, ou abra o caixa zerado (R$ 0,00)." (disponível ≤ 0)
+    ou "... ou abra com valor menor (até R$ Y)." (disponível positivo).
+  - link nos dois perfis, abre em nova aba: "Ver tutorial: como funciona o dinheiro do caixa" (`TUTORIAL_DINHEIRO_FISICO_URL`, `lib/caixa.ts`).
+  - botão secundário: "Usar disponível (R$ Y)" com saldo positivo; "Abrir zerado (R$ 0,00)" com disponível ≤ 0 (só preenche 0,00 e fecha o aviso;
+    o operador ainda clica em "Abrir Caixa"); botão primário "Ajustar saldo do dinheiro" só com permissão.
+- **Reabrir:** título do alerta "Reabrir caixa #N?" (`caixa.json` `confirmTitleNumbered`; sem número: "Reabrir caixa?"). O cartão amarelo e o resumo
+  dentro do alerta continuam com o título "Reabrir Último Caixa".
+- **"Preencher" (preenchimento inteligente)** passa a completar também a "Descrição" (1.60.18, `FinancialDescriptionField.tsx`): digitar "Gás da" e
+  clicar em "Preencher" deixa "Gás da empilhadeira"; "Desfazer preenchimento" desfaz a descrição junto.
+- **Histórico de Transações:** o chevron da linha de despesa/receita avulsa virou botão ("Ver detalhes" / "Ocultar detalhes") e a linha expandida
+  mostra os detalhes completos (`ManualMovementExpandedDetails`), além dos anexos.
+- Capítulos novos desta aplicação: 6 (cofre zerado ou negativo), 11 (despesa e receita), 12 (sangria no fim do dia) e o trecho 13a (trava do
+  Fechar Caixa); rótulos do restante: `cobertura_160.md` (seção 2).

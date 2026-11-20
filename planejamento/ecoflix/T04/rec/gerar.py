@@ -526,9 +526,9 @@ POPS = "(()=>{const o=window.open;window.__pops=[];window.open=function(...a){co
 # base64 (`HTML:<b64>`) para a ilustração `"cena": "pdf"` (a gravação filma uma aba só; t04_pdf.py grava o arquivo)
 HTML_JS = ("(async()=>{const w=(window.__pops||[]).slice(-1)[0];if(!w)return 'SEM JANELA';const espera=%s;for(let i=0;i<60;i++){let t='';"
            "try{t=(w.document&&w.document.body&&w.document.body.innerText)||''}catch(e){return 'ERRO '+e}"
-           "if(t&&espera.every(x=>t.includes(x))){const h='<!doctype html>'+w.document.documentElement.outerHTML;const u=new TextEncoder().encode(h);let s='';"
+           "if(t&&espera.every(x=>t.toLowerCase().includes(x.toLowerCase()))){const h='<!doctype html>'+w.document.documentElement.outerHTML;const u=new TextEncoder().encode(h);let s='';"
            "for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'HTML:'+btoa(s)}"
-           "await new Promise(r=>setTimeout(r,250))}return 'SEM HTML'})()")
+           "await new Promise(r=>setTimeout(r,250))}let d='';try{d=' pops='+window.__pops.length+' fechada='+w.closed+' texto='+((w.document.body&&w.document.body.innerText)||'').slice(0,160)}catch(e){d=' '+e}return 'SEM HTML'+d})()")
 
 
 def html_js(espera):
@@ -639,7 +639,7 @@ def cap03():
     c.hover(CAMPO('name'), 0.8, at=c.A(6, 'nome', 0.5), label='Nome: Serralheria Bem-Te-Vi (o digitado)')
     c.confere_campos(['Serralheria Bem-Te-Vi', '(12) 90000-2742', 'contato@serralheriabemtevi.example'], 'nome, telefone e e-mail')
     c.mark(7)
-    c.confere('dlg', ['Número (Dados Fiscais)'], 'o link do campo em outra aba: Número (Dados Fiscais)')
+    c.confere('dlg', ['Número', '(Dados Fiscais)'], 'o link do campo em outra aba: Número (Dados Fiscais)')
     c.marcar(TEXTO_CAIXA, at=c.L(7) - 0.9, label='zoom: a caixa âmbar Falta isto para emitir NF-e (1) com o link Número (Dados Fiscais) (L7)')
     c.hover(PEND('Número'), 1.4, at=c.A(7, 'amarelo,', 0.5), label='o link Número (Dados Fiscais), na caixa âmbar')
     c.fim()
@@ -704,7 +704,12 @@ def cap04():
     c.hover(FISCAL_OK('Rogério Alves Costa'), 1.4, at=c.A(11, 'pronto', 0.5), label='o Rogério agora com o sinal verde')
     c.mark(12)
     c.click(INCOMPLETOS, at=c.A(12, 'botão', 0.6), label='botão incompletos')
-    c.confere('main aside', ['Valdir Pereira', 'Aparecida Ramos', 'Cida Ramos'], 'só os três incompletos')
+    c.add({'do': 'eval', 'label': 'garante o filtro dos incompletos ligado (se o clique se perdeu no recarregamento, clica por JS)',
+           'js': "(async()=>{const ach=()=>[...document.querySelectorAll('main button[aria-pressed]')].find(b=>/incompletos|Mostrar todos/.test(b.textContent));"
+                 "await new Promise(r=>setTimeout(r,500));let b=ach();if(b&&b.getAttribute('aria-pressed')!=='true'){b.click();await new Promise(r=>setTimeout(r,700));b=ach()}"
+                 "const t=(document.querySelector('main aside')||document.body).innerText;"
+                 "return (b&&b.getAttribute('aria-pressed')==='true'&&!t.includes('Auto Peças Vale Forte'))?'OK: filtrado ('+b.textContent.trim()+')':'DIFERENTE: filtro desligado'})()"})
+    c.confere('main aside', ['Valdir Pereira', 'Cida Ramos'], 'só os incompletos (Valdir e Cida)')
     c.hover(NOME_LINHA('Cida Ramos'), 1.0, at=c.A(12, 'mostra', 0.5), label='a lista só com os incompletos')
     c.mark(13)
     c.click(MOSTRAR_TODOS, at=c.A(13, 'Uma', 0.6), label='Mostrar todos (a lista volta)')

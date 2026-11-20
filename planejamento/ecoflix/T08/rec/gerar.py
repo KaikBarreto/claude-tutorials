@@ -926,7 +926,7 @@ def cap11():
     c.click(BTN('CONFIRMAR PAGAMENTO'), at=round(c.L(6) - 0.2, 2), label='CONFIRMAR PAGAMENTO')
     c.waitfor(text='O que deseja fazer com este ticket de pesagem?', timeout=12)
     c.registra(SEL(DLG), at=c.A(6, 'valor', 0.2), label='Ticket #60 salvo, PESAGEM AVULSA (Imprimir comprovante, Fechar)')
-    c.confere('dlg', ['Ticket #60 salvo', 'PESAGEM AVULSA', 'não pode ser valorizada'], 'pesagem avulsa #60 salva')
+    c.confere('dlg', ['Ticket #60 salvo', 'PESAGEM AVULSA', 'Serviço de pesagem cobrado: R$ 60,00'], 'pesagem avulsa #60 salva (1.60.18)')
     # 1.60.18: o aviso diz o que foi cobrado ("Serviço de pesagem cobrado: R$ 60,00. Não vira pedido de compra nem de venda.")
     c.registra(TXTX('Serviço de pesagem cobrado', within=DLG), at=c.A(6, 'sem', 0.2), label='Serviço de pesagem cobrado: R$ 60,00 (não vira pedido)')
     # o PDF do app vira a ilustração do comprovante; depois o robô volta à lista das avulsas e para

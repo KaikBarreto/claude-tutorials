@@ -1,6 +1,6 @@
 {
  "name": "t06-cap10",
- "title": "T6 · Cap. 10 · Fechar o caixa (narração ESTIMADA 137,2 s; marcas L1..L14 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T17:40:00-03:00; logado como Rafael Nogueira)",
+ "title": "T6 · Cap. 10 · Saque e sangria (narração ESTIMADA 132,7 s; marcas L1..L16 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:45:00-03:00; logado como Rafael Nogueira)",
  "seed": "t06-cap10",
  "pace": 0.5,
  "cps": 40,
@@ -20,9 +20,7 @@
  },
  "seedExtra": [
   "t06/apos-cap02",
-  "t06/apos-cap05",
-  "t06/apos-cap09",
-  "t06/dia-10"
+  "t06/apos-cap05"
  ],
  "prewarm": [
   "/login"
@@ -101,312 +99,459 @@
    "timeout": 10
   },
   {
-   "do": "waitFor",
-   "text": "Aços Quiririm Ltda",
-   "timeout": 10
-  },
-  {
    "do": "eval",
    "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
   }
  ],
  "steps": [
   {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"R$ 1.007,10\", \"Aços Quiririm Ltda\", \"Aparecida Ramos\", \"Valdir Pereira\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere movimento do dia no #85"
-  },
-  {
    "do": "mark",
    "name": "L1",
    "at": 0.4
   },
   {
-   "do": "hover",
-   "target": {
-    "text": "R$ 1.007,10",
-    "exact": true,
-    "within": "main"
-   },
-   "seconds": 0.3,
-   "at": 0.4,
-   "label": "Dinheiro em Caixa R$ 1.007,10",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.children.length===0&&e.textContent.trim()===\"Hist\\u00f3rico de Transa\\u00e7\\u00f5es\")[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;const dy=Math.round(el.getBoundingClientRect().top-120);if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/1000),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 1.78,
-   "label": "desce ao Histórico de Transações"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('Aços Quiririm Ltda')"
-   },
-   "seconds": 0.6,
-   "at": 3.24,
-   "label": "venda Aços Quiririm (Pix/Transferência)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('Aparecida Ramos')"
-   },
-   "seconds": 0.6,
-   "at": 9.92,
-   "label": "compra da Aparecida (Dinheiro)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('Valdir Pereira')"
-   },
-   "seconds": 0.3,
-   "at": 12.12,
-   "label": "compra do Valdir (Dinheiro)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
    "do": "mark",
    "name": "L2",
-   "at": 12.68
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const c=rolagem(null);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;if(y0<3)return 'ok';const dy=-y0;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
-   "at": 12.68,
-   "label": "volta ao topo"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "role": "button",
-    "name": "Fechar Caixa",
-    "exact": true,
-    "within": "main"
-   },
-   "seconds": 0.6,
-   "at": 14.52,
-   "label": "Fechar Caixa (sem cadeado)",
-   "optional": true,
-   "timeout": 4
+   "at": 7.22
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 20.85
+   "at": 17.67
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 32.13
+   "at": 25.38
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 35.98
   },
   {
    "do": "click",
    "target": {
     "role": "button",
-    "name": "Fechar Caixa",
-    "exact": true,
+    "name": "Saque / Sangria",
     "within": "main"
    },
-   "at": 33.12,
-   "label": "Fechar Caixa"
+   "at": 36.51,
+   "label": "Saque / Sangria"
   },
   {
    "do": "waitFor",
-   "text": "Fechar Caixa #85",
+   "text": "Transferir dinheiro do banco para o cofre ou para um caixa aberto",
    "timeout": 10
   },
   {
-   "do": "waitFor",
-   "text": "Valor esperado pelo sistema",
-   "timeout": 15
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Saldo de Abertura\", \"R$ 1.500,00\", \"Restante em Caixa\", \"R$ 1.007,10\", \"Compras\", \"R$ 492,90\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere conta do dia: 1.500,00 - 492,90 = 1.007,10"
-  },
-  {
-   "do": "mark",
-   "name": "L5",
-   "at": 36.43
-  },
-  {
    "do": "hover",
    "target": {
-    "text": "Saldo de Abertura",
+    "role": "button",
+    "name": "Saque",
     "exact": true,
     "within": "[role=dialog]"
    },
    "seconds": 0.6,
-   "at": 36.83,
-   "label": "ZOOM cartões do fechamento (L5 e L6)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Compras",
-    "exact": true,
-    "within": "[role=dialog]"
-   },
-   "seconds": 0.6,
-   "at": 43.06,
-   "label": "Compras R$ 492,90 (Dinheiro)",
+   "at": 39.95,
+   "label": "opção Saque marcada",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 49.84
+   "at": 41.04
   },
   {
    "do": "hover",
    "target": {
-    "text": "Restante em Caixa",
-    "exact": true,
-    "within": "[role=dialog]"
+    "selector": "[role=dialog] button[role=combobox]",
+    "nth": 0
    },
    "seconds": 0.6,
-   "at": 50.24,
-   "label": "Restante em Caixa R$ 1.007,10",
+   "at": 41.59,
+   "label": "Conta de origem: Conta Principal",
    "optional": true,
    "timeout": 4
   },
   {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "nth": 1
+   },
+   "at": 44.75,
+   "label": "Destino do saque"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Caixa de Marcos Antunes"
+   },
+   "at": 47.36,
+   "label": "Caixa de Marcos Antunes"
+  },
+  {
    "do": "mark",
    "name": "L7",
-   "at": 57.48
+   "at": 47.92
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #amount"
+   },
+   "at": 48.22,
+   "label": "Valor do Saque"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] #amount"
+   },
+   "text": "3.000,00",
+   "at": 50.13,
+   "label": "ZOOM digita R$ 3.000,00 (L7)",
+   "noClick": true
   },
   {
    "do": "mark",
    "name": "L8",
-   "at": 65.65
+   "at": 52.82
   },
   {
    "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.children.length===0&&e.textContent.trim()===\"Valor de Fechamento\")[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;const dy=Math.round(el.getBoundingClientRect().top-380);if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 73.73,
-   "label": "desce a janela até o Valor de Fechamento"
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.children.length===0&&e.textContent.trim()===\"Tem tarifa no saque?\")[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;const dy=Math.round(el.getBoundingClientRect().top-330);if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 52.82,
+   "label": "desce a janela até a tarifa"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "nth": 2
+   },
+   "at": 54.26,
+   "label": "Tem tarifa no saque?"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Sim",
+    "exact": true
+   },
+   "at": 55.37,
+   "label": "Sim"
   },
   {
    "do": "eval",
-   "js": "(async()=>{let v='';for(let i=0;i<12;i++){const e=document.querySelector(\"[role=dialog] #closingBalance\");v=e?e.value:'(sem campo)';if(v===\"1.007,10\")return 'OK: '+v;await new Promise(r=>setTimeout(r,250));}return 'DIFERENTE: '+v})()",
-   "label": "confere Valor de Fechamento já com o esperado"
+   "js": "(()=>{const e=document.querySelector('[role=dialog] #fee');if(!e)return 'SEM ALVO';e.focus();return 'foco ok'})()",
+   "label": "foco no Valor da Tarifa"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] #fee"
+   },
+   "text": "6,50",
+   "at": 56.55,
+   "label": "ZOOM digita R$ 6,50 (L8)",
+   "noClick": true
   },
   {
    "do": "mark",
    "name": "L9",
-   "at": 75.03
+   "at": 57.87
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.children.length===0&&e.textContent.trim()===\"Efeitos desta transa\\u00e7\\u00e3o:\")[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 57.87,
+   "label": "desce a janela até os efeitos"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Diminuirá em R$ 3006,50\", \"(Saque: R$ 3.000,00 + Tarifa: R$ 6,50)\", \"Aumentará em R$ 3.000,00\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere efeitos do saque"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "[role=dialog] #closingBalance"
+    "text": "Saldo da Conta Bancária",
+    "exact": true,
+    "within": "[role=dialog]"
    },
    "seconds": 0.6,
-   "at": 75.58,
-   "label": "Valor de Fechamento (já com o esperado)",
+   "at": 60.32,
+   "label": "ZOOM Efeitos desta transação (L9 e L10)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Diminuirá em",
+    "exact": false,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "at": 61.46,
+   "label": "Diminuirá em R$ 3006,50",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Aumentará em",
+    "exact": false,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "at": 66.39,
+   "label": "Aumentará em R$ 3.000,00",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L10",
-   "at": 82.82
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] #closingBalance"
-   },
-   "at": 83.12,
-   "label": "campo Valor de Fechamento"
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "[role=dialog] #closingBalance"
-   },
-   "text": "1.007,10",
-   "at": 84.2,
-   "label": "ZOOM digita 1.007,10 e o valor esperado (L10)",
-   "noClick": true,
-   "clear": true
+   "at": 67.71
   },
   {
    "do": "mark",
    "name": "L11",
-   "at": 87.96
+   "at": 81.2
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Confirmar Saque",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 81.5,
+   "label": "Confirmar Saque"
+  },
+  {
+   "do": "waitFor",
+   "text": "Saque realizado com sucesso!",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L12",
+   "at": 86.13
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Saque / Sangria",
+    "within": "main"
+   },
+   "at": 86.13,
+   "label": "Saque / Sangria (de novo)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Transferir dinheiro do banco para o cofre ou para um caixa aberto",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "nth": 1
+   },
+   "at": 88.22,
+   "label": "Destino do saque"
   },
   {
    "do": "hover",
    "target": {
-    "text": "Valor esperado pelo sistema",
-    "exact": false,
-    "within": "[role=dialog]"
+    "role": "option",
+    "name": "Cofre (Conta DINHEIRO)",
+    "exact": false
    },
    "seconds": 0.6,
-   "at": 89.87,
-   "label": "Valor esperado pelo sistema: R$ 1.007,10",
+   "at": 89.39,
+   "label": "Cofre (Conta DINHEIRO) (sem escolher)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
-   "name": "L12",
-   "at": 104.55
+   "name": "L13",
+   "at": 98.68
   },
   {
-   "do": "mark",
-   "name": "L13",
-   "at": 118.11
+   "do": "press",
+   "key": "Escape",
+   "at": 98.68,
+   "label": "fecha a lista sem escolher"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] label[for=transactionDate], [role=dialog] :text(\"Data/hora do lançamento\")"
+   },
+   "seconds": 0.6,
+   "at": 105.83,
+   "label": "ZOOM Data/hora do lançamento (L13)",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "click",
    "target": {
     "role": "button",
-    "name": "Confirmar Fechamento",
+    "name": "Cancelar",
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 118.41,
-   "label": "Confirmar Fechamento",
-   "noScroll": true
+   "at": 109.02,
+   "label": "Cancelar"
   },
   {
    "do": "waitFor",
-   "text": "Deseja imprimir o relatório de fechamento de caixa?",
-   "timeout": 12
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 6
   },
   {
    "do": "mark",
    "name": "L14",
-   "at": 127.27
+   "at": 110.41
   },
   {
    "do": "click",
    "target": {
     "role": "button",
-    "name": "Não, obrigado",
-    "exact": true
+    "name": "Nova Movimentação Bancária",
+    "within": "main"
    },
-   "at": 128.56,
-   "label": "Não, obrigado"
+   "at": 111.09,
+   "label": "Nova Movimentação Bancária"
   },
   {
    "do": "waitFor",
-   "text": "Meu Caixa",
+   "text": "Nova Movimentação Financeira",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "nth": 0
+   },
+   "at": 118.08,
+   "label": "Conta bancária"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Conta Secundária"
+   },
+   "at": 119.37,
+   "label": "Conta Secundária"
+  },
+  {
+   "do": "mark",
+   "name": "L15",
+   "at": 121.24
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Saída",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 121.54,
+   "label": "Tipo Saída"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #description"
+   },
+   "at": 122.38,
+   "label": "Descrição"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=document.querySelector(\"[role=dialog] #description\");if(!e)return 'SEM ALVO';e.focus();document.execCommand('insertText',false,\"Tarifa mensal do pacote de serviços\");return e.value})()",
+   "label": "cola a descrição"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #amount"
+   },
+   "at": 123.36,
+   "label": "Valor"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] #amount"
+   },
+   "text": "39,90",
+   "at": 124.59,
+   "label": "digita R$ 39,90",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "nth": 1
+   },
+   "at": 125.41,
+   "label": "Categoria"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Tarifas",
+    "exact": true
+   },
+   "at": 126.47,
+   "label": "categoria Tarifas"
+  },
+  {
+   "do": "mark",
+   "name": "L16",
+   "at": 127.21
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{for(let i=0;i<10;i++){const d=document.querySelector('[role=dialog]');const t=d?d.innerText:'';const v=d?[...d.querySelectorAll('input')].map(e=>e.value).join(' | '):'';if(t.includes('Conta Secundária')&&t.includes('Tarifas')&&v.includes('Tarifa mensal do pacote de serviços')&&v.includes('R$ 39,90'))return 'OK: Conta Secundária | Tarifas | Tarifa mensal do pacote de serviços | R$ 39,90';await new Promise(r=>setTimeout(r,150))}return 'DIFERENTE: '+(document.querySelector('[role=dialog]')||{innerText:''}).innerText.slice(0,200)})()",
+   "label": "confere conta, categoria, descrição e valor da saída"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 127.51,
+   "label": "Salvar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Movimentação registrada com sucesso!",
    "timeout": 10
   },
   {
@@ -417,7 +562,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 137.19
+   "at": 132.65
   }
  ]
 }

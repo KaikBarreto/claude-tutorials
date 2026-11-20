@@ -1,6 +1,6 @@
 {
  "name": "t06-cap07",
- "title": "T6 · Cap. 7 · Cada um com o seu caixa (narração ESTIMADA 58,8 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:45:00-03:00; logado como Rafael Nogueira)",
+ "title": "T6 · Cap. 7 · Os dois cartões (narração ESTIMADA 68,5 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:45:00-03:00; logado como Rafael Nogueira)",
  "seed": "t06-cap07",
  "pace": 0.5,
  "cps": 40,
@@ -112,153 +112,188 @@
   {
    "do": "hover",
    "target": {
-    "role": "button",
-    "name": "#85 | Caixa - Rafael Nogueira",
+    "text": "Dinheiro em Caixa",
+    "exact": true,
     "within": "main"
    },
    "seconds": 0.6,
-   "at": 2.78,
-   "label": "ZOOM abas Início, #85 e #86 (L1 e L2)",
+   "at": 5.21,
+   "label": "cartão Dinheiro em Caixa",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "hover",
    "target": {
-    "role": "button",
-    "name": "#86 | Caixa - Marcos Antunes",
+    "text": "R$ 1.500,00",
+    "exact": true,
     "within": "main"
    },
    "seconds": 0.6,
-   "at": 4.68,
-   "label": "aba #86 do Marcos",
+   "at": 9.77,
+   "label": "R$ 1.500,00 do meu caixa",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Aberto em: 10/11/2026 08:31\", \"Dinheiro total da empresa:\", \"R$ 18.500,00\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere aberto 08:31 e cofre R$ 18.500,00"
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 7.14
+   "at": 11.08
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Aberto em:",
+    "exact": false,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 12.47,
+   "label": "ZOOM Aberto em e Dinheiro total da empresa (L2)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Ver movimentações do dinheiro da empresa",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 14.45,
+   "label": "Dinheiro total da empresa: R$ 18.500,00",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 16.9
+   "at": 19.86
   },
   {
    "do": "click",
    "target": {
-    "selector": "main button[aria-haspopup=\"dialog\"]:has(svg[class*=\"help\"])"
+    "role": "button",
+    "name": "Ver movimentações do dinheiro da empresa",
+    "exact": true,
+    "within": "main"
    },
-   "at": 17.43,
-   "label": "? Como funcionam os Multi-Caixas"
+   "at": 20.36,
+   "label": "Dinheiro total da empresa (abre o cofre)"
   },
   {
    "do": "waitFor",
-   "text": "Como funcionam os Multi-Caixas?",
-   "timeout": 10
+   "text": "O cofre da empresa",
+   "timeout": 12
   },
   {
-   "do": "hover",
-   "target": {
-    "text": "Transações de caixa (depósitos",
-    "exact": false,
-    "within": "[role=dialog]"
-   },
-   "seconds": 0.6,
-   "at": 21.78,
-   "label": "item 1: transações de caixa só no caixa selecionado",
-   "optional": true,
-   "timeout": 4
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"O cofre da empresa\", \"R$ 18.500,00\", \"Disponível no cofre: R$ 0,00 (0%)\", \"Caixa de Rafael Nogueira: R$ 1.500,00 (8%)\", \"Caixa de Marcos Antunes: R$ 17.000,00 (92%)\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere barra do cofre (0 / 1.500 / 17.000)"
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 28.79
+   "at": 23.32
   },
   {
    "do": "hover",
    "target": {
-    "text": "Saldo bancário (PIX/transferências)",
-    "exact": false,
-    "within": "[role=dialog]"
+    "text": "92%",
+    "exact": true,
+    "within": "main"
    },
    "seconds": 0.6,
-   "at": 30.25,
-   "label": "item 2: saldo bancário compartilhado",
+   "at": 23.87,
+   "label": "ZOOM barra e legenda do cofre (L4)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "hover",
    "target": {
-    "text": "Saldo de clientes/fornecedores também",
-    "exact": false,
-    "within": "[role=dialog]"
+    "role": "button",
+    "name": "Caixa de Rafael Nogueira:",
+    "within": "main"
    },
    "seconds": 0.6,
-   "at": 31.7,
-   "label": "item 3: saldo de clientes/fornecedores",
+   "at": 26.61,
+   "label": "Caixa de Rafael Nogueira: R$ 1.500,00 (8%)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Caixa de Marcos Antunes:",
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 29.11,
+   "label": "Caixa de Marcos Antunes: R$ 17.000,00 (92%)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Disponível no cofre:",
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 31.99,
+   "label": "Disponível no cofre: R$ 0,00 (0%)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 35.06
-  },
-  {
-   "do": "press",
-   "key": "Escape",
-   "at": 35.06,
-   "label": "fecha a ajuda"
-  },
-  {
-   "do": "waitFor",
-   "gone": {
-    "role": "dialog"
-   },
-   "timeout": 6
+   "at": 33.77
   },
   {
    "do": "click",
    "target": {
-    "role": "button",
-    "name": "Início",
-    "exact": true,
-    "within": "main"
+    "text": "Financeiro",
+    "exact": true
    },
-   "at": 35.9,
-   "label": "aba Início"
+   "at": 34.07,
+   "label": "menu Financeiro"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Caixa",
+    "exact": true
+   },
+   "at": 35.08,
+   "label": "menu Caixa (de volta)"
   },
   {
    "do": "waitFor",
-   "text": "Abrir Caixa para Outro Usuário",
-   "timeout": 10
+   "text": "Gestão financeira e movimentações",
+   "timeout": 12
   },
   {
    "do": "hover",
    "target": {
-    "text": "Painel Gerencial",
+    "text": "Saldo Bancário",
     "exact": true,
     "within": "main"
    },
    "seconds": 0.6,
-   "at": 37.06,
-   "label": "Painel Gerencial",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Resumo do Dia",
-    "exact": true,
-    "within": "main"
-   },
-   "seconds": 0.6,
-   "at": 39.03,
-   "label": "Resumo do Dia",
+   "at": 37.35,
+   "label": "cartão Saldo Bancário",
    "optional": true,
    "timeout": 4
   },
@@ -266,38 +301,54 @@
    "do": "hover",
    "target": {
     "role": "button",
-    "name": "Abrir Caixa",
-    "exact": true,
+    "name": "Saque / Sangria",
     "within": "main"
    },
    "seconds": 0.6,
-   "at": 42.98,
-   "label": "Abrir Caixa para Outro Usuário",
+   "at": 44.19,
+   "label": "botões do Saldo Bancário",
    "optional": true,
    "timeout": 4
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"2 caixas encontrados\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere 2 caixas encontrados"
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 47.41
+   "at": 47.1
   },
   {
-   "do": "hover",
+   "do": "click",
    "target": {
-    "text": "caixas encontrados",
-    "exact": false,
+    "selector": "main button[aria-label=\"Ocultar saldo\"]"
+   },
+   "at": 47.63,
+   "label": "olho Ocultar saldo"
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "R$ ••••••",
+    "exact": true,
     "within": "main"
    },
-   "seconds": 0.6,
-   "at": 49.86,
-   "label": "2 caixas encontrados",
+   "text": "",
+   "noClick": true,
    "optional": true,
-   "timeout": 4
+   "timeout": 4,
+   "at": 52.02,
+   "label": "ZOOM R$ •••••• (L6 e L7)"
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 52.61
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[aria-label=\"Mostrar saldo\"]"
+   },
+   "at": 66.2,
+   "label": "olho Mostrar saldo"
   },
   {
    "do": "eval",
@@ -307,7 +358,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 58.78
+   "at": 68.46
   }
  ]
 }

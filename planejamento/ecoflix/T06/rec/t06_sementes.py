@@ -7,16 +7,21 @@ app grava (caixa, abertura, saque, tarifa, fechamento) são as que o app 1.59.15
 (`capturar`). Rode de novo sempre que o mundo base mudar:  python3 -I rec/t06/t06_sementes.py [todas|apos-cap02 ...]
   python3 -I rec/t06/t06_sementes.py capturar     # mostra as linhas de hoje (10/11) da instância 54306 (depois de um ensaio)
 
-Sementes (cada uma soma só o que o capítulo fez; o roteiro empilha: SEMENTE em gerar.py):
+Sementes (cada uma soma só o que o capítulo fez; o roteiro empilha: SEMENTE em gerar.py; numeração de capítulos do app 1.60.18, 20/11):
   apos-cap02  #85 do Rafael aberto às 08:31 com R$ 1.500,00 (+ a linha "Abertura do Caixa #85")
   apos-cap05  #86 do Marcos aberto pelo Rafael às 08:42 com R$ 17.000,00 ("Usar disponível")
-  apos-cap09  saque de R$ 3.000,00 da Conta Principal para o #86 com tarifa de R$ 6,50 (08:46) e a saída "Tarifa mensal do pacote de
+  cofre-negativo  (cap06, aplicada DURANTE o capítulo por /__dev/seed) saída de R$ 1.200,00 direto no cofre: o disponível vai de 0 a -1.200,00
+  apos-cap10  saque de R$ 3.000,00 da Conta Principal para o #86 com tarifa de R$ 6,50 (08:46) e a saída "Tarifa mensal do pacote de
               serviços" de R$ 39,90 da Conta Secundária, categoria "Tarifas", no #85 (08:47)
+  apos-cap11  despesa "Gás da empilhadeira" R$ 50,00 em dinheiro no #85 (08:56) e receita "Aluguel de caçamba" R$ 120,00 por Pix na Conta
+              Principal (08:58, no #85); mais 2 contas a receber pagas "Aluguel de caçamba" (26/08 e 10/09) para o preenchimento inteligente
   dia-10      no #85: venda à Aços Quiririm (1.600 kg de ferro pesado a R$ 1,25 = R$ 2.000,00, Pix na Conta Principal, 10:15); compra da
               Aparecida Ramos (42 kg de alumínio latinha a R$ 6,20 = R$ 260,40, dinheiro, 11:20); compra do Valdir Pereira (310 kg de ferro
-              misto a R$ 0,75 = R$ 232,50, dinheiro, 15:05). Esperado no fechamento: 1.500,00 - 492,90 = R$ 1.007,10
-  apos-cap10  #85 fechado às 17:42 com R$ 1.007,10 (sem diferença)
-  apos-cap11  #85 reaberto às 17:43
+              misto a R$ 0,75 = R$ 232,50, dinheiro, 15:05). Esperado no fechamento: 1.500,00 - 50,00 - 492,90 = R$ 957,10
+  dia-10-rascunho  (cap13a) rascunho de compra do Valdir Pereira (1 item de cobre, R$ 86,00) no #85: o Fechar Caixa fica com cadeado
+  apos-cap12  sangria de R$ 5.000,00 do #86 (Marcos) para a Conta Principal, "Depósito do fim do dia" (17:31): o #86 vai de 20.000,00 a 15.000,00
+  apos-cap13  #85 fechado às 17:42 com R$ 957,10 (sem diferença)
+  apos-cap14  #85 reaberto às 17:43
 """
 import json
 import os
@@ -96,6 +101,8 @@ N85 = numero_caixa()            # 85 no mundo base
 N86 = N85 + 1
 ABRE85, ABRE86, SAQUE, TARIFA_MES, FECHA85, REABRE85 = utc('08:31'), utc('08:42'), utc('08:46'), utc('08:47'), utc('17:42'), utc('17:43')
 SAQ, TAR_SAQUE, TAR_MES = 3000.0, 6.5, 39.9
+DESP, REC, SANG, NEGATIVO = 50.0, 120.0, 5000.0, 1200.0     # despesa e receita do cap11, sangria do cap12, saída do cofre-negativo (cap06)
+DESPESA, RECEITA, SANGRIA_T = utc('08:56'), utc('08:58'), utc('17:31')
 
 
 def apos_cap02():
@@ -126,14 +133,14 @@ def efeitos_cap09():
     return p, s, c
 
 
-def apos_cap09():
+def apos_cap10():
     p0, s0 = ultimo_saldo(PRINCIPAL), ultimo_saldo(SECUNDARIA)
     c0 = sum(b['amount'] for b in B['bank_transactions'] if b['bank_account_id'] == COFRE)
     p, s, c = efeitos_cap09()
     grupo = '@id:grupo.t06.saque'
     nome = conta(PRINCIPAL)['name']
     return {
-        '_doc': (f'T06 · depois do cap09: saque de R$ 3.000,00 da {nome} para o caixa #{N86} com tarifa de R$ 6,50 (08:46) e a saída '
+        '_doc': (f'T06 · depois do cap10: saque de R$ 3.000,00 da {nome} para o caixa #{N86} com tarifa de R$ 6,50 (08:46) e a saída '
                  f'"Tarifa mensal do pacote de serviços" de R$ 39,90 da Conta Secundária, categoria "Tarifas", no caixa #{N85} (08:47).'),
         'bank_transactions': [
             bt('@id:bt.t06.saque', PRINCIPAL, 'transfer', -SAQ, f'↑ SAQUE · {nome} → Caixa #{N86}', SAQUE, r2(p0 - SAQ),
@@ -178,9 +185,10 @@ def item(tipo, num, mid, qtd, preco):
 
 def dia_10():
     p, s, c = efeitos_cap09()
+    p, c = r2(p + REC), r2(c - DESP)      # depois do apos-cap11: receita de 120,00 na Principal e despesa de 50,00 do cofre
     n = proximo_pedido()
     out = {'_doc': (f'T06 · o dia 10/11 no caixa #{N85} (entre o cap09 e o cap10): venda #{n} à Aços Quiririm, compras #{n + 1} (Aparecida) e '
-                    f'#{n + 2} (Valdir); esperado no fechamento R$ 1.007,10.'),
+                    f'#{n + 2} (Valdir); esperado no fechamento R$ 957,10.'),
            'sales': [], 'sale_items': [], 'purchases': [], 'purchase_items': [], 'stock_movements': [], 'cash_transactions': [],
            'bank_transactions': [], '_patch': {'materials': [], 'bank_accounts': [], 'cash_register': []}}
     estoque = {}
@@ -218,29 +226,101 @@ def dia_10():
         out['_patch']['materials'].append({'match': {'id': mid}, 'set': {'current_stock': q}})
     out['_patch']['bank_accounts'] += [{'match': {'id': PRINCIPAL}, 'set': {'balance': principal}},
                                        {'match': {'id': COFRE}, 'set': {'balance': r2(c - gaveta)}}]
-    out['_patch']['cash_register'].append({'match': {'id': C85}, 'set': {'opening_balance': r2(1500 - gaveta)}})
-    assert r2(1500 - gaveta) == 1007.10, gaveta
+    out['_patch']['cash_register'].append({'match': {'id': C85}, 'set': {'opening_balance': r2(1500 - DESP - gaveta)}})
+    assert r2(1500 - DESP - gaveta) == 957.10, gaveta
     return out
 
 
-def apos_cap10():
+def apos_cap13():
     return {
-        '_doc': f'T06 · depois do cap10: caixa #{N85} fechado às 17:42 com R$ 1.007,10, sem diferença (o dinheiro contado volta ao cofre).',
-        'cash_transactions': [ct('@id:ct.t06.fecha85', C85, 'closing', 1007.1, 'Fechamento de caixa', FECHA85)],
-        '_patch': {'cash_register': [{'match': {'id': C85}, 'set': {'status': 'closed', 'closing_balance': 1007.1, 'closed_at': FECHA85}}]},
+        '_doc': f'T06 · depois do cap13: caixa #{N85} fechado às 17:42 com R$ 957,10, sem diferença (o dinheiro contado volta ao cofre).',
+        'cash_transactions': [ct('@id:ct.t06.fecha85', C85, 'closing', 957.1, 'Fechamento de caixa', FECHA85)],
+        '_patch': {'cash_register': [{'match': {'id': C85}, 'set': {'status': 'closed', 'closing_balance': 957.1, 'closed_at': FECHA85}}]},
     }
 
 
-def apos_cap11():
+def apos_cap14():
     return {
-        '_doc': f'T06 · depois do cap11: caixa #{N85} reaberto às 17:43 (volta como estava antes do fechamento; a linha "Fechamento de caixa" fica, como o app faz).',
+        '_doc': f'T06 · depois do cap14: caixa #{N85} reaberto às 17:43 (volta como estava antes do fechamento; a linha "Fechamento de caixa" fica, como o app faz).',
         '_patch': {'cash_register': [{'match': {'id': C85}, 'set': {'status': 'open', 'closing_balance': None, 'closed_at': None,
                                                                      'reopened_at': REABRE85}}]},
     }
 
 
-SEMENTES = {'apos-cap02': apos_cap02, 'apos-cap05': apos_cap05, 'apos-cap09': apos_cap09, 'dia-10': dia_10, 'apos-cap10': apos_cap10,
-            'apos-cap11': apos_cap11}
+def apos_cap11():
+    p, s, c = efeitos_cap09()
+    nome = conta(PRINCIPAL)['name']
+    saldo = r2(p + REC)
+    bills, pays = [], []
+    for k, (dia, bt_id) in enumerate((('2026-08-26', '@id:bt.45'), ('2026-09-10', '@id:bt.74')), 1):
+        quando = f'{dia}T13:15:00.000Z'
+        bid = f'@id:titulo.t06.aluguel{k}'
+        bills.append({'id': bid, 'company_id': EMP, 'direction': 'receivable', 'description': 'Aluguel de caçamba', 'amount': 1400, 'currency': 'BRL',
+                      'due_date': dia, 'status': 'paid', 'paid_amount': 1400, 'paid_at': quando, 'category_id': categoria('Aluguel de caçamba'),
+                      'cost_center_id': '@id:cc.coleta', 'expected_bank_account_id': PRINCIPAL, 'expected_payment_method': 'transfer',
+                      'created_by': RAFAEL, 'created_at': quando, 'updated_at': quando})
+        pays.append({'id': f'@id:pgto.t06.aluguel{k}', 'company_id': EMP, 'bill_id': bid, 'amount': 1400, 'currency': 'BRL', 'payment_method': 'transfer',
+                     'paid_date': dia, 'bank_account_id': PRINCIPAL, 'bank_transaction_id': bt_id, 'created_by': RAFAEL, 'created_at': quando})
+    return {
+        '_doc': (f'T06 · depois do cap11 (08:5x): despesa "Gás da empilhadeira" R$ 50,00 em dinheiro no caixa #{N85} e receita "Aluguel de caçamba" '
+                 f'R$ 120,00 por Pix na {nome}; 2 contas a receber pagas "Aluguel de caçamba" (R$ 1.400,00, 26/08 e 10/09) que espelham as entradas '
+                 'de agosto e setembro (baixas das entradas @id:bt.45 e @id:bt.74: sem dinheiro novo) para o padrão da Nova Receita.'),
+        'cash_transactions': [ct('@id:ct.t06.gas', C85, 'withdrawal', DESP, 'Gás da empilhadeira', DESPESA, category_id='@id:categoria.combustivel',
+                                 cost_center_id='@id:cc.patio')],
+        'bank_transactions': [bt('@id:bt.t06.aluguel', PRINCIPAL, 'deposit', REC, 'Aluguel de caçamba', RECEITA, saldo,
+                                 category_id=categoria('Aluguel de caçamba'), cost_center_id='@id:cc.coleta', payment_method='transfer',
+                                 cash_register_id=C85)],
+        'financial_bills': bills, 'bill_payments': pays,
+        '_patch': {'bank_accounts': [{'match': {'id': PRINCIPAL}, 'set': {'balance': saldo}}, {'match': {'id': COFRE}, 'set': {'balance': r2(c - DESP)}}],
+                   'cash_register': [{'match': {'id': C85}, 'set': {'opening_balance': r2(1500 - DESP)}}]},
+    }
+
+
+def apos_cap12():
+    p, s, c = efeitos_cap09()
+    nome = conta(PRINCIPAL)['name']
+    c_dia = r2(c - DESP - 492.9)
+    p_dia = r2(p + REC + 2000.0)
+    grupo = '@id:grupo.t06.sangria'
+    return {
+        '_doc': f'T06 · depois do cap12 (17:3x): sangria de R$ 5.000,00 do caixa #{N86} (Marcos) para a {nome}, "Depósito do fim do dia".',
+        'cash_transactions': [ct('@id:ct.t06.sangria86', C86, 'transfer', -SANG, f'↑ SANGRIA · Caixa #{N86} → {nome} (Depósito do fim do dia)',
+                                 SANGRIA_T, quem=MARCOS, group_id=grupo)],
+        'bank_transactions': [
+            bt('@id:bt.t06.sangria_banco', PRINCIPAL, 'transfer', SANG, f'↓ SANGRIA · Caixa #{N86} → {nome} (Depósito do fim do dia)', SANGRIA_T,
+               r2(p_dia + SANG), group_id=grupo, cash_register_id=C86),
+            bt('@id:bt.t06.sangria_cofre', COFRE, 'transfer', -SANG, f'↓ Débito do Cofre · Sangria Caixa #{N86} → {nome} (Depósito do fim do dia)',
+               SANGRIA_T, r2(c_dia - SANG), group_id=grupo, cash_register_id=C86)],
+        '_patch': {'bank_accounts': [{'match': {'id': PRINCIPAL}, 'set': {'balance': r2(p_dia + SANG)}}, {'match': {'id': COFRE}, 'set': {'balance': r2(c_dia - SANG)}}],
+                   'cash_register': [{'match': {'id': C86}, 'set': {'opening_balance': r2(17000 + SAQ - SANG)}}]},
+    }
+
+
+def dia_10_rascunho():
+    return {
+        '_doc': f'T06 · cap13a: rascunho de compra do Valdir Pereira (1 item de cobre, R$ 86,00) no caixa #{N85}: o Fechar Caixa fica com cadeado.',
+        'order_drafts': [{'id': '@id:rascunho.t06.valdir', 'company_id': EMP, 'type': 'purchase', 'client_name': 'Valdir Pereira',
+                          'selected_id': '@id:fornecedor.valdir', 'cash_register_id': C85, 'created_by': RAFAEL,
+                          'items': [{'material_id': '@id:material.cobre_misto', 'material_name': material('@id:material.cobre_misto')['name'],
+                                     'material_unit': 'Kg', 'quantity': 10, 'impurity': 0, 'unit_price': 8.6, 'total_price': 86, 'tare_weight': 0,
+                                     'impurity_kg': 0, 'impurity_pct': 0, '_seq': 0, 'item_discount': 0}],
+                          'notes': '', 'attachments': [], 'pending_transfers': [], 'source_weighing_ticket_ids': [],
+                          'created_at': utc('16:10'), 'updated_at': utc('16:10')}],
+    }
+
+
+def cofre_negativo():
+    c0 = sum(b['amount'] for b in B['bank_transactions'] if b['bank_account_id'] == COFRE)
+    return {
+        '_doc': ('T06 · cap06 (aplicada por /__dev/seed no meio do capítulo): saída de R$ 1.200,00 lançada direto no cofre (Conta DINHEIRO), sem caixa. '
+                 'O cofre fica R$ 1.200,00 abaixo do que está dentro dos caixas abertos: disponível −1.200,00.'),
+        'bank_transactions': [bt('@id:bt.t06.cofre_negativo', COFRE, 'expense', -NEGATIVO, 'Saída direta do cofre', utc('08:43'), r2(c0 - NEGATIVO))],
+        '_patch': {'bank_accounts': [{'match': {'id': COFRE}, 'set': {'balance': r2(c0 - NEGATIVO)}}]},
+    }
+
+
+SEMENTES = {'apos-cap02': apos_cap02, 'apos-cap05': apos_cap05, 'cofre-negativo': cofre_negativo, 'apos-cap10': apos_cap10, 'apos-cap11': apos_cap11,
+            'dia-10': dia_10, 'dia-10-rascunho': dia_10_rascunho, 'apos-cap12': apos_cap12, 'apos-cap13': apos_cap13, 'apos-cap14': apos_cap14}
 
 
 def capturar():

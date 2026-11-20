@@ -1,6 +1,6 @@
 {
  "name": "t06-cap05",
- "title": "T6 · Cap. 5 · Saldo insuficiente (narração ESTIMADA 71,8 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:41:50-03:00; logado como Rafael Nogueira)",
+ "title": "T6 · Cap. 5 · Saldo insuficiente (narração ESTIMADA 83,0 s; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:41:50-03:00; logado como Rafael Nogueira)",
  "seed": "t06-cap05",
  "pace": 0.5,
  "cps": 40,
@@ -224,9 +224,32 @@
    "timeout": 4
   },
   {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Ver tutorial: como funciona o dinheiro do caixa\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere link Ver tutorial (handoff 19/11)"
+  },
+  {
    "do": "mark",
    "name": "L4",
    "at": 27.58
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Ver tutorial: como funciona o dinheiro do caixa",
+    "exact": false,
+    "within": "[role=dialog]:has-text(\"Saldo insuficiente em dinheiro\")"
+   },
+   "seconds": 0.6,
+   "at": 30.03,
+   "label": "link Ver tutorial: como funciona o dinheiro do caixa",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 34.92
   },
   {
    "do": "hover",
@@ -236,15 +259,15 @@
     "within": "[role=dialog]:has-text(\"Saldo insuficiente em dinheiro\")"
    },
    "seconds": 0.6,
-   "at": 29.27,
+   "at": 40.1,
    "label": "Usar disponível (R$ 17.000,00)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
-   "name": "L5",
-   "at": 34.08
+   "name": "L6",
+   "at": 45.29
   },
   {
    "do": "hover",
@@ -255,15 +278,15 @@
     "within": "[role=dialog]:has-text(\"Saldo insuficiente em dinheiro\")"
    },
    "seconds": 0.6,
-   "at": 34.63,
+   "at": 45.84,
    "label": "Ajustar saldo do dinheiro",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
-   "name": "L6",
-   "at": 46.51
+   "name": "L7",
+   "at": 57.71
   },
   {
    "do": "hover",
@@ -274,15 +297,15 @@
     "within": "[role=dialog]:has-text(\"Saldo insuficiente em dinheiro\")"
    },
    "seconds": 0.6,
-   "at": 55.03,
+   "at": 66.23,
    "label": "ajuste o cofre uma vez só",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
-   "name": "L7",
-   "at": 57.03
+   "name": "L8",
+   "at": 68.24
   },
   {
    "do": "click",
@@ -291,7 +314,7 @@
     "name": "Usar disponível",
     "within": "[role=dialog]:has-text(\"Saldo insuficiente em dinheiro\")"
    },
-   "at": 64.62,
+   "at": 75.82,
    "label": "Usar disponível"
   },
   {
@@ -307,7 +330,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 66.06,
+   "at": 77.26,
    "label": "Abrir Caixa (janela)"
   },
   {
@@ -323,7 +346,7 @@
     "within": "main"
    },
    "seconds": 0.6,
-   "at": 69.95,
+   "at": 81.16,
    "label": "Dinheiro em Caixa R$ 17.000,00 (#86)",
    "optional": true,
    "timeout": 4
@@ -341,7 +364,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 71.81
+   "at": 83.02
   }
  ]
 }

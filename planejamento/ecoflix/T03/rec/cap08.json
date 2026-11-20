@@ -258,7 +258,7 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const esp=[\"36,00\", \"15\", \"41,40\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog] tbody tr:has-text('Cobre misto')\"+' input, '+\"[role=dialog] tbody tr:has-text('Cobre misto')\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "js": "(async()=>{const esp=[\"36,00\", \"15\", \"41,40\"];let out='';for(let i=0;i<12;i++){const nos=[...document.querySelectorAll(\"[role=dialog] tbody tr\")].filter(n=>!\"Cobre misto\"||n.innerText.includes(\"Cobre misto\"));const v=nos.flatMap(n=>[...n.querySelectorAll('input, textarea')]).map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
    "label": "confere Cobre misto 36,00, 15% e 41,40"
   },
   {
@@ -288,7 +288,7 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const esp=[\"29,00\", \"4,50\", \"33,50\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog] tbody tr:has-text('Bronze')\"+' input, '+\"[role=dialog] tbody tr:has-text('Bronze')\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "js": "(async()=>{const esp=[\"29,00\", \"4,50\", \"33,50\"];let out='';for(let i=0;i<12;i++){const nos=[...document.querySelectorAll(\"[role=dialog] tbody tr\")].filter(n=>!\"Bronze\"||n.innerText.includes(\"Bronze\"));const v=nos.flatMap(n=>[...n.querySelectorAll('input, textarea')]).map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
    "label": "confere Bronze 29,00, R$ 4,50 e 33,50"
   },
   {
@@ -321,7 +321,7 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const esp=[\"29,00\", \"5\", \"34,00\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog] tbody tr:has-text('Bronze')\"+' input, '+\"[role=dialog] tbody tr:has-text('Bronze')\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "js": "(async()=>{const esp=[\"29,00\", \"5\", \"34,00\"];let out='';for(let i=0;i<12;i++){const nos=[...document.querySelectorAll(\"[role=dialog] tbody tr\")].filter(n=>!\"Bronze\"||n.innerText.includes(\"Bronze\"));const v=nos.flatMap(n=>[...n.querySelectorAll('input, textarea')]).map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
    "label": "confere Bronze 29,00, R$ 5 e 34,00"
   },
   {
@@ -347,7 +347,7 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const esp=[\"30,00\", \"35,00\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog] tbody tr:has-text('Bronze')\"+' input, '+\"[role=dialog] tbody tr:has-text('Bronze')\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "js": "(async()=>{const esp=[\"30,00\", \"35,00\"];let out='';for(let i=0;i<12;i++){const nos=[...document.querySelectorAll(\"[role=dialog] tbody tr\")].filter(n=>!\"Bronze\"||n.innerText.includes(\"Bronze\"));const v=nos.flatMap(n=>[...n.querySelectorAll('input, textarea')]).map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
    "label": "confere Bronze 30,00 e 35,00"
   },
   {

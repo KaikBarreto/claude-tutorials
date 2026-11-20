@@ -6,33 +6,32 @@
   ele põe na abertura, operar dois caixas (Rafael e Marcos), mover dinheiro entre banco e caixa sem virar receita, fechar
   conferindo o esperado e reabrir.
 - **Antes:** T5 "Balança e impressora: o EcoTray". **Próximo:** T7 "Comprar e vender sucata".
-- **Duração:** alvo da fonte ~14 min; a fala dá ~13 min (2.044 palavras, ver `roteiro.md`), ~14,5 min com vinhetas e
-  ações.
-- **Base:** `T06/inventario.md` (código 1.59.154). Desktop, logado como **Rafael Nogueira** (administrador MASTER); um
-  trecho do cap08 logado como **Marcos Antunes** (outro usuário).
-- **FAKE_NOW:** `2026-11-10T08:30:00-03:00` nos capítulos 0 a 9 (a manhã); `2026-11-10T17:40:00-03:00` nos capítulos 10
-  a 12 (fim do dia, com o movimento do dia por semente).
+- **Duração:** ~23 min de vídeo (3.253 palavras, ~20,9 min de fala; era 2.044 palavras em 14,5 min). Aplicada ao app **1.60.18**
+  em 20/11/2026: cobertura 1.60.10 (`cobertura_160.md`) + handoff do cofre zerado/negativo (19/11).
+- **Base:** `T06/inventario.md` (código 1.60.18). Desktop 1600x900, logado como **Rafael Nogueira** (administrador MASTER); um
+  trecho do cap09 (cap09b) logado como **Marcos Antunes**.
+- **FAKE_NOW (10/11/2026):** 08:30:00 caps 0-1; 08:30:55 cap2; 08:41:50 caps 3-5; 08:43:30 cap6; 08:45:00 caps 7-10; 08:55:00 cap11;
+  17:30:00 cap12; 17:40:00 cap13; 17:42:40 cap14; 17:44:00 cap15.
 
-## Capítulos (os da fonte, na ordem)
-| # | Vinheta (área / título) | O que a tela mostra | Estado de partida |
+## Capítulos (numeração nova: 6, 11 e 12 são novos; os antigos 6 a 12 viraram 7 a 10, 13, 14 e 15)
+| # | Vinheta / título | O que a tela mostra | Estado de partida |
 |---|---|---|---|
-| 0 | (abertura) | Dashboard → "Financeiro" › "Caixa". Problema: no ferro-velho quase tudo se paga em dinheiro vivo. Cartão "Antes: Balança e impressora: o EcoTray". | `inicio` |
-| 1 | CAIXA / O caixa fechado | Aba "Início" do gestor: "Meu Caixa", "Abrir Caixa", cartão amarelo "Reabrir #84"; "Painel Gerencial" sem caixas. Atalho de compra → "Abra o caixa antes de realizar compras" e volta. | `inicio` |
-| 2 | ABERTURA / Abrir o caixa | "Abrir Caixa": campo vazio, dica "R$ 1.250,00 foi o valor restante...", conta a gaveta e digita R$ 1.500,00; caixa #85 aberto. | `inicio` |
-| 3 | ABERTURA / Abrir com zero | Linha "Abertura do Caixa #85" no histórico; ilustração do dia só de Pix; "Início" › "Abrir Caixa" para o Marcos: aviso amarelo do zero. | `apos-cap02` |
-| 4 | COFRE / O cofre da empresa | No mesmo diálogo, "Disponível no cofre agora: R$ 17.000,00 (de R$ 18.500,00 total...)"; ilustração cofre × caixa. | `apos-cap02` + diálogo do Marcos aberto pelo `setup` |
-| 5 | COFRE / Saldo insuficiente | Tenta R$ 20.000,00 para o Marcos → "⚠️ Saldo insuficiente em dinheiro"; as duas saídas; "Usar disponível (R$ 17.000,00)"; caixa #86 do Marcos aberto. | idem |
-| 6 | CAIXA / Os dois cartões | "Dinheiro em Caixa" (aberto em, "Dinheiro total da empresa:" → "O cofre da empresa" com a barra), "Saldo Bancário" e os botões; olho → "R$ ••••••". | `apos-cap05` |
-| 7 | MULTI-CAIXA / Cada um com o seu caixa | Abas "Início", "#85 \| Caixa - Rafael Nogueira (você)", "#86 \| Caixa - Marcos Antunes"; "?" → "Como funcionam os Multi-Caixas?"; "Início" › "Painel Gerencial". | `apos-cap05` |
-| 8 | MULTI-CAIXA / O caixa dos outros | Aba do Marcos; quem pode; o Marcos logado no computador da balança vê só o caixa dele. | `apos-cap05` |
-| 9 | MOVIMENTAÇÕES / Saque e sangria | Ilustração suprimento × sangria; "Saque / Sangria": saque de R$ 3.000,00 da conta principal para o caixa do Marcos com tarifa de R$ 6,50; a opção "Sangria" (sem confirmar); "Nova Movimentação Bancária": saída "Tarifa mensal do pacote de serviços" R$ 39,90. | `apos-cap05` |
-| 10 | FECHAMENTO / Fechar o caixa | Fim do dia: o caixa #85 com o movimento; trava de pedido não finalizado (falada); "Fechar Caixa #85": esperado R$ 1.007,10, contado R$ 1.007,10; "Confirmar Fechamento"; "Imprimir Relatório" → "Não, obrigado". | `apos-cap09` + `dia-10` |
-| 11 | FECHAMENTO / Reabrir um caixa | Cartão amarelo "Reabrir #85"; "reabrir outro caixa" (lista de todos); "Reabrir #85" → "Reabrir caixa #85?" → "Reabrir Caixa". | `apos-cap10` |
-| 12 | RESUMO / Recapitulando | Montagem do que foi feito; cartão "Próximo: Comprar e vender sucata". | (montagem) |
-
-Transições faladas: 1→2 "Então, vamos abrir"; 2→3 o histórico mostra a linha de abertura; 3→4 "quem diz quanto dá é o
-cofre"; 4→5 "e se tentar mais do que tem?"; 5→6 os dois cartões com os dois caixas abertos; 6→7 as abas; 7→8 clicar na
-aba do Marcos; 8→9 "os três mil que faltam vêm do banco"; 9→10 "fim do dia"; 10→11 "fechei e lembrei".
+| 0 | (abertura) | Dashboard → "Financeiro" › "Caixa". Cartão "Antes: Balança e impressora: o EcoTray". | `inicio` |
+| 1 | CAIXA / O caixa fechado | "Meu Caixa", cartão amarelo "Reabrir #84", "Painel Gerencial" vazio, Shift+C → "Abra o caixa antes de realizar compras". | `inicio` |
+| 2 | ABERTURA / Abrir o caixa | Campo vazio e a dica do #84; digita R$ 1.500,00; **novo:** "Data e Hora de Abertura" (retroativa) e a primeira abertura da empresa; #85 aberto. | `inicio` |
+| 3 | ABERTURA / Abrir com zero | Linha "Abertura do Caixa #85"; **novo:** três pontinhos › "Editar saldo de abertura" (abre e cancela) e busca/filtros/abas do histórico; dia só de Pix; aviso do zero no diálogo do Marcos. | `apos-cap02` |
+| 4 | COFRE / O cofre da empresa | "Disponível no cofre agora: R$ 17.000,00 (de R$ 18.500,00 total...)"; ilustração cofre × caixa. | `apos-cap02` + diálogo do Marcos |
+| 5 | COFRE / Saldo insuficiente | R$ 20.000,00 → aviso do cofre; **novo:** link "Ver tutorial: como funciona o dinheiro do caixa"; "Usar disponível (R$ 17.000,00)"; #86 aberto. | idem |
+| 6 | COFRE / Cofre zerado ou negativo (**novo**, handoff 19/11) | Com #85 e #86 abertos o disponível é R$ 0,00: tenta R$ 500,00 para a Juliana → aviso "há apenas R$ 0,00 disponíveis"; botão "Abrir zerado (R$ 0,00)"; (fora do vídeo, `cofre-negativo`) → "o cofre está negativo em R$ 1.200,00 e não há dinheiro disponível"; "Abrir zerado" preenche 0,00; "Abrir Caixa" abre o #87 zerado, sem barrar. | `apos-cap05` + `cofre-negativo` no meio |
+| 7 | CAIXA / Os dois cartões | (antigo 6) "Dinheiro em Caixa", cofre e barra, "Saldo Bancário", olho. | `apos-cap05` |
+| 8 | MULTI-CAIXA / Cada um com o seu caixa | (antigo 7) abas, "?", painel; **novo:** calendário do painel (09/11), "Transações do Dia" e gráficos, "Resumo do Caixa Atual", botão "Saldo de Cliente/Fornecedor". | `apos-cap05` |
+| 9 | MULTI-CAIXA / O caixa dos outros | (antigo 8) aba do Marcos; **novo:** permissões abrir/fechar (cadeado); cap09b = Marcos logado (voz linhas 5-6). | `apos-cap05` |
+| 10 | MOVIMENTAÇÕES / Saque e sangria | (antigo 9) saque de R$ 3.000,00 + tarifa; **novo:** destino "Cofre (Conta DINHEIRO)" e "Data/hora do lançamento" no lugar da sangria sem preencher; tarifa mensal R$ 39,90. | `apos-cap05` |
+| 11 | MOVIMENTAÇÕES / Despesa e receita do dia (**novo**) | "Nova Despesa" com o preenchimento inteligente (Gás da empilhadeira, R$ 50,00, dinheiro) e "Nova Receita" (Aluguel de caçamba, R$ 120,00, Pix na Conta Principal). | `apos-cap10` |
+| 12 | MOVIMENTAÇÕES / Sangria no fim do dia (**novo**) | 17:30: "Saque / Sangria" › "Sangria" do caixa do Marcos, R$ 5.000,00 para a Conta Principal. | `apos-cap11` + `dia-10` |
+| 13 | FECHAMENTO / Fechar o caixa | (antigo 10) esperado **R$ 957,10**; **novo:** trava (cap13a, rascunho do Valdir), cartões Saídas/Entradas, Projeção de Lucro, diferença de exemplo (950,00 → −R$ 7,10) e contagem certa, data/hora retroativa do fechamento. | `apos-cap12` |
+| 14 | FECHAMENTO / Reabrir um caixa | (antigo 11) cartão amarelo "Reabrir #85" (R$ 957,10), "reabrir outro caixa", "Reabrir caixa #85?"; **novo:** corrigir pedido de caixa fechado não pede reabrir. | `apos-cap13` |
+| 15 | RESUMO / Recapitulando | Montagem; cartão "Próximo: Comprar e vender sucata". | `apos-cap14` |
 
 ## Cuidados (⚠️ da fonte) e onde entram
 | Cuidado | Onde | Como |
@@ -61,7 +60,10 @@ Além do `MUNDO_FICTICIO.md` (Recicla Vale Metais; Rafael, Juliana e Marcos; cof
   09/11 07:02 → 17:36, fechou com R$ 640,00 (as três compras da T16); os anteriores do histórico. A fala não diz número de caixa: se a sequência
   do mundo der outros números, só a coluna Tela muda (#84 → último do Rafael, #85 e #86 → os dois de hoje).
 - **Categoria:** "Tarifas" (a de sistema), a das tarifas do histórico.
-- **Criado ao vivo (manhã):** caixa #85 do Rafael aberto com R$ 1.500,00 (08:31, linha "Abertura do Caixa #85"); caixa
+- **Criado ao vivo (manhã, 1.60.18):** (cap06, descartável) o caixa #87 da Juliana aberto zerado; (cap11, segue na cadeia) despesa "Gás da empilhadeira"
+  R$ 50,00 em dinheiro (Combustível · Pátio) e receita "Aluguel de caçamba" R$ 120,00 por Pix na Conta Principal; o #85 passa a R$ 1.450,00.
+  Padrões do preenchimento: "Gás da empilhadeira" (4 usos, última em setembro de 2026, do mundo base) e "Aluguel de caçamba" (2 usos, setembro,
+  das 2 contas a receber pagas que a semente `apos-cap11` acrescenta). Antes disso: caixa #85 do Rafael aberto com R$ 1.500,00 (08:31, linha "Abertura do Caixa #85"); caixa
   #86 do Marcos aberto pelo Rafael com R$ 17.000,00 (08:4x, "Usar disponível"); saque de R$ 3.000,00 da conta principal
   para o #86 com tarifa de R$ 6,50 ("Tarifa de Saque para o Caixa #86"), o #86 fica com R$ 20.000,00 e o cofre com
   R$ 21.500,00 no total; saída bancária "Tarifa mensal do pacote de serviços" R$ 39,90 da Conta Secundária, categoria
@@ -69,9 +71,10 @@ Além do `MUNDO_FICTICIO.md` (Recicla Vale Metais; Rafael, Juliana e Marcos; cof
 - **Semente `dia-10` (entre o cap09 e o cap10), no caixa #85:** venda para Aços Quiririm Ltda, 1.600 kg de ferro pesado
   a R$ 1,25 = **R$ 2.000,00** por Pix/transferência na conta principal (10:15; junção: o pátio tem 2.180 kg às 08:30); compra de Aparecida Ramos, 42 kg de
   alumínio latinha a R$ 6,20 = **R$ 260,40** em dinheiro (11:20); compra de Valdir Pereira, 310 kg de ferro misto a
-  R$ 0,75 = **R$ 232,50** em dinheiro (15:05). Esperado no fechamento: 1.500,00 − 492,90 = **R$ 1.007,10**. Nenhum
+  R$ 0,75 = **R$ 232,50** em dinheiro (15:05). Esperado no fechamento: 1.500,00 − 50,00 − 492,90 = **R$ 957,10**. Nenhum
   pedido não finalizado no #85. O #86 do Marcos segue aberto com o movimento que o T7 quiser (não aparece aqui).
-- **Criado ao vivo (fim do dia):** fechamento do #85 às 17:4x com R$ 1.007,10 (sem diferença) e a reabertura logo depois.
+- **Criado ao vivo (fim do dia):** (cap12) sangria de R$ 5.000,00 do #86 (20.000,00 → 15.000,00) para a Conta Principal, "Depósito do fim do dia" (17:31);
+  fechamento do #85 às 17:4x com R$ 957,10 (sem diferença) e a reabertura logo depois. Efeito na T9: #85 fecha com 957,10, #86 com 15.000,00.
 - **Estado final:** #85 (Rafael) reaberto e #86 (Marcos) aberto, ambos em 10/11. Se o T7 começar na manhã do dia 10, ele
   parte de `apos-cap09` (os dois caixas abertos), não do fim desta aula.
 
@@ -79,10 +82,12 @@ Além do `MUNDO_FICTICIO.md` (Recicla Vale Metais; Rafael, Juliana e Marcos; cof
 - **Rotas:** `/dashboard`, `/caixa` (abas "Início", #85, #86), `/compra` (só o redirecionamento do cap01),
   `/movimentacoes-bancarias` (conta DINHEIRO, cap06). Janela de desktop; sem celular; sem página pública.
 - **Outro usuário:** cap08, Marcos Antunes logado num navegador próprio ("o computador da balança"), só `/caixa`.
-- **Cortes de relógio:** capítulos 0 a 9 às 08:30; 10 a 12 às 17:40 (semente `dia-10`).
-- **Sementes entre capítulos:** `inicio` (caps 0 a 2), `apos-cap02` (caps 3 a 5; o `setup` dos caps 4 e 5 abre fora do
-  vídeo "Início" › "Abrir Caixa" e escolhe "Marcos Antunes"), `apos-cap05` (caps 6 a 9), `apos-cap09` + `dia-10`
-  (cap10), `apos-cap10` (cap11).
+- **Cortes de relógio:** ver FAKE_NOW acima (a manhã anda; fim do dia às 17:30 e 17:40).
+- **Sementes (`rec/mundo/seeds-extra/t06/`, `rec/t06/t06_sementes.py`):** `inicio` (caps 0 a 2), `apos-cap02` (caps 3 a 5; o `setup`
+  dos caps 4 e 5 abre fora do vídeo "Início" › "Abrir Caixa" e escolhe "Marcos Antunes"), `apos-cap05` (caps 6 a 10; no cap06 a
+  `cofre-negativo` entra no meio, por POST ao `/__dev/seed` feito pelo robô), `apos-cap10` (saque e tarifa; cap11), `apos-cap11`
+  (despesa, receita e as 2 contas a receber; cap12 em diante), `dia-10` (venda e compras; cap12 em diante), `apos-cap12` (sangria;
+  cap13), `dia-10-rascunho` (só o cap13a), `apos-cap13` (fechado; cap14), `apos-cap14` (reaberto; cap15).
 - **Backend falso, o que precisa existir:**
   1. RPC `get_dinheiro_balance(p_company_id)` com `enabled`, `account_id`, `saldo_total`, `reservado_total` (soma dos
      saldos correntes dos caixas abertos), `disponivel` e `caixas_abertos[]` (`register_id`, `operator_id`,
@@ -92,11 +97,12 @@ Além do `MUNDO_FICTICIO.md` (Recicla Vale Metais; Rafael, Juliana e Marcos; cof
   3. `cash_transactions`: `opening`, `transfer`, `closing`, `adjustment`; delete com filtros `like`/`ilike` na reabertura.
   4. RPCs `create_manual_bank_transaction` (saque, tarifa, espelho do cofre, saída bancária) e
      `adjust_cash_register_balance`.
-  5. `order_drafts` vazio para o #85 (botão "Fechar Caixa" livre); canal de tempo real `multi-cash-<empresa>` tolerado.
+  5. `order_drafts` vazio para o #85 (botão "Fechar Caixa" livre); canal de tempo real `company-updates:<empresa>:<uuid>` tolerado (1.60).
+  7. RPCs `get_cash_register_other_order_ids` e `get_financial_description_suggestions` (handlers do mundo base).
   6. A tela `/compra` precisa carregar o bastante para disparar o aviso e voltar (sem caixa aberto do Rafael).
 - **Ilustrações** (`docs/09-aula-ilustrada.md`, estilo da marca, sem tela inventada): o dinheiro do dia no pátio
   (cap00); dia só de Pix (cap03); cofre × caixa (cap04); o limite do cofre e as duas saídas (cap05); suprimento ×
-  sangria e a tarifa (cap09); esperado × contado e a volta ao cofre (cap10).
+  sangria e a tarifa (cap10); esperado × contado e a volta ao cofre (cap13).
 
 ## Pronúncias
 Da tabela do PERFIL: EcoSistema, EcoTray, DRE ("Registrar diferença no DRE"). Nenhuma nova. Números por extenso;

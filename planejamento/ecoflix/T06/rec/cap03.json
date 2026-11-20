@@ -1,6 +1,6 @@
 {
  "name": "t06-cap03",
- "title": "T6 · Cap. 3 · Abrir com zero (narração ESTIMADA 70,2 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:41:50-03:00; logado como Rafael Nogueira)",
+ "title": "T6 · Cap. 3 · Abrir com zero (narração ESTIMADA 103,4 s; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:41:50-03:00; logado como Rafael Nogueira)",
  "seed": "t06-cap03",
  "pace": 0.5,
  "cps": 40,
@@ -16,7 +16,8 @@
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
-  "initial-preferences-set": "true"
+  "initial-preferences-set": "true",
+  "cato_adoption_nudge_38814e47-876a-5977-a5f7-53af364c17bb_34c36c63-0890-5e89-8963-7c77b7996908": "{\"count\":99,\"lastShownAt\":0}"
  },
  "seedExtra": [
   "t06/apos-cap02"
@@ -118,20 +119,130 @@
    "at": 13.14
   },
   {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('Abertura do Caixa #85') button[aria-label='Abrir ações da movimentação']"
+   },
+   "at": 20.35,
+   "label": "três pontinhos da linha Abertura"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Editar saldo de abertura"
+   },
+   "at": 22.47,
+   "label": "Editar saldo de abertura"
+  },
+  {
+   "do": "waitFor",
+   "text": "Editar Saldo de Abertura",
+   "timeout": 10
+  },
+  {
    "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const c=rolagem(null);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;if(y0<3)return 'ok';const dy=-y0;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
-   "at": 15.04,
-   "label": "volta ao topo (sob a ilustração)"
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Saldo de Abertura Atual\", \"R$ 1.500,00\", \"Novo Saldo de Abertura\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere janela Editar Saldo de Abertura (R$ 1.500,00)"
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 25.33
+   "at": 24.5
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "alterar o saldo de abertura ajusta o Dinheiro em Caixa",
+    "exact": false,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "at": 24.9,
+   "label": "ZOOM Atenção: alterar o saldo de abertura (L3)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 35.05,
+   "label": "Cancelar"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 6
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 31.91
+   "at": 35.78
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main input[placeholder='Buscar transação...']"
+   },
+   "seconds": 0.6,
+   "at": 37.93,
+   "label": "Buscar transação...",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Filtros",
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 38.68,
+   "label": "Filtros",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Pix/Transferência",
+    "within": "main"
+   },
+   "seconds": 0.4,
+   "at": 39.44,
+   "label": "abas Todas, Dinheiro e Pix/Transferência",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 46.3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const c=rolagem(null);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;if(y0<3)return 'ok';const dy=-y0;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
+   "at": 48.2,
+   "label": "volta ao topo (sob a ilustração)"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 58.5
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 65.08
   },
   {
    "do": "click",
@@ -141,7 +252,7 @@
     "exact": true,
     "within": "main"
    },
-   "at": 35.77,
+   "at": 68.94,
    "label": "aba Início"
   },
   {
@@ -152,7 +263,7 @@
     "exact": true,
     "within": "main"
    },
-   "at": 37.75,
+   "at": 70.92,
    "label": "Abrir Caixa (para outro usuário)"
   },
   {
@@ -166,7 +277,7 @@
    "target": {
     "selector": "[role=dialog] button[role=combobox]"
    },
-   "at": 39.83,
+   "at": 73.0,
    "label": "Abrir para o usuário (vem a Juliana)"
   },
   {
@@ -175,13 +286,13 @@
     "role": "option",
     "name": "Marcos Antunes"
    },
-   "at": 43.01,
+   "at": 76.18,
    "label": "escolhe Marcos Antunes"
   },
   {
    "do": "mark",
-   "name": "L5",
-   "at": 43.57
+   "name": "L8",
+   "at": 76.74
   },
   {
    "do": "hover",
@@ -191,15 +302,15 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.6,
-   "at": 44.73,
-   "label": "ZOOM aviso amarelo do zero (L5)",
+   "at": 77.89,
+   "label": "ZOOM aviso amarelo do zero (L8)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
-   "name": "L6",
-   "at": 58.57
+   "name": "L9",
+   "at": 91.74
   },
   {
    "do": "hover",
@@ -207,7 +318,7 @@
     "selector": "#openingBalance"
    },
    "seconds": 0.6,
-   "at": 63.98,
+   "at": 97.15,
    "label": "campo Saldo de Abertura vazio",
    "optional": true,
    "timeout": 4
@@ -220,7 +331,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 70.24
+   "at": 103.41
   }
  ]
 }

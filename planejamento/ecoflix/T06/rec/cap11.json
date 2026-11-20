@@ -1,6 +1,6 @@
 {
  "name": "t06-cap11",
- "title": "T6 · Cap. 11 · Reabrir um caixa (narração ESTIMADA 55,4 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T17:42:40-03:00; logado como Rafael Nogueira)",
+ "title": "T6 · Cap. 11 · Despesa e receita do dia (narração ESTIMADA 114,6 s; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:55:00-03:00; logado como Rafael Nogueira)",
  "seed": "t06-cap11",
  "pace": 0.5,
  "cps": 40,
@@ -21,8 +21,6 @@
  "seedExtra": [
   "t06/apos-cap02",
   "t06/apos-cap05",
-  "t06/apos-cap09",
-  "t06/dia-10",
   "t06/apos-cap10"
  ],
  "prewarm": [
@@ -85,8 +83,21 @@
   },
   {
    "do": "waitFor",
-   "text": "Reabrir #85",
+   "text": "#86 | Caixa - Marcos Antunes",
    "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "#85 | Caixa - Rafael Nogueira",
+    "within": "main"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Aberto em: 10/11/2026 08:31",
+   "timeout": 10
   },
   {
    "do": "eval",
@@ -103,165 +114,381 @@
    "do": "hover",
    "target": {
     "role": "button",
-    "name": "Reabrir #85",
-    "exact": true,
+    "name": "Nova Despesa",
     "within": "main"
    },
    "seconds": 0.6,
-   "at": 4.84,
-   "label": "Reabrir #85",
+   "at": 11.29,
+   "label": "NOVA DESPESA e NOVA RECEITA (ZOOM L1)",
    "optional": true,
    "timeout": 4
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"#85\", \"R$ 1.007,10\", \"reabrir outro caixa\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere cartão amarelo do #85 com R$ 1.007,10"
-  },
-  {
-   "do": "mark",
-   "name": "L2",
-   "at": 6.08
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main div[class*=\"border-amber-500/40\"]"
+    "role": "button",
+    "name": "Nova Receita",
+    "within": "main"
    },
-   "seconds": 0.6,
-   "at": 7.01,
-   "label": "ZOOM cartão amarelo #85 (L2)",
+   "seconds": 0.3,
+   "at": 11.74,
+   "label": "Nova Receita",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
-   "name": "L3",
-   "at": 14.78
+   "name": "L2",
+   "at": 12.37
   },
   {
    "do": "click",
    "target": {
     "role": "button",
-    "name": "reabrir outro caixa",
-    "exact": true,
+    "name": "Nova Despesa",
     "within": "main"
    },
-   "at": 15.69,
-   "label": "reabrir outro caixa"
+   "at": 12.67,
+   "label": "Nova Despesa"
   },
   {
    "do": "waitFor",
-   "text": "Escolha qual caixa fechado deseja reabrir",
+   "text": "Informe o valor e motivo da despesa",
+   "exact": false,
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 20.62
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #description"
+   },
+   "at": 21.83,
+   "label": "Descrição"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] #description"
+   },
+   "text": "Gás da",
+   "at": 23.62,
+   "label": "digita Gás da (o padrão abre na 3a letra)",
+   "noClick": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Padrão encontrado: Gás da empilhadeira",
+   "exact": false,
    "timeout": 10
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"#85\", \"R$ 1.007,10\", \"#84\", \"R$ 1.250,00\", \"#83\", \"Marcos Antunes\", \"R$ 640,00\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere lista: #85, #84 e #83 do Marcos"
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Padrão encontrado: Gás da empilhadeira\", \"Usado 4 vezes\", \"setembro de 2026\", \"Preencher\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere padrão do gás (4 usos, setembro)"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "[role=dialog] button:has-text('#84')"
+    "selector": "[role=dialog] :text(\"Padrão encontrado: Gás da empilhadeira\")"
    },
    "seconds": 0.6,
-   "at": 21.18,
-   "label": "lista dos últimos caixas fechados (#84)",
+   "at": 28.99,
+   "label": "ZOOM lista Padrão encontrado e Preencher (L3)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 24.16
+   "at": 35.16
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Preencher",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 36.15,
+   "label": "Preencher"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Gás da empilhadeira\", \"Combustível\", \"Pátio\", \"Dinheiro (Caixa)\", \"Campos preenchidos\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere campos preenchidos (gás)"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "[role=dialog] button:has-text('#83')"
+    "selector": "[role=dialog] :text(\"Desfazer preenchimento\")"
    },
    "seconds": 0.6,
-   "at": 26.54,
-   "label": "o #83 do Marcos (R$ 640,00)",
+   "at": 43.0,
+   "label": "Desfazer preenchimento",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #amount"
+   },
+   "at": 46.32,
+   "label": "Valor"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] #amount"
+   },
+   "text": "50,00",
+   "at": 47.55,
+   "label": "ZOOM digita R$ 50,00 (L4)",
+   "noClick": true
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 35.07
+   "at": 48.34
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "combobox",
+    "hasText": "Dinheiro (Caixa)",
+    "within": "[role=dialog]"
+   },
+   "at": 48.87,
+   "label": "Pagou com"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "[role=dialog] button:has-text('#85')"
+    "role": "option",
+    "name": "Conta Principal"
    },
-   "seconds": 0.6,
-   "at": 35.62,
-   "label": "o #85 já marcado",
+   "seconds": 0.4,
+   "at": 53.45,
+   "label": "grupos Dinheiro e Contas",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 57.19,
+   "label": "fecha a lista sem trocar"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 60.53
   },
   {
    "do": "click",
    "target": {
     "role": "button",
-    "name": "Reabrir #85",
-    "exact": true,
+    "name": "Mais detalhes",
     "within": "[role=dialog]"
    },
-   "at": 37.72,
-   "label": "Reabrir #85 (lista)"
-  },
-  {
-   "do": "waitFor",
-   "text": "Reabrir caixa #85?",
-   "timeout": 10
+   "at": 61.06,
+   "label": "Mais detalhes"
   },
   {
    "do": "hover",
    "target": {
-    "text": "O caixa será reaberto exatamente como estava",
-    "exact": false,
-    "within": "[role=alertdialog]"
+    "selector": "[role=dialog] :text(\"Observação (opcional)\")"
    },
    "seconds": 0.6,
-   "at": 39.57,
-   "label": "Reabrir caixa #85? (como estava)",
+   "at": 63.74,
+   "label": "Observação (opcional)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text(\"Parcelar ou repetir\")"
+   },
+   "seconds": 0.6,
+   "at": 66.4,
+   "label": "Parcelar ou repetir (sem abrir)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
-   "name": "L6",
-   "at": 45.82
+   "name": "L7",
+   "at": 71.52
   },
   {
    "do": "click",
    "target": {
     "role": "button",
-    "name": "Reabrir Caixa",
-    "exact": true
+    "name": "Confirmar Despesa",
+    "exact": true,
+    "within": "[role=dialog]"
    },
-   "at": 46.12,
-   "label": "Reabrir Caixa"
+   "at": 71.82,
+   "label": "Confirmar Despesa"
   },
   {
    "do": "waitFor",
-   "text": "Caixa reaberto com sucesso!",
+   "text": "Retirada realizada com sucesso!",
    "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"R$ 1.450,00\", \"Gás da empilhadeira\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Dinheiro em Caixa R$ 1.450,00 e a despesa no histórico"
   },
   {
    "do": "hover",
    "target": {
-    "text": "R$ 1.007,10",
+    "text": "R$ 1.450,00",
     "exact": true,
     "within": "main"
    },
    "seconds": 0.6,
-   "at": 49.1,
-   "label": "Dinheiro em Caixa R$ 1.007,10 (#85 reaberto)",
+   "at": 75.71,
+   "label": "ZOOM Dinheiro em Caixa R$ 1.450,00 (L7)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 82.73
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova Receita",
+    "within": "main"
+   },
+   "at": 83.18,
+   "label": "Nova Receita"
+  },
+  {
+   "do": "waitFor",
+   "text": "Informe o valor e motivo da receita",
+   "exact": false,
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #description"
+   },
+   "at": 88.8,
+   "label": "Descrição"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] #description"
+   },
+   "text": "Aluguel de",
+   "at": 90.71,
+   "label": "digita Aluguel de",
+   "noClick": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Padrão encontrado: Aluguel de caçamba",
+   "exact": false,
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Preencher",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 91.7,
+   "label": "Preencher"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Aluguel de caçamba\", \"Conta Principal\", \"Campos preenchidos\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere campos preenchidos (aluguel de caçamba)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #amount"
+   },
+   "at": 92.13,
+   "label": "Valor"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] #amount"
+   },
+   "text": "120,00",
+   "at": 92.68,
+   "label": "ZOOM digita R$ 120,00 (L8)",
+   "noClick": true
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 96.74
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Confirmar Receita",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 97.04,
+   "label": "Confirmar Receita"
+  },
+  {
+   "do": "waitFor",
+   "text": "Depósito realizado com sucesso!",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L10",
+   "at": 101.72
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Dinheiro em Caixa",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 103.03,
+   "label": "Dinheiro em Caixa R$ 1.450,00 (segue)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Saldo Bancário",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 110.55,
+   "label": "Saldo Bancário (subiu R$ 120,00)",
    "optional": true,
    "timeout": 4
   },
@@ -273,7 +500,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 55.44
+   "at": 114.61
   }
  ]
 }

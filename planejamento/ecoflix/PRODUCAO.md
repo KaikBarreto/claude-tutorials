@@ -934,3 +934,9 @@ Decisões:
   Usuário; antigos 06-09 viraram 08-11, 10 virou 13). Fala 1.483 → 2.313 palavras. 14/14 no rápido; completos 04, 05, 07
   (cap04 com 1,0 s em "liga Pedidos": rever com a voz real). Ilustrações pendentes do v3: ilu06_proprios, ilu07_mapa_grupos,
   ilu12_relatorio_pdf (comprovante; o robô devolve o HTML do relatório). `cenas.html` e `tempos/` antigos ficaram velhos.
+- **T08 refeita na 1.60.18** (20/11 03:26): 1600x900, palco escurecido, 8 ilustrações v3 em 1920x1080 (`--larg 1422 --dsf
+  1.35`, sem piscadas), cupom real na tela no cap09 e no cap11 (`cenas_v3/comprovante.html`), voz nova do cap04/cap07
+  (1.644 créditos). Aula 13:59,9, -16,3 LUFS, -3,8 dBTP. Prévia de 720p enviada. **Lições**: (1) ensaio fora da fila junto
+  com a gravação final deu atrasos de até 16 s: tudo em série; (2) um `confere` com texto que o app não mostra mais espera
+  ~6,7 s e empurra o resto do capítulo: na troca de versão, conferir os textos dos `confere` antes de pôr respiro na voz;
+  (3) `--dsf 1.3` em 16:9 dá largura ímpar e o x264 recusa (o `render_cenas` agora sai na hora).
