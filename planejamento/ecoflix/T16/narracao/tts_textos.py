@@ -9,7 +9,7 @@ A Fundição Bandeira do Vale compra cobre dela toda semana. E a carga só sai d
 As notas fazem parte do módulo Notas Fiscais. Se ele estiver no seu plano, tudo fica em Fiscal e Ambiental.
 Se você ainda não viu o tutorial Relatório Financeiro e dê-érri-ê, dá uma olhada antes. [pause] É a parte mais delicada do sistema, então a gente vai devagar e na ordem.""",
 1: """Tudo começa no menu, em Fiscal e Ambiental.
-Aqui ficam as telas fiscais: as notas de mercadoria, as de serviço, o transporte, o ambiental, o estoque fiscal e os relatórios fiscais. Hoje a gente fica nas notas de mercadoria.
+Aqui ficam as telas fiscais: as notas de mercadoria, as de serviço, o transporte, o ambiental e o relatório e estoque fiscal. Hoje a gente fica nas notas de mercadoria.
 Clico em Notas Fiscais, /ˈẽniˈɛfiˈe/.
 Em cima ficam as sub-abas: Entrada, Saída, Notas Recebidas e Inutilizadas.
 Saída é a nota da venda, quando a mercadoria sai do pátio pro cliente. Entrada é a da compra, quando ela chega do fornecedor.
@@ -34,7 +34,7 @@ E o botão Próximo leva pra empresa.""",
 4: """Com o certificado validado, os dados da empresa. É o passo dois.
 O Importar dados traz o que já está no cadastro da empresa: o nome, o CNPJ, o telefone e o e-mail.
 Confiro a razão social completa e digito a inscrição estadual. O CNPJ daqui é o que vai como emitente em toda nota.
-O endereço fiscal vem do cadastro da empresa, o mesmo do comprovante. Pra mudar, é em Configurações, Empresa.
+O endereço fiscal vem do cadastro da empresa, e pra mudar é em Configurações, Empresa. Se este CNPJ tiver um endereço diferente pra nota, é marcar Este CNPJ tem endereço próprio e preencher aqui.
 Mais embaixo dá pra enviar o logo que sai impresso na nota. E o responsável técnico só se preenche se o contador pedir, porque alguns estados exigem.
 Passo três, os impostos. Primeiro, o regime tributário. A Recicla Vale é Lucro Real, e quem define isso é o contador.
 Olha: escolhido o regime, a tela já ajusta os campos de PIS e COFINS.
@@ -74,7 +74,7 @@ O selo fica âmbar perto do limite e vermelho quando chega nele. Mesmo assim, ai
 Só depois dos cinco a emissão trava, com o aviso Suas notas do mês acabaram. Aí é subir de nível, e vale na hora.""",
 9: """Agora sim, a primeira nota. A Serra Fina Alumínio Reciclagem comprou alumínio perfil e pediu a nota. Clico em Nova Nota.
 É uma venda, então /ˈẽniˈɛfiˈe/ de Saída. A nota abre em tela cheia, com as abas em cima. As duas primeiras são as obrigatórias: Dados e Itens.
-No alto ficam o número previsto e o ambiente. Produção é a nota de verdade. Homologação é só pra teste, e não vale como nota fiscal.
+No alto ficam o número previsto e o ambiente. Toda nota nova abre em Produção, que é a nota de verdade.
 Em Quem emite aparece a empresa, e quem tem mais de um CNPJ escolhe aqui qual deles emite. Em Para quem, escolho o cliente: a Serra Fina.
 Em O que é vai a natureza da operação: venda de mercadorias. O cê-éfe-ó-pê vem sozinho, pela natureza e pelo estado do cliente.
 E a numeração: série um, número mil duzentos e quarenta e nove, como a gente configurou. A data em branco é agora, e dá pra informar outra quando a carga saiu mais cedo.
@@ -107,7 +107,7 @@ Em Faturamento vai como a venda foi combinada. A Fundição paga a prazo, em dua
 Informo o vencimento de cada parcela. A soma tem que bater com o total da nota, senão ela não emite. E quem usa sempre o mesmo prazo escolhe uma condição de pagamento, e as parcelas já vêm preenchidas.
 Em Opções vai o número do pedido de compra do cliente, quando a indústria exige esse número na nota.
 Voltando em Itens, lá embaixo ficam as Informações complementares: o texto livre desta nota. Dá pra somar ao texto padrão da configuração ou trocar ele só aqui.
-Por último, a Pré-visualização. É a nota como ela vai sair, ainda sem valor fiscal. Confiro o cliente, as parcelas, o imposto, o transporte e os itens.
+Por último, a Pré-visualização. Aqui embaixo, o Resumo para conferência desenha a nota antes de emitir, ainda sem valor fiscal. Confiro o cliente, as parcelas, o imposto, o transporte e os itens.
 Tudo certo. Emitir Nota. Ela entra como Aguardando sefás e, em instantes, a mil duzentos e cinquenta está autorizada.""",
 12: """E as compras do dia, de quem não emite nota? A Dona Cida e o Valdir vendem sucata como pessoa física, e a nota de entrada dessas compras sai pela Recicla Vale.
 Em vez de uma nota por compra, dá pra juntar o dia todo. Na barra Importar de, clico em Emissão em Massa, Caixa.
@@ -137,24 +137,24 @@ No menu aparecem dois caminhos pra corrigir. Editar e reenviar usa o mesmo núme
 E se essa venda não for mais acontecer? Aí o número precisa ser fechado, em Inutilizar numeração, que a gente vê mais adiante.
 Vou de mesmo número. A nota abre preenchida, e a tela confirma: vai ser reemitida como série um, número mil duzentos e cinquenta e dois, com o número travado.
 Nos itens, o ene-cê-ême do alumínio estava com o final errado. Corrijo aqui. E, pra não repetir o erro, vale conferir também o ene-cê-ême no cadastro do material.
-Emitir Nota. Ela volta pra fila da sefás e, em instantes, está autorizada.
+Clico em Reemitir /ˈẽniˈɛfiˈe/. Ela volta pra fila da sefás e, em instantes, está autorizada.
 As recusas mais comuns são quatro. CNPJ não habilitado: o contador precisa credenciar a empresa na sefás. Inscrição estadual do cliente errada ou faltando: corrige no cadastro. ene-cê-ême que não existe: corrige no item e no material. E certificado vencido ou de outro CNPJ: envia o á-um certo na configuração.
 Às vezes o problema nem é seu: é instabilidade da sefás. Aí a própria mensagem manda esperar uns minutos e enviar de novo. E uma nota recusada não trava a emissão das próximas.""",
 16: """Nota autorizada, e se algo mudar? A Serra Fina ligou: desistiu daquele primeiro pedido, e a carga nem saiu do pátio. Então a nota mil duzentos e quarenta e nove vai ser cancelada.
 No menu da nota, Cancelar. O motivo é obrigatório, com pelo menos quinze caracteres.
-Confirmar Cancelamento. Pronto, cancelada.
+Confirmar Cancelamento. Pronto, cancelada. Se a sefás demorar pra responder, a nota fica como Cancelamento enviado, e não precisa pedir de novo.
 O prazo normal de cancelamento é de vinte e quatro horas. Depois disso a sefás ainda costuma aceitar o pedido até vinte dias, e a tela avisa que a nota está fora do prazo normal. Passou dos vinte dias, não cancela mais: o caminho é a nota de devolução, que a gente vê daqui a pouco.
 Já a mil duzentos e cinquenta continua valendo. Só mudou um detalhe: a transportadora trocou o caminhão da carga. Pra isso existe a carta de correção, um aviso que fica junto da nota.
 Ela corrige erros em campos específicos. E a própria tela diz o que não dá pra corrigir: valores, quantidade, quem vende e quem compra, a data e qualquer coisa que mude o imposto.
 No texto, uso o formato que a tela sugere: onde se lê a placa antiga, leia-se a placa nova.
 Clico em Enviar cê-cê-ê. Pronto: a correção fica registrada junto da nota.
-Abrindo a Carta de Correção de novo, ela está na lista, com o pê-dê-éfe pra mandar pro cliente ou pra transportadora, o xis-ême-éle e o protocolo da sefás. Cada nota aceita até vinte cartas, e vale sempre a última.""",
+Abrindo a Carta de Correção de novo, ela está na lista, registrada na sefás, com o protocolo. Cada nota aceita até vinte cartas.""",
 17: """E quando a mercadoria volta? A Fundição recebeu o cobre e devolveu quarenta quilos, que vieram com mistura. A nota mil duzentos e cinquenta já está valendo e a carga já rodou, então não é cancelamento. É uma nota de devolução.
 A mercadoria está entrando de volta, então é /ˈẽniˈɛfiˈe/ de Entrada, com a natureza Devolução de venda. O cê-éfe-ó-pê muda sozinho, e aparece um campo novo: a chave da nota original.
 Toda devolução aponta pra nota que ela devolve. Em vez de colar os quarenta e quatro números, clico em Selecionar nota do sistema e escolho a mil duzentos e cinquenta. Vêm o cliente, a chave e os itens.
 Nos itens, deixo só o que voltou: quarenta quilos, pelo mesmo preço da venda. Mil novecentos e dezesseis reais.
 Embaixo tem um bloco que só a devolução tem. A sefás exige, em cada produto devolvido, a nota de origem e o número daquele item dentro dela. A chave já veio. O número do item, a tela está pedindo.
-Esse número está no dânfi da nota original, na coluna Item. O cobre era o item um, então digito um. Quando a nota original já guarda esse número, ele vem preenchido sozinho. Uma dica: confira sempre, porque número errado joga o crédito do cliente no produto errado.
+A tela diz onde achar esse número: na nota original, na coluna Item. O cobre era o item um, então digito um. Quando a nota original já guarda esse número, ele vem preenchido sozinho. Uma dica: confira sempre, porque número errado joga o crédito do cliente no produto errado.
 Repara que a aba Faturamento sumiu: devolução não tem cobrança. E em Impostos a tela propõe os códigos da entrada. Em devolução, vale mostrar essa prévia pro contador antes de emitir.
 Emitir Nota. Pronto: a devolução mil duzentos e cinquenta e três está autorizada, ligada à nota original.
 E o contrário também existe. Quando é a Recicla Vale que devolve uma compra pro fornecedor, é /ˈẽniˈɛfiˈe/ de Saída, com a natureza Devolução de compra. Uma dica: confirme com o contador quem emite a devolução no seu caso, você ou o cliente.""",
@@ -173,13 +173,13 @@ Escrevo a justificativa e clico em Inutilizar na sefás.
 Pronto. Os números fechados ficam aqui, em Inutilizadas.""",
 20: """Agora, os arquivos da nota. Toda nota autorizada tem dois: o dânfi e o xis-ême-éle.
 O dânfi é a folha impressa que acompanha a carga no caminhão. O xis-ême-éle é o arquivo oficial da nota, que o contador guarda.
-Os dois ficam no menu da nota. Ali também tem o Comprovante, um resumo da nota pra imprimir na impressora térmica.
-Download dânfi abre o pê-dê-éfe, pronto pra imprimir. O dânfi ganhou um visual mais limpo. E, a partir de primeiro de dezembro, ele passa a sair com os campos do i-bê-ésse, da cê-bê-ésse e do Imposto Seletivo. A troca é automática, pela data de emissão da nota.
+Os dois ficam no menu da nota. Ali também tem o Comprovante, a Notinha: um resumo da nota pra imprimir na impressora térmica.
+Download dânfi abre o pê-dê-éfe, pronto pra imprimir e mandar junto com a carga.
 E Download xis-ême-éle baixa o arquivo, com o número da nota no nome.
 E em Visualizar, a aba xis-ême-éle mostra o mesmo arquivo enviado à sefás, pra conferir ou copiar um trecho.
 O menu muda com a situação da nota. Na cancelada, aparece o xis-ême-éle de Cancelamento.
 Clicando na linha, abrem os detalhes sem sair da lista: a chave, os valores, o protocolo e quem emitiu.
-Pra achar uma nota antiga, tem a busca, o período e os Filtros, com a situação: autorizada, rejeitada, cancelada, rascunho. E as notas de teste ficam separadas, na aba Homologação.
+Pra achar uma nota antiga, tem a busca, o período e os Filtros, com a situação: autorizada, rejeitada, cancelada, rascunho.
 E pra mandar as notas do mês pro contador, tem a Exportação Contábil, que é assunto do próximo tutorial.""",
 21: """Até aqui, as notas que a Recicla Vale emite. Agora, as que ela recebe.
 Quando um fornecedor emite uma nota com o CNPJ da Recicla Vale como destinatário, a nota passa pela sefás. Com o recurso ativo, ela aparece sozinha aqui.
@@ -189,7 +189,7 @@ Cada linha mostra quem emitiu, o valor, a data, a situação na sefás e a manif
 Depois disso, as notas entram sozinhas. E o Sincronizar agora faz a busca na hora.""",
 22: """Chegou a nota, e agora? Repara na coluna Manifestação: as duas já estão com Ciência.
 Manifestar é responder à sefás sobre a nota que chegou. A ciência não é um botão: ela já vem sozinha, quando a nota entra.
-A do Depósito chegou só com o resumo. Pra baixar o xis-ême-éle e o dânfi de uma nota recebida, é Buscar documento, que não confirma nem recusa nada.
+A do Depósito chegou só com o resumo, e o Ver xis-ême-éle ainda está apagado. Pra trazer a nota completa, é Buscar documento, que não confirma nem recusa nada.
 As respostas ficam no grupo Manifestar. Confirmar operação diz que a compra é sua. Desconhecer operação, que você não reconhece a nota. E Operação não realizada, que a compra não aconteceu.
 As duas últimas pedem uma justificativa e não podem ser desfeitas.
 A bateria da Auto Peças chegou certinho, então confirmo a operação. Pronto: confirmada.""",

@@ -36,3 +36,12 @@ Não editei `roteiro.md` nem `tts_textos.py`.
 
 ## 18/11 · passada do 1.60.10
 As três propostas da tabela acima foram aplicadas no `roteiro.md` e no `tts_textos.py` (cap02 L2 e L3; a do cap10 L8 virou a última linha do cap11, que agora emite a 1250). Nada pendente.
+
+## 20/11 · passada do 1.60.18
+Aplicadas no `roteiro.md` e no `tts_textos.py` (12 linhas; detalhe em `andamento_160.md`). Pendente, depende do mundo base:
+
+| Cap. | Linha | Proposta | Falta |
+|---|---|---|---|
+| 11 | L11 | Antes do Resumo: "Em cima, Ver a DANFE desta nota mostra a DANFE de verdade, sem emitir: ela salva o rascunho e não manda nada pra SEFAZ." (o robô clica, espera a DANFE dentro da aba e devolve o PDF para a cena do comprovante) | O `plugnotas-emit` falso (compartilhado) não atende `action: "preview_danfe_fiscal"` (`lib/fiscal/danfePreviewReal.ts`). E a prévia de uma nota de produção datada de 10/11 sai no modelo anterior: a cena não pode usar o modelo novo. |
+| 16 | L9 | Voltar a citar o PDF da carta | Só se a gravação for de nota do provedor antigo: no motor próprio (`fiscal_provider = 'direct'`) a lista da CC-e não tem o botão "PDF". |
+| 16 | L9 | "e vale sempre a última" (retirado) | Regra da SEFAZ, mas não está no código nem na tela; volta só com o aval do Kaik. |

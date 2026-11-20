@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- T02 "Usuários e permissões" · ilustrações no kit v3 (perfis/ecoflix/cenas_v3/LEIA.md): um mundo 3D, dois climas, câmera contínua.
+     Uma função por CENA e CAPS[cap] diz qual cena cada capítulo ilustrado usa. As janelas (de/ate) estão em ../cenas/ilustracoes.json.
+       cap03 · chaveiro    (escuro)  ilu03_perfis_rapidos     "Perfis rápidos"        linha 1
+       cap06 · comprador   (claro)   ilu06_proprios           "Restrições"            linha 1
+       cap08 · cracha      (claro)   ilu08_desativar_excluir  "Desativar ou excluir"  linha 1
+       cap10 · cadeiras    (claro)   ilu10_vagas_plano        "As vagas do plano"     linhas 1 e 2
+       cap11 · someFica    (escuro)  ilu11_some_fica          "Esconder o valor"      linhas 1 a 3
+     Só textos e números da fala e da tela do app; nenhum valor inventado (os números escondidos são barras, nunca cifras).
+     16:9: auditoria  node perfis/ecoflix/cenas_v3/auditar.cjs --aula planejamento/ecoflix/T02 --larg 1422
+           render     node ferramentas/edit/cenas/render_cenas.cjs <cap> <capNN.json> saida.mp4 --html planejamento/ecoflix/T02/cenas_v3/cena.html
+                      --larg 1422 --dsf 1.35 --de <s> --ate <s>
+     Tempos: $TUT_HOME/t02/narracao/capNN.json (bash planejamento/ecoflix/preparar_aula.sh T02). Tudo ancorado em W(linha, 'palavra').
+     Ícones lucide usados (o nome tem de estar literal nesta página): 'shield-check' 'user-check' 'eye' 'sliders-horizontal'
+     'store' 'eye-off' 'user-x' 'trash-2' 'lock' 'user-round' 'users' 'triangle-alert' 'package' 'tag' 'shopping-cart'
+     'circle-check' -->
+</head><body>
+<script type="module">
+import { PI, cl, lerp, pr, eo, eio, eo5, golpe, W, ic, vis, foco, pulso, ondaEm, titulo, posTitulo, selo, htmlChip, htmlCartao, htmlOp,
+  CENA, GL, piso, anel, destaque, U, camera, lugar, plano, clima, cena, estilo, enquadraRet }
+  from '../../../../perfis/ecoflix/cenas_v3/motor.js';
+import { ceuClaro, mundoEscuro } from '../../../../perfis/ecoflix/cenas_v3/fundo.js';
+import { pessoa } from '../../../../perfis/ecoflix/cenas_v3/objetos/pessoa.js';
+import { pessoaSenta } from '../../../../perfis/ecoflix/cenas_v3/objetos/pessoaSenta.js';
+import { cadeira } from '../../../../perfis/ecoflix/cenas_v3/objetos/cadeira.js';
+import { htmlFluxoCartoes } from '../../../../perfis/ecoflix/cenas_v3/dados/fluxoCartoes.js';
+import { base } from '../../../../perfis/ecoflix/cenas_v3/dados/base.js';
+
+const cartaoP = (icone, rot, sub, cls, cw = 190) => htmlFluxoCartoes({ cartoes: [[icone, rot, sub, cls]], cw });   // cartão pequeno (selo + rótulo + legenda)
+const patio = halo => { piso({ r: 26, x: 0, z: -2, passo: 1.3 }); U.uNevoa.value.set(.955, .975, .965, .8); ceuClaro({ halo }); };
+
+// =====================================================================================================================
+// CENA "chaveiro" · cap03, linha 1 · clima escuro (permissão é dado do sistema)
+// "São três perfis prontos, e o Personalizado. Pensa num chaveiro: cada perfil pronto já vem com um conjunto de chaves.
+//  O Personalizado vem vazio, pra você montar."
+// Os quatro perfis na ordem da tela. No "chaveiro" cada um ganha a argola; no "chaves" as chaves caem nas três prontas
+// (as do Somente Visualização são vazadas: só abrem para olhar). No fim a câmera fecha no Personalizado: argola vazia e o "+".
+function htmlChaveiro(n, o = {}) {
+  estilo('chv', `.chv{position:relative;width:240px;height:200px}.chv svg{position:absolute;inset:0;overflow:visible}.chv .k{transform-origin:120px 58px;opacity:0}`);
+  const A = Array.from({ length: n }, (_, i) => (i - (n - 1) / 2) * 25), v = o.vazada;
+  const ch = a => `<g class="k" data-a="${a}"><g transform="translate(120 58)"><path d="M0 2V33" stroke="rgba(255,255,255,.5)" stroke-width="2.4" stroke-linecap="round"/>
+    ${v ? `<circle cy="45" r="11" stroke="#6CF0A8" stroke-width="2.6"/><path d="M-3.5 56V112Q-3.5 115 0 115Q3.5 115 3.5 112V104H10V98H3.5V93H8.5V87H3.5V56" stroke="#6CF0A8" stroke-width="2.6" stroke-linejoin="round"/>`
+        : `<circle cy="45" r="12.5" fill="url(#chvG)"/><circle cy="41.5" r="4" fill="#1B2A23"/><rect x="-3.6" y="55" width="7.2" height="61" rx="3.4" fill="url(#chvG)"/><rect x="2" y="87" width="8.5" height="6.4" rx="2" fill="url(#chvG)"/><rect x="2" y="98" width="10" height="6.4" rx="2" fill="url(#chvG)"/>`}</g></g>`;
+  return `<div class="chv"><svg viewBox="0 0 240 200" fill="none"><defs><linearGradient id="chvG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8CF5BE"/><stop offset="1" stop-color="#2FB271"/></linearGradient></defs>
+    <path class="elo" d="M120 0V11" stroke="rgba(255,255,255,.5)" stroke-width="2.4" stroke-linecap="round"/>
+    <circle class="aro" cx="120" cy="34" r="23" stroke="${n ? 'rgba(255,255,255,.82)' : 'rgba(247,197,90,.9)'}" stroke-width="5" ${n ? '' : 'stroke-dasharray="7 8"'} stroke-linecap="round"/>${A.map(ch).join('')}</svg></div>`;
+}
+function chaveiroAnda(e, t, tAro, tCh) {
+  const K = e._k ??= [...e.querySelectorAll('.k')], aro = e._a ??= [e.querySelector('.aro'), e.querySelector('.elo')];
+  const pa = pr(t, tAro, .5); for (const x of aro) x.style.opacity = eo(pa).toFixed(3); aro[0].style.transformOrigin = '120px 34px'; aro[0].style.transform = `rotate(${(14 * golpe(pr(t, tAro, .9), 1.2, 3.6)).toFixed(2)}deg) scale(${(.7 + .3 * eo5(pa)).toFixed(4)})`;
+  K.forEach((k, i) => { const a = tCh + i * .09, p = pr(t, a, 1.1); k.style.opacity = eo(pr(t, a, .22)).toFixed(3);
+    k.style.transform = `rotate(${(+k.dataset.a + 24 * golpe(p, 1.3, 3.2) * (i % 2 ? -1 : 1)).toFixed(2)}deg) translateY(${(-16 * (1 - eo5(pr(t, a, .4)))).toFixed(2)}px)`; });
+}
+function chaveiro() {
+  const L = 1, t0 = W(L, 'sao'), ttr = W(L, 'tres'), tpe = W(L, 'personalizado'), tch = W(L, 'chaveiro'), tcv = W(L, 'chaves'), tp2 = W(L, 'personalizado', 2), tva = W(L, 'vazio'), tmo = W(L, 'montar'), tfim = W(L, 'montar', 1, 'e');
+  const EE = .0112, EIXO = lugar([0, 0, 0]), E = mundoEscuro(EIXO, 0, EE), X = (html, x, y, o = {}) => E(html, x * EE, -y * EE, 0, o);   // X: posição em px do desenho (y para baixo)
+  const CW = 300, VAO = 36, P = CW + VAO, AH = 200;
+  const PERFIS = [['shield-check', 'Acesso Total', 'perfil pronto', '', 5], ['user-check', 'Operador Padrão', 'perfil pronto', '', 4], ['eye', 'Somente Visualização', 'perfil pronto', '', 3], ['sliders-horizontal', 'Personalizado', 'vem vazio', 'a', 0]];
+  const cart = PERFIS.map(([i, r, s, c], k) => X(cartaoP(i, r, s, c, CW), k * P, 0, { anc: [0, 0] })), HC = cart[0].h, LT = 3 * P + cart[3].w;
+  const arg = PERFIS.map((p, k) => X(htmlChaveiro(p[4], { vazada: k === 2 }), k * P + cart[k].w / 2, HC, { anc: [.5, 0], sobre: true }));
+  const mais = X(htmlOp('+'), 3 * P + cart[3].w / 2, HC + 118, { sobre: true });
+  E.fundo(LT / 2 * EE, -(HC + AH) / 2 * EE, { aneis: false });
+  const tit = titulo('Permissões', 'Perfis rápidos', 'escuro');
+  const ret = (x0, y0, x1, y1) => [x0 * EE, -y1 * EE, x1 * EE, -y0 * EE];
+  const S0 = enquadraRet(EIXO, ret(0, 0, LT, HC), { az: -.035, max: 1 / EE }),                              // 1 · os quatro perfis
+        S1 = enquadraRet(EIXO, ret(0, 0, LT, HC + AH), { az: .02 }),                                         // 2 · desce: os chaveiros
+        S2 = enquadraRet(EIXO, ret(3 * P - 40, 0, 3 * P + cart[3].w + 40, HC + AH), { az: -.03, max: 1.42 / EE });   // 3 · fecha no Personalizado
+  camera([[t0 - 3, S0], [tch - .5, { ...S0, az: -.01, d: S0.d * .985 }, 'lin'], [tch + .55, S1], [tp2 - .45, { ...S1, az: .035, d: S1.d * .985 }, 'lin'], [tp2 + .85, S2], [tfim + 2.5, { ...S2, az: -.01, d: S2.d * .98 }, 'lin']]);
+  return t => {
+    clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, t0 - .45);
+    cart.forEach((c, k) => vis(c.e, t, k < 3 ? ttr - .1 + k * .13 : tpe - .12, 1e9, { dy: 18, sc: .95 }));
+    arg.forEach((a, k) => chaveiroAnda(a.e, t, tch - .08 + k * .1, k < 3 ? tcv - .15 + k * .14 : 1e9));
+    for (const k of [0, 1, 2]) pulso(cart[k].e, t, tcv + .1 + k * .14, .03, .7);
+    // o Personalizado: recua enquanto se fala dos prontos, volta no nome dele; os outros três saem quando a câmera fecha nele
+    foco(cart[3].e, t, tch - .2, tp2 - .5, { fora: true, min: .6 }); arg[3].op = lerp(.6, 1, eo(pr(t, tp2 - .5, .4)));
+    const ido = 1 - eo(pr(t, tp2 - .55, .45)); for (const k of [0, 1, 2]) cart[k].op = arg[k].op = ido;
+    pulso(cart[3].e, t, tva - .05, .04, .8); pulso(arg[3].e, t, tva, .06, .8);
+    vis(mais.e, t, tmo - .15, 1e9, { sc: .6, dy: 0 }); pulso(mais.e, t, tmo + .45, .1, .8);
+  };
+}
+
+// =====================================================================================================================
+// CENA "comprador" · cap06, linha 1 · clima claro (gente e fichas: o mundo físico)
+// "Pensa num comprador que roda a rua e não deve ver os fornecedores dos colegas. A restrição faz a pessoa enxergar só o
+//  que ela mesma lançou."
+// O comprador chega andando, com as fichas dos fornecedores dele; os dois colegas têm as deles. Na "restrição", as fichas
+// dos colegas apagam e sobram as que ele mesmo lançou.
+function comprador() {
+  const L = 1, t0 = W(L, 'pensa'), tco = W(L, 'comprador'), tru = W(L, 'rua'), tfo = W(L, 'fornecedores'), tcl = W(L, 'colegas'), tre = W(L, 'restricao'), ten = W(L, 'enxergar'), tso = W(L, 'so'),
+    tla = W(L, 'lancou'), tfim = W(L, 'lancou', 1, 'e');
+  patio([0, 3.2, -12]);
+  const XA = -3.05, XB = [.15, 3.05], X0 = XA - 4.4, ta = t0 - .7, tch = tru + .25;
+  const A = pessoa(CENA, [X0, 0, 0], { camisa: '#2FB271', bone: '#2E7D57' });
+  XB.forEach((x, i) => { const p = pessoa(CENA, [x, 0, 0], i ? { camisa: '#8E9BB0', cabelo: '#5A4636', coque: true } : { camisa: '#A6B2C2', pele: '#C98F6B' }); p.rotation.y = -PI / 2; });
+  const an = anel(.9, [XA, 0, 0]);
+  const EF = .0078, YF = [2.42, 3.1], ficha = (x, y, sub, cls) => plano(cartaoP('store', 'Fornecedor', sub, cls, 196), { pos: [x, y, 0], rot: [-.06, 0, 0], esc: EF });
+  const fA = YF.map(y => ficha(X0, y, 'do comprador', '')), fB = XB.flatMap(x => YF.map(y => ficha(x, y, 'de um colega', 'n')));
+  const FZ = 2.9, chR = plano(htmlChip(`${ic('eye-off', 18)}Restrição`, 'n'), { pos: [XA - .55, .5, FZ], rot: [-.2, 0, 0], esc: .0108 });
+  const chS = plano(htmlChip(`${ic('eye', 18)}só o que ela mesma lançou`), { pos: [XA + 2.75, .5, FZ], rot: [-.2, 0, 0], esc: .0108 });
+  const tit = titulo('Permissões', 'Restrições');
+  const K1 = { x: -1.25, y: 1.95, z: 0, d: 11.3, az: .1, el: .1 }, K2 = { x: 0, y: 1.95, z: 0, d: 11.75, az: .035, el: .1 }, K3 = { x: -.35, y: 1.92, z: 0, d: 11.45, az: -.03, el: .1 };
+  camera([[t0 - 3, K1], [tfo - .55, { ...K1, d: 11.1, az: .085 }, 'lin'], [tfo + .6, K2], [tre - .4, { ...K2, d: 11.6, az: .015 }, 'lin'], [tre + .8, K3], [tfim + 2.5, { ...K3, d: 11.25, az: -.05 }, 'lin']]);
+  return t => {
+    GL.style.opacity = eo(pr(t, t0 + .08, .5)).toFixed(3); posTitulo(tit, t, t0 - .9, t0 - .45);
+    const p = pr(t, ta, tch - ta), x = lerp(X0, XA, 1 - Math.pow(1 - p, 2.1)), gira = eio(pr(t, tch - .25, .5));
+    A.position.x = x; A.userData.anda((x - X0) * 5.2 * (1 - gira)); A.rotation.y = -PI / 2 * gira;
+    fA.forEach((f, i) => { f.pos[0] = x; vis(f.e, t, (i ? tru - .05 : tco + .2), 1e9, { dy: 18, sc: .95 }); });
+    fB.forEach((f, i) => { vis(f.e, t, (i < 2 ? tfo - .1 : tcl - .15) + (i % 2) * .14, 1e9, { dy: 18, sc: .95 }); foco(f.e, t, -9, ten - .1 + i * .07, { min: .2 }); });
+    vis(chR.e, t, tre - .1, 1e9, { dy: 10, sc: .8 }); vis(chS.e, t, tso - .1, 1e9, { dy: 10, sc: .8 });
+    for (const [i, f] of fA.entries()) pulso(f.e, t, tla - .05 + i * .12, .06, .8); pulso(chS.e, t, tla + .1, .06, .8); destaque(an, t, tla - .1);
+  };
+}
+
+// =====================================================================================================================
+// CENA "cracha" · cap08, linha 1 · clima claro (crachá e gaveta: papel e gente)
+// "Desativar é como guardar o crachá: a pessoa fica sem acesso, e você devolve quando quiser. Excluir é rasgar o crachá."
+// À esquerda, o crachá do Marcos desce para a gaveta no "guardar" e volta no "devolve". À direita, no "Excluir", o mesmo
+// crachá aparece e, no "rasgar", parte em dois.
+function htmlCracha() {
+  estilo('crc', `
+.crc{position:relative;width:220px;height:300px}
+.crc .corpo{position:absolute;left:0;top:40px;width:220px;height:260px;border-radius:18px;background:linear-gradient(165deg,#fff,#F3F8F6);border:1px solid #fff;
+  box-shadow:0 26px 48px -14px rgba(30,80,60,.32),0 6px 14px -4px rgba(30,80,60,.12);overflow:hidden;text-align:center}
+.crc .faixa{height:58px;background:linear-gradient(100deg,#2FB271,#63D99B);color:#fff;font-weight:800;font-size:13.5px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:9px;white-space:nowrap}
+.crc .fita{position:absolute;left:97px;top:0;width:26px;height:60px;border-radius:5px;background:linear-gradient(180deg,#39424A,#59646E)}
+.crc .av{margin:16px auto 0;width:82px;height:82px;border-radius:50%;background:linear-gradient(160deg,#E4EFEA,#C9DAD2);color:#7C8F87;display:flex;align-items:center;justify-content:center}
+.crc .nm{margin-top:13px;font-weight:800;font-size:19px;color:#17191A;white-space:nowrap}
+.crc .st{display:inline-flex;align-items:center;gap:7px;margin-top:8px;font-weight:700;font-size:13.5px;color:#2E7D57}.crc .st i{width:9px;height:9px;border-radius:50%;background:#50D088}`);
+  return `<div class="crc"><div class="corpo"><div class="faixa">Recicla Vale Metais</div><div class="av">${ic('user-round', 46)}</div><div class="nm">Marcos Antunes</div><div class="st"><i></i>Ativo</div></div><div class="fita"></div></div>`;
+}
+function cracha() {
+  const L = 1, t0 = W(L, 'desativar'), tgu = W(L, 'guardar'), tse = W(L, 'sem'), tdv = W(L, 'devolve'), tex = W(L, 'excluir'), tra = W(L, 'rasgar'), tfim = W(L, 'cracha', 2, 'e');
+  patio([0, 3.4, -12]);
+  const EC = .01, YC = 3.25, X = (html, x, y, o = {}) => plano(html, { pos: [x * EC, YC - y * EC, 0], esc: EC, ...o }), XE = -300, XD = 300, Y0 = -45, DESCE = 212;
+  const chD = X(htmlChip(`${ic('user-x', 18)}Desativar`), XE, -222, { anc: [.5, 1] }), chE = X(htmlChip(`${ic('trash-2', 18)}Excluir`, 'n'), XD, -222, { anc: [.5, 1] });
+  // a gaveta: o fundo aparece por cima da frente; o crachá desce entre os dois (mesma profundidade, a ordem é do z do plano)
+  const gF = X('<div style="width:292px;height:118px;border-radius:16px 16px 4px 4px;background:linear-gradient(180deg,#D3E2DB,#E6EFEB);box-shadow:inset 0 12px 20px -10px rgba(30,80,60,.34)"></div>', XE, 120, { z: -60, sobre: true });
+  const c1 = X(htmlCracha(), XE, Y0, { z: 0, sobre: true });
+  const gB = X(`<div style="position:relative;width:332px;height:214px;border-radius:14px 14px 24px 24px;background:linear-gradient(170deg,#fff,#EBF3EF);border:1px solid #fff;box-shadow:0 30px 54px -16px rgba(30,80,60,.36),0 -8px 16px -10px rgba(30,80,60,.22)">
+    <div style="position:absolute;left:116px;top:34px;width:100px;height:15px;border-radius:8px;background:linear-gradient(180deg,#BFCFC7,#DCE7E1)"></div></div>`, XE, 222, { z: 60, sobre: true });
+  const chS = X(htmlChip(`${ic('lock', 18)}sem acesso`, 'n'), XE, 262, { z: 90, sobre: true });
+  // o crachá da direita: inteiro até o "rasgar"; depois, as duas metades (o mesmo desenho, recortado em ziguezague)
+  const zz = Array.from({ length: 13 }, (_, i) => `${i % 2 ? 103 : 117}px ${i * 25}px`), c2 = X(htmlCracha(), XD, Y0, { sobre: true });
+  const mE = X(`<div style="clip-path:polygon(-60px -60px,${zz.join(',')},-60px 360px)">${htmlCracha()}</div>`, XD - 55, Y0, { anc: [.25, .5], sobre: true });
+  const mD = X(`<div style="clip-path:polygon(280px -60px,${zz.join(',')},280px 360px)">${htmlCracha()}</div>`, XD + 55, Y0, { anc: [.75, .5], sobre: true });
+  const tit = titulo('Usuários', 'Desativar ou excluir');
+  const R = (x0, y0, x1, y1) => [x0 * EC, YC - y1 * EC, x1 * EC, YC - y0 * EC];
+  const S1 = enquadraRet(null, R(-470, -262, 150, 332), { az: .04, el: .02 }), S2 = enquadraRet(null, R(-470, -262, 470, 332), { az: -.02, el: .02 });
+  camera([[t0 - 3, S1], [tex - .5, { ...S1, d: S1.d * .985, az: .025 }, 'lin'], [tex + .6, S2], [tfim + 2.5, { ...S2, d: S2.d * .985, az: -.035 }, 'lin']]);
+  return t => {
+    GL.style.opacity = eo(pr(t, t0 + .08, .5)).toFixed(3); posTitulo(tit, t, t0 - .9, t0 - .45);
+    vis(chD.e, t, t0 - .1, 1e9, { dy: 10, sc: .8 }); vis(c1.e, t, t0 + .05, 1e9, { dy: 24 }); vis(gF.e, t, tgu - .5, 1e9, { dy: 0 }); vis(gB.e, t, tgu - .5, 1e9, { dy: 14 });
+    const g = eio(pr(t, tgu - .05, .7)) - eio(pr(t, tdv - .05, .7)); c1.pos[1] = YC - (Y0 + DESCE * g) * EC;
+    c1.e.style.filter = g > .01 ? `saturate(${(1 - .8 * g).toFixed(3)})` : ''; pulso(c1.e, t, tdv + .65, .04, .7);
+    vis(chS.e, t, tse - .1, tdv - .1, { dy: 8, sc: .8 });
+    vis(chE.e, t, tex - .1, 1e9, { dy: 10, sc: .8 });
+    const r = eo(pr(t, tra - .02, .75)), rasgou = t >= tra - .02;
+    vis(c2.e, t, tex + .1, 1e9, { dy: 24 }); c2.op = rasgou ? 0 : 1; mE.op = mD.op = rasgou ? 1 : 0;
+    c2.e.style.rotate = (2.2 * golpe(pr(t, tra - .32, .3), 1.5, 3)).toFixed(2) + 'deg';
+    mE.pos[0] = (XD - 55 - 30 * r) * EC; mE.pos[1] = YC - (Y0 + 30 * r) * EC; mE.rot[2] = .13 * r;
+    mD.pos[0] = (XD + 55 + 34 * r) * EC; mD.pos[1] = YC - (Y0 + 66 * r) * EC; mD.rot[2] = -.2 * r;
+    for (const m of [mE, mD]) m.e.style.filter = r > .01 ? `saturate(${(1 - .75 * eo(pr(t, tra + .25, .6))).toFixed(3)})` : '';
+  };
+}
+
+// =====================================================================================================================
+// CENA "cadeiras" · cap10, linhas 1 e 2 · clima claro (cadeiras e gente)
+// "Pensa em cadeiras: cada usuário ativo ocupa uma. Quem está desativado libera a dele."
+// "E se o plano diminuir e sobrar gente, o sistema abre uma janela pedindo pra você escolher quem desativar."
+// Três cadeiras, o Rafael, a Juliana e o Marcos sentados: 3 / 3 usuários. No "desativado" o Marcos levanta e sai de lado
+// (2 / 3); volta no começo da linha 2; no "diminuir" a cadeira dele some e ele sobra de pé; no "janela", o aviso do sistema.
+function cadeiras() {
+  const t0 = W(1, 'pensa'), tcd = W(1, 'cadeiras'), tus = W(1, 'usuario'), toc = W(1, 'ocupa'), tde = W(1, 'desativado'), tli = W(1, 'libera'),
+    tE = W(2, 'e'), tdi = W(2, 'diminuir'), tso = W(2, 'sobrar'), tja = W(2, 'janela'), tfim = W(2, 'desativar', 1, 'e');
+  patio([0, 3.0, -12]);
+  const XS = [-1.75, 0, 1.75], NOMES = ['Rafael', 'Juliana', 'Marcos'], OPC = [{ camisa: '#5B8FD6' }, { camisa: '#C8664A', coque: true, cabelo: '#5A3A26' }, { camisa: '#E0A63A', pele: '#C98F6B' }];
+  const cad = XS.map(x => { const c = cadeira(CENA, [x, 0, 0]); c.rotation.y = -PI / 2; return c; });
+  const gente = XS.map((x, i) => { const p = pessoaSenta(CENA, [x, 0, -.07], OPC[i]); p.rotation.y = -PI / 2; p.userData.senta(1); return p; });
+  const aneis = XS.map(x => anel(.85, [x, 0, 0])), anM = anel(.8, [XS[2], 0, .45]);
+  const chip = (n, cls) => plano(htmlChip(`${ic('user-round', 18)}${n}`, cls), { pos: [0, 0, 0], rot: [-.1, 0, 0], esc: .0088, anc: [.5, 1] });
+  const ch = NOMES.map((n, i) => { const c = chip(n, ''); c.pos[0] = XS[i]; c.pos[1] = gente[i].userData.altura(1) - .04; return c; }), chM = chip('Marcos', 'n');
+  const FZ = 2.7, FR = [-.2, 0, 0];
+  const ct = plano(htmlChip(`${ic('users', 18)}<span class="ct">3 / 3 usuários</span>`, 'n'), { pos: [0, .45, FZ], rot: FR, esc: .0112 }), ctT = ct.e.querySelector('.ct');
+  const av = plano(cartaoP('triangle-alert', 'Limite de Usuários Excedido', 'Selecione os usuários para desativar', 'a', 380), { pos: [0, .5, FZ], rot: FR, esc: .0096 });
+  const tit = titulo('Plano', 'As vagas do plano');
+  // o Marcos: levanta, vira e sai de lado; volta de pé para a frente da cadeira
+  const D = 1.55, a1 = tde - .15, b1 = a1 + .42, a2 = tE - .35, chega = a2 + .95;
+  const K1 = { x: 0, y: 1.22, z: 0, d: 10.9, az: .2, el: .15 }, K2 = { x: .55, y: 1.2, z: 0, d: 11.5, az: .13, el: .15 }, K3 = { x: .1, y: 1.1, z: 0, d: 11.3, az: .06, el: .15 };
+  camera([[t0 - 3, K1], [a1, { ...K1, d: 10.7, az: .18 }, 'lin'], [b1 + .85, K2], [tdi - .35, { ...K2, d: 11.35, az: .11 }, 'lin'], [tdi + .9, K3], [tfim + 2.5, { ...K3, d: 11.1, az: .04 }, 'lin']]);
+  return t => {
+    GL.style.opacity = eo(pr(t, t0 + .08, .5)).toFixed(3); posTitulo(tit, t, t0 - .9, t0 - .45);
+    aneis.forEach((a, i) => destaque(a, t, i === 2 && t >= tli - .2 ? tli - .1 : tcd - .1 + i * .1));
+    ch.forEach((c, i) => { vis(c.e, t, t0 + .3 + i * .1, 1e9, { dy: 10, sc: .8 }); pulso(c.e, t, toc - .05 + i * .1, .07, .7); });
+    // Marcos
+    const k = 1 - eio(pr(t, a1, .5)), sai = eio(pr(t, b1, .9)), vem = eio(pr(t, a2, .9)), sx = D * (sai - vem), M = gente[2], u = M.userData;
+    const g1 = Math.min(eo(pr(t, b1 - .08, .28)), 1 - eo(pr(t, b1 + .68, .28))), g2 = Math.min(eo(pr(t, a2 - .08, .28)), 1 - eo(pr(t, a2 + .68, .28)));
+    u.senta(k); u.anda(k > .02 ? 0 : (D * (sai + vem)) * 5.2); M.position.set(XS[2] + sx, 0, lerp(.45, -.07, k)); M.rotation.y = -PI / 2 + PI / 2 * g1 - PI / 2 * g2;
+    const fora = Math.min(eo(pr(t, tde - .1, .4)), 1 - eo(pr(t, chega - .15, .4)));   // 1 enquanto está desativado
+    for (const c of [ch[2], chM]) { c.pos[0] = M.position.x; c.pos[1] = u.altura(k) - .04; c.pos[2] = M.position.z; }
+    vis(chM.e, t, t0 + .5, 1e9, { dy: 0 }); ch[2].op = 1 - fora; chM.op = fora; pulso(ch[2].e, t, tso - .05, .08, .8); destaque(anM, t, tso - .1);
+    // a cadeira do Marcos some quando o plano diminui
+    const s = 1 - eio(pr(t, tdi - .05, .5)); cad[2].visible = s > .01; cad[2].scale.setScalar(Math.max(.01, s));
+    // o contador e o aviso
+    vis(ct.e, t, toc - .1, tdi - .1, { dy: 10, sc: .8 }); const txt = t >= tli - .05 && t < chega - .1 ? '2 / 3 usuários' : '3 / 3 usuários'; if (ctT.textContent !== txt) ctT.textContent = txt;
+    pulso(ct.e, t, tli - .05, .08, .8); pulso(ct.e, t, chega - .1, .08, .8);
+    vis(av.e, t, tja - .12, 1e9, { dy: 18, sc: .95 }); pulso(av.e, t, tfim - .9, .04, .8);
+  };
+}
+
+// =====================================================================================================================
+// CENA "someFica" · cap11, linhas 1 a 3 · clima escuro (valores do sistema)
+// 1 "Sem essa permissão, esses números aparecem escondidos, com pontinhos no lugar."
+// 2 "Agora imagina uma compra de mil quilos de ferro pesado, a noventa e cinco centavos o quilo. Quem compra precisa ver
+//    esse preço, senão não fecha o pedido."
+// 3 "Uma dica: esconder valor não trava a operação. O preço do material continua na compra e na venda. O que some é o
+//    consolidado: o lucro, os totais do período, o saldo do caixa e o do banco."
+// Estações: (1) o cartão da permissão: a chave desliga e os valores (barras, nenhuma cifra inventada) viram pontinhos;
+// (2) a compra: 1.000 kg × R$ 0,95 = R$ 950,00, à vista de quem compra; (3) abre para os dois: o que some e o que fica.
+function htmlValores(linhas, w) {
+  base(); estilo('sf', `
+.sf{padding:18px 22px 10px;isolation:isolate}.sf .top{display:flex;align-items:center;gap:12px;margin-bottom:10px}.sf .top .d-t{font-size:17.5px}
+.sf .ch{position:relative;width:46px;height:26px;border-radius:13px;background:var(--tr);flex:none;margin-left:auto}
+.sf .ch .on{position:absolute;inset:0;border-radius:13px;background:linear-gradient(100deg,#2FB271,#63D99B);box-shadow:0 0 16px rgba(80,208,136,.4)}
+.sf .ch .bt{position:absolute;left:3px;top:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 2px 5px rgba(0,0,0,.3)}
+.sf .ln{position:relative;display:flex;align-items:center;justify-content:space-between;height:50px;border-top:1px solid var(--ln)}
+.sf .ln .hl{position:absolute;inset:4px -10px;border-radius:12px;background:var(--fx2);opacity:0;z-index:-1}
+.sf .vl{position:relative;display:flex;align-items:center;gap:8px;width:132px;height:24px}.sf .vl .d-n{font-size:16.5px;color:var(--tx)}
+.sf .vl .br{position:absolute;left:34px;top:6px;width:92px;height:12px;border-radius:6px;background:linear-gradient(100deg,#6CF0A8,#8CF5BE);box-shadow:0 0 14px rgba(80,208,136,.45)}
+.sf .vl .pt{position:absolute;left:34px;top:0;line-height:24px;font-weight:800;font-size:19px;letter-spacing:.12em;color:var(--tx2);opacity:0}`);
+  return `<div class="cartao sf" style="position:relative;width:${w}px"><div class="top">${selo('eye', '', 44)}<div><div class="d-t">Ver Totais e Valores Financeiros</div><div class="d-s">no Geral</div></div><div class="ch"><i class="on"></i><i class="bt"></i></div></div>
+    ${linhas.map(r => `<div class="ln"><i class="hl"></i><span class="d-v">${r}</span><div class="vl"><span class="d-n">R$</span><i class="br"></i><span class="pt">••••••</span></div></div>`).join('')}</div>`;
+}
+function someFica() {
+  const tse = W(1, 'sem'), tnu = W(1, 'numeros'), tes = W(1, 'escondidos'), tpo = W(1, 'pontinhos'),
+    tag = W(2, 'agora'), tco = W(2, 'compra'), tmi = W(2, 'mil'), tno = W(2, 'noventa'), tpr = W(2, 'preco'), tpd = W(2, 'pedido'),
+    tp3 = W(3, 'preco'), tct = W(3, 'continua'), tso = W(3, 'some'), tlu = W(3, 'lucro'), tto = W(3, 'totais'), tcx = W(3, 'caixa'), tbc = W(3, 'banco'), tfim = W(3, 'banco', 1, 'e');
+  const EE = .0112, EIXO = lugar([0, 0, 0]), E = mundoEscuro(EIXO, 0, EE), X = (html, x, y, o = {}) => E(html, x * EE, -y * EE, 0, o);
+  const WL = 480, GAP = 96, CW = 232, VO = 68, XR = WL + GAP, PC = CW + VO, WR = 3 * CW + 2 * VO, LT = XR + WR, HC = 126;
+  const cv = X(htmlValores(['Lucro', 'Totais do período', 'Saldo do caixa', 'Saldo do banco'], WL), 0, 0, { anc: [0, .5] }), HL = cv.h;
+  const on = cv.e.querySelector('.on'), bt = cv.e.querySelector('.bt'), LN = [...cv.e.querySelectorAll('.ln')];
+  const cc = (i, ...a) => X(htmlCartao(...a), XR + i * PC, 0, { anc: [0, .5] });
+  const c1 = cc(0, 'package', 'Ferro pesado', 'mil quilos', '1.000 kg', { w: CW, h: HC, fn: 32 }), c2 = cc(1, 'tag', 'Preço', 'o quilo', 'R$ 0,95', { w: CW, h: HC, fn: 32, cls: 'a' }),
+        c3 = cc(2, 'circle-check', 'Pedido', 'da compra', 'R$ 950,00', { w: CW, h: HC, fn: 32, res: true });
+  const o1 = X(htmlOp('×'), XR + CW + VO / 2, 0, { z: 40 }), o2 = X(htmlOp('='), XR + PC + CW + VO / 2, 0, { z: 40 }), on3 = c3.e.querySelector('.onda');
+  const YCH = -HC / 2 - 14, chC = X(htmlChip(`${ic('shopping-cart', 18)}Compra`, 'n'), XR, YCH, { anc: [0, 1] }), chF = X(htmlChip(`${ic('eye', 18)}Fica`), LT, YCH, { anc: [1, 1] });
+  const chS = X(htmlChip(`${ic('eye-off', 18)}Some`, 'n'), 0, -HL / 2 - 14, { anc: [0, 1] });
+  E.fundo(LT / 2 * EE, 0, { aneis: false });
+  const tit = titulo('Valores', 'Esconder o valor', 'escuro');
+  const ret = (x0, y0, x1, y1) => [x0 * EE, -y1 * EE, x1 * EE, -y0 * EE], TOPO = -HL / 2 - 14 - 40;
+  const S1 = enquadraRet(EIXO, ret(0, TOPO, WL, HL / 2), { az: -.035, max: 1.3 / EE }),                 // 1 · a permissão e os valores
+        S2 = enquadraRet(EIXO, ret(XR, YCH - 40, LT, HC / 2), { az: .03, max: 1.22 / EE }),           // 2 · a compra
+        S3 = enquadraRet(EIXO, ret(0, TOPO, LT, HL / 2), { margem: 56 });                              // 3 · o que some e o que fica
+  camera([[tse - 3, S1], [tag - .35, { ...S1, az: -.01, d: S1.d * .98 }, 'lin'], [tag + .95, S2], [tp3 - .2, { ...S2, az: .0, d: S2.d * .975 }, 'lin'], [tct - .3, { ...S2, az: -.008, d: S2.d * .97 }, 'lin'],
+    [tso - .05, S3], [tfim + 2.5, { ...S3, az: .02, d: S3.d * .985 }, 'lin']]);
+  return t => {
+    clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, tse - .9, tse - .45);
+    // estação 1: a chave desliga no "Sem"; as barras apagam no "escondidos" e os pontinhos entram no "pontinhos"
+    vis(cv.e, t, tse - .5, 1e9, { dy: 24, sc: .96 }); const des = eio(pr(t, tse + .05, .35)); on.style.opacity = (1 - des).toFixed(3); bt.style.transform = `translateX(${(20 * (1 - des)).toFixed(2)}px)`;
+    LN.forEach((x, i) => { x.querySelector('.br').style.opacity = (1 - eo(pr(t, tes - .1 + i * .07, .3))).toFixed(3); x.querySelector('.br').style.transform = `scaleX(${(1 + .1 * golpe(pr(t, tnu - .05 + i * .06, .6), 1.2, 3.4)).toFixed(4)})`;
+      const p = x.querySelector('.pt'), a = tpo - .12 + i * .09; p.style.opacity = eo(pr(t, a, .3)).toFixed(3); p.style.transform = `translateY(${(6 * (1 - eo5(pr(t, a, .5)))).toFixed(2)}px)`; });
+    // o cartão dos valores sai enquanto a câmera vai até a compra e volta quando ela abre para os dois
+    cv.op = 1 - eo(pr(t, tag - .4, .45)) + eo(pr(t, tso - .75, .55));
+    // estação 2: a compra
+    vis(chC.e, t, tco - .12, 1e9, { dy: 10 }); vis(c1.e, t, tmi - .12, 1e9, { dy: 22 }); vis(o1.e, t, tno - .3, 1e9, { sc: .6, dy: 0 }); vis(c2.e, t, tno - .1, 1e9, { dy: 22 });
+    pulso(c2.e, t, tpr - .05, .05, .8); vis(o2.e, t, tpd - .3, 1e9, { sc: .6, dy: 0 }); vis(c3.e, t, tpd - .12, 1e9, { dy: 22, sc: .94 }); ondaEm(on3, t, tpd + .25);
+    // estação 3: o preço fica; o consolidado some
+    pulso(c2.e, t, tp3 - .05, .05, .8); vis(chF.e, t, tct - .12, 1e9, { dy: 10, sc: .8 });
+    vis(chS.e, t, tso - .1, 1e9, { dy: 10, sc: .8 });
+    [tlu, tto, tcx, tbc].forEach((a, i) => { LN[i].querySelector('.hl').style.opacity = Math.min(eo(pr(t, a - .08, .3)), 1 - .55 * eo(pr(t, a + .9, .5))).toFixed(3); });
+  };
+}
+
+// =====================================================================================================================
+const CAPS = { 3: chaveiro, 6: comprador, 8: cracha, 10: cadeiras, 11: someFica };
+cena(d => CAPS[d.cap](d), { fov: 26 });
+</script></body></html>

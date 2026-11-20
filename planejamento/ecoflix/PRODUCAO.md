@@ -1089,3 +1089,9 @@ Decisões:
 - 20/11 14:47 **Kaik liberou o Fable**. Uso: ilustrações v3 em 16:9 das aulas com voz pronta (a maior fatia que falta), uma
   aula por ajudante Fable, começando por T02 e T06; `_BRIEF_CENAS_V3.md` ganhou o bloco de 20/11 (16:9, piscadas, comprovante
   com o papel real tirado do PDF do robô, âncoras por palavra sobre os tempos estimados). Sonnet segue nas adaptações; Opus na T16.
+- 20/11 14:56 **Zip das vozes recebido** (230 MP3; as 215 dos 12 nós "(1.60.18)" conferidas, nenhuma faltando). MP3 movidos
+  para `$TUT_HOME/tNN/narracao/recebido_1.60.18/capMM.mp3` e `titulos.mp3`; ferramentas de narração copiadas; processamento
+  (`proc.py --take` + `titulos.py`) pela fila com `rec/voz_proc_lote.sh` (log `rec/voz_proc_lote.log`, VOZ-LOTE-FIM).
+  Disco: 2,8 → 3,8 GB livres (apagados os intermediários regeráveis da T08 e MP4 de ensaio velhos; o zip em
+  `/mnt/user-data/uploads` ocupa 231 MB do mesmo disco e é só leitura). Aula final 1080p ~180 MB cada: guardar todas não cabe;
+  decidir com o Kaik como entregar. Briefing novo `_BRIEF_FINAL.md` (gravação final + montagem por aula, molde da T08).

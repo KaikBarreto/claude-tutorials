@@ -293,3 +293,27 @@
 - **Devolução**: "Chave da NF-e original (devolução)", "Selecionar nota do sistema" → "Importar NF-e de Saída para Devolução"; sem a aba "Faturamento"; bloco "Nota de origem de cada item" ("Origem: <chave>", "Item na origem", "Informe o número do item na nota de origem"). **Complementar**: menu "Gerar nota complementar"; "Chave da NF-e original (complementar)"; "Contar esta nota no Estoque Fiscal"; itens vazios.
 - **Lista**: menu da autorizada: "Visualizar", "Download XML", "Download DANFE", "Comprovante (Notinha)", "Carta de Correção", "Gerar nota complementar", "Histórico", "Cancelar"; clique na linha: "Detalhes da Nota Fiscal #N"; busca, período ("Todos os tempos"), "Filtros", abas "Produção" / "Homologação". **CC-e**: "1 CC-e enviada", "PDF", "XML", "✅ Registrada na SEFAZ · protocolo ...". **Inutilizar**: item "Prazo SEFAZ: até dia 10 do mês seguinte ao pulo"; aba "Inutilizar Rejeitadas" ("Nenhuma nota rejeitada nessa empresa.").
 - **Notas recebidas**: menu com os grupos "Financeiro" ("Lançar despesa / conta", "Pendurar no saldo do fornecedor", "Lançar compra…", "Contar no estoque fiscal") e "Manifestar".
+
+## 16. O que mudou no 1.60.18 (lido no código em 20/11; handoff fiscal de 19/11)
+- Menu Fiscal & Ambiental: "Estoque Fiscal" e "Relatórios Fiscais" viraram um item só, **"Relatório/Estoque Fiscal"**
+  (`config/routes.ts:510`; sete abas, assunto da T17).
+- Configuração Fiscal › Empresa › "Endereço Fiscal", no CNPJ padrão (`is_default`): **"Usar o endereço do cadastro da empresa"** /
+  **"Este CNPJ tem endereço próprio"** (`EmpresaSection.tsx:420-440`); com o cadastro, o botão "Editar em Configurações › Empresa".
+  Erros no próprio campo ("CNPJ inválido. Confira os números." etc.), IE de tamanho incomum só em âmbar (1.60.16).
+- Nota: o seletor "Ambiente" ("Produção" / "Homologação") aparece para todos, mas a nota de teste é liberada por CNPJ: **não
+  anunciar**. Toda nota nova abre em "Produção" (`NovaNotaModal.tsx:1283`).
+- Aba "Pré-visualização": no alto, **"Prévia real desta nota"** (abas "DANFE" / "XML", "Ver a DANFE desta nota", "Salva o rascunho e
+  gera a prévia. Não emite a nota."; `DanfeRealPreview.tsx`); embaixo, **"Resumo para conferência"** ("Conferência rápida enquanto
+  você preenche. O documento fiel é a DANFE acima."; `NovaNotaModal.tsx:8471`) e o desenho com "SEM VALOR FISCAL". Ao sair de
+  uma nota salva pela prévia: "Sair desta nota?".
+- Reemissão de rejeitada: o botão do rodapé é **"Reemitir NF-e"** (não "Emitir Nota"; `NovaNotaModal.tsx:8713`).
+- Cancelamento: selo **"Cancelamento enviado"** e, no menu, "Cancelamento enviado, aguardando a SEFAZ" enquanto a SEFAZ não confirma
+  (`NotaFiscalTable.tsx:138`, `:498`; 1.60.15).
+- Carta de Correção: o botão "PDF" da lista só existe com `fiscal_provider` diferente de `direct` (`CartaCorrecaoDialog.tsx:231`);
+  "XML" sempre. Limite de 20 por nota (`:33`, `:213`).
+- Devolução: o aviso do item sem número diz "Abra a DANFE da nota original e copie o número da coluna Item de cada produto."
+  (`NovaNotaModal.tsx:7572-7576`).
+- Comprovante (Notinha): RPC `get_invoice_for_print` + PDF térmico gerado no app (`utils/invoiceSummaryThermalGenerator.ts`), na aba
+  nova (ou direto na térmica, com a impressão direta ligada).
+- DANFE: o PDF de verdade vem do motor fiscal externo; o backend falso devolve um PDF fictício simplificado. Modelo novo (NT
+  2026.010) só em produção para notas emitidas a partir de 01/12/2026: não mostrar como o atual.

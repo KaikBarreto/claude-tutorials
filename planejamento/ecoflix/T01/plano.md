@@ -7,13 +7,13 @@
   logo, CNPJ, contato, endereço, número do pedido, frase do comprovante, preferências do pátio e a condição 30/60/90.
 - **Pré-requisito:** T0. Cartão "Antes: Bem-vindo ao EcoSistema".
 - **Próximo:** T2. Cartão "Próximo: Usuários e permissões".
-- **Duração:** alvo da fonte ~18 min; a fala natural dá ~15 min de voz (2.351 palavras, ver `roteiro.md`), ~17 min de
-  vídeo com as 13 vinhetas e o tempo das ações.
-- **Base:** `T01/inventario.md` (código 1.59.154). App no tema claro, desktop (janela 1280×800, como na Domiflix).
+- **Duração:** alvo da fonte ~18 min; com a cobertura completa do 1.60.18 (pedido do Kaik, 19/11: aula única, pode ficar mais
+  longa) a fala dá ~21,5 min de voz (3.348 palavras, ver `roteiro.md`), ~27 min de vídeo com as 15 vinhetas e o tempo das ações.
+- **Base:** `T01/inventario.md` (código 1.59.154, mais a seção "Revisão 1.60.18" no fim) e `T01/cobertura_160.md`. App 1.60.18 no tema claro, desktop (janela 1600×900, 16:9, escolha do Kaik).
 - **FAKE_NOW:** `2026-11-10T08:30:00-03:00` em todos os capítulos (os exemplos do "Formato do número" saem com 11/26).
 - 🔒: só o White Label, como menção (a aula inteira é a T27). Nada de preço de plano.
 
-## Capítulos (os 12 da fonte, na ordem; cap00 abertura e cap13 recapitulando)
+## Capítulos (os 12 da fonte, na ordem, mais 2 novos no 1.60.18; cap00 abertura e cap15 recapitulando)
 
 | # | Vinheta (área / título) | O que a tela mostra | Estado de partida | Duração |
 |---|---|---|---|---|
@@ -26,16 +26,19 @@
 | 6 | EMPRESA / Contato e endereço | "Informações de Contato" (troca o e-mail); "Exibir nos documentos" + [ILUSTRAÇÃO: cadastrado × impresso]; CEP → endereço; "Prévia no comprovante" sem o complemento. | `apos-cap05` | 1:50 |
 | 7 | PEDIDOS / Numeração de pedidos | "Reinício da numeração", "Formato do número" (Barras, Zeros, volta ao Padrão), "Numeração separada para compras e vendas" (abre e cancela); 2 ilustrações. | `apos-cap06` | 1:45 |
 | 8 | COMPROVANTE / A frase do comprovante | "Frase Personalizada" + "No comprovante", "Alinhar à esquerda"; [ILUSTRAÇÃO: o comprovante]; "Salvar alterações". | `apos-cap06` | 1:00 |
-| 9 | USABILIDADE / O jeito do pátio | Inverter os termos (🚫), "Multi-Caixas", "Formato do Comprovante", "Forma de Pagamento Padrão", "Arredondar Pagamentos", "Impureza/Tara Desconta no Valor" (⚠️), "Lucro no Comprovante", "Exigir cliente/fornecedor no Ticket de Pesagem"; 2 ilustrações. Só mostra, não muda. | `apos-cap08` | 2:40 |
-| 10 | PAGAMENTO / Condições de pagamento | "Nova condição" → "30/60/90 dias", "Definir como condição padrão", desmarca "À vista", 3 parcelas, "Soma dos percentuais" 100% → "Criar condição"; [ILUSTRAÇÃO: 30/60/90]. | `apos-cap08` | 1:40 |
-| 11 | APARÊNCIA / Aparência e atalhos | "Menu Superior" e volta, "Menu (lateral e superior)", "Tema Escuro" e volta; "Atalhos"; Ctrl+K e a busca "cobre". | `apos-cap10` | 1:20 |
-| 12 | SEGURANÇA / Senha, termos e Zona de Perigo | "Alterar Senha" (abre e cancela), "Ver Contrato" ("Aceito em", "Baixar PDF", "Fechar"), "Zona de Perigo" → "Zerar Sistema" → "Sim, continuar" → janela mostrada com calma → "Cancelar". | `apos-cap10` | 1:30 |
-| 13 | RESUMO / Recapitulando | Montagem dos trechos; "Próximo: Usuários e permissões". | (reaproveita) | 0:50 |
+| 9 | USABILIDADE / O jeito do pátio | Inverter os termos (🚫), "Multi-Caixas", "Formato do Comprovante", "Mostrar jogos nos pedidos", "Forma de Pagamento Padrão", "Permitir Edição de Itens", "Arredondar Pagamentos", "Múltiplas Tabelas de Preço", "Impureza/Tara Desconta no Valor" (⚠️), "Lucro no Comprovante"; 2 ilustrações. Só mostra, não muda. | `apos-cap08` | 3:10 |
+| 10 | COMPROVANTE / O comprovante do seu jeito (novo) | "Mostrar só peso líquido", "Assinaturas no comprovante" e "Quem assina" (liga, escolhe "Só o cliente/fornecedor", desliga no fim), "Marca de ticket não valorizado" e "QR de fotos" (só passa), "Estilo do comprovante térmico" ("Nome em destaque" e volta); 1 ilustração. | `apos-cap08` (termina igual) | 2:10 |
+| 11 | USABILIDADE / Ticket, idioma e guia (novo) | "Exigir cliente/fornecedor no Ticket de Pesagem", "Permitir forma de pagamento no ticket" (só passa), "Regionalização" ("Idioma do Sistema" abre e fecha, "Moeda do Sistema"), "Agenda", "Reativar guia de configuração"; 1 ilustração. | `apos-cap08` | 1:20 |
+| 12 | PAGAMENTO / Condições de pagamento | A lista já tem "À vista" (padrão); "Nova condição" → "30/60/90 dias", "Definir como condição padrão", desmarca "À vista", 3 parcelas, "Soma dos percentuais" 100% → "Criar condição"; a estrela "Padrão" da "À vista"; [ILUSTRAÇÃO: 30/60/90]. | `apos-cap08` | 2:00 |
+| 13 | APARÊNCIA / Aparência e atalhos | "Menu Superior" e volta, "Menu (lateral e superior)", "Tema Escuro" e volta; "Atalhos" com a chave "Atalhos de Teclado" e as "Dicas"; Ctrl+K, "Ações Rápidas" e a busca "cobre". | `apos-cap12` | 1:40 |
+| 14 | SEGURANÇA / Senha, termos e Zona de Perigo | "Alterar Senha" (abre e cancela), "Ver Contrato" ("Aceito em", "Baixar PDF", "Fechar"), "Histórico de Exclusões" (só passa), "Zona de Perigo" → "Zerar Sistema" → "Sim, continuar" → as dez caixas, desmarca e marca duas → "Cancelar". | `apos-cap12` | 2:10 |
+| 15 | RESUMO / Recapitulando | Montagem dos trechos; "Próximo: Usuários e permissões". | (reaproveita) | 0:55 |
 
 Transições faladas: 0→1 "Vamos criar a conta"; 1→2 "Lembra desse cartão"; 2→3 "Conta criada, agora é entrar"; 3→4 "E se
 um dia você esquecer a senha?"; 4→5 "Agora, os dados da empresa"; 5→6 "Logo abaixo ficam o contato e o endereço"; 6→7 "Cada
-compra e cada venda ganha um número"; 7→8 "Agora, a frase do comprovante"; 8→9 "Agora, a aba Usabilidade"; 9→10 "as
-Condições de Pagamento"; 10→11 "Na aba Aparência"; 11→12 "Pra fechar, a parte de baixo da aba Empresa".
+compra e cada venda ganha um número"; 7→8 "Agora, a frase do comprovante"; 8→9 "Agora, a aba Usabilidade"; 9→10 "Ainda na
+Usabilidade, três ajustes"; 10→11 "Pra fechar a aba Usabilidade"; 11→12 "as Condições de Pagamento"; 12→13 "Na aba Aparência"; 13→14 "Pra fechar,
+a parte de baixo da aba Empresa".
 
 **Cuidados da fonte na fala**
 
@@ -64,8 +67,8 @@ Condições de Pagamento"; 10→11 "Na aba Aparência"; 11→12 "Pra fechar, a p
 | Logo e ícone | `recicla-vale-logo.png` (horizontal, ~600×240, fundo transparente) e `recicla-vale-icone.png` (1:1, 128×128): marca fictícia (símbolo próprio + "Recicla Vale Metais"), sem lembrar o símbolo de reciclagem do EcoSistema nem marca real |
 | Frase do comprovante | "Obrigado pela parceria! Atendemos de segunda a sexta, das 7h às 17h." (68 caracteres; junção: sem sábado, como o histórico), "No comprovante" ligado, centralizada |
 | Numeração | padrão: "Nenhum (segue direto)", "#{NUM}", contagem única (o T1 mostra as opções e volta ao padrão) |
-| Condição de pagamento | "30/60/90 dias", padrão, ativa: 30 dias 33,33%, 60 dias 33,33%, 90 dias 33,34% |
-| Usabilidade (sem mudança) | "Multi-Caixas" ligado; cofre ligado; "Formato do Comprovante" Térmico nos dois; "Forma de Pagamento Padrão" "Perguntar sempre"; "Permitir Edição de Itens" e "Múltiplas Tabelas de Preço" ligados; arredondar desligado; "Impureza/Tara Desconta no Valor" ligado; "Lucro no Comprovante" desligado; "Exigir cliente/fornecedor no Ticket de Pesagem" desligado; termos não invertidos |
+| Condição de pagamento | Na partida: só "À vista" (padrão, 1 parcela, 0 dias; decisão da junção 18/11, só nesta aula). O cap12 cria "30/60/90 dias", padrão, ativa (30 dias 33,33%, 60 dias 33,33%, 90 dias 33,34%) e a "À vista" deixa de ser a padrão. O app real semeia 6 condições em empresa nova (À vista, 30 dias, 60 dias, 90 dias, 30/60 e 30/60/90); o mundo mostra só a "À vista" para a aula ensinar a criar uma. |
+| Usabilidade (sem mudança; o cap10 liga e desliga as assinaturas, e o estilo térmico vai a "Nome em destaque" e volta) | "Assinaturas no comprovante" desligada (`receipt_signature_mode` "both"), "Mostrar só peso líquido" desligado, estilo "Compacto"; idioma do Rafael `pt-BR`; "Multi-Caixas" ligado; cofre ligado; "Formato do Comprovante" Térmico nos dois; "Forma de Pagamento Padrão" "Perguntar sempre"; "Permitir Edição de Itens" e "Múltiplas Tabelas de Preço" ligados; arredondar desligado; "Impureza/Tara Desconta no Valor" ligado; "Lucro no Comprovante" desligado; "Exigir cliente/fornecedor no Ticket de Pesagem" desligado; termos não invertidos |
 | Termos | `profiles.terms_accepted_at` do Rafael = 03/08/2026 08:47:12 (a conta "nasceu" no começo do histórico; a fala não lê a data) |
 | OTP do cap04 | 481207 |
 
@@ -76,8 +79,9 @@ desligada R$ 150,00 (200 kg), estoque 190 kg nos dois; Fundição Bandeira do Va
 **Sementes:** `inicio` = mundo base com a empresa **como sai de um cadastro novo** (nome, e-mail do Rafael e telefone;
 sem CNPJ, endereço, logo, ícone, frase nem condição de pagamento), o resto do mundo como está; `apos-cap05` (+ logo, ícone,
 CNPJ); `apos-cap06` (+ e-mail de contato, endereço, prévia sem complemento; serve ao 7 e ao 8); `apos-cap08` (+ frase;
-serve ao 9 e ao 10); `apos-cap10` (+ condição 30/60/90; serve ao 11 e ao 12). O estado final (`apos-cap12` = `apos-cap10`) é a
-identidade da empresa que todas as outras aulas usam: consolidar no `MUNDO_FICTICIO.md` e nas sementes base.
+serve aos caps 9, 10, 11 e 12); `apos-cap12` (+ condição 30/60/90 padrão, "À vista" sem o selo; serve aos caps 13 e 14). `inicio` traz as cinco chaves
+"Exibir nos documentos" ligadas, a do 2º endereço desligada e a condição "À vista". O estado final (`apos-cap12`) é a
+identidade da empresa que as outras aulas usam (menos a "À vista" extra, que só existe aqui): consolidar no `MUNDO_FICTICIO.md` e nas sementes base.
 
 ## Gravação
 
@@ -99,9 +103,12 @@ identidade da empresa que todas as outras aulas usam: consolidar no `MUNDO_FICTI
 - **Chegada no sistema limpa** (caps 3 a 12): sem a janela "Personalize sua experiência", sem o aceite de termos, sem lembrete
   da EcoFlix, sem aviso de versão nova, sem NPS. O trocador de contas do cap03 precisa do login pelo formulário (é ele que
   salva a sessão); não injetar sessão nesse capítulo.
-- **Nada destrutivo:** "Zerar Sistema" só aberto e cancelado (RPCs `reset_company_*` nunca chamadas); "Alterar Senha" (logado)
-  abre e cancela; "Numeração separada" abre e cancela; nenhuma chave da Usabilidade muda.
-- **Arquivos do `public/`:** a cópia 1.59.154 só tem `src/` (sem `public/`): o painel do login usa `/guia-tecnico/img/t6-caixa.jpg`,
+- **Nada destrutivo:** "Zerar Sistema" só aberto e cancelado (RPCs `reset_company_*` nunca chamadas; as caixas desmarcadas voltam a marcadas); "Alterar Senha" (logado)
+  abre e cancela; "Numeração separada" abre e cancela; "Segundo endereço" abre e cancela; no fim da Usabilidade nada fica mudado (as
+  assinaturas ligadas no cap10 são desligadas de novo, o estilo térmico volta a "Compacto").
+- **Senha do ambiente (`TUT_SENHA`)**: 8+ caracteres com número, letra minúscula, maiúscula e caractere especial (por exemplo `ReciclaVale#26`), senão o
+  indicador do cap01 não chega em "Senha forte" e a fala desmente a tela.
+- **Arquivos do `public/`** (no 1.60.18 o build já os traz): a cópia 1.59.154 só tinha `src/` (sem `public/`): o painel do login usa `/guia-tecnico/img/t6-caixa.jpg`,
   `/guia-tecnico/img/t9-pedidos.jpg` e `/images/Logo 3D EcoSistema.png`. Copiar o `public/` do commit `f37573ea0` no
   `setup-app`, ou a imagem sai quebrada no plano geral.
 - **Ilustrações** (cenas HTML no estilo da marca, `docs/09-aula-ilustrada.md`; nenhuma imita tela do app): cap00 comprovante sem
