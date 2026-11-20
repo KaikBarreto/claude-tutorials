@@ -24,10 +24,12 @@
 ```bash
 cd /home/claude/ecoflix
 FAKE_NOW=2026-11-10T08:30:00-03:00 FAKE_PORT=54316 bash rec/run.sh fake
-bash rec/t16/t16_lote160.sh 0 1 2 ... 24 --completo 15 16 20   # rápido em ordem (a cadeia de sementes depende da ordem), depois completos
+bash rec/t16/t16_lote160.sh --junto 0 1 2 ... 24 --completo 15 16 20   # rápido em ordem (a cadeia de sementes depende da ordem), depois completos
 cat rec/t16/_ens/_lote.txt rec/t16/_lote.txt                    # uma linha por capítulo; resumo em t16-capNN.resumo.txt
 FAKE_PORT=54316 bash rec/run.sh down
 ```
 
 ## Estado dos ensaios
-Lote 1 de 20/11 (1.60.22) lançado atrás do build do 1.60.22 na fila: todos no rápido + completos 15, 16, 20. Resultado: (pendente)
+- Lote 1 (20/11, 1.60.22, uma senha da fila por capítulo): morreu nas 2 h com só cap00 e cap01 feitos (rápido, 0 falho); cada
+  capítulo esperava ~50 min na fila.
+- Lote 2 (`--junto`, uma senha só): 2 a 24 no rápido + completos 15, 16, 20. Resultado: (pendente)

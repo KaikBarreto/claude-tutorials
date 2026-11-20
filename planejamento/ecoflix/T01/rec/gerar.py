@@ -906,7 +906,7 @@ def cap10():
     rola_ate(c, 'Assinaturas no comprovante', at=c.A(11, 'desligo', 1.0), label='sobe às Assinaturas no comprovante', y=260, dur_ms=900, escopo='main')
     c.click(CHAVE('Assinaturas no comprovante'), at=c.A(11, 'assinaturas.', 0.8), label='desliga Assinaturas no comprovante')
     c.waitfor(text='Assinaturas removidas do comprovante', timeout=8)
-    c.confere_ausente('main', 'Quem assina', 'sem "Quem assina" (assinaturas desligadas)')
+    c.confere_ausente('main', 'Só o cliente/fornecedor', 'sem o seletor Quem assina (assinaturas desligadas)')
     c.fim()
     return c
 

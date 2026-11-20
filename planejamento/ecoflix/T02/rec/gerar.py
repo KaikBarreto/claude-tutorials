@@ -300,7 +300,12 @@ def stable_id(chave):
 
 
 RAFAEL = stable_id('user.rafael')
-VERSAO = '1.60.18'
+# a versão "já vista" é a do build servido (app/dist/.versao-app): com o login pela tela (anonymous) o gravador não acerta o storage
+# sozinho, e versão antiga aqui traz o aviso "Sistema atualizado" para dentro do vídeo (20/11: build 1.60.22, roteiro 1.60.18)
+try:
+    VERSAO = open(os.path.join(TUT_HOME, 'app', 'dist', '.versao-app'), encoding='utf8').read().strip() or '1.60.18'
+except OSError:
+    VERSAO = '1.60.18'
 HOJE = FAKE_NOW[:10]
 # Capítulo "anonymous": o robô abre o app sem sessão e o setup entra pela tela de login com $TUT_USER e $TUT_SENHA do ambiente (o
 # valor nunca vai para arquivo nem log). Sem a sessão pronta do robô, o localStorage que ele poria vai aqui: versão já vista,
