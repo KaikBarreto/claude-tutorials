@@ -4,6 +4,21 @@ O Kaik aprovou o estilo v3 (18/11: "Ficou ótimo a prévia da animação"): um m
 gradientes = mundo físico; escuro de vidro = mundo dos dados), câmera contínua entre estações, 3D quando ajuda.
 **Tarefa**: as ilustrações da sua aula no kit v3, poucas e boas. Sem aprovação no meio: termine e relate.
 
+## Valem por cima de tudo abaixo (20/11)
+- **16:9**: a gravação é 1600x900 e as cenas renderizam com `--larg 1422 --dsf 1.35` (1920x1080); auditoria com
+  `auditar.cjs --aula planejamento/ecoflix/Tnn --larg 1422`; depois do render, `python3 -I perfis/ecoflix/cenas_v3/piscadas.py
+  <mp4>` (sai com 1 se algo some e volta). Leia a seção "16:9 (19/11)" do `LEIA.md`. A margem de 40 px vale no quadro 1422x800.
+- **Comprovante e PDF na tela** (pedido do Kaik, 19/11): toda entrada `"tipo": "comprovante"` / `"cena": "pdf"` vira cena com
+  o PAPEL REAL, sem redesenho, no molde de `planejamento/ecoflix/T08/cenas_v3/comprovante.html` (câmera passeando, marca-texto
+  verde nos campos que a voz cita, título que sai antes do mergulho). O PDF vem do robô: no `$TUT_HOME/rec/tNN/`, o
+  `tNN-capMM.actions.json` do ensaio traz o PDF devolvido (veja como a T08 extraiu em `$TUT_HOME/t08/edit/` e
+  `planejamento/ecoflix/T08/cenas/ilustracoes.json`, chave `anexo`); rasterize com `pdftoppm -r 720` e tire as coordenadas com
+  `pdftotext -bbox` (1,5 px por pt). Arquivos de imagem ficam FORA do git (`$TUT_HOME/tNN/edit/out/comprovantes/`), passados ao
+  render com `--anexo`. Se o capítulo ainda não tem o PDF no ensaio, deixe a entrada como pendente e diga no relatório.
+- **Tempos**: a voz real pode não ter chegado. Monte as âncoras por palavra (`W(linha, 'palavra')`) sobre os tempos
+  estimados de `cenas/tempos/`; com a voz real o coordenador só re-renderiza. Não prenda nada a segundos fixos.
+- **Meta**: as cenas são a parte mais vista da aula depois da tela; capricho vale mais que quantidade.
+
 ## Ler (só isto)
 - `perfis/ecoflix/cenas_v3/LEIA.md` (API, objetos, componentes de dados, regra dos climas, exemplo) e a cena aprovada
   `planejamento/ecoflix/T08/cenas_v3/cena.html` (o padrão de qualidade e de câmera).

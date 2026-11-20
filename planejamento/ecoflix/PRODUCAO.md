@@ -1086,3 +1086,6 @@ Decisões:
   lugar de "Estoque Fiscal" e "Relatórios Fiscais"); 1 linha de fala (cap06: "...os documentos ambientais e o relatório e
   estoque fiscal."). Lote de 36 rápidos + completos 06, 07, 06b rodando (`rec/t00/_ens/lote_*.log`, LOTE-FIM); instância 54300
   fica de pé até o fim. Cupom 58 mm sem nome do material: bug do app confirmado (handoff T07, item 2).
+- 20/11 14:47 **Kaik liberou o Fable**. Uso: ilustrações v3 em 16:9 das aulas com voz pronta (a maior fatia que falta), uma
+  aula por ajudante Fable, começando por T02 e T06; `_BRIEF_CENAS_V3.md` ganhou o bloco de 20/11 (16:9, piscadas, comprovante
+  com o papel real tirado do PDF do robô, âncoras por palavra sobre os tempos estimados). Sonnet segue nas adaptações; Opus na T16.
