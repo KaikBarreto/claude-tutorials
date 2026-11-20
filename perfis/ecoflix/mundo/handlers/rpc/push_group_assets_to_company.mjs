@@ -2,7 +2,7 @@
 // catálogo: o de mesmo nome na filial só é atualizado (e contado) se estiver arquivado, sem preço, sem código ou sem NCM, ou com "Sobrescrever
 // preços"; o que falta é criado com os preços da tabela padrão do grupo; os dois casos ganham o vínculo. 2) Com "Tabelas de Preço" (ou
 // materiais + sobrescrever): a tabela PRINCIPAL da filial recebe os preços da tabela padrão do grupo e, com "Tabelas de Preço", os materiais
-// também (como o SQL faz, mesmo sem a chave). 3) Categorias que faltam (nome + tipo). 4) As outras tabelas do grupo (cria as que faltam).
+// também, só onde a filial não tem preço (ou com a chave). 3) Categorias que faltam (nome + tipo). 4) As outras tabelas do grupo (cria as que faltam).
 // 5/6) Clientes e fornecedores compartilhados que faltam (pelo nome). 7) group_push_audit. Devolve as contagens ("n novo(s)").
 import { exigeDono, agora } from '../../lib/grupo.mjs';
 import { num } from '../../lib/eco.mjs';
@@ -62,7 +62,9 @@ export default (a, ctx) => {
   }
   const upsertItem = (tabId, mat, pc, pv) => {
     const ex = store.rows('price_table_items').find((i) => i.price_table_id === tabId && i.material_id === mat.id);
-    if (ex) Object.assign(ex, { purchase_price: pc, sale_price: pv, updated_at: iso });
+    // 1.60.22 (20261120001000): sem "Sobrescrever", preço > 0 que a filial já tem fica; zerado/vazio recebe o da matriz (campo a campo)
+    if (ex) Object.assign(ex, { purchase_price: sobrescreve || !num(ex.purchase_price) ? pc : ex.purchase_price,
+      sale_price: sobrescreve || !num(ex.sale_price) ? pv : ex.sale_price, updated_at: iso });
     else db.insert('price_table_items', { price_table_id: tabId, material_id: mat.id, purchase_price: pc, sale_price: pv, is_override: false, created_at: iso, updated_at: iso });
   };
   if (padrao && (pTab || (pMat && sobrescreve))) {
@@ -76,7 +78,10 @@ export default (a, ctx) => {
     if (pTab) {
       for (const it of itensGrupo(padrao.id)) {
         const gm = gmPorId.get(it.group_material_id);
-        for (const m of matsAlvo().filter((x) => gm && k(x.name) === k(gm.name) && !x.is_archived)) { m.purchase_price = it.purchase_price; m.sale_price = it.sale_price; }
+        for (const m of matsAlvo().filter((x) => gm && k(x.name) === k(gm.name) && !x.is_archived)) {
+          if (sobrescreve || !num(m.purchase_price)) m.purchase_price = it.purchase_price;   // 1.60.22: espelho com a mesma proteção
+          if (sobrescreve || !num(m.sale_price)) m.sale_price = it.sale_price;
+        }
       }
     }
     store.table('price_table_items').touch();
