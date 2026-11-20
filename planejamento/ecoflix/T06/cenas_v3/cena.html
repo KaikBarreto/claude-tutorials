@@ -60,23 +60,23 @@ function dinheiroDoDia() {
     tse = W(1, 'se'), tnb = W(1, 'bate'), tdif = W(1, 'diferenca'), ten = W(2, 'entao'), tab = W(2, 'abre'), tfe = W(2, 'fecha'), ton = W(2, 'onde'), tdi2 = W(2, 'dinheiro'), tfim = W(2, 'aberto', 1, 'e');
   chipAmbar(); piso({ r: 28, x: 0, z: 0, passo: 1.3 }); U.uNevoa.value.set(.955, .975, .965, .8); ceuClaro({ halo: [.4, 3.2, -13] });
   const REG = registradora(CENA, [0, 0, 0], { s: 3.2, cupom: false }), GAV = [0, .42, 1.15];
-  // o catador: vem da direita por trás do caixa, para, vende e segue para a esquerda (a passada fecha inteira nas duas paradas)
-  const ZC = -2.1, XS = 4.5, PASSO = PI / 5.2, X0 = XS + 12 * PASSO, X1 = XS - 30 * PASSO, tv0 = tno - 1.7, tv1 = tsu - .1, ts0 = tse + .35, ts1 = ts0 + 7.2;
-  const CAR = carroca(CENA, [X0, 0, ZC], { carga: 'misto', n: 30 }); CAR.rotation.y = PI;
-  const CAT = pessoa(CENA, [X0 - 1.95, 0, ZC], { camisa: '#C8664A', bone: '#3E4A59' }); CAT.rotation.y = PI;
-  const PIL = monte(CENA, [2.25, 0, .15], { tipo: 'misto', n: 30, r: .8, h: .5, s: .78 });
+  // o catador: vem da esquerda por trás do caixa, para, vende e segue para a direita (a passada fecha inteira nas duas paradas)
+  const ZC = -2.1, XS = 3.6, PASSO = PI / 5.2, X0 = XS - 20 * PASSO, X1 = XS + 20 * PASSO, tv1 = tsu - .1, tv0 = tv1 - 4.4, ts0 = tse + .35, ts1 = ts0 + 5.6;
+  const CAR = carroca(CENA, [X0, 0, ZC], { carga: 'misto', n: 30 });
+  const CAT = pessoa(CENA, [X0 + 1.95, 0, ZC], { camisa: '#C8664A', bone: '#3E4A59' });
+  const PIL = monte(CENA, [2.3, 0, .1], { tipo: 'misto', n: 30, r: .8, h: .5, s: .78 });
   const notas = [0, 1, 2].map(i => cedula(CENA, [0, -9, 0], { w: .56, cor: ['#A6E3BF', '#8FD7AD', '#BDEBD0'][i] }));
-  const COF = cofre(CENA, [-4.1, 0, -.1], { s: 1.25 }); COF.rotation.y = .2;
-  const CH = (html, pos, o = {}) => plano(html, { pos, rot: ROTC, esc: .0105, anc: [.5, 1], ...o });
+  const COF = cofre(CENA, [-4.3, 0, -.1], { s: 1.25 }); COF.rotation.y = .2;
+  const CH = (html, pos, o = {}) => plano(html, { pos, rot: ROTC, esc: .012, anc: [.5, 1], ...o });
   const chRV = CH(htmlChip(`${ic('map-pin', 18)}Recicla Vale Metais`), [0, 2.05, 0]);
   const chCo = CH(htmlChip(`${ic('shopping-cart', 18)}compra de sucata`, 'n'), [X0, 2.2, ZC]);
-  const chDv = CH(htmlChip(`${ic('banknote', 18)}dinheiro vivo`), [1.35, 2.55, -.6]);
+  const chDv = CH(htmlChip(`${ic('banknote', 18)}dinheiro vivo`), [2.7, 2.8, -.9]);
   const chDf = CH(htmlChip(`${ic('circle-help', 18)}a diferença?`, 'am'), [0, 2.05, 0]);
-  const chAb = CH(htmlChip(`${ic('lock-open', 18)}abre com quanto?`), [-1.75, 2.1, .2]), chFe = CH(htmlChip(`${ic('lock', 18)}fecha com quanto?`, 'n'), [1.75, 2.1, .2]);
+  const chAb = CH(htmlChip(`${ic('lock-open', 18)}abre com quanto?`), [-1.5, 2.05, .2]), chFe = CH(htmlChip(`${ic('lock', 18)}fecha com quanto?`, 'n'), [1.5, 2.05, .2]);
   const tit = titulo('Caixa', 'O dinheiro do dia');
-  const A1 = { x: 0, y: 1.1, z: .3, d: 11.2, az: .14, el: .2 }, A2 = { x: 2.0, y: 1.1, z: -.4, d: 15.4, az: .07, el: .2 }, A3 = { x: .1, y: 1.1, z: .3, d: 11.8, az: .1, el: .2 }, A4 = { x: -1.95, y: 1.15, z: .2, d: 13.8, az: .13, el: .2 };
-  camera([[t0 - 3, A1], [tno - .9, { ...A1, d: 10.9, az: .12 }, 'lin'], [tno + .6, A2], [tse - .1, { ...A2, d: 15.1, az: .05 }, 'lin'], [tse + 1.4, A3], [ton - .5, { ...A3, d: 11.5, az: .08 }, 'lin'], [ton + .9, A4],
-    [tfim + 2.5, { ...A4, d: 13.5, az: .11 }, 'lin']]);
+  const A1 = { x: 0, y: 1.25, z: .3, d: 9.4, az: .14, el: .2 }, A2 = { x: 2.6, y: 1.4, z: -.6, d: 13.4, az: .06, el: .2 }, A3 = { x: .9, y: 1.3, z: .2, d: 10.6, az: .1, el: .2 }, A4 = { x: -1.6, y: 1.35, z: .2, d: 12.8, az: .13, el: .2 };
+  camera([[t0 - 3, A1], [tno - .9, { ...A1, d: 9.2, az: .12 }, 'lin'], [tno + .6, A2], [tse - .1, { ...A2, d: 13.1, az: .04 }, 'lin'], [tse + 1.4, A3], [ton - .5, { ...A3, d: 10.3, az: .08 }, 'lin'], [ton + .9, A4],
+    [tfim + 2.5, { ...A4, d: 12.5, az: .11 }, 'lin']]);
   return t => {
     GL.style.opacity = eo(pr(t, t0 + .08, .5)).toFixed(3); posTitulo(tit, t, t0 - .9, t0 - .45);
     // a gaveta: aberta no "dinheiro do dia", fecha quando o caixa "não bate"; depois abre e fecha na fala
@@ -84,12 +84,12 @@ function dinheiroDoDia() {
     REG.userData.visor(t > tnb - .05 && t < ten + .1 ? '?' : '');
     // o catador e a carroça
     const x = t < ts0 ? lerp(X0, XS, 1 - Math.pow(1 - pr(t, tv0, tv1 - tv0), 2.2)) : lerp(XS, X1, eio(pr(t, ts0, ts1 - ts0)) * .5 + pr(t, ts0, ts1 - ts0) * .5);
-    CAR.position.x = x; for (const r of CAR.userData.rodas) r.rotation.z = x / CAR.userData.R; CAT.position.x = x - 1.95; CAT.userData.anda((X0 - x) * 5.2, -.42);
-    const vend = t >= tsu - .25; for (const l of CAR.userData.lotes) l.visible = !vend; cai(PIL, t, tsu - .25, { d: .8, alt: 1.6 });
+    CAR.position.x = x; for (const r of CAR.userData.rodas) r.rotation.z = -x / CAR.userData.R; CAT.position.x = x + 1.95; CAT.userData.anda((x - X0) * 5.2, -.42);
+    const vend = t >= tsu - .25; for (const l of CAR.userData.lotes) l.visible = !vend; PIL.visible = vend; cai(PIL, t, tsu - .25, { d: .8, alt: 1.6 });
     // as cédulas saem da gaveta para a mão do catador
-    const MAO = [XS - 2.35, 1.0, ZC + .25];
-    notas.forEach((n, i) => { const a = tpg - .1 + i * .26, p = pr(t, a, .75), on = p > 0 && p < 1; n.visible = on; if (!on) return;
-      const q = arco(GAV, MAO, eio(p), 1.35); n.position.set(q[0], q[1], q[2]); n.rotation.set(.5 * Math.sin(p * PI), p * 4 + i, .9 * Math.sin(p * PI * 2)); n.scale.setScalar(Math.min(1, 6 * p, 5 * (1 - p))); });
+    const MAO = [XS + 1.7, 1.0, ZC + .25];
+    notas.forEach((n, i) => { const a = tpg - .1 + i * .26, p = pr(t, a, .9), on = p > 0 && p < 1; n.visible = on; if (!on) return;
+      const q = arco(GAV, MAO, eio(p), 1.5); n.position.set(q[0], q[1], q[2]); n.rotation.set(.5 * Math.sin(p * PI), p * 4 + i, .9 * Math.sin(p * PI * 2)); n.scale.setScalar(Math.min(1, 6 * p, 5 * (1 - p))); });
     // rótulos
     vis(chRV.e, t, trv - .1, tnb - .3, { dy: 10 }); chCo.pos[0] = x; vis(chCo.e, t, tcp - .1, ts0 + .1, { dy: 10 }); vis(chDv.e, t, tdv - .1, ts0, { dy: 10, sc: .8 });
     vis(chDf.e, t, tdif - .1, ten + .1, { dy: 10, sc: .8 }); pulso(chDf.e, t, tdif + .5, .06, .8);
@@ -110,21 +110,21 @@ function diaDePix() {
   const t0 = W(4, 'agora'), trv = W(4, 'recicla'), ten = W(4, 'entrega'), tcl = W(4, 'clientes'), tpg = W(4, 'pagam'), tpix = W(4, 'pix'), tnen = W(4, 'nenhum'), tgav = W(4, 'gaveta'),
     tcx = W(5, 'caixa'), tz = W(5, 'zero'), tz2 = W(5, 'zero', 2), tfim = W(5, 'zero', 2, 'e');
   piso({ r: 36, x: 0, z: -1, passo: 1.6 }); U.uNevoa.value.set(.955, .975, .965, .8); ceuClaro({ halo: [0, 4.2, -20] });
-  const XG = -7.4, XC = 7.4, ZB = -3, RX = -2.1, RZ = 4.4;
+  const XG = -7.4, XC = 7.4, ZB = -3, RX = -1.5, RZ = 7.0;
   const GP = galpao(CENA, [XG, 0, ZB]); GP.scale.setScalar(.5); const FU = fundicao(CENA, [XC, 0, ZB]); FU.scale.setScalar(.5); const BA = banco(CENA, [0, 0, -9], { s: .52 });
   const PT = grupo(CENA, [0, 0, .3]); PT.scale.setScalar(.55); const T = caminhao(PT, { carga: 150 }), sT = mancha(8.6, 3.5, [0, 0, .15], { op: .8, pai: PT });
-  const REG = registradora(CENA, [RX, 0, RZ], { s: 5.2, cupom: false });
-  const PA = [XC - .6, 3.05, ZB], PB = [.5, 3.55, -8.2], F = fio(CENA, '#50D088', .045), luz = malha(esfera(.16), mat('#6CF0A8', { emi: 1.2, emiC: .6 }), [0, -9, 0], CENA);
-  const an = anel(2.3, [RX, 0, RZ]);
+  const REG = registradora(CENA, [RX, 0, RZ], { s: 4.6, cupom: false });
+  const PA = [XC - 1.2, 3.0, ZB], PB = [.5, 3.55, -8.2], F = fio(CENA, '#50D088', .045), luz = malha(esfera(.16), mat('#6CF0A8', { emi: 1.2, emiC: .6 }), [0, -9, 0], CENA);
+  const an = anel(2.1, [RX, 0, RZ]);
   const CH = (html, pos, o = {}) => plano(html, { pos, rot: ROTC, esc: .019, anc: [.5, 1], ...o });
-  const chRV = CH(htmlChip(`${ic('map-pin', 18)}Recicla Vale`), [XG, 3.75, ZB]), chCl = CH(htmlChip(`${ic('factory', 18)}Cliente`, 'n'), [XC - .9, 3.75, ZB]), chBa = CH(htmlChip(`${ic('landmark', 18)}Banco`, 'n'), [-1.9, 2.3, -7.6]);
-  const chPx = CH(htmlChip(`${ic('smartphone', 18)}Pix ou transferência`), [lerp(PA[0], PB[0], .5) + .3, 4.15, lerp(PA[2], PB[2], .5)]);
-  const chNe = plano(htmlChip(`${ic('ban', 18)}nenhum dinheiro vivo`, 'n'), { pos: [RX, 3.05, RZ], rot: ROTC, esc: .0165, anc: [.5, 1] });
-  const cZ = plano(htmlCartao('wallet', 'Caixa', 'abre com zero', reais(0), { res: true }), { pos: [3.1, 1.3, RZ + .5], rot: ROTC, esc: .0128 }), vZ = vaga(cZ, 190, 'rgba(47,178,113,.5)'), onZ = cZ.e.querySelector('.onda');
-  const sZ = mancha(4.6, 1.6, [3.1, 0, RZ + .4], { op: 0 });
+  const chRV = CH(htmlChip(`${ic('map-pin', 18)}Recicla Vale`), [XG, 3.75, ZB]), chCl = CH(htmlChip(`${ic('factory', 18)}Cliente`, 'n'), [XC + .7, 3.1, ZB + 2.1]), chBa = CH(htmlChip(`${ic('landmark', 18)}Banco`, 'n'), [-1.9, 2.3, -7.6]);
+  const chPx = CH(htmlChip(`${ic('smartphone', 18)}Pix ou transferência`), [lerp(PA[0], PB[0], .55), 4.45, lerp(PA[2], PB[2], .55)]);
+  const chNe = plano(htmlChip(`${ic('ban', 18)}nenhum dinheiro vivo`, 'n'), { pos: [RX, 2.7, RZ], rot: ROTC, esc: .0145, anc: [.5, 1] });
+  const cZ = plano(htmlCartao('wallet', 'Caixa', 'abre com zero', reais(0), { res: true }), { pos: [3.0, 1.2, RZ + .4], rot: ROTC, esc: .0115 }), vZ = vaga(cZ, 190, 'rgba(47,178,113,.5)'), onZ = cZ.e.querySelector('.onda');
+  const sZ = mancha(4.2, 1.5, [3.0, 0, RZ + .3], { op: 0 });
   const tit = titulo('Abertura', 'Um dia só de Pix');
-  const K1 = { x: -.6, y: 2.2, z: -1.5, d: 29.5, az: .07, el: .2 }, K2 = { x: .5, y: 2.3, z: -1.5, d: 29, az: .03, el: .2 }, K3 = { x: .25, y: 1.75, z: -.5, d: 26.6, az: .05, el: .2 };
-  camera([[t0 - 3, K1], [tpg - .5, { ...K1, x: -.2, d: 29.2, az: .06 }, 'lin'], [tpg + .9, K2], [tnen - .4, { ...K2, d: 28.7, az: .02 }, 'lin'], [tnen + 1.1, K3], [tfim + 2.5, { ...K3, d: 26.1, az: .035 }, 'lin']]);
+  const K1 = { x: -.6, y: 2.9, z: -1.5, d: 29.5, az: .07, el: .2 }, K2 = { x: .5, y: 3.0, z: -1.5, d: 29, az: .03, el: .2 }, K3 = { x: .25, y: 2.2, z: 1.2, d: 28.2, az: .05, el: .2 };
+  camera([[t0 - 3, K1], [tpg - .5, { ...K1, x: -.2, d: 29.2, az: .06 }, 'lin'], [tpg + .9, K2], [tnen - .4, { ...K2, d: 28.7, az: .02 }, 'lin'], [tnen + 1.1, K3], [tfim + 2.5, { ...K3, d: 27.7, az: .035 }, 'lin']]);
   const XA = -4.6 / .55, XB = 4.5 / .55, ta = ten - .5, tb = tcl + .5;
   return t => {
     GL.style.opacity = eo(pr(t, t0 + .08, .5)).toFixed(3); posTitulo(tit, t, t0 - .9, t0 - .45);
@@ -159,9 +159,9 @@ function cofreCaixa() {
   piso({ r: 26, x: 0, z: 0, passo: 1.3 }); U.uNevoa.value.set(.955, .975, .965, .8); ceuClaro({ halo: [-.2, 3.2, -12] });
   const SX = -2.85, RX = .15, RZ = .1, FX = [SX, RX, 3.15];
   const COF = cofre(CENA, [SX, 0, 0], { s: 1.25 }); COF.rotation.y = .16; const REG = registradora(CENA, [RX, 0, RZ], { s: 3.2, cupom: false });
-  const M = maco(CENA, [0, -9, 0], 5, { w: .6 }), PD = mundo(COF, COF.userData.boca), PG = [RX, .52, RZ + 1.05], an = anel(1.75, [SX, 0, 0]);
+  const M = maco(CENA, [0, -9, 0], 5, { w: .8 }), PD = mundo(COF, COF.userData.boca), PG = [RX, .6, RZ + 1.05], an = anel(1.75, [SX, 0, 0]);
   // a conta do dinheiro vivo: três cartões de pé, na frente
-  const FY = .64, FZ = 3.3, EC = .0064, CWD = 322;
+  const FY = .6, FZ = 4.2, EC = .006, CWD = 322;
   const cart = (i, ...a) => plano(htmlCartao(...a), { pos: [FX[i], FY, FZ], rot: ROTC, esc: EC });
   const c1 = cart(0, 'vault', 'Cofre', 'todo o dinheiro vivo', reais(TOT), { w: CWD }), c2 = cart(1, 'wallet', 'Caixa do Rafael', 'na gaveta', reais(CX), { w: CWD, cls: 'a' }),
     c3 = cart(2, 'badge-check', 'Disponível no cofre', 'fora dos caixas abertos', reais(DISP), { w: CWD, res: true });
@@ -171,9 +171,9 @@ function cofreCaixa() {
   const chS = plano(htmlChip(`${ic('monitor', 18)}No sistema: Conta Dinheiro`, 'n'), { pos: [SX - .05, 2.42, 0], rot: ROTC, esc: .0098, anc: [.5, 1] });
   const chF = plano(htmlChip(`${ic('circle-check', 18)}todo real tem um lugar`), { pos: [RX + .1, 1.95, RZ], rot: ROTC, esc: .0098, anc: [.5, 1] });
   const tit = titulo('Cofre', 'O cofre e o caixa');
-  const P1 = { x: -2.35, y: 1.2, z: .9, d: 11.4, az: .17, el: .2 }, P2 = { x: -1.3, y: 1.12, z: .9, d: 13.0, az: .11, el: .2 }, P3 = { x: .15, y: 1.05, z: .9, d: 15.4, az: .06, el: .2 };
-  camera([[t0 - 3, P1], [tab - .7, { ...P1, d: 11.1, az: .15 }, 'lin'], [tab + .7, P2], [tnao - .2, { ...P2, d: 12.7, az: .09 }, 'lin'], [tdisp - .1, P3], [tfe - .2, { ...P3, d: 15.1, az: .04 }, 'lin'],
-    [tfim + 2.5, { ...P3, d: 14.7, az: .02 }, 'lin']]);
+  const P1 = { x: -2.35, y: 1.5, z: 1.2, d: 11.2, az: .17, el: .2 }, P2 = { x: -1.3, y: 1.45, z: 1.2, d: 12.8, az: .11, el: .2 }, P3 = { x: .15, y: 1.4, z: 1.2, d: 14.8, az: .06, el: .2 };
+  camera([[t0 - 3, P1], [tab - .7, { ...P1, d: 10.9, az: .15 }, 'lin'], [tab + .7, P2], [tnao - .2, { ...P2, d: 12.5, az: .09 }, 'lin'], [tdisp - .1, P3], [tfe - .2, { ...P3, d: 14.5, az: .04 }, 'lin'],
+    [tfim + 2.5, { ...P3, d: 14.2, az: .02 }, 'lin']]);
   const tv0 = tes - .15, tv1 = tgav + .15, tr0 = tfe + .25, tr1 = tvol + .75;
   return t => {
     GL.style.opacity = eo(pr(t, t0 + .08, .5)).toFixed(3); posTitulo(tit, t, t0 - .9, t0 - .45);
@@ -231,7 +231,8 @@ function saqueSangria() {
   const chSu = X(htmlChip(`${ic('hand-coins', 18)}suprimento`, 'n'), XV1 - 14, -116, { anc: [1, .5] }), chSa = X(htmlChip(`${ic('monitor', 18)}no sistema: Saque`), XV1 - 14, -68, { anc: [1, .5] });
   const chSg = X(htmlChip(`${ic('landmark', 18)}Sangria`, 'am'), XV2 + 14, 72, { anc: [0, .5] });
   const chN = X(htmlChip(`${ic('ban', 18)}não é receita nem despesa`, 'n'), 0, 268, { anc: [0, .5] });
-  const chM = X(htmlChip(`${ic('arrow-left-right', 18)}o mesmo dinheiro mudando de lugar`), chN.w + 16, 268, { anc: [0, .5] });
+  const chM = X(htmlChip(`${ic('arrow-left-right', 18)}o mesmo dinheiro mudando de lugar`), 0, 268, { anc: [0, .5] });
+  { const x = (XR + CW - chN.w - 16 - chM.w) / 2; chN.pos[0] = x * EE; chM.pos[0] = (x + chN.w + 16) * EE; }   // a frase de baixo, centrada no desenho
   E.fundo(XR / 2 * EE + 1.6, 0, { aneis: false });
   const tit = titulo('Movimentações', 'Saque e sangria', 'escuro');
   const ret = (a, b, c, d) => [a * EE, -d * EE, c * EE, -b * EE], XF = XR + CW;
@@ -240,6 +241,7 @@ function saqueSangria() {
   camera([[t0 - 3, S1], [tba - .9, { ...S1, az: .02, d: S1.d * .985 }, 'lin'], [tba + .35, S2], [tnos - .2, { ...S2, az: -.02, d: S2.d * .985 }, 'lin'], [tnos + 1.0, S3], [tfim + 2.5, { ...S3, az: .02, d: S3.d * .985 }, 'lin']]);
   return t => {
     clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, t0 - .45);
+    [tba + .05, tct - .25, tcf + .05, tta - .15].forEach((a, i) => { G[i].style.opacity = eo(pr(t, a, .3)).toFixed(3); });   // cada fio só existe a partir da sua fala
     // o caixa do Marcos
     vis(cM.e, t, tma - .15, NUNCA, { dy: 22 }); chega(cM, vM, t, tde - .1); vis(chQ.e, t, tvi - .1, NUNCA, { dy: 10, sc: .8 }); vis(chFa.e, t, ttr - .1, NUNCA, { dy: -10, sc: .8 }); pulso(chFa.e, t, W(0, 'faltam'), .06, .8);
     // o banco e o Saque

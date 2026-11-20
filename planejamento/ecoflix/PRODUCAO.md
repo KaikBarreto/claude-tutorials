@@ -1095,3 +1095,11 @@ Decisões:
   Disco: 2,8 → 3,8 GB livres (apagados os intermediários regeráveis da T08 e MP4 de ensaio velhos; o zip em
   `/mnt/user-data/uploads` ocupa 231 MB do mesmo disco e é só leitura). Aula final 1080p ~180 MB cada: guardar todas não cabe;
   decidir com o Kaik como entregar. Briefing novo `_BRIEF_FINAL.md` (gravação final + montagem por aula, molde da T08).
+- 20/11 15:11 **Kaik publicou o 1.60.22** com as correções da T07 (comprovante sem valores no PDF pós-finalização, cupom
+  58 mm com o material, faixa de sincronizado 3 s, título do menu lateral). Entre 1.60.18 e 1.60.22 (21 commits): pagamento
+  retroativo de funcionário (T19: rever no ensaio), DANFE real na pré-visualização, lupa de CNPJ na Configuração Fiscal e 539
+  (T16/T17: avisado o agente da T16), ticket avulso → padrão limpa o parceiro (T08 pronta: não usa essa troca), login com
+  conta sem empresa. Migrations sem tabela nova para o mundo (só função de saldo de funcionário, repair e 539).
+  Build do 1.60.22 pela fila (`rec/build_1.60.22.sh`, log `rec/build_1.60.22.log`); `app/dist-1.60.18` guardado,
+  `dist-1.60.10` apagado. Novos achados do Kaik (fora do pedido): rascunho ao lado mostra o número antigo no seletor até
+  recarregar; uma vez o "Finalizar" abriu o Cato com a dica aberta.

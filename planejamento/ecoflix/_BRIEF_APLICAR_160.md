@@ -9,6 +9,7 @@ ficar mais longo; nenhuma aula se divide; profundidade extra no fiscal.** **Tare
 a gravação final no 1.60.10. Sem aprovação no meio: termine e relate.
 
 ## Valem por cima de tudo abaixo (20/11)
+- **App de gravação: 1.60.22** (20/11 15:xx, commit `bea545ecf`; antes 1.60.18 `e8edc9e6d`, cópia em `/dev/shm/ecoflix-src-1.60.18`). Mudou do 1.60.18: comprovante sem valores e cupom 58 mm (T07), faixa de sincronizado 3 s, pagamento retroativo de funcionário (T19), DANFE real na pré-visualização, lupa de CNPJ na Configuração Fiscal e 539 (T16/T17), ticket avulso → padrão limpa o parceiro (T08), aviso de conta sem empresa no login. Onde abaixo diz 1.60.18, leia 1.60.22.
 - **O app agora é o 1.60.18** (commit `e8edc9e6d`; build em `$TUT_HOME/app/dist`; código só leitura em `/dev/shm/ecoflix-src`).
   Onde está escrito 1.60.10 abaixo, leia 1.60.18. O robô de toda aula já aponta para 1.60.18.
 - **Tela da gravação: 1600x900** (16:9, escolha do Kaik; já é o padrão em `rec/mundo/mundo.json -> navegador.tela`).
