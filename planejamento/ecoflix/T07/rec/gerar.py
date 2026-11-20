@@ -1123,7 +1123,7 @@ def cap11():
     c.waitfor(text='Compra registrada!', timeout=12)
     c.waitfor(text='Imprimir Comprovante', timeout=10)
     c.click(BTNX('Imprimir direto'), w=(9, 'cupom'), label='Imprimir direto')
-    c.waitfor(text='Comprovante enviado para a impressora', timeout=10)
+    c.waitfor(text='Comprovante enviado para', timeout=10)
     c.fim()
     return c
 
@@ -1249,7 +1249,7 @@ def cap15():
     c.hover(BTNX('Imprimir direto'), 1.2, w=(1, 'Imprimir'), label='Imprimir direto')
     c.hover(BTN('Visualizar', within=DLG), 1.2, w=(1, 'Visualizar,'), label='Visualizar')
     c.click(BTNX('Imprimir direto'), w=(2, 'Imprimir'), label='Imprimir direto')
-    c.waitfor(text='Comprovante enviado para a impressora', timeout=10)
+    c.waitfor(text='Comprovante enviado para', timeout=10)
     c.ev(js_cupom('cupom-compra-vale-forte'), label='cupom da compra (o que foi para a impressora, para a ilustração)')
     c.ev(js_rola_form(dur_ms=500), w=(3, 'Pronto.'), label='rola o formulário (sob a ilustração do cupom)')
     c.click(OPCOES, w=(4, 'preco?'), label='Opções avançadas')

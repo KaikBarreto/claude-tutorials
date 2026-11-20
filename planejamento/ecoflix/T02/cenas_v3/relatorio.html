@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- T02 "Usuários e permissões" · o RELATÓRIO POR USUÁRIO REAL na tela (kit v3, clima claro: papel é mundo físico).
+     Molde: T08/cenas_v3/comprovante.html (pedido do Kaik, 19/11: toda fala de PDF/comprovante mostra o papel real).
+     O app abre o relatório numa aba nova; o robô devolve a página (HTML_JS no gerar.py, cap12, passo "relatório HTML") e a
+     edição a imprime como o app pede (@page A4 paisagem) em $TUT_HOME/t02/edit/out/comprovantes/cap12.pdf e a rasteriza em
+     cap12-N.png (t02/edit/relatorio_pdf.py). Aqui o papel é a imagem real, sem redesenho: a câmera passeia e o marca-texto
+     verde acompanha a fala.
+       cap12 · linha 3 · "... e salvar em PDF. O relatório traz as compras e as vendas de cada um, com os pedidos detalhados."
+     Coordenadas: pontos do PDF (pdftotext -bbox), página de 841,92 x 594,96 pt, desenhada com 0,75 px por pt.
+     Render: render_cenas.cjs 12 <cap12.json> saida.mp4 --html .../relatorio.html --anexo $TUT_HOME/t02/edit/out/comprovantes
+             --larg 1422 --dsf 1.35 --de <s> --ate <s> -->
+</head><body>
+<script type="module">
+import { pr, eo, W, vis, titulo, posTitulo, GL, mancha, piso, U, camera, plano, cena, estilo, enquadraRet }
+  from '../../../../perfis/ecoflix/cenas_v3/motor.js';
+import { ceuClaro } from '../../../../perfis/ecoflix/cenas_v3/fundo.js';
+
+const K = .75, LP = 841.92, HP = 594.96, WP = Math.round(LP * K), HPX = Math.round(HP * K), E = .01;   // px por pt, página (pt e px), metros por px
+const YC = HPX * E / 2 + .45, DX = WP * E + .7;   // centro da folha 1 (m) e distância até a folha 2
+const LEITURA = 3.4 / E;   // teto do zoom: ~3,4 px de quadro por px do papel (a tabela de 7,5 pt sai com ~19 px num quadro de 800)
+
+function papel(src, marcas) {
+  estilo('folha', `
+.folha{position:relative;width:${WP}px;height:${HPX}px;background:#fff;border-radius:5px;box-shadow:0 34px 60px -18px rgba(30,80,60,.38),0 8px 16px -6px rgba(30,80,60,.14)}
+.folha img{display:block;width:${WP}px;height:${HPX}px;border-radius:5px}
+.folha .mk{position:absolute;border-radius:4px;background:rgba(80,208,136,.46);mix-blend-mode:multiply;transform-origin:0 50%;transform:scaleX(0)}`);
+  const mk = Object.entries(marcas).map(([id, [x0, y0, x1, y1]]) =>
+    `<i class="mk" data-m="${id}" style="left:${(x0 * K).toFixed(1)}px;top:${(y0 * K).toFixed(1)}px;width:${((x1 - x0) * K).toFixed(1)}px;height:${((y1 - y0) * K).toFixed(1)}px"></i>`).join('');
+  return `<div class="folha"><img src="${src}" alt="">${mk}</div>`;
+}
+const marca = (e, id, t, a) => { const m = (e._mk ??= {})[id] ??= e.querySelector(`[data-m="${id}"]`); m.style.transform = `scaleX(${eo(pr(t, a, .45)).toFixed(4)})`; };
+// retângulo do papel (pt: x0, y0 de cima, x1, y1) em metros; cx = centro da folha
+const ret = (cx, x0, y0, x1, y1) => [cx + (x0 * K - WP / 2) * E, YC + (HPX / 2 - y1 * K) * E, cx + (x1 * K - WP / 2) * E, YC + (HPX / 2 - y0 * K) * E];
+const palco = () => { piso({ r: 30, x: DX / 2, z: -2, passo: 1.3 }); U.uNevoa.value.set(.955, .975, .965, .8); ceuClaro({ halo: [.2, 3.4, -12] }); };
+
+function relatorio(d) {
+  const t0 = W(3, 'salvar'), trel = W(3, 'relatorio'), tco = W(3, 'compras'), tve = W(3, 'vendas'), tca = W(3, 'cada'),
+    tpe = W(3, 'pedidos'), tde = W(3, 'detalhados'), tfim = W(3, 'detalhados', 1, 'e');
+  palco();
+  const p1 = plano(papel(`${d.anexo}/cap12-1.png`, {
+    comp: [276, 156, 368, 192], vend: [70, 156, 176, 192], raf: [32, 270.5, 94, 284.5], mar: [32, 287.8, 95, 301.8] }), { pos: [0, YC, 0], esc: E, sangra: true });
+  const p2 = plano(papel(`${d.anexo}/cap12-2.png`, { det: [36, 30, 133, 48] }), { pos: [DX, YC, 0], esc: E, sangra: true });
+  const s1 = mancha(7.2, 1.6, [0, 0, .1], { op: 0 }), s2 = mancha(7.2, 1.6, [DX, 0, .1], { op: 0 });
+  const tit = titulo('Usuários', 'Relatório por Usuário');
+  const o = { topo: 70, margem: 56, max: LEITURA, el: .015 };   // de perto o título já saiu: o papel ocupa o quadro
+  const TUDO = enquadraRet(null, ret(0, 0, 0, LP, HP), { topo: 150, margem: 60, el: .02, az: .05 });
+  const F1 = enquadraRet(null, ret(0, 20, 86, LP - 20, 336), { ...o, az: .03 });          // título do relatório, os 4 cartões e o Resumo por Usuário
+  const F2 = enquadraRet(null, ret(DX, 20, 14, LP - 20, 290), { ...o, az: -.025 });       // Vendas Detalhadas: os pedidos, linha a linha
+  camera([[t0 - 3, TUDO], [trel - .35, { ...TUDO, d: TUDO.d * .975, az: .04 }, 'lin'], [tco - .1, F1], [tpe - .3, { ...F1, d: F1.d * .985, az: .015 }, 'lin'],
+    [tde + .35, F2], [tfim + 2, { ...F2, d: F2.d * .98, az: -.035 }, 'lin']]);
+  return t => {
+    GL.style.opacity = eo(pr(t, t0 + .08, .5)).toFixed(3); posTitulo(tit, t, t0 - .9, t0 - .45, trel - .45);   // sai antes do mergulho
+    vis(p1.e, t, t0 - .15, 1e9, { dy: 30 }); vis(p2.e, t, t0 + .1, 1e9, { dy: 30 });
+    s1.material.uniforms.uOp.value = .55 * (+p1.e.style.opacity || 0); s2.material.uniforms.uOp.value = .55 * (+p2.e.style.opacity || 0);
+    marca(p1.e, 'comp', t, tco - .1); marca(p1.e, 'vend', t, tve - .1); marca(p1.e, 'raf', t, tca - .1); marca(p1.e, 'mar', t, tca + .12);
+    marca(p2.e, 'det', t, tde - .05);
+  };
+}
+
+const CAPS = { 12: relatorio };
+cena(d => CAPS[d.cap](d), { fov: 26 });
+</script></body></html>

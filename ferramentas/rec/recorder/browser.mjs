@@ -109,7 +109,13 @@ export function buildStorageState(session, extra = {}) {
 
 /** Modo url: so o localStorage que o roteiro pediu (`storage`), sem sessao nem chave nenhuma da Dominex. */
 export function plainStorageState(entries = {}) {
-  const list = Object.entries(entries).map(([name, value]) => ({ name, value: String(value) }));
+  // Mesmo cuidado do buildStorageState: se o roteiro manda a versão "já vista" (login pela tela), vale a do build servido.
+  if (!entries.__mostrarAvisoVersao) {
+    const v = appVersion();
+    for (const k of ['app_version', 'notification_shown_version']) if (k in entries) entries = { ...entries, [k]: v };
+  }
+  const { __mostrarAvisoVersao, ...resto } = entries;
+  const list = Object.entries(resto).map(([name, value]) => ({ name, value: String(value) }));
   if (!list.length) return undefined;
   return { cookies: [], origins: [{ origin: new URL(APP_URL).origin, localStorage: list }] };
 }
