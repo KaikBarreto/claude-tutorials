@@ -3,7 +3,7 @@
 ($TUT_HOME/t22/narracao/capNN.json: o estimado até a voz chegar; com a voz, o da voz, sem mudar nada aqui). O cap12 (Recapitulando) é
 montagem das gravações dos outros capítulos: não tem robô.
 
-Computador 1280x800, menu lateral aberto. Logado como Rafael Nogueira (MASTER, matriz Recicla Vale Metais) em todos os capítulos, menos o
+Computador 1600x900, menu lateral aberto. Logado como Rafael Nogueira (MASTER, matriz Recicla Vale Metais) em todos os capítulos, menos o
 cap03, gravado como Sandra Pires (MASTER da Filial Pindamonhangaba). FAKE_NOW 2026-11-10T08:30:00-03:00 em todos (o mesmo no Supabase
 falso e no robô). Rodar de qualquer pasta: `python3 -I rec/t22/gerar.py [NN ...]` (ANCORAS=1 lista as âncoras). Depois:
 `node rec/record.mjs rec/t22/capNN.json --check`; ensaio rápido: `python3 -I rec/t22/ensaio.py NN` + `--rapido`; gravação: sem `--rapido`.
@@ -692,7 +692,7 @@ def cap08():
     c.click(BTNX('Comparativo'), at=c.A(5, 'Comparativo', 0.6), label='Comparativo (em competência)')
     c.waitfor(text='DRE Comparativo por Unidade', timeout=10)
     c.ev(js_rola_texto('DRE Comparativo por Unidade', 150, 600), label='desce até a tabela do Comparativo')
-    c.hover(SEL('main tbody tr:has(td:text-is("CMV"))'), 1.2, at=c.A(5, 'CMV', 0.6), label='linha CMV de cada unidade (ZOOM)')
+    c.hover(SEL('main tbody tr:has-text("Compras (CMV)")'), 2.5, at=c.A(5, 'CMV', 0.6), label='linha CMV de cada unidade (ZOOM)')
     c.confere('main tbody', ['__LER__'], 'LER: linha CMV do Comparativo em competência')
     c.mark(6)
     c.fim()
@@ -777,7 +777,7 @@ def cap10():
     c.click(SEL('main button:has-text("Filtros")'), at=c.A(5, 'Filtros', 0.6), label='Filtros')
     c.hover(TXT('Período', within=MAIN), 0.6, at=c.A(5, 'período', 0.5), label='Período')
     c.click(SEL('main button:has-text("Material")'), at=c.A(5, 'material.', 0.9), label='Material (lista)')
-    c.click(SEL('[role=option]:has-text("Alumínio latinha"), [cmdk-item]:has-text("Alumínio latinha")'), label='escolhe Alumínio latinha')
+    c.click(SEL('[data-radix-popper-content-wrapper] label:has-text("Alumínio latinha")'), label='escolhe Alumínio latinha')
     c.press('Escape', label='fecha a lista')
     c.hover(SEL('main tbody tr:first-child'), 1.0, at=c.A(5, 'Cada', 0.5), label='as linhas: Compra, Venda e Transferência, com a Filial (ZOOM)')
     c.mark(6)

@@ -1060,3 +1060,9 @@ Decisões:
   T11 17.351, T12 16.649, T13 16.987, T14 18.062, T15 19.097, T19 17.521. Faltam disparar: T13 títulos (`P5sRktMXiDOTkajVV7OE`),
   T14, T15, T19 (ids em `scratchpad/voz/nos_Tnn.json`): o disparo parou em 429 (fila de gerações cheia; nada cobrado).
   Ajudantes de voz estouraram contexto com `creative_add_flow_node`; jeito barato anotado em `perfis/ecoflix/voz.json` (`montar_nos`).
+- 20/11 13:xx **T03 fechada (agente)**: Prefixo no cap03 (2 linhas: "Ao lado do código fica o Prefixo ... Digito pê, e a linha
+  embaixo mostra pê setenta." / "O prefixo aparece na tela, no comprovante e na nota fiscal. O número no banco não muda. Aqui eu
+  não preciso dele, então apago.") e seleção em massa no cap15 (antigo cap10; 2 linhas, com Transferir Estoque, Definir prefixo
+  e Excluir); 3.600 → 3.694 palavras. Completos de 03, 06, 08, 09, 11, 13 sem falha (pior atraso 1,67 s no 13); cap15 trocou
+  para Ferro pesado e Ferro misto (o radiador fica na 2ª página), completo com 5,29 s na L6 (respiro na voz). Coordenador:
+  legenda "Digito P" e "P70" (`config_narracao.json`) e o último ensaio do cap15 (`t03_lote2.sh misto r15 c15`).
