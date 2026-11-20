@@ -186,9 +186,23 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{let a=document.querySelector('a[href=\"/venda\"]');if(!a){const b=[...document.querySelectorAll('button')].find(e=>e.textContent.trim().startsWith('Pedidos'));if(b){b.click();await new Promise(r=>setTimeout(r,500));a=document.querySelector('a[href=\"/venda\"]')}}if(!a)return 'SEM ALVO';a.click();return 'ok'})()",
+   "js": "(()=>{history.pushState({},'','/caixa');dispatchEvent(new PopStateEvent('popstate'));return location.pathname})()",
    "at": 11.26,
-   "label": "Venda (menu)"
+   "label": "Caixa (bastidor)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nova Venda",
+   "timeout": 20
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova Venda",
+    "exact": true
+   },
+   "label": "Nova Venda"
   },
   {
    "do": "waitFor",

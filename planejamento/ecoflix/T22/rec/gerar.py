@@ -1126,7 +1126,10 @@ def cap16():
     c.click(SEL('main div.flex:has(> div > p:text-is("Recicla Vale Metais")) button[role=switch]'), at=c.A(1, 'Ligo', 0.6), label='liga a chave da matriz')
     c.waitfor(text='Configuração atualizada', timeout=8)
     c.mark(2)
-    c.ev(JS_ABRE_VENDA, at=c.L(2) - 0.5, label='Venda (menu)')
+    # o Caixa mora dentro do grupo Financeiro do menu: a troca de tela é de bastidor (rota do próprio app, sem recarregar), até o botão Nova Venda
+    c.ev("(()=>{history.pushState({},'','/caixa');dispatchEvent(new PopStateEvent('popstate'));return location.pathname})()", at=c.L(2) - 0.5, label='Caixa (bastidor)')
+    c.waitfor(text='Nova Venda', timeout=20)
+    c.click(BTN('Nova Venda'), label='Nova Venda')
     c.waitfor(text='Voltar para o caixa', timeout=25)
     c.add(AGUARDA)
     c.ev(ANIMA_SEMPRE)

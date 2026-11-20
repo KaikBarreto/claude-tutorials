@@ -1,11 +1,12 @@
 # Briefing do fechamento · gravação final e montagem de uma aula EcoFlix (uma aula por agente)
 
 Repositório da skill: `/home/claude/claude-tutorials` (caminhos relativos a ele); área de trabalho `$TUT_HOME` =
-`/home/claude/ecoflix`. App 1.60.18 em `$TUT_HOME/app/dist` (servido na 8080: `bash rec/run.sh app` se cair), tela 1600x900.
-A aula já tem: fala aprovada, robô ensaiado no 1.60.18, **voz real processada** (`$TUT_HOME/tNN/narracao/capNN.json`, sem
+`/home/claude/ecoflix`. App **1.60.22** em `$TUT_HOME/app/dist` (servido na 8080: `bash rec/run.sh app` se cair), tela 1600x900.
+A aula já tem: fala aprovada, robô ensaiado (no 1.60.18 ou no 1.60.22), **voz real processada** (`$TUT_HOME/tNN/narracao/capNN.json`, sem
 "estimado", e `titulos/titulos.json`) e as ilustrações v3 feitas ou em andamento (`Tnn/cenas_v3/`, `Tnn/cenas/ilustracoes.json`).
 **Tarefa**: gravação final com a voz, montagem e prévia da aula, no padrão da T08 (aprovada pelo Kaik: "ficou muito bom").
-Sem aprovação no meio: termine e relate.
+Sem aprovação no meio: termine e relate. Fechada antes no mesmo molde: a **T02** (`$TUT_HOME/t02/edit/`, `rec/t02/t02_final.sh`;
+`ilus_local.json` para ajuste de ilustração sem editar o `ilustracoes.json`).
 
 ## Modelo a copiar: a T08
 - Gravação final: `$TUT_HOME/rec/t08/t08_final.sh` (um capítulo por vez pela fila, instância religada no `FAKE_NOW` do
@@ -37,13 +38,15 @@ Sem aprovação no meio: termine e relate.
 6. **Conferência** (`docs/07-conferencia.md`): folha de quadros da aula inteira, cada ilustração e cada zoom olhados;
    texto na tela sem travessão e sem dado real; título de capítulo certo; nada cortado; áudio sem estouro.
 7. **Entrega**: `entregar.py` → aula final 1080p em `tNN/edit/out/Tnn/aula_final.mp4` + legendas, e uma prévia 720p de até
-   28 MB em `$TUT_HOME/entrega_previa/EcoFlix Tnn - <título> 1.60.18 (previa 720p).mp4`.
-8. **Disco** (sobra pouco: ~3 GB para tudo): no fim, apague `out/Tnn/proj`, `out/Tnn/video_sem_audio.mp4` e as pastas
+   28 MB em `$TUT_HOME/entrega_previa/EcoFlix Tnn - <título> 1.60.22 (previa 720p).mp4`.
+8. **Disco** (sobra pouco: ~1,8 GB para tudo; na T02 chegou a zero no `finish.py`): `proj` e `video_sem_audio.mp4` em
+   `/dev/shm/tNN_*` (link simbólico em `out/Tnn/`), `df -h /` antes de cada passo pesado e pare se ficar abaixo de 600 MB; no fim, apague `out/Tnn/proj`, `out/Tnn/video_sem_audio.mp4` e as pastas
    `out/capNN` (regeráveis), sempre com caminho absoluto literal. Fica: `aula_final.mp4`, legendas, `capitulos.json`, a prévia,
    as gravações finais em `rec/tNN/` e as ilustrações em `out/ilus/`.
 
 ## Limites
-- Tudo na tela sai do app real 1.60.18; dados do mundo fictício; nenhuma credencial em arquivo (`TUT_SENHA` 8+ caracteres
+- Tudo na tela sai do app real 1.60.22 (o gravador já cala o aviso "Sistema atualizado" e o balão de dica do Cato
+  em qualquer login: não precisa mexer no `VERSAO` do `gerar.py`); dados do mundo fictício; nenhuma credencial em arquivo (`TUT_SENHA` 8+ caracteres
   só no ambiente). Nunca gere nem peça voz nova (frase errada: relate com a frase exata; o coordenador corrige por frase).
 - Não mexa em `perfis/`, `ferramentas/`, outras aulas, mundo base, `PRODUCAO.md`. Sem commit. Nada de `pkill`/`killall`,
   `git stash/reset/clean/checkout`; `rm` só com caminho absoluto literal. Derrube a sua instância no fim.
