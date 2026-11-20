@@ -1,6 +1,6 @@
 {
  "name": "t01-cap07",
- "title": "T01 · Cap. 7 · Numeração de pedidos (narração 87,3 s ESTIMADA; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T01 · Cap. 7 · Numeração de pedidos (narração 120,0 s ESTIMADA; marcas L1..L12 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "seed": "t01-cap07",
  "pace": 0.5,
  "cps": 14,
@@ -304,12 +304,36 @@
    "label": "confere exemplo do Zeros"
   },
   {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Pontos"
+   },
+   "seconds": 0.2,
+   "at": 48.87,
+   "label": "modelo Pontos (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Ano/Nº"
+   },
+   "seconds": 0.2,
+   "at": 49.71,
+   "label": "modelo Ano/Nº (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
    "do": "click",
    "target": {
     "role": "button",
     "name": "Padrão"
    },
-   "at": 49.63,
+   "at": 53.73,
    "label": "volta ao Padrão"
   },
   {
@@ -325,7 +349,115 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 53.9
+   "at": 58.0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Variáveis disponíveis:"
+   },
+   "seconds": 3.4,
+   "at": 61.74,
+   "label": "ZOOM Variáveis disponíveis: {NUM}, {NUM:4}, {MM}, {AAAA}, {AA}, {DD}",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 67.15
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#order-number-template"
+   },
+   "at": 68.52,
+   "label": "campo do formato"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#order-number-template"
+   },
+   "text": "RV-{NUM:4}",
+   "cps": 14,
+   "at": 69.42,
+   "label": "apaga e digita RV-{NUM:4}",
+   "noClick": true,
+   "clear": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Exemplo: RV-0030\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere exemplo do formato livre"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main span:text-is('Exemplo:') >> xpath=.."
+   },
+   "seconds": 0.8,
+   "at": 73.81,
+   "label": "ZOOM Exemplo: RV-0030",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 76.16
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#order-number-template"
+   },
+   "text": "RV-",
+   "cps": 14,
+   "at": 79.62,
+   "label": "apaga o {NUM:4}: fica RV-",
+   "clear": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Seu formato não tem\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere aviso: o formato não tem {NUM}"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Seu formato não tem"
+   },
+   "seconds": 1.8,
+   "at": 80.81,
+   "label": "aviso em vermelho: Seu formato não tem {NUM}",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Padrão"
+   },
+   "at": 85.75,
+   "label": "volta ao Padrão"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Exemplo: #30\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere de volta ao Padrão"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"#{NUM}\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"main\"+' input, '+\"main\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere formato #{NUM} de novo"
+  },
+  {
+   "do": "mark",
+   "name": "L10",
+   "at": 86.61
   },
   {
    "do": "hover",
@@ -334,7 +466,7 @@
     "exact": true
    },
    "seconds": 1.6,
-   "at": 55.41,
+   "at": 88.12,
    "label": "Numeração separada para compras e vendas (desligada)",
    "optional": true,
    "timeout": 3
@@ -346,27 +478,27 @@
     "exact": true
    },
    "seconds": 2.0,
-   "at": 58.6,
-   "label": "Cada tipo passa a ter sua própria contagem.",
+   "at": 91.31,
+   "label": "Cada tipo passa a ter a sua própria contagem.",
    "optional": true,
    "timeout": 3
   },
   {
    "do": "mark",
-   "name": "L8",
-   "at": 62.98
+   "name": "L11",
+   "at": 95.69
   },
   {
    "do": "mark",
-   "name": "L9",
-   "at": 72.44
+   "name": "L12",
+   "at": 105.14
   },
   {
    "do": "click",
    "target": {
     "selector": "#order-number-scope"
    },
-   "at": 73.37,
+   "at": 106.08,
    "label": "chave Numeração separada (pede confirmação)"
   },
   {
@@ -379,8 +511,8 @@
    "target": {
     "text": "Compras e vendas passarão a contar separadamente"
    },
-   "seconds": 1.58,
-   "at": 76.84,
+   "seconds": 1.59,
+   "at": 109.54,
    "label": "janela Ativar numeração separada?",
    "optional": true,
    "timeout": 3
@@ -391,7 +523,7 @@
     "text": "Compras e vendas passarão a contar separadamente"
    },
    "seconds": 1.4,
-   "at": 79.97,
+   "at": 112.68,
    "label": "Os pedidos que você já fez não mudam",
    "optional": true,
    "timeout": 3
@@ -403,7 +535,7 @@
     "name": "Cancelar",
     "exact": true
    },
-   "at": 84.99,
+   "at": 117.7,
    "label": "Cancelar (a chave fica desligada)"
   },
   {
@@ -427,7 +559,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 87.3
+   "at": 120.0
   }
  ]
 }

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """T16 · gera rec/t16/cap00..cap24.json (roteiros do robô) a partir da voz (t16/narracao/capNN.json).
 
-Nota Fiscal de mercadoria (NF-e) no COMPUTADOR (janela 1280x800), logado como Rafael Nogueira (MASTER, Recicla Vale Metais), EcoSistema
+Nota Fiscal de mercadoria (NF-e) no COMPUTADOR (janela 1600x900, 20/11), logado como Rafael Nogueira (MASTER, Recicla Vale Metais), EcoSistema
 1.60.18 (25 capítulos desde a passada de 18/11: cobertura_160.md). FAKE_NOW 2026-11-10T08:30:00-03:00 (terça) em todos os capítulos. Emissão, certificado, SEFAZ e notas recebidas simulados no
 Supabase falso (rec/mundo/handlers: plugnotas-*, get_invoices_paged, get_next_invoice_number, search_orders_for_invoice,
 certificate_vault_status, dfe_inbound_import_enqueue + a fila dfe_inbound_import_jobs; lib/nfe.mjs): nada sai da máquina.
@@ -437,8 +437,7 @@ def cap01():
     c.hover(SUBMENU('Notas de Serviço (NFS-e)'), 0.3, at=c.A(2, 'serviço,', 0.6), label='Notas de Serviço (NFS-e)')
     c.hover(SUBMENU('Transporte (MDF-e)'), 0.3, at=c.A(2, 'transporte,', 0.6), label='Transporte (MDF-e)')
     c.hover(SUBMENU('Ambiental (MTR/CDF)'), 0.3, at=c.A(2, 'ambiental', 0.6), label='Ambiental (MTR/CDF)')
-    c.hover(SUBMENU('Estoque Fiscal'), 0.3, at=c.A(2, 'estoque', 0.6), label='Estoque Fiscal')
-    c.hover(SUBMENU('Relatórios Fiscais'), 0.3, at=c.A(2, 'relatórios', 0.6), label='Relatórios Fiscais')
+    c.hover(SUBMENU('Relatório/Estoque Fiscal'), 0.6, at=c.A(2, 'relatório', 0.6), label='Relatório/Estoque Fiscal (uma tela só desde a 1.60.15)')
     c.hover(SUBMENU('Notas Fiscais (NF-e)'), 0.5, at=c.A(2, 'mercadoria.', 0.6, nth=1), label='volta às Notas Fiscais (NF-e)')
     c.mark(3)
     c.click(SUBMENU('Notas Fiscais (NF-e)'), at=c.A(3, 'Notas', 0.6), label='Notas Fiscais (NF-e) (tela abre na sub-aba Entrada)')
@@ -562,8 +561,11 @@ def cap04():
     c.type(CAMPO('empresa-ie'), IE_RECICLA, at=c.A(3, 'inscrição', 0.05), label='digita a inscrição estadual', cps=40, noClick=True)
     c.marcar(CAMPO('empresa-cnpj'), at=c.A(3, 'CNPJ', 0.2), label='zoom: CNPJ * e Inscrição Estadual')
     c.mark(4)
-    c.ev(js_rola_texto('Endereço Fiscal', 150, 700, MAIN), at=c.A(4, 'endereço', 0.9), label='desce a Endereço Fiscal')
-    c.hover(TXT('Editar em Configurações › Empresa', exact=False), 1.0, at=c.A(4, 'mudar,', 0.6), label='Editar em Configurações › Empresa')
+    c.ev(js_rola_texto('Endereço Fiscal', 150, 700, MAIN), at=c.A(4, 'endereço', 0.9, nth=0), label='desce a Endereço Fiscal')
+    c.hover(TXT('Usar o endereço do cadastro da empresa'), 0.5, at=c.A(4, 'cadastro', 0.6), label='opção marcada: Usar o endereço do cadastro da empresa')
+    c.hover(TXT('Editar em Configurações › Empresa', exact=False), 0.8, at=c.A(4, 'mudar', 0.6), label='Editar em Configurações › Empresa')
+    c.hover(TXT('Este CNPJ tem endereço próprio'), 1.2, at=c.A(4, 'marcar', 0.6), label='zoom: Este CNPJ tem endereço próprio (sem marcar)')
+    c.confere('main', ['Usar o endereço do cadastro da empresa', 'Este CNPJ tem endereço próprio'], 'as duas opções do Endereço Fiscal (CNPJ padrão)')
     c.mark(5)
     c.ev(js_rola_texto('Logo para Nota Fiscal', 330, 700, MAIN), at=c.A(5, 'embaixo', 0.9), label='desce ao Logo para Nota Fiscal')
     c.hover(BTN('Enviar Logo', MAIN), 0.8, at=c.A(5, 'logo', 0.6), label='Logo para Nota Fiscal: Enviar Logo (sem clicar)')
@@ -822,9 +824,10 @@ def escolhe_cliente(c, busca, nome, at_abre, at_busca, at_escolhe):
     c.waitfor(gone={'selector': "[role=dialog]:has-text('Selecionar Cliente')"}, timeout=8)
 
 
-def emite_e_espera(c, num, at, label, linha_aut=None, at_aut=None, marca=None):
-    """Emitir Nota (rodapé fixo, sem rolar): a nota fecha, a linha #num aparece "Aguardando SEFAZ" e, no polling de 5 s, "Autorizada"."""
-    c.click(ROD('Emitir Nota'), at=at, label=label, noScroll=True)
+def emite_e_espera(c, num, at, label, linha_aut=None, at_aut=None, marca=None, botao='Emitir Nota'):
+    """Emitir Nota (rodapé fixo, sem rolar): a nota fecha, a linha #num aparece "Aguardando SEFAZ" e, no polling de 5 s, "Autorizada".
+    Na reemissão de uma rejeitada o botão é "Reemitir NF-e" (NovaNotaModal.tsx:8713)."""
+    c.click(ROD(botao), at=at, label=label, noScroll=True)
     c.waitfor(selector=f"main tbody tr:has-text('#{num}')", timeout=20)
     c.hover(SEL(f"main tbody tr:has-text('#{num}') td:has-text('SEFAZ')"), 0.6, label=f'#{num} Aguardando SEFAZ')
     if marca:
@@ -1077,7 +1080,10 @@ def cap11():
     c.hover(SEL(f"{DLG} :text-is('Substituir nesta nota')", nth=0), 0.8, at=c.A(10, 'trocar', 0.6), label='Substituir nesta nota')
     c.mark(11)
     c.click(ABA_NOTA('Pré-visualização'), at=c.A(11, 'Pré-visualização.', 0.7), label='aba Pré-visualização')
-    c.waitfor(text='SEM VALOR FISCAL', timeout=10)
+    c.waitfor(text='Resumo para conferência', timeout=10)
+    c.confere('dlg', ['Prévia real desta nota', 'Ver a DANFE desta nota', 'Resumo para conferência'], 'Prévia real no alto e o Resumo para conferência')
+    c.ev(ROLA_NOTA('Resumo para conferência', 150), at=c.A(11, 'embaixo,', 0.9), label='desce ao Resumo para conferência (sem clicar em Ver a DANFE)')
+    c.hover(SEL(f"{DLG} :text-is('Resumo para conferência')"), 0.6, at=c.A(11, 'Resumo', 0.6), label='Resumo para conferência')
     c.hover(SEL(f"{DLG} :text-is('SEM VALOR FISCAL')", nth=0), 0.8, at=c.A(11, 'sem', 0.6), label='zoom: SEM VALOR FISCAL')
     c.ev(js_rola(f"{DLG} table", 420, 2500), at=c.A(11, 'Confiro', 0.3), label='desce pelo DANFE: destinatário, duplicatas, imposto, transporte')
     c.confere('dlg', ['Boleto (15)', '11.975,00', 'Cargas Vale do Sol'], 'prévia com as duplicatas e o transporte')
@@ -1275,7 +1281,7 @@ def cap15():
     c.type(NCM(1), '76020000', at=c.A(8, 'Corrijo', 0.05), label='NCM 7602.00.00', cps=30, noClick=True)
     c.confere_campos(['7602.00.00'], 'NCM corrigido')
     c.mark(9)
-    emite_e_espera(c, 1252, c.A(9, 'Emitir', 0.7), 'Emitir Nota', linha_aut=True, at_aut=c.A(9, 'autorizada.', 0.6))
+    emite_e_espera(c, 1252, c.A(9, 'Reemitir', 0.7), 'Reemitir NF-e', linha_aut=True, at_aut=c.A(9, 'autorizada.', 0.6), botao='Reemitir NF-e')
     c.mark(10)
     c.mark(11)
     c.fim()
@@ -1314,8 +1320,7 @@ def cap16():
     menu_item(c, '#1250', 'Carta de Correção', c.A(9, 'Carta', 0.5), 'Carta de Correção (de novo)', at_menu=round(c.L(9) + 0.1, 2))
     c.waitfor(text='1 CC-e enviada', timeout=10)
     c.hover(SEL(f"{DLG} :text-is('1 CC-e enviada')"), 0.8, at=c.A(9, 'lista,', 0.6), label='zoom: 1 CC-e enviada')
-    c.hover(SEL(f"{DLG} button:text-is('PDF'), {DLG} a:text-is('PDF')"), 0.6, at=c.A(9, 'PDF', 0.6), label='PDF da carta')
-    c.hover(SEL(f"{DLG} :text-matches('Registrada na SEFAZ')"), 1.2, at=c.A(9, 'protocolo', 0.6), label='Registrada na SEFAZ · protocolo')
+    c.hover(SEL(f"{DLG} :text-matches('Registrada na SEFAZ')"), 1.6, at=c.A(9, 'registrada', 0.6), label='Registrada na SEFAZ · protocolo')
     c.fim()
     return c
 
@@ -1359,6 +1364,7 @@ def cap17():
     c.hover(SEL(f"{DLG} :text-matches('^Origem: 3526')"), 0.8, at=c.A(5, 'chave', 0.6), label='Origem: a chave da 1250')
     c.hover(SEL(f"{DLG} :text-is('Informe o número do item na nota de origem')"), 1.0, at=c.A(5, 'pedindo.', 0.7), label='Informe o número do item na nota de origem')
     c.mark(6)
+    c.hover(SEL(f"{DLG} :text-matches('copie o número da coluna')"), 1.2, at=c.A(6, 'tela', 0.6), label='zoom: Abra a DANFE da nota original e copie o número da coluna Item')
     c.click(SEL(f"{DLG} input[id^='ref-item-origem']"), at=c.A(6, 'cobre', 0.7), label='Item na origem (clique no campo)')
     c.type(SEL(f"{DLG} input[id^='ref-item-origem']"), '1', at=c.A(6, 'digito', 0.05), label='Item na origem: 1', cps=30, noClick=True)
     c.confere('dlg', ['Pronta pra emitir'], 'Pronta pra emitir depois do item na origem')
@@ -1451,18 +1457,32 @@ def cap19():
     return c
 
 
+# PDF que o app abre na aba nova (openPdfInTab: <iframe id="pdf-frame">; a gravação filma uma aba só): o robô devolve o PDF em base64
+# no `value` do passo (rótulo "PDF ..."), e o t16_pdf.py grava rec/t16/arquivos/ para a cena do comprovante (padrão do T08)
+POPS = "(()=>{const o=window.open;window.__pops=[];window.open=function(...a){const w=o.apply(this,a);window.__pops.push(w);return w};return 'ok'})()"
+PDF_JS = ("(async()=>{const w=(window.__pops||[]).slice(-1)[0];if(!w)return 'SEM JANELA';for(let i=0;i<60;i++){let f=null;"
+          "try{f=w.document&&w.document.querySelector('#pdf-frame')}catch(e){return 'ERRO '+e}"
+          "if(f&&f.src){const b=await (await fetch(f.src.split('#')[0])).blob();const u=new Uint8Array(await b.arrayBuffer());let s='';"
+          "for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'PDF:'+btoa(s)}"
+          "await new Promise(r=>setTimeout(r,250))}return 'SEM PDF'})()")
+
+
 def cap20():
-    """DANFE e XML: (L1), ilustração (L2), o menu da 1250 e o Comprovante (L3, zoom), Download DANFE (L4: o PDF abre em outra aba, fora da
-    gravação), Download XML (L5), Visualizar > aba XML (L6), o menu da 1249 cancelada (L7), os detalhes da linha (L8), busca, período e
-    Filtros (L9), Exportação Contábil nos três pontinhos (L10)."""
-    c = Cap(20, setup=setup_nfe('saida', '#1250'), start=(760, 400))
+    """DANFE e XML: (L1), ilustração (L2), o menu da 1250 e o Comprovante (Notinha), clicado: o PDF térmico abre em outra aba e o robô o
+    devolve (L3), Download DANFE: o PDF abre em outra aba e o robô o devolve (L4), Download XML (L5), Visualizar > aba XML (L6), o menu
+    da 1249 cancelada (L7), os detalhes da linha (L8), busca, período e Filtros (L9; sem as abas Produção/Homologação: a nota de teste é
+    liberada por CNPJ), Exportação Contábil nos três pontinhos (L10)."""
+    c = Cap(20, setup=setup_nfe('saida', '#1250', extra=[{'do': 'eval', 'js': POPS}]), start=(760, 400))
     c.mark(1)
     c.mark(2)
     c.mark(3)
     c.hover(TRIG('#1250'), 0.6, at=c.A(3, 'menu', 0.6), label='zoom: o menu da 1250 (Download XML, Download DANFE, Comprovante, Carta de Correção)', noScroll=True)
-    c.hover(ITEM('Comprovante (Notinha)'), 1.2, at=c.A(3, 'Comprovante,', 0.6), label='Comprovante (Notinha)', noScroll=True)
+    c.hover(ITEM('Comprovante (Notinha)'), 1.0, at=c.A(3, 'Comprovante,', 0.6), label='Comprovante (Notinha)', noScroll=True)
+    c.click(ITEM('Comprovante (Notinha)'), at=c.A(3, 'resumo', 0.4), label='Comprovante (Notinha): o PDF térmico abre na aba nova', noScroll=True)
+    c.ev(PDF_JS, label='PDF do Comprovante (Notinha) da 1250 (aba nova, para a cena do comprovante)')
     c.mark(4)
     menu_item(c, '#1250', 'Download DANFE', c.A(4, 'DANFE', 0.6, nth=0), 'Download DANFE (o PDF abre em outra aba)')
+    c.ev(PDF_JS, label='PDF do DANFE da 1250 (aba nova, para a cena do comprovante)')
     c.mark(5)
     menu_item(c, '#1250', 'Download XML', c.A(5, 'XML', 0.6), 'Download XML', at_menu=c.A(5, 'Download', 0.9))
     c.mark(6)
@@ -1489,8 +1509,7 @@ def cap20():
     c.hover(SEL("main input[placeholder^='Buscar por número']"), 0.5, at=c.A(9, 'busca,', 0.6), label='a busca')
     c.hover(SEL("main button[role=combobox]:has-text('Todos os tempos')"), 0.5, at=c.A(9, 'período', 0.6), label='o período: Todos os tempos')
     c.click(SEL("main button[aria-label='Filtros']"), at=c.A(9, 'Filtros,', 0.7), label='zoom: Filtros (abre)')
-    c.press('Escape', at=c.A(9, 'teste', 0.9), label='fecha os Filtros')
-    c.hover(SEL("main [role=tab]:has-text('Homologação')"), 1.2, at=c.A(9, 'Homologação.', 0.7), label='aba Homologação (notas de teste)')
+    c.press('Escape', at=c.A(9, 'rascunho.', 0.3), label='fecha os Filtros')
     c.mark(10)
     c.click(MAIS, at=c.A(10, 'contador,', 0.7), label='três pontinhos (Mais opções de NF-e)')
     c.hover(ITEM('Exportação Contábil'), 1.2, at=c.A(10, 'Exportação', 0.6), label='zoom: Exportação Contábil (sem clicar)', noScroll=True)

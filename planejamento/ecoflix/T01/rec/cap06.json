@@ -1,6 +1,6 @@
 {
  "name": "t01-cap06",
- "title": "T01 · Cap. 6 · Contato e endereço (narração 69,5 s ESTIMADA; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T01 · Cap. 6 · Contato e endereço (narração 123,4 s ESTIMADA; marcas L1..L12 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "seed": "t01-cap06",
  "pace": 0.5,
  "cps": 14,
@@ -174,8 +174,8 @@
     "selector": "#show-phone"
    },
    "seconds": 0.2,
-   "at": 16.88,
-   "label": "chave Exibir nos documentos do Telefone",
+   "at": 20.65,
+   "label": "chave Exibir nos documentos do Telefone (ligada)",
    "optional": true,
    "timeout": 3
   },
@@ -184,26 +184,26 @@
    "target": {
     "selector": "#show-email"
    },
-   "seconds": 0.2,
-   "at": 18.14,
-   "label": "chave Exibir nos documentos do E-mail",
+   "seconds": 0.6,
+   "at": 21.66,
+   "label": "chave Exibir nos documentos do E-mail (ligada)",
    "optional": true,
    "timeout": 3
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 19.53
+   "at": 29.7
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 25.58
+   "at": 35.75
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Endereço\"&&e.offsetParent);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-120);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 25.58,
+   "at": 35.75,
    "label": "desce até o Endereço"
   },
   {
@@ -212,7 +212,7 @@
     "placeholder": "00000-000",
     "exact": true
    },
-   "at": 26.8,
+   "at": 36.96,
    "label": "CEP"
   },
   {
@@ -223,7 +223,7 @@
    },
    "text": "12086410",
    "cps": 14,
-   "at": 28.3,
+   "at": 38.47,
    "label": "digita o CEP 12086-410",
    "noClick": true
   },
@@ -248,7 +248,7 @@
     "placeholder": "Rua, Avenida, etc."
    },
    "seconds": 0.2,
-   "at": 30.88,
+   "at": 41.04,
    "label": "Logradouro: Rua das Oficinas (e o bairro do lado)",
    "optional": true,
    "timeout": 3
@@ -258,8 +258,8 @@
    "target": {
     "selector": "main div:has(> label:text-is(\"Cidade\")) button[role=combobox]"
    },
-   "seconds": 0.2,
-   "at": 32.02,
+   "seconds": 0.1,
+   "at": 42.18,
    "label": "Cidade Taubaté e Estado SP - São Paulo",
    "optional": true,
    "timeout": 3
@@ -267,7 +267,7 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 33.52
+   "at": 56.44
   },
   {
    "do": "click",
@@ -275,7 +275,7 @@
     "placeholder": "Nº",
     "exact": true
    },
-   "at": 33.97,
+   "at": 56.9,
    "label": "Número"
   },
   {
@@ -286,7 +286,7 @@
    },
    "text": "1250",
    "cps": 14,
-   "at": 35.81,
+   "at": 58.73,
    "label": "digita 1250",
    "noClick": true
   },
@@ -295,7 +295,7 @@
    "target": {
     "placeholder": "Sala, Galpão, etc. (opcional)"
    },
-   "at": 37.0,
+   "at": 59.93,
    "label": "Complemento"
   },
   {
@@ -305,14 +305,14 @@
    },
    "text": "Galpão 2",
    "cps": 30,
-   "at": 38.89,
+   "at": 61.82,
    "label": "digita Galpão 2",
    "noClick": true
   },
   {
    "do": "mark",
    "name": "L7",
-   "at": 40.47
+   "at": 63.39
   },
   {
    "do": "hover",
@@ -320,7 +320,7 @@
     "text": "É este endereço que sai na nota fiscal."
    },
    "seconds": 2.0,
-   "at": 41.28,
+   "at": 64.2,
    "label": "nota: é este endereço que sai na nota fiscal (a Configuração Fiscal usa o que estiver aqui)",
    "optional": true,
    "timeout": 3
@@ -328,12 +328,12 @@
   {
    "do": "mark",
    "name": "L8",
-   "at": 49.78
+   "at": 72.7
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Prévia no comprovante\"&&e.offsetParent);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-210);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 49.78,
+   "at": 72.7,
    "label": "desce até a Prévia no comprovante"
   },
   {
@@ -347,7 +347,7 @@
     "selector": "main p.font-mono"
    },
    "seconds": 3.0,
-   "at": 51.44,
+   "at": 74.37,
    "label": "Prévia no comprovante: o endereço como sai impresso",
    "optional": true,
    "timeout": 3
@@ -355,7 +355,7 @@
   {
    "do": "mark",
    "name": "L9",
-   "at": 57.27
+   "at": 80.19
   },
   {
    "do": "hover",
@@ -364,7 +364,7 @@
     "name": "Logradouro"
    },
    "seconds": 0.2,
-   "at": 57.85,
+   "at": 80.77,
    "label": "caixas da prévia, pedaço por pedaço",
    "optional": true,
    "timeout": 3
@@ -376,7 +376,7 @@
     "name": "CEP"
    },
    "seconds": 0.3,
-   "at": 60.37,
+   "at": 83.29,
    "label": "caixa CEP",
    "optional": true,
    "timeout": 3
@@ -387,7 +387,7 @@
     "role": "checkbox",
     "name": "Complemento"
    },
-   "at": 63.74,
+   "at": 86.67,
    "label": "desmarca o Complemento"
   },
   {
@@ -400,9 +400,117 @@
    "target": {
     "selector": "main p.font-mono"
    },
-   "seconds": 1.4,
-   "at": 66.37,
+   "seconds": 0.32,
+   "at": 89.3,
    "label": "a prévia sem o galpão",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L10",
+   "at": 91.17
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Endereço da empresa\"&&e.offsetParent);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-200);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 92.36,
+   "label": "sobe ao título Endereço da empresa"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "2º endereço"
+   },
+   "at": 95.59,
+   "label": "2º endereço (abre a janela Segundo endereço)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Segundo endereço",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#address-2"
+   },
+   "seconds": 0.42,
+   "at": 98.05,
+   "label": "Endereço (texto livre)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#show-address-2"
+   },
+   "seconds": 1.2,
+   "at": 100.02,
+   "label": "chave Mostrar no comprovante junto do endereço principal (desligada)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L11",
+   "at": 104.65
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true
+   },
+   "at": 108.02,
+   "label": "Cancelar"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "text": "Segundo endereço",
+    "exact": true
+   },
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L12",
+   "at": 108.95
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Fuso horário\"&&e.offsetParent);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 108.95,
+   "label": "desce até o Fuso horário"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Fuso horário\", \"Brasília (UTC−3)\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Fuso horário preenchido pelo estado"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#company-timezone"
+   },
+   "seconds": 0.2,
+   "at": 110.36,
+   "label": "Fuso horário: Brasília (UTC−3), preenchido pelo estado",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "É a hora que vale no seu ponto eletrônico"
+   },
+   "seconds": 2.4,
+   "at": 110.64,
+   "label": "a hora que vale no ponto eletrônico",
    "optional": true,
    "timeout": 3
   },
@@ -414,7 +522,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 69.55
+   "at": 123.36
   }
  ]
 }

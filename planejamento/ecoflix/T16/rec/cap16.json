@@ -1,6 +1,6 @@
 {
  "name": "t16-cap16",
- "title": "T16 · Cap. 16 · Cancelar e corrigir (narração ESTIMADA 109,1 s; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T16 · Cap. 16 · Cancelar e corrigir (narração ESTIMADA 110,5 s; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t16-cap16",
  "pace": 0.5,
  "cps": 40,
@@ -191,7 +191,7 @@
    "target": {
     "selector": "main tbody tr:has-text('#1249') td:has-text('Cancelada')"
    },
-   "seconds": 0.15,
+   "seconds": 1.0,
    "at": 24.06,
    "label": "#1249 Cancelada",
    "optional": true,
@@ -200,12 +200,12 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 24.84
+   "at": 32.89
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 47.29
+   "at": 55.33
   },
   {
    "do": "hover",
@@ -213,7 +213,7 @@
     "selector": "main tbody tr:has-text('#1250') td:last-child button"
    },
    "seconds": 0.3,
-   "at": 60.41,
+   "at": 68.46,
    "label": "abre o menu da linha #1250",
    "noScroll": true,
    "optional": true,
@@ -237,7 +237,7 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 61.91
+   "at": 69.96
   },
   {
    "do": "click",
@@ -245,7 +245,7 @@
     "role": "menuitem",
     "name": "Carta de Correção"
    },
-   "at": 62.31,
+   "at": 70.36,
    "label": "Carta de Correção",
    "noScroll": true
   },
@@ -260,7 +260,7 @@
     "selector": "[role=dialog] :text-matches('permite corrigir erros em campos')"
    },
    "seconds": 2.0,
-   "at": 66.24,
+   "at": 74.28,
    "label": "zoom: aviso Importante (o que não dá pra corrigir)",
    "optional": true,
    "timeout": 4
@@ -268,20 +268,20 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 76.53
+   "at": 84.58
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] textarea"
    },
-   "at": 76.96,
+   "at": 85.01,
    "label": "Texto da Correção (clique no campo)"
   },
   {
    "do": "eval",
    "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM ALVO (nada em foco)';document.execCommand('insertText',false,\"Onde se l\\u00ea 'Placa FJR3B27', leia-se 'Placa GKM5D18'. A transportadora trocou o ve\\u00edculo da carga.\");return e.value})()",
-   "at": 78.6,
+   "at": 86.64,
    "label": "Texto da Correção"
   },
   {
@@ -290,7 +290,7 @@
     "selector": "[role=dialog] :text-matches('Dica: Use o formato')"
    },
    "seconds": 0.77,
-   "at": 82.6,
+   "at": 90.65,
    "label": "zoom: Dica do formato",
    "optional": true,
    "timeout": 4
@@ -298,14 +298,14 @@
   {
    "do": "mark",
    "name": "L8",
-   "at": 84.32
+   "at": 92.37
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] button:has-text('Enviar CC-e')"
    },
-   "at": 85.2,
+   "at": 93.25,
    "label": "Enviar CC-e"
   },
   {
@@ -316,12 +316,12 @@
   {
    "do": "mark",
    "name": "L9",
-   "at": 90.52
+   "at": 98.56
   },
   {
    "do": "press",
    "key": "Escape",
-   "at": 90.72,
+   "at": 98.76,
    "label": "fecha a janela da carta (se ainda estiver aberta)"
   },
   {
@@ -337,7 +337,7 @@
     "selector": "main tbody tr:has-text('#1250') td:last-child button"
    },
    "seconds": 0.15,
-   "at": 91.52,
+   "at": 99.56,
    "label": "abre o menu da linha #1250",
    "noScroll": true,
    "optional": true,
@@ -364,7 +364,7 @@
     "role": "menuitem",
     "name": "Carta de Correção"
    },
-   "at": 91.67,
+   "at": 99.72,
    "label": "Carta de Correção (de novo)",
    "noScroll": true
   },
@@ -378,20 +378,9 @@
    "target": {
     "selector": "[role=dialog] :text-is('1 CC-e enviada')"
    },
-   "seconds": 0.18,
-   "at": 94.69,
+   "seconds": 0.15,
+   "at": 102.73,
    "label": "zoom: 1 CC-e enviada",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "[role=dialog] button:text-is('PDF'), [role=dialog] a:text-is('PDF')"
-   },
-   "seconds": 0.6,
-   "at": 95.82,
-   "label": "PDF da carta",
    "optional": true,
    "timeout": 4
   },
@@ -400,8 +389,8 @@
    "target": {
     "selector": "[role=dialog] :text-matches('Registrada na SEFAZ')"
    },
-   "seconds": 1.2,
-   "at": 101.59,
+   "seconds": 1.6,
+   "at": 103.42,
    "label": "Registrada na SEFAZ · protocolo",
    "optional": true,
    "timeout": 4
@@ -414,7 +403,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 109.09
+   "at": 110.46
   }
  ]
 }

@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
-# T16 (1.60.10) · lote de ensaios rápidos em sequência, um capítulo por vez pela fila (rec/fila.sh --prio 16), com MP4 ultrafast só para a
-# folha de contato. Capítulo que mexe no banco e sai com 0 passo falho captura a semente apos-capNN na MESMA trava.
-#   bash rec/t16/t16_lote160.sh 0 1 2 ...        (rápido)        bash rec/t16/t16_lote160.sh --completo 9 11 ...
+# T16 (1.60.18, 1600x900) · lote de ensaios em sequência, um capítulo por vez pela fila (rec/fila.sh --prio 16), com MP4 ultrafast só
+# para a folha de contato. Capítulo que mexe no banco e sai com 0 passo falho no rápido captura a semente apos-capNN na MESMA trava.
+#   bash rec/t16/t16_lote160.sh 0 1 2 ... [--completo 15 16 ...]   (os números antes de --completo vão no rápido; os depois, no completo)
+# Depois do cap20, o t16_pdf.py grava em rec/t16/arquivos/ os PDFs que o robô devolveu (comprovante e DANFE).
 # Saídas por capítulo em rec/t16/_ens/ (rápido) ou rec/t16/ (completo): t16-capNN.resumo.txt, .prever.txt, .contact.jpg; linha em _lote.txt.
 # A senha do login é aleatória, só no ambiente (nunca em arquivo).
 set -u
 cd "$(dirname "$0")/../.."
-MODO=rapido; [ "${1:-}" = --completo ] && { MODO=completo; shift; }
+MODO=rapido
 PORTA=54316
 export FAKE_NOW=2026-11-10T08:30:00-03:00 FAKE_URL=http://127.0.0.1:$PORTA TUT_USER=rafael@reciclavalemetais.example
 TUT_SENHA=$(head -c 12 /dev/urandom | base64 | tr -dc 'A-Za-z0-9' | head -c 14); export TUT_SENHA
@@ -15,6 +16,7 @@ PID=$(cat rec/.runtime/fake$PORTA.pid 2>/dev/null)
 tr '\0' '\n' < /proc/$PID/environ 2>/dev/null | grep -qx "FAKE_PORT=$PORTA" || { echo "instância $PORTA fora do ar"; exit 3; }
 python3 -I rec/t16/gerar.py > rec/t16/_ens/.gerar.out 2>&1 || { echo "gerar.py falhou"; tail -3 rec/t16/_ens/.gerar.out; exit 2; }
 for C in "$@"; do
+  [ "$C" = --completo ] && { MODO=completo; continue; }
   NN=$(printf '%02d' "$((10#$C))")
   if [ "$MODO" = rapido ]; then
     python3 -I rec/t16/ensaio.py "$NN" > /dev/null || continue
@@ -33,5 +35,6 @@ for C in "$@"; do
   python3 -I rec/t16/resumo.py "$NN" $RES > "$DIR/t16-cap$NN.resumo.txt" 2>&1
   [ "$MODO" = rapido ] && python3 -I rec/t16/prever.py "$NN" --ens > "$DIR/t16-cap$NN.prever.txt" 2>&1
   rm -f "$DIR/t16-cap$NN.mp4"
+  [ "$NN" = 20 ] && python3 -I rec/t16/t16_pdf.py $RES > "$DIR/t16-cap20.pdfs.txt" 2>&1
   echo "cap$NN $MODO rc_falhos=$(cat "$DIR/.t16-cap$NN.rc" 2>/dev/null) semente=$(cat "$DIR/.t16-cap$NN.semente" 2>/dev/null | tail -1 | cut -c1-90) $(date +%T)" | tee -a "$DIR/_lote.txt"
 done

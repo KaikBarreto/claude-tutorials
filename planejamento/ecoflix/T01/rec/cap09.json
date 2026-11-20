@@ -1,6 +1,6 @@
 {
  "name": "t01-cap09",
- "title": "T01 · Cap. 9 · O jeito do pátio (narração 200,3 s ESTIMADA; marcas L1..L18 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T01 · Cap. 9 · O jeito do pátio (narração 222,2 s ESTIMADA; marcas L1..L19 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "seed": "t01-cap09",
  "pace": 0.5,
  "cps": 14,
@@ -164,7 +164,7 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 22.53
+   "at": 26.78
   },
   {
    "do": "hover",
@@ -172,7 +172,7 @@
     "text": "continuam com a mesma lógica"
    },
    "seconds": 4.0,
-   "at": 22.82,
+   "at": 27.08,
    "label": "descrição: compras, vendas, vínculos, saldos e documentos fiscais continuam iguais",
    "optional": true,
    "timeout": 3
@@ -180,12 +180,12 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 31.3
+   "at": 35.55
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].filter(e=>e.textContent.trim().startsWith(\"Caixa\")&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-120);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 31.3,
+   "at": 35.55,
    "label": "desce até a seção Caixa"
   },
   {
@@ -194,7 +194,7 @@
     "text": "Cada operador abre e gerencia seu próprio caixa"
    },
    "seconds": 3.4,
-   "at": 33.18,
+   "at": 37.43,
    "label": "Multi-Caixas: cada operador, o próprio caixa",
    "optional": true,
    "timeout": 3
@@ -205,7 +205,7 @@
     "selector": "main div:has(> div > div > label:text-is(\"Multi-Caixas\")) > button[role=switch]"
    },
    "seconds": 0.2,
-   "at": 41.77,
+   "at": 46.03,
    "label": "chave Multi-Caixas ligada",
    "optional": true,
    "timeout": 3
@@ -213,7 +213,7 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 43.19
+   "at": 47.44
   },
   {
    "do": "hover",
@@ -221,8 +221,8 @@
     "text": "Rastreabilidade do dinheiro físico (Cofre)",
     "exact": true
    },
-   "seconds": 2.0,
-   "at": 44.93,
+   "seconds": 1.99,
+   "at": 49.19,
    "label": "Rastreabilidade do dinheiro físico (Cofre), ligada",
    "optional": true,
    "timeout": 3
@@ -230,7 +230,7 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 48.48
+   "at": 52.73
   },
   {
    "do": "hover",
@@ -239,7 +239,7 @@
     "exact": true
    },
    "seconds": 0.2,
-   "at": 49.0,
+   "at": 53.26,
    "label": "Formato do Comprovante",
    "optional": true,
    "timeout": 3
@@ -249,7 +249,7 @@
    "target": {
     "selector": "main div:has(> span:text-is(\"Computador\")) button[role=combobox]"
    },
-   "at": 50.68,
+   "at": 54.93,
    "label": "abre o formato do Computador"
   },
   {
@@ -269,7 +269,7 @@
     "exact": true
    },
    "seconds": 1.6,
-   "at": 52.95,
+   "at": 57.2,
    "label": "Térmico (58/80mm)",
    "noScroll": true,
    "optional": true,
@@ -283,7 +283,7 @@
     "exact": true
    },
    "seconds": 1.2,
-   "at": 56.14,
+   "at": 60.39,
    "label": "A4 (PDF em folha)",
    "noScroll": true,
    "optional": true,
@@ -296,7 +296,7 @@
     "name": "Térmico (58/80mm)",
     "exact": true
    },
-   "at": 58.9,
+   "at": 63.16,
    "label": "fica no Térmico (58/80mm)",
    "noScroll": true
   },
@@ -312,7 +312,7 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 60.29
+   "at": 64.54
   },
   {
    "do": "hover",
@@ -320,7 +320,7 @@
     "selector": "main div:has(> span:text-is(\"Computador\")) button[role=combobox]"
    },
    "seconds": 0.2,
-   "at": 61.88,
+   "at": 66.13,
    "label": "Computador: Térmico",
    "optional": true,
    "timeout": 3
@@ -331,7 +331,7 @@
     "selector": "main div:has(> span:text-is(\"Celular/Tablet\")) button[role=combobox]"
    },
    "seconds": 0.2,
-   "at": 63.55,
+   "at": 67.8,
    "label": "Celular/Tablet: Térmico",
    "optional": true,
    "timeout": 3
@@ -342,7 +342,7 @@
     "text": "(preferência por usuário)"
    },
    "seconds": 0.2,
-   "at": 64.91,
+   "at": 69.17,
    "label": "(preferência por usuário)",
    "optional": true,
    "timeout": 3
@@ -350,7 +350,7 @@
   {
    "do": "mark",
    "name": "L8",
-   "at": 66.63
+   "at": 70.88
   },
   {
    "do": "hover",
@@ -358,9 +358,26 @@
     "text": "Pedidos e Pagamentos",
     "exact": true
    },
-   "seconds": 0.43,
-   "at": 67.16,
+   "seconds": 0.4,
+   "at": 71.41,
    "label": "Pedidos e Pagamentos",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Mostrar jogos nos pedidos\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere primeira opção: Mostrar jogos nos pedidos"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Mostrar jogos nos pedidos",
+    "exact": true
+   },
+   "seconds": 1.0,
+   "at": 74.65,
+   "label": "Mostrar jogos nos pedidos (a quantidade também em jogos)",
    "optional": true,
    "timeout": 3
   },
@@ -370,8 +387,8 @@
     "text": "Forma de Pagamento Padrão",
     "exact": true
    },
-   "seconds": 1.6,
-   "at": 69.14,
+   "seconds": 1.0,
+   "at": 82.72,
    "label": "Forma de Pagamento Padrão",
    "optional": true,
    "timeout": 3
@@ -381,7 +398,7 @@
    "target": {
     "selector": "main div:has(> div > div > label:text-is(\"Forma de Pagamento Padrão\")) > button[role=combobox]"
    },
-   "at": 73.57,
+   "at": 87.16,
    "label": "abre a Forma de Pagamento Padrão"
   },
   {
@@ -401,7 +418,7 @@
     "exact": true
    },
    "seconds": 0.2,
-   "at": 75.54,
+   "at": 89.12,
    "label": "Dinheiro",
    "noScroll": true,
    "optional": true,
@@ -415,7 +432,7 @@
     "exact": true
    },
    "seconds": 0.3,
-   "at": 76.45,
+   "at": 90.03,
    "label": "Pix/Transferência",
    "noScroll": true,
    "optional": true,
@@ -429,7 +446,7 @@
     "exact": true
    },
    "seconds": 0.2,
-   "at": 78.3,
+   "at": 91.88,
    "label": "Perguntar sempre",
    "noScroll": true,
    "optional": true,
@@ -438,7 +455,7 @@
   {
    "do": "mark",
    "name": "L9",
-   "at": 79.81
+   "at": 93.4
   },
   {
    "do": "click",
@@ -447,7 +464,7 @@
     "name": "Perguntar sempre",
     "exact": true
    },
-   "at": 81.71,
+   "at": 95.29,
    "label": "fica em Perguntar sempre",
    "noScroll": true
   },
@@ -465,8 +482,8 @@
    "target": {
     "selector": "main div:has(> div > div > label:text-is(\"Forma de Pagamento Padrão\")) > button[role=combobox]"
    },
-   "seconds": 0.85,
-   "at": 84.14,
+   "seconds": 0.86,
+   "at": 97.72,
    "label": "Perguntar sempre: cada fornecedor recebe de um jeito",
    "optional": true,
    "timeout": 3
@@ -474,12 +491,51 @@
   {
    "do": "mark",
    "name": "L10",
-   "at": 86.54
+   "at": 100.13
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Permitir Edição de Itens",
+    "exact": true
+   },
+   "seconds": 0.7,
+   "at": 100.48,
+   "label": "Permitir Edição de Itens (ligada)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Editar peso, impureza/tara e valor de materiais já incluídos"
+   },
+   "seconds": 1.2,
+   "at": 102.73,
+   "label": "Editar peso, impureza/tara e valor de materiais já incluídos",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div:has(> label:text-is(\"Permitir Edição de Itens\")) > svg"
+   },
+   "seconds": 2.4,
+   "at": 106.33,
+   "label": "a dica: Adicionou 100kg de alumínio e percebeu que era 95kg?",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L11",
+   "at": 114.3
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Arredondar Pagamentos\"&&e.offsetParent);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 86.54,
+   "at": 114.3,
    "label": "desce até Arredondar Pagamentos"
   },
   {
@@ -488,7 +544,7 @@
     "selector": "main div:has(> label:text-is(\"Arredondar Pagamentos\")) > svg"
    },
    "seconds": 1.6,
-   "at": 87.09,
+   "at": 114.85,
    "label": "Arredondar Pagamentos: a dica aparece",
    "optional": true,
    "timeout": 3
@@ -499,7 +555,7 @@
     "selector": "main div:has(> label:text-is(\"Na Venda\")) > button[role=switch]"
    },
    "seconds": 0.2,
-   "at": 92.41,
+   "at": 120.17,
    "label": "Na Venda (desligada)",
    "optional": true,
    "timeout": 3
@@ -510,20 +566,48 @@
     "selector": "main div:has(> label:text-is(\"Na Compra\")) > button[role=switch]"
    },
    "seconds": 0.2,
-   "at": 93.72,
+   "at": 121.48,
    "label": "Na Compra (desligada)",
    "optional": true,
    "timeout": 3
   },
   {
    "do": "mark",
-   "name": "L11",
-   "at": 95.01
+   "name": "L12",
+   "at": 122.77
   },
   {
    "do": "mark",
-   "name": "L12",
-   "at": 114.65
+   "name": "L13",
+   "at": 142.4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Múltiplas Tabelas de Preço",
+    "exact": true
+   },
+   "seconds": 1.2,
+   "at": 143.87,
+   "label": "Múltiplas Tabelas de Preço (ligada, sem parar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Permite criar e gerenciar múltiplas tabelas de preço vinculadas"
+   },
+   "seconds": 0.55,
+   "at": 147.41,
+   "label": "Permite criar e gerenciar múltiplas tabelas de preço vinculadas",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L14",
+   "at": 149.51
   },
   {
    "do": "hover",
@@ -532,7 +616,7 @@
     "exact": true
    },
    "seconds": 1.6,
-   "at": 117.0,
+   "at": 151.86,
    "label": "Impureza/Tara Desconta no Valor (ligada)",
    "optional": true,
    "timeout": 3
@@ -543,7 +627,7 @@
     "selector": "main div:has(> label:text-is(\"Impureza/Tara Desconta no Valor\")) > svg"
    },
    "seconds": 3.4,
-   "at": 120.64,
+   "at": 155.5,
    "label": "Impureza/Tara: a dica (Ex: compra de 100kg com 5kg de impureza)",
    "optional": true,
    "timeout": 3
@@ -554,30 +638,30 @@
     "selector": "main div:has(> div > div > label:text-is(\"Impureza/Tara Desconta no Valor\")) > button[role=switch]"
    },
    "seconds": 1.6,
-   "at": 126.56,
+   "at": 161.43,
    "label": "chave Impureza/Tara ligada",
    "optional": true,
    "timeout": 3
   },
   {
    "do": "mark",
-   "name": "L13",
-   "at": 129.8
-  },
-  {
-   "do": "mark",
-   "name": "L14",
-   "at": 141.31
-  },
-  {
-   "do": "mark",
    "name": "L15",
-   "at": 155.48
+   "at": 164.66
   },
   {
    "do": "mark",
    "name": "L16",
-   "at": 169.04
+   "at": 176.18
+  },
+  {
+   "do": "mark",
+   "name": "L17",
+   "at": 190.34
+  },
+  {
+   "do": "mark",
+   "name": "L18",
+   "at": 203.9
   },
   {
    "do": "hover",
@@ -586,7 +670,7 @@
     "exact": true
    },
    "seconds": 0.8,
-   "at": 169.19,
+   "at": 204.06,
    "label": "Lucro no Comprovante (desligado)",
    "optional": true,
    "timeout": 3
@@ -597,7 +681,7 @@
     "text": "Exibe o lucro estimado no PDF do comprovante de venda"
    },
    "seconds": 1.2,
-   "at": 171.83,
+   "at": 206.69,
    "label": "Exibe o lucro estimado no comprovante de venda",
    "optional": true,
    "timeout": 3
@@ -608,20 +692,20 @@
     "selector": "main div:has(> label:text-is(\"Lucro no Comprovante\")) > svg"
    },
    "seconds": 0.5,
-   "at": 175.77,
+   "at": 210.64,
    "label": "Lucro no Comprovante: só para quem vê a projeção de lucro",
    "optional": true,
    "timeout": 3
   },
   {
    "do": "mark",
-   "name": "L17",
-   "at": 178.2
+   "name": "L19",
+   "at": 213.06
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Forma de Pagamento Padrão\"&&e.offsetParent);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-120);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 178.2,
+   "at": 213.06,
    "label": "as opções de pedido, de Forma de Pagamento Padrão a Lucro no Comprovante"
   },
   {
@@ -629,55 +713,10 @@
    "target": {
     "selector": "[aria-label='Menu da conta']"
    },
-   "seconds": 0.2,
-   "at": 184.47,
+   "seconds": 0.1,
+   "at": 219.34,
    "label": "aqui o Rafael (o card da conta)",
    "noScroll": true,
-   "optional": true,
-   "timeout": 3
-  },
-  {
-   "do": "mark",
-   "name": "L18",
-   "at": 186.06
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Exigir cliente/fornecedor no Ticket de Pesagem\"&&e.offsetParent);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/1100),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 186.06,
-   "label": "desce até Exigir cliente/fornecedor no Ticket de Pesagem"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Exigir cliente/fornecedor no Ticket de Pesagem",
-    "exact": true
-   },
-   "seconds": 1.2,
-   "at": 187.98,
-   "label": "Exigir cliente/fornecedor no Ticket de Pesagem (desligado)",
-   "optional": true,
-   "timeout": 3
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Quando ligado, o funcionário não consegue salvar um ticket"
-   },
-   "seconds": 3.0,
-   "at": 191.45,
-   "label": "Quando ligado, ninguém salva um ticket sem escolher com quem foi",
-   "optional": true,
-   "timeout": 3
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main div:has(> div > div > label:text-is(\"Exigir cliente/fornecedor no Ticket de Pesagem\")) > button[role=switch]"
-   },
-   "seconds": 1.2,
-   "at": 196.84,
-   "label": "chave Exigir cliente/fornecedor (vale pra empresa toda)",
    "optional": true,
    "timeout": 3
   },
@@ -694,7 +733,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 200.32
+   "at": 222.23
   }
  ]
 }

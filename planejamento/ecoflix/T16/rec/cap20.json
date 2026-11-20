@@ -1,6 +1,6 @@
 {
  "name": "t16-cap20",
- "title": "T16 · Cap. 20 · DANFE e XML (narração ESTIMADA 103,1 s; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T16 · Cap. 20 · DANFE e XML (narração ESTIMADA 85,2 s; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t16-cap20",
  "pace": 0.5,
  "cps": 40,
@@ -83,6 +83,10 @@
   },
   {
    "do": "eval",
+   "js": "(()=>{const o=window.open;window.__pops=[];window.open=function(...a){const w=o.apply(this,a);window.__pops.push(w);return w};return 'ok'})()"
+  },
+  {
+   "do": "eval",
    "js": "(()=>{const a=document.getAnimations().filter(x=>x.currentTime<0);a.forEach(x=>x.startTime=document.timeline.currentTime);return a.length})()"
   },
   {
@@ -124,12 +128,27 @@
     "role": "menuitem",
     "name": "Comprovante (Notinha)"
    },
-   "seconds": 1.2,
+   "seconds": 1.0,
    "at": 20.7,
    "label": "Comprovante (Notinha)",
    "noScroll": true,
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Comprovante (Notinha)"
+   },
+   "at": 23.25,
+   "label": "Comprovante (Notinha): o PDF térmico abre na aba nova",
+   "noScroll": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const w=(window.__pops||[]).slice(-1)[0];if(!w)return 'SEM JANELA';for(let i=0;i<60;i++){let f=null;try{f=w.document&&w.document.querySelector('#pdf-frame')}catch(e){return 'ERRO '+e}if(f&&f.src){const b=await (await fetch(f.src.split('#')[0])).blob();const u=new Uint8Array(await b.arrayBuffer());let s='';for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'PDF:'+btoa(s)}await new Promise(r=>setTimeout(r,250))}return 'SEM PDF'})()",
+   "label": "PDF do Comprovante (Notinha) da 1250 (aba nova, para a cena do comprovante)"
   },
   {
    "do": "hover",
@@ -149,7 +168,7 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 25.99
+   "at": 26.97
   },
   {
    "do": "click",
@@ -157,14 +176,19 @@
     "role": "menuitem",
     "name": "Download DANFE"
    },
-   "at": 26.97,
+   "at": 27.95,
    "label": "Download DANFE (o PDF abre em outra aba)",
    "noScroll": true
   },
   {
+   "do": "eval",
+   "js": "(async()=>{const w=(window.__pops||[]).slice(-1)[0];if(!w)return 'SEM JANELA';for(let i=0;i<60;i++){let f=null;try{f=w.document&&w.document.querySelector('#pdf-frame')}catch(e){return 'ERRO '+e}if(f&&f.src){const b=await (await fetch(f.src.split('#')[0])).blob();const u=new Uint8Array(await b.arrayBuffer());let s='';for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'PDF:'+btoa(s)}await new Promise(r=>setTimeout(r,250))}return 'SEM PDF'})()",
+   "label": "PDF do DANFE da 1250 (aba nova, para a cena do comprovante)"
+  },
+  {
    "do": "mark",
    "name": "L5",
-   "at": 46.98
+   "at": 33.62
   },
   {
    "do": "hover",
@@ -172,7 +196,7 @@
     "selector": "main tbody tr:has-text('#1250') td:last-child button"
    },
    "seconds": 0.15,
-   "at": 47.14,
+   "at": 33.77,
    "label": "abre o menu da linha #1250",
    "noScroll": true,
    "optional": true,
@@ -199,14 +223,14 @@
     "role": "menuitem",
     "name": "Download XML"
    },
-   "at": 48.12,
+   "at": 34.76,
    "label": "Download XML",
    "noScroll": true
   },
   {
    "do": "press",
    "key": "Escape",
-   "at": 51.1,
+   "at": 37.74,
    "label": "(fecha o que estiver aberto)"
   },
   {
@@ -215,7 +239,7 @@
     "selector": "main tbody tr:has-text('#1250') td:last-child button"
    },
    "seconds": 0.15,
-   "at": 51.7,
+   "at": 38.34,
    "label": "abre o menu da linha #1250",
    "noScroll": true,
    "optional": true,
@@ -239,7 +263,7 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 52.8
+   "at": 39.44
   },
   {
    "do": "click",
@@ -247,7 +271,7 @@
     "role": "menuitem",
     "name": "Visualizar"
    },
-   "at": 53.48,
+   "at": 40.12,
    "label": "Visualizar",
    "noScroll": true
   },
@@ -261,7 +285,7 @@
    "target": {
     "selector": "[role=dialog] [role=tab]:has-text('XML')"
    },
-   "at": 55.0,
+   "at": 41.64,
    "label": "aba XML"
   },
   {
@@ -270,7 +294,7 @@
     "selector": "[role=dialog] :text-is('XML da nota')"
    },
    "seconds": 1.2,
-   "at": 57.05,
+   "at": 43.69,
    "label": "zoom: XML da nota (Mesmo arquivo enviado à SEFAZ) e Copiar XML",
    "optional": true,
    "timeout": 4
@@ -278,12 +302,12 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 61.73
+   "at": 48.37
   },
   {
    "do": "press",
    "key": "Escape",
-   "at": 62.48,
+   "at": 49.12,
    "label": "fecha o Visualizar"
   },
   {
@@ -296,7 +320,7 @@
     "selector": "main tbody tr:has-text('#1249') td:last-child button"
    },
    "seconds": 0.3,
-   "at": 64.99,
+   "at": 51.63,
    "label": "abre o menu da 1249 (Cancelada)",
    "noScroll": true,
    "optional": true,
@@ -309,7 +333,7 @@
     "name": "XML de Cancelamento"
    },
    "seconds": 1.0,
-   "at": 66.84,
+   "at": 53.48,
    "label": "zoom: XML de Cancelamento (sem clicar)",
    "noScroll": true,
    "optional": true,
@@ -318,12 +342,12 @@
   {
    "do": "mark",
    "name": "L8",
-   "at": 68.99
+   "at": 55.63
   },
   {
    "do": "press",
    "key": "Escape",
-   "at": 69.29,
+   "at": 55.93,
    "label": "fecha o menu"
   },
   {
@@ -332,7 +356,7 @@
     "selector": "main tbody tr:has-text('#1250') td",
     "nth": 3
    },
-   "at": 70.1,
+   "at": 56.74,
    "label": "clique na linha #1250 (abre os detalhes)"
   },
   {
@@ -346,7 +370,7 @@
     "selector": "main :text-is('Chave NF-e:')"
    },
    "seconds": 0.6,
-   "at": 73.99,
+   "at": 60.63,
    "label": "zoom: Detalhes da Nota Fiscal #1250: Chave NF-e",
    "optional": true,
    "timeout": 4
@@ -357,7 +381,7 @@
     "selector": "main :text-is('Protocolo de autorização:')"
    },
    "seconds": 0.34,
-   "at": 75.89,
+   "at": 62.53,
    "label": "Protocolo de autorização",
    "optional": true,
    "timeout": 4
@@ -368,7 +392,7 @@
     "selector": "main :text-is('Emitido por:')"
    },
    "seconds": 0.15,
-   "at": 77.18,
+   "at": 63.82,
    "label": "Emitido por: Rafael Nogueira",
    "optional": true,
    "timeout": 4
@@ -376,7 +400,7 @@
   {
    "do": "mark",
    "name": "L9",
-   "at": 77.84
+   "at": 64.48
   },
   {
    "do": "click",
@@ -384,7 +408,7 @@
     "selector": "main tbody tr:has-text('#1250') td",
     "nth": 3
    },
-   "at": 78.24,
+   "at": 64.88,
    "label": "fecha os detalhes da linha"
   },
   {
@@ -398,7 +422,7 @@
     "selector": "main input[placeholder^='Buscar por número']"
    },
    "seconds": 0.15,
-   "at": 80.79,
+   "at": 67.43,
    "label": "a busca",
    "optional": true,
    "timeout": 4
@@ -409,7 +433,7 @@
     "selector": "main button[role=combobox]:has-text('Todos os tempos')"
    },
    "seconds": 0.15,
-   "at": 81.63,
+   "at": 68.27,
    "label": "o período: Todos os tempos",
    "optional": true,
    "timeout": 4
@@ -419,37 +443,26 @@
    "target": {
     "selector": "main button[aria-label='Filtros']"
    },
-   "at": 82.52,
+   "at": 69.15,
    "label": "zoom: Filtros (abre)"
   },
   {
    "do": "press",
    "key": "Escape",
-   "at": 89.37,
+   "at": 74.78,
    "label": "fecha os Filtros"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main [role=tab]:has-text('Homologação')"
-   },
-   "seconds": 0.18,
-   "at": 92.0,
-   "label": "aba Homologação (notas de teste)",
-   "optional": true,
-   "timeout": 4
   },
   {
    "do": "mark",
    "name": "L10",
-   "at": 93.13
+   "at": 75.29
   },
   {
    "do": "click",
    "target": {
     "selector": "main button[aria-label='Mais opções de NF-e']"
    },
-   "at": 95.84,
+   "at": 78.0,
    "label": "três pontinhos (Mais opções de NF-e)"
   },
   {
@@ -459,7 +472,7 @@
     "name": "Exportação Contábil"
    },
    "seconds": 1.2,
-   "at": 97.31,
+   "at": 79.47,
    "label": "zoom: Exportação Contábil (sem clicar)",
    "noScroll": true,
    "optional": true,
@@ -468,7 +481,7 @@
   {
    "do": "press",
    "key": "Escape",
-   "at": 101.25,
+   "at": 83.41,
    "label": "fecha o menu"
   },
   {
@@ -479,7 +492,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 103.06
+   "at": 85.22
   }
  ]
 }

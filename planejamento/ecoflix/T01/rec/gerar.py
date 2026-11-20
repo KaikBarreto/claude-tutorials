@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""T01 · gera rec/t01/cap00..cap13.json (roteiros do robô) a partir da voz (t01/narracao/capNN.json).
+"""T01 · gera rec/t01/cap00..cap15.json (roteiros do robô) a partir da voz (t01/narracao/capNN.json).
 
-EcoFlix T1 "Sua conta e sua empresa": EcoSistema 1.59.154 no COMPUTADOR (janela 1280x800, tema claro), Supabase falso com o mundo
+EcoFlix T1 "Sua conta e sua empresa": EcoSistema 1.60.18 no COMPUTADOR (janela 1600x900, tema claro), Supabase falso com o mundo
 da Recicla Vale Metais, logado como Rafael Nogueira (MASTER). FAKE_NOW 2026-11-10T08:30:00-03:00 em todos os capítulos.
 Os `at` saem da palavra que anuncia cada passo: A(linha, palavra, folga) = início da palavra - folga (folga = custo do gesto,
 docs/04-gravacao.md "Custo real dos gestos"). Hoje a voz é ESTIMADA (capNN.json com "estimado"); quando a voz chegar, roda-se
@@ -9,7 +9,7 @@ de novo com o capNN.json da voz e o roteiro sai preso às palavras de verdade, s
 Rodar de qualquer pasta: `python3 -I rec/t01/gerar.py [NN ...]`. Depois: `node rec/record.mjs rec/t01/capNN.json --check`.
 
 Todos os capítulos abrem SEM sessão ("anonymous": true): os caps 0 a 4 são as páginas públicas (/cadastro, /login), e dos caps 5
-a 13 o `setup` entra pelo formulário do /login com "$TUT_USER"/"$TUT_SENHA" (nunca no vídeo; a senha nunca vai para arquivo).
+a 15 o `setup` entra pelo formulário do /login com "$TUT_USER"/"$TUT_SENHA" (nunca no vídeo; a senha nunca vai para arquivo).
 O cap03 entra pela tela de propósito: é o login pelo formulário que salva a sessão do trocador de contas.
 
 Cadeia de sementes (rec/mundo/seeds-extra/t01/): `inicio` (a empresa como sai de um cadastro novo) e, a cada capítulo que mexe no
@@ -41,11 +41,12 @@ STORAGE = {'app_version': VERSAO, 'notification_shown_version': VERSAO, 'pwa-ins
            'initial-preferences-set': 'true', f'daily-tasks-reminder-last-shown-{RAFAEL}': '2026-11-10'}
 
 NOMES = ['Abertura', 'Criar a conta', 'Os 7 dias de teste', 'Entrar no sistema', 'Esqueci minha senha', 'Logo, ícone, nome e CNPJ',
-         'Contato e endereço', 'Numeração de pedidos', 'A frase do comprovante', 'O jeito do pátio', 'Condições de pagamento',
-         'Aparência e atalhos', 'Senha, termos e Zona de Perigo', 'Recapitulando']
-# estado de partida de cada capítulo (sementes por cima do mundo base, na ordem). Os caps 7, 9, 11, 12 e 13 só leem.
-CADEIA = ['t01/inicio', 't01/apos-cap05', 't01/apos-cap06', 't01/apos-cap08', 't01/apos-cap10']
-ATE = {0: 1, 1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 2, 7: 3, 8: 3, 9: 4, 10: 4, 11: 5, 12: 5, 13: 5}
+         'Contato e endereço', 'Numeração de pedidos', 'A frase do comprovante', 'O jeito do pátio', 'O comprovante do seu jeito',
+         'Ticket, idioma e guia', 'Condições de pagamento', 'Aparência e atalhos', 'Senha, termos e Zona de Perigo', 'Recapitulando']
+# estado de partida de cada capítulo (sementes por cima do mundo base, na ordem). Os caps 7, 9, 10, 11, 13, 14 e 15 só leem (o 10 liga e
+# desliga as assinaturas e o estilo do cupom, e termina igual; o 7 volta ao Padrão; o 6 abre e cancela o 2º endereço).
+CADEIA = ['t01/inicio', 't01/apos-cap05', 't01/apos-cap06', 't01/apos-cap08', 't01/apos-cap12']
+ATE = {0: 1, 1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 2, 7: 3, 8: 3, 9: 4, 10: 4, 11: 4, 12: 4, 13: 5, 14: 5, 15: 5}
 SEMENTE = {n: CADEIA[:k] for n, k in ATE.items()}
 
 # Observador de avisos na tela (aceite do ensaio): erro do app e janela que não pode aparecer na chegada ao sistema.
@@ -387,15 +388,19 @@ def cap01():
     c.cursor((1120, 470), at=c.A(5, 'Repara', 0.4), label='a etapa Dados inteira (sem campo de CNPJ)')
     c.confere_ausente('body', 'CNPJ', 'nenhum campo de CNPJ no cadastro', espera=0.2)
     c.mark(6)
-    c.click(BTNX('Continuar'), at=c.A(6, 'Continuar,', 0.8), label='Continuar')
+    c.click(BTNX('Continuar'), at=c.A(6, 'Continuar.', 0.8), label='Continuar')
     c.waitfor(text='Email de acesso:', timeout=12)
     c.mark(7)
     c.click(CAD_SENHA, at=c.A(7, 'senha', 0.8), label='Senha')
     c.type(CAD_SENHA, '$TUT_SENHA', at=c.A(7, 'precisa', -0.07), cps=24, noClick=True, label='digita a senha (pontinhos; o indicador de força enche)')
-    c.confere('body', ['Senha forte.'], 'indicador Senha forte')
-    c.hover(TXTP('Senha forte.'), 0.6, at=c.A(7, 'indicador', 0.5), label='indicador de força: Senha forte')
-    c.click(CAD_CONFIRMA, at=c.A(7, 'forte.', 0.85), label='Confirmar Senha')
-    c.type(CAD_CONFIRMA, '$TUT_SENHA', at=c.A(7, 'Embaixo,', -0.12), cps=24, noClick=True, label='repete a senha')
+    # a lista sob o campo (PasswordStrengthIndicator): "Senha forte. Deve conter:" e os cinco itens. A senha do ambiente tem de cumprir os cinco
+    c.confere('body', ['Senha forte. Deve conter:', 'Pelo menos 8 caracteres', 'Pelo menos 1 número', 'Pelo menos 1 letra minúscula',
+                       'Pelo menos 1 letra maiúscula', 'Pelo menos 1 caractere especial'], 'lista da senha forte com os cinco itens')
+    c.hover(TXTP('Senha forte.'), 0.5, at=c.A(7, 'Embaixo,', 0.8), label='ZOOM lista da senha: Senha forte. Deve conter:')
+    c.hover(TXTP('Pelo menos 1 caractere especial'), 0.8, at=c.A(7, 'especial.', 0.9), label='os cinco itens da lista, até o caractere especial')
+    c.hover(TXTP('Senha forte.'), 0.4, at=c.A(7, 'forte.', 0.8), label='Senha forte')
+    c.click(CAD_CONFIRMA, at=c.A(7, 'Depois', 0.85), label='Confirmar Senha')
+    c.type(CAD_CONFIRMA, '$TUT_SENHA', at=c.A(7, 'repito', -0.1), cps=24, noClick=True, label='repete a senha')
     c.mark(8)
     c.rolar(380, at=c.A(8, 'Ao', 1.0), label='desce até o aviso dos termos', ponto=(640, 520))
     c.hover(BTN('Termos de Uso'), 0.3, at=c.A(8, 'Termos', 0.7), label='Termos de Uso (sem clicar)')
@@ -458,7 +463,13 @@ def cap03():
     c.mark(6)
     c.click(CARD_CONTA, at=c.A(6, 'Clicando', 0.5), label='abre o menu da conta', noScroll=True)
     c.waitfor(target={'role': 'menuitem', 'name': 'Meu Perfil'}, timeout=8)
-    c.hover({'role': 'menuitem', 'name': 'Meu Perfil'}, 1.2, at=c.A(6, 'Perfil', 0.6), label='Meu Perfil')
+    c.hover({'role': 'menuitem', 'name': 'Meu Perfil'}, 0.4, at=c.A(6, 'Perfil', 0.6), label='Meu Perfil')
+    # o resto do menu, item por item (a faixa do menu tem ~44 px por item; o cursor só passa, sem clicar)
+    c.hover({'role': 'menuitem', 'name': 'Assinatura'}, 0.1, at=c.A(6, 'Assinatura,', 0.6), label='menu: Assinatura')
+    c.hover({'role': 'menuitem', 'name': 'Tema'}, 0.1, at=c.A(6, 'Tema,', 0.6), label='menu: Tema')
+    c.hover({'role': 'menuitem', 'name': 'Tutoriais | EcoFlix'}, 0.1, at=c.A(6, 'tutoriais', 0.6), label='menu: Tutoriais | EcoFlix')
+    c.hover({'role': 'menuitem', 'name': 'Central de Ajuda'}, 0.1, at=c.A(6, 'Central', 0.6), label='menu: Central de Ajuda')
+    c.hover({'role': 'menuitem', 'name': 'Falar com o Suporte'}, 0.6, at=c.A(6, 'Suporte.', 0.9), label='menu: Falar com o Suporte')
     c.mark(7)
     c.click(SEL("[aria-label='Trocar de conta']", nth=0), at=c.A(7, 'trocador', 0.7), label='trocador de contas (o card cresce)')
     c.waitfor(text='Adicionar conta', timeout=8)
@@ -468,7 +479,10 @@ def cap03():
     c.mark(9)
     c.hover(TXT('Adicionar conta'), 2.4, at=c.A(9, 'Adicionar', 0.7), label='Adicionar conta (sem clicar)')
     c.hover(TXT('Adicionar conta'), 1.2, at=c.A(9, 'Cabem', 0.5), label='Adicionar conta: até cinco contas')
-    c.press('Escape', at=c.A(9, 'contas.', -0.3), label='Esc fecha o menu')
+    c.mark(10)
+    c.hover(SEL("[aria-label='Sair desta conta']"), 1.4, at=c.A(10, 'ícone', 0.7), label='Sair desta conta (ícone ao lado do nome, sem clicar)')
+    c.hover(TXT('Sair de todas as contas'), 1.6, at=c.A(10, 'Sair', 0.7, nth=1), label='Sair de todas as contas (sem clicar)')
+    c.press('Escape', at=c.A(10, 'mão.', -0.2), label='Esc fecha o menu')
     c.fim()
     return c
 
@@ -551,12 +565,15 @@ def cap05():
     c.hover(ABA('condicoes-pagamento'), 0.3, at=c.A(2, 'Condições', 1.0), label='aba Condições de Pagamento')
     c.hover(ABA('appearance'), 0.1, at=c.A(2, 'Aparência', 1.1), label='aba Aparência')
     c.hover(SEL('#tab-btn-shortcuts svg'), 0.1, at=c.A(2, 'Atalhos.', 0.85), label='aba Atalhos (na borda da faixa)', noScroll=True)
-    c.hover(ABA('users'), 1.0, at=c.A(2, 'Usuários', 0.3), label='aba Usuários e Permissões (próximo tutorial)')
+    c.hover(ABA('users'), 0.4, at=c.A(2, 'Usuários', 0.3), label='aba Usuários e Permissões (próximo tutorial)')
+    c.hover(ABA('integrations'), 1.0, at=c.A(2, 'Integrações', 0.8), label='aba Integrações (é o tutorial da balança e da impressora)')
     c.mark(3)
     c.hover(TXT('Identidade Visual'), 1.0, at=c.A(3, 'Identidade', 0.6), label='Identidade Visual')
     c.upload(TXT('Nenhum logo enviado'), 'assets/recicla-vale-logo.png', at=c.A(3, 'Clico', 0.7), label='escolhe o logo recicla-vale-logo.png')
     c.waitfor(text='Logo atualizado com sucesso!', timeout=10)
-    c.hover(LOGO_IMG, 1.4, at=c.A(3, 'comprovantes', 0.6), label='o logo da Recicla Vale na tela')
+    c.hover(LOGO_IMG, 0.6, at=c.A(3, 'comprovantes', 0.6), label='o logo da Recicla Vale na tela')
+    c.hover(BTNX('Substituir'), 0.3, at=c.A(3, 'Substituir', 0.8), label='botão Substituir do logo (sem clicar)')
+    c.hover(BTNX('Remover'), 0.8, at=c.A(3, 'Remover', 0.8), label='botão Remover do logo (sem clicar)')
     c.mark(4)
     c.upload(TXT('1:1'), 'assets/recicla-vale-icone.png', at=c.A(4, 'ícone', 0.8), label='escolhe o ícone recicla-vale-icone.png')
     c.waitfor(text='Ícone atualizado com sucesso!', timeout=10)
@@ -568,7 +585,8 @@ def cap05():
     c.mark(6)
     rola_ate(c, 'Nome da Empresa', at=c.A(6, 'O', 0.9), label='desce até o nome e o CNPJ', y=330, dur_ms=700, escopo='main')
     c.hover(SEL('#company-name'), 0.6, at=c.A(6, 'nome', 0.5), label='Nome da Empresa: Recicla Vale Metais')
-    c.hover(SEL('#show-name'), 2.8, at=c.A(6, 'chave', 0.6), label='chave Exibir nos documentos (ligada)')
+    c.hover(SEL('#show-name'), 1.2, at=c.A(6, 'chave', 0.6), label='chave Exibir nos documentos (ligada)')
+    c.hover(SEL('#show-cnpj'), 1.2, at=c.A(6, 'CNPJ', 0.7), label='a chave Exibir nos documentos do CNPJ/CPF (também ligada)')
     c.mark(7)
     c.click(SEL('#company-cnpj'), at=c.A(7, 'CNPJ.', 0.8), label='CNPJ/CPF')
     c.type(SEL('#company-cnpj'), '47318506000107', at=c.A(7, 'dica:', 0.0), cps=10, noClick=True, label='digita o CNPJ: 47.318.506/0001-07')
@@ -597,8 +615,8 @@ def cap06():
            label='apaga e digita contato@reciclavalemetais.example')
     c.confere_campos(['contato@reciclavalemetais.example'], 'e-mail de contato')
     c.mark(3)
-    c.hover(SEL('#show-phone'), 0.2, at=c.A(3, 'chave', 1.0), label='chave Exibir nos documentos do Telefone')
-    c.hover(SEL('#show-email'), 0.1, at=c.A(3, 'Exibir', 0.2), label='chave Exibir nos documentos do E-mail')
+    c.hover(SEL('#show-phone'), 0.2, at=c.A(3, 'telefone,', 0.8), label='chave Exibir nos documentos do Telefone (ligada)')
+    c.hover(SEL('#show-email'), 0.6, at=c.A(3, 'e-mail', 0.7), label='chave Exibir nos documentos do E-mail (ligada)')
     c.mark(4)
     c.mark(5)
     rola_ate(c, 'Endereço', at=c.A(5, 'No', 0.9), label='desce até o Endereço', y=120, dur_ms=900, escopo='main')
@@ -629,13 +647,28 @@ def cap06():
     c.click(CHK('Complemento'), at=c.A(9, 'desmarco', 0.8), label='desmarca o Complemento')
     c.confere('main', ['Rua das Oficinas, 1250 - Parque Industrial - Taubaté/SP - CEP: 12086-410'], 'prévia sem o galpão')
     c.hover(PREVIA, 1.4, at=c.A(9, 'some', 0.6), label='a prévia sem o galpão')
+    c.mark(10)
+    # 2º endereço: o botão fica no alto da seção Endereço; abre a janela e cancela (nada digitado)
+    rola_ate(c, 'Endereço da empresa', at=c.A(10, 'outro', 1.0), label='sobe ao título Endereço da empresa', y=200, dur_ms=900, escopo='main')
+    c.click(BTNX('2º endereço'), at=c.A(10, 'botão', 0.8), label='2º endereço (abre a janela Segundo endereço)')
+    c.waitfor(text='Segundo endereço', timeout=8)
+    c.hover(SEL('#address-2'), 0.5, at=c.A(10, 'campo', 0.7), label='Endereço (texto livre)')
+    c.hover(SEL('#show-address-2'), 1.2, at=c.A(10, 'chave', 0.7), label='chave Mostrar no comprovante junto do endereço principal (desligada)')
+    c.mark(11)
+    c.click(BTN('Cancelar'), at=c.A(11, 'cancelo.', 0.8), label='Cancelar')
+    c.waitfor(gone=TXT('Segundo endereço'), timeout=8)
+    c.mark(12)
+    rola_ate(c, 'Fuso horário', at=c.A(12, 'Por', 0.9), label='desce até o Fuso horário', y=300, dur_ms=900, escopo='main')
+    c.confere('main', ['Fuso horário', 'Brasília (UTC−3)'], 'Fuso horário preenchido pelo estado')
+    c.hover(SEL('#company-timezone'), 0.5, at=c.A(12, 'Fuso', 0.7), label='Fuso horário: Brasília (UTC−3), preenchido pelo estado')
+    c.hover(TXTP('É a hora que vale no seu ponto eletrônico'), 2.4, at=c.A(12, 'hora', 0.8), label='a hora que vale no ponto eletrônico')
     c.fim()
     return c
 
 
 def cap07():
     """Numeração de pedidos: o reinício (abre a lista e fica em Nenhum), os modelos (Barras, Zeros e volta ao Padrão) e a numeração
-    separada (a janela de confirmação, Cancelar). L3 e L8 são ilustração. Nada muda no fim (o modelo volta ao Padrão)."""
+    separada (a janela de confirmação, Cancelar) e o formato livre (RV-{NUM:4}; sem {NUM} o campo avisa). L3 e L11 são ilustração. Nada muda no fim (o modelo volta ao Padrão)."""
     c = Cap(7, pace=0.5, setup=setup_config(), start=(760, 420))
     c.mark(1)
     rola_ate(c, 'Numeração de pedidos', at=0.4, label='desce até Numeração de pedidos', y=120, dur_ms=1200, escopo='main')
@@ -662,19 +695,36 @@ def cap07():
     c.mark(6)
     c.click(BTNX('Zeros'), at=c.A(6, 'Zeros,', 0.8), label='modelo Zeros')
     c.confere('main', ['Exemplo: 0030'], 'exemplo do Zeros')
+    c.hover(BTNX('Pontos'), 0.2, at=c.A(6, 'Pontos', 0.8), label='modelo Pontos (sem clicar)')
+    c.hover(BTNX('Ano/Nº'), 0.2, at=c.A(6, 'Ano', 0.8), label='modelo Ano/Nº (sem clicar)')
     c.click(BTNX('Padrão'), at=c.A(6, 'Padrão,', 0.8), label='volta ao Padrão')
     c.confere('main', ['Exemplo: #30'], 'de volta ao Padrão')
     c.confere_campos(['#{NUM}'], 'formato #{NUM}')
     c.mark(7)
-    c.hover(TXT('Numeração separada para compras e vendas'), 1.6, at=c.A(7, 'Numeração', 0.6), label='Numeração separada para compras e vendas (desligada)')
-    c.hover(TXT('Cada tipo passa a ter sua própria contagem.'), 2.0, at=c.A(7, 'Ligando,', 0.6), label='Cada tipo passa a ter sua própria contagem.')
+    # formato livre (a tela traz as peças em "Variáveis disponíveis:"; `{AAAA}` sai com 2 dígitos, a fala só diz "o ano")
+    c.hover(TXTP('Variáveis disponíveis:'), 3.4, at=c.A(7, 'Essas', 0.8), label='ZOOM Variáveis disponíveis: {NUM}, {NUM:4}, {MM}, {AAAA}, {AA}, {DD}')
     c.mark(8)
+    c.click(SEL('#order-number-template'), at=c.A(8, 'letras', 0.9), label='campo do formato')
+    c.type(SEL('#order-number-template'), 'RV-{NUM:4}', at=c.A(8, 'letras', 0.0), cps=14, noClick=True, clear=True, label='apaga e digita RV-{NUM:4}')
+    c.confere('main', ['Exemplo: RV-0030'], 'exemplo do formato livre')
+    c.hover(SEL("main span:text-is('Exemplo:') >> xpath=.."), 1.6, at=c.A(8, 'embaixo', 0.7), label='ZOOM Exemplo: RV-0030')
     c.mark(9)
-    c.click(SEL('#order-number-scope'), at=c.A(9, 'ligar,', 0.8), label='chave Numeração separada (pede confirmação)')
+    c.type(SEL('#order-number-template'), 'RV-', at=c.A(9, 'Sem', 0.4), cps=14, clear=True, label='apaga o {NUM:4}: fica RV-')
+    c.confere('main', ['Seu formato não tem'], 'aviso: o formato não tem {NUM}')
+    c.hover(TXTP('Seu formato não tem'), 1.8, at=c.A(9, 'avisa', 0.8), label='aviso em vermelho: Seu formato não tem {NUM}')
+    c.click(BTNX('Padrão'), at=c.A(9, 'Padrão.', 0.8), label='volta ao Padrão')
+    c.confere('main', ['Exemplo: #30'], 'de volta ao Padrão')
+    c.confere_campos(['#{NUM}'], 'formato #{NUM} de novo')
+    c.mark(10)
+    c.hover(TXT('Numeração separada para compras e vendas'), 1.6, at=c.A(10, 'Numeração', 0.6), label='Numeração separada para compras e vendas (desligada)')
+    c.hover(TXT('Cada tipo passa a ter sua própria contagem.'), 2.0, at=c.A(10, 'Ligando,', 0.6), label='Cada tipo passa a ter a sua própria contagem.')
+    c.mark(11)
+    c.mark(12)
+    c.click(SEL('#order-number-scope'), at=c.A(12, 'ligar,', 0.8), label='chave Numeração separada (pede confirmação)')
     c.waitfor(text='Ativar numeração separada?', timeout=8)
-    c.hover(TXTP('Compras e vendas passarão a contar separadamente'), 2.6, at=c.A(9, 'números', 0.6), label='janela Ativar numeração separada?')
-    c.hover(TXTP('Compras e vendas passarão a contar separadamente'), 1.4, at=c.A(9, 'pedidos', 0.5), label='Os pedidos que você já fez não mudam')
-    c.click(BTN('Cancelar'), at=c.A(9, 'Cancelar.', 0.8), label='Cancelar (a chave fica desligada)')
+    c.hover(TXTP('Compras e vendas passarão a contar separadamente'), 2.6, at=c.A(12, 'números', 0.6), label='janela Ativar numeração separada?')
+    c.hover(TXTP('Compras e vendas passarão a contar separadamente'), 1.4, at=c.A(12, 'pedidos', 0.5), label='Os pedidos que você já fez não mudam')
+    c.click(BTN('Cancelar'), at=c.A(12, 'Cancelar.', 0.8), label='Cancelar (a chave fica desligada)')
     c.waitfor(gone=TXT('Ativar numeração separada?'), timeout=8)
     c.ev("(()=>{const s=document.querySelector('#order-number-scope');return s?s.getAttribute('data-state'):'sem chave'})()", label='confere chave desligada (unchecked)')
     c.fim()
@@ -721,7 +771,7 @@ COMBO_LINHA = lambda texto: SEL(f'main div:has(> span:text-is("{texto}")) button
 def cap09():
     """O jeito do pátio (aba Usabilidade, nada muda): nomenclatura (inverter os termos), Multi-Caixas, cofre, Formato do Comprovante
     (abre e fica no Térmico), Forma de Pagamento Padrão (abre e fica em Perguntar sempre), Arredondar, Impureza/Tara (com a dica),
-    Lucro no Comprovante, as opções gravadas no usuário e Exigir cliente/fornecedor no ticket. L11, L13 a L15 são ilustração."""
+    Lucro no Comprovante e as opções gravadas no usuário (o resto da aba é o cap10 e o cap11). L12 e L15 a L17 são ilustração."""
     c = Cap(9, pace=0.5, setup=setup_config(), start=(760, 420))
     c.mark(1)
     c.click(ABA('usability'), at=c.A(1, 'Usabilidade.', 0.8), label='aba Usabilidade')
@@ -753,8 +803,10 @@ def cap09():
     c.hover(COMBO_LINHA('Celular/Tablet'), 0.3, at=c.A(7, 'celular,', 0.6), label='Celular/Tablet: Térmico')
     c.hover(TXTP('(preferência por usuário)'), 0.4, at=c.A(7, 'pessoa', 0.6), label='(preferência por usuário)')
     c.mark(8)
-    c.hover(TXT('Pedidos e Pagamentos'), 0.8, at=c.A(8, 'Pedidos', 0.6), label='Pedidos e Pagamentos')
-    c.hover(TXT('Forma de Pagamento Padrão'), 1.6, at=c.A(8, 'Forma', 0.6), label='Forma de Pagamento Padrão')
+    c.hover(TXT('Pedidos e Pagamentos'), 0.4, at=c.A(8, 'Pedidos', 0.6), label='Pedidos e Pagamentos')
+    c.confere('main', ['Mostrar jogos nos pedidos'], 'primeira opção: Mostrar jogos nos pedidos')
+    c.hover(TXT('Mostrar jogos nos pedidos'), 1.0, at=c.A(8, 'Mostrar', 0.7), label='Mostrar jogos nos pedidos (a quantidade também em jogos)')
+    c.hover(TXT('Forma de Pagamento Padrão'), 1.0, at=c.A(8, 'Forma', 0.6), label='Forma de Pagamento Padrão')
     c.click(SEL('main div:has(> div > div > label:text-is("Forma de Pagamento Padrão")) > button[role=combobox]'), at=c.A(8, 'finaliza', 0.8), label='abre a Forma de Pagamento Padrão')
     c.waitfor(target=OPC('Dinheiro'), timeout=6)
     c.hover(OPC('Dinheiro'), 0.1, at=c.A(8, 'Dinheiro,', 0.5), label='Dinheiro', noScroll=True)
@@ -765,31 +817,34 @@ def cap09():
     c.waitfor(gone=OPC('Dinheiro'), timeout=6)
     c.hover(SEL('main div:has(> div > div > label:text-is("Forma de Pagamento Padrão")) > button[role=combobox]'), 1.6, at=c.A(9, 'fornecedor', 0.6), label='Perguntar sempre: cada fornecedor recebe de um jeito')
     c.mark(10)
-    rola_ate(c, 'Arredondar Pagamentos', at=c.A(10, 'O', 1.0), label='desce até Arredondar Pagamentos', y=300, dur_ms=600, escopo='main')
-    c.hover(AJUDA('Arredondar Pagamentos'), 1.6, at=c.A(10, 'Arredondar', 0.5), label='Arredondar Pagamentos: a dica aparece')
-    # o cursor fica parado na chave depois do passo: segundos curtos não somem com o gesto e não empurram a marca L11
-    c.hover(CHAVE_SUB('Na Venda'), 0.1, at=c.A(10, 'separado', 0.8), label='Na Venda (desligada)')
-    c.hover(CHAVE_SUB('Na Compra'), 0.05, at=c.A(10, 'Venda', 0.4), label='Na Compra (desligada)')
+    # Permitir Edição de Itens fica logo abaixo da Forma de Pagamento Padrão (ligada, só mostra)
+    c.hover(TXT('Permitir Edição de Itens'), 1.0, at=c.A(10, 'Permitir', 0.7), label='Permitir Edição de Itens (ligada)')
+    c.hover(TXTP('Editar peso, impureza/tara e valor de materiais já incluídos'), 1.2, at=c.A(10, 'corrigir', 0.8), label='Editar peso, impureza/tara e valor de materiais já incluídos')
+    c.hover(AJUDA('Permitir Edição de Itens'), 2.4, at=c.A(10, 'Pesou', 0.7), label='a dica: Adicionou 100kg de alumínio e percebeu que era 95kg?')
     c.mark(11)
+    rola_ate(c, 'Arredondar Pagamentos', at=c.A(11, 'O', 1.0), label='desce até Arredondar Pagamentos', y=300, dur_ms=600, escopo='main')
+    c.hover(AJUDA('Arredondar Pagamentos'), 1.6, at=c.A(11, 'Arredondar', 0.5), label='Arredondar Pagamentos: a dica aparece')
+    # o cursor fica parado na chave depois do passo: segundos curtos não somem com o gesto e não empurram a marca L12
+    c.hover(CHAVE_SUB('Na Venda'), 0.1, at=c.A(11, 'separado', 0.8), label='Na Venda (desligada)')
+    c.hover(CHAVE_SUB('Na Compra'), 0.05, at=c.A(11, 'Venda', 0.4), label='Na Compra (desligada)')
     c.mark(12)
-    c.hover(TXT('Impureza/Tara Desconta no Valor'), 1.6, at=c.A(12, 'Impureza', 0.6), label='Impureza/Tara Desconta no Valor (ligada)')
-    c.hover(AJUDA('Impureza/Tara Desconta no Valor'), 3.4, at=c.A(12, 'sujeira', 0.6), label='Impureza/Tara: a dica (Ex: compra de 100kg com 5kg de impureza)')
-    c.hover(CHAVE('Impureza/Tara Desconta no Valor'), 1.6, at=c.A(12, 'material,', 0.6), label='chave Impureza/Tara ligada')
     c.mark(13)
+    c.hover(TXT('Múltiplas Tabelas de Preço'), 1.2, at=c.A(13, 'Múltiplas', 0.8), label='Múltiplas Tabelas de Preço (ligada, sem parar)')
+    c.hover(TXTP('Permite criar e gerenciar múltiplas tabelas de preço vinculadas'), 0.6, at=c.A(13, 'tutorial', 0.9), label='Permite criar e gerenciar múltiplas tabelas de preço vinculadas')
     c.mark(14)
+    c.hover(TXT('Impureza/Tara Desconta no Valor'), 1.6, at=c.A(14, 'Impureza', 0.6), label='Impureza/Tara Desconta no Valor (ligada)')
+    c.hover(AJUDA('Impureza/Tara Desconta no Valor'), 3.4, at=c.A(14, 'sujeira', 0.6), label='Impureza/Tara: a dica (Ex: compra de 100kg com 5kg de impureza)')
+    c.hover(CHAVE('Impureza/Tara Desconta no Valor'), 1.6, at=c.A(14, 'material,', 0.6), label='chave Impureza/Tara ligada')
     c.mark(15)
     c.mark(16)
-    c.hover(TXT('Lucro no Comprovante'), 0.8, at=c.A(16, 'Lucro', 0.9), label='Lucro no Comprovante (desligado)')
-    c.hover(TXTP('Exibe o lucro estimado no PDF do comprovante de venda'), 1.2, at=c.A(16, 'estimado', 1.0), label='Exibe o lucro estimado no comprovante de venda')
-    c.hover(AJUDA('Lucro no Comprovante'), 0.5, at=c.A(16, 'permissão', 1.0), label='Lucro no Comprovante: só para quem vê a projeção de lucro')
     c.mark(17)
-    rola_ate(c, 'Forma de Pagamento Padrão', at=c.A(17, 'Repara:', 0.9), label='as opções de pedido, de Forma de Pagamento Padrão a Lucro no Comprovante', y=120, dur_ms=900, escopo='main')
-    c.hover(CARD_CONTA, 0.1, at=c.A(17, 'aqui', 1.0), label='aqui o Rafael (o card da conta)', noScroll=True)
     c.mark(18)
-    rola_ate(c, 'Exigir cliente/fornecedor no Ticket de Pesagem', at=c.A(18, 'Por', 0.9), label='desce até Exigir cliente/fornecedor no Ticket de Pesagem', y=300, dur_ms=1100, escopo='main')
-    c.hover(TXT('Exigir cliente/fornecedor no Ticket de Pesagem'), 1.2, at=c.A(18, 'Exigir', 0.2), label='Exigir cliente/fornecedor no Ticket de Pesagem (desligado)')
-    c.hover(TXTP('Quando ligado, o funcionário não consegue salvar um ticket'), 3.0, at=c.A(18, 'Ligado,', 0.6), label='Quando ligado, ninguém salva um ticket sem escolher com quem foi')
-    c.hover(CHAVE('Exigir cliente/fornecedor no Ticket de Pesagem'), 1.2, at=c.A(18, 'Esse', 0.6), label='chave Exigir cliente/fornecedor (vale pra empresa toda)')
+    c.hover(TXT('Lucro no Comprovante'), 0.8, at=c.A(18, 'Lucro', 0.9), label='Lucro no Comprovante (desligado)')
+    c.hover(TXTP('Exibe o lucro estimado no PDF do comprovante de venda'), 1.2, at=c.A(18, 'estimado', 1.0), label='Exibe o lucro estimado no comprovante de venda')
+    c.hover(AJUDA('Lucro no Comprovante'), 0.5, at=c.A(18, 'permissão', 1.0), label='Lucro no Comprovante: só para quem vê a projeção de lucro')
+    c.mark(19)
+    rola_ate(c, 'Forma de Pagamento Padrão', at=c.A(19, 'Repara:', 0.9), label='as opções de pedido, de Forma de Pagamento Padrão a Lucro no Comprovante', y=120, dur_ms=900, escopo='main')
+    c.hover(CARD_CONTA, 0.1, at=c.A(19, 'aqui', 1.0), label='aqui o Rafael (o card da conta)', noScroll=True)
     c.ev("JSON.stringify([...document.querySelectorAll('main button[role=switch]')].map(s=>s.getAttribute('data-state')[0]).join(''))", label='estado das chaves da Usabilidade (nada mudou)')
     c.fim()
     return c
@@ -799,10 +854,10 @@ DIAS = lambda i: SEL(f'{DLG} input[inputmode=numeric]', nth=i)
 PCT = lambda i: SEL(f'{DLG} input[inputmode=decimal]', nth=i)
 
 
-def cap10():
+def cap12():
     """Condições de pagamento: a aba vazia, Nova condição, o nome 30/60/90 dias, Definir como condição padrão, desmarca À vista,
     as três parcelas (30/60/90 e 33,33 + 33,33 + 33,34), a Soma dos percentuais 100% e Criar condição. L2 é ilustração. Vira apos-cap10."""
-    c = Cap(10, pace=0.5, setup=setup_config(), start=(760, 420))
+    c = Cap(12, pace=0.5, setup=setup_config(), start=(760, 420))
     c.mark(1)
     c.click(ABA('condicoes-pagamento'), at=c.A(1, 'Condições', 0.8), label='aba Condições de Pagamento')
     c.waitfor(text='Nenhuma condição cadastrada ainda.', timeout=10)
@@ -854,10 +909,10 @@ def cap10():
     return c
 
 
-def cap11():
+def cap13():
     """Aparência e atalhos: Menu Superior e volta ao Menu Lateral, o menu escuro, Tema Escuro e volta ao Claro, a aba Atalhos, Ctrl+K
     e a busca "cobre", Esc."""
-    c = Cap(11, pace=0.5, setup=setup_config(), start=(760, 420))
+    c = Cap(13, pace=0.5, setup=setup_config(), start=(760, 420))
     c.mark(1)
     # a fala começa em 0,4 s: o clique vem depois da marca L1 (com 0,8 ele passava à frente dela e a atrasava)
     c.click(ABA('appearance'), at=c.A(1, 'Aparência,', 0.5), label='aba Aparência')
@@ -914,11 +969,11 @@ def js_main_topo(dur_ms=700):
             "if(y0<3)return 'ok';" + SUAVE.replace('DUR', str(int(dur_ms))).replace('DESTINO', 'y0*(1-e)') + "return 'topo:'+Math.round(c.scrollTop)})()")
 
 
-def cap12():
+def cap14():
     """Senha, termos e Zona de Perigo: Alterar Senha (abre e cancela), Ver Contrato (Aceito em, Baixar PDF sem clicar, Fechar) e o
     Zerar Sistema mostrado com calma (Tem certeza? > Sim, continuar > a lista toda marcada, o que fica, o nome da empresa) e
     Cancelar sem digitar nada. As RPCs reset_company_* nunca são chamadas."""
-    c = Cap(12, pace=0.5, setup=setup_config(), start=(760, 420))
+    c = Cap(14, pace=0.5, setup=setup_config(), start=(760, 420))
     c.mark(1)
     rola_ate(c, 'Segurança', at=0.4, label='desce pelo fim do cartão Empresa e pelo Filial até Segurança', y=150, dur_ms=2600, prefixo=True, escopo='main')
     c.hover(BTN('Alterar Senha'), 1.0, at=c.A(1, 'Alterar', 0.6), label='Segurança: Alterar Senha')
@@ -968,11 +1023,11 @@ def cap12():
     return c
 
 
-def cap13():
+def cap15():
     """Recapitulando (a montagem da edição usa trechos dos capítulos; este passeio pelo estado final fica de reserva): o card da conta,
     logo, ícone e CNPJ, a prévia do endereço, a numeração, a frase, a Usabilidade e a condição 30/60/90 padrão, a Aparência e a
     Zona de Perigo. L6 é o cartão Próximo."""
-    c = Cap(13, pace=0.5, setup=setup_config(), start=(760, 420))
+    c = Cap(15, pace=0.5, setup=setup_config(), start=(760, 420))
     c.mark(1)
     c.hover(CARD_CONTA, 2.0, at=c.A(1, 'conta', 0.6), label='a conta da Recicla Vale', noScroll=True)
     c.hover(CARD_CONTA, 1.6, at=c.A(1, 'trocador', 0.6), label='o card da conta (trocador de contas no menu)', noScroll=True)
@@ -1010,7 +1065,7 @@ def cap13():
     return c
 
 
-CAPS_ROBO = {n: globals()[f'cap{n:02d}'] for n in range(14) if f'cap{n:02d}' in globals()}
+CAPS_ROBO = {n: globals()[f'cap{n:02d}'] for n in range(16) if f'cap{n:02d}' in globals()}
 
 if __name__ == '__main__':
     quais = [int(a) for a in sys.argv[1:]] or sorted(CAPS_ROBO)

@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- T06 "Caixa: abrir, fechar e o cofre" · ilustrações no kit v3 (perfis/ecoflix/cenas_v3/LEIA.md), 16:9 (--larg 1422).
+     Uma função por CENA e CAPS[cap] diz qual cena cada capítulo ilustrado usa. As janelas (de/ate) estão em ../cenas/ilustracoes.json.
+       cap00 · dinheiroDoDia  (claro)   ilu00_dinheiro_do_dia     "O dinheiro do dia"     a gaveta, a compra paga em dinheiro vivo, a diferença, o cofre
+       cap03 · diaDePix       (claro)   ilu03_dia_so_de_pix       "Um dia só de Pix"      a carga vai, o Pix cai no banco, o caixa abre com zero
+       cap04 · cofreCaixa     (claro)   ilu04_cofre_caixa         "O cofre e o caixa"     18.500 no cofre, 1.500 na gaveta, 17.000 disponível; fecha e volta
+       cap10 · saqueSangria   (escuro)  ilu09_suprimento_sangria  "Saque e sangria"       banco, caixa do Marcos e cofre: o mesmo dinheiro mudando de lugar
+       cap13 · conferencia    (escuro)  ilu10_esperado_contado    "Esperado e contado"    batem: sem diferença; não batem: diferença registrada
+     Só textos e números da fala e da tela. Âncoras por palavra (W): com a voz real é só renderizar de novo.
+     Acabamento: node perfis/ecoflix/cenas_v3/auditar.cjs --aula planejamento/ecoflix/T06 --larg 1422
+     Render de uma janela: node ferramentas/edit/cenas/render_cenas.cjs <cap> <capNN.json> saida.mp4 \
+               --html planejamento/ecoflix/T06/cenas_v3/cena.html --larg 1422 --dsf 1.35 --de <s> --ate <s>
+     Ícones lucide usados (o nome tem de estar literal nesta página): 'vault' 'landmark' 'wallet' 'banknote' 'hand-coins'
+     'circle-check' 'triangle-alert' 'receipt' 'arrow-left-right' 'ban' 'monitor' 'truck' 'map-pin' 'shopping-cart'
+     'smartphone' 'badge-check' 'lock' 'lock-open' 'factory' 'circle-help' -->
+</head><body>
+<script type="module">
+import { PI, cl, lerp, pr, eo, eio, eo5, eis, passa, golpe, W, el, ic, vis, foco, pulso, ondaEm, conta, titulo, posTitulo,
+  htmlChip, htmlCartao, htmlOp, htmlFluxo, fluxo, CENA, GL, mat, malha, mancha, piso, anel, destaque, U, camera, lugar, plano, clima, cena,
+  estilo, enquadraRet, esfera, grupo, mundo }
+  from '../../../../perfis/ecoflix/cenas_v3/motor.js';
+import { ceuClaro, mundoEscuro } from '../../../../perfis/ecoflix/cenas_v3/fundo.js';
+import { cofre } from '../../../../perfis/ecoflix/cenas_v3/objetos/cofre.js';
+import { registradora } from '../../../../perfis/ecoflix/cenas_v3/objetos/registradora.js';
+import { cedula, maco } from '../../../../perfis/ecoflix/cenas_v3/objetos/cedula.js';
+import { carroca } from '../../../../perfis/ecoflix/cenas_v3/objetos/carroca.js';
+import { pessoa } from '../../../../perfis/ecoflix/cenas_v3/objetos/pessoa.js';
+import { monte, cai } from '../../../../perfis/ecoflix/cenas_v3/objetos/monte.js';
+import { caminhao, dirige, bascula } from '../../../../perfis/ecoflix/cenas_v3/objetos/caminhao.js';
+import { galpao } from '../../../../perfis/ecoflix/cenas_v3/objetos/galpao.js';
+import { fundicao } from '../../../../perfis/ecoflix/cenas_v3/objetos/fundicao.js';
+import { banco } from '../../../../perfis/ecoflix/cenas_v3/objetos/banco.js';
+import { fio } from '../../../../perfis/ecoflix/cenas_v3/objetos/fio.js';
+import { htmlFluxoCartoes } from '../../../../perfis/ecoflix/cenas_v3/dados/fluxoCartoes.js';
+import { reais } from '../../../../perfis/ecoflix/cenas_v3/dados/base.js';
+
+// =====================================================================================================================
+// comuns
+const NUNCA = 1e9, ROTC = [-.2, .08, 0];
+const cartaoP = (icone, rot, sub, cls, cw = 190) => htmlFluxoCartoes({ cartoes: [[icone, rot, sub, cls]], cw });   // cartão pequeno (selo + rótulo + legenda)
+const arco = (a, b, p, alt) => [lerp(a[0], b[0], p), lerp(a[1], b[1], p) + alt * 4 * p * (1 - p), lerp(a[2], b[2], p)];
+const chipAmbar = () => estilo('t06-am', `.chip.am{background:linear-gradient(150deg,#F7CB68,#E59A22);color:#3A2A06;border-color:rgba(255,255,255,.4);box-shadow:0 12px 22px -8px rgba(229,154,34,.6)}`);
+// o lugar do número até a fala dizer o valor (tracejado), como na T08
+const vaga = (c, w = 236, cor = 'rgba(23,25,26,.22)') => el(`<div class="ab" style="left:22px;bottom:20px;width:${w}px;height:44px;border-radius:12px;border:2px dashed ${cor}"></div>`, c.e);
+const chega = (c, v, t, a) => { const k = eo(pr(t, a, .3)); c.e.querySelector('.num').style.opacity = k.toFixed(3); v.style.opacity = (1 - k).toFixed(3); };
+const some = (o, k) => { o.visible = k > .002; if (o.visible) o.scale.setScalar(k); };   // objeto 3D que entra crescendo (k passa de 1 e volta)
+
+// =====================================================================================================================
+// CENA "dinheiroDoDia" · cap00, linhas 0 a 2 · clima claro (o pátio)
+// 0 "Oi! Neste tutorial a gente vai cuidar do dinheiro do dia na Recicla Vale Metais."
+// 1 "No ferro-velho, quase toda compra de sucata é paga em dinheiro vivo. Se o caixa não bate no fim do dia, ninguém sabe
+//    onde foi parar a diferença."
+// 2 "Então a gente vai ver com quanto o caixa abre, com quanto ele fecha, e onde fica o dinheiro da empresa quando não tem
+//    caixa aberto."
+// A registradora (o caixa) com a gaveta aberta; o catador chega com a carroça, a sucata fica e as cédulas saem da gaveta;
+// ele vai embora, o visor fica com a pergunta; a gaveta abre e fecha; a câmera abre para o cofre.
+function dinheiroDoDia() {
+  const t0 = W(0, 'oi'), tdin = W(0, 'dinheiro'), trv = W(0, 'recicla'), tno = W(1, 'no'), tcp = W(1, 'compra'), tsu = W(1, 'sucata'), tpg = W(1, 'paga'), tdv = W(1, 'dinheiro'),
+    tse = W(1, 'se'), tnb = W(1, 'bate'), tdif = W(1, 'diferenca'), ten = W(2, 'entao'), tab = W(2, 'abre'), tfe = W(2, 'fecha'), ton = W(2, 'onde'), tdi2 = W(2, 'dinheiro'), tfim = W(2, 'aberto', 1, 'e');
+  chipAmbar(); piso({ r: 28, x: 0, z: 0, passo: 1.3 }); U.uNevoa.value.set(.955, .975, .965, .8); ceuClaro({ halo: [.4, 3.2, -13] });
+  const REG = registradora(CENA, [0, 0, 0], { s: 3.2, cupom: false }), GAV = [0, .42, 1.15];
+  // o catador: vem da direita por trás do caixa, para, vende e segue para a esquerda (a passada fecha inteira nas duas paradas)
+  const ZC = -2.1, XS = 4.5, PASSO = PI / 5.2, X0 = XS + 12 * PASSO, X1 = XS - 30 * PASSO, tv0 = tno - 1.7, tv1 = tsu - .1, ts0 = tse + .35, ts1 = ts0 + 7.2;
+  const CAR = carroca(CENA, [X0, 0, ZC], { carga: 'misto', n: 30 }); CAR.rotation.y = PI;
+  const CAT = pessoa(CENA, [X0 - 1.95, 0, ZC], { camisa: '#C8664A', bone: '#3E4A59' }); CAT.rotation.y = PI;
+  const PIL = monte(CENA, [2.25, 0, .15], { tipo: 'misto', n: 30, r: .8, h: .5, s: .78 });
+  const notas = [0, 1, 2].map(i => cedula(CENA, [0, -9, 0], { w: .56, cor: ['#A6E3BF', '#8FD7AD', '#BDEBD0'][i] }));
+  const COF = cofre(CENA, [-4.1, 0, -.1], { s: 1.25 }); COF.rotation.y = .2;
+  const CH = (html, pos, o = {}) => plano(html, { pos, rot: ROTC, esc: .0105, anc: [.5, 1], ...o });
+  const chRV = CH(htmlChip(`${ic('map-pin', 18)}Recicla Vale Metais`), [0, 2.05, 0]);
+  const chCo = CH(htmlChip(`${ic('shopping-cart', 18)}compra de sucata`, 'n'), [X0, 2.2, ZC]);
+  const chDv = CH(htmlChip(`${ic('banknote', 18)}dinheiro vivo`), [1.35, 2.55, -.6]);
+  const chDf = CH(htmlChip(`${ic('circle-help', 18)}a diferença?`, 'am'), [0, 2.05, 0]);
+  const chAb = CH(htmlChip(`${ic('lock-open', 18)}abre com quanto?`), [-1.75, 2.1, .2]), chFe = CH(htmlChip(`${ic('lock', 18)}fecha com quanto?`, 'n'), [1.75, 2.1, .2]);
+  const tit = titulo('Caixa', 'O dinheiro do dia');
+  const A1 = { x: 0, y: 1.1, z: .3, d: 11.2, az: .14, el: .2 }, A2 = { x: 2.0, y: 1.1, z: -.4, d: 15.4, az: .07, el: .2 }, A3 = { x: .1, y: 1.1, z: .3, d: 11.8, az: .1, el: .2 }, A4 = { x: -1.95, y: 1.15, z: .2, d: 13.8, az: .13, el: .2 };
+  camera([[t0 - 3, A1], [tno - .9, { ...A1, d: 10.9, az: .12 }, 'lin'], [tno + .6, A2], [tse - .1, { ...A2, d: 15.1, az: .05 }, 'lin'], [tse + 1.4, A3], [ton - .5, { ...A3, d: 11.5, az: .08 }, 'lin'], [ton + .9, A4],
+    [tfim + 2.5, { ...A4, d: 13.5, az: .11 }, 'lin']]);
+  return t => {
+    GL.style.opacity = eo(pr(t, t0 + .08, .5)).toFixed(3); posTitulo(tit, t, t0 - .9, t0 - .45);
+    // a gaveta: aberta no "dinheiro do dia", fecha quando o caixa "não bate"; depois abre e fecha na fala
+    REG.userData.abre(eio(pr(t, tdin - .15, .55)) - eio(pr(t, tse + .2, .5)) + eio(pr(t, tab - .12, .45)) - eio(pr(t, tfe - .12, .45)));
+    REG.userData.visor(t > tnb - .05 && t < ten + .1 ? '?' : '');
+    // o catador e a carroça
+    const x = t < ts0 ? lerp(X0, XS, 1 - Math.pow(1 - pr(t, tv0, tv1 - tv0), 2.2)) : lerp(XS, X1, eio(pr(t, ts0, ts1 - ts0)) * .5 + pr(t, ts0, ts1 - ts0) * .5);
+    CAR.position.x = x; for (const r of CAR.userData.rodas) r.rotation.z = x / CAR.userData.R; CAT.position.x = x - 1.95; CAT.userData.anda((X0 - x) * 5.2, -.42);
+    const vend = t >= tsu - .25; for (const l of CAR.userData.lotes) l.visible = !vend; cai(PIL, t, tsu - .25, { d: .8, alt: 1.6 });
+    // as cédulas saem da gaveta para a mão do catador
+    const MAO = [XS - 2.35, 1.0, ZC + .25];
+    notas.forEach((n, i) => { const a = tpg - .1 + i * .26, p = pr(t, a, .75), on = p > 0 && p < 1; n.visible = on; if (!on) return;
+      const q = arco(GAV, MAO, eio(p), 1.35); n.position.set(q[0], q[1], q[2]); n.rotation.set(.5 * Math.sin(p * PI), p * 4 + i, .9 * Math.sin(p * PI * 2)); n.scale.setScalar(Math.min(1, 6 * p, 5 * (1 - p))); });
+    // rótulos
+    vis(chRV.e, t, trv - .1, tnb - .3, { dy: 10 }); chCo.pos[0] = x; vis(chCo.e, t, tcp - .1, ts0 + .1, { dy: 10 }); vis(chDv.e, t, tdv - .1, ts0, { dy: 10, sc: .8 });
+    vis(chDf.e, t, tdif - .1, ten + .1, { dy: 10, sc: .8 }); pulso(chDf.e, t, tdif + .5, .06, .8);
+    vis(chAb.e, t, tab - .1, NUNCA, { dy: 10, sc: .8 }); vis(chFe.e, t, tfe - .1, NUNCA, { dy: 10, sc: .8 });
+    // o cofre: onde fica o dinheiro da empresa
+    some(COF, passa(pr(t, tdi2 - .15, .6), 1.3));
+  };
+}
+
+// =====================================================================================================================
+// CENA "diaDePix" · cap03, linhas 4 e 5 · clima claro (o pátio visto de longe)
+// 4 "Agora imagina um dia em que a Recicla Vale só entrega carga pros clientes, e eles pagam por Pix ou transferência.
+//    Nenhum dinheiro vivo passa pela gaveta."
+// 5 "Aí faz sentido abrir o caixa com zero. É só deixar o campo vazio ou digitar zero."
+// O caminhão sai do galpão e entrega a carga no cliente; o pagamento vai por um fio de luz do cliente ao banco, por cima
+// do caixa; na frente, a registradora fechada, e o cartão do Caixa recebe o zero.
+function diaDePix() {
+  const t0 = W(4, 'agora'), trv = W(4, 'recicla'), ten = W(4, 'entrega'), tcl = W(4, 'clientes'), tpg = W(4, 'pagam'), tpix = W(4, 'pix'), tnen = W(4, 'nenhum'), tgav = W(4, 'gaveta'),
+    tcx = W(5, 'caixa'), tz = W(5, 'zero'), tz2 = W(5, 'zero', 2), tfim = W(5, 'zero', 2, 'e');
+  piso({ r: 36, x: 0, z: -1, passo: 1.6 }); U.uNevoa.value.set(.955, .975, .965, .8); ceuClaro({ halo: [0, 4.2, -20] });
+  const XG = -7.4, XC = 7.4, ZB = -3, RX = -2.1, RZ = 4.4;
+  const GP = galpao(CENA, [XG, 0, ZB]); GP.scale.setScalar(.5); const FU = fundicao(CENA, [XC, 0, ZB]); FU.scale.setScalar(.5); const BA = banco(CENA, [0, 0, -9], { s: .52 });
+  const PT = grupo(CENA, [0, 0, .3]); PT.scale.setScalar(.55); const T = caminhao(PT, { carga: 150 }), sT = mancha(8.6, 3.5, [0, 0, .15], { op: .8, pai: PT });
+  const REG = registradora(CENA, [RX, 0, RZ], { s: 5.2, cupom: false });
+  const PA = [XC - .6, 3.05, ZB], PB = [.5, 3.55, -8.2], F = fio(CENA, '#50D088', .045), luz = malha(esfera(.16), mat('#6CF0A8', { emi: 1.2, emiC: .6 }), [0, -9, 0], CENA);
+  const an = anel(2.3, [RX, 0, RZ]);
+  const CH = (html, pos, o = {}) => plano(html, { pos, rot: ROTC, esc: .019, anc: [.5, 1], ...o });
+  const chRV = CH(htmlChip(`${ic('map-pin', 18)}Recicla Vale`), [XG, 3.75, ZB]), chCl = CH(htmlChip(`${ic('factory', 18)}Cliente`, 'n'), [XC - .9, 3.75, ZB]), chBa = CH(htmlChip(`${ic('landmark', 18)}Banco`, 'n'), [-1.9, 2.3, -7.6]);
+  const chPx = CH(htmlChip(`${ic('smartphone', 18)}Pix ou transferência`), [lerp(PA[0], PB[0], .5) + .3, 4.15, lerp(PA[2], PB[2], .5)]);
+  const chNe = plano(htmlChip(`${ic('ban', 18)}nenhum dinheiro vivo`, 'n'), { pos: [RX, 3.05, RZ], rot: ROTC, esc: .0165, anc: [.5, 1] });
+  const cZ = plano(htmlCartao('wallet', 'Caixa', 'abre com zero', reais(0), { res: true }), { pos: [3.1, 1.3, RZ + .5], rot: ROTC, esc: .0128 }), vZ = vaga(cZ, 190, 'rgba(47,178,113,.5)'), onZ = cZ.e.querySelector('.onda');
+  const sZ = mancha(4.6, 1.6, [3.1, 0, RZ + .4], { op: 0 });
+  const tit = titulo('Abertura', 'Um dia só de Pix');
+  const K1 = { x: -.6, y: 2.2, z: -1.5, d: 29.5, az: .07, el: .2 }, K2 = { x: .5, y: 2.3, z: -1.5, d: 29, az: .03, el: .2 }, K3 = { x: .25, y: 1.75, z: -.5, d: 26.6, az: .05, el: .2 };
+  camera([[t0 - 3, K1], [tpg - .5, { ...K1, x: -.2, d: 29.2, az: .06 }, 'lin'], [tpg + .9, K2], [tnen - .4, { ...K2, d: 28.7, az: .02 }, 'lin'], [tnen + 1.1, K3], [tfim + 2.5, { ...K3, d: 26.1, az: .035 }, 'lin']]);
+  const XA = -4.6 / .55, XB = 4.5 / .55, ta = ten - .5, tb = tcl + .5;
+  return t => {
+    GL.style.opacity = eo(pr(t, t0 + .08, .5)).toFixed(3); posTitulo(tit, t, t0 - .9, t0 - .45);
+    const p = pr(t, ta, tb - ta), x = lerp(XA, XB, eio(p)); dirige(T, x, () => 0, { arfa: -.008 * golpe(pr(t, tb - .15, .7), 1.3) }); bascula(T, 0); sT.position.x = x + .1;
+    vis(chRV.e, t, trv - .1, NUNCA, { dy: 10 }); vis(chCl.e, t, tcl - .1, NUNCA, { dy: 10 });
+    // o pagamento: o fio cresce do cliente ao banco e o ponto de luz corre por ele (três vezes)
+    const g = eio(pr(t, tpg - .05, .9)); F.liga(PA, PB, g); vis(chBa.e, t, tpg + .55, NUNCA, { dy: 10 }); vis(chPx.e, t, tpix - .1, NUNCA, { dy: 10, sc: .8 });
+    const u = (t - tpg) / 1.15, k = u - Math.floor(u), on = u > 0 && u < 3; luz.visible = on; if (on) { const q = arco(PA, PB, eio(k), 0); luz.position.set(q[0], q[1], q[2]); luz.scale.setScalar(Math.sin(PI * k) ** .5); }
+    // o caixa: nenhum dinheiro vivo passa pela gaveta; abre com zero
+    some(REG, passa(pr(t, tnen - .2, .6), 1.3)); vis(chNe.e, t, tnen + .3, NUNCA, { dy: 10, sc: .8 }); destaque(an, t, tgav - .1);
+    vis(cZ.e, t, tcx - .1, NUNCA, { dy: 22, sc: .94 }); chega(cZ, vZ, t, tz - .05); REG.userData.visor(t > tz - .05 ? '0,00' : '');
+    pulso(cZ.e, t, tz + .1, .04, .8); ondaEm(onZ, t, tz + .1); pulso(cZ.e, t, tz2, .035, .8);
+    sZ.material.uniforms.uOp.value = .55 * (+cZ.e.style.opacity || 0);
+  };
+}
+
+// =====================================================================================================================
+// CENA "cofreCaixa" · cap04, linhas 1 a 4 · clima claro (o dinheiro vivo: cofre e gaveta)
+// 1 "O cofre é todo o dinheiro vivo da empresa: dezoito mil e quinhentos reais. No sistema, ele também aparece como Conta Dinheiro."
+// 2 "Quando eu abri o meu caixa com mil e quinhentos, esse dinheiro foi pra minha gaveta. Ele continua sendo da empresa, só mudou de lugar."
+// 3 "O que não está em nenhum caixa aberto é o disponível no cofre: dezessete mil. É desse dinheiro que sai um caixa novo."
+// 4 "Por isso o caixa só abre com o dinheiro que já está registrado no cofre. E quando ele fecha, o dinheiro contado volta
+//    pro cofre. Assim, todo real tem um lugar."
+// O cofre abre (R$ 18.500,00); um maço vai para a gaveta do caixa (R$ 1.500,00); o que ficou é o disponível
+// (R$ 17.000,00); quando o caixa fecha, o maço volta e o cofre fecha.
+function cofreCaixa() {
+  const TOT = 18500, CX = 1500, DISP = 17000;
+  const t0 = W(1, 'o'), tco = W(1, 'cofre'), ttd = W(1, 'todo'), t18 = W(1, 'dezoito'), tsis = W(1, 'sistema'), tcd = W(1, 'conta'),
+    tab = W(2, 'abri'), tmil = W(2, 'mil'), tes = W(2, 'esse'), tgav = W(2, 'gaveta'), tcont = W(2, 'continua'),
+    tnao = W(3, 'nao'), tdisp = W(3, 'disponivel'), t17 = W(3, 'dezessete'), tsai = W(3, 'sai'),
+    treg = W(4, 'registrado'), tfe = W(4, 'fecha'), tvol = W(4, 'volta'), ttodo = W(4, 'todo'), tfim = W(4, 'lugar', 1, 'e');
+  piso({ r: 26, x: 0, z: 0, passo: 1.3 }); U.uNevoa.value.set(.955, .975, .965, .8); ceuClaro({ halo: [-.2, 3.2, -12] });
+  const SX = -2.85, RX = .15, RZ = .1, FX = [SX, RX, 3.15];
+  const COF = cofre(CENA, [SX, 0, 0], { s: 1.25 }); COF.rotation.y = .16; const REG = registradora(CENA, [RX, 0, RZ], { s: 3.2, cupom: false });
+  const M = maco(CENA, [0, -9, 0], 5, { w: .6 }), PD = mundo(COF, COF.userData.boca), PG = [RX, .52, RZ + 1.05], an = anel(1.75, [SX, 0, 0]);
+  // a conta do dinheiro vivo: três cartões de pé, na frente
+  const FY = .64, FZ = 3.3, EC = .0064, CWD = 322;
+  const cart = (i, ...a) => plano(htmlCartao(...a), { pos: [FX[i], FY, FZ], rot: ROTC, esc: EC });
+  const c1 = cart(0, 'vault', 'Cofre', 'todo o dinheiro vivo', reais(TOT), { w: CWD }), c2 = cart(1, 'wallet', 'Caixa do Rafael', 'na gaveta', reais(CX), { w: CWD, cls: 'a' }),
+    c3 = cart(2, 'badge-check', 'Disponível no cofre', 'fora dos caixas abertos', reais(DISP), { w: CWD, res: true });
+  const oM = plano(htmlOp('−'), { pos: [(FX[0] + FX[1]) / 2, FY, FZ + .03], rot: ROTC, esc: EC }), oI = plano(htmlOp('='), { pos: [(FX[1] + FX[2]) / 2, FY, FZ + .03], rot: ROTC, esc: EC });
+  const v1 = vaga(c1, 250), v3 = vaga(c3, 250, 'rgba(47,178,113,.5)'), n1 = c1.e.querySelector('.num'), n3 = c3.e.querySelector('.num'), on3 = c3.e.querySelector('.onda');
+  const sC = FX.map(x => mancha(2.5, .95, [x, 0, FZ - .1], { op: 0 }));
+  const chS = plano(htmlChip(`${ic('monitor', 18)}No sistema: Conta Dinheiro`, 'n'), { pos: [SX - .05, 2.42, 0], rot: ROTC, esc: .0098, anc: [.5, 1] });
+  const chF = plano(htmlChip(`${ic('circle-check', 18)}todo real tem um lugar`), { pos: [RX + .1, 1.95, RZ], rot: ROTC, esc: .0098, anc: [.5, 1] });
+  const tit = titulo('Cofre', 'O cofre e o caixa');
+  const P1 = { x: -2.35, y: 1.2, z: .9, d: 11.4, az: .17, el: .2 }, P2 = { x: -1.3, y: 1.12, z: .9, d: 13.0, az: .11, el: .2 }, P3 = { x: .15, y: 1.05, z: .9, d: 15.4, az: .06, el: .2 };
+  camera([[t0 - 3, P1], [tab - .7, { ...P1, d: 11.1, az: .15 }, 'lin'], [tab + .7, P2], [tnao - .2, { ...P2, d: 12.7, az: .09 }, 'lin'], [tdisp - .1, P3], [tfe - .2, { ...P3, d: 15.1, az: .04 }, 'lin'],
+    [tfim + 2.5, { ...P3, d: 14.7, az: .02 }, 'lin']]);
+  const tv0 = tes - .15, tv1 = tgav + .15, tr0 = tfe + .25, tr1 = tvol + .75;
+  return t => {
+    GL.style.opacity = eo(pr(t, t0 + .08, .5)).toFixed(3); posTitulo(tit, t, t0 - .9, t0 - .45);
+    // o cofre abre em "todo o dinheiro vivo" e fecha quando o dinheiro volta
+    COF.userData.abre(eio(pr(t, ttd - .25, .95)) - eio(pr(t, tr1 + .1, .9)));
+    // o caixa do Rafael: entra em "abri o meu caixa"; a gaveta abre para receber o maço e fecha quando o caixa fecha
+    some(REG, passa(pr(t, tab - .2, .6), 1.3)); REG.userData.abre(eio(pr(t, tmil - .2, .55)) - eio(pr(t, tr0 + .9, .55)));
+    REG.userData.visor(t > tv1 - .1 && t < tr0 + .3 ? '1.500,00' : '');
+    const k = eio(pr(t, tv0, tv1 - tv0)) - eio(pr(t, tr0, tr1 - tr0)), voa = t > tv0 && t < tr1; M.visible = voa; COF.userData.macos[1].visible = !voa;
+    if (voa) { const q = arco(PD, PG, k, 1.25); M.position.set(q[0], q[1], q[2]); M.rotation.y = PI / 2 + k * PI; }
+    destaque(an, t, treg - .15);
+    // a conta: cada cartão na palavra que o nomeia; o número entra quando a fala diz o valor
+    vis(c1.e, t, tco - .1, NUNCA, { dy: 22 }); chega(c1, v1, t, t18 - .1); conta(n1, t, t18 - .05, .7, 0, TOT, reais); pulso(c1.e, t, tcont, .04, .8);
+    vis(chS.e, t, tsis - .1, NUNCA, { dy: 10, sc: .8 }); pulso(chS.e, t, tcd, .05, .8);
+    vis(oM.e, t, tmil + .25, NUNCA, { sc: .6, dy: 0 }); vis(c2.e, t, tmil - .1, NUNCA, { dy: 22 });
+    vis(oI.e, t, tdisp - .25, NUNCA, { sc: .6, dy: 0 }); vis(c3.e, t, tdisp - .1, NUNCA, { dy: 22, sc: .94 }); chega(c3, v3, t, t17 - .1); conta(n3, t, t17 - .05, .7, 0, DISP, reais);
+    pulso(c3.e, t, t17 + .75, .04, .8); ondaEm(on3, t, t17 + .75); pulso(c3.e, t, tsai, .035, .8);
+    vis(chF.e, t, ttodo - .1, NUNCA, { dy: 10, sc: .8 });
+    [c1, c2, c3].forEach((c, i) => { sC[i].material.uniforms.uOp.value = .55 * Math.min(1, +c.e.style.opacity || 0); });
+  };
+}
+
+// =====================================================================================================================
+// CENA "saqueSangria" · cap10, linhas 0 a 3 · clima escuro (o caminho do dinheiro no sistema)
+// 0 "Lembra que o Marcos queria vinte mil e abriu com dezessete? Os três mil que faltam vêm do banco."
+// 1 "Pôr dinheiro na gaveta durante o dia é o que muita gente chama de suprimento. Quando ele vem do banco, aqui no sistema é um Saque."
+// 2 "A sangria é o caminho contrário: o dinheiro sai de um caixa, ou do cofre, e vai pro banco."
+// 3 "Nos dois casos não é receita nem despesa: é o mesmo dinheiro da empresa mudando de lugar. Só a tarifa do banco é despesa de verdade."
+// Estações: (1) o caixa do Marcos e o que falta; (2) abre para o banco: o Saque (verde) vai, a Sangria (âmbar) volta, do
+// caixa ou do cofre; (3) abre para o desenho inteiro: não é receita nem despesa, só a tarifa.
+function saqueSangria() {
+  const t0 = W(0, 'lembra'), tma = W(0, 'marcos'), tvi = W(0, 'vinte'), tde = W(0, 'dezessete'), ttr = W(0, 'tres'), tba = W(0, 'banco'),
+    tsu = W(1, 'suprimento'), tsi = W(1, 'sistema'), tsa = W(1, 'saque'), tsg = W(2, 'sangria'), tct = W(2, 'contrario'), tcx = W(2, 'caixa'), tcf = W(2, 'cofre'), tb2 = W(2, 'banco'),
+    tnos = W(3, 'nos'), trc = W(3, 'receita'), tme = W(3, 'mesmo'), tso = W(3, 'so'), tta = W(3, 'tarifa'), tdp = W(3, 'despesa', 2), tfim = W(3, 'verdade', 1, 'e');
+  chipAmbar();
+  const EE = .0112, EIXO = lugar([0, 0, 0]), E = mundoEscuro(EIXO, 0, EE), X = (html, x, y, o = {}) => E(html, x * EE, -y * EE, 0, o);   // posição em px do desenho (y para baixo)
+  const XR = 660, YC = -150, YB = 150, CW = 322, AMB = '#F2B63D';
+  const cM = X(htmlCartao('wallet', 'Caixa do Marcos', 'abriu com', reais(17000), { w: CW }), XR, YC, { anc: [0, .5] }), vM = vaga(cM, 250, 'rgba(190,245,218,.34)');
+  const chQ = X(htmlChip(`${ic('hand-coins', 18)}queria ${reais(20000)}`, 'n'), XR, YC - 66 - 12, { anc: [0, 1] }), chFa = X(htmlChip(`${ic('landmark', 18)}faltam ${reais(3000)}`), XR, YC + 66 + 12, { anc: [0, 0] });
+  const rB = X(cartaoP('landmark', 'Banco', 'conta principal', 'n', 236), 0, 0, { anc: [0, .5] }), BW = rB.w, HB = rB.h;
+  const rC = X(cartaoP('vault', 'Cofre', 'todo o dinheiro vivo', 'n', CW), XR, YB, { anc: [0, .5] });
+  const rT = X(cartaoP('receipt', 'Tarifa do banco', 'despesa de verdade', 'a', 236), 0, YB, { anc: [0, .5] });
+  // os fios (10 px de respiro nas duas pontas): 0 = Saque (banco → caixa), 1 = Sangria (caixa → banco), 2 = Sangria (cofre → banco), 3 = tarifa
+  const OY = 300, r = 22, x0 = BW + 10, x1 = XR - 10, XV1 = 440, XV2 = 520, Y = y => y + OY, XT = 44;
+  const dS = `M${x0} ${Y(-14)}H${XV1 - r}Q${XV1} ${Y(-14)} ${XV1} ${Y(-14) - r}V${Y(YC - 20) + r}Q${XV1} ${Y(YC - 20)} ${XV1 + r} ${Y(YC - 20)}H${x1}`;
+  const dG = `M${x1} ${Y(YC + 20)}H${XV2 + r}Q${XV2} ${Y(YC + 20)} ${XV2} ${Y(YC + 20) + r}V${Y(14) - r}Q${XV2} ${Y(14)} ${XV2 - r} ${Y(14)}H${x0}`;
+  const dC = `M${x1} ${Y(YB)}H${XV2 + r}Q${XV2} ${Y(YB)} ${XV2} ${Y(YB) - r}V${Y(14) + r}Q${XV2} ${Y(14)} ${XV2 - r} ${Y(14)}H${x0}`;
+  const dT = `M${XT} ${Y(HB / 2 + 10)}V${Y(YB - HB / 2 - 10)}`;
+  const fios = X(htmlFluxo(XR, 600, [dS, dG, dC, dT]), 0, -OY, { anc: [0, 0], z: -40 }), G = [...fios.e.children];
+  for (const i of [1, 2, 3]) { G[i].querySelector('.ft').setAttribute('stroke', AMB); G[i].querySelector('.fh').setAttribute('fill', AMB); }
+  const ponta = (i, d, cor) => { G[i].insertAdjacentHTML('beforeend', `<path d="${d}" stroke="${cor}" stroke-width="2.8" opacity="0"/>`); return G[i].lastElementChild; };
+  const pS = ponta(0, `M${x1 - 9} ${Y(YC - 20) - 8}L${x1} ${Y(YC - 20)}L${x1 - 9} ${Y(YC - 20) + 8}`, 'var(--vc)'), pG = ponta(1, `M${x0 + 9} ${Y(14) - 8}L${x0} ${Y(14)}L${x0 + 9} ${Y(14) + 8}`, AMB),
+    pT = ponta(3, `M${XT - 8} ${Y(YB - HB / 2 - 10) - 9}L${XT} ${Y(YB - HB / 2 - 10)}L${XT + 8} ${Y(YB - HB / 2 - 10) - 9}`, AMB);
+  // os nomes dos caminhos
+  const chSu = X(htmlChip(`${ic('hand-coins', 18)}suprimento`, 'n'), XV1 - 14, -116, { anc: [1, .5] }), chSa = X(htmlChip(`${ic('monitor', 18)}no sistema: Saque`), XV1 - 14, -68, { anc: [1, .5] });
+  const chSg = X(htmlChip(`${ic('landmark', 18)}Sangria`, 'am'), XV2 + 14, 72, { anc: [0, .5] });
+  const chN = X(htmlChip(`${ic('ban', 18)}não é receita nem despesa`, 'n'), 0, 268, { anc: [0, .5] });
+  const chM = X(htmlChip(`${ic('arrow-left-right', 18)}o mesmo dinheiro mudando de lugar`), chN.w + 16, 268, { anc: [0, .5] });
+  E.fundo(XR / 2 * EE + 1.6, 0, { aneis: false });
+  const tit = titulo('Movimentações', 'Saque e sangria', 'escuro');
+  const ret = (a, b, c, d) => [a * EE, -d * EE, c * EE, -b * EE], XF = XR + CW;
+  const S1 = enquadraRet(EIXO, ret(XR - 150, YC - 122, XF + 150, YC + 122), { az: -.03, max: 1.45 / EE }), S2 = enquadraRet(EIXO, ret(0, YC - 122, XF, YB + HB / 2), { az: .02 }),
+    S3 = enquadraRet(EIXO, ret(0, YC - 122, XF, 290), { margem: 56 });
+  camera([[t0 - 3, S1], [tba - .9, { ...S1, az: .02, d: S1.d * .985 }, 'lin'], [tba + .35, S2], [tnos - .2, { ...S2, az: -.02, d: S2.d * .985 }, 'lin'], [tnos + 1.0, S3], [tfim + 2.5, { ...S3, az: .02, d: S3.d * .985 }, 'lin']]);
+  return t => {
+    clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, t0 - .45);
+    // o caixa do Marcos
+    vis(cM.e, t, tma - .15, NUNCA, { dy: 22 }); chega(cM, vM, t, tde - .1); vis(chQ.e, t, tvi - .1, NUNCA, { dy: 10, sc: .8 }); vis(chFa.e, t, ttr - .1, NUNCA, { dy: -10, sc: .8 }); pulso(chFa.e, t, W(0, 'faltam'), .06, .8);
+    // o banco e o Saque
+    vis(rB.e, t, tba - .15, NUNCA, { dy: 18 }); const l0 = t < tsu ? tba + .1 : t < tme - .2 ? tsa - .2 : tme;
+    fluxo(fios.e, 0, t, tba + .15, .9, { luz: [l0, 1.0], fica: .7 }); pS.setAttribute('opacity', eo(pr(t, tba + .95, .2)).toFixed(3));
+    vis(chSu.e, t, tsu - .1, NUNCA, { dx: 10, dy: 0, sc: .8 }); vis(chSa.e, t, tsi - .1, NUNCA, { dx: 10, dy: 0, sc: .8 }); pulso(chSa.e, t, tsa, .07, .8);
+    // a Sangria: do caixa, ou do cofre, para o banco
+    const l1 = t < tme - .2 ? tcx - .1 : tme + .15;
+    fluxo(fios.e, 1, t, tct - .15, .9, { luz: [l1, 1.0], fica: .7 }); pG.setAttribute('opacity', eo(pr(t, tct + .65, .2)).toFixed(3)); vis(chSg.e, t, tsg - .1, NUNCA, { dx: -10, dy: 0, sc: .8 });
+    vis(rC.e, t, tcf - .15, NUNCA, { dy: 18 }); fluxo(fios.e, 2, t, tcf + .15, .8, { luz: [t < tme - .2 ? tb2 - .5 : tme + .3, 1.0], fica: .7 }); pulso(rB.e, t, tb2, .04, .8);
+    // nos dois casos: não é receita nem despesa; só a tarifa é despesa
+    vis(chN.e, t, trc - .2, NUNCA, { dy: 10, sc: .8 }); vis(chM.e, t, tme - .1, NUNCA, { dy: 10, sc: .8 });
+    fluxo(fios.e, 3, t, tta - .05, .5, { luz: [tta - .05, .6], fica: .7 }); pT.setAttribute('opacity', eo(pr(t, tta + .35, .2)).toFixed(3)); vis(rT.e, t, tta + .1, NUNCA, { dy: -14 }); pulso(rT.e, t, tdp, .05, .8);
+    for (const e of [chSu, chSa, chSg, chQ, chFa]) foco(e.e, t, -9, tso - .1, { min: .72 });
+  };
+}
+
+// =====================================================================================================================
+// CENA "conferencia" · cap13, linhas 10 e 11 · clima escuro (a conta do fechamento)
+// 10 "Agora vem a conferência. De um lado, o que o sistema espera. Do outro, o que você conta na gaveta."
+// 11 "Se os dois batem, o caixa fecha sem diferença. Se não batem, a diferença fica registrada, pra mais ou pra menos."
+// De um lado o Esperado (R$ 957,10, o "Restante em caixa" da linha 7), do outro o Contado (ainda por contar); do sinal
+// entre os dois saem os dois desfechos.
+function conferencia() {
+  const t0 = W(10, 'agora'), tld = W(10, 'lado'), tes = W(10, 'espera'), tou = W(10, 'outro'), tco = W(10, 'conta'), tse = W(11, 'se'), tba = W(11, 'batem'), tsd = W(11, 'sem'),
+    tnb = W(11, 'nao'), tb2 = W(11, 'batem', 2), tdf = W(11, 'diferenca', 2), trg = W(11, 'registrada'), tma = W(11, 'mais'), tfim = W(11, 'menos', 1, 'e');
+  const EE = .0112, EIXO = lugar([0, 0, 0]), E = mundoEscuro(EIXO, 0, EE), X = (html, x, y, o = {}) => E(html, x * EE, -y * EE, 0, o);
+  const DX = 235, YT = -105, YR = 150, CW = 322, AMB = '#F2B63D';
+  const cE = X(htmlCartao('monitor', 'Esperado', 'pelo sistema', reais(957.1), { w: CW }), -DX, YT), vE = vaga(cE, 200, 'rgba(190,245,218,.34)');
+  const cC = X(htmlCartao('hand-coins', 'Contado', 'na gaveta', 'R$ ?', { w: CW, cls: 'a' }), DX, YT);
+  const op = X(htmlOp('='), 0, YT, { z: 40 });
+  const rS = X(cartaoP('circle-check', 'Sem diferença', 'os dois batem', 'res', 292), -DX, YR), rD = X(cartaoP('triangle-alert', 'Diferença registrada', 'pra mais ou pra menos', 'a', 292), DX, YR), HR = rS.h;
+  const OX = 300, OY = 100, r = 24, YM = 28, y0 = YT + 24 + 10, y1 = YR - HR / 2 - 10, Xp = x => x + OX, Yp = y => y + OY;
+  const garfo = s => `M${Xp(0)} ${Yp(y0)}V${Yp(YM) - r}Q${Xp(0)} ${Yp(YM)} ${Xp(s * r)} ${Yp(YM)}H${Xp(s * (DX - r))}Q${Xp(s * DX)} ${Yp(YM)} ${Xp(s * DX)} ${Yp(YM) + r}V${Yp(y1)}`;
+  const fios = X(htmlFluxo(2 * OX, 300, [garfo(-1), garfo(1)]), -OX, -OY, { anc: [0, 0], z: -40 }), G = [...fios.e.children];
+  G[1].querySelector('.ft').setAttribute('stroke', AMB); G[1].querySelector('.fh').setAttribute('fill', AMB);
+  E.fundo(0, 0, { aneis: false });
+  const tit = titulo('Fechamento', 'Esperado e contado', 'escuro');
+  const ret = (a, b, c, d) => [a * EE, -d * EE, c * EE, -b * EE], XL = DX + CW / 2;
+  const S1 = enquadraRet(EIXO, ret(-XL, YT - 66, XL, YT + 66), { az: -.03, max: 1.42 / EE }), S2 = enquadraRet(EIXO, ret(-XL, YT - 66, XL, YR + HR / 2), { az: .0, max: 1.42 / EE });
+  camera([[t0 - 3, S1], [tse - .35, { ...S1, az: .03, d: S1.d * .985 }, 'lin'], [tse + .8, S2], [tfim + 2.5, { ...S2, az: .025, d: S2.d * .985 }, 'lin']]);
+  const sinal = op.e;
+  return t => {
+    clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, t0 - .45);
+    vis(cE.e, t, tld - .1, NUNCA, { dy: 22 }); chega(cE, vE, t, tes - .15); vis(cC.e, t, tou - .1, NUNCA, { dy: 22 }); pulso(cC.e, t, tco, .04, .8);
+    // batem: o sinal de igual e o desfecho verde; não batem: o sinal muda e acende o desfecho âmbar
+    vis(sinal, t, tba - .15, NUNCA, { sc: .6, dy: 0 }); const s = t < tb2 - .1 ? '=' : '≠'; if (sinal.textContent !== s) sinal.textContent = s; pulso(sinal, t, tb2 - .1, .12, .7);
+    pulso(cE.e, t, tba, .03, .7);
+    fios.e.style.opacity = eo(pr(t, tba - .1, .4)).toFixed(3);
+    fluxo(fios.e, 0, t, tba + .15, .7, { luz: [tba + .15, .8], fica: .7 }); vis(rS.e, t, tsd - .15, NUNCA, { dy: -16 }); pulso(rS.e, t, tsd + .45, .05, .8);
+    fluxo(fios.e, 1, t, tb2, .7, { luz: [tb2, .8], fica: .7 }); vis(rD.e, t, tdf - .15, NUNCA, { dy: -16 }); pulso(rD.e, t, trg, .05, .8); pulso(rD.e, t, tma, .035, .8);
+    foco(rS.e, t, -9, tb2 - .1, { min: .62 });
+  };
+}
+
+// =====================================================================================================================
+const CAPS = { 0: dinheiroDoDia, 3: diaDePix, 4: cofreCaixa, 10: saqueSangria, 13: conferencia };
+cena(d => CAPS[d.cap](d), { fov: 26 });
+</script></body></html>

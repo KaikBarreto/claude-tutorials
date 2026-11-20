@@ -1,6 +1,6 @@
 {
  "name": "t16-cap11",
- "title": "T16 · Cap. 11 · Impostos e as outras abas (narração ESTIMADA 166,0 s; marcas L1..L12 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T16 · Cap. 11 · Impostos e as outras abas (narração ESTIMADA 169,5 s; marcas L1..L12 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t16-cap11",
  "pace": 0.5,
  "cps": 40,
@@ -704,8 +704,30 @@
   },
   {
    "do": "waitFor",
-   "text": "SEM VALOR FISCAL",
+   "text": "Resumo para conferência",
    "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Prévia real desta nota\", \"Ver a DANFE desta nota\", \"Resumo para conferência\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Prévia real no alto e o Resumo para conferência"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim().toLowerCase()===\"resumo para confer\\u00eancia\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-150);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 145.43,
+   "label": "desce ao Resumo para conferência (sem clicar em Ver a DANFE)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-is('Resumo para conferência')"
+   },
+   "seconds": 0.6,
+   "at": 146.72,
+   "label": "Resumo para conferência",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "hover",
@@ -713,8 +735,8 @@
     "selector": "[role=dialog] :text-is('SEM VALOR FISCAL')",
     "nth": 0
    },
-   "seconds": 0.72,
-   "at": 148.08,
+   "seconds": 0.71,
+   "at": 151.58,
    "label": "zoom: SEM VALOR FISCAL",
    "optional": true,
    "timeout": 4
@@ -722,7 +744,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog] table\")].filter(e=>e.offsetParent)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-420);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/2500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 149.75,
+   "at": 153.24,
    "label": "desce pelo DANFE: destinatário, duplicatas, imposto, transporte"
   },
   {
@@ -733,14 +755,14 @@
   {
    "do": "mark",
    "name": "L12",
-   "at": 155.12
+   "at": 158.61
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] button:text-is('Emitir Nota')"
    },
-   "at": 156.23,
+   "at": 159.72,
    "label": "Emitir Nota",
    "noScroll": true
   },
@@ -770,7 +792,7 @@
     "selector": "main tbody tr:has-text('#1250') td:has-text('Autorizada')"
    },
    "seconds": 1.0,
-   "at": 163.77,
+   "at": 167.26,
    "label": "#1250 Autorizada",
    "optional": true,
    "timeout": 4
@@ -783,7 +805,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 166.03
+   "at": 169.52
   }
  ]
 }
