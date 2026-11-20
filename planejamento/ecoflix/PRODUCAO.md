@@ -1066,3 +1066,6 @@ Decisões:
   e Excluir); 3.600 → 3.694 palavras. Completos de 03, 06, 08, 09, 11, 13 sem falha (pior atraso 1,67 s no 13); cap15 trocou
   para Ferro pesado e Ferro misto (o radiador fica na 2ª página), completo com 5,29 s na L6 (respiro na voz). Coordenador:
   legenda "Digito P" e "P70" (`config_narracao.json`) e o último ensaio do cap15 (`t03_lote2.sh misto r15 c15`).
+- 20/11 13:13 T03 cap15 com os seletores novos: rápido 0 falho; completo 0 falho com L6 5,7 s atrasada (o "Definir prefixo" e o
+  desmarcar levam mais que a fala da L5): respiro de ~6 s antes da L6 com `pausas.py` depois da voz. **T03 pronta para a voz**
+  (18 nós, 20.465 caracteres; `scratchpad/voz/T03.json`).
