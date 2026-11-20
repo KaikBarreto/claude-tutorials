@@ -187,10 +187,12 @@ Código lido em `/dev/shm/ecoflix-src/src` (`5290be4cd`); detalhe e linhas em `c
 - **Caixa** (`components/UnfinishedOrdersTabs.tsx`): bloco "Pedidos Não Finalizados" com o contador ✔ (sanfona fechada: clicar para
   ver os cartões); com pedido não finalizado o "Fechar Caixa" fica travado ✔ ("Não é possível fechar o caixa com pedidos não
   finalizados", `pages/Caixa.tsx`).
-- **Trocar fornecedor/tabela com itens** (`components/orders/OrderPriceContextChangeDialog.tsx`): "Trocar fornecedor?" · "O pedido já
-  tem 1 item lançado. Escolha o que fazer com os preços atuais." · "Não informado → Depósito Irmãos Siqueira" · "Itens que mudam" "1 de
-  1" · "Total se atualizar" R$ 360,00 (riscado) e R$ 374,40 · "Cancelar", "Só nos próximos", "Atualizar 1 item" ✔. Na venda, "Trocar
-  cliente?"; trocando só a tabela, "Trocar tabela de preços?".
+- **Trocar fornecedor/tabela com itens** (1.60.18, `components/orders/OrderPriceContextChangeDialog.tsx` + `hooks/usePriceContextChangePrompt.ts`):
+  a troca vale na hora e a janela só abre DEPOIS, e só se algum preço muda (itens que seguiam a referência antiga; preço digitado, importado,
+  mesclado ou gravado nunca entra). "Atualizar os preços?" · "Com {fornecedor}, o preço de N item(ns) é diferente." (tabela: "Na tabela
+  {nome}, o preço de N item(ns) é diferente.") · lista "{material}" "R$ 36,00 → R$ 37,44/kg" · "Total dos itens" R$ 360,00 (riscado) →
+  R$ 374,40 · "O outro item fica como está."/"Os outros N itens ficam como estão." · botões "Manter preços" e "Atualizar N preço(s)". Substitui os rótulos do 1.60.10
+  ("Trocar fornecedor?", "Itens que mudam", "Total se atualizar", "Só nos próximos", "Atualizar 1 item", "Cancelar").
 - **Legenda da origem do preço** embaixo do Valor/Kg de cada linha (`lib/orders/itemPriceOrigin.ts`): nome da tabela ("Principal" ✔,
   "Tabela Depósitos" ✔), "Preço personalizado", "Preço do material", "Preço informado", "Preço importado", "Preços combinados",
   "Preço gravado".
@@ -217,3 +219,12 @@ Código lido em `/dev/shm/ecoflix-src/src` (`5290be4cd`); detalhe e linhas em `c
   em `__dev/unknowns` como AUTH_SEM_HANDLER: pedido ao mundo base).
 - Handoffs novos: H4 aviso "Preço especial aplicado" × legenda "Preço personalizado"; H5 "Fornecedor atual → …" quando o campo estava
   vazio; H6 "Cadastrar «texto»" não leva o texto ao "Nome *"; H7 mensagens antigas de edição em caixa fechado (`cobertura_160.md`).
+
+
+## 1.60.18 (20/11/2026): o que mudou desde o 1.60.10 nesta aula
+- Legenda da origem do preço: o `<span>` agora é `span.block.max-w-[5rem]` com `title` (antes `span.truncate`); o robô usa `span[class*='max-w-[5rem]'][title]`.
+  Voltar o Valor/Kg ao preço da referência traz de volta a legenda de origem (`handleItemChange` → `getCurrentPriceOrigin`).
+- Coluna de peso: "Peso" (sem Tara/Imp.), "Peso Bruto" (com a coluna) e "Peso Líq." (só líquido); a coluna deixou de se chamar "Peso Líquido" com o valor bruto.
+- Janela "Atualizar os preços?" (acima). Tela 1600×900: Tara/Imp./Desconto/Lucro ficam na linha (só vão para o expansível quando o cartão tem menos de 640 px).
+- Fora da aula (preferência): trava do peso manual com o EcoTray fechado ("Digitar peso (balança desconectada)" → "Liberar digitação"; fica registrado em Compra e Venda).
+- Margem automática (Materiais > Editar Preços; `AutoMarginCard.tsx`): a venda acompanha a compra (margem sobre a compra). Citada numa frase no cap04; a configuração é da T3.

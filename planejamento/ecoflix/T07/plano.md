@@ -8,7 +8,7 @@
   parcelado, imprimir o cupom, vender com lucro estimado e cupom sem valor, cobrir o estoque que falta e comprar sem internet.
 - **Duração (1.60.10, 18/11):** fala 3.541 palavras e 18.916 caracteres (~22,7 min) + 19 vinhetas e as ações sem fala
   (preenchimento acelerado): ~26 min. Uma aula só (decisão do Kaik), acima do alvo de 22 min da fonte. `python3 -I narracao/tts_textos.py` mostra a conta por capítulo.
-- Base: `inventario.md` (código 1.59.154) + `cobertura_160.md` e a seção "1.60.10" do inventário (app gravado: **1.60.10**). Logado como **Rafael Nogueira** (MASTER, vê lucro), desktop 1280×800, tema claro.
+- Base: `inventario.md` (código 1.59.154) + `cobertura_160.md` e a seção "1.60.10" do inventário (app gravado: **1.60.18**, tela 1600×900). Logado como **Rafael Nogueira** (MASTER, vê lucro), desktop 1600×900 (1.60.18), tema claro.
   `FAKE_NOW=2026-11-10T08:35:00-03:00` (junção: depois do #85 da T6, aberto às 08:31, e antes do #86, às 08:4x; a pesagem
   da T8 vem às 08:40).
 - 🔒: só a leitura da balança (módulo `balanca_integration`) e as outras unidades na falta de estoque (filial, módulo gerencial);
@@ -27,7 +27,7 @@
 | 6 | PESAGEM · Tara, impureza e dupla pesagem | Ilustração; "Pesagem avançada" do ferro: 1ª e 2ª pesagem, impureza 3 %, "Completo", "Confirmar" | Estoque entra pelo líquido | 2:30 |
 | 7 | PESAGEM · Mesclar pesagens | 2ª latinha; "Mesclar 2 pesagens deste material" → "Mesclar Todas"; "Desmesclar pesagens" | | 1:00 |
 | 8 | VALOR · Desconto e conferência | "Adicionar tara / pesagem avançada" → "Valor final" 225,00 → desconto; "Total da Compra"; lápis | Campo de valor apaga o ponto | 1:00 |
-| 9 | PEDIDOS · Dois pedidos ao mesmo tempo (novo) | Barra de pedidos ("Número", "Valor", "FORNECEDOR"); "+" abre o #1760; "Não informado" + cobre 10 kg (legenda "Principal"); troca para o Depósito Irmãos Siqueira: "Trocar fornecedor?" → "Atualizar 1 item" (37,44, "Tabela Depósitos"); volta ao pedido do Zé pela barra | "Só nos próximos" × "Atualizar" | novo |
+| 9 | PEDIDOS · Dois pedidos ao mesmo tempo (novo) | Barra de pedidos ("Número", "Valor", "FORNECEDOR"); "+" abre o #1760; "Não informado" + cobre 10 kg (legenda "Principal"); troca para o Depósito Irmãos Siqueira: "Atualizar os preços?" → "Atualizar 1 preço" (37,44, "Tabela Depósitos"); volta ao pedido do Zé pela barra | "Manter preços" × "Atualizar" | novo |
 | 10 | RASCUNHO · Rascunho: sair, descartar e recuperar (novo) | Ilustração; Caixa: "Pedidos Não Finalizados"; lixeira da lista → "Descartar este pedido?"; "Rascunhos apagados" → "Recuperar"; descarta de novo e "Excluir definitivamente"; mouse no "Cancelar" | Caixa não fecha com pedido não finalizado; "Cancelar" não tem volta; colega no mesmo pedido (só fala) | novo |
 | 11 | PAGAMENTO · Finalizar o pedido | "Finalizar Pedido": ilustração das 3 formas; Pix (chave), Saldo ("Você deverá a ele"), Dinheiro; "Arredondar para baixo"; 920,00 → "Excesso: R$ 6,80" → "Deixar no saldo de …" → "Desfazer"; "Compra registrada!"; "Imprimir direto" | | 2:00 |
 | 12 | PAGAMENTO · Abater o vale na compra (novo) | Valdir Pereira (saldo −300,00), Ferro misto 200 kg = R$ 150,00; "Saldo do Fornecedor": "Saldo atual:" e "Saldo após o pedido:" "(Ele te deverá)"; fecha sem confirmar; "Cancelar" → "Cancelar pedido?" → "Sim, cancelar" | Mostra e cancela: o saldo do Valdir não muda (junção) | novo |

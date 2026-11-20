@@ -26,7 +26,7 @@ A chave Pix dele é o telefone. Aqui também dá pra escolher a tabela de preço
 Salvar. Pronto: o Zé já vem escolhido no pedido. O CPF e o endereço, você completa depois, com calma, na tela de Clientes e Fornecedores.""",
 4: """Agora o preço. Do lado do fornecedor fica a tabela de preços do pedido. Ela vem do cadastro do fornecedor. Se ele não tem uma, vem a tabela que você fixou pro seu usuário, e se você não fixou nenhuma, a principal, a da estrela.
 Quando você escolhe o material, o sistema procura o preço nesta ordem. Primeiro, o preço especial combinado com aquele fornecedor. Depois, a tabela do pedido. E por último, o preço do próprio material.
-Uma dica: a tela sempre avisa quando valeu um preço especial ou o da tabela. E o preço é só uma sugestão: dá pra mudar na hora.
+Uma dica: a tela sempre avisa quando valeu um preço especial ou o da tabela. E o preço é só uma sugestão: dá pra mudar na hora. Se a sua tabela usa a margem automática, o preço de venda já acompanha o de compra: isso se liga em Materiais, no Editar Preços.
 O Zé é novo e está na tabela principal, então vale o preço dessa tabela. O preço entra na hora em que você escolhe o material. Se trocar o fornecedor depois, a tela pergunta o que fazer com os preços, e a gente vê isso daqui a pouco.""",
 5: """Agora o primeiro material: o cobre misto do Zé. O preço veio da tabela principal: trinta e seis reais o quilo. E repara no peso: doze quilos e quatrocentos, direto da balança. Se o material ainda não existe, o mais ao lado do campo cadastra na hora.
 Quem traz esse peso é o Ecotrêi, o programa que fica aberto no computador, ligado na balança. O selo ao vivo quer dizer que o peso está chegando agora.
@@ -35,7 +35,8 @@ Se já tem peso no campo e você clica no botão, a tela pergunta antes de troca
 O botão também avisa pela cor: azul, tudo certo. Âmbar, conectado, mas o peso não está chegando: confira se a balança está ligada. Vermelho, a balança caiu, e clicando nele você vai pra configuração.
 Embaixo, o estoque disponível desse material e o valor do item: quatrocentos e quarenta e seis reais e quarenta. Incluir Item, e o cobre entra na lista, com a origem do preço escrita embaixo dele.
 Agora a latinha, em três sacos de ráfia: vinte e um quilos e seiscentos. Cada saco pesa duzentos gramas. Então, no campo tara-ímp, vai zero vírgula seis.
-A balança nunca preenche esse campo sozinha: a tara é você que informa. O valor sai pelo peso sem os sacos: vinte e um quilos, a seis e vinte, dá cento e trinta reais e vinte. Incluir Item.""",
+A balança nunca preenche esse campo sozinha: a tara é você que informa. O valor sai pelo peso sem os sacos: vinte e um quilos, a seis e vinte, dá cento e trinta reais e vinte. Incluir Item.
+Repara que a coluna do peso se chama Peso Bruto: ela mostra o que a balança marcou, e a tara fica do lado.""",
 6: """Antes de seguir, três palavras do pátio. Tara é o peso do que não é material, como o saco, o tambor ou a caçamba. Impureza é a sujeira que vem junto: terra, borracha, plástico.
 E o peso líquido é o que sobra: o bruto, menos a tara, menos a impureza. É pelo líquido que o material entra no estoque.
 E quando a sucata vem numa carroça ou num caminhão, tem a dupla pesagem. Pesa cheio, descarrega e pesa vazio. A diferença é a carga.
@@ -60,8 +61,8 @@ E se o combinado for o valor do pedido inteiro, o lápis do lado deixa digitar o
 9: """Antes de pagar o Zé, repara nesta barra escura. Ela é o pedido que está aberto agora: o número, o valor e o fornecedor.
 Enquanto o Zé confere a carga dele, chegou uma caminhonete. Não precisa fechar nada: o botão Novo pedido abre outro, e o do Zé fica guardado.
 O motorista ainda não disse de quem é a carga, então começo com Não informado e já peso: dez quilos de cobre misto. Embaixo do preço, a tela mostra de onde ele veio: da tabela Principal.
-A carga é do Depósito Irmãos Siqueira, que tem tabela própria. Como já tem item lançado, a tela pergunta o que fazer com o preço. Ela mostra quantos itens mudam e quanto fica o total.
-Só nos próximos troca o fornecedor e deixa o que já foi pesado no preço antigo. Atualizar refaz o preço dos itens pela tabela nova.
+A carga é do Depósito Irmãos Siqueira, que tem tabela própria. Como já tem item lançado, a tela pergunta se é pra atualizar os preços. Ela mostra de quanto pra quanto cada item muda, e o total dos itens.
+Manter preços deixa o que já foi pesado no preço antigo. Atualizar refaz o preço dos itens pela tabela nova. Uma dica: essa pergunta só aparece quando algum preço muda de verdade, e o preço que você digitou na mão ninguém mexe.
 Atualizar. O cobre passou pra trinta e sete e quarenta e quatro, e a legenda agora diz Tabela Depósitos. A mesma pergunta aparece quando você troca só a tabela de preços.
 Pra voltar ao Zé, é só clicar na barra e escolher o pedido dele. Cada um guarda os seus itens, o seu fornecedor e a sua tabela.""",
 10: """Esses pedidos abertos são rascunhos. O sistema salva sozinho a cada mudança. Se você sair da tela ou fechar o navegador, eles continuam lá.

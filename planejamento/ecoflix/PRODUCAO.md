@@ -1055,3 +1055,8 @@ Decisões:
   Ajudante da voz liberado para os lotes A, B e C (~188 mil). Ficam ~74 mil para T03, T20 e T22 (~54 mil). As 11 restantes
   (~195 mil estimados, texto ainda vai crescer) precisam de mais crédito depois. Regras de economia no `perfis/ecoflix/voz.json`
   (`economia`): voz só com texto congelado; correção por frase com `emendar.py`; 1 versão; eleven_v4 mantido.
+- 20/11 13:xx **Voz disparada**: lote A (T02, T04, T06; 51 nós) e T09, T10, T11, T12, T13 (88 nós, menos o nó de títulos da T13)
+  com 1 versão; nenhuma falha. Estimativas por aula (créditos): T02 12.699, T04 18.281, T06 17.749, T09 12.431, T10 13.622,
+  T11 17.351, T12 16.649, T13 16.987, T14 18.062, T15 19.097, T19 17.521. Faltam disparar: T13 títulos (`P5sRktMXiDOTkajVV7OE`),
+  T14, T15, T19 (ids em `scratchpad/voz/nos_Tnn.json`): o disparo parou em 429 (fila de gerações cheia; nada cobrado).
+  Ajudantes de voz estouraram contexto com `creative_add_flow_node`; jeito barato anotado em `perfis/ecoflix/voz.json` (`montar_nos`).
