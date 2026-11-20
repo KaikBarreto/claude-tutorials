@@ -133,3 +133,8 @@ as gravações). Cada item diz a aula em que apareceu. **No fim da produção, v
   zerado na limpeza do formulário antes do `handlePrintReceipt`; `Sale.tsx` ~3813 e ~5071). Cupom 58 mm da compra com
   "Material não identificado" em TODO cupom de 58 mm (CONFIRMADO: o desvio do 58 mm em `thermalReceiptGenerator.ts` ~2738 passa os itens sem `formatThermalReceiptItems`). Faixa "Operações sincronizadas com sucesso!" some em ~0,3 s.
   Aviso de console `DialogContent requires a DialogTitle`. Handoff: `handoffs/2026-11-20_correcoes_T07.md`.
+- **T02 (20/11)**: Relatório por Usuário mostra o peso sem formatação ("600.000", "38992.000"). No aviso de limite de usuários,
+  "R$25,00" sem o espaço depois do R$. O balão de dica do Cato cobre o canto do Dashboard e da lista de usuários (nas gravações
+  o gravador agora cala o balão; no app ele segue por cima do conteúdo).
+- **T20 (20/11)**: em Clientes e Fornecedores, o menu da linha abre no hover e intercepta o clique em "Editar" (o robô passou a
+  clicar por script). O relatório do portal do parceiro sai como HTML, não PDF.

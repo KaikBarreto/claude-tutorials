@@ -127,6 +127,7 @@ A minutagem da fonte é alvo; a duração é a da fala (~790 caracteres de narra
   EcoTray, a bandeja, os avisos) é uma tela de Windows simulada com a pessoa usando, junto do sistema no navegador. A
   janela do EcoTray é a do código (`ecotray/dashboard.py`, `tray_app.py`, `installer_win/installer_gui.py`): textos,
   cores, fonte e medidas exatos. A área de trabalho é genérica no estilo Windows, sem logo nem ícones da Microsoft.
+- Avisos que atrapalham ficam calados pelo gravador em qualquer login (sessão falsa ou pela tela): "Sistema atualizado" (versão do build servido) e o balão de dica do Cato. Para mostrar um deles de propósito: `"__mostrarAvisoVersao"` ou `"__mostrarCato"` no storage do roteiro (só a T00 mostra o balão).
 - Papel saindo da impressora: só na fala ou ilustração. Nunca tela inventada do app. Comprovante: o PDF do app.
 
 ## Edição

@@ -1032,11 +1032,11 @@ def cap15():
     setup = login(SANDRA_EMAIL, 'Olá, Sandra!') + vai('/materiais', 'Materiais') + [AGUARDA]
     c = Cap(15, setup, pace=0.5, start=(700, 300))
     c.mark(1)
-    # a tabela mostra só os primeiros materiais por página: a busca traz o Papelão e o Plástico PET para a vista (a seleção continua entre buscas)
-    BUSCA = {'placeholder': 'Buscar material por código ou nome...'}
-    c.type(BUSCA, 'Papelão', at=c.A(1, 'estoque', 0.3), clear=True, label='busca Papelão')
+    # a tabela mostra 10 materiais por página: "Itens por página" em 25 põe o Papelão e o Plástico PET (14 e 15) à vista (a busca não serve: a
+    # janela do lote só leva os materiais que a busca está mostrando)
+    c.click(SEL('main div:has(> span:text-is("Itens por página:")) button[role=combobox]'), at=c.A(1, 'estoque', 0.3), label='Itens por página')
+    c.click(OPT('25'), label='25 por página')
     c.click(SEL('main tbody tr:has-text("Papelão") button[role=checkbox]'), label='marca o Papelão')
-    c.type(BUSCA, 'Plástico', clear=True, label='busca Plástico PET')
     c.click(SEL('main tbody tr:has-text("Plástico PET") button[role=checkbox]'), label='marca o Plástico PET')
     c.click(BTNX('Transferir Estoque'), at=c.A(1, 'Transferir', 0.6), label='Transferir Estoque (barra de baixo)')
     c.waitfor(text='Transferência em Lote', timeout=10)

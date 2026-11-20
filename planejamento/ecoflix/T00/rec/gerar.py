@@ -255,7 +255,8 @@ def storage(balao=False):
     """o que a primeira entrada do Rafael mostraria por cima da tela, já visto (o robô entra sem sessão: modo "anonymous").
     1.60: o balão de dica do Cato sobe sozinho 15 s depois de qualquer tela abrir; fica calado (contador no máximo, CatoFab.tsx:249-258) em
     todos os capítulos menos o do Cato (`balao=True`)."""
-    cala = {} if balao else {f'cato_adoption_nudge_{EMPRESA}_{RAFAEL}': json.dumps({'count': 16, 'lastShownAt': AGORA_MS})}
+    # __mostrarCato: o gravador cala o balão no login pela tela (browser.mjs, calaCatoNaLeitura); aqui ele tem de aparecer
+    cala = {'__mostrarCato': '1'} if balao else {f'cato_adoption_nudge_{EMPRESA}_{RAFAEL}': json.dumps({'count': 16, 'lastShownAt': AGORA_MS})}
     return {
         **cala,
         'app_version': VERSAO, 'notification_shown_version': VERSAO, 'pwa-install-dismissed': 'true', 'theme': 'light',

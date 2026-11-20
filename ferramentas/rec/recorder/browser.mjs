@@ -81,6 +81,23 @@ function mundoStorage(session, versao) {
   return Object.fromEntries(Object.entries(pedidos).map(([k, v]) => [troca(k), troca(typeof v === 'string' ? v : JSON.stringify(v))]));
 }
 
+// Balão de dica do Cato ("cato_adoption_nudge_<empresa>_<usuário>", CatoFab.tsx): a regra do mundo é calado (navegador.localStorage).
+// Com sessão falsa a chave entra pronta no storage; no login pela tela (sessão anônima) o usuário ainda não existe quando o storage
+// nasce, então a leitura devolve o "já visto" do mundo enquanto o app não gravou um valor próprio. Só um roteiro que queira MOSTRAR
+// o balão (T00) põe "__mostrarCato" no storage.
+const CATO_NUDGE = 'cato_adoption_nudge_';
+function calaCatoNaLeitura({ prefixo, valor }) {
+  const ler = Storage.prototype.getItem;
+  Storage.prototype.getItem = function (k) {
+    const v = ler.call(this, k);
+    return v === null && typeof k === 'string' && k.startsWith(prefixo) ? valor : v;
+  };
+}
+function valorCatoDoMundo() {
+  const e = Object.entries(MUNDO.navegador?.localStorage || {}).find(([k]) => k.startsWith(CATO_NUDGE));
+  return e ? (typeof e[1] === 'string' ? e[1] : JSON.stringify(e[1])) : '{"count":99,"lastShownAt":0}';
+}
+
 /** localStorage inicial: sessao + "ja vi" dos avisos que atrapalhariam a gravacao. */
 export function buildStorageState(session, extra = {}) {
   const v = appVersion();
@@ -101,6 +118,8 @@ export function buildStorageState(session, extra = {}) {
     entries.notification_shown_version = v;
   }
   delete entries.__mostrarAvisoVersao;
+  if (extra.__mostrarCato) for (const k of Object.keys(entries)) if (k.startsWith(CATO_NUDGE) && !(k in extra)) delete entries[k];
+  delete entries.__mostrarCato;
   return {
     cookies: [],
     origins: [{ origin: new URL(APP_URL).origin, localStorage: Object.entries(entries).map(([name, value]) => ({ name, value })) }],
@@ -114,7 +133,7 @@ export function plainStorageState(entries = {}) {
     const v = appVersion();
     for (const k of ['app_version', 'notification_shown_version']) if (k in entries) entries = { ...entries, [k]: v };
   }
-  const { __mostrarAvisoVersao, ...resto } = entries;
+  const { __mostrarAvisoVersao, __mostrarCato, ...resto } = entries;
   const list = Object.entries(resto).map(([name, value]) => ({ name, value: String(value) }));
   if (!list.length) return undefined;
   return { cookies: [], origins: [{ origin: new URL(APP_URL).origin, localStorage: list }] };
@@ -252,6 +271,7 @@ export async function openSession({
   // envelhecem entre o planejamento e a gravação. O tempo continua correndo normalmente a partir dali.
   if (FAKE_NOW_DATE) await context.clock.install({ time: FAKE_NOW_DATE });
   await context.addInitScript(stubServiceWorker);
+  if (isolate && !session && !storage?.__mostrarCato) await context.addInitScript(calaCatoNaLeitura, { prefixo: CATO_NUDGE, valor: valorCatoDoMundo() });
   // CSS do mundo (mundo.json "navegador.css"): correção de renderização do Chromium sem janela, nunca mudança de tela
   if (isolate && MUNDO.navegador?.css) await context.addInitScript(injectCss, MUNDO.navegador.css);
   if (sameTab) await context.addInitScript(sameTabLinks);
