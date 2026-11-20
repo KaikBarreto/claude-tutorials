@@ -38,7 +38,9 @@ FAKE_NOW = '2026-11-10T08:30:00-03:00'
 # localStorage de quem abre o navegador sem sessão: sem aviso de versão nova, sem o convite para instalar o app, sem a janela
 # "Personalize sua experiência" e sem o lembrete das tarefas do dia (a mesma lista que o robô põe numa sessão logada)
 STORAGE = {'app_version': VERSAO, 'notification_shown_version': VERSAO, 'pwa-install-dismissed': 'true', 'theme': 'light',
-           'initial-preferences-set': 'true', f'daily-tasks-reminder-last-shown-{RAFAEL}': '2026-11-10'}
+           'initial-preferences-set': 'true', f'daily-tasks-reminder-last-shown-{RAFAEL}': '2026-11-10',
+           # balão de dica do Cato calado (o mundo base faz isso só na sessão logada; aqui o login é pela tela)
+           f'cato_adoption_nudge_{EMPRESA_ID}_{RAFAEL}': '{"count":99,"lastShownAt":0}'}
 
 NOMES = ['Abertura', 'Criar a conta', 'Os 7 dias de teste', 'Entrar no sistema', 'Esqueci minha senha', 'Logo, ícone, nome e CNPJ',
          'Contato e endereço', 'Numeração de pedidos', 'A frase do comprovante', 'O jeito do pátio', 'O comprovante do seu jeito',

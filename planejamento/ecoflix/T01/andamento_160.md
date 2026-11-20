@@ -35,3 +35,9 @@ Depois apagar MP4/jpg de ensaio: `/dev/shm/t01_rec` (disco apertado).
 - Resultado do lote 3 e correção do que falhar (sem lote 4: o limite de 3 foi usado).
 - Voz ElevenLabs e gravação final (rodar `preparar_aula.sh T01` depois da voz).
 - Decisões do Kaik: À vista como única condição na partida (o app real semeia 6); selo "MASTER"; senha do ambiente com 5 requisitos.
+
+## Resultado final do lote 3 (20/11 20:45)
+- Rápido (1.60.22): os 16 capítulos com 0 passo falho, sem SEM ALVO nem erro de página.
+- Completos feitos: cap14 (maxLate 0,60 s, 1 atraso >= 0,3) e cap10 (maxLate 0,28 s): dentro de 0,8 s.
+- Completos NÃO feitos (prazo): 03, 12, 09, 11, 13, 04. A gravação final com a voz confere esses.
+- Instância 54301 derrubada; `/dev/shm/t01_rec` apagado.
