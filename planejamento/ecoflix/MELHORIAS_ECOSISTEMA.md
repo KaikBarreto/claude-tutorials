@@ -125,3 +125,4 @@ as gravações). Cada item diz a aula em que apareceu. **No fim da produção, v
   (`TUTORIAL_DINHEIRO_FISICO_URL`): trocar quando a trilha nova for publicada.
 - **T09 · Pedidos**: peso "24.00 Kg" com ponto; o selo "Estornado" só explica no `title` nativo; trocar o fornecedor ao
   editar um pedido em dinheiro não abre "Atualizar os preços?"; textos "caixa de hoje" continuam em telas de outro dia.
+- **T12 · Coletas**: "Cancelar ordem em vez disso" aparece na recusa de exclusão até em ordem concluída, que não pode ser cancelada.

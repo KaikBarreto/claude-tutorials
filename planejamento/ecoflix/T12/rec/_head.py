@@ -128,6 +128,9 @@ class Cap:
     def W(s, i, palavra, nth=0):
         q = norm(palavra)
         hits = [w for w in s.words if w['linha'] == i - 1 and norm(w['w']).startswith(q)]
+        if hits and len(hits) <= nth:
+            print(f'  aviso cap{s.n:02d}: "{palavra}" nth={nth} so tem {len(hits)} na linha {i}; usando a ultima')
+            nth = len(hits) - 1
         if len(hits) <= nth:
             raise SystemExit(f'cap{s.n:02d}: palavra "{palavra}" (#{nth}) não achada na linha {i}: ' + ' '.join(w['w'] for w in s.words if w['linha'] == i - 1))
         return hits[nth]['s']
@@ -150,6 +153,8 @@ class Cap:
 
     def add(s, d):
         if d.get('at') is not None:
+            d['at'] = round(max(d['at'], getattr(s, '_ult', 0.0)), 2)   # o `at` precisa ser crescente
+            s._ult = d['at']
             lim = 0.8 if d.get('do') == 'hover' else 0.5   # gesto que começa até 0,5 s antes da linha espera a marca (marca no início da linha)
             for mt, mi in s.pending:
                 if d['at'] < mt <= d['at'] + lim:

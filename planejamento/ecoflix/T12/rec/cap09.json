@@ -1,6 +1,6 @@
 {
  "name": "t12-cap09",
- "title": "T12 · Cap. 9 · As caçambas e onde estão (narração 89,1 s ESTIMADA; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T07:00:00-03:00)",
+ "title": "T12 · Cap. 9 · A coleta pedida pelo portal (narração 88,7 s ESTIMADA; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T07:00:00-03:00)",
  "seed": "t12-cap09",
  "pace": 0.5,
  "cps": 9,
@@ -11,6 +11,7 @@
  },
  "anonymous": true,
  "storage": {
+  "cato_adoption_nudge_38814e47-876a-5977-a5f7-53af364c17bb_34c36c63-0890-5e89-8963-7c77b7996908": "{\"count\":99,\"lastShownAt\":4102444800000}",
   "app_version": "1.60.18",
   "notification_shown_version": "1.60.18",
   "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
@@ -21,7 +22,7 @@
  },
  "seedExtra": [
   "t12/inicio",
-  "t12/apos-cap08"
+  "t12/apos-cap07"
  ],
  "prewarm": [
   "/login"
@@ -70,29 +71,11 @@
   },
   {
    "do": "goto",
-   "url": "/coletas/equipamentos"
+   "url": "/coletas/frota"
   },
   {
    "do": "waitFor",
-   "text": "Caçambas, bags, caixas e paletes em campo",
-   "timeout": 30
-  },
-  {
-   "do": "waitFor",
-   "idle": true,
-   "timeout": 25
-  },
-  {
-   "do": "wait",
-   "seconds": 0.3
-  },
-  {
-   "do": "goto",
-   "url": "/coletas/ordens"
-  },
-  {
-   "do": "waitFor",
-   "text": "Solicite, agende e acompanhe as ordens de coleta",
+   "text": "Veículos e motoristas disponíveis para as coletas",
    "timeout": 30
   },
   {
@@ -105,22 +88,22 @@
    "seconds": 0.8
   },
   {
-   "do": "eval",
-   "js": "(()=>{if([...document.querySelectorAll('a')].some(a=>a.textContent.trim()==='Frota'&&a.offsetParent))return 'ja aberto';const b=[...document.querySelectorAll('button')].find(b=>b.textContent.trim().startsWith('Coletas & Logística'));if(!b)return 'SEM ALVO';b.click();return 'aberto'})()"
+   "do": "goto",
+   "url": "/portal/b577c1f2-e15d-5e19-8a9d-d8b81d0f5897"
   },
   {
    "do": "waitFor",
-   "target": {
-    "role": "link",
-    "name": "Frota",
-    "exact": true,
-    "within": "aside, [data-sidebar=sidebar]"
-   },
-   "timeout": 8
+   "text": "Cooperativa Recomeço",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
   },
   {
    "do": "wait",
-   "seconds": 0.5
+   "seconds": 0.8
   },
   {
    "do": "eval",
@@ -138,383 +121,419 @@
    "at": 0
   },
   {
-   "do": "click",
-   "target": {
-    "role": "link",
-    "name": "Equipamentos",
-    "exact": true,
-    "within": "aside, [data-sidebar=sidebar]"
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 440
    },
-   "at": 0.8,
-   "label": "menu Equipamentos"
-  },
-  {
-   "do": "waitFor",
-   "text": "Caçambas, bags, caixas e paletes em campo",
-   "timeout": 15
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Caçambas, bags, caixas e paletes em campo",
-    "exact": true
-   },
-   "seconds": 0.6,
-   "at": 3.98,
-   "label": "caçambas, bags, caixas e paletes",
-   "optional": true,
-   "timeout": 4
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 0.5,
+   "label": "cursor em repouso (ilustração)"
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 6.85
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Tipos de equipamento",
-    "within": "main",
-    "exact": true
-   },
-   "seconds": 0.3,
-   "at": 6.85,
-   "label": "Tipos de equipamento",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tr:has-text('Caçamba 5 m³')"
-   },
-   "seconds": 2.0,
-   "label": "Caçamba 5 m³: uma a uma",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tr:has-text('Bag 1 m³')"
-   },
-   "seconds": 2.0,
-   "at": 12.98,
-   "label": "Bag 1 m³: por quantidade",
-   "optional": true,
-   "timeout": 4
+   "at": 12.01
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 18.74
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Unidades identific\\u00e1veis\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-140);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 18.74,
-   "label": "desce às Unidades identificáveis"
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const esp=[\"Depósito Irmãos Siqueira\"];let out='';for(let i=0;i<22;i++){const el=[...document.querySelectorAll(\"main [role=listitem]\")].find(e=>e.innerText.includes(\"Ca\\u00e7amba 05\"));if(!el){out='DIFERENTE: sem '+\"Ca\\u00e7amba 05\";}else{const t=el.innerText.replace(/\\s+/g,' ');const falta=esp.filter(e=>!t.includes(e));if(!falta.length)return 'OK: '+\"Ca\\u00e7amba 05\"+' '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,200);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere Caçamba 05 no Depósito Irmãos Siqueira"
+   "at": 17.23
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main [role=listitem]:has-text('Caçamba 05')"
+    "text": "Cooperativa Recomeço",
+    "exact": true
    },
    "seconds": 0.6,
-   "at": 19.63,
-   "label": "Caçamba 05",
+   "at": 17.23,
+   "label": "portal: Cooperativa Recomeço",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#tab-btn-coletas"
+   },
+   "at": 21.91,
+   "label": "aba Coletas"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Minhas coletas",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 22.95,
+   "label": "Minhas coletas",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main [role=listitem]:has-text('Caçamba 05') :text-is('Depósito Irmãos Siqueira')"
+    "text": "Ver relatório da coleta"
    },
-   "seconds": 1.5,
-   "at": 24.49,
-   "label": "Caçamba 05 no Depósito Irmãos Siqueira",
+   "seconds": 0.9,
+   "at": 26.08,
+   "label": "Ver relatório da coleta (das concluídas)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Solicitar coleta",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "at": 28.14,
+   "label": "Solicitar coleta",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 29.34
+   "at": 30.03
   },
   {
    "do": "click",
    "target": {
     "role": "button",
-    "name": "Nova unidade",
+    "name": "Solicitar coleta",
     "exact": true
    },
-   "at": 30.38,
-   "label": "Nova unidade"
+   "at": 30.03,
+   "label": "abre Solicitar coleta"
   },
   {
    "do": "waitFor",
    "target": {
-    "selector": "#equipamento-id"
+    "selector": "#coleta-material"
    },
    "timeout": 10
   },
   {
    "do": "click",
    "target": {
-    "selector": "#equipamento-id"
+    "selector": "#coleta-material"
    },
-   "label": "Identificação (campo)"
+   "at": 32.19,
+   "label": "Material (campo)"
   },
   {
    "do": "type",
    "target": {
-    "selector": "#equipamento-id"
+    "selector": "#coleta-material"
    },
-   "text": "Caçamba 06",
+   "text": "PET prensado",
    "cps": 40,
-   "at": 34.8,
-   "label": "Identificação: Caçamba 06",
+   "at": 33.14,
+   "label": "Material: PET prensado",
    "noClick": true
-  },
-  {
-   "do": "press",
-   "key": "Tab",
-   "label": "vai ao Tipo de equipamento"
-  },
-  {
-   "do": "press",
-   "key": "Enter",
-   "label": "abre Tipo de equipamento"
-  },
-  {
-   "do": "waitFor",
-   "selector": "[role=listbox]",
-   "timeout": 5
-  },
-  {
-   "do": "press",
-   "key": "Enter",
-   "label": "Tipo: Caçamba 5 m³"
   },
   {
    "do": "click",
    "target": {
-    "role": "button",
-    "name": "Cadastrar",
-    "exact": true,
-    "within": "[role=dialog]"
+    "selector": "#coleta-qtd"
    },
-   "at": 36.6,
-   "label": "Cadastrar unidade"
+   "at": 36.46,
+   "label": "Quantidade estimada (campo)"
   },
   {
-   "do": "waitFor",
-   "text": "Unidade cadastrada",
-   "timeout": 10
+   "do": "type",
+   "target": {
+    "selector": "#coleta-qtd"
+   },
+   "text": "800 kg",
+   "cps": 40,
+   "at": 37.01,
+   "label": "Quantidade estimada: 800 kg",
+   "noClick": true
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 38.19
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Unidades identific\\u00e1veis\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-24);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 38.19,
-   "label": "sobe a lista (Caçamba 06 à vista)"
+   "at": 38.12
   },
   {
    "do": "click",
    "target": {
-    "selector": "main [role=listitem]:has-text('Caçamba 06')"
+    "selector": "#coleta-data"
    },
-   "label": "Caçamba 06 na lista"
+   "at": 38.12,
+   "label": "Data preferida (campo)"
   },
   {
-   "do": "hover",
+   "do": "type",
    "target": {
-    "text": "Ainda sem movimentação registrada",
-    "within": "main",
-    "exact": false
+    "selector": "#coleta-data"
    },
-   "seconds": 1.2,
-   "label": "sem lugar (sem movimentação)",
+   "text": "13112026",
+   "cps": 40,
+   "at": 40.22,
+   "label": "Data preferida 13/11/2026",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#coleta-janela"
+   },
+   "label": "abre Período"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=listbox]"
+   },
+   "text": "T",
+   "cps": 40,
+   "label": "Período: procura Tarde",
+   "noClick": true
+  },
+  {
+   "do": "press",
+   "key": "Enter",
+   "label": "Período: Tarde"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Endere\\u00e7o da coleta\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-150);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 42.63,
+   "label": "desce ao Endereço da coleta (do cadastro)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Rua, Avenida, etc.']"
+   },
+   "text": "",
+   "noClick": true,
    "optional": true,
-   "timeout": 4
+   "timeout": 4,
+   "label": "Endereço da coleta: Rua do Trabalho, 57 (do cadastro)"
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 43.47
+   "at": 45.38
   },
   {
    "do": "click",
    "target": {
     "role": "button",
-    "name": "Movimentar",
-    "exact": true,
-    "within": "main"
-   },
-   "at": 43.76,
-   "label": "Movimentar"
-  },
-  {
-   "do": "waitFor",
-   "text": "Nova movimentação",
-   "timeout": 10
-  },
-  {
-   "do": "hover",
-   "target": {
-    "role": "button",
-    "name": "Externo",
-    "within": "[role=dialog]"
-   },
-   "seconds": 0.6,
-   "at": 45.58,
-   "label": "De: Externo (compra nova)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] button:has-text('Minha base') >> nth=1"
-   },
-   "at": 49.35,
-   "label": "Para: Minha base"
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Registrar",
+    "name": "Solicitar coleta",
     "exact": true,
     "within": "[role=dialog]"
    },
-   "label": "Registrar"
+   "at": 45.38,
+   "label": "Solicitar coleta (enviar)"
   },
   {
    "do": "waitFor",
-   "text": "Movimentação registrada",
+   "text": "Solicitação enviada (#10)",
    "timeout": 10
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Posição atual",
-    "within": "main",
-    "exact": true
-   },
-   "seconds": 1.2,
-   "at": 54.38,
-   "label": "Posição atual: Minha base",
-   "optional": true,
-   "timeout": 4
   },
   {
    "do": "mark",
    "name": "L7",
-   "at": 55.59
+   "at": 49.75
   },
   {
-   "do": "scroll",
-   "point": {
-    "x": 760,
-    "y": 460
+   "do": "goto",
+   "url": "/coletas/frota",
+   "at": 49.75,
+   "label": "de volta ao sistema (Frota)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Veículos e motoristas disponíveis para as coletas",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Coletas & Logística",
+    "within": "aside, [data-sidebar=sidebar]"
    },
-   "by": 0,
-   "duration": 0.3,
-   "after": 0,
-   "at": 55.79,
-   "label": "cursor em repouso (ilustração)"
+   "seconds": 1.4,
+   "at": 52.09,
+   "label": "o ponto vermelho no menu Coletas & Logística",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Coletas & Logística",
+    "within": "aside, [data-sidebar=sidebar]"
+   },
+   "label": "abre Coletas & Logística",
+   "unless": {
+    "role": "link",
+    "name": "Ordens de Coleta",
+    "exact": true,
+    "within": "aside, [data-sidebar=sidebar]"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Ordens de Coleta",
+    "exact": true,
+    "within": "aside, [data-sidebar=sidebar]"
+   },
+   "at": 55.73,
+   "label": "Ordens de Coleta"
+  },
+  {
+   "do": "waitFor",
+   "text": "Solicite, agende e acompanhe as ordens de coleta",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#10'))"
+   },
+   "seconds": 1.0,
+   "at": 57.63,
+   "label": "#10 na Solicitada",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#10')) :text-is('via portal')"
+   },
+   "seconds": 0.8,
+   "at": 60.51,
+   "label": "#10: via portal",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "mark",
    "name": "L8",
-   "at": 70.36
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Onde tudo est\\u00e1 agora\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-120);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 70.36,
-   "label": "desce a Onde tudo está agora"
+   "at": 62.18
   },
   {
    "do": "hover",
    "target": {
-    "text": "Na base",
-    "within": "main",
-    "exact": true
+    "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#10')) button:text-is('Aprovar')"
    },
    "seconds": 0.3,
-   "at": 74.21,
-   "label": "Na base",
+   "at": 64.59,
+   "label": "Aprovar",
    "optional": true,
    "timeout": 4
   },
   {
-   "do": "hover",
+   "do": "click",
    "target": {
-    "text": "Em campo",
-    "within": "main",
-    "exact": true
+    "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#10')) button:text-is('Recusar')"
    },
-   "seconds": 0.3,
-   "at": 75.96,
-   "label": "Em campo",
-   "optional": true,
-   "timeout": 4
+   "at": 66.33,
+   "label": "Recusar #10"
+  },
+  {
+   "do": "waitFor",
+   "text": "Recusar solicitação?",
+   "timeout": 8
   },
   {
    "do": "hover",
    "target": {
-    "text": "Com parceiros",
-    "within": "main",
-    "exact": true
+    "selector": "#reject-motivo"
    },
-   "seconds": 0.3,
-   "at": 77.48,
-   "label": "Com parceiros",
+   "seconds": 2.2,
+   "at": 69.07,
+   "label": "Recusar solicitação: o Motivo",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L9",
-   "at": 79.06
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const c=rolagem(document.querySelector('main [role=tab]'));if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,t0=performance.now();if(y0<3)return 'ok';await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0*(1-e),behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
-   "at": 79.06,
-   "label": "sobe às abas"
+   "at": 75.58
   },
   {
    "do": "click",
    "target": {
-    "role": "tab",
-    "name": "Movimentações",
-    "exact": true
+    "role": "button",
+    "name": "Voltar",
+    "exact": true,
+    "within": "[role=alertdialog]"
    },
-   "label": "aba Movimentações"
+   "at": 75.58,
+   "label": "Voltar (não recusa)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#10')) button:text-is('Aprovar')"
+   },
+   "at": 76.02,
+   "label": "Aprovar #10"
+  },
+  {
+   "do": "waitFor",
+   "text": "Agendar coleta",
+   "timeout": 10
   },
   {
    "do": "hover",
    "target": {
-    "text": "Ordem 8",
-    "within": "main",
-    "exact": false
+    "text": "Data da coleta *",
+    "within": "[role=dialog]",
+    "exact": true
    },
-   "seconds": 1.2,
-   "at": 86.86,
-   "label": "as da troca de hoje: Ordem 8",
+   "seconds": 2.0,
+   "label": "Agendar coleta: a data e a janela do pedido",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L10",
+   "at": 82.01
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Agendar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 82.01,
+   "label": "Agendar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Status alterado para Agendada",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#10'))"
+   },
+   "seconds": 1.5,
+   "at": 85.25,
+   "label": "#10 em Agendada",
    "optional": true,
    "timeout": 4
   },
@@ -526,7 +545,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 89.12
+   "at": 88.65
   }
  ]
 }

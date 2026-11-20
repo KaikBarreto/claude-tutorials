@@ -6,8 +6,8 @@ set -u
 cd /home/claude/ecoflix
 NN=$1; MODO=${2:-}
 PORT=54312; PIDF=rec/.runtime/fake$PORT.pid; FN=2026-11-10T07:00:00-03:00
-SEMEIA=" 05 06 07 08 09 "
-SENSIVEL=" 03 04 06 07 08 "   # digitação longa (03, 08), lista aberta enquanto a fala anda (04, 06), portal e sistema (07)
+SEMEIA=" 05 06 07 09 10 11 12 15 "
+SENSIVEL=" 03 06 09 10 "   # digitação longa, lista aberta enquanto a fala anda, portal e sistema
 export FAKE_URL=http://127.0.0.1:$PORT FAKE_NOW=$FN TUT_USER=rafael@reciclavalemetais.example
 [ -n "${TUT_SENHA:-}" ] || export TUT_SENHA="$(head -c 12 /dev/urandom | base64)"
 echo "cap$NN pegou a trava $(date +%H:%M:%S)"

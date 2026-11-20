@@ -9,35 +9,41 @@
   entrou no pátio em produto de maior valor").
 - **Vinhetas (áreas):** COLETAS · ORDENS · AGENDA · ACOMPANHAMENTO · PORTAL · FROTA · EQUIPAMENTOS · RELATÓRIO ·
   CONFIGURAÇÕES · RESUMO.
-- **Alvo da fonte:** ~15 min. Estimativa: 1.716 palavras de fala (~11 min de voz) + vinhetas, cartela, a troca de janela
+- **Alvo da fonte:** ~15 min. Estimativa: 2.943 palavras de fala (~19 min de voz) + vinhetas, cartela, a troca de janela
   do portal e as esperas dos formulários ≈ 13 min.
 - **FAKE_NOW:** `2026-11-10T07:00:00-03:00` (terça; junção: a troca da caçamba é antes da balança do T8, 08:40, e da viagem do T17, 09:40). Desktop, Rafael Nogueira (MASTER); no cap07, uma segunda janela sem
   login com o portal da Cooperativa Recomeço.
 - **Fora da aula (fonte):** "Rastreamento" e "Rotas". A fala não cita nem promete nada; a câmera não para nesses itens do
   menu. Na 1.59.154 o Rastreamento já abre um mapa (relatório ao Kaik).
 
-## Capítulos (os da fonte, na ordem)
+## Capítulos (18, renumerados no 1.60.18)
 
-| # | Vinheta (área / título) | O que a tela mostra | ⚠️, 🔒 e ilustração | Estado de partida |
-|---|---|---|---|---|
-| 0 | (abertura) | Dashboard → "Coletas & Logística" → "Ordens de Coleta". | 🔒 dito; [ILUSTRAÇÃO: coleta no papel e no grupo de mensagens] | `inicio` |
-| 1 | COLETAS / O que o módulo resolve | O quadro, sem ação; o caminho de uma coleta. | ⚠️ ordem de coleta não é pedido (explicado) + [ILUSTRAÇÃO: o caminho da coleta e a compra à parte] | `inicio` |
-| 2 | ORDENS / O quadro das ordens | Colunas "Solicitada", "Agendada", "A caminho", "Concluídas", "Cancelada"; cartões #8 e #7 ("Sem cadastro"); "Quadro"/"Lista"; "Nova ordem". | ⚠️ só anda para a frente; cancelada e concluída ficam como registro (dica) | `inicio` |
-| 3 | ORDENS / Criar uma ordem | "Nova ordem" → etapa "Parceiro" (Auto Peças Vale Forte, endereço do cadastro) → "Coleta": "Material estimado" e "Observações". | menção ao "Sem cadastro" | `inicio` |
-| 4 | AGENDA / Data e janela | Mesma janela, etapa "Coleta": "Data agendada" 12/11/2026, "Período" ("Manhã", "Tarde", "Dia todo") → "Manhã". | | `inicio` + `setup` reabre a janela na etapa 2 |
-| 5 | AGENDA / Motorista e veículo | Etapa "Frota": "Jair Lopes" e "GHT7B19", "Revisão", "Criar ordem"; o cartão #9 em "Agendada". | | `inicio` + `setup` reabre na etapa 3 |
-| 6 | ACOMPANHAMENTO / Até concluir | #8: "A caminho" → "Preencher" → "Recolhi" Caçamba 03 e "Entreguei" Caçamba 05 → "Concluir coleta" → "Voltar às ordens" → detalhe com "Equipamentos movimentados" e "Histórico". | ⚠️ concluir não cria compra (dica) | `apos-cap05` |
-| 7 | PORTAL / A coleta pedida pelo portal | Portal da Cooperativa Recomeço → "Coletas" → "Solicitar coleta" (PET prensado, 800 kg, 13/11, "Tarde") → no sistema: ponto vermelho, cartão #10 "via portal" → "Aprovar" → "Agendar coleta" → "Agendar". | 🔒 portal dito; [ILUSTRAÇÃO: os dois lados do pedido] | `apos-cap06` |
-| 8 | FROTA / Veículos e motoristas | "Frota" → "Veículos": detalhe do FKD2E41; "Novo veículo" FVL8A52 poliguindaste (tara 7.100, capacidade 8.500) → "Motoristas": "Novo motorista" Sérgio Paiva (CNH C). | [ILUSTRAÇÃO: tara, bruto e líquido] | `apos-cap07` |
-| 9 | EQUIPAMENTOS / As caçambas e onde estão | "Equipamentos": "Tipos de equipamento" (uma a uma × por quantidade), "Unidades identificáveis", "Nova unidade" Caçamba 06 → "Movimentar" de "Externo" para "Minha base"; "Onde tudo está agora"; aba "Movimentações" com "Ordem 8". | ⚠️ caçamba só muda de lugar quando alguém registra (dica, ajustada ao código) + [ILUSTRAÇÃO: o caminho da caçamba] | `apos-cap08` |
-| 10 | RELATÓRIO / O relatório das coletas | "Relatório": "Este mês" e "Mês passado"; totais, "Taxa de conclusão", "Por status", "Por motorista", "Por veículo", "Por parceiro". | ⚠️ cancelada sai da taxa (dica) + [ILUSTRAÇÃO: a conta da taxa]; ⚠️ em que dia cada coleta entra (dica, pelo código) | `apos-cap09` |
-| 11 | CONFIGURAÇÕES / As regras das coletas | "Prefixo da numeração" "COL-", "Janelas de coleta oferecidas", "Exigir motorista e veículo para agendar", "Exigir aprovação da solicitação", "Antecedência mínima (horas)" 24, "Dias aceitos para coleta". | ⚠️ regras do portal não travam o operador (dica) + [ILUSTRAÇÃO: as regras só na porta do portal] | `apos-cap10` |
-| 12 | RESUMO / Recapitulando | Montagem; cartão "Próximo". | | (montagem) |
+Novos: 2 a 8 reabertos e ampliados (Lista, Calendário, Filtros; Sem cadastro; Não definido; editar, cancelar e excluir), 8 relatório
+para o parceiro, 12 movimentações e ficha do parceiro, 13 rastreamento, 16 checklist e assinaturas. Renumerados: portal 7→9, frota 8→10,
+caçambas 9→11, relatório 10→14, regras 11→15, resumo 12→17. "Caçambas" agora é "Equipamentos". Tela da gravação 1600x900.
 
-Transições faladas: 0→1 "Antes de clicar, o que o módulo resolve"; 1→2 "Agora, o quadro"; 2→3 "A Auto Peças Vale Forte
-ligou: vamos criar a ordem"; 3→4 "Agora, o dia e o período"; 4→5 "Falta quem vai buscar"; 5→6 "O caminhão saiu";
-6→7 "E quando o próprio parceiro pede?"; 7→8 "Quem faz tudo isso é a frota"; 8→9 "E as caçambas"; 9→10 "No fim do mês,
-o relatório"; 10→11 "Por último, as regras"; 11→12 "Recapitulando".
+| # | Tema | O que a tela mostra | Partida |
+|---|---|---|---|
+| 0 | Abertura | Dashboard, "Coletas & Logística", "Ordens de Coleta". | `inicio` |
+| 1 | O que o módulo resolve | Quadro sem ação; ilustração do caminho da coleta. | `inicio` |
+| 2 | O quadro das ordens | Colunas, cartão novo (folhinha, "Hoje", "Preencher"), Quadro, Lista, Calendário, Filtros. | `inicio` |
+| 3 | Criar uma ordem | "Nova ordem", etapas, "Sem cadastro", Tipo Fornecedor/Cliente, Parceiro Auto Peças Vale Forte. | `inicio` |
+| 4 | Data e janela | "Data agendada", "Período", "Não definido". | `inicio` |
+| 5 | Motorista e veículo | Etapa "Frota", "Criar ordem", cartão #9 em "Agendada". | `inicio` |
+| 6 | Até concluir | Arrastar o #8, "Preencher", Recolhi/Entreguei, bags, "Concluir coleta", ordem #7 sem cadastro. | `apos-cap05` |
+| 7 | Editar, cancelar e excluir | Menu do cartão, Editar, Cancelada, Excluir com a recusa do banco. | `apos-cap06` |
+| 8 | Relatório para o parceiro | Botão "Relatório", Copiar link, WhatsApp, Imprimir. | `apos-cap07` |
+| 9 | A coleta pedida pelo portal | Portal, "Solicitar coleta", cartão #10 "via portal", Recusar (Voltar), Aprovar, Agendar. | `apos-cap07` |
+| 10 | Veículos e motoristas | Frota, FKD2E41, aviso de toneladas, FVL8A52, Sérgio Paiva. | `apos-cap09` |
+| 11 | As caçambas e onde estão | Equipamentos, Novo tipo (Palete), Caçamba 02 em manutenção, Caçamba 06, Movimentar, saldos. | `apos-cap10` |
+| 12 | Movimentações e ficha do parceiro | Nova movimentação, Editar/Excluir, Mostrar anuladas, aba Coletas da ficha. | `apos-cap11` |
+| 13 | Onde está o caminhão | Rastreamento (mapa, Ao vivo, raio do GPS), Trajeto da ordem 7, Rotas. | `apos-cap12` + `rastreamento` |
+| 14 | O relatório das coletas | Este mês, Mês passado, tabelas por status, motorista, veículo, parceiro. | `apos-cap12` |
+| 15 | As regras das coletas | Prefixo, janelas, exigir aprovação, avisar solicitação, antecedência, dias aceitos. | `apos-cap12` |
+| 16 | Checklist e assinaturas | Modelo "Coleta com caçamba", perguntas, padrão, assinatura, tela da ordem. | `apos-cap15` |
+| 17 | Resumo | Montagem; cartão "Próximo". | (montagem) |
+
+Alvo: ~2.943 palavras de fala (~19 min de voz), antes 1.716. A T20 deve partir de `apos-cap15`.
 
 ## Falas dos cuidados ⚠️ e 🚫 (fonte → aula, conferido no código)
 | Da fonte | Na 1.59.154 | Onde e como |

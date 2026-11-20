@@ -1,0 +1,452 @@
+{
+ "name": "t12-cap12",
+ "title": "T12 · Cap. 12 · Movimentações e a ficha do parceiro (narração 54,1 s ESTIMADA; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T07:00:00-03:00)",
+ "seed": "t12-cap12",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 470
+ },
+ "anonymous": true,
+ "storage": {
+  "cato_adoption_nudge_38814e47-876a-5977-a5f7-53af364c17bb_34c36c63-0890-5e89-8963-7c77b7996908": "{\"count\":99,\"lastShownAt\":4102444800000}",
+  "app_version": "1.60.18",
+  "notification_shown_version": "1.60.18",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t12/inicio",
+  "t12/apos-cap11"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "••••••••"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "url": "/dashboard",
+   "timeout": 40
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "goto",
+   "url": "/coletas/equipamentos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Caçambas, bags, caixas e paletes em campo",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Movimentações",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "seconds": 1.0
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Transi[çc][ãa]o inv[áa]lida|n[ãa]o encontrad|Localiza[çc][ãa]o n[ãa]o registrada|Sem sinal de GPS/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA ECOFLIX'))window.__avisos.push('TRILHA ECOFLIX')},300);return 1})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__animFix)return 'ja';window.__animFix=setInterval(()=>{for(const a of document.getAnimations())if(a.currentTime!==null&&a.currentTime<0)a.startTime=document.timeline.currentTime},100);return 'anim fix'})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Movimentações",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 2.99,
+   "label": "aba Movimentações",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova movimentação",
+    "exact": true
+   },
+   "at": 4.58,
+   "label": "Nova movimentação"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nova movimentação",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[aria-pressed]:has-text('Minha base') >> nth=0"
+   },
+   "at": 7.24,
+   "label": "De: Minha base"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[aria-pressed]:has-text('Parceiro') >> nth=1"
+   },
+   "at": 7.78,
+   "label": "Para: Parceiro"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Selecionar parceiro"
+   },
+   "label": "Selecionar parceiro…"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "Buscar por nome, apelido, CPF/CNPJ ou telefone..."
+   },
+   "timeout": 10
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar por nome, apelido, CPF/CNPJ ou telefone..."
+   },
+   "text": "Recomeço",
+   "cps": 40,
+   "label": "busca Recomeço",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cooperativa Recomeço",
+    "within": "[role=dialog] >> nth=-1"
+   },
+   "at": 9.29,
+   "label": "escolhe Cooperativa Recomeço"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]:has-text('Tipo de equipamento')"
+   },
+   "label": "Tipo de equipamento"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Bag 1 m³",
+    "exact": true
+   },
+   "label": "Tipo: Bag 1 m³"
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Quantidade"
+   },
+   "label": "Quantidade (campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Quantidade"
+   },
+   "text": "10",
+   "cps": 40,
+   "label": "Quantidade: 10",
+   "noClick": true,
+   "clear": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Registrar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 10.05,
+   "label": "Registrar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Movimentação registrada",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 11.63
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button[aria-label^='Ações']:visible >> nth=0"
+   },
+   "seconds": 1.0,
+   "at": 11.92,
+   "label": "menu da linha",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[aria-label^='Ações']:visible >> nth=0"
+   },
+   "label": "abre o menu da linha"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Editar"
+   },
+   "at": 13.28,
+   "label": "Editar movimentação"
+  },
+  {
+   "do": "waitFor",
+   "text": "Editar movimentação",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Tipo e unidade não mudam aqui",
+    "within": "[role=dialog]"
+   },
+   "seconds": 2.0,
+   "at": 20.11,
+   "label": "Editar movimentação: o que muda e o que não muda",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha o Editar"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[aria-label^='Ações']:visible >> nth=0"
+   },
+   "label": "abre o menu da linha"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Excluir"
+   },
+   "label": "Excluir"
+  },
+  {
+   "do": "waitFor",
+   "text": "Excluir movimentação?",
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 24.13
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Motivo (opcional)",
+    "within": "[role=alertdialog]"
+   },
+   "seconds": 1.4,
+   "at": 27.52,
+   "label": "Excluir movimentação?: Motivo (opcional)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true,
+    "within": "[role=alertdialog]"
+   },
+   "label": "Cancelar (não exclui)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Filtros",
+    "within": "main"
+   },
+   "at": 30.02,
+   "label": "Filtros"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Mostrar anuladas"
+   },
+   "seconds": 1.2,
+   "at": 31.01,
+   "label": "Mostrar anuladas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha os Filtros"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 39.96
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Clientes e Fornecedores",
+    "exact": true,
+    "within": "aside, [data-sidebar=sidebar]"
+   },
+   "at": 39.96,
+   "label": "menu Clientes e Fornecedores"
+  },
+  {
+   "do": "waitFor",
+   "text": "Depósito Irmãos Siqueira",
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Depósito Irmãos Siqueira",
+    "within": "main"
+   },
+   "label": "ficha do Depósito Irmãos Siqueira"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Coletas",
+    "exact": true
+   },
+   "at": 42.07,
+   "label": "aba Coletas"
+  },
+  {
+   "do": "waitFor",
+   "text": "Com este parceiro agora",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Com este parceiro agora",
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "at": 44.34,
+   "label": "Com este parceiro agora",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Agendar coleta"
+   },
+   "seconds": 1.2,
+   "at": 49.13,
+   "label": "Agendar coleta",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 54.12
+  }
+ ]
+}

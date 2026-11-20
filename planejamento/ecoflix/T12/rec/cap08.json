@@ -1,16 +1,17 @@
 {
  "name": "t12-cap08",
- "title": "T12 · Cap. 8 · Veículos e motoristas (narração 78,2 s ESTIMADA; marcas L1..L11 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T07:00:00-03:00)",
+ "title": "T12 · Cap. 8 · O relatório para o parceiro (narração 61,8 s ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T07:00:00-03:00)",
  "seed": "t12-cap08",
  "pace": 0.5,
  "cps": 9,
  "tail": 1.5,
  "start": {
   "x": 760,
-  "y": 420
+  "y": 470
  },
  "anonymous": true,
  "storage": {
+  "cato_adoption_nudge_38814e47-876a-5977-a5f7-53af364c17bb_34c36c63-0890-5e89-8963-7c77b7996908": "{\"count\":99,\"lastShownAt\":4102444800000}",
   "app_version": "1.60.18",
   "notification_shown_version": "1.60.18",
   "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
@@ -70,24 +71,6 @@
   },
   {
    "do": "goto",
-   "url": "/coletas/frota"
-  },
-  {
-   "do": "waitFor",
-   "text": "Veículos e motoristas disponíveis para as coletas",
-   "timeout": 30
-  },
-  {
-   "do": "waitFor",
-   "idle": true,
-   "timeout": 25
-  },
-  {
-   "do": "wait",
-   "seconds": 0.3
-  },
-  {
-   "do": "goto",
    "url": "/coletas/ordens"
   },
   {
@@ -103,24 +86,6 @@
   {
    "do": "wait",
    "seconds": 0.8
-  },
-  {
-   "do": "eval",
-   "js": "(()=>{if([...document.querySelectorAll('a')].some(a=>a.textContent.trim()==='Frota'&&a.offsetParent))return 'ja aberto';const b=[...document.querySelectorAll('button')].find(b=>b.textContent.trim().startsWith('Coletas & Logística'));if(!b)return 'SEM ALVO';b.click();return 'aberto'})()"
-  },
-  {
-   "do": "waitFor",
-   "target": {
-    "role": "link",
-    "name": "Frota",
-    "exact": true,
-    "within": "aside, [data-sidebar=sidebar]"
-   },
-   "timeout": 8
-  },
-  {
-   "do": "wait",
-   "seconds": 0.5
   },
   {
    "do": "eval",
@@ -140,515 +105,197 @@
   {
    "do": "click",
    "target": {
-    "role": "link",
-    "name": "Frota",
-    "exact": true,
-    "within": "aside, [data-sidebar=sidebar]"
+    "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#8')) button:text-is('Relatório')"
    },
-   "at": 1.11,
-   "label": "menu Frota"
+   "at": 0.88,
+   "label": "#8: Relatório"
   },
   {
    "do": "waitFor",
-   "text": "Veículos e motoristas disponíveis para as coletas",
+   "text": "Relatório de Coleta 8",
    "timeout": 15
-  },
-  {
-   "do": "scroll",
-   "point": {
-    "x": 340,
-    "y": 198
-   },
-   "by": 0,
-   "duration": 0.3,
-   "after": 0,
-   "at": 3.7,
-   "label": "aba Veículos"
-  },
-  {
-   "do": "scroll",
-   "point": {
-    "x": 460,
-    "y": 198
-   },
-   "by": 0,
-   "duration": 0.3,
-   "after": 0,
-   "at": 4.76,
-   "label": "aba Motoristas"
   },
   {
    "do": "hover",
    "target": {
-    "text": "Mesma frota usada na pesagem de compra/venda.",
+    "role": "button",
+    "name": "Copiar link",
     "exact": true
    },
-   "seconds": 0.8,
-   "at": 6.56,
-   "label": "mesma frota da pesagem",
+   "seconds": 0.4,
+   "at": 10.2,
+   "label": "Copiar link",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Compartilhar no WhatsApp"
+   },
+   "seconds": 0.4,
+   "at": 12.55,
+   "label": "Compartilhar no WhatsApp (não clica)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Imprimir",
+    "exact": true
+   },
+   "seconds": 0.6,
+   "at": 13.31,
+   "label": "Imprimir (não clica)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 9.36
+   "at": 14.82
   },
   {
    "do": "click",
    "target": {
-    "selector": "main button:has-text('FKD2E41'):has-text('Caminhão truck')"
+    "role": "button",
+    "name": "Copiar link",
+    "exact": true
    },
-   "at": 9.36,
-   "label": "FKD2E41"
+   "at": 14.92,
+   "label": "Copiar link (clica)"
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"6.380\", \"14.000\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere FKD2E41: tara 6.380 e capacidade 14.000 (ilustração)"
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Equipamentos\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-260);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 17.84,
+   "label": "desce a Equipamentos"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main div:has(> h3:text-is('Capacidade operacional')) + div.grid"
+    "text": "Equipamentos",
+    "exact": true
    },
-   "seconds": 2.0,
-   "at": 11.84,
-   "label": "Tara e Capacidade do FKD2E41",
+   "seconds": 1.5,
+   "at": 19.51,
+   "label": "Equipamentos do relatório",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 14.19
+   "at": 29.44
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Voltar às ordens",
+    "exact": true
+   },
+   "at": 29.44,
+   "label": "Voltar às ordens",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Solicite, agende e acompanhe as ordens de coleta",
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#8')) :text-is('Depósito Irmãos Siqueira')"
+   },
+   "label": "abre a ficha da ordem 8"
+  },
+  {
+   "do": "waitFor",
+   "text": "Detalhes da ordem de coleta.",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim().startsWith(\"Relat\\u00f3rio do Fornecedor\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-280);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 29.84,
+   "label": "ficha: Relatório do Fornecedor"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Abrir link do Fornecedor"
+   },
+   "seconds": 0.8,
+   "at": 35.42,
+   "label": "Abrir link do Fornecedor (não clica)",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 23.27
+   "at": 38.14
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 38.14,
+   "label": "fecha a ficha"
   },
   {
    "do": "click",
    "target": {
-    "role": "button",
-    "name": "Novo veículo",
-    "exact": true
+    "role": "link",
+    "name": "Configurações",
+    "exact": true,
+    "within": "aside, [data-sidebar=sidebar]"
    },
-   "at": 29.17,
-   "label": "Novo veículo"
+   "at": 40.32,
+   "label": "menu Configurações (Coletas)"
   },
   {
    "do": "waitFor",
-   "target": {
-    "selector": "#veiculo-placa"
-   },
-   "timeout": 10
+   "text": "Ajuste a numeração, as janelas e as regras do portal de coletas",
+   "timeout": 15
   },
   {
-   "do": "click",
-   "target": {
-    "selector": "#veiculo-placa"
-   },
-   "label": "Placa (campo)"
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Relat\\u00f3rio p\\u00fablico\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-200);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 41.56,
+   "label": "desce a Relatório público"
   },
   {
-   "do": "type",
+   "do": "hover",
    "target": {
-    "selector": "#veiculo-placa"
+    "text": "Mostrar valores no relatório que o cliente abre",
+    "exact": true
    },
-   "text": "FVL8A52",
-   "cps": 40,
-   "at": 31.84,
-   "label": "Placa FVL8A52",
-   "noClick": true
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "#veiculo-descricao"
-   },
-   "label": "Descrição / Apelido (campo)"
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "#veiculo-descricao"
-   },
-   "text": "Caminhão poliguindaste",
-   "cps": 40,
-   "label": "Descrição: Caminhão poliguindaste",
-   "noClick": true
+   "seconds": 1.2,
+   "at": 41.76,
+   "label": "Mostrar valores no relatório que o cliente abre",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 33.56
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "#veiculo-uf"
-   },
-   "at": 38.4,
-   "label": "abre UF de licenciamento"
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "[role=listbox]"
-   },
-   "text": "SP",
-   "cps": 40,
-   "label": "UF: procura SP",
-   "noClick": true
-  },
-  {
-   "do": "press",
-   "key": "Enter",
-   "label": "UF: SP"
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Tipo de rodado\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-420);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "label": "desce a janela do veículo"
-  },
-  {
-   "do": "eval",
-   "js": "(()=>{const t=[...document.querySelectorAll(\"#veiculo-categoria\")][0];if(!t)return 'SEM ALVO';t.focus();return 'foco'})()",
-   "at": 40.3,
-   "label": "Tipo: Veículo único (foco)"
-  },
-  {
-   "do": "press",
-   "key": "Enter",
-   "label": "Tipo: Veículo único (abre)"
-  },
-  {
-   "do": "waitFor",
-   "selector": "[role=listbox]",
-   "timeout": 5
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "[role=listbox]"
-   },
-   "text": "V",
-   "cps": 40,
-   "label": "Tipo: Veículo único (procura)",
-   "noClick": true
-  },
-  {
-   "do": "press",
-   "key": "Enter",
-   "label": "Tipo: Veículo único"
-  },
-  {
-   "do": "eval",
-   "js": "(()=>{const t=[...document.querySelectorAll(\"#veiculo-rodado\")][0];if(!t)return 'SEM ALVO';t.focus();return 'foco'})()",
-   "at": 40.9,
-   "label": "Tipo de rodado: Toco (foco)"
-  },
-  {
-   "do": "press",
-   "key": "Enter",
-   "label": "Tipo de rodado: Toco (abre)"
-  },
-  {
-   "do": "waitFor",
-   "selector": "[role=listbox]",
-   "timeout": 5
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "[role=listbox]"
-   },
-   "text": "To",
-   "cps": 40,
-   "label": "Tipo de rodado: Toco (procura)",
-   "noClick": true
-  },
-  {
-   "do": "press",
-   "key": "Enter",
-   "label": "Tipo de rodado: Toco"
-  },
-  {
-   "do": "mark",
-   "name": "L6",
-   "at": 41.81
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "#veiculo-tara"
-   },
-   "at": 42.47,
-   "label": "Tara (campo)"
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "#veiculo-tara"
-   },
-   "text": "7100",
-   "cps": 40,
-   "at": 43.02,
-   "label": "Tara (kg) 7100",
-   "noClick": true
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "#veiculo-cap-kg"
-   },
-   "at": 45.73,
-   "label": "Capacidade (campo)"
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "#veiculo-cap-kg"
-   },
-   "text": "8500",
-   "cps": 40,
-   "at": 46.28,
-   "label": "Capacidade (kg) 8500",
-   "noClick": true
-  },
-  {
-   "do": "mark",
-   "name": "L7",
-   "at": 48.23
-  },
-  {
-   "do": "scroll",
-   "point": {
-    "x": 821,
-    "y": 736
-   },
-   "by": 0,
-   "duration": 0.3,
-   "after": 0,
-   "at": 48.23,
-   "label": "Cadastrar veículo (cursor)"
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "[role=dialog] button:has-text('Cadastrar')"
-   },
-   "text": "",
-   "noClick": true,
-   "label": "Cadastrar veículo",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "eval",
-   "js": "(()=>{const b=[...document.querySelectorAll(\"[role=dialog] button\")].find(b=>b.offsetParent!==null&&(b.textContent||'').includes(\"Cadastrar\"));if(!b)return 'SEM ALVO';b.click();return 'clicado'})()",
-   "at": 48.33,
-   "label": "Cadastrar veículo (clique)"
-  },
-  {
-   "do": "waitFor",
-   "text": "Veículo cadastrado",
-   "timeout": 10
+   "at": 49.58
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main button:has-text('FVL8A52')"
+    "text": "O link do relatório é público",
+    "within": "main"
    },
-   "seconds": 1.0,
-   "at": 49.57,
-   "label": "FVL8A52 na frota",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L8",
-   "at": 52.76
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "tab",
-    "name": "Motoristas",
-    "exact": true
-   },
-   "at": 54.41,
-   "label": "aba Motoristas"
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Novo motorista",
-    "exact": true
-   },
-   "at": 56.45,
-   "label": "Novo motorista"
-  },
-  {
-   "do": "waitFor",
-   "target": {
-    "selector": "#motorista-nome"
-   },
-   "timeout": 10
-  },
-  {
-   "do": "mark",
-   "name": "L9",
-   "at": 58.42
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "#motorista-nome"
-   },
-   "at": 58.42,
-   "label": "Nome (campo)"
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "#motorista-nome"
-   },
-   "text": "Sérgio Paiva",
-   "cps": 40,
-   "label": "Nome: Sérgio Paiva",
-   "noClick": true
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "#motorista-doc"
-   },
-   "at": 62.35,
-   "label": "CPF (campo)"
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "#motorista-doc"
-   },
-   "text": "46371820508",
-   "cps": 40,
-   "label": "CPF",
-   "noClick": true
-  },
-  {
-   "do": "press",
-   "key": "Tab",
-   "label": "vai ao Telefone"
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "#motorista-tel"
-   },
-   "text": "12900004417",
-   "cps": 40,
-   "label": "Telefone",
-   "noClick": true
-  },
-  {
-   "do": "mark",
-   "name": "L10",
-   "at": 64.31
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "#motorista-cnh"
-   },
-   "at": 66.27,
-   "label": "CNH (campo)"
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "#motorista-cnh"
-   },
-   "text": "04581273671",
-   "cps": 40,
-   "at": 68.03,
-   "label": "CNH",
-   "noClick": true
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "#motorista-cnh-cat"
-   },
-   "label": "abre Categoria"
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "[role=listbox]"
-   },
-   "text": "C",
-   "cps": 40,
-   "label": "Categoria: procura C",
-   "noClick": true
-  },
-  {
-   "do": "press",
-   "key": "Enter",
-   "label": "Categoria C"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "#motorista-cnh-val"
-   },
-   "at": 71.65,
-   "label": "Validade da CNH (campo)"
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "#motorista-cnh-val"
-   },
-   "text": "18062030",
-   "cps": 40,
-   "label": "Validade da CNH 18/06/2030",
-   "noClick": true
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Cadastrar",
-    "exact": true,
-    "within": "[role=dialog]"
-   },
-   "at": 72.36,
-   "label": "Cadastrar motorista"
-  },
-  {
-   "do": "waitFor",
-   "text": "Motorista cadastrado",
-   "timeout": 10
-  },
-  {
-   "do": "mark",
-   "name": "L11",
-   "at": 73.16
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main button:has-text('Sérgio Paiva')"
-   },
-   "seconds": 1.5,
-   "at": 75.27,
-   "label": "Sérgio Paiva na lista",
+   "seconds": 2.5,
+   "at": 49.58,
+   "label": "o aviso do link público",
    "optional": true,
    "timeout": 4
   },
@@ -660,7 +307,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 78.21
+   "at": 61.76
   }
  ]
 }

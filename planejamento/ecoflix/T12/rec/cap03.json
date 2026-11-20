@@ -1,6 +1,6 @@
 {
  "name": "t12-cap03",
- "title": "T12 · Cap. 3 · Criar uma ordem (narração 55,0 s ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T07:00:00-03:00)",
+ "title": "T12 · Cap. 3 · Criar uma ordem (narração 69,0 s ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T07:00:00-03:00)",
  "seed": "t12-cap03",
  "pace": 0.5,
  "cps": 9,
@@ -11,6 +11,7 @@
  },
  "anonymous": true,
  "storage": {
+  "cato_adoption_nudge_38814e47-876a-5977-a5f7-53af364c17bb_34c36c63-0890-5e89-8963-7c77b7996908": "{\"count\":99,\"lastShownAt\":4102444800000}",
   "app_version": "1.60.18",
   "notification_shown_version": "1.60.18",
   "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
@@ -116,40 +117,37 @@
    "timeout": 10
   },
   {
-   "do": "scroll",
-   "point": {
-    "x": 455,
-    "y": 197
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] span:text-is('Parceiro')"
    },
-   "by": 0,
-   "duration": 0.3,
-   "after": 0,
-   "at": 8.25,
-   "label": "etapa Parceiro"
+   "seconds": 0.25,
+   "at": 8.0,
+   "label": "etapa Parceiro",
+   "optional": true,
+   "timeout": 4
   },
   {
-   "do": "scroll",
-   "point": {
-    "x": 606,
-    "y": 197
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] span:text-is('Coleta')"
    },
-   "by": 0,
-   "duration": 0.3,
-   "after": 0,
-   "at": 9.16,
-   "label": "etapa Coleta"
+   "seconds": 0.25,
+   "at": 8.91,
+   "label": "etapa Coleta",
+   "optional": true,
+   "timeout": 4
   },
   {
-   "do": "scroll",
-   "point": {
-    "x": 760,
-    "y": 197
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] span:text-is('Frota')"
    },
-   "by": 0,
-   "duration": 0.3,
-   "after": 0,
-   "at": 9.84,
-   "label": "etapa Frota"
+   "seconds": 0.25,
+   "at": 9.59,
+   "label": "etapa Frota",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "mark",
@@ -163,29 +161,81 @@
     "within": "[role=dialog]",
     "exact": true
    },
-   "seconds": 0.8,
+   "seconds": 0.5,
    "at": 12.68,
    "label": "Cadastrado",
    "optional": true,
    "timeout": 4
   },
   {
-   "do": "hover",
+   "do": "click",
    "target": {
     "text": "Sem cadastro",
     "within": "[role=dialog]",
     "exact": true
    },
-   "seconds": 1.2,
    "at": 18.52,
-   "label": "Sem cadastro",
+   "label": "Sem cadastro"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "#ordem-nome-avulsa"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Nome do solicitante *",
+    "within": "[role=dialog]",
+    "exact": true
+   },
+   "seconds": 0.5,
+   "at": 20.42,
+   "label": "Nome do solicitante *",
    "optional": true,
    "timeout": 4
   },
   {
+   "do": "hover",
+   "target": {
+    "text": "Telefone",
+    "within": "[role=dialog]",
+    "exact": true
+   },
+   "seconds": 0.5,
+   "at": 22.24,
+   "label": "Telefone",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Endereço completo",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.2,
+   "at": 23.23,
+   "label": "Endereço completo * obrigatório sem cadastro",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Cadastrado",
+    "within": "[role=dialog]",
+    "exact": true
+   },
+   "at": 28.48,
+   "label": "volta para Cadastrado"
+  },
+  {
    "do": "mark",
    "name": "L3",
-   "at": 22.99
+   "at": 31.34
   },
   {
    "do": "hover",
@@ -193,7 +243,7 @@
     "selector": "#ordem-tipo"
    },
    "seconds": 0.8,
-   "at": 22.99,
+   "at": 31.34,
    "label": "Tipo: Fornecedor",
    "optional": true,
    "timeout": 4
@@ -201,9 +251,34 @@
   {
    "do": "click",
    "target": {
+    "selector": "#ordem-tipo"
+   },
+   "at": 40.13,
+   "label": "abre o Tipo (Fornecedor e Cliente)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Cliente",
+    "exact": true
+   },
+   "seconds": 0.9,
+   "label": "Tipo: a opção Cliente",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha o Tipo (continua Fornecedor)"
+  },
+  {
+   "do": "click",
+   "target": {
     "selector": "[role=dialog] button:has-text('Selecionar')"
    },
-   "at": 26.67,
+   "at": 40.64,
    "label": "Parceiro: Selecionar…"
   },
   {
@@ -230,13 +305,13 @@
     "name": "Auto Peças Vale Forte",
     "within": "[role=dialog] >> nth=-1"
    },
-   "at": 29.42,
+   "at": 43.39,
    "label": "escolhe Auto Peças Vale Forte"
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 31.08
+   "at": 45.05
   },
   {
    "do": "hover",
@@ -244,7 +319,7 @@
     "placeholder": "Rua, Avenida, etc."
    },
    "seconds": 1.0,
-   "at": 31.59,
+   "at": 45.56,
    "label": "endereço do cadastro",
    "optional": true,
    "timeout": 4
@@ -255,7 +330,7 @@
     "selector": "[role=dialog] button[role=combobox] >> nth=2"
    },
    "seconds": 0.8,
-   "at": 36.98,
+   "at": 50.95,
    "label": "endereço do cadastro (cidade)",
    "optional": true,
    "timeout": 4
@@ -263,7 +338,7 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 38.64
+   "at": 52.61
   },
   {
    "do": "click",
@@ -272,7 +347,7 @@
     "name": "Avançar",
     "exact": true
    },
-   "at": 38.64,
+   "at": 52.61,
    "label": "Avançar"
   },
   {
@@ -280,7 +355,7 @@
    "target": {
     "selector": "#ordem-material"
    },
-   "at": 40.52,
+   "at": 54.49,
    "label": "Material estimado (campo)"
   },
   {
@@ -290,21 +365,21 @@
    },
    "text": "~400 kg de radiadores e baterias",
    "cps": 40,
-   "at": 42.66,
+   "at": 56.63,
    "label": "Material estimado",
    "noClick": true
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 46.66
+   "at": 60.63
   },
   {
    "do": "click",
    "target": {
     "selector": "#ordem-obs"
    },
-   "at": 46.71,
+   "at": 60.69,
    "label": "Observações (campo)"
   },
   {
@@ -314,7 +389,7 @@
    },
    "text": "Retirar pelo portão lateral",
    "cps": 40,
-   "at": 52.05,
+   "at": 66.02,
    "label": "Observações",
    "noClick": true
   },
@@ -326,7 +401,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 55.05
+   "at": 69.02
   }
  ]
 }

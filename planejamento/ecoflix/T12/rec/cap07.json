@@ -1,16 +1,17 @@
 {
  "name": "t12-cap07",
- "title": "T12 · Cap. 7 · A coleta pedida pelo portal (narração 81,9 s ESTIMADA; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T07:00:00-03:00)",
+ "title": "T12 · Cap. 7 · Editar, cancelar e excluir (narração 64,8 s ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T07:00:00-03:00)",
  "seed": "t12-cap07",
  "pace": 0.5,
  "cps": 9,
  "tail": 1.5,
  "start": {
   "x": 760,
-  "y": 420
+  "y": 470
  },
  "anonymous": true,
  "storage": {
+  "cato_adoption_nudge_38814e47-876a-5977-a5f7-53af364c17bb_34c36c63-0890-5e89-8963-7c77b7996908": "{\"count\":99,\"lastShownAt\":4102444800000}",
   "app_version": "1.60.18",
   "notification_shown_version": "1.60.18",
   "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
@@ -70,29 +71,11 @@
   },
   {
    "do": "goto",
-   "url": "/coletas/frota"
+   "url": "/coletas/ordens"
   },
   {
    "do": "waitFor",
-   "text": "Veículos e motoristas disponíveis para as coletas",
-   "timeout": 30
-  },
-  {
-   "do": "waitFor",
-   "idle": true,
-   "timeout": 25
-  },
-  {
-   "do": "wait",
-   "seconds": 0.8
-  },
-  {
-   "do": "goto",
-   "url": "/portal/b577c1f2-e15d-5e19-8a9d-d8b81d0f5897"
-  },
-  {
-   "do": "waitFor",
-   "text": "Portal do Cliente",
+   "text": "Solicite, agende e acompanhe as ordens de coleta",
    "timeout": 30
   },
   {
@@ -120,385 +103,243 @@
    "at": 0
   },
   {
-   "do": "scroll",
-   "point": {
-    "x": 760,
-    "y": 440
+   "do": "click",
+   "target": {
+    "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#9')) button[aria-label='Ações da ordem']"
    },
-   "by": 0,
-   "duration": 0.3,
-   "after": 0,
-   "at": 0.5,
-   "label": "cursor em repouso (ilustração)"
+   "at": 3.37,
+   "label": "#9: Ações da ordem"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Visualizar"
+   },
+   "seconds": 0.3,
+   "at": 6.26,
+   "label": "menu: Visualizar",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Editar"
+   },
+   "seconds": 0.3,
+   "at": 7.47,
+   "label": "menu: Editar",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Excluir"
+   },
+   "seconds": 0.3,
+   "at": 8.3,
+   "label": "menu: Excluir",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 12.01
+   "at": 9.74
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Editar"
+   },
+   "at": 13.82,
+   "label": "Editar"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "#ordem-obs"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#ordem-obs"
+   },
+   "at": 18.98,
+   "label": "Observações (campo)"
+  },
+  {
+   "do": "press",
+   "key": "End",
+   "label": "vai ao fim do texto"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#ordem-obs"
+   },
+   "text": " Ligar antes de chegar.",
+   "cps": 40,
+   "at": 20.66,
+   "label": "Observações: Ligar antes de chegar",
+   "noClick": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#ordem-janela"
+   },
+   "seconds": 0.8,
+   "at": 23.99,
+   "label": "o resto também se edita",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 26.49,
+   "label": "Salvar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Ordem de coleta atualizada",
+   "timeout": 10
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 17.23
+   "at": 27.85
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#9')) button:text-is('Cancelada')"
+   },
+   "at": 30.11,
+   "label": "#9: Cancelada"
+  },
+  {
+   "do": "waitFor",
+   "text": "Cancelar coleta?",
+   "timeout": 8
   },
   {
    "do": "hover",
    "target": {
-    "text": "Cooperativa Recomeço",
-    "exact": true
+    "text": "Essa ação não pode ser desfeita.",
+    "within": "[role=alertdialog]"
    },
-   "seconds": 0.6,
-   "at": 17.23,
-   "label": "portal: Cooperativa Recomeço",
+   "seconds": 1.2,
+   "at": 31.25,
+   "label": "Cancelar coleta? (confirmação)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "click",
    "target": {
-    "selector": "#tab-btn-coletas"
-   },
-   "at": 21.91,
-   "label": "aba Coletas"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Minhas coletas",
-    "exact": true
-   },
-   "seconds": 0.4,
-   "at": 22.95,
-   "label": "Minhas coletas",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
     "role": "button",
-    "name": "Solicitar coleta",
-    "exact": true
+    "name": "Voltar",
+    "exact": true,
+    "within": "[role=alertdialog]"
    },
-   "seconds": 0.8,
-   "at": 25.48,
-   "label": "Solicitar coleta",
-   "optional": true,
-   "timeout": 4
+   "at": 36.79,
+   "label": "Voltar (não cancela)"
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 27.37
+   "at": 41.33
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#8')) button[aria-label='Ações da ordem']"
+   },
+   "at": 41.33,
+   "label": "#8: Ações da ordem"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Excluir"
+   },
+   "label": "Excluir"
+  },
+  {
+   "do": "waitFor",
+   "text": "Excluir ordem de coleta?",
+   "timeout": 8
   },
   {
    "do": "click",
    "target": {
     "role": "button",
-    "name": "Solicitar coleta",
-    "exact": true
+    "name": "Excluir",
+    "exact": true,
+    "within": "[role=alertdialog]"
    },
-   "at": 27.37,
-   "label": "abre Solicitar coleta"
+   "at": 45.95,
+   "label": "confirma o Excluir"
   },
   {
    "do": "waitFor",
-   "target": {
-    "selector": "#coleta-material"
-   },
+   "text": "Não deu para excluir",
    "timeout": 10
   },
   {
-   "do": "click",
+   "do": "hover",
    "target": {
-    "selector": "#coleta-material"
+    "text": "Não dá para excluir a ordem de coleta",
+    "within": "[role=alertdialog]"
    },
-   "at": 29.53,
-   "label": "Material (campo)"
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "#coleta-material"
-   },
-   "text": "PET prensado",
-   "cps": 40,
-   "at": 30.48,
-   "label": "Material: PET prensado",
-   "noClick": true
+   "seconds": 2.5,
+   "at": 49.44,
+   "label": "Não deu para excluir: o motivo",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "click",
    "target": {
-    "selector": "#coleta-qtd"
+    "role": "button",
+    "name": "Fechar",
+    "exact": true,
+    "within": "[role=alertdialog]"
    },
-   "at": 33.8,
-   "label": "Quantidade estimada (campo)"
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "#coleta-qtd"
-   },
-   "text": "800 kg",
-   "cps": 40,
-   "at": 34.35,
-   "label": "Quantidade estimada: 800 kg",
-   "noClick": true
+   "at": 52.36,
+   "label": "Fechar"
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 35.47
+   "at": 52.46
   },
   {
-   "do": "click",
-   "target": {
-    "selector": "#coleta-data"
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 470
    },
-   "at": 35.47,
-   "label": "Data preferida (campo)"
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "#coleta-data"
-   },
-   "text": "13112026",
-   "cps": 40,
-   "at": 37.57,
-   "label": "Data preferida 13/11/2026",
-   "noClick": true
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "#coleta-janela"
-   },
-   "label": "abre Período"
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "[role=listbox]"
-   },
-   "text": "T",
-   "cps": 40,
-   "label": "Período: procura Tarde",
-   "noClick": true
-  },
-  {
-   "do": "press",
-   "key": "Enter",
-   "label": "Período: Tarde"
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Endere\\u00e7o da coleta\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-150);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 39.97,
-   "label": "desce ao Endereço da coleta (do cadastro)"
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "[role=dialog] input[placeholder='Rua, Avenida, etc.']"
-   },
-   "text": "",
-   "noClick": true,
-   "optional": true,
-   "timeout": 4,
-   "label": "Endereço da coleta: Rua do Trabalho, 57 (do cadastro)"
-  },
-  {
-   "do": "mark",
-   "name": "L6",
-   "at": 42.72
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Solicitar coleta",
-    "exact": true,
-    "within": "[role=dialog]"
-   },
-   "at": 42.72,
-   "label": "Solicitar coleta (enviar)"
-  },
-  {
-   "do": "waitFor",
-   "text": "Solicitação enviada (#10)",
-   "timeout": 10
-  },
-  {
-   "do": "mark",
-   "name": "L7",
-   "at": 47.1
-  },
-  {
-   "do": "goto",
-   "url": "/coletas/frota",
-   "at": 47.1,
-   "label": "de volta ao sistema (Frota)"
-  },
-  {
-   "do": "waitFor",
-   "text": "Veículos e motoristas disponíveis para as coletas",
-   "timeout": 15
-  },
-  {
-   "do": "hover",
-   "target": {
-    "role": "button",
-    "name": "Coletas & Logística",
-    "within": "aside, [data-sidebar=sidebar]"
-   },
-   "seconds": 1.4,
-   "at": 49.43,
-   "label": "o ponto vermelho no menu Coletas & Logística",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Coletas & Logística",
-    "within": "aside, [data-sidebar=sidebar]"
-   },
-   "label": "abre Coletas & Logística",
-   "unless": {
-    "role": "link",
-    "name": "Ordens de Coleta",
-    "exact": true,
-    "within": "aside, [data-sidebar=sidebar]"
-   }
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "link",
-    "name": "Ordens de Coleta",
-    "exact": true,
-    "within": "aside, [data-sidebar=sidebar]"
-   },
-   "at": 53.07,
-   "label": "Ordens de Coleta"
-  },
-  {
-   "do": "waitFor",
-   "text": "Solicite, agende e acompanhe as ordens de coleta",
-   "timeout": 15
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#10'))"
-   },
-   "seconds": 1.0,
-   "at": 54.97,
-   "label": "#10 na Solicitada",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#10')) :text-is('via portal')"
-   },
-   "seconds": 0.8,
-   "at": 57.86,
-   "label": "#10: via portal",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L8",
-   "at": 59.52
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#10')) button:text-is('Aprovar')"
-   },
-   "seconds": 0.3,
-   "at": 61.93,
-   "label": "Aprovar",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#10')) button:text-is('Recusar')"
-   },
-   "seconds": 1.5,
-   "label": "Recusar",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L9",
-   "at": 69.59
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#10')) button:text-is('Aprovar')"
-   },
-   "at": 69.59,
-   "label": "Aprovar #10"
-  },
-  {
-   "do": "waitFor",
-   "text": "Agendar coleta",
-   "timeout": 10
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Data da coleta *",
-    "within": "[role=dialog]",
-    "exact": true
-   },
-   "seconds": 2.0,
-   "label": "Agendar coleta: a data e a janela do pedido",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L10",
-   "at": 75.25
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Agendar",
-    "exact": true,
-    "within": "[role=dialog]"
-   },
-   "at": 75.25,
-   "label": "Agendar"
-  },
-  {
-   "do": "waitFor",
-   "text": "Status alterado para Agendada",
-   "timeout": 10
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#10'))"
-   },
-   "seconds": 1.5,
-   "at": 78.5,
-   "label": "#10 em Agendada",
-   "optional": true,
-   "timeout": 4
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 52.67,
+   "label": "cursor em repouso (a dica)"
   },
   {
    "do": "eval",
@@ -508,7 +349,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 81.9
+   "at": 64.8
   }
  ]
 }

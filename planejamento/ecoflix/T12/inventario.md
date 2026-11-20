@@ -1,4 +1,4 @@
-# Inventário · T12 Coletas e Logística (EcoSistema 1.59.154)
+# Inventário · T12 Coletas e Logística (EcoSistema 1.60.18; levantado no 1.59.154, atualizado abaixo)
 
 Levantado em 10/11/2026 contra `/home/claude/ecoflix/app-src-1.59.154/` (análise estática, só leitura). Caminhos relativos
 a `src/` (edge functions em `supabase/functions/`). Rótulo entre aspas = texto exato da tela. Só o que a aula usa.
@@ -159,3 +159,17 @@ a `src/` (edge functions em `supabase/functions/`). Rótulo entre aspas = texto 
 | Portal | edges `entity-portal` e `collection-request` |
 | Solicitações não vistas | `collection_orders` (`hooks/useUnviewedCollectionRequests.ts:42`) |
 | Configurações | `collection_settings` upsert (`hooks/useCollectionSettings.ts:65`) |
+
+
+## 99. Atualização para o 1.60.18 (20/11/2026)
+- Tela da gravação 1600x900. "Caçambas" é "Equipamentos" (tipos, unidades, "Novo tipo", "Nova unidade", "Movimentar").
+- Quadro: cartão novo com folhinha de data ("TER 10 NOV"), selo "Hoje", botão "Preencher", menu de três pontinhos no topo do cartão;
+  "A caminho" e "Cancelada" em largura cheia. Barra com "Filtros" e três ícones `aria-label` Quadro, Lista, Calendário (grupo de rádio).
+- Excluir ordem: RPC `delete_collection_order` recusa com o texto do banco quando a ordem já movimentou equipamento ("Cancele a ordem
+  em vez de excluir"); o botão "Cancelar ordem em vez disso" aparece até em ordem concluída (achado para MELHORIAS).
+- Menus do grupo "Coletas & Logística" abrem no hover (`HoverDropdownMenu`): tirar o cursor antes de clicar em outro botão.
+- Rastreamento: mapa Leaflet (tiles de `server.arcgisonline.com`, script de `cdnjs.cloudflare.com`, ambos desviados para o mundo falso),
+  selo "Ao vivo", raio de incerteza do GPS, "Trajeto de uma coleta"; RPC `get_collection_live_positions`.
+- Relatório da coleta concluída: botões "Copiar link", "Compartilhar no WhatsApp" e "Imprimir".
+- Ajuda do checklist das Coletas corrigida; "Avisar quando chegar solicitação" nas regras do portal.
+- Portal: o rótulo agora é "Portal do Fornecedor" (a espera do robô usa "Cooperativa Recomeço").

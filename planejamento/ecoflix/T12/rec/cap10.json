@@ -1,16 +1,17 @@
 {
  "name": "t12-cap10",
- "title": "T12 · Cap. 10 · O relatório das coletas (narração 51,1 s ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T07:00:00-03:00)",
+ "title": "T12 · Cap. 10 · Veículos e motoristas (narração 108,1 s ESTIMADA; marcas L1..L11 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T07:00:00-03:00)",
  "seed": "t12-cap10",
  "pace": 0.5,
  "cps": 9,
  "tail": 1.5,
  "start": {
   "x": 760,
-  "y": 420
+  "y": 470
  },
  "anonymous": true,
  "storage": {
+  "cato_adoption_nudge_38814e47-876a-5977-a5f7-53af364c17bb_34c36c63-0890-5e89-8963-7c77b7996908": "{\"count\":99,\"lastShownAt\":4102444800000}",
   "app_version": "1.60.18",
   "notification_shown_version": "1.60.18",
   "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
@@ -70,11 +71,11 @@
   },
   {
    "do": "goto",
-   "url": "/coletas/relatorio"
+   "url": "/coletas/frota"
   },
   {
    "do": "waitFor",
-   "text": "Indicadores e histórico das coletas",
+   "text": "Veículos e motoristas disponíveis para as coletas",
    "timeout": 30
   },
   {
@@ -141,154 +142,582 @@
    "do": "click",
    "target": {
     "role": "link",
-    "name": "Relatório",
+    "name": "Frota",
     "exact": true,
     "within": "aside, [data-sidebar=sidebar]"
    },
-   "at": 0.04,
-   "label": "menu Relatório"
+   "at": 1.11,
+   "label": "menu Frota"
   },
   {
    "do": "waitFor",
-   "text": "Indicadores e histórico das coletas",
+   "text": "Veículos e motoristas disponíveis para as coletas",
    "timeout": 15
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const pares=[[\"Total de coletas\", \"4\"], [\"Concluídas\", \"1\"], [\"Canceladas\", \"0\"], [\"Taxa de conclusão\", \"25%\"]];let out='';for(let i=0;i<22;i++){const falta=[];for(const [rot,val] of pares){const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===rot);if(!el){falta.push(rot+'=?');continue;}let c=el.parentElement,ok=false;for(let k=0;k<4&&c;k++,c=c.parentElement){const ls=c.innerText.split('\\n').map(x=>x.trim()).filter(Boolean);if(ls.length>1){ok=ls.includes(val);if(!ok)falta.push(rot+'='+ls.filter(x=>x!==rot).slice(0,2).join('/'));break;}}}if(!falta.length)return 'OK: '+pares.map(p=>p.join(' ')).join(' | ');out='DIFERENTE: '+falta.join(' | ');await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere Este mês: 4, 1, 0, 25%"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main button[role=combobox]"
+    "role": "tab",
+    "name": "Veículos",
+    "exact": true
    },
-   "seconds": 0.3,
-   "at": 2.99,
-   "label": "Período: Este mês",
+   "seconds": 0.25,
+   "at": 3.45,
+   "label": "aba Veículos",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main div.grid:has(:text-is('Total de coletas')) >> nth=-1"
+    "role": "tab",
+    "name": "Motoristas",
+    "exact": true
    },
-   "seconds": 3.5,
-   "at": 4.03,
-   "label": "Este mês: os quatro números",
+   "seconds": 0.25,
+   "at": 4.51,
+   "label": "aba Motoristas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Mesma frota usada na pesagem de compra/venda.",
+    "exact": true
+   },
+   "seconds": 0.6,
+   "at": 6.56,
+   "label": "mesma frota da pesagem",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "placeholder": "Buscar placa, descrição ou RNT"
+   },
+   "seconds": 1.4,
+   "at": 10.05,
+   "label": "busca, filtro e ordenação da lista",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 10.8
+   "at": 14.52
   },
   {
    "do": "click",
    "target": {
-    "selector": "main button[role=combobox]"
+    "selector": "main button:has-text('FKD2E41'):has-text('Caminhão truck')"
    },
-   "at": 10.8,
-   "label": "abre Período"
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "option",
-    "name": "Mês passado",
-    "exact": true
-   },
-   "label": "Período: Mês passado"
+   "at": 14.52,
+   "label": "FKD2E41"
   },
   {
    "do": "eval",
-   "js": "(async()=>{const pares=[[\"Total de coletas\", \"6\"], [\"Concluídas\", \"5\"], [\"Canceladas\", \"1\"], [\"Taxa de conclusão\", \"100%\"]];let out='';for(let i=0;i<22;i++){const falta=[];for(const [rot,val] of pares){const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===rot);if(!el){falta.push(rot+'=?');continue;}let c=el.parentElement,ok=false;for(let k=0;k<4&&c;k++,c=c.parentElement){const ls=c.innerText.split('\\n').map(x=>x.trim()).filter(Boolean);if(ls.length>1){ok=ls.includes(val);if(!ok)falta.push(rot+'='+ls.filter(x=>x!==rot).slice(0,2).join('/'));break;}}}if(!falta.length)return 'OK: '+pares.map(p=>p.join(' ')).join(' | ');out='DIFERENTE: '+falta.join(' | ');await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere outubro: seis, cinco, uma, cem por cento"
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"6.380\", \"14.000\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere FKD2E41: tara 6.380 e capacidade 14.000 (ilustração)"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main div.grid:has(:text-is('Total de coletas')) >> nth=-1"
+    "selector": "main div:has(> h3:text-is('Capacidade operacional')) + div.grid"
    },
-   "seconds": 4.0,
-   "label": "outubro: os quatro números",
+   "seconds": 1.5,
+   "at": 17.0,
+   "label": "Tara e Capacidade do FKD2E41",
    "optional": true,
    "timeout": 4
   },
   {
-   "do": "mark",
-   "name": "L3",
-   "at": 19.35
+   "do": "hover",
+   "target": {
+    "selector": "main button[aria-label='Ações de FKD2E41']"
+   },
+   "seconds": 2.0,
+   "at": 21.33,
+   "label": "menu de três pontinhos: Editar e Excluir",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "scroll",
    "point": {
     "x": 760,
-    "y": 460
+    "y": 470
    },
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 19.55,
-   "label": "cursor em repouso (ilustração)"
+   "at": 25.04,
+   "label": "tira o cursor do menu"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 25.42
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 27.06
+   "at": 34.5
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo veículo",
+    "exact": true
+   },
+   "at": 40.41,
+   "label": "Novo veículo"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "#veiculo-placa"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#veiculo-placa"
+   },
+   "label": "Placa (campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#veiculo-placa"
+   },
+   "text": "FVL8A52",
+   "cps": 40,
+   "at": 43.08,
+   "label": "Placa FVL8A52",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#veiculo-descricao"
+   },
+   "label": "Descrição / Apelido (campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#veiculo-descricao"
+   },
+   "text": "Caminhão poliguindaste",
+   "cps": 40,
+   "label": "Descrição: Caminhão poliguindaste",
+   "noClick": true
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 44.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#veiculo-uf"
+   },
+   "at": 49.64,
+   "label": "abre UF de licenciamento"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=listbox]"
+   },
+   "text": "SP",
+   "cps": 40,
+   "label": "UF: procura SP",
+   "noClick": true
+  },
+  {
+   "do": "press",
+   "key": "Enter",
+   "label": "UF: SP"
   },
   {
    "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Por status\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-130);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 27.06,
-   "label": "desce às tabelas"
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Tipo de rodado\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-420);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "label": "desce a janela do veículo"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const t=[...document.querySelectorAll(\"#veiculo-categoria\")][0];if(!t)return 'SEM ALVO';t.focus();return 'foco'})()",
+   "at": 51.53,
+   "label": "Tipo: Veículo único (foco)"
+  },
+  {
+   "do": "press",
+   "key": "Enter",
+   "label": "Tipo: Veículo único (abre)"
+  },
+  {
+   "do": "waitFor",
+   "selector": "[role=listbox]",
+   "timeout": 5
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=listbox]"
+   },
+   "text": "V",
+   "cps": 40,
+   "label": "Tipo: Veículo único (procura)",
+   "noClick": true
+  },
+  {
+   "do": "press",
+   "key": "Enter",
+   "label": "Tipo: Veículo único"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const t=[...document.querySelectorAll(\"#veiculo-rodado\")][0];if(!t)return 'SEM ALVO';t.focus();return 'foco'})()",
+   "at": 52.14,
+   "label": "Tipo de rodado: Toco (foco)"
+  },
+  {
+   "do": "press",
+   "key": "Enter",
+   "label": "Tipo de rodado: Toco (abre)"
+  },
+  {
+   "do": "waitFor",
+   "selector": "[role=listbox]",
+   "timeout": 5
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=listbox]"
+   },
+   "text": "To",
+   "cps": 40,
+   "label": "Tipo de rodado: Toco (procura)",
+   "noClick": true
+  },
+  {
+   "do": "press",
+   "key": "Enter",
+   "label": "Tipo de rodado: Toco"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 53.04
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#veiculo-tara"
+   },
+   "at": 53.71,
+   "label": "Tara (campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#veiculo-tara"
+   },
+   "text": "7",
+   "cps": 40,
+   "at": 58.74,
+   "label": "Tara (kg) 7 (o aviso das toneladas)",
+   "noClick": true
   },
   {
    "do": "hover",
    "target": {
-    "text": "Por status",
-    "within": "main",
-    "exact": true
+    "text": "Valor parece estar em toneladas",
+    "within": "[role=dialog]"
    },
-   "seconds": 0.6,
-   "at": 28.63,
-   "label": "Por status",
+   "seconds": 2.0,
+   "at": 59.55,
+   "label": "aviso: o valor parece estar em toneladas",
    "optional": true,
    "timeout": 4
   },
   {
+   "do": "click",
+   "target": {
+    "selector": "#veiculo-tara"
+   },
+   "at": 64.03,
+   "label": "Tara (campo, de novo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#veiculo-tara"
+   },
+   "text": "7100",
+   "cps": 40,
+   "at": 64.58,
+   "label": "Tara (kg) 7100",
+   "noClick": true,
+   "clear": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#veiculo-cap-kg"
+   },
+   "at": 67.3,
+   "label": "Capacidade (campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#veiculo-cap-kg"
+   },
+   "text": "8500",
+   "cps": 40,
+   "at": 67.85,
+   "label": "Capacidade (kg) 8500",
+   "noClick": true
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 69.79
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 1000,
+    "y": 800
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 69.79,
+   "label": "Cadastrar veículo (cursor)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Cadastrar')"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "Cadastrar veículo",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const b=[...document.querySelectorAll(\"[role=dialog] button\")].find(b=>b.offsetParent!==null&&(b.textContent||'').includes(\"Cadastrar\"));if(!b)return 'SEM ALVO';b.click();return 'clicado'})()",
+   "at": 69.89,
+   "label": "Cadastrar veículo (clique)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Veículo cadastrado",
+   "timeout": 10
+  },
+  {
    "do": "hover",
    "target": {
-    "text": "Por parceiro",
-    "within": "main",
-    "exact": true
+    "selector": "main button:has-text('FVL8A52')"
    },
-   "seconds": 1.5,
-   "at": 32.05,
-   "label": "Por motorista, veículo e parceiro",
+   "seconds": 1.0,
+   "at": 71.14,
+   "label": "FVL8A52 na frota",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
-   "name": "L5",
-   "at": 38.19
+   "name": "L8",
+   "at": 82.67
   },
   {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim().startsWith(\"Per\\u00edodo\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-160);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 38.19,
-   "label": "sobe ao Período"
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Motoristas",
+    "exact": true
+   },
+   "at": 84.32,
+   "label": "aba Motoristas"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo motorista",
+    "exact": true
+   },
+   "at": 86.37,
+   "label": "Novo motorista"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "#motorista-nome"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 88.33
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#motorista-nome"
+   },
+   "at": 88.33,
+   "label": "Nome (campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#motorista-nome"
+   },
+   "text": "Sérgio Paiva",
+   "cps": 40,
+   "label": "Nome: Sérgio Paiva",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#motorista-doc"
+   },
+   "at": 92.26,
+   "label": "CPF (campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#motorista-doc"
+   },
+   "text": "46371820508",
+   "cps": 40,
+   "label": "CPF",
+   "noClick": true
+  },
+  {
+   "do": "press",
+   "key": "Tab",
+   "label": "vai ao Telefone"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#motorista-tel"
+   },
+   "text": "12900004417",
+   "cps": 40,
+   "label": "Telefone",
+   "noClick": true
+  },
+  {
+   "do": "mark",
+   "name": "L10",
+   "at": 94.23
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#motorista-cnh"
+   },
+   "at": 96.18,
+   "label": "CNH (campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#motorista-cnh"
+   },
+   "text": "04581273671",
+   "cps": 40,
+   "at": 97.94,
+   "label": "CNH",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#motorista-cnh-cat"
+   },
+   "label": "abre Categoria"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=listbox]"
+   },
+   "text": "C",
+   "cps": 40,
+   "label": "Categoria: procura C",
+   "noClick": true
+  },
+  {
+   "do": "press",
+   "key": "Enter",
+   "label": "Categoria C"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#motorista-cnh-val"
+   },
+   "at": 101.57,
+   "label": "Validade da CNH (campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#motorista-cnh-val"
+   },
+   "text": "18062030",
+   "cps": 40,
+   "label": "Validade da CNH 18/06/2030",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cadastrar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 102.27,
+   "label": "Cadastrar motorista"
+  },
+  {
+   "do": "waitFor",
+   "text": "Motorista cadastrado",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L11",
+   "at": 103.07
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main button[role=combobox]"
+    "selector": "main button:has-text('Sérgio Paiva')"
    },
-   "seconds": 3.0,
-   "label": "Período (em que mês cada coleta entra)",
+   "seconds": 1.5,
+   "at": 105.18,
+   "label": "Sérgio Paiva na lista",
    "optional": true,
    "timeout": 4
   },
@@ -300,7 +729,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 51.13
+   "at": 108.12
   }
  ]
 }

@@ -981,3 +981,9 @@ Decisões:
   `t09_sementes.py` seguem a T06 (#85 957,10, #86 15.000,00). Ilustrações pendentes: ilu04_soma, ilu04_caixa_fechado e 6
   PDFs (comprovantes Vale Forte, Aparecida, Valdir; relatório de pedidos; fechamento; estoque do caixa). "Imprimir direto"
   depende do EcoTray (só falado).
+- **T12**: 18 capítulos (novos 07 editar/cancelar/excluir, 08 relatório para o parceiro, 12 movimentações e ficha do
+  parceiro, 13 rastreamento, 16 checklist e assinaturas; portal 7→9, frota 8→10, caçambas 9→11, relatório 10→14, regras
+  11→15, resumo 12→17). Fala 1.716 → 2.943 palavras. `gerar.py` = `_head.py` + `_caps1.py` + `_caps2.py` (edite as partes).
+  Handlers: `delete_collection_order`, `get_collection_live_positions`, rede externa cdnjs e arcgis (mapa). Lote de
+  ensaio lançado pelo agente; coordenador recolhe (`rec/t12/_ens/lote.log`). **A T20 parte de `apos-cap15`** (cap06 +10
+  bags ao Depósito, cap11 cria "Palete de madeira" e põe a Caçamba 02 em manutenção, cap12 +10 bags à Cooperativa).
