@@ -119,21 +119,19 @@
    "at": 13.14
   },
   {
-   "do": "click",
+   "do": "hover",
    "target": {
     "selector": "main tbody tr:has-text('Abertura do Caixa #85') button[aria-label='Abrir ações da movimentação']"
    },
+   "seconds": 0.8,
    "at": 20.35,
-   "label": "três pontinhos da linha Abertura"
-  },
-  {
-   "do": "waitFor",
-   "selector": "[role=menuitem]",
-   "timeout": 8
+   "label": "três pontinhos da linha Abertura (o menu abre ao passar o mouse)",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "eval",
-   "js": "(()=>{const e=[...document.querySelectorAll(\"[role=menuitem]\")].find(e=>e.getClientRects().length&&e.textContent.trim().startsWith(\"Editar saldo de abertura\"));if(!e)return 'SEM ALVO';e.click();return 'ok'})()",
+   "js": "(async()=>{for(let i=0;i<40;i++){const e=[...document.querySelectorAll('[role=menuitem]')].find(e=>/editar saldo de abertura/i.test(e.textContent||''));if(e){e.click();return 'ok'}await new Promise(r=>setTimeout(r,250))}return 'SEM ALVO: '+[...document.querySelectorAll('[role=menuitem]')].map(e=>e.textContent.trim()).join('|')})()",
    "at": 22.87,
    "label": "Editar saldo de abertura"
   },
@@ -215,8 +213,9 @@
   {
    "do": "hover",
    "target": {
-    "role": "tab",
+    "role": "button",
     "name": "Pix/Transferência",
+    "exact": true,
     "within": "main"
    },
    "seconds": 0.4,

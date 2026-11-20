@@ -965,3 +965,5 @@ Decisões:
   tela): fazer junto das cenas v3 da aula. O modal "sem permissão" só é falado (o mundo não tem usuário sem permissão).
   **Para o Kaik (fim do projeto)**: o link "Ver tutorial: como funciona o dinheiro do caixa" (`TUTORIAL_DINHEIRO_FISICO_URL`
   em `src/lib/caixa.ts`) aponta para a aula 5.5 da EcoFlix antiga; trocar quando a trilha nova for publicada.
+  T06 cap03 fechado pelo coordenador (20/11 06:11): no 1.60.18 o menu da linha do histórico abre no HOVER (o clique o
+  fechava) e Todas/Dinheiro/Pix/Transferência viraram botões (não `role=tab`). T06: 16/16 no rápido.

@@ -9,6 +9,9 @@ voz substitui o estimado e este gerador roda de novo, sem reescrever nada. Rodar
 Relógio do mundo (FAKE_NOW, igual no Supabase falso e no robô): 2026-11-10T08:30:00-03:00 nos caps 0 a 6 e 17:30 do 7 ao 14
 (o lançamento é "no fim do dia"). O título de cada roteiro diz qual; a instância do Supabase falso sobe com o mesmo.
 
+1.60.18 (20/11/2026): 19 capítulos, tela 1600x900. Os capítulos 10 (mexer na ordem), 15 (Conversão), 16 (perda padrão) e 17 (Máquinas)
+são novos; o que era 10 a 14 virou 11 a 14 e 18. Os NOMES das sementes (apos-cap09, apos-cap13...) seguem a numeração antiga, de propósito.
+
 Estado de partida: sementes rec/mundo/seeds-extra/t11/ (rec/t11/t11_sementes.py), acumuladas por capítulo (SEMENTE abaixo).
 
 Login: o capítulo abre SEM sessão ("anonymous") e o `setup` (fora do vídeo) entra pela tela de login com "$TUT_USER"/"$TUT_SENHA"
@@ -36,7 +39,7 @@ TUT = os.path.normpath(os.path.join(HERE, '..', '..'))
 NARR = os.path.join(TUT, 't11', 'narracao')
 NOW_MANHA = '2026-11-10T08:30:00-03:00'
 NOW_TARDE = '2026-11-10T17:30:00-03:00'
-FAKE_NOW = {n: (NOW_TARDE if n >= 7 else NOW_MANHA) for n in range(15)}
+FAKE_NOW = {n: (NOW_TARDE if n >= 7 else NOW_MANHA) for n in range(19)}
 
 
 def stable_id(chave):
@@ -62,11 +65,13 @@ STORAGE = {
 
 NOMES = ['Abertura', 'O que a Produção resolve', 'A receita do produto', 'Quanto entra por unidade', 'Coprodutos',
          'Criar a ordem de produção', 'O Kanban', 'A produção do dia', 'O real contra o teórico', 'Perda acima da tolerância',
-         'Finalizar e fechar o custo', 'Relatório de Produção', 'Os ajustes da Produção', 'Excluir uma ordem concluída', 'Recapitulando']
+         'Mexer na ordem em andamento', 'Finalizar e fechar o custo', 'Relatório de Produção', 'Os ajustes da Produção', 'Excluir uma ordem concluída',
+         'Conversão: produzir em um passo', 'Perda padrão: a sobra já sai calculada', 'Máquinas', 'Recapitulando']
 CADEIA = ['inicio', 'apos-cap03', 'apos-cap04', 'apos-cap05', 'apos-cap06', 'apos-cap09', 'apos-cap10', 'apos-cap12', 'apos-cap13']
 # estado de partida de cada capítulo = a última semente da cadeia que ele recebe (as anteriores vêm junto)
 SEMENTE = {0: 'inicio', 1: 'inicio', 2: 'inicio', 3: 'inicio', 4: 'apos-cap03', 5: 'apos-cap04', 6: 'apos-cap05', 7: 'apos-cap06',
-           8: 'apos-cap06', 9: 'apos-cap06', 10: 'apos-cap09', 11: 'apos-cap10', 12: 'apos-cap10', 13: 'apos-cap12', 14: 'apos-cap13'}
+           8: 'apos-cap06', 9: 'apos-cap06', 10: 'apos-cap09', 11: 'apos-cap09', 12: 'apos-cap10', 13: 'apos-cap10', 14: 'apos-cap12',
+           15: 'apos-cap13', 16: 'apos-cap13', 17: 'apos-cap13', 18: 'apos-cap13'}
 
 
 def sementes(n):
@@ -332,13 +337,13 @@ def capitulo(fn):
 MENU = '[data-sidebar=sidebar]'
 LISTA_FICHAS = "aside[aria-label='Lista de fichas técnicas']"
 FICHA = lambda nome: SEL(f"{LISTA_FICHAS} button:has-text('{nome}')")
-CARTAO_PRODUTO = SEL("main div.ring-2:has(p:text-is('Produto final'))")          # o cartão "Produto final" (em destaque)
-NOME_PRODUTO = SEL("main div.ring-2 p.text-lg")
-CONSUMO_POR = SEL("main div.ring-2 div.border-dashed")
-MAIS_PRODUTO = SEL("main button[title='Criar novo produto']")
-ROT_MP = SEL("main label:has-text('Matérias-primas')")
-ROT_PF = SEL("main div.ring-2 p:text-is('Produto final')")
-COPRODUTOS = SEL("main label:has-text('Coprodutos')")
+SAIDA = "main .recipe-workbench-output"                                           # o cartão "2 · Resultado" · "Produto final" (1.60.18)
+NOME_FICHA = SEL('#recipe-name-inline')                                           # o nome da ficha, grande e sem rótulo, no alto
+NOME_PRODUTO = SEL(f"{SAIDA} p.text-xl")
+CONSUMO_POR = SEL(f"{SAIDA} div.border-dashed")                                   # no pé do cartão: "Rendimento" e "Consumo previsto"
+ROT_MP = SEL("main label:has-text('O que entra')")
+ROT_PF = SEL(f"{SAIDA} p:text-is('Produto final')")
+EXCLUIR_FICHA = SEL("main button[aria-label='Excluir ficha']")
 QTD_COPRODUTO = TXT('Quantidade digitada no lançamento do dia')
 CARTAO_INSUMO = lambda nome: SEL(f"main div.group:has(p:text-is('{nome}'))")    # cartão do insumo/coproduto na ficha
 CABECALHO_PAGINA = SEL("main h1:has-text('Produção')")
@@ -346,7 +351,7 @@ CABECALHO_PAGINA = SEL("main h1:has-text('Produção')")
 # Ficha nova do cap02 refeita fora do vídeo (setup dos caps 3): Nova, Alumínio latinha, Fardo de alumínio, sem salvar
 REFAZ_FICHA = [
     {'do': 'click', 'target': ABA('recipes')}, {'do': 'waitFor', 'text': 'Selecione uma ficha técnica', 'timeout': 15},
-    {'do': 'click', 'target': BTN('Nova')}, {'do': 'waitFor', 'text': 'Nova ficha técnica', 'timeout': 10},
+    {'do': 'click', 'target': BTN('Nova')}, {'do': 'waitFor', 'target': SEL('#recipe-name-inline'), 'timeout': 10},
     {'do': 'click', 'target': PH('Escolher material')}, {'do': 'type', 'target': PH('Escolher material'), 'text': 'latinha', 'noClick': True, 'cps': 40},
     {'do': 'click', 'target': OPT('Alumínio latinha')}, {'do': 'wait', 'seconds': 0.5},
     {'do': 'click', 'target': PH('Selecione o produto')}, {'do': 'type', 'target': PH('Selecione o produto'), 'text': 'fardo', 'noClick': True, 'cps': 40},
@@ -360,12 +365,14 @@ def js_rola_main(y):
             f"if(!m)return 'SEM ROLAGEM';m.scrollTop={int(y)};return m.scrollTop}})()")
 
 
+NOTA_DIA = 'Turno da tarde, prensa sem parada.'   # igual ao da semente apos-cap09 (t11_sementes.py)
 DLG_ROLA = "[role=dialog] div.overflow-y-auto"
 CARTAO_OP = lambda n: SEL(f"main div.group:has(span:text-is('#{n}'))")         # cartão da ordem no quadro
 PEGA_OP = lambda n: SEL(f"main div.group:has(span:text-is('#{n}')) p.font-medium")   # o nome do produto no cartão: ponto seguro para clicar e arrastar
 # (o botão "Finalizar" e os ícones do canto param o arrasto no pointerdown e o clique neles abre outra coisa)
 CAB_COLUNA = lambda nome: BTN(nome, within='main')                                  # nome da coluna no cabeçalho (abre "Editar coluna")
 CORPO_COLUNA = lambda nome: SEL(f"main div.rounded-xl:has(> div button:text-is('{nome}')) > div.flex-1")   # corpo da coluna (onde se solta o cartão)
+MENU_COLUNA = lambda nome: SEL(f"main div.rounded-xl:has(> div button:text-is('{nome}')) > div:first-child > button:has(svg[class*='vertical'])")   # os três pontos do cabeçalho da coluna
 CHECK_CONCLUSAO = SEL("main span[title='Coluna de conclusão']")
 POPPER = '[data-radix-popper-content-wrapper]'
 
@@ -403,12 +410,14 @@ def cap00():
 
 @capitulo
 def cap01():
-    """O que a Produção resolve: as abas (L1), ilustração (L2 a L4), a tela de volta (L5, dica falada da tela de bloqueio)."""
+    """O que a Produção resolve: as seis abas em cima (L1), ilustração (L2 a L4), a tela de volta (L5, dica falada da tela de bloqueio)."""
     c = Cap(1, setup=setup_prod())
     c.mark(1)
-    c.registra(SEL("main nav:has(#tab-btn-orders)"), at=c.A(1, 'esquerdo', 0.2), label='[ZOOM] coluna de abas')
+    c.registra(SEL("main nav:has(#tab-btn-orders)"), at=c.A(1, 'ficam', 0.2), label='[ZOOM] faixa de abas (seis, em cima)')
     c.hover(ABA('orders'), 0.3, at=c.A(1, 'Ordens', 0.6), label='aba Ordens de Produção')
+    c.hover(ABA('quick'), 0.3, at=c.A(1, 'Conversão,', 0.6), label='aba Conversão')
     c.hover(ABA('recipes'), 0.3, at=c.A(1, 'Fichas', 0.6), label='aba Fichas Técnicas')
+    c.hover(ABA('machines'), 0.3, at=c.A(1, 'Máquinas,', 0.6), label='aba Máquinas')
     c.hover(ABA('report'), 0.3, at=c.A(1, 'Relatório', 0.6), label='aba Relatório')
     c.hover(ABA('settings'), 0.5, at=c.A(1, 'Configurações.', 0.6), label='aba Configurações')
     c.cursor((780, 520), at=c.A(1, 'Configurações.', -0.6), label='cursor sai das abas')
@@ -423,7 +432,7 @@ def cap01():
 
 @capitulo
 def cap02():
-    """A receita do produto: Fichas Técnicas, Nova, latinha entra, fardo sai, o "+" (sem clicar) e o Nome da ficha."""
+    """A receita do produto: Fichas Técnicas, Nova, latinha entra, fardo sai, "Cadastrar novo produto" (sem clicar) e o nome no alto."""
     c = Cap(2, setup=setup_prod())
     c.mark(1)
     c.click(ABA('recipes'), at=c.A(1, 'ficha', 0.8), label='aba Fichas Técnicas')
@@ -434,9 +443,9 @@ def cap02():
     c.mark(2)
     c.mark(3)
     c.click(BTN('Nova'), at=c.A(3, 'Nova.', 0.8), label='Nova')
-    c.waitfor(text='Nova ficha técnica', timeout=10)
-    c.confere('main', ['Nova ficha técnica', 'Monte a receita: matérias-primas entram, o produto final sai.', 'Produto final'], 'Nova ficha técnica')
-    c.hover(ROT_MP, 0.5, at=c.A(3, 'matérias-primas', 0.6), label='Matérias-primas (entram)')
+    c.waitfor(target=NOME_FICHA, timeout=10)
+    c.confere('main', ['Receita de produção', 'Para produzir 1', 'O que entra', 'Matérias-primas consumidas', 'vira', '2 · Resultado', 'Produto final'], 'Nova ficha técnica')
+    c.hover(ROT_MP, 0.5, at=c.A(3, 'matérias-primas', 0.6), label='O que entra (matérias-primas)')
     c.hover(ROT_PF, 0.5, at=c.A(3, 'produto', 0.6), label='Produto final')
     c.mark(4)
     c.click(PH('Escolher material'), at=c.A(4, 'esquerdo,', 0.7), label='Escolher material')
@@ -446,36 +455,32 @@ def cap02():
     c.click(PH('Selecione o produto'), at=c.A(5, 'direito,', 0.7), label='Selecione o produto')
     c.type(PH('Selecione o produto'), 'fardo', at=c.A(5, 'produto', 0.05), noClick=True, cps=40, label='digita fardo')
     c.click(OPT('Fardo de alumínio'), at=c.A(5, 'Fardo', 0.6), label='Fardo de alumínio')
-    c.confere('main div.ring-2', ['Fardo de alumínio', 'unidade de produção: pç'], 'cartão Produto final com o fardo')
-    # o cartão "Produto final" passa 48 px da borda do painel a 1280 px (achado do app): o foco no "+" faz o próprio navegador
-    # rolar o painel e mostrar o cartão inteiro (como Tab faria para uma pessoa)
-    c.press('Tab', at=c.A(5, 'cadastrado', 0.1), label='Tab: o foco vai ao "+" e o painel mostra o cartão inteiro')
+    c.confere('main', ['Fardo de alumínio', 'Cada produção gera 1', 'Produto que será produzido'], 'cartão Produto final com o fardo')
     c.hover(NOME_PRODUTO, 0.6, at=c.A(5, 'material,', 0.6), label='o Fardo de alumínio no cartão')
     c.mark(6)
-    c.hover(MAIS_PRODUTO, 1.4, at=c.A(6, 'botão', 0.6), label='[ZOOM] botão + (Criar novo produto), sem clicar', noScroll=True)   # já à vista depois do Tab; rolar gastava ~6 s
+    c.hover(BTNX('Cadastrar novo produto', within='main'), 1.4, at=c.A(6, 'Cadastrar', 0.6), label='[ZOOM] botão Cadastrar novo produto, sem clicar')
     c.mark(7)
-    c.hover(SEL('#recipe-name'), 1.2, at=c.A(7, 'nome', 0.6), label='Nome da ficha (vazio, o nome do produto de exemplo)')
+    c.hover(NOME_FICHA, 1.2, at=c.A(7, 'nome', 0.6), label='o nome da ficha, no alto (o do produto, de fundo)')
     c.fim()
     return c
 
 
 @capitulo
 def cap03():
-    """Quanto entra por unidade: unidade Kg, Qtd 1, Peças por unidade vazio, Salvar ficha, a ficha do Cobre mel (1,6)."""
-    c = Cap(3, setup=setup_prod(REFAZ_FICHA + [{'do': 'eval', 'js': js_rola_main(100)}, {'do': 'wait', 'seconds': 0.4}]))
+    """Quanto entra por unidade: unidade produzida Kg, Qtd 1, Peças por jogo vazio, Salvar ficha, a ficha do Cobre mel (1,6)."""
+    c = Cap(3, setup=setup_prod(REFAZ_FICHA))
     c.mark(1)
-    c.click(SEL('#recipe-unit'), at=c.A(1, 'unidade', 0.7), label='Unidade de produção')
+    c.click(SEL('#recipe-unit'), at=c.A(1, 'unidade', 0.7), label='Unidade produzida')
     c.click(OPT('Kg — Quilograma'), at=c.A(1, 'quilo.', 0.6), label='Kg — Quilograma')
-    c.confere('main div.ring-2', ['unidade de produção: Kg', 'Consumo por Kg'], 'cartão em Kg')
+    c.confere('main', ['Para produzir 1 Kg', 'Cada produção gera 1 Kg'], 'receita e cartão em Kg')
     c.mark(2)
     c.click(PH('Qtd'), at=c.A(2, 'quantidade', 0.7), label='[ZOOM] campo Qtd do Alumínio latinha')
     c.type(PH('Qtd'), '1', at=c.A(2, 'um.', 0.05, nth=3), noClick=True, cps=20, label='Qtd 1')
-    c.confere(CONSUMO_POR['selector'], ['Consumo por Kg', '1 Kg'], 'Consumo por Kg 1 Kg')
+    c.confere(CONSUMO_POR['selector'], ['Rendimento', '1 Kg', 'Consumo previsto'], 'Rendimento 1 Kg e Consumo previsto 1 Kg')
     c.mark(3)
-    c.hover(CONSUMO_POR, 1.2, at=c.A(3, 'perde', 0.6), label='o cartão Produto final (Consumo por Kg)')
+    c.hover(CONSUMO_POR, 1.2, at=c.A(3, 'perde', 0.6), label='o cartão Produto final (Rendimento e Consumo previsto)')
     c.mark(4)
-    c.hover(SEL('#recipe-pack'), 2.0, at=c.A(4, 'Peças', 0.6), label='Peças por unidade de venda (vazio)')
-    rola_ate(c, 'Salvar ficha', at=c.A(4, 'fardo', 0.3), label='desce até Salvar ficha (o campo Peças continua na tela)', y=560)
+    c.hover(SEL('#recipe-pack'), 2.0, at=c.A(4, 'Peças', 0.6), label='Peças por jogo (vazio)')
     c.mark(5)
     c.click(BTN('Salvar ficha'), at=c.A(5, 'Salvar', 0.7), label='Salvar ficha')
     c.waitfor(text='Ficha técnica salva', timeout=10)
@@ -484,8 +489,8 @@ def cap03():
     c.hover(FICHA('Fardo de alumínio'), 0.9, at=c.A(5, 'lista.', 0.6), label='Fardo de alumínio na lista')
     c.mark(6)
     c.click(FICHA('Cobre mel'), at=c.A(6, 'Cobre', 0.7), label='a ficha do Cobre mel')
-    c.waitfor(text='Editar ficha técnica', timeout=10)
-    c.confere('main', ['Editar ficha técnica', 'Fio de cobre encapado', 'Cobre mel', 'Consumo por Kg'], 'ficha do Cobre mel')
+    c.waitfor(target=NOME_FICHA, timeout=10)
+    c.confere('main', ['Fio de cobre encapado', 'Cobre mel', 'Consumo previsto'], 'ficha do Cobre mel')
     c.confere_campos(['1,6'], 'Qtd 1,6 do fio', escopo='main')
     c.hover(CARTAO_INSUMO('Fio de cobre encapado'), 1.6, at=c.A(6, 'quilo', 0.6, nth=1), label='[ZOOM] cartão Fio de cobre encapado com 1,6')
     c.mark(7)
@@ -495,13 +500,13 @@ def cap03():
 
 @capitulo
 def cap04():
-    """Coprodutos: a ficha do fardo, desce aos coprodutos, Adicionar coproduto > Chaparia, Salvar ficha."""
+    """Coprodutos: a ficha do fardo, desce a Outros resultados da produção, Adicionar coproduto > Chaparia, Salvar ficha, a dica do Excluir ficha."""
     c = Cap(4, setup=setup_prod([{'do': 'click', 'target': ABA('recipes')}, {'do': 'waitFor', 'text': 'Selecione uma ficha técnica', 'timeout': 15},
                                  {'do': 'wait', 'seconds': 0.4}]))
     c.mark(1)
     c.click(FICHA('Fardo de alumínio'), at=c.A(1, 'quando', 0.7), label='a ficha do Fardo de alumínio')
-    c.waitfor(text='Editar ficha técnica', timeout=10)
-    rola_ate(c, 'Use quando a produção gera mais de um material (ex.: sobra reaproveitável).', at=c.A(1, 'coproduto.', 1.0), label='desce até Coprodutos', y=330)
+    c.waitfor(target=NOME_FICHA, timeout=10)
+    rola_ate(c, 'Use quando a produção gera mais de um material (ex.: sobra reaproveitável).', at=c.A(1, 'embaixo,', 1.0), label='desce a Outros resultados da produção', y=330)
     c.mark(2)
     c.mark(3)
     c.click(BTNX('Adicionar coproduto'), at=c.A(3, 'entra', 0.7), label='Adicionar coproduto')
@@ -514,6 +519,9 @@ def cap04():
     c.click(BTN('Salvar ficha'), at=c.A(4, 'Salvar', 0.7), label='Salvar ficha')
     c.waitfor(text='Ficha técnica salva', timeout=10)
     c.hover(CARTAO_INSUMO('Chaparia'), 0.8, at=c.A(4, 'completa.', 0.6), label='a receita completa')
+    c.mark(5)
+    c.ev(js_topo(), at=c.A(5, 'dica:', 0.6), label='sobe ao alto da ficha')
+    c.hover(EXCLUIR_FICHA, 1.6, at=c.A(5, 'Excluir', 0.5), label='[ZOOM] botão Excluir ficha, no alto à direita, sem clicar')
     c.fim()
     return c
 
@@ -583,7 +591,7 @@ def cap06():
     c.hover(CAB_COLUNA('Em produção'), 0.3, at=c.A(1, 'produção', 0.6), label='Em produção')
     c.hover(CAB_COLUNA('Concluída'), 0.4, at=c.A(1, 'Concluída.', 0.6), label='Concluída')
     # A ordem das falas manda (propostas_fala.md, cap06): o check só aparece ANTES de salvar uma coluna. Depois do "Salvar" o app
-    # perde o is_done (achado do app) e o check some até recarregar a página; com a fala atual (check depois do Salvar) o passo falha.
+    # perde o is_done (achado do app) e o check some até recarregar a página. 20/11: a fala já vem na ordem certa (check na 2ª linha).
     i_col, i_chave, i_salvar, i_check = c.acha('As colunas são suas'), c.acha('a chave Coluna de conclusão'), c.acha('Salvar.'), c.acha('sinal de check')
 
     def bloco_colunas():
@@ -612,15 +620,22 @@ def cap06():
     else:
         bloco_colunas()
         bloco_check()
-    c.mark(6)
-    c.ev(js_quadro_x(300), at=c.A(6, 'etapa?', 0.4), label='a faixa do quadro mostra o fim (botão Coluna)')
-    c.hover(BTN('Coluna', within='main'), 1.2, at=c.A(6, 'botão', 0.6), label='botão Coluna (sem clicar)')
-    c.mark(7)
-    c.ev(js_quadro_x(-300), at=c.A(7, 'Pra', 0.3), label='a faixa do quadro volta ao começo')
-    c.drag(PEGA_OP(3), CORPO_COLUNA('Na prensa'), at=c.A(7, 'arrastar', 1.0), label='arrasta a #3 para Na prensa')
-    c.mark(8)
-    c.registra(SEL("main div.overflow-x-auto"), at=c.A(8, 'Arrastar', 0.2), label='o quadro inteiro')
-    c.hover(CAB_COLUNA('Concluída'), 1.0, at=c.A(8, 'conclusão', 0.6), label='a coluna de conclusão')
+    i_etapa, i_menu, i_arr, i_conc = c.acha('Precisa de mais uma etapa'), c.acha('menu de três pontos'), c.acha('Pra andar com a ordem'), c.acha('Arrastar pra coluna de conclusão')
+    c.mark(i_etapa)
+    c.ev(js_quadro_x(300), at=c.A(i_etapa, 'etapa?', 0.4), label='a faixa do quadro mostra o fim (botão Coluna, se o quadro rolar)')
+    c.hover(BTN('Coluna', within='main'), 1.2, at=c.A(i_etapa, 'botão', 0.6), label='botão Coluna (sem clicar)')
+    c.mark(i_menu)
+    c.ev(js_quadro_x(-300), at=c.A(i_menu, 'E', 0.2), label='a faixa do quadro volta ao começo')
+    c.click(MENU_COLUNA('A fazer'), at=c.A(i_menu, 'menu', 0.6), label='menu de três pontos da coluna A fazer')
+    c.waitfor(target={'role': 'menuitem', 'name': 'Excluir coluna'}, timeout=8)
+    c.hover({'role': 'menuitem', 'name': 'Excluir coluna'}, 1.2, at=c.A(i_menu, 'Excluir', 0.6), label='[ZOOM] Excluir coluna (sem clicar)')
+    c.press('Escape', at=c.A(i_menu, 'apagada.', 0.1), label='fecha o menu da coluna')
+    c.waitfor(gone={'role': 'menu'}, timeout=5)
+    c.mark(i_arr)
+    c.drag(PEGA_OP(3), CORPO_COLUNA('Na prensa'), at=c.A(i_arr, 'arrastar', 1.0), label='arrasta a #3 para Na prensa')
+    c.mark(i_conc)
+    c.registra(SEL("main div.overflow-x-auto"), at=c.A(i_conc, 'Arrastar', 0.2), label='o quadro inteiro')
+    c.hover(CAB_COLUNA('Concluída'), 1.0, at=c.A(i_conc, 'conclusão', 0.6), label='a coluna de conclusão')
     c.fim()
     return c
 
@@ -735,12 +750,17 @@ def cap09():
     c.registra(SALVAR_LANC, at=c.A(5, 'dica:', 0.2), label='o botão Salvar lançamento')
     c.hover(MOTIVO, 1.0, at=c.A(5, 'motivo', 0.6), label='é lá que o motivo fica esperando')
     c.mark(6)
-    c.click(SALVAR_LANC, at=c.A(6, 'Salvar', 0.7), label='Salvar lançamento', noScroll=True)
+    rola_ate(c, 'Observação', at=c.A(6, 'fim', 0.3), label='desce até a Observação (opcional)', y=420, escopo=LANC, prefixo=True)
+    c.click(SEL('#entry-note'), at=c.A(6, 'Observação,', 0.7), label='[ZOOM] campo Observação (opcional)')
+    c.type(SEL('#entry-note'), NOTA_DIA, at=c.A(6, 'recado', 0.5), noClick=True, cps=30, label='digita o recado do dia')
+    c.confere_campos([NOTA_DIA], 'a observação digitada', escopo=LANC)
+    c.mark(7)
+    c.click(SALVAR_LANC, at=c.A(7, 'Salvar', 0.7), label='Salvar lançamento', noScroll=True)
     c.waitfor(text='Lançamento salvo — estoque ajustado', timeout=12)
     c.waitfor(gone={'selector': LANC}, timeout=8)
     c.confere('dlg', ['Produção #3', 'Em andamento', '480', '480 de 500', '96%', '10/11', 'Cláudio Ferraz e Diego Morais'], 'o dia na ordem')
-    c.hover(TXTX('Cláudio Ferraz e Diego Morais', within=DLG), 1.0, at=c.A(6, 'dia', 0.6), label='o dia lançado na ordem')
-    c.hover(TXT('Produzido até agora', within=DLG), 0.8, at=c.A(6, 'produziu.', 0.6), label='Produzido até agora 480 Kg')
+    c.hover(TXTX('Cláudio Ferraz e Diego Morais', within=DLG), 1.0, at=c.A(7, 'dia', 0.6), label='o dia lançado na ordem')
+    c.hover(TXT('Produzido até agora', within=DLG), 0.8, at=c.A(7, 'produziu.', 0.6), label='Produzido até agora 480 Kg')
     c.fim()
     return c
 
@@ -750,9 +770,9 @@ FINAL = "[role=dialog]:has(h2:has-text('Finalizar'))"
 
 
 @capitulo
-def cap10():
+def cap11():
     """Finalizar e fechar o custo (17:30): arrasta a #3 para Concluída, Finalizar #3, 96% da meta, resumo do lote, custo, Finalizar ordem."""
-    c = Cap(10, setup=setup_prod())
+    c = Cap(11, setup=setup_prod())
     c.mark(1)
     # solta no começo da coluna (sobre o "#2"): perto da borda direita da faixa o dnd-kit rola o quadro sozinho (autoScroll, 20% da largura)
     c.drag(PEGA_OP(3), SEL("main div.group:has(span:text-is('#2')) span:text-is('#2')"), at=c.A(1, 'Arrasto', 1.2), label='arrasta a #3 para Concluída')
@@ -771,16 +791,16 @@ def cap10():
     c.hover(TXT('Matéria-prima usada', within=DLG), 0.4, at=c.A(3, 'latinha', 0.6), label='Matéria-prima usada 498 Kg')
     c.hover(TXT('Perdas', within=DLG), 0.6, at=c.A(3, 'dezoito', 0.6), label='Perdas 18 Kg')
     c.mark(4)
-    c.confere('dlg', ['Custo total do lote', 'R$ 3.087,60', 'Custo por peça', 'R$ 6,43'], 'custo do lote')
-    c.registra(SEL(f"{FINAL} div.rounded-lg:has(> div > div > p:text-is('Custo total do lote'))"), at=c.A(4, 'custo', 0.2), label='[ZOOM] Custo total do lote e Custo por peça')
+    c.confere('dlg', ['Custo total do lote', 'R$ 3.087,60', 'Custo por Kg', 'R$ 6,43'], 'custo do lote')
+    c.registra(SEL(f"{FINAL} div.rounded-lg:has(> div > div > p:text-is('Custo total do lote'))"), at=c.A(4, 'custo', 0.2), label='[ZOOM] Custo total do lote e Custo por Kg')
     c.hover(TXT('R$ 3.087,60', within=DLG), 1.0, at=c.A(4, 'três', 0.6), label='Custo total do lote R$ 3.087,60')
-    c.hover(TXT('R$ 6,43', within=DLG), 1.0, at=c.A(4, 'seis', 0.6), label='Custo por peça R$ 6,43')
+    c.hover(TXT('R$ 6,43', within=DLG), 1.0, at=c.A(4, 'seis', 0.6), label='Custo por Kg R$ 6,43')
     c.mark(5)
     c.mark(6)
     c.click(BTN('Finalizar ordem'), at=c.A(6, 'Finalizar', 0.7), label='Finalizar ordem', noScroll=True)
-    c.waitfor(text='Ordem finalizada — custo/peça R$ 6,43', timeout=12)
+    c.waitfor(text='Ordem finalizada — custo/Kg R$ 6,43', timeout=12)
     c.waitfor(gone={'selector': FINAL}, timeout=8)
-    c.confere('main', ['#3', 'Concluída', 'R$ 3.087,60', 'R$ 6,43/peça', 'Produziu:', '2 funcionários'], 'o cartão #3 concluído')
+    c.confere('main', ['#3', 'Concluída', 'R$ 3.087,60', 'R$ 6,43/Kg', 'Produziu:', '2 funcionários'], 'o cartão #3 concluído')
     c.hover(CARTAO_OP(3), 1.2, at=c.A(6, 'custo', 0.6), label='o cartão #3 na Concluída com o custo')
     c.mark(7)
     c.registra(CARTAO_OP(3), at=c.A(7, 'finalizada', 0.2), label='o cartão (fica na coluna de conclusão)')
@@ -797,9 +817,9 @@ ABA_DETALHE = lambda nome: SEL(f"main div.border-b > button:text-is('{nome}')")
 
 
 @capitulo
-def cap11():
+def cap12():
     """Relatório de Produção (17:30): filtros, PRODUTO = Fardo de alumínio, os quatro cartões, a tabela Por produto, Por funcionário e a meta."""
-    c = Cap(11, setup=setup_prod())
+    c = Cap(12, setup=setup_prod())
     c.mark(1)
     c.click(ABA('report'), at=c.A(1, 'relatório.', 0.7), label='aba Relatório')
     c.waitfor(text='Relatório de produção', timeout=12)
@@ -847,9 +867,9 @@ BLOQUEIO = 'Bloquear finalização quando faltar matéria-prima em estoque'
 
 
 @capitulo
-def cap12():
+def cap13():
     """Os ajustes da Produção (17:30): multinível, Quando dar baixa no estoque, liga o bloqueio, tolerância 2 e meta 250."""
-    c = Cap(12, setup=setup_prod())
+    c = Cap(13, setup=setup_prod())
     c.mark(1)
     c.click(ABA('settings'), at=c.A(1, 'configurações', 0.7), label='aba Configurações')
     c.waitfor(text='Custo de produção em cadeia (multinível)', timeout=10)
@@ -885,11 +905,11 @@ ALERTA = '[role=alertdialog]'
 
 
 @capitulo
-def cap13():
+def cap14():
     """Excluir uma ordem concluída (17:30): #1 e #2 do Cobre mel, lixeira da #2, Excluir ordem, Kardex do fio com o estorno."""
-    c = Cap(13, setup=setup_prod(aquece=['/historico-materiais']))
+    c = Cap(14, setup=setup_prod(aquece=['/historico-materiais']))
     c.mark(1)
-    c.confere('main', ['#3', '#2', '#1', 'Cobre mel', 'R$ 1.440,00', 'R$ 28,80/peça', '03/11/2026'], 'as ordens 1 e 2 do Cobre mel')
+    c.confere('main', ['#3', '#2', '#1', 'Cobre mel', 'R$ 1.440,00', 'R$ 28,80/Kg', '03/11/2026'], 'as ordens 1 e 2 do Cobre mel')
     c.registra(SEL("main div.rounded-xl:has(span:text-is('#2'))"), at=c.A(1, 'Repara', 0.2), label='[ZOOM] os cartões #2 e #1 do Cobre mel')
     c.hover(CARTAO_OP(1), 0.5, at=c.A(1, 'um', 0.6, nth=1), label='a ordem #1')
     c.hover(PEGA_OP(2), 0.8, at=c.A(1, 'dois', 0.6), label='a ordem #2')
@@ -927,9 +947,9 @@ def cap13():
 
 
 @capitulo
-def cap14():
+def cap18():
     """Recapitulando (17:30): o quadro no estado final (a edição monta os cortes dos capítulos por cima); o cartão Próximo no fim."""
-    c = Cap(14, setup=setup_prod())
+    c = Cap(18, setup=setup_prod())
     c.mark(1)
     c.registra(SEL("main div.overflow-x-auto"), at=0.4, label='o quadro no estado final (base da montagem)')
     c.mark(2)
@@ -937,7 +957,7 @@ def cap14():
     c.hover(CAB_COLUNA('Na prensa'), 0.8, at=c.A(2, 'coluna', 0.6), label='a coluna Na prensa')
     c.mark(3)
     c.mark(4)
-    c.hover(TXT('R$ 6,43/peça', exact=False, within='main'), 1.0, at=c.A(4, 'custo', 0.6), label='o custo de cada quilo no cartão')
+    c.hover(TXT('R$ 6,43/Kg', exact=False, within='main'), 1.0, at=c.A(4, 'custo', 0.6), label='o custo de cada quilo no cartão')
     c.hover(CAB_COLUNA('Concluída'), 0.8, at=c.A(4, 'excluiu', 0.6), label='a Concluída sem a ordem lançada em dobro')
     c.cursor((780, 600), at=c.A(4, 'estorno', 0.2), label='cursor descansa')
     c.mark(5)

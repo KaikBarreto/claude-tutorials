@@ -28,7 +28,7 @@ export default (a, ctx) => {
   let produzido = saidas.filter((o) => o.is_primary).reduce((s, o) => s + num(o.qty), 0);
   const lanc = db.insert('production_order_entries', {
     production_order_id: ordem.id, company_id: ordem.company_id, entry_date: a.p_entry_date || hojeBR(), produced_qty: produzido, posted: false,
-    client_request_id: cri, created_by: userId, created_at: agora, updated_at: agora,
+    client_request_id: cri, note: String(a.p_note ?? '').trim() || null, created_by: userId, created_at: agora, updated_at: agora,   // 1.60.18: p_note grava
   }, { companyId: ordem.company_id });
   const daEquipe = sincronizaEquipeDoDia(ctx, ordem, lanc.id, a.p_workers, produzido);
   if (daEquipe !== produzido) {

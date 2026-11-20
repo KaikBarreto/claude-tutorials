@@ -529,7 +529,8 @@ def cap03():
     c.hover(LINHA('Abertura do Caixa #85'), at=c.A(1, 'linha', 0.5), label='ZOOM linha Abertura do Caixa #85 R$ 1.500,00 (L1)')
     c.mark(2)
     # cobertura P2: os três pontinhos da linha de abertura > Editar saldo de abertura (a janela só é aberta e cancelada)
-    c.click(PONTINHOS_ABERTURA, at=c.A(2, 'pontinhos', 0.6), label='três pontinhos da linha Abertura')
+    # 1.60.18: o menu da linha abre no HOVER (handleDropdownEnter em TransactionHistory.tsx); o clique logo depois o fechava
+    c.hover(PONTINHOS_ABERTURA, 0.8, at=c.A(2, 'pontinhos', 0.6), label='três pontinhos da linha Abertura (o menu abre ao passar o mouse)')
     c.ev("(async()=>{for(let i=0;i<40;i++){const e=[...document.querySelectorAll('[role=menuitem]')].find(e=>/editar saldo de abertura/i.test(e.textContent||''));"
          "if(e){e.click();return 'ok'}await new Promise(r=>setTimeout(r,250))}return 'SEM ALVO: '+[...document.querySelectorAll('[role=menuitem]')].map(e=>e.textContent.trim()).join('|')})()",
          at=c.A(2, 'Editar', 0.2), label='Editar saldo de abertura')
@@ -542,7 +543,7 @@ def cap03():
     c.mark(4)
     c.hover(SEL("main input[placeholder='Buscar transação...']"), at=c.A(4, 'buscar', 0.5), label='Buscar transação...')
     c.hover(BTNX('Filtros', MAIN), at=c.A(4, 'filtrar', 0.5), label='Filtros')
-    c.hover({'role': 'tab', 'name': 'Pix/Transferência', 'within': MAIN}, 0.4, at=c.A(4, 'corrigir', 0.5), label='abas Todas, Dinheiro e Pix/Transferência')
+    c.hover({'role': 'button', 'name': 'Pix/Transferência', 'exact': True, 'within': MAIN}, 0.4, at=c.A(4, 'corrigir', 0.5), label='abas Todas, Dinheiro e Pix/Transferência')
     c.mark(5)
     c.ev(js_rola_topo(900), at=c.A(5, 'Agora', -1.0), label='volta ao topo (sob a ilustração)')
     c.mark(6)

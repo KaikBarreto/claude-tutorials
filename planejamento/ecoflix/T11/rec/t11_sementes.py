@@ -40,6 +40,8 @@ REC_COBRE, REC_FARDO = '@id:t11.recipe.cobre_mel', '@id:t11.recipe.fardo'
 OP = {n: f'@id:t11.order.{n}' for n in (1, 2, 3)}
 ENT = {n: f'@id:t11.entry.{n}' for n in (1, 2, 3)}
 
+NOTA_DIA = 'Turno da tarde, prensa sem parada.'   # a Observação que o cap09 digita (1.60.18: agora grava)
+CAPA = '@id:t11.material.capa_fio'
 CORTE = '2026-11-03T19:00:00.000Z'   # 03/11 16:00 em Brasília: a produção #1 (a #2 às 16:05)
 
 
@@ -220,7 +222,7 @@ def apos_cap09(h):
     return {
         'production_order_entries': [{
             'id': ENT[3], 'production_order_id': OP[3], 'company_id': CID, 'entry_date': '2026-11-10', 'produced_qty': 480, 'posted': True,
-            'total_material_cost': 3087.6, 'note': None, 'client_request_id': None, 'created_by': RAFAEL, 'created_at': at, 'updated_at': at}],
+            'total_material_cost': 3087.6, 'note': NOTA_DIA, 'client_request_id': None, 'created_by': RAFAEL, 'created_at': at, 'updated_at': at}],
         'production_order_consumption': [{
             'id': '@id:t11.cons.3.latinha', 'production_order_id': OP[3], 'entry_id': ENT[3], 'company_id': CID, 'material_id': LATINHA, 'theoretical_qty': 480,
             'actual_qty': 498, 'unit_cost': 6.2, 'line_cost': 3087.6, 'loss_qty': 18, 'loss_reason': 'reaproveitavel', 'created_at': at}],
@@ -261,6 +263,11 @@ def apos_cap13(h):
     at = '2026-11-10T20:40:00.000Z'
     cobre, fio = round(estoque_b(h, COBRE_MEL) + 50, 3), estoque_b(h, FIO)   # o cobre mel com a #2 por cima
     return {
+        # material da aula de perda padrão (cap16): sobra do descascamento do fio (código 17: o 16 é o Fardo de alumínio)
+        'materials': [{
+            'id': CAPA, 'company_id': CID, 'code': '17', 'name': 'Capa de fio', 'fiscal_name': None, 'group_id': '@id:grupo.outros',
+            'unit': 'Kg', 'ncm': '3915.90.00', 'purchase_price': 0.1, 'sale_price': 0.3, 'purchase_price_currency': 'BRL', 'sale_price_currency': 'BRL',
+            'current_stock': 0, 'is_archived': False, 'created_by': RAFAEL, 'created_at': '2026-11-10T12:00:00.000Z', 'updated_at': '2026-11-10T12:00:00.000Z'}],
         'stock_movements': [
             mov('@id:t11.sm.2.cobre_mel.estorno', COBRE_MEL, -50, cobre, at, 'Estorno de produção (exclusão da OP)', OP[2], ENT[2], '@id:t11.sm.2.cobre_mel'),
             mov('@id:t11.sm.2.fio.estorno', FIO, 80, fio, at, 'Estorno de produção (exclusão da OP)', OP[2], ENT[2], '@id:t11.sm.2.fio')],
