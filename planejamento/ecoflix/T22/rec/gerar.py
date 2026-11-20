@@ -693,7 +693,7 @@ def cap08():
     c.waitfor(text='DRE Comparativo por Unidade', timeout=10)
     c.ev(js_rola_texto('DRE Comparativo por Unidade', 150, 600), label='desce até a tabela do Comparativo')
     c.hover(SEL('main tbody tr:has-text("Compras (CMV)")'), 2.5, at=c.A(5, 'CMV', 0.6), label='linha CMV de cada unidade (ZOOM)')
-    c.confere('main tbody', ['__LER__'], 'LER: linha CMV do Comparativo em competência')
+    c.confere('main tbody', ['Compras (CMV)'], 'linha Compras (CMV) do Comparativo')
     c.mark(6)
     c.fim()
     return c
@@ -787,7 +787,7 @@ def cap10():
     c.hover(TXTP('Distribuição por forma de pagamento', within=MAIN), 1.6, at=c.A(6, 'preço', 0.6), label='Preço médio de compra e Distribuição por forma de pagamento (ZOOM)')
     c.mark(7)
     c.click(LINHA('Alumínio latinha'), at=c.A(7, 'linha', 0.6), label='abre a linha do material por unidade')
-    c.hover(TXT('Filial Pindamonhangaba', within='main tbody'), 1.4, at=c.A(7, 'unidade', 0.5), label='Preço Médio Compra de cada unidade (ZOOM)')
+    c.hover(LINHA('Alumínio latinha'), 1.4, at=c.A(7, 'unidade', 0.5), label='Preço Médio Compra de cada unidade (ZOOM)')
     c.mark(8)
     c.hover(TXTP('Usuários', within=MAIN), 0.7, at=c.A(8, 'usuário,', 0.6), label='filtro Usuários')
     c.hover(TXTP('Ocultar itens zerados', within=MAIN), 0.7, at=c.A(8, 'esconder', 0.6), label='Ocultar itens zerados')
@@ -796,7 +796,7 @@ def cap10():
     return c
 
 
-ACOES_MAT = lambda nome: SEL(f'main button[aria-label="Ações de {nome}"]')
+ACOES_MAT = lambda nome: SEL(f'main button[aria-label^="Ações de {nome}"]')
 ITEM_MENU = lambda nome: SEL(f'[role=menuitem]:has-text("{nome}")')
 
 
@@ -926,8 +926,7 @@ def cap13():
     6,20 -> 6,30 e Salvar; Vinculação por Unidade: liga a Filial Pindamonhangaba, Tipo %, Direção - (abaixo), Valor 5, Salvar; Aplicar; zoom em
     Importar da matriz e Excluir (sem clicar). Semente apos-cap09 (não segue: o cap14 parte do mesmo estado)."""
     c = Cap(13, setup_ger(url='/gerencial/configuracoes', espera='Código de Convite',
-                          extra=vai('/gerencial', 'Dashboard Gerencial') + abre_menu_ger() + menu_mostra('/gerencial/configuracoes')
-                          + [{'do': 'click', 'target': TAB('precos')}, {'do': 'waitFor', 'text': 'Tabelas de Preço do Grupo', 'timeout': 10}, AGUARDA]),
+                          extra=[{'do': 'waitFor', 'text': 'Código de Convite', 'timeout': 20}, AGUARDA, {'do': 'click', 'target': TAB('precos')}, {'do': 'waitFor', 'text': 'Tabelas de Preço do Grupo', 'timeout': 10}, AGUARDA]),
             pace=0.5, start=(700, 300))
     c.mark(1)
     c.click(SEL('main div.cursor-pointer:has-text("Principal")'), at=c.A(1, 'Abrindo', 0.6), label='abre a tabela Principal')

@@ -1,6 +1,6 @@
 {
  "name": "t01-cap05",
- "title": "T01 · Cap. 5 · Logo, ícone, nome e CNPJ (narração 94,1 s ESTIMADA; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T01 · Cap. 5 · Logo, ícone, nome e CNPJ (narração 108,1 s ESTIMADA; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "seed": "t01-cap05",
  "pace": 0.5,
  "cps": 14,
@@ -184,16 +184,27 @@
    "target": {
     "selector": "#tab-btn-users"
    },
-   "seconds": 1.0,
+   "seconds": 0.4,
    "at": 18.74,
    "label": "aba Usuários e Permissões (próximo tutorial)",
    "optional": true,
    "timeout": 3
   },
   {
+   "do": "hover",
+   "target": {
+    "selector": "#tab-btn-integrations"
+   },
+   "seconds": 1.0,
+   "at": 21.89,
+   "label": "aba Integrações (é o tutorial da balança e da impressora)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
    "do": "mark",
    "name": "L3",
-   "at": 21.84
+   "at": 25.48
   },
   {
    "do": "hover",
@@ -202,7 +213,7 @@
     "exact": true
    },
    "seconds": 0.2,
-   "at": 23.27,
+   "at": 26.92,
    "label": "Identidade Visual",
    "optional": true,
    "timeout": 3
@@ -214,7 +225,7 @@
     "exact": true
    },
    "file": "assets/recicla-vale-logo.png",
-   "at": 24.62,
+   "at": 28.26,
    "label": "escolhe o logo recicla-vale-logo.png"
   },
   {
@@ -227,16 +238,40 @@
    "target": {
     "selector": "main img[alt='Logo']"
    },
-   "seconds": 0.85,
-   "at": 29.05,
+   "seconds": 0.6,
+   "at": 32.69,
    "label": "o logo da Recicla Vale na tela",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Substituir"
+   },
+   "seconds": 0.3,
+   "at": 36.59,
+   "label": "botão Substituir do logo (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Remover"
+   },
+   "seconds": 0.3,
+   "at": 39.17,
+   "label": "botão Remover do logo (sem clicar)",
    "optional": true,
    "timeout": 3
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 31.45
+   "at": 41.02
   },
   {
    "do": "upload",
@@ -245,7 +280,7 @@
     "exact": true
    },
    "file": "assets/recicla-vale-icone.png",
-   "at": 32.54,
+   "at": 42.1,
    "label": "escolhe o ícone recicla-vale-icone.png"
   },
   {
@@ -264,7 +299,7 @@
     "text": "Usado no menu lateral quando recolhido"
    },
    "seconds": 1.8,
-   "at": 35.09,
+   "at": 44.66,
    "label": "Usado no menu lateral quando recolhido (White Label)",
    "optional": true,
    "timeout": 3
@@ -272,7 +307,7 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 38.86
+   "at": 48.43
   },
   {
    "do": "hover",
@@ -281,7 +316,7 @@
     "name": "White Label"
    },
    "seconds": 2.6,
-   "at": 40.3,
+   "at": 49.87,
    "label": "cartão White Label (recolhido, sem abrir)",
    "optional": true,
    "timeout": 3
@@ -293,7 +328,7 @@
     "name": "White Label"
    },
    "seconds": 2.4,
-   "at": 46.1,
+   "at": 55.66,
    "label": "White Label: depende do plano contratado",
    "optional": true,
    "timeout": 3
@@ -301,12 +336,12 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 50.45
+   "at": 60.01
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Nome da Empresa\"&&e.offsetParent);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-330);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 50.45,
+   "at": 60.01,
    "label": "desce até o nome e o CNPJ"
   },
   {
@@ -315,7 +350,7 @@
     "selector": "#company-name"
    },
    "seconds": 0.6,
-   "at": 51.0,
+   "at": 60.57,
    "label": "Nome da Empresa: Recicla Vale Metais",
    "optional": true,
    "timeout": 3
@@ -325,23 +360,34 @@
    "target": {
     "selector": "#show-name"
    },
-   "seconds": 2.8,
-   "at": 53.18,
+   "seconds": 1.2,
+   "at": 62.74,
    "label": "chave Exibir nos documentos (ligada)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#show-cnpj"
+   },
+   "seconds": 0.2,
+   "at": 71.37,
+   "label": "a chave Exibir nos documentos do CNPJ/CPF (também ligada)",
    "optional": true,
    "timeout": 3
   },
   {
    "do": "mark",
    "name": "L7",
-   "at": 58.54
+   "at": 72.51
   },
   {
    "do": "click",
    "target": {
     "selector": "#company-cnpj"
    },
-   "at": 59.25,
+   "at": 73.22,
    "label": "CNPJ/CPF"
   },
   {
@@ -351,7 +397,7 @@
    },
    "text": "47318506000107",
    "cps": 10,
-   "at": 60.81,
+   "at": 74.78,
    "label": "digita o CNPJ: 47.318.506/0001-07",
    "noClick": true
   },
@@ -366,7 +412,7 @@
     "selector": "#company-cnpj"
    },
    "seconds": 0.55,
-   "at": 69.47,
+   "at": 83.44,
    "label": "CNPJ conferido número por número",
    "optional": true,
    "timeout": 3
@@ -374,17 +420,17 @@
   {
    "do": "mark",
    "name": "L8",
-   "at": 71.57
+   "at": 85.54
   },
   {
    "do": "mark",
    "name": "L9",
-   "at": 80.95
+   "at": 94.92
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].filter(e=>e.textContent.trim().startsWith(\"Salvar alterações\")&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-560);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/1400),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 80.95,
+   "at": 94.92,
    "label": "desce ao rodapé do cartão Empresa"
   },
   {
@@ -395,7 +441,7 @@
     "exact": true
    },
    "seconds": 2.2,
-   "at": 82.17,
+   "at": 96.13,
    "label": "botão Salvar alterações (sem clicar)",
    "optional": true,
    "timeout": 3
@@ -408,7 +454,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 94.14
+   "at": 108.1
   }
  ]
 }

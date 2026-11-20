@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# T16 (1.60.18, 1600x900) · lote de ensaios em sequência, um capítulo por vez pela fila (rec/fila.sh --prio 16), com MP4 ultrafast só
+# T16 (1.60.22, 1600x900) · lote de ensaios em sequência, um capítulo por vez pela fila (rec/fila.sh --prio 16), com MP4 ultrafast só
 # para a folha de contato. Capítulo que mexe no banco e sai com 0 passo falho no rápido captura a semente apos-capNN na MESMA trava.
 #   bash rec/t16/t16_lote160.sh 0 1 2 ... [--completo 15 16 ...]   (os números antes de --completo vão no rápido; os depois, no completo)
 # Depois do cap20, o t16_pdf.py grava em rec/t16/arquivos/ os PDFs que o robô devolveu (comprovante e DANFE).
@@ -11,6 +11,7 @@ MODO=rapido
 PORTA=54316
 export FAKE_NOW=2026-11-10T08:30:00-03:00 FAKE_URL=http://127.0.0.1:$PORTA TUT_USER=rafael@reciclavalemetais.example
 TUT_SENHA=$(head -c 12 /dev/urandom | base64 | tr -dc 'A-Za-z0-9' | head -c 14); export TUT_SENHA
+export T16_VERSAO=1.60.22   # a versão do build (app/dist/.versao-app) que o gerar.py espera (VERSAO)
 MUTA=" 3 4 5 6 7 9 11 12 14 15 16 17 18 19 21 22 23 "
 PID=$(cat rec/.runtime/fake$PORTA.pid 2>/dev/null)
 tr '\0' '\n' < /proc/$PID/environ 2>/dev/null | grep -qx "FAKE_PORT=$PORTA" || { echo "instância $PORTA fora do ar"; exit 3; }
@@ -28,6 +29,7 @@ for C in "$@"; do
   SEM=0; case "$MUTA" in *" $((10#$C)) "*) [ "$MODO" = rapido ] && SEM=1 ;; esac
   rm -f "$DIR/t16-cap$NN.actions.json"
   bash rec/fila.sh --prio 16 -- bash -c '
+    [ "$(cat app/dist/.versao-app 2>/dev/null)" = "$T16_VERSAO" ] || { echo "app nao e $T16_VERSAO: $(cat app/dist/.versao-app)" > "$3/.t16-cap$4.out"; echo "9 versao" > "$3/.t16-cap$4.rc"; exit 0; }
     timeout 900 node rec/record.mjs "$1" $2 --preset ultrafast --crf 30 > "$3/.t16-cap$4.out" 2>&1; rc=$?
     f=$(python3 -I -c "import json;a=json.load(open(\"$3/t16-cap$4.actions.json\"))[\"actions\"];print(sum(1 for x in a if x.get(\"error\") or x.get(\"ok\") is False))" 2>/dev/null || echo x)
     if [ "$5" = 1 ] && [ $rc = 0 ] && [ "$f" = 0 ]; then python3 -I rec/t16/t16_sementes.py captura "$((10#$4))" --porta 54316 > "$3/.t16-cap$4.semente" 2>&1; fi

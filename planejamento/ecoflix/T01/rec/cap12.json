@@ -1,6 +1,6 @@
 {
  "name": "t01-cap12",
- "title": "T01 · Cap. 12 · Senha, termos e Zona de Perigo (narração 78,3 s ESTIMADA; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T01 · Cap. 12 · Condições de pagamento (narração 103,6 s ESTIMADA; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "seed": "t01-cap12",
  "pace": 0.5,
  "cps": 14,
@@ -14,8 +14,7 @@
   "t01/inicio",
   "t01/apos-cap05",
   "t01/apos-cap06",
-  "t01/apos-cap08",
-  "t01/apos-cap10"
+  "t01/apos-cap08"
  ],
  "storage": {
   "app_version": "1.60.18",
@@ -98,368 +97,393 @@
    "at": 0.4
   },
   {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].filter(e=>e.textContent.trim().startsWith(\"Segurança\")&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-150);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/2600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 0.4,
-   "label": "desce pelo fim do cartão Empresa e pelo Filial até Segurança"
+   "do": "click",
+   "target": {
+    "selector": "#tab-btn-condicoes-pagamento"
+   },
+   "at": 0.51,
+   "label": "aba Condições de Pagamento"
+  },
+  {
+   "do": "waitFor",
+   "text": "Defina parcelamentos",
+   "timeout": 10
   },
   {
    "do": "hover",
    "target": {
-    "role": "button",
-    "name": "Alterar Senha",
+    "text": "Defina parcelamentos padrão"
+   },
+   "seconds": 2.0,
+   "at": 3.06,
+   "label": "Defina parcelamentos padrão (à vista, 30/60/90…)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "À vista",
     "exact": true
    },
    "seconds": 0.2,
-   "at": 4.89,
-   "label": "Segurança: Alterar Senha",
+   "at": 11.94,
+   "label": "a lista já traz a condição À vista (padrão)",
    "optional": true,
    "timeout": 3
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 6.08
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Alterar Senha",
-    "exact": true
-   },
-   "at": 6.48,
-   "label": "Alterar Senha (abre)"
-  },
-  {
-   "do": "waitFor",
-   "text": "Digite sua nova senha abaixo. Certifique-se de usar uma senha forte.",
-   "timeout": 8
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Nova Senha",
-    "within": "[role=dialog]",
-    "exact": true
-   },
-   "seconds": 0.2,
-   "at": 9.41,
-   "label": "Nova Senha",
-   "optional": true,
-   "timeout": 3
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Confirmar Nova Senha",
-    "within": "[role=dialog]",
-    "exact": true
-   },
-   "seconds": 0.28,
-   "at": 10.85,
-   "label": "Confirmar Nova Senha",
-   "optional": true,
-   "timeout": 3
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Cancelar",
-    "exact": true
-   },
-   "at": 12.68,
-   "label": "Cancelar (o mesmo botão fica no Perfil)"
-  },
-  {
-   "do": "waitFor",
-   "gone": {
-    "text": "Digite sua nova senha abaixo. Certifique-se de usar uma senha forte.",
-    "exact": true
-   },
-   "timeout": 8
+   "at": 13.29
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 14.55
+   "at": 22.14
   },
   {
    "do": "click",
    "target": {
     "role": "button",
-    "name": "Ver Contrato",
+    "name": "Nova condição",
     "exact": true
    },
-   "at": 16.32,
-   "label": "Ver Contrato"
+   "at": 22.44,
+   "label": "Nova condição"
   },
   {
    "do": "waitFor",
-   "text": "Termos de Uso e Responsabilidade",
-   "timeout": 10
+   "text": "Nova condição de pagamento",
+   "timeout": 8
   },
   {
-   "do": "hover",
+   "do": "type",
    "target": {
-    "text": "Aceito em",
-    "within": "[role=dialog]"
+    "selector": "#pc-name"
    },
-   "seconds": 0.4,
-   "at": 21.53,
-   "label": "Aceito em ... (data e hora do aceite)",
-   "optional": true,
-   "timeout": 3
+   "text": "30/60/90 dias",
+   "cps": 30,
+   "at": 25.7,
+   "label": "digita 30/60/90 dias (Nome)",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "checkbox",
+    "name": "Definir como condição padrão"
+   },
+   "at": 28.16,
+   "label": "marca Definir como condição padrão"
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 23.48
+   "at": 33.88
   },
   {
    "do": "hover",
    "target": {
-    "role": "button",
-    "name": "Baixar PDF",
-    "exact": true
+    "role": "checkbox",
+    "name": "À vista (parcela única, 0 dias, 100%)"
    },
-   "seconds": 0.2,
-   "at": 24.31,
-   "label": "Baixar PDF (sem clicar)",
+   "seconds": 1.2,
+   "at": 34.28,
+   "label": "À vista (parcela única, 0 dias, 100%) marcada",
    "optional": true,
    "timeout": 3
   },
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] button:not([type=button]):text-is(\"Fechar\")"
+    "role": "checkbox",
+    "name": "À vista (parcela única, 0 dias, 100%)"
    },
-   "at": 26.05,
-   "label": "Fechar o contrato"
-  },
-  {
-   "do": "waitFor",
-   "gone": {
-    "text": "Termos de Uso e Responsabilidade",
-    "exact": true
-   },
-   "timeout": 8
+   "at": 38.76,
+   "label": "desmarca À vista (as linhas destravam)"
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 28.31
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].filter(e=>e.textContent.trim().startsWith(\"Zona de Perigo\")&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 28.31,
-   "label": "desce até a Zona de Perigo"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Zona de Perigo",
-    "exact": true
-   },
-   "seconds": 0.6,
-   "at": 29.37,
-   "label": "Zona de Perigo, em vermelho",
-   "optional": true,
-   "timeout": 3
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Zerar Sistema",
-    "exact": true
-   },
-   "seconds": 0.2,
-   "at": 32.63,
-   "label": "Zerar Sistema",
-   "optional": true,
-   "timeout": 3
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Exclui dados operacionais selecionados"
-   },
-   "seconds": 1.5,
-   "at": 34.23,
-   "label": "Zerar Sistema: exclui os dados de operação escolhidos",
-   "optional": true,
-   "timeout": 3
-  },
-  {
-   "do": "mark",
-   "name": "L6",
-   "at": 38.07
+   "at": 40.53
   },
   {
    "do": "click",
    "target": {
     "role": "button",
-    "name": "Zerar Sistema",
-    "exact": true
+    "name": "Adicionar parcela"
    },
-   "at": 40.73,
-   "label": "Zerar Sistema (abre Tem certeza?)"
+   "at": 40.55,
+   "label": "Adicionar parcela (2ª)"
   },
   {
-   "do": "waitFor",
-   "text": "Tem certeza?",
-   "timeout": 8
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar parcela"
+   },
+   "at": 42.04,
+   "label": "Adicionar parcela (3ª)"
   },
   {
    "do": "hover",
    "target": {
-    "text": "Você está prestes a acessar a função de zerar o sistema."
+    "text": "Dias após emissão",
+    "exact": true
    },
-   "seconds": 0.3,
-   "at": 43.55,
-   "label": "Tem certeza?",
+   "seconds": 0.05,
+   "at": 43.05,
+   "label": "Dias após emissão",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[inputmode=numeric]",
+    "nth": 0
+   },
+   "text": "30",
+   "cps": 14,
+   "at": 44.77,
+   "label": "1ª parcela: 30 dias (o cursor passa pelo % do total)",
+   "clear": true
+  },
+  {
+   "do": "press",
+   "key": "Tab",
+   "at": 47.95,
+   "label": "Tab: % da 1ª parcela"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[inputmode=decimal]",
+    "nth": 0
+   },
+   "text": "33,33",
+   "cps": 20,
+   "at": 48.49,
+   "label": "1ª parcela: 33,33%",
+   "noClick": true
+  },
+  {
+   "do": "press",
+   "key": [
+    "Tab",
+    "Tab"
+   ],
+   "at": 51.22,
+   "label": "Tab: dias da 2ª parcela"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[inputmode=numeric]",
+    "nth": 1
+   },
+   "text": "60",
+   "cps": 14,
+   "at": 52.06,
+   "label": "2ª parcela: 60 dias",
+   "noClick": true
+  },
+  {
+   "do": "press",
+   "key": "Tab",
+   "at": 53.35,
+   "label": "Tab: % da 2ª parcela"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[inputmode=decimal]",
+    "nth": 1
+   },
+   "text": "33,33",
+   "cps": 20,
+   "at": 53.8,
+   "label": "2ª parcela: 33,33%",
+   "noClick": true
+  },
+  {
+   "do": "press",
+   "key": [
+    "Tab",
+    "Tab"
+   ],
+   "at": 55.06,
+   "label": "Tab: dias da 3ª parcela"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[inputmode=numeric]",
+    "nth": 2
+   },
+   "text": "90",
+   "cps": 14,
+   "at": 55.55,
+   "label": "3ª parcela: 90 dias",
+   "noClick": true
+  },
+  {
+   "do": "press",
+   "key": "Tab",
+   "at": 56.46,
+   "label": "Tab: % da 3ª parcela"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[inputmode=decimal]",
+    "nth": 2
+   },
+   "text": "33,34",
+   "cps": 20,
+   "at": 57.14,
+   "label": "3ª parcela: 33,34%",
+   "noClick": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Soma dos percentuais\", \"100%\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Soma dos percentuais 100%"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 60.54
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Soma dos percentuais",
+    "exact": true
+   },
+   "seconds": 3.2,
+   "at": 60.99,
+   "label": "Soma dos percentuais 100%, em verde",
    "optional": true,
    "timeout": 3
   },
   {
    "do": "mark",
    "name": "L7",
-   "at": 45.48
+   "at": 68.79
   },
   {
    "do": "click",
    "target": {
     "role": "button",
-    "name": "Sim, continuar",
+    "name": "Criar condição",
     "exact": true
    },
-   "at": 45.68,
-   "label": "Sim, continuar"
+   "at": 69.57,
+   "label": "Criar condição"
   },
   {
    "do": "waitFor",
-   "text": "Zerar Sistema - Ação Irreversível",
+   "text": "Condição criada",
+   "timeout": 10
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "text": "Nova condição de pagamento",
+    "exact": true
+   },
    "timeout": 8
   },
   {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"30/60/90 dias\", \"Padrão\", \"30 / 60 / 90 dias · 3 parcelas\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a condição na lista com o selo Padrão"
+  },
+  {
    "do": "hover",
    "target": {
-    "text": "Clientes e Fornecedores",
+    "text": "30/60/90 dias",
     "exact": true
    },
-   "seconds": 0.4,
-   "at": 49.32,
-   "label": "Clientes e Fornecedores (marcado)",
+   "seconds": 0.35,
+   "at": 72.05,
+   "label": "30/60/90 dias na lista",
    "optional": true,
    "timeout": 3
   },
   {
    "do": "hover",
    "target": {
-    "text": "Estoque de Materiais",
-    "exact": true
-   },
-   "seconds": 0.3,
-   "at": 52.36,
-   "label": "Estoque de Materiais (passa por Cadastro de Materiais)",
-   "optional": true,
-   "timeout": 3
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Pedidos (Vendas e Compras)",
-    "exact": true
+    "text": "3 parcelas"
    },
    "seconds": 0.2,
-   "at": 54.63,
-   "label": "Pedidos (Vendas e Compras) (passa por Movimentações Financeiras)",
-   "optional": true,
-   "timeout": 3
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Selecionar tudo",
-    "exact": true
-   },
-   "seconds": 0.4,
-   "at": 56.25,
-   "label": "tudo já vem marcado (Selecionar tudo)",
+   "at": 73.95,
+   "label": "selo Padrão e 30 / 60 / 90 dias · 3 parcelas",
    "optional": true,
    "timeout": 3
   },
   {
    "do": "mark",
    "name": "L8",
-   "at": 58.2
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const d=[...document.querySelectorAll('[role=dialog]')].pop();if(!d)return 'sem janela';const c=[d,...d.querySelectorAll('*')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,dy=c.scrollHeight-c.clientHeight-y0,t0=performance.now();if(dy<3)return 'ok';await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'fim:'+Math.round(c.scrollTop)})()",
-   "at": 58.2,
-   "label": "a janela desce até o que fica e o nome da empresa"
+   "at": 77.41
   },
   {
    "do": "hover",
    "target": {
-    "text": "Serão mantidos:"
+    "selector": "main button:has-text(\"Padrão\")"
    },
-   "seconds": 2.0,
-   "at": 59.41,
-   "label": "Serão mantidos: dados básicos, usuários, histórico de pagamentos",
-   "optional": true,
-   "timeout": 3
-  },
-  {
-   "do": "mark",
-   "name": "L9",
-   "at": 64.7
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Esta ação NÃO PODE ser desfeita!"
-   },
-   "seconds": 1.2,
-   "at": 65.0,
-   "label": "Esta ação NÃO PODE ser desfeita!",
+   "seconds": 1.0,
+   "at": 81.58,
+   "label": "estrela Padrão da À vista (sem clicar)",
    "optional": true,
    "timeout": 3
   },
   {
    "do": "hover",
    "target": {
-    "placeholder": "Nome da empresa"
+    "selector": "main [role=switch]"
    },
-   "seconds": 1.5,
-   "at": 67.8,
-   "label": "PARA CONFIRMAR, DIGITE O NOME DA EMPRESA (campo vazio)",
+   "seconds": 1.0,
+   "at": 86.29,
+   "label": "chave da condição (desliga sem apagar, sem clicar)",
    "optional": true,
    "timeout": 3
   },
   {
-   "do": "mark",
-   "name": "L10",
-   "at": 72.11
-  },
-  {
-   "do": "click",
+   "do": "hover",
    "target": {
-    "selector": "[role=dialog] button:text-is(\"Cancelar\")"
+    "selector": "main button:has-text(\"Editar\"), main button[aria-label=\"Editar\"], main button[title=\"Editar\"]"
    },
-   "at": 73.95,
-   "label": "Cancelar sem digitar nada"
+   "seconds": 0.5,
+   "at": 89.86,
+   "label": "Editar (sem clicar)",
+   "optional": true,
+   "timeout": 3
   },
   {
-   "do": "waitFor",
-   "gone": {
-    "text": "Zerar Sistema - Ação Irreversível",
+   "do": "hover",
+   "target": {
+    "selector": "main button:has-text(\"Excluir\"), main button[aria-label=\"Excluir\"], main button[title=\"Excluir\"]"
+   },
+   "seconds": 0.6,
+   "at": 92.74,
+   "label": "Excluir (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "30/60/90 dias",
     "exact": true
    },
-   "timeout": 8
+   "seconds": 1.4,
+   "at": 100.94,
+   "label": "a condição padrão aparece no alto da lista",
+   "optional": true,
+   "timeout": 3
   },
   {
    "do": "eval",
@@ -469,7 +493,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 78.31
+   "at": 103.58
   }
  ]
 }

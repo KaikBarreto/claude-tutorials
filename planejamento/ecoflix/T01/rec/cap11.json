@@ -1,6 +1,6 @@
 {
  "name": "t01-cap11",
- "title": "T01 · Cap. 11 · Aparência e atalhos (narração 56,4 s ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T01 · Cap. 11 · Ticket, idioma e guia (narração 67,3 s ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "seed": "t01-cap11",
  "pace": 0.5,
  "cps": 14,
@@ -14,8 +14,7 @@
   "t01/inicio",
   "t01/apos-cap05",
   "t01/apos-cap06",
-  "t01/apos-cap08",
-  "t01/apos-cap10"
+  "t01/apos-cap08"
  ],
  "storage": {
   "app_version": "1.60.18",
@@ -100,246 +99,224 @@
   {
    "do": "click",
    "target": {
-    "selector": "#tab-btn-appearance"
+    "selector": "#tab-btn-usability"
    },
-   "at": 0.43,
-   "label": "aba Aparência"
+   "at": 0.89,
+   "label": "aba Usabilidade"
   },
   {
    "do": "waitFor",
-   "text": "Estilo de Navegação (Desktop)",
+   "text": "Configure preferências gerais de usabilidade do sistema",
    "timeout": 10
   },
   {
-   "do": "hover",
-   "target": {
-    "text": "Estilo de Navegação (Desktop)",
-    "exact": true
-   },
-   "seconds": 1.31,
-   "at": 1.7,
-   "label": "Estilo de Navegação (Desktop): Menu Lateral marcado",
-   "optional": true,
-   "timeout": 3
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Exigir cliente/fornecedor no Ticket de Pesagem\"&&e.offsetParent);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/2000),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 2.54,
+   "label": "desce até Exigir cliente/fornecedor no Ticket de Pesagem"
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 4.56
-  },
-  {
-   "do": "click",
-   "target": {
-    "text": "Menu Superior",
-    "exact": true
-   },
-   "at": 6.33,
-   "label": "Menu Superior (o menu vai para o alto)"
-  },
-  {
-   "do": "waitFor",
-   "text": "Estilo de navegação alterado para Menu Superior",
-   "timeout": 8
-  },
-  {
-   "do": "click",
-   "target": {
-    "text": "Menu Lateral",
-    "exact": true
-   },
-   "at": 13.57,
-   "label": "volta ao Menu Lateral"
-  },
-  {
-   "do": "waitFor",
-   "text": "Estilo de navegação alterado para Menu Lateral",
-   "timeout": 8
-  },
-  {
-   "do": "mark",
-   "name": "L3",
-   "at": 15.54
+   "at": 6.46
   },
   {
    "do": "hover",
    "target": {
-    "text": "Escuro (recomendado)",
+    "text": "Exigir cliente/fornecedor no Ticket de Pesagem",
     "exact": true
    },
-   "seconds": 0.88,
-   "at": 17.74,
-   "label": "Menu: Escuro (recomendado)",
+   "seconds": 1.0,
+   "at": 6.81,
+   "label": "Exigir cliente/fornecedor no Ticket de Pesagem (desligado)",
    "optional": true,
    "timeout": 3
   },
   {
    "do": "hover",
    "target": {
-    "text": "Seguir o tema",
+    "text": "Quando ligado, o funcionário não consegue salvar um ticket"
+   },
+   "seconds": 2.6,
+   "at": 10.73,
+   "label": "Quando ligado, ninguém salva um ticket sem escolher com quem foi",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div:has(> div > div > label:text-is(\"Exigir cliente/fornecedor no Ticket de Pesagem\")) > button[role=switch]"
+   },
+   "seconds": 0.73,
+   "at": 16.22,
+   "label": "chave Exigir cliente/fornecedor (vale pra empresa toda)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 18.5
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Permitir forma de pagamento no ticket de pesagem",
     "exact": true
    },
-   "seconds": 0.2,
-   "at": 20.17,
-   "label": "Menu: Seguir o tema",
+   "seconds": 2.0,
+   "at": 19.89,
+   "label": "Permitir forma de pagamento no ticket de pesagem (sem parar)",
    "optional": true,
    "timeout": 3
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 21.66
+   "at": 26.97
   },
   {
    "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].filter(e=>e.textContent.trim().startsWith(\"Tema do Sistema\")&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-200);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 21.66,
-   "label": "desce até o Tema do Sistema"
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Regionalização\"&&e.offsetParent);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-140);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 26.97,
+   "label": "desce até a Regionalização"
   },
   {
    "do": "click",
    "target": {
-    "role": "button",
-    "name": "Tema Escuro"
+    "selector": "main button[role=combobox]:has-text('Português (Brasil)')"
    },
-   "at": 24.19,
-   "label": "Tema Escuro"
+   "at": 29.88,
+   "label": "abre o Idioma do Sistema"
   },
   {
-   "do": "click",
+   "do": "waitFor",
    "target": {
-    "role": "button",
-    "name": "Tema Claro"
+    "role": "option",
+    "name": "English (USA)"
    },
-   "at": 26.46,
-   "label": "volta ao Tema Claro"
+   "timeout": 6
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Português (Brasil)\", \"English (USA)\", \"Español (América Latina)\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"body\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere as três opções de idioma"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Português (Brasil)"
+   },
+   "seconds": 0.2,
+   "at": 32.03,
+   "label": "Português (Brasil)",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "English (USA)"
+   },
+   "seconds": 0.2,
+   "at": 33.02,
+   "label": "English (USA)",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Español (América Latina)"
+   },
+   "seconds": 0.2,
+   "at": 33.68,
+   "label": "Español (América Latina)",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 3
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 28.31
+   "at": 34.68
   },
   {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const c=rolagem(document.querySelector('main h1'));if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,t0=performance.now();if(y0<3)return 'ok';await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0*(1-e),behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
-   "at": 28.61,
-   "label": "sobe às abas"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "#tab-btn-shortcuts svg"
-   },
-   "at": 29.52,
-   "label": "aba Atalhos",
-   "noScroll": true
+   "do": "press",
+   "key": "Escape",
+   "at": 35.28,
+   "label": "Esc fecha o idioma em Português (Brasil)"
   },
   {
    "do": "waitFor",
-   "text": "Atalhos de Teclado",
-   "timeout": 10
+   "gone": {
+    "role": "option",
+    "name": "English (USA)"
+   },
+   "timeout": 6
   },
   {
-   "do": "hover",
-   "target": {
-    "text": "Navegação",
-    "exact": true
-   },
-   "seconds": 0.3,
-   "at": 30.58,
-   "label": "lista Navegação",
-   "optional": true,
-   "timeout": 3
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main button:text-is('D')"
-   },
-   "seconds": 0.2,
-   "at": 33.62,
-   "label": "Dashboard: Shift + D",
-   "optional": true,
-   "timeout": 3
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main button:text-is('C')"
-   },
-   "seconds": 1.6,
-   "at": 35.06,
-   "label": "clicando na letra, troca por outra (sem clicar)",
-   "optional": true,
-   "timeout": 3
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Português (Brasil)\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere idioma segue em Português (Brasil)"
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 38.38
-  },
-  {
-   "do": "press",
-   "key": "Control+k",
-   "at": 41.15,
-   "label": "Ctrl+K abre a busca"
-  },
-  {
-   "do": "waitFor",
-   "target": {
-    "placeholder": "Buscar páginas, clientes, fornecedores, materiais, funcionários..."
-   },
-   "timeout": 8
-  },
-  {
-   "do": "type",
-   "target": {
-    "placeholder": "Buscar páginas, clientes, fornecedores, materiais, funcionários..."
-   },
-   "text": "cobre",
-   "cps": 12,
-   "at": 44.97,
-   "label": "digita cobre",
-   "noClick": true
-  },
-  {
-   "do": "waitFor",
-   "text": "Fio de cobre encapado",
-   "timeout": 8
+   "at": 47.11
   },
   {
    "do": "hover",
    "target": {
-    "text": "Cobre mel",
+    "text": "Moeda do Sistema",
     "exact": true
    },
-   "seconds": 0.32,
-   "at": 46.58,
-   "label": "Cobre mel, Cobre misto e Fio de cobre encapado",
+   "seconds": 2.0,
+   "at": 48.35,
+   "label": "Moeda do Sistema (sem abrir)",
    "optional": true,
    "timeout": 3
   },
   {
    "do": "mark",
    "name": "L7",
-   "at": 48.45
+   "at": 52.77
   },
   {
    "do": "hover",
    "target": {
-    "text": "Resultados da Busca",
+    "text": "Exibir Feriados",
     "exact": true
    },
-   "seconds": 1.6,
-   "at": 50.27,
-   "label": "Resultados da Busca",
+   "seconds": 1.0,
+   "at": 53.1,
+   "label": "Agenda › Exibir Feriados (sem clicar)",
    "optional": true,
    "timeout": 3
   },
   {
-   "do": "press",
-   "key": "Escape",
-   "at": 54.33,
-   "label": "Esc fecha a busca"
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Reativar guia de configuração",
+    "exact": true
+   },
+   "seconds": 1.8,
+   "at": 57.58,
+   "label": "Guia de configuração › Reativar guia de configuração (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const l=document.documentElement.lang||'';return 'lang='+l})()",
+   "label": "idioma da página (pt)"
   },
   {
    "do": "eval",
@@ -349,7 +326,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 56.4
+   "at": 67.26
   }
  ]
 }

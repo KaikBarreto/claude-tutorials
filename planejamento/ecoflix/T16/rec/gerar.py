@@ -2,7 +2,7 @@
 """T16 · gera rec/t16/cap00..cap24.json (roteiros do robô) a partir da voz (t16/narracao/capNN.json).
 
 Nota Fiscal de mercadoria (NF-e) no COMPUTADOR (janela 1600x900, 20/11), logado como Rafael Nogueira (MASTER, Recicla Vale Metais), EcoSistema
-1.60.18 (25 capítulos desde a passada de 18/11: cobertura_160.md). FAKE_NOW 2026-11-10T08:30:00-03:00 (terça) em todos os capítulos. Emissão, certificado, SEFAZ e notas recebidas simulados no
+1.60.22 (25 capítulos desde a passada de 18/11: cobertura_160.md). FAKE_NOW 2026-11-10T08:30:00-03:00 (terça) em todos os capítulos. Emissão, certificado, SEFAZ e notas recebidas simulados no
 Supabase falso (rec/mundo/handlers: plugnotas-*, get_invoices_paged, get_next_invoice_number, search_orders_for_invoice,
 certificate_vault_status, dfe_inbound_import_enqueue + a fila dfe_inbound_import_jobs; lib/nfe.mjs): nada sai da máquina.
 Cada passo é preso a uma palavra da fala: `at` = início da palavra − o custo do gesto (A(linha, palavra, folga)), para o cursor CHEGAR
@@ -294,7 +294,7 @@ def stable_id(chave):
 
 
 RAFAEL = stable_id('user.rafael')
-VERSAO = '1.60.18'
+VERSAO = '1.60.22'
 HOJE = FAKE_NOW[:10]
 STORAGE = {'app_version': VERSAO, 'notification_shown_version': VERSAO, 'pwa-install-dismissed': 'true', 'theme': 'light',
            f'daily-tasks-reminder-last-shown-{RAFAEL}': HOJE, 'initial-preferences-set': 'true',
@@ -553,6 +553,8 @@ def cap04():
     c.hover(CAMPO('empresa-cnpj'), 0.25, at=c.A(2, 'CNPJ,', 0.6), label='o CNPJ importado')
     c.hover(CAMPO('empresa-telefone'), 0.25, at=c.A(2, 'telefone', 0.6), label='o telefone importado')
     c.hover(CAMPO('empresa-email'), 0.4, at=c.A(2, 'e-mail.', 0.6), label='o e-mail importado')
+    c.hover(SEL("main [data-campo='cnpj'] button[aria-label='Buscar dados pelo CNPJ']"), 1.6, at=c.A(2, 'lupa', 0.6),
+            label='zoom: a lupa do CNPJ (dica Buscar dados da empresa pelo CNPJ), sem clicar')
     c.mark(3)
     c.click(CAMPO('empresa-razao-social'), at=c.A(3, 'razão', 0.7), label='Razão Social (clique no campo)')
     c.press('End')
@@ -685,6 +687,7 @@ def cap06():
     c.click(SEL(f"{DLG} button:text-is('Adicionar')"), at=c.A(6, 'Adicionar.', 0.7), label='Adicionar')
     c.waitfor(text='Série adicionada com sucesso', timeout=10)
     c.hover(TXT('Última nota emitida: 1248', exact=False), 1.2, at=c.A(6, 'próxima', 0.6), label='a linha Série 1 com Última nota emitida: 1248')
+    c.hover(TXT('Última nota emitida: 1248', exact=False), 1.5, at=c.A(6, 'confira', 0.6), label='a última nota informada (dica do número já usado, 1.60.21)')
     c.mark(7)
     c.hover(CAMPO('default-serie-input'), 1.0, at=c.A(7, 'padrão', 0.6), label='zoom: Série padrão: Série 1')
     c.confere_ausente('main', 'mas não foi cadastrada', 'o aviso âmbar sumiu', espera=0.2)
@@ -1004,7 +1007,8 @@ class _Setup:
 def cap11():
     """Impostos e as outras abas (na nota da Fundição, reaberta no setup): o cenário aplicado (L1, zoom), o ICMS (L2), PIS/COFINS suspensos
     (L3), ilustração (L4), Ajustar impostos desta nota (L5), IBS/CBS (L6), Faturamento a prazo, boleto, duas parcelas (L7), vencimentos
-    (L8), Opções: xPed (L9), Informações complementares (L10), Pré-visualização (L11), Emitir Nota e 1250 autorizada (L12)."""
+    (L8), Opções: xPed (L9), Informações complementares (L10), Emitir Nota e 1250 autorizada (L11). Sem a Pré-visualização: no 1.60.22 ela
+    só mostra a DANFE real ("Ver a DANFE desta nota"), que o backend falso não gera (propostas_fala.md)."""
     s = _Setup()
     s.click(NOVA_NOTA)
     s.click(DLG_TXT('NF-e de Saída'))
@@ -1079,16 +1083,7 @@ def cap11():
     c.hover(SEL(f"{DLG} :text-is('Somar aos textos herdados')", nth=0), 0.6, at=c.A(10, 'somar', 0.6), label='Somar aos textos herdados')
     c.hover(SEL(f"{DLG} :text-is('Substituir nesta nota')", nth=0), 0.8, at=c.A(10, 'trocar', 0.6), label='Substituir nesta nota')
     c.mark(11)
-    c.click(ABA_NOTA('Pré-visualização'), at=c.A(11, 'Pré-visualização.', 0.7), label='aba Pré-visualização')
-    c.waitfor(text='Resumo para conferência', timeout=10)
-    c.confere('dlg', ['Prévia real desta nota', 'Ver a DANFE desta nota', 'Resumo para conferência'], 'Prévia real no alto e o Resumo para conferência')
-    c.ev(ROLA_NOTA('Resumo para conferência', 150), at=c.A(11, 'embaixo,', 0.9), label='desce ao Resumo para conferência (sem clicar em Ver a DANFE)')
-    c.hover(SEL(f"{DLG} :text-is('Resumo para conferência')"), 0.6, at=c.A(11, 'Resumo', 0.6), label='Resumo para conferência')
-    c.hover(SEL(f"{DLG} :text-is('SEM VALOR FISCAL')", nth=0), 0.8, at=c.A(11, 'sem', 0.6), label='zoom: SEM VALOR FISCAL')
-    c.ev(js_rola(f"{DLG} table", 420, 2500), at=c.A(11, 'Confiro', 0.3), label='desce pelo DANFE: destinatário, duplicatas, imposto, transporte')
-    c.confere('dlg', ['Boleto (15)', '11.975,00', 'Cargas Vale do Sol'], 'prévia com as duplicatas e o transporte')
-    c.mark(12)
-    emite_e_espera(c, 1250, c.A(12, 'Emitir', 0.7), 'Emitir Nota', linha_aut=True, at_aut=c.A(12, 'autorizada.', 0.6))
+    emite_e_espera(c, 1250, c.A(11, 'Emitir', 0.7), 'Emitir Nota', linha_aut=True, at_aut=c.A(11, 'autorizada.', 0.6))
     c.fim()
     return c
 

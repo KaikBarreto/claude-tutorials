@@ -32,7 +32,7 @@ Aí é pedir o arquivo certo ao contador e usar o Substituir Certificado.
 Na renovação é o mesmo caminho. O á-um vence todo ano. Quando ele vence, a tela avisa que o certificado venceu, e é só enviar o arquivo renovado aqui mesmo. Sem isso, nenhuma nota sai.
 E o botão Próximo leva pra empresa.""",
 4: """Com o certificado validado, os dados da empresa. É o passo dois.
-O Importar dados traz o que já está no cadastro da empresa: o nome, o CNPJ, o telefone e o e-mail.
+O Importar dados traz o que já está no cadastro da empresa: o nome, o CNPJ, o telefone e o e-mail. E a lupa ao lado do CNPJ busca os dados da empresa pelo próprio CNPJ, até a inscrição estadual.
 Confiro a razão social completa e digito a inscrição estadual. O CNPJ daqui é o que vai como emitente em toda nota.
 O endereço fiscal vem do cadastro da empresa, e pra mudar é em Configurações, Empresa. Se este CNPJ tiver um endereço diferente pra nota, é marcar Este CNPJ tem endereço próprio e preencher aqui.
 Mais embaixo dá pra enviar o logo que sai impresso na nota. E o responsável técnico só se preenche se o contador pedir, porque alguns estados exigem.
@@ -58,7 +58,7 @@ Quem já emite nota continua a sequência. A Recicla Vale usa a série um, e a �
 Repara que a tela já avisa: a série um está como padrão, mas ainda não foi cadastrada. Então, primeiro o cadastro.
 Em Adicionar série, informo a série um e a última nota emitida nela, a mil duzentos e quarenta e oito.
 Se a empresa nunca emitiu nota, é deixar em zero, e a primeira sai com o número um.
-Clico em Adicionar. Pronto: a próxima nota sai com o número mil duzentos e quarenta e nove.
+Clico em Adicionar. Pronto: a próxima nota sai com o número mil duzentos e quarenta e nove. Uma dica: confira esse número com a última nota que saiu no sistema antigo. Se ficar atrás, a sefás avisa que o número já foi usado, a nota volta como Rejeitada, e é ajustar a numeração aqui.
 Agora a série padrão mostra a série um, e o aviso sumiu. Aqui, entrada e saída usam a mesma série. Pra quem usa uma série só, é deixar assim.
 Quem separa as notas de entrada numa série e as de saída em outra desliga esta chave e escolhe uma série pra cada.""",
 7: """Mais dois cadastros. Quando a carga vai com uma transportadora contratada, os dados dela vão na nota. Então a gente cadastra uma vez, e na nota é só escolher.
@@ -107,7 +107,6 @@ Em Faturamento vai como a venda foi combinada. A Fundição paga a prazo, em dua
 Informo o vencimento de cada parcela. A soma tem que bater com o total da nota, senão ela não emite. E quem usa sempre o mesmo prazo escolhe uma condição de pagamento, e as parcelas já vêm preenchidas.
 Em Opções vai o número do pedido de compra do cliente, quando a indústria exige esse número na nota.
 Voltando em Itens, lá embaixo ficam as Informações complementares: o texto livre desta nota. Dá pra somar ao texto padrão da configuração ou trocar ele só aqui.
-Por último, a Pré-visualização. Aqui embaixo, o Resumo para conferência desenha a nota antes de emitir, ainda sem valor fiscal. Confiro o cliente, as parcelas, o imposto, o transporte e os itens.
 Tudo certo. Emitir Nota. Ela entra como Aguardando sefás e, em instantes, a mil duzentos e cinquenta está autorizada.""",
 12: """E as compras do dia, de quem não emite nota? A Dona Cida e o Valdir vendem sucata como pessoa física, e a nota de entrada dessas compras sai pela Recicla Vale.
 Em vez de uma nota por compra, dá pra juntar o dia todo. Na barra Importar de, clico em Emissão em Massa, Caixa.
@@ -202,7 +201,7 @@ O PET prensado tem palavras em comum com o Plástico PET, e o selo pede pra conf
 A nota traz só o peso líquido. E Conferir na tela de compra leva os itens pra tela de Compra. Nada é lançado agora: lá você confere os valores e escolhe como pagou. No mesmo menu, a nota recebida também pode virar despesa ou ir pro saldo do fornecedor.""",
 24: """Pronto! Recapitulando: a gente subiu o certificado á-um, preencheu a empresa e os impostos no Lucro Real e criou um cenário, sempre com o que o contador passou.
 Continuou a numeração da série um, cadastrou a transportadora e viu a cota do mês, com a tolerância de cinco documentos.
-Emitiu a nota pelos três caminhos: do zero, a partir de um pedido e a partir de um caixa fechado. E conferiu os impostos, as parcelas e a pré-visualização antes de emitir.
+Emitiu a nota pelos três caminhos: do zero, a partir de um pedido e a partir de um caixa fechado. E conferiu os impostos e as parcelas antes de emitir.
 Resolveu as pendências que travam a emissão, corrigiu uma nota recusada pela sefás e emitiu uma devolução e uma complementar.
 Cancelou uma nota, mandou uma carta de correção, inutilizou os números que tinham ficado em aberto e baixou o dânfi e o xis-ême-éle.
 E ativou as notas recebidas, confirmou uma operação e importou uma nota pelo xis-ême-éle.

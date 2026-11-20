@@ -1,6 +1,6 @@
 {
  "name": "t01-cap13",
- "title": "T01 · Cap. 13 · Recapitulando (narração 52,9 s ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T01 · Cap. 13 · Aparência e atalhos (narração 76,9 s ESTIMADA; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "seed": "t01-cap13",
  "pace": 0.5,
  "cps": 14,
@@ -15,7 +15,7 @@
   "t01/apos-cap05",
   "t01/apos-cap06",
   "t01/apos-cap08",
-  "t01/apos-cap10"
+  "t01/apos-cap12"
  ],
  "storage": {
   "app_version": "1.60.18",
@@ -98,214 +98,11 @@
    "at": 0.4
   },
   {
-   "do": "hover",
-   "target": {
-    "selector": "[aria-label='Menu da conta']"
-   },
-   "seconds": 2.0,
-   "at": 2.91,
-   "label": "a conta da Recicla Vale",
-   "noScroll": true,
-   "optional": true,
-   "timeout": 3
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "[aria-label='Menu da conta']"
-   },
-   "seconds": 1.6,
-   "at": 6.78,
-   "label": "o card da conta (trocador de contas no menu)",
-   "noScroll": true,
-   "optional": true,
-   "timeout": 3
-  },
-  {
-   "do": "mark",
-   "name": "L2",
-   "at": 10.17
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main img[alt='Logo']"
-   },
-   "seconds": 0.2,
-   "at": 12.43,
-   "label": "o logo",
-   "optional": true,
-   "timeout": 3
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main img[alt='Ícone']"
-   },
-   "seconds": 0.2,
-   "at": 13.69,
-   "label": "o ícone",
-   "optional": true,
-   "timeout": 3
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].filter(e=>e.textContent.trim().startsWith(\"CNPJ/CPF\")&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-160);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 14.95,
-   "label": "o CNPJ, o contato e o endereço"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "#company-cnpj"
-   },
-   "seconds": 0.29,
-   "at": 15.7,
-   "label": "CNPJ 47.318.506/0001-07",
-   "optional": true,
-   "timeout": 3
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Prévia no comprovante\"&&e.offsetParent);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-280);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 17.54,
-   "label": "a Prévia no comprovante"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main p.font-mono"
-   },
-   "seconds": 0.2,
-   "at": 19.76,
-   "label": "o endereço sem o galpão",
-   "optional": true,
-   "timeout": 3
-  },
-  {
-   "do": "mark",
-   "name": "L3",
-   "at": 20.69
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Numeração de pedidos\"&&e.offsetParent);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-150);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 20.99,
-   "label": "a Numeração de pedidos"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "role": "button",
-    "name": "Padrão"
-   },
-   "seconds": 0.2,
-   "at": 22.69,
-   "label": "modelo Padrão",
-   "optional": true,
-   "timeout": 3
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Frase Personalizada\"&&e.offsetParent);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-200);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 24.04,
-   "label": "a frase do comprovante"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "#receipt-phrase"
-   },
-   "seconds": 0.6,
-   "at": 25.12,
-   "label": "a frase da Recicla Vale",
-   "optional": true,
-   "timeout": 3
-  },
-  {
-   "do": "mark",
-   "name": "L4",
-   "at": 27.27
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const c=rolagem(document.querySelector('main h1'));if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,t0=performance.now();if(y0<3)return 'ok';await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0*(1-e),behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
-   "at": 27.27,
-   "label": "sobe às abas"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "#tab-btn-usability"
-   },
-   "at": 28.31,
-   "label": "aba Usabilidade"
-  },
-  {
-   "do": "waitFor",
-   "text": "Impureza/Tara Desconta no Valor",
-   "timeout": 10
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Impureza/Tara Desconta no Valor\"&&e.offsetParent);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 29.8,
-   "label": "Impureza/Tara Desconta no Valor"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Impureza/Tara Desconta no Valor",
-    "exact": true
-   },
-   "seconds": 0.2,
-   "at": 30.69,
-   "label": "Impureza/Tara (ligada)",
-   "optional": true,
-   "timeout": 3
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const c=rolagem(document.querySelector('main h1'));if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,t0=performance.now();if(y0<3)return 'ok';await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0*(1-e),behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
-   "at": 32.05,
-   "label": "sobe às abas (de novo)"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "#tab-btn-condicoes-pagamento"
-   },
-   "at": 32.75,
-   "label": "aba Condições de Pagamento"
-  },
-  {
-   "do": "waitFor",
-   "text": "30/60/90 dias",
-   "timeout": 10
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "30/60/90 dias",
-    "exact": true
-   },
-   "seconds": 0.4,
-   "at": 34.63,
-   "label": "30/60/90 dias com o selo Padrão",
-   "optional": true,
-   "timeout": 3
-  },
-  {
-   "do": "mark",
-   "name": "L5",
-   "at": 36.65
-  },
-  {
    "do": "click",
    "target": {
     "selector": "#tab-btn-appearance"
    },
-   "at": 37.92,
+   "at": 0.43,
    "label": "aba Aparência"
   },
   {
@@ -314,40 +111,275 @@
    "timeout": 10
   },
   {
+   "do": "hover",
+   "target": {
+    "text": "Estilo de Navegação (Desktop)",
+    "exact": true
+   },
+   "seconds": 1.31,
+   "at": 1.7,
+   "label": "Estilo de Navegação (Desktop): Menu Lateral marcado",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 4.56
+  },
+  {
    "do": "click",
    "target": {
-    "selector": "#tab-btn-company"
+    "text": "Menu Superior",
+    "exact": true
    },
-   "at": 40.65,
-   "label": "aba Empresa"
+   "at": 6.33,
+   "label": "Menu Superior (o menu vai para o alto)"
   },
   {
    "do": "waitFor",
-   "text": "Identidade Visual",
-   "timeout": 10
+   "text": "Estilo de navegação alterado para Menu Superior",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Menu Lateral",
+    "exact": true
+   },
+   "at": 13.57,
+   "label": "volta ao Menu Lateral"
+  },
+  {
+   "do": "waitFor",
+   "text": "Estilo de navegação alterado para Menu Lateral",
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 15.54
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Escuro (recomendado)",
+    "exact": true
+   },
+   "seconds": 0.88,
+   "at": 17.74,
+   "label": "Menu: Escuro (recomendado)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Seguir o tema",
+    "exact": true
+   },
+   "seconds": 0.2,
+   "at": 20.17,
+   "label": "Menu: Seguir o tema",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 21.66
   },
   {
    "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].filter(e=>e.textContent.trim().startsWith(\"Zona de Perigo\")&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/1000),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 42.27,
-   "label": "a Zona de Perigo"
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].filter(e=>e.textContent.trim().startsWith(\"Tema do Sistema\")&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-200);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 21.66,
+   "label": "desce até o Tema do Sistema"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Tema Escuro"
+   },
+   "at": 24.19,
+   "label": "Tema Escuro"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Tema Claro"
+   },
+   "at": 26.46,
+   "label": "volta ao Tema Claro"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 28.31
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const c=rolagem(document.querySelector('main h1'));if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,t0=performance.now();if(y0<3)return 'ok';await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0*(1-e),behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
+   "at": 28.61,
+   "label": "sobe às abas"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#tab-btn-shortcuts svg"
+   },
+   "at": 29.52,
+   "label": "aba Atalhos",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Atalhos de Teclado",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Navegação",
+    "exact": true
+   },
+   "seconds": 0.3,
+   "at": 30.58,
+   "label": "lista Navegação",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button:text-is('D')"
+   },
+   "seconds": 0.2,
+   "at": 33.62,
+   "label": "Dashboard: Shift + D",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button:text-is('C')"
+   },
+   "seconds": 1.6,
+   "at": 35.06,
+   "label": "clicando na letra, troca por outra (sem clicar)",
+   "optional": true,
+   "timeout": 3
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 44.14
+   "at": 38.38
   },
   {
-   "do": "scroll",
-   "point": {
-    "x": 1060,
-    "y": 300
+   "do": "hover",
+   "target": {
+    "text": "Atalhos de Teclado",
+    "exact": true
    },
-   "by": 0,
-   "duration": 0.3,
-   "after": 0,
-   "at": 44.44,
-   "label": "cursor parado (cartão Próximo: Usuários e permissões)"
+   "seconds": 0.2,
+   "at": 41.81,
+   "label": "a chave Atalhos de Teclado, no alto da aba",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main [role=switch]"
+   },
+   "seconds": 1.6,
+   "at": 42.27,
+   "label": "chave que liga e desliga todos os atalhos (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 52.24
+  },
+  {
+   "do": "press",
+   "key": "Control+k",
+   "at": 55.01,
+   "label": "Ctrl+K abre a busca"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "Buscar páginas, clientes, fornecedores, materiais, funcionários..."
+   },
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Ações Rápidas",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "at": 60.89,
+   "label": "Ações Rápidas (sem digitar nada)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar páginas, clientes, fornecedores, materiais, funcionários..."
+   },
+   "text": "cobre",
+   "cps": 12,
+   "at": 65.44,
+   "label": "digita cobre",
+   "noClick": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Fio de cobre encapado",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Cobre mel",
+    "exact": true
+   },
+   "seconds": 0.32,
+   "at": 67.04,
+   "label": "Cobre mel, Cobre misto e Fio de cobre encapado",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 68.91
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Resultados da Busca",
+    "exact": true
+   },
+   "seconds": 1.6,
+   "at": 70.73,
+   "label": "Resultados da Busca",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 74.8,
+   "label": "Esc fecha a busca"
   },
   {
    "do": "eval",
@@ -357,7 +389,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 52.93
+   "at": 76.86
   }
  ]
 }

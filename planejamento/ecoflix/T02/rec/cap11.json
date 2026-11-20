@@ -1,6 +1,6 @@
 {
  "name": "t02-cap11",
- "title": "T2 · Cap. 11 · Esconder o valor (narração ESTIMADA 80,3 s; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T2 · Cap. 11 · Esconder o valor (narração 65,0 s; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t02-cap11",
  "pace": 0.5,
  "cps": 30,
@@ -91,7 +91,7 @@
   {
    "do": "mark",
    "name": "L1",
-   "at": 0.4
+   "at": 0
   },
   {
    "do": "click",
@@ -100,7 +100,7 @@
     "exact": true,
     "within": "main"
    },
-   "at": 0.4,
+   "at": 0.3,
    "label": "clica no Marcos"
   },
   {
@@ -121,7 +121,7 @@
     "within": "main"
    },
    "note": "L1 valores.",
-   "at": 1.09,
+   "at": 0.48,
    "label": "Editar (detalhe do Marcos)"
   },
   {
@@ -133,7 +133,7 @@
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] input[placeholder=\\\"Buscar tela ou a\\u00e7\\u00e3o...\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-150);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
    "note": "L1 topo",
-   "at": 3.2,
+   "at": 2.8,
    "label": "desce o corpo da janela: Geral no topo da lista"
   },
   {
@@ -145,7 +145,7 @@
    },
    "seconds": 0.15,
    "note": "L1 Geral,",
-   "at": 3.62,
+   "at": 2.82,
    "label": "grupo Geral",
    "optional": true,
    "timeout": 4
@@ -157,7 +157,7 @@
    },
    "seconds": 3.0,
    "note": "L1 Ver",
-   "at": 4.83,
+   "at": 3.78,
    "label": "ZOOM Ver Totais e Valores Financeiros (ligado)",
    "optional": true,
    "timeout": 4
@@ -165,17 +165,17 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 10.63
+   "at": 8.74
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 17.28
+   "at": 13.62
   },
   {
    "do": "eval",
    "js": "(()=>{const r=[];for(const n of [\"Caixa\"]){const b=document.querySelector('[role=dialog] button[aria-label=\"Ver ações de '+n+'\"]');if(!b){r.push('SEM ALVO '+n);continue}if(b.getAttribute('data-state')!=='open'){b.click();r.push('abriu '+n)}else r.push('já '+n)}return r.join(' | ')})()",
-   "at": 18.18,
+   "at": 14.52,
    "label": "abre as ações do Caixa (sob a ilustração)"
   },
   {
@@ -191,12 +191,12 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 29.62
+   "at": 23.12
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 44.85
+   "at": 36.8
   },
   {
    "do": "hover",
@@ -205,7 +205,7 @@
    },
    "seconds": 0.15,
    "note": "L5 ligados,",
-   "at": 48.21,
+   "at": 39.44,
    "label": "Ver Dinheiro Total em Caixa (ligado)",
    "optional": true,
    "timeout": 4
@@ -217,7 +217,7 @@
    },
    "seconds": 0.15,
    "note": "L5 projeção",
-   "at": 51.4,
+   "at": 42.16,
    "label": "Ver Projeção de Lucro (desligado)",
    "optional": true,
    "timeout": 4
@@ -225,13 +225,13 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 53.93
+   "at": 43.87
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] [role=switch][aria-label=\\\"Acesso \\u00e0 tela Ticket de Pesagem\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-330);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
    "note": "L6 pesa,",
-   "at": 59.31,
+   "at": 48.07,
    "label": "a lista desce até o Ticket de Pesagem"
   },
   {
@@ -243,7 +243,7 @@
     "within": "[role=dialog]"
    },
    "note": "L6 Ticket",
-   "at": 60.68,
+   "at": 49.29,
    "label": "Clique para ver 4 ações (Ticket de Pesagem)"
   },
   {
@@ -254,7 +254,7 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 62.18
+   "at": 50.51
   },
   {
    "do": "hover",
@@ -263,7 +263,7 @@
    },
    "seconds": 3.0,
    "note": "L7 Criar",
-   "at": 63.03,
+   "at": 51.39,
    "label": "ZOOM Criar Ticket de Pesagem com Valores (desligado)",
    "optional": true,
    "timeout": 4
@@ -271,7 +271,7 @@
   {
    "do": "mark",
    "name": "L8",
-   "at": 74.82
+   "at": 60.75
   },
   {
    "do": "click",
@@ -282,7 +282,7 @@
     "within": "[role=dialog]"
    },
    "note": "L8 cancelo.",
-   "at": 78.24,
+   "at": 63.61,
    "label": "Cancelar (nada muda)"
   },
   {
@@ -300,7 +300,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 80.27
+   "at": 64.96
   }
  ]
 }

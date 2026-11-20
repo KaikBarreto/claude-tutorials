@@ -1,6 +1,6 @@
 {
  "name": "t01-cap01",
- "title": "T01 · Cap. 1 · Criar a conta (narração 73,4 s ESTIMADA; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T01 · Cap. 1 · Criar a conta (narração 92,2 s ESTIMADA; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "seed": "t01-cap01",
  "pace": 0.5,
  "cps": 14,
@@ -244,14 +244,14 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 45.03
+   "at": 54.75
   },
   {
    "do": "click",
    "target": {
     "placeholder": "Mínimo 8 caracteres"
    },
-   "at": 45.28,
+   "at": 55.0,
    "label": "Senha"
   },
   {
@@ -261,23 +261,45 @@
    },
    "text": "$TUT_SENHA",
    "cps": 24,
-   "at": 46.6,
+   "at": 56.32,
    "label": "digita a senha (pontinhos; o indicador de força enche)",
    "noClick": true
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Senha forte.\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"body\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere indicador Senha forte"
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Senha forte. Deve conter:\", \"Pelo menos 8 caracteres\", \"Pelo menos 1 número\", \"Pelo menos 1 letra minúscula\", \"Pelo menos 1 letra maiúscula\", \"Pelo menos 1 caractere especial\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"body\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere lista da senha forte com os cinco itens"
   },
   {
    "do": "hover",
    "target": {
     "text": "Senha forte."
    },
-   "seconds": 0.3,
-   "at": 49.45,
-   "label": "indicador de força: Senha forte",
+   "seconds": 0.5,
+   "at": 58.42,
+   "label": "ZOOM lista da senha: Senha forte. Deve conter:",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Pelo menos 1 caractere especial"
+   },
+   "seconds": 0.8,
+   "at": 66.97,
+   "label": "os cinco itens da lista, até o caractere especial",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Senha forte."
+   },
+   "seconds": 0.2,
+   "at": 70.41,
+   "label": "Senha forte",
    "optional": true,
    "timeout": 3
   },
@@ -286,7 +308,7 @@
    "target": {
     "placeholder": "Digite a senha novamente"
    },
-   "at": 51.3,
+   "at": 70.89,
    "label": "Confirmar Senha"
   },
   {
@@ -296,14 +318,14 @@
    },
    "text": "$TUT_SENHA",
    "cps": 24,
-   "at": 52.8,
+   "at": 72.6,
    "label": "repete a senha",
    "noClick": true
   },
   {
    "do": "mark",
    "name": "L8",
-   "at": 55.93
+   "at": 74.68
   },
   {
    "do": "scroll",
@@ -314,7 +336,7 @@
    "by": 380,
    "duration": 0.5,
    "after": 100,
-   "at": 55.93,
+   "at": 74.68,
    "label": "desce até o aviso dos termos"
   },
   {
@@ -325,7 +347,7 @@
     "exact": true
    },
    "seconds": 0.2,
-   "at": 59.24,
+   "at": 77.99,
    "label": "Termos de Uso (sem clicar)",
    "optional": true,
    "timeout": 3
@@ -338,7 +360,7 @@
     "exact": true
    },
    "seconds": 1.2,
-   "at": 60.45,
+   "at": 79.21,
    "label": "Política de Privacidade (sem clicar)",
    "optional": true,
    "timeout": 3
@@ -346,7 +368,7 @@
   {
    "do": "mark",
    "name": "L9",
-   "at": 65.69
+   "at": 84.44
   },
   {
    "do": "click",
@@ -355,7 +377,7 @@
     "name": "Criar Conta",
     "exact": true
    },
-   "at": 66.48,
+   "at": 85.23,
    "label": "Criar Conta"
   },
   {
@@ -383,7 +405,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 73.42
+   "at": 92.17
   }
  ]
 }

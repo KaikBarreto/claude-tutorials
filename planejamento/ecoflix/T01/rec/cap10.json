@@ -1,6 +1,6 @@
 {
  "name": "t01-cap10",
- "title": "T01 · Cap. 10 · Condições de pagamento (narração 82,6 s ESTIMADA; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T01 · Cap. 10 · O comprovante do seu jeito (narração 119,8 s ESTIMADA; marcas L1..L11 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "seed": "t01-cap10",
  "pace": 0.5,
  "cps": 14,
@@ -99,379 +99,350 @@
   {
    "do": "click",
    "target": {
-    "selector": "#tab-btn-condicoes-pagamento"
+    "selector": "#tab-btn-usability"
    },
-   "at": 0.51,
-   "label": "aba Condições de Pagamento"
+   "at": 0.4,
+   "label": "aba Usabilidade"
   },
   {
    "do": "waitFor",
-   "text": "Nenhuma condição cadastrada ainda.",
+   "text": "Configure preferências gerais de usabilidade do sistema",
    "timeout": 10
   },
   {
-   "do": "hover",
-   "target": {
-    "text": "Defina parcelamentos padrão"
-   },
-   "seconds": 1.49,
-   "at": 3.06,
-   "label": "Defina parcelamentos padrão (à vista, 30/60/90…)",
-   "optional": true,
-   "timeout": 3
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Nenhuma condição cadastrada ainda.",
-    "exact": true
-   },
-   "seconds": 1.4,
-   "at": 6.1,
-   "label": "Nenhuma condição cadastrada ainda.",
-   "optional": true,
-   "timeout": 3
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Mostrar só peso líquido\"&&e.offsetParent);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-260);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/1800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 1.7,
+   "label": "desce até Mostrar só peso líquido"
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 9.19
+   "at": 5.47
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Mostrar só peso líquido",
+    "exact": true
+   },
+   "seconds": 1.0,
+   "at": 6.81,
+   "label": "Mostrar só peso líquido (desligado)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Oculta a tara nas notinhas e na tabela de materiais"
+   },
+   "seconds": 1.6,
+   "at": 10.43,
+   "label": "Oculta a tara nas notinhas; mostra apenas o peso líquido (bruto − tara)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div:has(> label:text-is(\"Mostrar só peso líquido\")) > svg"
+   },
+   "seconds": 2.8,
+   "at": 13.69,
+   "label": "a dica: comprou 100kg com 5kg de tara? a notinha mostra direto 95kg",
+   "optional": true,
+   "timeout": 3
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 18.04
+   "at": 25.71
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Assinaturas no comprovante",
+    "exact": true
+   },
+   "seconds": 0.48,
+   "at": 27.2,
+   "label": "Assinaturas no comprovante (desligada)",
+   "optional": true,
+   "timeout": 3
   },
   {
    "do": "click",
    "target": {
-    "role": "button",
-    "name": "Nova condição",
-    "exact": true
+    "selector": "main div:has(> div > div > label:text-is(\"Assinaturas no comprovante\")) > button[role=switch]"
    },
-   "at": 18.34,
-   "label": "Nova condição"
+   "at": 29.23,
+   "label": "liga Assinaturas no comprovante"
   },
   {
    "do": "waitFor",
-   "text": "Nova condição de pagamento",
+   "text": "Assinaturas ativadas no comprovante",
    "timeout": 8
   },
   {
-   "do": "type",
-   "target": {
-    "selector": "#pc-name"
-   },
-   "text": "30/60/90 dias",
-   "cps": 30,
-   "at": 21.6,
-   "label": "digita 30/60/90 dias (Nome)",
-   "noClick": true
+   "do": "waitFor",
+   "text": "Quem assina",
+   "timeout": 8
   },
   {
-   "do": "click",
-   "target": {
-    "role": "checkbox",
-    "name": "Definir como condição padrão"
-   },
-   "at": 24.06,
-   "label": "marca Definir como condição padrão"
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Quem assina\", \"Operador e cliente/fornecedor\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Quem assina aparece em \"Operador e cliente/fornecedor\""
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 29.78
-  },
-  {
-   "do": "hover",
-   "target": {
-    "role": "checkbox",
-    "name": "À vista (parcela única, 0 dias, 100%)"
-   },
-   "seconds": 1.2,
-   "at": 30.18,
-   "label": "À vista (parcela única, 0 dias, 100%) marcada",
-   "optional": true,
-   "timeout": 3
+   "at": 33.65
   },
   {
    "do": "click",
    "target": {
-    "role": "checkbox",
-    "name": "À vista (parcela única, 0 dias, 100%)"
+    "selector": "#receipt-signature-mode"
    },
-   "at": 34.66,
-   "label": "desmarca À vista (as linhas destravam)"
+   "at": 34.13,
+   "label": "abre Quem assina"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "option",
+    "name": "Só o operador"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Operador e cliente/fornecedor"
+   },
+   "seconds": 0.6,
+   "at": 36.51,
+   "label": "Operador e cliente/fornecedor",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Só o cliente/fornecedor"
+   },
+   "seconds": 0.6,
+   "at": 39.39,
+   "label": "Só o cliente/fornecedor",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Só o operador"
+   },
+   "seconds": 0.2,
+   "at": 41.9,
+   "label": "Só o operador",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 3
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 36.43
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Adicionar parcela"
-   },
-   "at": 36.45,
-   "label": "Adicionar parcela (2ª)"
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Adicionar parcela"
-   },
-   "at": 37.94,
-   "label": "Adicionar parcela (3ª)"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Dias após emissão",
-    "exact": true
-   },
-   "seconds": 0.05,
-   "at": 38.95,
-   "label": "Dias após emissão",
-   "optional": true,
-   "timeout": 3
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "[role=dialog] input[inputmode=numeric]",
-    "nth": 0
-   },
-   "text": "30",
-   "cps": 14,
-   "at": 40.68,
-   "label": "1ª parcela: 30 dias (o cursor passa pelo % do total)",
-   "clear": true
-  },
-  {
-   "do": "press",
-   "key": "Tab",
-   "at": 43.85,
-   "label": "Tab: % da 1ª parcela"
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "[role=dialog] input[inputmode=decimal]",
-    "nth": 0
-   },
-   "text": "33,33",
-   "cps": 20,
-   "at": 44.39,
-   "label": "1ª parcela: 33,33%",
-   "noClick": true
-  },
-  {
-   "do": "press",
-   "key": [
-    "Tab",
-    "Tab"
-   ],
-   "at": 47.12,
-   "label": "Tab: dias da 2ª parcela"
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "[role=dialog] input[inputmode=numeric]",
-    "nth": 1
-   },
-   "text": "60",
-   "cps": 14,
-   "at": 47.96,
-   "label": "2ª parcela: 60 dias",
-   "noClick": true
-  },
-  {
-   "do": "press",
-   "key": "Tab",
-   "at": 49.25,
-   "label": "Tab: % da 2ª parcela"
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "[role=dialog] input[inputmode=decimal]",
-    "nth": 1
-   },
-   "text": "33,33",
-   "cps": 20,
-   "at": 49.7,
-   "label": "2ª parcela: 33,33%",
-   "noClick": true
-  },
-  {
-   "do": "press",
-   "key": [
-    "Tab",
-    "Tab"
-   ],
-   "at": 50.96,
-   "label": "Tab: dias da 3ª parcela"
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "[role=dialog] input[inputmode=numeric]",
-    "nth": 2
-   },
-   "text": "90",
-   "cps": 14,
-   "at": 51.45,
-   "label": "3ª parcela: 90 dias",
-   "noClick": true
-  },
-  {
-   "do": "press",
-   "key": "Tab",
-   "at": 52.36,
-   "label": "Tab: % da 3ª parcela"
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "[role=dialog] input[inputmode=decimal]",
-    "nth": 2
-   },
-   "text": "33,34",
-   "cps": 20,
-   "at": 53.05,
-   "label": "3ª parcela: 33,34%",
-   "noClick": true
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Soma dos percentuais\", \"100%\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere Soma dos percentuais 100%"
+   "at": 43.19
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 56.44
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Soma dos percentuais",
-    "exact": true
-   },
-   "seconds": 3.2,
-   "at": 56.89,
-   "label": "Soma dos percentuais 100%, em verde",
-   "optional": true,
-   "timeout": 3
-  },
-  {
-   "do": "mark",
-   "name": "L7",
-   "at": 64.69
+   "at": 52.72
   },
   {
    "do": "click",
    "target": {
-    "role": "button",
-    "name": "Criar condição",
-    "exact": true
+    "role": "option",
+    "name": "Só o cliente/fornecedor"
    },
-   "at": 65.47,
-   "label": "Criar condição"
+   "at": 59.73,
+   "label": "escolhe Só o cliente/fornecedor",
+   "noScroll": true
   },
   {
    "do": "waitFor",
-   "text": "Condição criada",
-   "timeout": 10
-  },
-  {
-   "do": "waitFor",
-   "gone": {
-    "text": "Nova condição de pagamento",
-    "exact": true
-   },
+   "text": "Assinaturas do comprovante atualizadas",
    "timeout": 8
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"30/60/90 dias\", \"Padrão\", \"30 / 60 / 90 dias · 3 parcelas\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere a condição na lista com o selo Padrão"
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Só o cliente/fornecedor\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Quem assina em \"Só o cliente/fornecedor\""
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 62.48
   },
   {
    "do": "hover",
    "target": {
-    "text": "30/60/90 dias",
-    "exact": true
+    "text": "No ticket de pesagem, o operador aparece como Empresa"
    },
-   "seconds": 0.2,
-   "at": 67.95,
-   "label": "30/60/90 dias na lista",
-   "optional": true,
-   "timeout": 3
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "3 parcelas"
-   },
-   "seconds": 0.2,
-   "at": 69.24,
-   "label": "selo Padrão e 30 / 60 / 90 dias · 3 parcelas",
+   "seconds": 2.6,
+   "at": 66.13,
+   "label": "No ticket de pesagem, o operador aparece como Empresa",
    "optional": true,
    "timeout": 3
   },
   {
    "do": "mark",
    "name": "L8",
-   "at": 70.58
+   "at": 71.79
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Marca de ticket não valorizado\"&&e.offsetParent);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 71.79,
+   "label": "desce até a Marca de ticket não valorizado"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main [role=switch]"
+    "text": "Marca de ticket não valorizado",
+    "exact": true
    },
-   "seconds": 1.87,
-   "at": 71.03,
-   "label": "chave da condição (desliga sem apagar, sem clicar)",
+   "seconds": 1.0,
+   "at": 73.51,
+   "label": "Marca de ticket não valorizado (sem parar)",
    "optional": true,
    "timeout": 3
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main button:has-text(\"Editar\"), main button[aria-label=\"Editar\"], main button[title=\"Editar\"]"
+    "text": "QR de fotos no comprovante",
+    "exact": true
    },
-   "seconds": 0.5,
-   "at": 74.45,
-   "label": "Editar (sem clicar)",
+   "seconds": 1.0,
+   "at": 78.67,
+   "label": "QR de fotos no comprovante (só com o Portal do Cliente)",
    "optional": true,
    "timeout": 3
   },
   {
+   "do": "mark",
+   "name": "L9",
+   "at": 86.72
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Estilo do comprovante térmico\"&&e.offsetParent);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-200);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 86.72,
+   "label": "desce até o Estilo do comprovante térmico"
+  },
+  {
    "do": "hover",
    "target": {
-    "selector": "main button:has-text(\"Excluir\"), main button[aria-label=\"Excluir\"], main button[title=\"Excluir\"]"
+    "text": "Estilo do comprovante térmico",
+    "exact": true
    },
    "seconds": 0.6,
-   "label": "Excluir (sem clicar)",
+   "at": 88.06,
+   "label": "Estilo do comprovante térmico",
    "optional": true,
    "timeout": 3
   },
   {
    "do": "hover",
    "target": {
-    "text": "30/60/90 dias",
+    "text": "Compacto",
     "exact": true
    },
    "seconds": 1.4,
-   "at": 79.99,
-   "label": "a condição padrão aparece no alto da lista",
+   "at": 93.3,
+   "label": "Compacto (marcado): o nome do lado dos valores",
    "optional": true,
    "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L10",
+   "at": 97.78
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Nome em destaque",
+    "exact": true
+   },
+   "at": 98.2,
+   "label": "Nome em destaque (o nome vai em cima)"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const r=document.querySelector('#receipt-layout-b');return r?r.getAttribute('data-state'):'sem cartão'})()",
+   "label": "confere Nome em destaque marcado (checked)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Nome em destaque",
+    "exact": true
+   },
+   "seconds": 2.0,
+   "at": 103.67,
+   "label": "Nome em destaque: nome comprido numa linha só",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L11",
+   "at": 108.83
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Compacto",
+    "exact": true
+   },
+   "at": 111.82,
+   "label": "volta ao Compacto"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const r=document.querySelector('#receipt-layout-a');return r?r.getAttribute('data-state'):'sem cartão'})()",
+   "label": "confere Compacto marcado (checked)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Assinaturas no comprovante\"&&e.offsetParent);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-260);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 112.45,
+   "label": "sobe às Assinaturas no comprovante"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div:has(> div > div > label:text-is(\"Assinaturas no comprovante\")) > button[role=switch]"
+   },
+   "at": 113.49,
+   "label": "desliga Assinaturas no comprovante"
+  },
+  {
+   "do": "waitFor",
+   "text": "Assinaturas removidas do comprovante",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{await new Promise(r=>setTimeout(r,600));const el=document.querySelector(\"main\");const t=(el?el.innerText:'').replace(/[\\s\\u00a0]+/g,' ').toLowerCase();return t.includes(\"quem assina\")?'DIFERENTE: apareceu '+\"Quem assina\":'OK: ausente '+\"Quem assina\"})()",
+   "label": "confere sem \"Quem assina\" (assinaturas desligadas)"
   },
   {
    "do": "eval",
@@ -481,7 +452,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 82.63
+   "at": 119.82
   }
  ]
 }

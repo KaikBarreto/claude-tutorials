@@ -294,7 +294,7 @@
 - **Lista**: menu da autorizada: "Visualizar", "Download XML", "Download DANFE", "Comprovante (Notinha)", "Carta de Correção", "Gerar nota complementar", "Histórico", "Cancelar"; clique na linha: "Detalhes da Nota Fiscal #N"; busca, período ("Todos os tempos"), "Filtros", abas "Produção" / "Homologação". **CC-e**: "1 CC-e enviada", "PDF", "XML", "✅ Registrada na SEFAZ · protocolo ...". **Inutilizar**: item "Prazo SEFAZ: até dia 10 do mês seguinte ao pulo"; aba "Inutilizar Rejeitadas" ("Nenhuma nota rejeitada nessa empresa.").
 - **Notas recebidas**: menu com os grupos "Financeiro" ("Lançar despesa / conta", "Pendurar no saldo do fornecedor", "Lançar compra…", "Contar no estoque fiscal") e "Manifestar".
 
-## 16. O que mudou no 1.60.18 (lido no código em 20/11; handoff fiscal de 19/11)
+## 16. O que mudou no 1.60.18 e no 1.60.22 (lido no código em 20/11; handoff fiscal de 19/11; `e8edc9e6d..bea545ecf`)
 - Menu Fiscal & Ambiental: "Estoque Fiscal" e "Relatórios Fiscais" viraram um item só, **"Relatório/Estoque Fiscal"**
   (`config/routes.ts:510`; sete abas, assunto da T17).
 - Configuração Fiscal › Empresa › "Endereço Fiscal", no CNPJ padrão (`is_default`): **"Usar o endereço do cadastro da empresa"** /
@@ -302,10 +302,16 @@
   Erros no próprio campo ("CNPJ inválido. Confira os números." etc.), IE de tamanho incomum só em âmbar (1.60.16).
 - Nota: o seletor "Ambiente" ("Produção" / "Homologação") aparece para todos, mas a nota de teste é liberada por CNPJ: **não
   anunciar**. Toda nota nova abre em "Produção" (`NovaNotaModal.tsx:1283`).
-- Aba "Pré-visualização": no alto, **"Prévia real desta nota"** (abas "DANFE" / "XML", "Ver a DANFE desta nota", "Salva o rascunho e
-  gera a prévia. Não emite a nota."; `DanfeRealPreview.tsx`); embaixo, **"Resumo para conferência"** ("Conferência rápida enquanto
-  você preenche. O documento fiel é a DANFE acima."; `NovaNotaModal.tsx:8471`) e o desenho com "SEM VALOR FISCAL". Ao sair de
-  uma nota salva pela prévia: "Sair desta nota?".
+- Aba "Pré-visualização" (1.60.21/22, `8fdd09e6a`, `def22f7c2`): **só a DANFE real**, sem o resumo antigo (`DanfePreview.tsx` apagado).
+  Abas "DANFE" / "XML"; vazio: **"Veja a DANFE desta nota antes de emitir"**, "Salva o rascunho e gera a prévia. Não emite a nota." e o
+  botão **"Ver a DANFE desta nota"** (`DanfeRealPreview.tsx`); na reemissão usa a nota salva ("Mostra a nota como está salva. ..."). A
+  DANFE vem do `plugnotas-emit` com `action: "preview_danfe_fiscal"`. Ao sair de uma nota salva pela prévia: "Sair desta nota?".
+- Empresa (1.60.21, `5b6ddc923`): o "CNPJ *" ganhou a **lupa** (`aria-label` "Buscar dados pelo CNPJ", dica "Buscar dados da empresa
+  pelo CNPJ"), que preenche razão social, nome fantasia, telefone, e-mail e a IE do estado ("Preenchida pela consulta do CNPJ
+  (Sintegra, SP). Confira antes de salvar."; "Usar a da Sintegra"). "Importar dados" continua.
+- Número já usado (1.60.21, rejeição 539 com a chave de outra nota): a nota vira **Rejeitada** com "Numeração de NF-e nesta série já
+  utilizada. ... Para emitir, ajuste o próximo número da série nas Configurações Fiscais." (`utils/sefazError.ts:250`; migration
+  `20261120013000_nfe_539_numero_ja_usado.sql`).
 - Reemissão de rejeitada: o botão do rodapé é **"Reemitir NF-e"** (não "Emitir Nota"; `NovaNotaModal.tsx:8713`).
 - Cancelamento: selo **"Cancelamento enviado"** e, no menu, "Cancelamento enviado, aguardando a SEFAZ" enquanto a SEFAZ não confirma
   (`NotaFiscalTable.tsx:138`, `:498`; 1.60.15).

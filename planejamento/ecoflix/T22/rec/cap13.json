@@ -84,32 +84,13 @@
    "idle": true
   },
   {
-   "do": "goto",
-   "url": "/gerencial"
-  },
-  {
    "do": "waitFor",
-   "text": "Dashboard Gerencial",
-   "timeout": 25
+   "text": "Código de Convite",
+   "timeout": 20
   },
   {
    "do": "waitFor",
    "idle": true
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const aberto=()=>!!document.querySelector('a[href=\"/gerencial/configuracoes\"]');const b=[...document.querySelectorAll('button')].find(e=>e.textContent.trim().startsWith('Gerencial (Filiais)'));if(!b)return 'SEM ALVO';if(aberto()!==true)b.click();await new Promise(r=>setTimeout(r,500));return aberto()?'aberto':'fechado'})()"
-  },
-  {
-   "do": "waitFor",
-   "target": {
-    "selector": "a[href=\"/gerencial/configuracoes\"]"
-   },
-   "timeout": 8
-  },
-  {
-   "do": "eval",
-   "js": "(()=>{const a=document.querySelector('a[href=\"/gerencial/configuracoes\"]');if(!a)return 'SEM ALVO';let c=a.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)break;c=c.parentElement;}if(!c||c===document.body)return 'SEM ROLAGEM';const dy=a.getBoundingClientRect().bottom-(c.getBoundingClientRect().bottom-8);if(dy>0)c.scrollTop+=dy;return Math.round(a.getBoundingClientRect().top)})()"
   },
   {
    "do": "click",

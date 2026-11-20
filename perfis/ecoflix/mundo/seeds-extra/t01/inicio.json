@@ -1,9 +1,11 @@
 {
- "_doc": "T1 (Sua conta e sua empresa), estado de partida dos caps 0 a 5: a empresa como sai de um cadastro novo (nome, o e-mail do Rafael e o telefone do cadastro; sem CNPJ, endereço, logo, ícone, frase nem condição de pagamento); o resto do mundo como está. Preferências do Rafael do plano do T1 (Usabilidade só mostrada: Perguntar sempre, impureza/tara no valor ligada, sem arredondar, sem lucro no comprovante) e o aceite dos termos em 03/08/2026 08:47:12. Ver planejamento/ecoflix/T01/plano.md, 'Mundo'.",
+ "_doc": "T1 (Sua conta e sua empresa), estado de partida dos caps 0 a 5: a empresa como sai de um cadastro novo (nome, o e-mail do Rafael e o telefone do cadastro; sem CNPJ, endereço, logo, ícone nem frase; só a condição À vista como padrão (o app real semeia assim)); o resto do mundo como está. Preferências do Rafael do plano do T1 (Usabilidade só mostrada: Perguntar sempre, impureza/tara no valor ligada, sem arredondar, sem lucro no comprovante) e o aceite dos termos em 03/08/2026 08:47:12. Ver planejamento/ecoflix/T01/plano.md, 'Mundo'.",
  "_patch": {
   "companies": [
    {
-    "match": {"id": "@id:company.reciclavale"},
+    "match": {
+     "id": "@id:company.reciclavale"
+    },
     "set": {
      "cnpj": null,
      "email": "rafael@reciclavalemetais.example",
@@ -26,13 +28,20 @@
      "order_number_template": "#{NUM}",
      "invert_customer_supplier_terms": false,
      "multi_cash_enabled": true,
-     "require_entity_on_weighing_ticket": false
+     "require_entity_on_weighing_ticket": false,
+     "show_address_2_in_documents": false,
+     "show_signatures_on_receipt": false,
+     "receipt_signature_mode": "both",
+     "receipt_item_layout": "a",
+     "show_net_weight_only": false
     }
    }
   ],
   "profiles": [
    {
-    "match": {"id": "@id:user.rafael"},
+    "match": {
+     "id": "@id:user.rafael"
+    },
     "set": {
      "terms_accepted_at": "2026-08-03T11:47:12.000Z",
      "must_change_password": false,
@@ -43,12 +52,35 @@
      "multiple_price_tables_enabled": true,
      "impurity_deducts_from_value": true,
      "show_profit_on_receipt": false,
-     "navigation_style": "sidebar"
+     "navigation_style": "sidebar",
+     "preferred_language": "pt-BR"
     }
    }
   ]
  },
  "_remove": {
-  "payment_conditions": [{"company_id": "@id:company.reciclavale"}]
- }
+  "payment_conditions": [
+   {
+    "company_id": "@id:company.reciclavale"
+   }
+  ]
+ },
+ "payment_conditions": [
+  {
+   "id": "@id:condicao.a_vista",
+   "company_id": "@id:company.reciclavale",
+   "name": "À vista",
+   "installments": [
+    {
+     "seq": 1,
+     "days": 0,
+     "percent": 100
+    }
+   ],
+   "is_default": true,
+   "active": true,
+   "created_at": "2026-08-03T11:47:12.000Z",
+   "updated_at": "2026-08-03T11:47:12.000Z"
+  }
+ ]
 }
