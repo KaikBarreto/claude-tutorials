@@ -133,7 +133,7 @@
   {
    "do": "click",
    "target": {
-    "selector": "main aside button:has-text('Serralheria Bem-Te-Vi')"
+    "selector": "main aside button:has-text('Serralheria Bem-Te-Vi') p.font-medium"
    },
    "at": 2.46,
    "label": "clica na Serralheria Bem-Te-Vi: a ficha abre ao lado"
@@ -307,10 +307,15 @@
   {
    "do": "click",
    "target": {
-    "selector": "main aside button:has-text('Depósito Irmãos Siqueira')"
+    "selector": "main aside button:has-text('Depósito Irmãos Siqueira') p.font-medium"
    },
    "at": 40.14,
    "label": "clica no Depósito Irmãos Siqueira"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const ok=()=>{try{return !!(document.querySelector(\"main section[aria-label='Detalhes de Depósito Irmãos Siqueira']\"))}catch(e){return false}};const ate=async(s)=>{for(let i=0;i<s*10;i++){if(ok())return true;await new Promise(r=>setTimeout(r,100))}return ok()};if(await ate(2.5))return 'ok';const el=(()=>{return [...document.querySelectorAll(\"main aside button\")].find(x=>x.textContent.includes('Depósito Irmãos Siqueira'))})();if(!el)return 'SEM ALVO';el.click();return (await ate(6))?'refeito':'SEM EFEITO'})()",
+   "label": "garante a ficha do depósito (rede de segurança)"
   },
   {
    "do": "waitFor",

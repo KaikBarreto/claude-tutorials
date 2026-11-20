@@ -1,6 +1,6 @@
 {
  "name": "t10-cap05",
- "title": "T10 · Cap. 5 · Os tipos de movimentação (narração 101,3 s ESTIMADA; marcas L1..L11 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário rafael)",
+ "title": "T10 · Cap. 5 · Os tipos de movimentação (narração 118,7 s ESTIMADA; marcas L1..L12 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário rafael)",
  "seed": "t10-cap05",
  "pace": 0.5,
  "cps": 14,
@@ -16,7 +16,8 @@
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
-  "initial-preferences-set": "true"
+  "initial-preferences-set": "true",
+  "cato_adoption_nudge_38814e47-876a-5977-a5f7-53af364c17bb_34c36c63-0890-5e89-8963-7c77b7996908": "{\"count\":99,\"lastShownAt\":0}"
  },
  "seedExtra": [
   "t10/inicio",
@@ -440,10 +441,26 @@
   {
    "do": "hover",
    "target": {
+    "selector": "main div.flex-wrap:has(svg.lucide-clock)"
+   },
+   "seconds": 6.0,
+   "at": 71.51,
+   "label": "(L8 só falada) a linha aberta segue na tela",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 83.53
+  },
+  {
+   "do": "hover",
+   "target": {
     "selector": "main tbody tr:has-text('Exclusão') > td:nth-child(8)"
    },
    "seconds": 1.6,
-   "at": 65.92,
+   "at": 84.03,
    "label": "[ZOOM] Exclusão de 22/10: -180 Kg",
    "optional": true,
    "timeout": 4
@@ -454,7 +471,7 @@
     "selector": "main tbody tr:has-text('Exclusão') > td:nth-child(3)"
    },
    "seconds": 1.0,
-   "at": 71.77,
+   "at": 89.88,
    "label": "Data 22/10 da Exclusão",
    "optional": true,
    "timeout": 4
@@ -466,15 +483,15 @@
   },
   {
    "do": "mark",
-   "name": "L9",
-   "at": 75.18
+   "name": "L10",
+   "at": 93.3
   },
   {
    "do": "click",
    "target": {
     "selector": "main button:has(> svg.lucide-list-filter)"
    },
-   "at": 75.38,
+   "at": 93.5,
    "label": "Filtros"
   },
   {
@@ -489,7 +506,7 @@
     "name": "Tipo de movimentação",
     "within": "[role=dialog]"
    },
-   "at": 76.15,
+   "at": 94.26,
    "label": "Tipo de movimentação"
   },
   {
@@ -497,8 +514,21 @@
    "target": {
     "selector": "[data-radix-popper-content-wrapper] button:has-text('Desmarcar todos')"
    },
-   "at": 77.58,
+   "at": 95.7,
    "label": "Desmarcar todos"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha a lista dos tipos (o painel dos filtros segue aberto)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "selector": "[data-radix-popper-content-wrapper]"
+   },
+   "timeout": 4,
+   "optional": true
   },
   {
    "do": "click",
@@ -508,16 +538,41 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 78.95,
+   "at": 97.06,
    "label": "Fornecedores (abre a lista)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Fornecedores",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "label": "Fornecedores de novo (só se a lista não abriu)",
+   "unless": {
+    "selector": "[data-radix-popper-content-wrapper] label:has-text('Depósito Irmãos Siqueira')"
+   }
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] label:has-text('Depósito Irmãos Siqueira')"
+   },
+   "timeout": 8
   },
   {
    "do": "click",
    "target": {
     "selector": "[data-radix-popper-content-wrapper] label:has-text('Depósito Irmãos Siqueira')"
    },
-   "at": 80.24,
+   "at": 98.35,
    "label": "marca Depósito Irmãos Siqueira"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha a lista dos fornecedores"
   },
   {
    "do": "click",
@@ -526,7 +581,7 @@
     "name": "Aplicar filtros",
     "exact": true
    },
-   "at": 81.76,
+   "at": 100.1,
    "label": "Aplicar filtros",
    "noScroll": true
   },
@@ -540,12 +595,12 @@
   {
    "do": "eval",
    "js": "(()=>{const t=[...document.querySelectorAll('main tbody tr > td:nth-child(4)')].map(e=>e.innerText.trim()).filter(Boolean);return 'tipos na lista: '+[...new Set(t)].join(', ')+' ('+t.length+' linhas)'})()",
-   "label": "tipos na lista (só Compra e Venda)"
+   "label": "tipos na lista (só Compra)"
   },
   {
    "do": "mark",
-   "name": "L10",
-   "at": 85.02
+   "name": "L11",
+   "at": 104.27
   },
   {
    "do": "type",
@@ -556,32 +611,32 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 91.34,
-   "label": "a lista sem Transferência, Edição Manual e Exclusão"
+   "at": 108.77,
+   "label": "a lista só com Compra: sem Transferência, Edição Manual, Exclusão nem Venda"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr > td:nth-child(4) :text-is('Venda')",
+    "selector": "main tbody tr > td:nth-child(4) :text-is('Compra')",
     "nth": 0
    },
    "seconds": 1.2,
-   "at": 94.4,
-   "label": "as vendas continuam",
+   "at": 111.83,
+   "label": "só as compras do Siqueira",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
-   "name": "L11",
-   "at": 96.0
+   "name": "L12",
+   "at": 113.43
   },
   {
    "do": "click",
    "target": {
     "selector": "main button:has(> svg.lucide-list-filter)"
    },
-   "at": 96.5,
+   "at": 113.93,
    "label": "Filtros"
   },
   {
@@ -596,7 +651,7 @@
     "name": "Limpar filtros",
     "exact": true
    },
-   "at": 98.4,
+   "at": 115.83,
    "label": "Limpar filtros",
    "noScroll": true
   },
@@ -607,7 +662,7 @@
     "name": "Aplicar filtros",
     "exact": true
    },
-   "at": 99.16,
+   "at": 116.59,
    "label": "fecha a folha (a lista volta em Este mês)",
    "noScroll": true
   },
@@ -619,7 +674,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 101.29
+   "at": 118.72
   }
  ]
 }

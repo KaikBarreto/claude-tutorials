@@ -127,12 +127,14 @@
    "label": "três pontinhos da linha Abertura"
   },
   {
-   "do": "click",
-   "target": {
-    "role": "menuitem",
-    "name": "Editar saldo de abertura"
-   },
-   "at": 22.47,
+   "do": "waitFor",
+   "selector": "[role=menuitem]",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=[...document.querySelectorAll(\"[role=menuitem]\")].find(e=>e.getClientRects().length&&e.textContent.trim().startsWith(\"Editar saldo de abertura\"));if(!e)return 'SEM ALVO';e.click();return 'ok'})()",
+   "at": 22.87,
    "label": "Editar saldo de abertura"
   },
   {

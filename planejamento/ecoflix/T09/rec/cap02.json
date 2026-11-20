@@ -331,15 +331,13 @@
     "selector": "main thead th:has-text('Valor')"
    },
    "at": 41.53,
-   "label": "clica em Valor: a lista ordena do maior para o menor"
+   "label": "clica em Valor: a lista ordena do menor para o maior"
   },
   {
-   "do": "click",
-   "target": {
-    "selector": "main thead th:has-text('Data')"
-   },
-   "at": 43.83,
-   "label": "clica em Data: volta à ordem por data"
+   "do": "eval",
+   "js": "(()=>{const th=[...document.querySelectorAll('main thead th')].find(t=>t.innerText.trim().startsWith('Data'));if(!th)return 'SEM ALVO';th.click();th.click();return 'Data: 2 cliques (asc e desc)'})()",
+   "at": 43.73,
+   "label": "volta à ordem por data, a mais nova primeiro (Data: asc e desc; o primeiro clique numa coluna nova é crescente)"
   },
   {
    "do": "hover",

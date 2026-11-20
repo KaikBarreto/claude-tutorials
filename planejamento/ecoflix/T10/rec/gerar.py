@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """T10 · gera rec/t10/capNN.json (roteiros do robô) a partir da voz (t10/narracao/capNN.json). Estoque: saldo, histórico e posição.
 
-EcoSistema 1.59.154 no COMPUTADOR (janela 1280x800), Recicla Vale Metais, Rafael Nogueira (MASTER), FAKE_NOW 10/11/2026 08:30 (todos os
-capítulos). Uso, de qualquer pasta:  python3 -I rec/t10/gerar.py [NN ...]   (sem argumento: todos)
+EcoSistema 1.60.18 no COMPUTADOR (tela 1600x900), Recicla Vale Metais, Rafael Nogueira (MASTER), FAKE_NOW 10/11/2026 08:30 (todos os
+capítulos). 15 capítulos (20/11: cap07 "Achar uma movimentação" e cap11 "Clientes, usuários e grupos" são novos; o antigo 7-10 virou 8-10 e 12; 11 virou 13; 12 virou 14). Uso, de qualquer pasta:  python3 -I rec/t10/gerar.py [NN ...]   (sem argumento: todos)
 Antes (e sempre que o mundo base mudar): python3 -I rec/t10/t10_sementes.py  (sementes t10/inicio e t10/apos-cap03 e as 2 fotos).
 Depois: ensaio.py NN (rápido) -> record.mjs --rapido -> resumo.py NN --ens -> prever.py NN --ens -> gravação com os tempos -> resumo.py NN.
 
@@ -54,10 +54,11 @@ sys.path.insert(0, NARR)
 from tts_textos import CAPS as TEXTOS  # noqa: E402  (texto atual de cada capítulo, grafia do TTS)
 
 NOMES = ['Abertura', 'As quatro portas do estoque', 'O saldo de cada material', 'Transferir entre materiais', 'O Kardex, linha a linha',
-         'Os tipos de movimentação', 'O pedido por trás da linha', 'Comprado, vendido e lucro', 'Material por material',
-         'O filtro de fornecedor', 'A foto do estoque numa data', 'Exportar para o contador', 'Recapitulando']
+         'Os tipos de movimentação', 'O pedido por trás da linha', 'Achar uma movimentação', 'Comprado, vendido e lucro',
+         'Material por material', 'O filtro de fornecedor', 'Clientes, usuários e grupos', 'A foto do estoque numa data',
+         'Exportar para o contador', 'Recapitulando']
 # estado de partida: t10/inicio (as 2 fotos da compra de 09/11) e, do cap04 em diante, t10/apos-cap03 (a transferência de 320 kg)
-SEMENTE = {n: (['inicio'] if n <= 3 else ['inicio', 'apos-cap03']) for n in range(13)}
+SEMENTE = {n: (['inicio'] if n <= 3 else ['inicio', 'apos-cap03']) for n in range(15)}
 
 # folga de cada gesto (pace 0,5; medido no T03 e na tabela "Custo real dos gestos" do docs/04): at = palavra - folga
 FOLGA = {'click': 0.7, 'click1': 1.3, 'hover': 0.55, 'type': 0.95, 'typen': 0.05, 'press': 0.05, 'scroll': 0.15, 'eval': 0.0, 'goto': 0.9}
@@ -83,7 +84,7 @@ def versao_app():
     try:
         return open(os.path.join(TUT, 'app', 'dist', '.versao-app'), encoding='utf8').read().strip()
     except OSError:
-        return '1.59.154'
+        return '1.60.18'
 
 
 def storage_de(usuario):
@@ -392,6 +393,32 @@ def js_pdf(k, nome):
         k, k, json.dumps(nome))
 
 
+# ---------------------------------------------------------------- PDF e HTML na tela (20/11): a gravação filma uma aba só
+POPS = "(()=>{const o=window.open;window.__pops=[];window.open=function(...a){const w=o.apply(this,a);window.__pops.push(w);return w};return 'ok'})()"
+# o PDF do Kardex que o app abre na aba nova (iframe #pdf-frame), devolvido em base64 ('PDF:<base64>') para a ilustração da edição
+PDF_JS = ("(async()=>{const w=(window.__pops||[]).slice(-1)[0];if(!w)return 'SEM JANELA';for(let i=0;i<60;i++){let f=null;"
+          "try{f=w.document&&w.document.querySelector('#pdf-frame')}catch(e){return 'ERRO '+e}"
+          "if(f&&f.src){const b=await (await fetch(f.src.split('#')[0])).blob();const u=new Uint8Array(await b.arrayBuffer());let s='';"
+          "for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'PDF:'+btoa(s)}"
+          "await new Promise(r=>setTimeout(r,250))}return 'SEM PDF'})()")
+# o Relatório de Estoque abre uma aba com HTML escrito pelo app: devolvido ('HTML:<base64>') quando o texto esperado aparece
+HTML_JS = ("(async()=>{let w;for(let i=0;i<60&&!(w=(window.__pops||[]).slice(-1)[0]);i++)await new Promise(r=>setTimeout(r,250));if(!w)return 'SEM JANELA';const espera=%s;for(let i=0;i<60;i++){let t='';"
+           "try{t=(w.document&&w.document.documentElement&&w.document.documentElement.textContent)||''}catch(e){return 'ERRO '+e}"
+           "if(t&&espera.every(x=>t.toLowerCase().includes(x.toLowerCase()))){const h='<!doctype html>'+w.document.documentElement.outerHTML;const u=new TextEncoder().encode(h);let s='';"
+           "for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'HTML:'+btoa(s)}"
+           "await new Promise(r=>setTimeout(r,250))}let d='';try{d=' pops='+window.__pops.length+' fechada='+w.closed+' texto='+((w.document.documentElement&&w.document.documentElement.textContent)||'').slice(0,160)}catch(e){d=' '+e}return 'SEM HTML'+d})()")
+
+
+def html_js(espera):
+    return HTML_JS % json.dumps(list(espera), ensure_ascii=False)
+
+
+# troca a hora da Posição de Estoque (input type=time): o valor entra pelo setter nativo e o React recebe o evento
+JS_HORA = ("(()=>{const el=document.querySelector(\"input[aria-label='Hora']\");if(!el)return 'SEM HORA';"
+           "const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;set.call(el,'%s');"
+           "el.dispatchEvent(new Event('input',{bubbles:true}));el.dispatchEvent(new Event('change',{bubbles:true}));return el.value})()")
+
+
 # ---------------------------------------------------------------- setup (fora do vídeo)
 def setup_login(email='$TUT_USER', espera='Olá, Rafael!'):
     return [
@@ -469,7 +496,8 @@ def cap00():
 
 def cap01():
     """As quatro portas: Materiais abre o grupo (Estoque, Histórico (Kardex), Relatório, Ticket de Pesagem, Produção); Estoque; a coluna
-    Tabelas de Preço até "Posição de Estoque" (sem clicar); L3 sob a ilustração (o menu recolhe por eval); L4 quadro geral."""
+    Tabelas de Preço até "Posição de Estoque" (sem clicar); L3 (1.60.18) só falada: o botão da empresa com uma tabela só; L4 sob a
+    ilustração (o menu recolhe por eval); L5 quadro geral."""
     c = Cap(1, setup_login() + vai('/materiais', 'Gerencie os materiais do estoque') + vai('/dashboard', 'Olá, Rafael!'), start=(760, 420))
     c.click(MENU_GRUPO('Materiais'), w=(1, 'Materiais,'), primeiro=True, label='menu Materiais (abre o grupo)')
     c.waitfor(target=MENU_LINK('Relatório'), timeout=6)
@@ -480,16 +508,18 @@ def cap01():
     c.registra(P('Tabelas de Preço', exact=True), w=(2, 'coluna'), label='coluna Tabelas de Preço')
     c.hover(BTN('Posição de Estoque'), 1.0, w=(2, 'Posição'), label='[ZOOM] Posição de Estoque, embaixo de Nova Tabela (sem clicar)')
     c.confere('main', ['Tabelas de Preço', 'Tabela Depósitos', 'Nova Tabela', 'Posição de Estoque'], 'coluna das tabelas com a Posição de Estoque')
-    # L3: ilustração das quatro portas cobre a janela; por baixo, o menu lateral recolhe (sem cursor)
-    c.ev(js_clicar('header button:has(svg.lucide-panel-left-close)'), w=(3, 'Histórico', None, 0.0), label='recolhe o menu lateral (por baixo da ilustração)')
-    c.registra(SEL('main'), w=(4, 'gente', None, 0.0), label='quadro geral da tela Estoque')
+    # L3 (só falada): o botão do cabeçalho de quem tem uma tabela de preço só não é gravado; o cursor segue na Posição de Estoque
+    c.hover(BTN('Posição de Estoque'), 2.4, w=(3, 'tabela'), label='(L3 só falada) o cursor segue na Posição de Estoque da coluna')
+    # L4: ilustração das quatro portas cobre a janela; por baixo, o menu lateral recolhe (sem cursor)
+    c.ev(js_clicar('header button:has(svg.lucide-panel-left-close)'), w=(4, 'Histórico', None, 0.0), label='recolhe o menu lateral (por baixo da ilustração)')
+    c.registra(SEL('main'), w=(5, 'gente', None, 0.0), label='quadro geral da tela Estoque')
     c.fim()
     return c
 
 
 def cap02():
     """O saldo: os três cartões; Peso Total; Total Pago e Projeção; Cobre mel (42 Kg e R$ 42,50) com a explicação do preço médio; o selo
-    estimativa; L6 ilustração; Ferro misto 6.420 Kg."""
+    estimativa; L6 (1.60.18) dica do triângulo amarelo (só falada: o mundo não tem material sem compra); L7 ilustração; Ferro misto 6.420 Kg."""
     c = Cap(2, setup_estoque())
     c.hover(P('Total Pago', exact=True), 1.4, w=(1, 'cartões'), label='os três cartões de cima')
     c.hover(P('Peso Total em Estoque', exact=True), 2.4, w=(2, 'Peso'), label='[ZOOM] Peso Total em Estoque')
@@ -503,8 +533,11 @@ def cap02():
     # fica no R$ 42,50 do L4 até o fim do L5 (a explicação na tela enquanto a fala a resume) e a câmera vai ao selo do cabeçalho
     c.hover(CELULA('Cobre mel', 6), 6.6, w=(4, 'média'), label='[ZOOM] Preço médio pago do Cobre mel (R$ 42,50) e a explicação')
     c.registra(SEL("main thead th:has-text('Preço médio pago') :text-is('estimativa')"), w=(5, 'selo'), label='[ZOOM] selo estimativa')
-    # L6: ilustração "o que mexe no saldo" (robô parado)
-    c.hover(CELULA('Ferro misto', 4), 3.0, w=(7, 'ferro'), label='[ZOOM] Estoque Atual do Ferro misto (6.420 Kg)')
+    # L6 (só falada): diz se algum material do mundo mostra o aviso "Sem histórico de compra" (informativo; o roteiro não depende dele)
+    c.ev("(()=>{const t=document.querySelector('main')?.innerText||'';return /Sem histórico de compra/i.test(t)?'AVISO amarelo presente na lista':'sem aviso amarelo na lista (a dica fica só falada)'})()",
+         w=(6, 'Uma', None, 0.0), label='confere se algum material mostra o triângulo "Sem histórico de compra"')
+    # L7: ilustração "o que mexe no saldo" (robô parado)
+    c.hover(CELULA('Ferro misto', 4), 3.0, w=(8, 'ferro'), label='[ZOOM] Estoque Atual do Ferro misto (6.420 Kg)')
     c.confere('row:Ferro misto', ['Ferro misto', ' 6.420Kg'], 'Ferro misto 6.420 Kg')
     c.fim()
     return c
@@ -543,7 +576,8 @@ def cap03():
 
 def cap04():
     """Kardex: menu (recolhido) Materiais > Histórico (Kardex); L2 ilustração; Ferro pesado; a Transferência (2.180 > +320 > 2.500) e a
-    Compra de 09/11 (+860, final 2.180); L6 ilustração; Filtros sem contador (Este mês); Filtros > Período > Este ano > Aplicar."""
+    Compra de 09/11 (+860, final 2.180); L6 ilustração; L7 (1.60.18) colunas Usuário e Pedido da Compra; Filtros sem contador (Este mês);
+    Filtros > Período > Este ano > Aplicar."""
     c = Cap(4, setup_estoque())
     c.hover(MENU_GRUPO('Materiais'), 0.3, w=(1, 'Agora', None, 0.4), noScroll=True, label='menu lateral (o menu recolhido abre)')
     # aberto pelo mouse, o menu traz o grupo Materiais FECHADO (ensaio de 11/11): abre o grupo, só se o item ainda não aparece
@@ -566,18 +600,21 @@ def cap04():
     c.hover(KCEL('+860 Kg', 9), 1.4, w=(5, 'final'), label='[ZOOM] Estoque Final da compra 2.180 Kg')
     c.hover(KCEL('Transferência', 7), 1.2, w=(5, 'inicial'), label='Estoque Inicial da transferência 2.180 Kg')
     # L6: ilustração "a corrente" (robô parado)
-    c.hover(FILTROS, 1.0, w=(7, 'Este'), label='Filtros (sem contador): o Histórico abre em Este mês')
-    c.hover(TH('Data'), 0.6, w=(7, 'dez', 1), label='coluna Data: só novembro')
-    c.click(FILTROS, w=(8, 'ver'), label='Filtros')
+    c.hover(KCEL('+860 Kg', 2), 1.0, w=(7, 'quem'), label='[ZOOM] coluna Usuário da Compra de 09/11')
+    c.hover(KCEL('+860 Kg', 5), 1.2, w=(7, 'número'), label='[ZOOM] coluna Pedido da Compra de 09/11 (o número do pedido)')
+    c.confere('row:+860 Kg', ['Compra', '#'], 'a Compra de 09/11 mostra usuário e o número do pedido')
+    c.hover(FILTROS, 1.0, w=(8, 'Este'), label='Filtros (sem contador): o Histórico abre em Este mês')
+    c.hover(TH('Data'), 0.6, w=(8, 'dez', 1), label='coluna Data: só novembro')
+    c.click(FILTROS, w=(9, 'ver'), label='Filtros')
     c.waitfor(text='Filtros do Kardex', timeout=8)
-    c.click(COMBO('Este mês', DLG), w=(8, 'período'), primeiro=True, label='Período (abre a lista)')
-    c.hover(OPT('Este ano'), 0.3, w=(8, 'Este'), label='Este ano')
-    c.hover(OPT('Todos os tempos'), 0.5, w=(8, 'Todos'), label='Todos os tempos')
-    c.click(OPT('Este ano'), w=(8, 'Assim,'), label='escolhe Este ano')
-    c.click(BTN('Aplicar filtros'), noScroll=True, w=(8, 'abre'), label='Aplicar filtros')
+    c.click(COMBO('Este mês', DLG), w=(9, 'período'), primeiro=True, label='Período (abre a lista)')
+    c.hover(OPT('Este ano'), 0.3, w=(9, 'Este'), label='Este ano')
+    c.hover(OPT('Todos os tempos'), 0.5, w=(9, 'Todos'), label='Todos os tempos')
+    c.click(OPT('Este ano'), w=(9, 'Assim,'), label='escolhe Este ano')
+    c.click(BTN('Aplicar filtros'), noScroll=True, w=(9, 'abre'), label='Aplicar filtros')
     c.waitfor(gone={'role': 'dialog'}, timeout=8)
-    c.hover(FILTROS, 1.2, w=(8, 'histórico'), label='[ZOOM] Filtros com 1')
-    c.ev(js_rola_ate('Edição Manual', y=420), w=(8, 'sumiu:', None, 0.0), label='desce: entram as linhas de outubro')
+    c.hover(FILTROS, 1.2, w=(9, 'histórico'), label='[ZOOM] Filtros com 1')
+    c.ev(js_rola_ate('Edição Manual', y=420), w=(9, 'sumiu:', None, 0.0), label='desce: entram as linhas de outubro')
     c.confere('main', ['Edição Manual', '31/10'], 'Este ano: entram as linhas de outubro')
     c.fim()
     return c
@@ -585,7 +622,8 @@ def cap04():
 
 def cap05():
     """Tipos: (setup: Ferro pesado em Este ano) os selos; Filtros > Tipo de movimentação (os sete); L3-L5 ilustração; marca Edição Manual e
-    Exclusão; a linha de 31/10 aberta; a Exclusão de 22/10; Fornecedores = Siqueira (sem Transferência, Edição Manual, Exclusão); Limpar."""
+    Exclusão; a linha de 31/10 aberta; L8 (1.60.18) dica do Editar (só falada); a Exclusão de 22/10; Fornecedores = Siqueira (desde a
+    1.60.18 só ficam as COMPRAS dele: sem Transferência, Edição Manual, Exclusão nem Venda); Limpar."""
     c = Cap(5, setup_kardex('Ferro pesado', 'Este ano'))
     c.hover(KBADGE('Transferência'), 0.3, w=(1, 'Cada', None, 0.4), label='selo Transferência')
     c.hover(KBADGE('Compra'), 0.3, w=(1, 'tipo,'), label='selo Compra')
@@ -611,24 +649,31 @@ def cap05():
     c.hover(SEL('main div.flex-wrap:has(svg.lucide-clock)'), 1.0, w=(7, 'quem'), label='Rafael Nogueira e a hora')
     c.confere('main', ['Saída', 'Contagem do pátio no fechamento do mês', '41.874 Kg', '41.860 Kg', 'Rafael Nogueira', '31/10/2026'],
               'linha aberta: Saída, observação, 41.874 > 41.860, Rafael, 31/10')
-    c.hover(KCEL('Exclusão', 8), 1.6, w=(8, 'aqui,'), label='[ZOOM] Exclusão de 22/10: -180 Kg')
-    c.hover(KCEL('Exclusão', 3), 1.0, w=(8, 'repetida'), label='Data 22/10 da Exclusão')
+    # L8 (só falada): a dica do Editar; a linha aberta segue na tela, o cursor parado
+    c.hover(SEL('main div.flex-wrap:has(svg.lucide-clock)'), 6.0, w=(8, 'Edição', None, 0.2), label='(L8 só falada) a linha aberta segue na tela')
+    c.hover(KCEL('Exclusão', 8), 1.6, w=(9, 'aqui,'), label='[ZOOM] Exclusão de 22/10: -180 Kg')
+    c.hover(KCEL('Exclusão', 3), 1.0, w=(9, 'repetida'), label='Data 22/10 da Exclusão')
     c.confere('row:Exclusão', ['22/10', '-180 Kg'], 'Exclusão de 22/10: -180 Kg')
-    c.click(FILTROS, w=(9, 'Uma'), label='Filtros')
+    c.click(FILTROS, w=(10, 'Uma'), label='Filtros')
     c.waitfor(text='Filtros do Kardex', timeout=8)
-    c.click(BTNX('Tipo de movimentação', within=DLG), w=(9, 'filtros'), primeiro=True, label='Tipo de movimentação')
-    c.click(SEL(f"{POP} button:has-text('Desmarcar todos')"), w=(9, 'Fornecedores'), label='Desmarcar todos')
-    c.click(BTN('Fornecedores', within=DLG), w=(9, 'Clientes:'), label='Fornecedores (abre a lista)')
-    c.click(OPCAO('Depósito Irmãos Siqueira'), w=(9, 'fornecedor'), label='marca Depósito Irmãos Siqueira')
-    c.click(BTN('Aplicar filtros'), noScroll=True, w=(9, 'compras,'), label='Aplicar filtros')
+    c.click(BTNX('Tipo de movimentação', within=DLG), w=(10, 'filtros'), primeiro=True, label='Tipo de movimentação')
+    c.click(SEL(f"{POP} button:has-text('Desmarcar todos')"), w=(10, 'Fornecedores'), label='Desmarcar todos')
+    c.press('Escape', label='fecha a lista dos tipos (o painel dos filtros segue aberto)')
+    c.waitfor(gone={'selector': POP}, timeout=4, optional=True)
+    c.click(BTN('Fornecedores', within=DLG), w=(10, 'Clientes:'), label='Fornecedores (abre a lista)')
+    c.click(BTN('Fornecedores', within=DLG), label='Fornecedores de novo (só se a lista não abriu)', unless=OPCAO('Depósito Irmãos Siqueira'))
+    c.waitfor(target=OPCAO('Depósito Irmãos Siqueira'), timeout=8)
+    c.click(OPCAO('Depósito Irmãos Siqueira'), w=(10, 'fornecedor'), label='marca Depósito Irmãos Siqueira')
+    c.press('Escape', label='fecha a lista dos fornecedores')
+    c.click(BTN('Aplicar filtros'), noScroll=True, w=(10, 'compras'), label='Aplicar filtros')
     c.waitfor(gone={'role': 'dialog'}, timeout=8)
-    c.ev(JS_TIPOS, label='tipos na lista (só Compra e Venda)')
-    c.registra(SEL('main tbody'), w=(10, 'saem'), label='a lista sem Transferência, Edição Manual e Exclusão')
-    c.hover(KBADGE('Venda'), 1.2, w=(10, 'cliente.'), label='as vendas continuam')
-    c.click(FILTROS, w=(11, 'ver'), label='Filtros')
+    c.ev(JS_TIPOS, label='tipos na lista (só Compra)')
+    c.registra(SEL('main tbody'), w=(11, 'saem'), label='a lista só com Compra: sem Transferência, Edição Manual, Exclusão nem Venda')
+    c.hover(KBADGE('Compra'), 1.2, w=(11, 'cliente.'), label='só as compras do Siqueira')
+    c.click(FILTROS, w=(12, 'ver'), label='Filtros')
     c.waitfor(text='Filtros do Kardex', timeout=8)
-    c.click(BTN('Limpar filtros'), noScroll=True, w=(11, 'limpar'), label='Limpar filtros')
-    c.click(BTN('Aplicar filtros'), noScroll=True, w=(11, 'filtros.'), label='fecha a folha (a lista volta em Este mês)')
+    c.click(BTN('Limpar filtros'), noScroll=True, w=(12, 'limpar'), label='Limpar filtros')
+    c.click(BTN('Aplicar filtros'), noScroll=True, w=(12, 'filtros.'), label='fecha a folha (a lista volta em Este mês)')
     c.fim()
     return c
 
@@ -645,7 +690,8 @@ def cap06():
     c.hover(ITEM_CEL(2), 1.4, w=(2, 'sessenta'), label='Peso 860 Kg')
     c.hover(ITEM_CEL(3), 1.4, w=(2, 'noventa'), label='Valor Unit. R$ 0,95')
     c.hover(ITEM_CEL(4), 1.2, w=(2, 'dezessete'), label='Total R$ 817,00')
-    c.confere("main table table tbody tr:has-text('Ferro pesado')", ['Ferro pesado', '860 Kg', 'R$ 0,95', 'R$ 817,00'], 'item 860 Kg a R$ 0,95 = R$ 817,00')
+    # `row:` e a tabela de dentro: o seletor `:has-text` é do Playwright e não vale no querySelectorAll do `confere` (varredura 1.60.18)
+    c.confere('main table table', ['Ferro pesado', '860 Kg', 'R$ 0,95', 'R$ 817,00'], 'item 860 Kg a R$ 0,95 = R$ 817,00')
     c.ev(js_rola_ate('Fornecedor:', y=300), w=(3, 'Embaixo,', None, 0.3), label='desce até o Fornecedor')
     c.hover(SEL("main table table div:has(> span:text-is('Fornecedor:'))"), 1.8, w=(3, 'fornecedor,'), label='[ZOOM] Fornecedor: Depósito Irmãos Siqueira')
     c.hover(SEL("main table table div:text-is('Formas de Pagamento')"), 1.2, w=(3, 'pago,'), label='Formas de Pagamento: Pix/Transferência R$ 817,00')
@@ -662,9 +708,94 @@ def cap06():
 
 
 def cap07():
-    """Relatório: menu (recolhido) Materiais > Relatório; Este mês > Mês passado; os quatro cartões; Total Comprado aberto; Projeção de
-    Lucro (estimativa) aberta; L7-L9 ilustrações."""
-    c = Cap(7, setup_estoque())
+    """(NOVO 1.60.18) Achar uma movimentação: (setup: Kardex Geral) busca "cobre" e Ordenar > Nome; Ferro pesado; Filtros > Período >
+    Personalizado 01 a 07/11; volta a Este mês e Quantidade movimentada Igual a 860; Clientes = Aços Quiririm: a venda de 04/11 aberta;
+    Limpar filtros; Exportar > PDF (janela do Kardex); Exportar PDF (o PDF vai para o actions.json); Exportar > Excel; Como funciona?."""
+    c = Cap(7, setup_login() + ESTOQUE + RECOLHE + HIST + [{'do': 'eval', 'js': POPS},
+                                                           {'do': 'scroll', 'point': {'x': 700, 'y': 420}, 'by': 0, 'duration': 0.3, 'after': 0}])
+    BUSCA = SEL("main input[placeholder='Buscar código ou material']")
+    # L1: a busca e o Ordenar da coluna Materiais
+    c.ev(JS_PAPELAO, label='confere o papelão negativo (Kardex Geral) fora da tela')
+    c.type(BUSCA, 'cobre', w=(1, 'busca'), label='[ZOOM] Buscar código ou material: cobre')
+    c.confere('main [role=list]', ['Cobre mel', 'Cobre misto', 'Fio de cobre encapado'], 'a busca "cobre" deixa os três cobres')
+    c.press('Control+a', w=(1, 'ou'), label='seleciona a busca')
+    c.press('Backspace', label='limpa a busca')
+    c.click(BTNX('Ordenar', within='main'), w=(1, 'Ordenar'), label='[ZOOM] Ordenar (Ordenar materiais: Código e Nome)')
+    c.waitfor(text='Ordenar materiais', timeout=6)
+    c.click(SEL(f"{POP} button:has-text('Nome')"), w=(1, 'pra', None, 0.4), label='Nome')
+    c.press('Escape', label='fecha o Ordenar')
+    # L2: Ferro pesado e o período Personalizado
+    c.click(KMAT('Ferro pesado'), w=(2, 'No', None, 0.3), label='Ferro pesado')
+    c.waitfor(target=KROW('Transferência'), timeout=10)
+    c.click(FILTROS, w=(2, 'período'), label='Filtros')
+    c.waitfor(text='Filtros do Kardex', timeout=8)
+    c.click(COMBO('Este mês', DLG), w=(2, 'opções'), primeiro=True, label='Período (abre a lista)')
+    c.click(OPT('Personalizado'), w=(2, 'Personalizado'), label='Personalizado')
+    c.waitfor(target=SEL("table[role=grid]"), timeout=8)
+    c.click(SEL("table[role=grid] button[name='day']:text-is('1')", nth=0), w=(2, 'um'), label='dia 1 (início)')
+    c.click(SEL("table[role=grid] button[name='day']:text-is('7')", nth=0), w=(2, 'sete'), label='dia 7 (fim)')
+    c.pause(0.6)
+    c.press('Escape', label='fecha o calendário')
+    c.ev("(()=>{const d=[...document.querySelectorAll('main tbody tr > td:nth-child(3)')].map(e=>e.innerText.trim().slice(0,5));return 'datas na lista: '+[...new Set(d)].join(', ')+' ('+d.length+' linhas)'})()",
+         label='datas das linhas (a primeira semana de novembro)')
+    # L3: volta a Este mês e a quantidade movimentada
+    c.click(SEL(f'{DLG} button[role=combobox]', nth=0), w=(3, 'quando'), label='Período (abre a lista)')
+    c.click(OPT('Este mês'), label='volta a Este mês')
+    c.click(SEL(f"{DLG} button[aria-label='Operador da quantidade']"), w=(3, 'filtro'), label='Operador da quantidade')
+    c.click(OPT('Igual a'), w=(3, 'Igual'), label='Igual a')
+    c.type(SEL(f'{DLG} #kardex-quantity'), '860', w=(3, 'oitocentos'), label='[ZOOM] Quantidade movimentada: Igual a 860')
+    c.registra(SEL(f"{DLG} #kardex-quantity-help"), w=(3, 'ignora'), label='[ZOOM] Considera o valor sem sinal: 40 encontra +40 e -40.')
+    c.ev(JS_TIPOS, label='linhas com 860 (a compra de 09/11)')
+    c.confere('main tbody', ['+860 Kg'], 'sobra a compra de 09/11 (+860 Kg)')
+    # L4: clientes e a venda aberta
+    c.press('Control+a', w=round(c.L(4) - 1.6, 2), label='seleciona a quantidade')
+    c.press('Backspace', label='limpa a quantidade')
+    c.click(BTN('Clientes', within=DLG), w=(4, 'clientes'), label='Clientes (abre a lista)')
+    c.click(OPCAO('Aços Quiririm Ltda'), w=(4, 'pra'), label='marca Aços Quiririm Ltda')
+    c.press('Escape', label='fecha a lista dos clientes')
+    c.click(BTN('Aplicar filtros'), noScroll=True, w=(4, 'Abrindo', None, 1.4), label='Aplicar filtros')
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.ev(JS_TIPOS, label='tipos na lista (só as vendas dele)')
+    c.click(KCEL('-38.992 Kg', 6), w=(4, 'dia'), label='abre a venda de 04/11')
+    c.waitfor(text='Total do Pedido:', timeout=10)
+    c.registra(SEL("main table table"), w=(4, 'cliente,'), label='[ZOOM] a venda aberta: Cliente, itens, Formas de Pagamento e Total do Pedido')
+    c.confere('main table table', ['Aços Quiririm', 'Formas de Pagamento', 'Total do Pedido:'], 'venda de 04/11: cliente, pagamento e total')
+    # L5: limpar e abrir a janela do Exportar
+    c.click(FILTROS, w=round(c.L(5) - 3.4, 2), label='Filtros')
+    c.waitfor(text='Filtros do Kardex', timeout=8)
+    c.click(BTN('Limpar filtros'), noScroll=True, label='Limpar filtros')
+    c.click(BTN('Aplicar filtros'), noScroll=True, label='fecha a folha')
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.click(BTN('Exportar'), w=(5, 'Exportar,'), label='Exportar (abre o menu)')
+    c.waitfor(target=ITEM('PDF'), timeout=6)
+    c.click(ITEM('PDF'), w=(5, 'janela'), label='PDF')
+    c.waitfor(text='Exportar Kardex (PDF)', timeout=8)
+    c.registra(PD('Escolha o recorte do extrato', exact=False), w=(5, 'mudar'), label='[ZOOM] Escolha o recorte do extrato. Mudar os filtros aqui não altera os filtros da tela.')
+    c.confere('dlg', ['Exportar Kardex (PDF)', 'Escolha o recorte do extrato', 'Ferro pesado'], 'janela do Kardex (PDF) com o Ferro pesado')
+    # L6: exportar o PDF; depois o Excel
+    c.click(BTN('Exportar PDF', within=DLG), w=(6, 'Exportar,'), label='Exportar PDF (o PDF abre noutra aba)')
+    c.waitfor(text='Kardex exportado em PDF', timeout=25)
+    c.ev(PDF_JS, label='PDF do Kardex do Ferro pesado (aba nova, para a ilustração)')
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.pause(0.5)
+    c.click(BTN('Exportar'), w=(6, 'Excel,'), label='Exportar (abre o menu)')
+    c.click(BTN('Exportar'), label='Exportar de novo (só se o menu não abriu)', unless=ITEM('Excel'))
+    c.waitfor(target=ITEM('Excel'), timeout=8)
+    c.click(ITEM('Excel'), w=(6, 'caminho'), label='Excel')
+    c.waitfor(text='Exportar Kardex (Excel)', timeout=8)
+    c.click(BTN('Exportar Excel', within=DLG), label='Exportar Excel (o arquivo baixa)')
+    c.waitfor(text='Kardex exportado em Excel', timeout=15)
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    # L7: o aviso do recorte grande e o Como funciona?
+    c.hover(BTNX('Como funciona?'), 2.4, w=(7, 'Como', None, 0.6), label='[ZOOM] Como funciona? (sem abrir)')
+    c.fim()
+    return c
+
+
+def cap08():
+    """Relatório: menu (recolhido) Materiais > Relatório; Este mês > Mês passado; os quatro cartões; Total Comprado aberto; L6 (1.60.18)
+    Total Vendido e Lucro abertos e a Distribuição por forma de pagamento; Projeção de Lucro (estimativa) aberta; L8-L10 ilustrações."""
+    c = Cap(8, setup_estoque())
     c.hover(MENU_GRUPO('Materiais'), 0.3, w=(1, 'Agora', None, 0.4), noScroll=True, label='menu lateral (o menu recolhido abre)')
     c.click(MENU_GRUPO('Materiais'), noScroll=True, unless=MENU_LINK('Relatório'), label='abre o grupo Materiais')
     c.click(MENU_LINK('Relatório'), w=(1, 'Estoque:'), noScroll=True, label='Relatório')
@@ -682,18 +813,30 @@ def cap07():
     c.waitfor(text='Preço médio de compra', timeout=6)
     c.hover(P('Preço médio de compra', exact=True), 1.0, w=(5, 'preço'), label='Preço médio de compra')
     c.hover(P('Material que mais comprou', exact=True), 1.2, w=(5, 'material'), label='Material que mais comprou')
-    c.click(BTN('Projeção de Lucro'), w=(6, 'Projeção'), label='abre Projeção de Lucro')
-    c.hover(P('Estimativa: assume a venda', exact=False), 1.6, w=(6, 'estimativa.'), label='[ZOOM] explicação da Projeção de Lucro (estimativa)')
+    # L6 (1.60.18): Total Vendido e Lucro abrem do mesmo jeito; a Distribuição por forma de pagamento
+    c.click(BTN('Total Vendido'), w=(6, 'Total'), label='abre Total Vendido')
+    c.waitfor(text='Material que mais vendeu', timeout=6)
+    c.click(BTN('Lucro'), w=(6, 'Lucro'), label='abre Lucro')
+    c.waitfor(text='Material mais lucrativo', timeout=6)
+    c.hover(P('Material que mais vendeu', exact=True), 1.0, w=(6, 'vendeu'), label='Material que mais vendeu')
+    c.hover(P('Material mais lucrativo', exact=True), 1.0, w=(6, 'lucrativo,'), label='Material mais lucrativo e a margem')
+    c.ev(js_rola_ate('Distribuição por forma de pagamento', y=300, prefixo=True), w=(6, 'embaixo', None, 0.3), label='desce até a Distribuição por forma de pagamento')
+    c.hover(P('Distribuição por forma de pagamento', exact=True, nth=0), 2.6, w=(6, 'dinheiro,'), label='[ZOOM] Distribuição por forma de pagamento: Dinheiro, Pix/Transferência, Saldo e Em aberto')
+    c.confere('main', ['Distribuição por forma de pagamento', 'Dinheiro', 'Pix/Transferência', 'Saldo', 'Em aberto'], 'a distribuição por forma de pagamento')
+    c.ev(js_rola_topo(), w=(7, 'A', None, 0.9), label='volta ao topo')
+    c.click(BTN('Projeção de Lucro'), w=(7, 'Projeção'), label='abre Projeção de Lucro')
+    c.hover(P('Estimativa: assume a venda', exact=False), 1.6, w=(7, 'estimativa.'), label='[ZOOM] explicação da Projeção de Lucro (estimativa)')
     c.confere('main', ['Total Comprado', 'Total Vendido', 'Lucro', 'Projeção de Lucro', 'Preço médio de compra', 'Material que mais comprou'], 'os quatro cartões e os detalhes')
-    # L7-L9: ilustrações (robô parado)
+    # L8-L10: ilustrações (robô parado)
     c.fim()
     return c
 
 
-def cap08():
+def cap09():
     """Material por material: (setup: Mês passado) Detalhamento; Cobre mel 980,000 / R$ 41.650,00 / R$ 42,50; L3 ilustração; 1.000,000 /
-    R$ 47.900,00 / R$ 47,90; L5 ilustração; Lucro s/ Vendas (cabeçalho e R$ 5.400,00); Bateria automotiva 1.320,000 e 0,000."""
-    c = Cap(8, setup_relatorio('Mês passado'))
+    R$ 47.900,00 / R$ 47,90; L5 ilustração; Lucro s/ Vendas (cabeçalho e R$ 5.400,00); Bateria automotiva 1.320,000 e 0,000; L8 (1.60.18) o
+    balão do Resultado da bateria (R$ 0,00, nunca negativo)."""
+    c = Cap(9, setup_relatorio('Mês passado'))
     c.ev(js_rola_ate('Detalhamento por Material', y=110, dur_ms=900), w=(1, 'Embaixo', None, 0.0), label='desce até o Detalhamento por Material')
     c.hover(RCEL('Cobre mel', 2), 0.6, w=(2, 'cobre'), label='linha Cobre mel')
     c.registra(SEL("main tbody tr:has-text('Cobre mel')"), w=(2, 'outubro:'), label='[ZOOM] Cobre mel: Qtd. Comprada 980,000, Valor Comprado R$ 41.650,00, Preço Médio Compra R$ 42,50')
@@ -714,14 +857,17 @@ def cap08():
     c.hover(RCEL('Bateria automotiva', 3), 1.4, w=(7, 'trezentos'), label='[ZOOM] Bateria automotiva: Qtd. Comprada 1.320,000')
     c.hover(RCEL('Bateria automotiva', 6), 1.4, w=(7, 'erro.'), label='[ZOOM] Bateria automotiva: Qtd. Vendida 0,000')
     c.confere('row:Bateria automotiva', ['1.320,000', 'R$ 4.092,00', '0,000'], 'Bateria automotiva 1.320,000 comprados e 0,000 vendidos')
+    # L8 (1.60.18): o balão do Resultado (R$ 0,00 e a conta inteira)
+    c.hover(RCEL('Bateria automotiva', 10), 4.0, w=(8, 'Resultado', 0), label='[ZOOM] Resultado da bateria (R$ 0,00) e o balão da conta')
+    c.confere(POP, ['vendidos', 'comprados', 'prejuízo', 'R$ 0,00'], 'o balão do Resultado: vendidos, comprados, prejuízo e Lucro exibido R$ 0,00')
     c.fim()
     return c
 
 
-def cap09():
+def cap10():
     """Fornecedor: (setup: Mês passado) Fornecedores > Depósito Irmãos Siqueira: só Total Comprado e as colunas de compra; L2 ilustração;
     a tabela só de compra; tira o filtro."""
-    c = Cap(9, setup_relatorio('Mês passado'))
+    c = Cap(10, setup_relatorio('Mês passado'))
     c.click(BTN('Fornecedores'), w=(1, 'filtro'), label='filtro Fornecedores (abre a lista)')
     c.waitfor(target=OPCAO('Depósito Irmãos Siqueira'), timeout=6)
     c.click(OPCAO('Depósito Irmãos Siqueira'), w=(1, 'Depósito'), label='marca Depósito Irmãos Siqueira')
@@ -742,10 +888,61 @@ def cap09():
     return c
 
 
-def cap10():
+def cap11():
+    """(NOVO 1.60.18) Clientes, usuários e grupos: (setup: Relatório em Mês passado) Clientes = Fundição Bandeira do Vale; Usuários = Marcos
+    Antunes; Grupos = Cobre; Por grupo (Subtotal ...); Ocultar itens zerados; ordena pelo título Resultado e desce até TOTAL. Cada filtro
+    é desmarcado (chip, opção, Escape) nos ~2 s antes do seguinte."""
+    c = Cap(11, setup_relatorio('Mês passado'))
+
+    def solta(chip, opcao_label, prox):
+        """desmarca o filtro (o chip leva o nome do que foi marcado): chip, opção, Escape, nos 2,2 s antes da linha `prox`"""
+        c.click(BTN(chip), w=round(c.L(prox) - 2.2, 2), label=f'chip {chip} (abre a lista)')
+        c.click(OPCAO(opcao_label), w=round(c.L(prox) - 1.4, 2), label=f'desmarca {opcao_label}')
+        c.press('Escape', w=round(c.L(prox) - 0.7, 2), label='fecha a lista')
+    # L1: clientes
+    c.click(BTN('Clientes'), w=(1, 'clientes'), label='Clientes (abre a lista)')
+    c.waitfor(target=OPCAO('Fundição Bandeira do Vale'), timeout=6)
+    c.click(OPCAO('Fundição Bandeira do Vale'), w=(1, 'Fundição'), label='marca Fundição Bandeira do Vale')
+    c.press('Escape', w=(1, 'Vale,'), label='fecha a lista')
+    c.hover(TH('Qtd. Vendida'), 1.2, w=(1, 'quanto'), label='[ZOOM] as colunas de venda só com a Fundição; as de compra não mudam')
+    solta('Fundição Bandeira do Vale', 'Fundição Bandeira do Vale', 2)
+    # L2: usuários
+    c.click(BTN('Usuários'), w=(2, 'usuários'), label='Usuários (abre a lista)')
+    c.waitfor(target=OPCAO('Marcos Antunes'), timeout=6)
+    c.click(OPCAO('Marcos Antunes'), w=(2, 'pessoa'), label='marca Marcos Antunes')
+    c.press('Escape', w=(2, 'lançou.'), label='fecha a lista')
+    c.hover(BTN('Total Comprado'), 1.2, w=(2, 'compras'), label='[ZOOM] só o que o Marcos lançou')
+    solta('Marcos Antunes', 'Marcos Antunes', 3)
+    # L3: grupos
+    c.click(BTN('Grupos'), w=(3, 'grupos'), label='Grupos (abre a lista)')
+    c.waitfor(target=OPCAO('Cobre'), timeout=6)
+    c.click(OPCAO('Cobre'), w=(3, 'Cobre', 0), label='marca o grupo Cobre')
+    c.press('Escape', (3, 'e', 1), label='fecha a lista')
+    c.hover(BTN('Total Comprado'), 1.0, w=(3, 'cartões'), label='[ZOOM] os cartões somam só o cobre')
+    solta('Cobre', 'Cobre', 4)
+    # L4: Por grupo
+    c.click(SEL("main [aria-label='Ver por grupo']"), w=(4, 'Por'), label='Por grupo')
+    c.ev(js_rola_ate('Subtotal Cobre', y=420, prefixo=True), w=(4, 'cada', None, 0.3), label='desce até o Subtotal Cobre')
+    c.hover(P('Subtotal Cobre', nth=0, exact=False), 1.2, w=(4, 'faixa'), label='[ZOOM] Subtotal Cobre')
+    c.confere('main', ['Subtotal Ferrosos', 'Subtotal Cobre'], 'Por grupo: Subtotal Ferrosos e Subtotal Cobre')
+    # L5: volta a Por material e Ocultar itens zerados
+    c.ev(js_rola_ate('Detalhamento por Material', y=110), w=round(c.L(5) - 1.8, 2), label='volta ao cabeçalho do Detalhamento')
+    c.click(SEL("main [aria-label='Ver por material']"), w=round(c.L(5) - 0.8, 2), label='Por material')
+    c.click(BTN('Ocultar itens zerados'), w=(5, 'Ocultar'), label='[ZOOM] Ocultar itens zerados')
+    c.hover(SEL('main tbody'), 1.6, w=(5, 'lembra'), label='some o que não girou no mês')
+    # L6: ordena por Resultado e a linha TOTAL
+    c.click(TH('Resultado'), w=(6, 'Resultado'), label='ordena pelo título Resultado')
+    c.ev(js_rola_ate('TOTAL', y=470), w=(6, 'última', None, 0.3), label='desce até a linha TOTAL')
+    c.hover(SEL("main tbody tr:has-text('TOTAL')", nth=-1), 1.6, w=(6, 'soma'), label='[ZOOM] a linha TOTAL')
+    c.fim()
+    return c
+
+
+def cap12():
     """Posição: Estoque > Posição de Estoque (hoje 23:59); Ferro pesado 2.500,000; L3 ilustração; calendário > outubro > 31; Ver posição;
-    Ferro pesado 41.860,000; Valor, Projeção venda, Total geral."""
-    c = Cap(10, setup_estoque())
+    Ferro pesado 41.860,000; L7 (1.60.18) hora 12:00 (41.874,000) e volta a 23:59; Valor e Projeção venda; Por grupo; Total geral; a nota
+    do rodapé inteira."""
+    c = Cap(12, setup_estoque())
     c.click(BTN('Posição de Estoque'), w=(1, 'Posição'), label='Posição de Estoque (coluna Tabelas de Preço)')
     c.waitfor(text='Escolha a data', timeout=15)
     c.hover(DATA_BTN('10/11/2026'), 0.8, w=(1, 'hoje,'), label='data de hoje: 10/11/2026')
@@ -764,52 +961,89 @@ def cap10():
     c.waitfor(text='Posição de estoque em 31/10/2026 23:59', timeout=15)
     c.hover(PCEL('Ferro pesado', 4), 3.0, w=(6, 'ferro'), label='[ZOOM] Ferro pesado, Saldo 41.860,000 em 31/10')
     c.confere('row:Ferro pesado', ['Ferro pesado', '41.860,000'], 'Ferro pesado em 31/10: 41.860,000')
-    c.hover(TH('Valor'), 1.2, w=(7, 'valor'), label='coluna Valor')
-    c.hover(TH('Projeção venda'), 1.2, w=(7, 'projeção,'), label='coluna Projeção venda')
-    c.ev(js_rola_ate('Total geral', y=470), w=(7, 'Embaixo,', None, 0.6), label='desce até o Total geral e a nota do rodapé')
-    c.hover(TXT('Total geral'), 1.2, w=(7, 'total'), label='[ZOOM] linha Total geral e a nota do rodapé')
-    c.confere('main', ['Total geral', 'Valor = saldo × custo médio das compras até a data', 'Projeção = saldo × preço de venda atual'], 'Total geral e a nota')
+    # L7 (1.60.18): a hora 12:00 (antes da contagem das 12:40) e de volta a 23:59
+    c.hover(HORA, 1.0, w=(7, 'mudar'), label='[ZOOM] Hora')
+    c.ev(JS_HORA % '12:00', w=(7, 'hora.', None, 0.0), label='troca a hora para 12:00')
+    c.click(BTN('Ver posição'), w=(7, 'Ao'), label='Ver posição (12:00)')
+    c.waitfor(text='Posição de estoque em 31/10/2026 12:00', timeout=15)
+    c.hover(PCEL('Ferro pesado', 4), 3.0, w=(7, 'quarenta'), label='[ZOOM] Ferro pesado, Saldo ao meio-dia de 31/10')
+    c.confere('row:Ferro pesado', ['Ferro pesado', '41.874,000'], 'Ferro pesado às 12:00 de 31/10: 41.874,000')
+    c.ev(JS_HORA % '23:59', w=round(c.L(8) - 2.6, 2), label='volta a hora para 23:59')
+    c.click(BTN('Ver posição'), w=round(c.L(8) - 1.6, 2), label='Ver posição (23:59)')
+    c.waitfor(text='Posição de estoque em 31/10/2026 23:59', timeout=15)
+    # L8: Valor e Projeção venda
+    c.hover(TH('Valor'), 1.2, w=(8, 'valor'), label='coluna Valor')
+    c.hover(TH('Projeção venda'), 1.2, w=(8, 'projeção,'), label='coluna Projeção venda')
+    # L9: Por grupo
+    c.click(SEL("main [aria-label='Ver por grupo']"), w=(9, 'Por', 0), label='Por grupo')
+    c.confere('main', ['Subtotal Ferrosos'], 'Por grupo: Subtotal Ferrosos')
+    c.hover(P('Subtotal Ferrosos', nth=0, exact=False), 1.6, w=(9, 'subtotal'), label='[ZOOM] Subtotal Ferrosos')
+    c.click(SEL("main [aria-label='Ver por material']"), w=round(c.L(10) - 1.6, 2), label='Por material')
+    # L10: Total geral
+    c.ev(js_rola_ate('Total geral', y=470), w=(10, 'Embaixo,', None, 0.6), label='desce até o Total geral')
+    c.hover(TXT('Total geral'), 1.0, w=(10, 'total'), label='[ZOOM] linha Total geral')
+    c.confere('main', ['Total geral'], 'Total geral')
+    # L11: a nota do rodapé
+    c.hover(SEL("main p:has-text('Valores negativos indicam')", nth=0), 3.0, w=(11, 'negativo'), label='[ZOOM] a nota do rodapé inteira')
+    c.confere('main', ['Valor = saldo × custo médio das compras até a data', 'Projeção = saldo × preço de venda atual',
+                       'Valores negativos indicam movimentações lançadas fora da ordem cronológica',
+                       'Itens sem compra registrada até a data aparecem sem valorização'], 'a nota do rodapé: as quatro frases')
     c.fim()
     return c
 
 
-def cap11():
-    """Exportar: (setup: Posição em 31/10 23:59) Exportar > PDF: colunas e materiais; Exportar (o PDF fica no actions.json); Exportar >
-    Excel > Exportar; corte: Exportar do Histórico (PDF, Excel) e Exportar Relatório."""
+def cap13():
+    """Exportar: (setup: Posição em 31/10 23:59) Exportar > PDF: colunas (tira e põe "Valor do estoque") e materiais; Exportar (o PDF vai
+    para o actions.json); Exportar > Excel > Exportar; Relatório de Estoque de outubro: Exportar Relatório (a aba HTML vai para o
+    actions.json); Estoque Fiscal só falado."""
     st = setup_estoque() + POS + escolhe_31_10() + [{'do': 'eval', 'js': JS_PDF_GANCHO},
                                                     {'do': 'scroll', 'point': {'x': 700, 'y': 420}, 'by': 0, 'duration': 0.2, 'after': 0}]
-    c = Cap(11, st)
+    c = Cap(13, st)
     c.click(BTN('Exportar'), w=(1, 'Exportar,', 1), label='Exportar (abre o menu)')
     c.waitfor(target=ITEM('PDF'), timeout=6)
     c.click(ITEM('PDF'), w=(1, 'PDF.'), label='PDF')
     c.waitfor(text='Exportar estoque (PDF)', timeout=8)
     c.hover(PD('Colunas do arquivo', exact=True), 1.0, w=(2, 'colunas'), label='Colunas do arquivo')
-    c.hover(PD('Materiais', exact=True), 0.8, w=(2, 'materiais'), label='Materiais')
-    c.hover(SEL(f"{DLG} span:has-text(' materiais')"), 1.6, w=(2, 'guarda'), label='rodapé: N de N materiais')
     c.confere('dlg', ['Código', 'Material', 'Unidade', 'Saldo', 'Valor do estoque', 'Projeção de venda', 'materiais'], 'as seis colunas e o rodapé')
+    COL = {'role': 'checkbox', 'name': 'Valor do estoque', 'exact': True, 'within': DLG}
+    c.hover(PD('Grupos', exact=True), 0.8, w=(2, 'arquivo'), label='Grupos (a escolha por família)')
+    c.hover(BTNX('Marcar todos', within=DLG), 0.8, w=(2, 'Não'), label='Marcar todos / Desmarcar todos')
+    c.click(COL, w=(2, 'tirar'), label='[ZOOM] desmarca a coluna Valor do estoque')
+    c.click(COL, w=(2, 'guarda', None, 1.8), label='marca a coluna Valor do estoque de novo')
+    c.hover(SEL(f"{DLG} span:has-text(' materiais')"), 1.6, w=(2, 'escolha'), label='rodapé: N de N materiais')
+    c.confere('dlg', ['Valor do estoque', 'materiais'], 'a coluna Valor do estoque marcada de novo')
     c.click(BTN('Exportar', within=DLG), w=(3, 'Exportar,'), label='Exportar (o PDF abre noutra aba)')
     c.waitfor(text='Posição de estoque exportada em PDF', timeout=15)
     c.ev(js_pdf(0, 'posicao-estoque-31-10-pdf'), label='PDF da posição de 31/10 (para a edição mostrar a aba)')
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.pause(0.5)
     c.click(BTN('Exportar'), w=(4, 'contador'), label='Exportar (abre o menu)')
+    c.click(BTN('Exportar'), label='Exportar de novo (só se o menu não abriu)', unless=ITEM('Excel'))
+    c.waitfor(target=ITEM('Excel'), timeout=8)
     c.click(ITEM('Excel'), w=(4, 'mesmo'), label='Excel')
     c.waitfor(text='Exportar estoque (Excel)', timeout=8)
     c.click(BTN('Exportar', within=DLG), w=(4, 'baixa'), primeiro=True, label='Exportar (o arquivo baixa)')
     c.waitfor(text='Posição de estoque exportada em Excel', timeout=15)
-    c.goto('/historico-materiais', w=(5, 'O', 0, 1.4), label='corte: Histórico de Materiais')
-    c.click(BTN('Exportar'), w=(5, 'Histórico'), label='Exportar do Histórico (PDF, Excel)')
-    c.waitfor(target=ITEM('Excel'), timeout=6)
-    c.ev(JS_PAPELAO, label='confere o papelão negativo (Kardex Geral) fora da tela')
-    c.press('Escape', w=(5, 'Relatório', None, 0.2), label='fecha o menu')
-    c.goto('/relatorio-estoque', w=(5, 'também', None, 0.4), label='corte: Relatório de Estoque')
-    c.hover(BTN('Exportar Relatório'), 1.4, w=(5, 'cada'), label='Exportar Relatório')
+    # L5: o Relatório de Estoque de outubro e o Exportar Relatório
+    c.goto('/relatorio-estoque', w=(5, 'O', 0, 1.4), label='corte: Relatório de Estoque')
+    c.waitfor(text='Análise detalhada de compras, vendas e lucro por material', timeout=15)
+    c.ev(POPS, label='guarda as abas que o app abrir')
+    c.click(COMBO('Este mês'), w=(5, 'Histórico'), label='período (abre a lista)')
+    c.click(OPT('Mês passado'), w=(5, 'já'), label='Mês passado')
+    c.pause(0.8)
+    c.click(BTN('Exportar Relatório'), w=(5, 'pelo'), label='Exportar Relatório (a aba abre)')
+    c.ev(html_js(['Relatório de Estoque', 'Cobre mel']), label='HTML do Relatório de Estoque de outubro (aba nova, para a ilustração)')
+    # L6: o Estoque Fiscal só falado
+    c.cursor((760, 420), w=(6, 'Quem', None, 0.0), label='o cursor sai do botão')
     c.fim()
     return c
 
 
-def cap12():
+def cap14():
     """Recapitulando (a edição monta por cima): Estoque depois da transferência; Kardex do Ferro pesado com a compra aberta e as fotos;
-    Relatório de outubro no Cobre mel e o filtro Fornecedores; Posição de 31/10 e o Exportar."""
-    c = Cap(12, setup_estoque())
+    L3 a busca por 860 e a venda de 04/11 (montagem); Relatório de outubro no Cobre mel e o filtro Fornecedores; L5 clientes, usuários e
+    grupos; Posição de 31/10 e o Exportar."""
+    c = Cap(14, setup_estoque())
     c.ev(js_rola_ate('Lista de Materiais', y=110), w=(1, 'conferiu', None, 0.3), label='a Lista de Materiais')
     c.hover(CELULA('Ferro misto', 4), 1.4, w=(1, 'transferiu'), label='Ferro misto 6.100 Kg')
     c.hover(CELULA('Ferro pesado', 4), 0.6, w=(1, 'ferro', 1), label='Ferro pesado 2.500 Kg')
@@ -821,25 +1055,29 @@ def cap12():
     c.click(KCEL('+860 Kg', 6), w=(2, 'abriu'), label='abre a compra de 09/11')
     c.waitfor(text='Fotos anexadas', timeout=10)
     c.ev(js_rola_ate('Fotos anexadas', y=420), w=(2, 'pagamento', None, 0.3), label='o pedido, o pagamento e as fotos')
-    c.goto('/relatorio-estoque', w=(3, 'No', None, 0.9), label='Relatório de Estoque')
-    c.click(COMBO('Este mês'), w=(3, 'comprado,'), label='período')
-    c.click(OPT('Mês passado'), w=(3, 'vendido,'), label='Mês passado')
-    c.ev(js_rola_ate('Cobre mel', y=420), w=(3, 'resultado', None, 0.5), label='a linha do Cobre mel')
-    c.hover(RCEL('Cobre mel', 10), 0.8, w=(3, 'margem'), label='Resultado e Margem do Cobre mel')
-    c.ev(js_rola_topo(), w=(3, 'por', None, 0.3), label='volta ao topo')
-    c.hover(BTN('Fornecedores'), 0.8, w=(3, 'fornecedor'), label='filtro Fornecedores')
-    c.goto('/materiais/posicao-estoque', w=(4, 'E', 0, 0.9), label='Posição de Estoque')
-    c.click(DATA_BTN('10/11/2026'), w=(4, 'foto'), label='data')
-    c.click(PREV_MES, w=(4, 'estoque'), label='outubro')
-    c.click(DIA('31'), w=(4, 'trinta'), label='dia 31')
-    c.click(BTN('Ver posição'), w=(4, 'exportada'), label='Ver posição')
+    # L3: ilustração/montagem (a busca por 860 e a venda aberta): o robô fica na compra aberta
+    c.goto('/relatorio-estoque', w=(4, 'No', None, 0.9), label='Relatório de Estoque')
+    c.click(COMBO('Este mês'), w=(4, 'comprado,'), label='período')
+    c.click(OPT('Mês passado'), w=(4, 'vendido,'), label='Mês passado')
+    c.ev(js_rola_ate('Cobre mel', y=420), w=(4, 'resultado', None, 0.5), label='a linha do Cobre mel')
+    c.hover(RCEL('Cobre mel', 10), 0.8, w=(4, 'margem'), label='Resultado e Margem do Cobre mel')
+    c.ev(js_rola_topo(), w=(4, 'por', None, 0.3), label='volta ao topo')
+    c.hover(BTN('Fornecedores'), 0.8, w=(4, 'fornecedor'), label='filtro Fornecedores')
+    c.hover(BTN('Clientes'), 0.6, w=(5, 'cliente,'), label='filtro Clientes')
+    c.hover(BTN('Usuários'), 0.6, w=(5, 'usuário'), label='filtro Usuários')
+    c.hover(BTN('Grupos'), 0.6, w=(5, 'grupo'), label='filtro Grupos')
+    c.goto('/materiais/posicao-estoque', w=(6, 'E', 0, 0.9), label='Posição de Estoque')
+    c.click(DATA_BTN('10/11/2026'), w=(6, 'foto'), label='data')
+    c.click(PREV_MES, w=(6, 'estoque'), label='outubro')
+    c.click(DIA('31'), w=(6, 'trinta'), label='dia 31')
+    c.click(BTN('Ver posição'), w=(6, 'exportada'), label='Ver posição')
     c.waitfor(text='Posição de estoque em 31/10/2026 23:59', timeout=15)
-    c.hover(BTN('Exportar'), 1.0, w=(4, 'Excel'), label='Exportar (PDF e Excel)')
+    c.hover(BTN('Exportar'), 1.0, w=(6, 'Excel'), label='Exportar (PDF e Excel)')
     c.fim()
     return c
 
 
-CAPS = {f'{n:02d}': globals()[f'cap{n:02d}'] for n in range(13)}
+CAPS = {f'{n:02d}': globals()[f'cap{n:02d}'] for n in range(15)}
 
 if __name__ == '__main__':
     pedidos = sys.argv[1:] or sorted(CAPS)

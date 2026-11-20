@@ -1,0 +1,502 @@
+{
+ "name": "t10-cap13",
+ "title": "T10 · Cap. 13 · Exportar para o contador (narração 59,8 s ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário rafael)",
+ "seed": "t10-cap13",
+ "pace": 0.5,
+ "cps": 14,
+ "tail": 1.5,
+ "start": {
+  "x": 700,
+  "y": 300
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.60.18",
+  "notification_shown_version": "1.60.18",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true",
+  "cato_adoption_nudge_38814e47-876a-5977-a5f7-53af364c17bb_34c36c63-0890-5e89-8963-7c77b7996908": "{\"count\":99,\"lastShownAt\":0}"
+ },
+ "seedExtra": [
+  "t10/inicio",
+  "t10/apos-cap03"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/login"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "input[type=email]"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "input[type=email]"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "input[type=password]"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[type=submit]"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 40
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/materiais"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie os materiais do estoque",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "header button:has(svg.lucide-panel-left-close), header button:has(svg.lucide-panel-left)"
+   },
+   "noScroll": true
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 700,
+    "y": 420
+   },
+   "by": 0,
+   "duration": 0.2,
+   "after": 0
+  },
+  {
+   "do": "goto",
+   "url": "/materiais/posicao-estoque"
+  },
+  {
+   "do": "waitFor",
+   "text": "Escolha a data",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button:has(svg.lucide-calendar):has-text('10/11/2026')"
+   }
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button[name='previous-month']"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button[name='previous-month']"
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button[name='day']:text-is('31')"
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.5
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ver posição",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Posição de estoque em 31/10/2026 23:59",
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__pdfs)return 'ja';window.__pdfs=[];const o=URL.createObjectURL.bind(URL);URL.createObjectURL=(b)=>{try{if(b&&b.type==='application/pdf')window.__pdfs.push(b)}catch(e){}return o(b)};return 'gancho'})()"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 700,
+    "y": 420
+   },
+   "by": 0,
+   "duration": 0.2,
+   "after": 0
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=new RegExp(\"N[\\u00e3a]o foi poss[i\\u00ed]vel|Erro ao|Tente novamente|indispon[i\\u00ed]vel|Algo deu errado|Something went wrong|Falha ao|Pop-up bloqueado|Popup bloqueado|Sem permiss[\\u00e3a]o\",'i');const ign=new RegExp(\"$^\",'i');const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&!ign.test(m[0])&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Exportar",
+    "exact": true
+   },
+   "at": 4.18,
+   "label": "Exportar (abre o menu)"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "menuitem",
+    "name": "PDF"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "PDF"
+   },
+   "at": 5.7,
+   "label": "PDF"
+  },
+  {
+   "do": "waitFor",
+   "text": "Exportar estoque (PDF)",
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 6.68
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Colunas do arquivo",
+    "within": "[role=dialog]",
+    "exact": true
+   },
+   "seconds": 1.0,
+   "at": 8.63,
+   "label": "Colunas do arquivo",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Código\", \"Material\", \"Unidade\", \"Saldo\", \"Valor do estoque\", \"Projeção de venda\", \"materiais\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere as seis colunas e o rodapé"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Grupos",
+    "within": "[role=dialog]",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "at": 10.6,
+   "label": "Grupos (a escolha por família)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Marcar todos",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "at": 11.29,
+   "label": "Marcar todos / Desmarcar todos",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "checkbox",
+    "name": "Valor do estoque",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 13.87,
+   "label": "[ZOOM] desmarca a coluna Valor do estoque"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "checkbox",
+    "name": "Valor do estoque",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 15.81,
+   "label": "marca a coluna Valor do estoque de novo"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] span:has-text(' materiais')"
+   },
+   "seconds": 1.6,
+   "at": 17.97,
+   "label": "rodapé: N de N materiais",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Valor do estoque\", \"materiais\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a coluna Valor do estoque marcada de novo"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 19.87
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Exportar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 20.07,
+   "label": "Exportar (o PDF abre noutra aba)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Posição de estoque exportada em PDF",
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{for(let i=0;i<30&&!(window.__pdfs&&window.__pdfs.length>0);i++)await new Promise(r=>setTimeout(r,200));const b=window.__pdfs&&window.__pdfs[0];if(!b)return 'SEM PDF';const u=new Uint8Array(await b.arrayBuffer());let s='';for(let i=0;i<u.length;i+=8192)s+=String.fromCharCode.apply(null,u.subarray(i,i+8192));return {pdf:\"posicao-estoque-31-10-pdf\",bytes:u.length,b64:btoa(s)}})()",
+   "label": "PDF da posição de 31/10 (para a edição mostrar a aba)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "pause",
+   "seconds": 0.5
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 26.97
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Exportar",
+    "exact": true
+   },
+   "at": 27.55,
+   "label": "Exportar (abre o menu)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Exportar",
+    "exact": true
+   },
+   "label": "Exportar de novo (só se o menu não abriu)",
+   "unless": {
+    "role": "menuitem",
+    "name": "Excel"
+   }
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "menuitem",
+    "name": "Excel"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Excel"
+   },
+   "at": 29.98,
+   "label": "Excel"
+  },
+  {
+   "do": "waitFor",
+   "text": "Exportar estoque (Excel)",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Exportar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 31.2,
+   "label": "Exportar (o arquivo baixa)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Posição de estoque exportada em Excel",
+   "timeout": 15
+  },
+  {
+   "do": "goto",
+   "url": "/relatorio-estoque",
+   "at": 32.75,
+   "label": "corte: Relatório de Estoque"
+  },
+  {
+   "do": "waitFor",
+   "text": "Análise detalhada de compras, vendas e lucro por material",
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const o=window.open;window.__pops=[];window.open=function(...a){const w=o.apply(this,a);window.__pops.push(w);return w};return 'ok'})()",
+   "label": "guarda as abas que o app abrir"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 33.25
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[role=combobox]",
+    "hasText": "Este mês"
+   },
+   "at": 33.6,
+   "label": "período (abre a lista)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Mês passado"
+   },
+   "at": 34.96,
+   "label": "Mês passado"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Exportar Relatório",
+    "exact": true
+   },
+   "at": 37.47,
+   "label": "Exportar Relatório (a aba abre)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{let w;for(let i=0;i<60&&!(w=(window.__pops||[]).slice(-1)[0]);i++)await new Promise(r=>setTimeout(r,250));if(!w)return 'SEM JANELA';const espera=[\"Relatório de Estoque\", \"Cobre mel\"];for(let i=0;i<60;i++){let t='';try{t=(w.document&&w.document.documentElement&&w.document.documentElement.textContent)||''}catch(e){return 'ERRO '+e}if(t&&espera.every(x=>t.toLowerCase().includes(x.toLowerCase()))){const h='<!doctype html>'+w.document.documentElement.outerHTML;const u=new TextEncoder().encode(h);let s='';for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'HTML:'+btoa(s)}await new Promise(r=>setTimeout(r,250))}let d='';try{d=' pops='+window.__pops.length+' fechada='+w.closed+' texto='+((w.document.documentElement&&w.document.documentElement.textContent)||'').slice(0,160)}catch(e){d=' '+e}return 'SEM HTML'+d})()",
+   "label": "HTML do Relatório de Estoque de outubro (aba nova, para a ilustração)"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 47.11
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 420
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 48.01,
+   "label": "o cursor sai do botão"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 59.84
+  }
+ ]
+}

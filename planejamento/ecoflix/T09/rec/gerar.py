@@ -413,8 +413,9 @@ def cap02():
     c.mark(4)
     c.hover(SEL("main thead th:has-text('Data')"), 0.2, at=c.A(4, 'Data,', 0.6), label='cabeçalho Data (ordena)')
     c.hover(SEL("main thead th:has-text('N° Pedidos')"), 0.2, at=c.A(4, 'número', 0.6), label='cabeçalho N° Pedidos (ordena)')
-    c.click(SEL("main thead th:has-text('Valor')"), at=c.A(4, 'Valor,', 0.6), label='clica em Valor: a lista ordena do maior para o menor')
-    c.click(SEL("main thead th:has-text('Data')"), at=c.A(4, 'ordem.', 0.2), label='clica em Data: volta à ordem por data')
+    c.click(SEL("main thead th:has-text('Valor')"), at=c.A(4, 'Valor,', 0.6), label='clica em Valor: a lista ordena do menor para o maior')
+    c.ev("(()=>{const th=[...document.querySelectorAll('main thead th')].find(t=>t.innerText.trim().startsWith('Data'));if(!th)return 'SEM ALVO';th.click();th.click();return 'Data: 2 cliques (asc e desc)'})()",
+         at=c.A(4, 'ordem.', 0.3), label='volta à ordem por data, a mais nova primeiro (Data: asc e desc; o primeiro clique numa coluna nova é crescente)')
     c.hover(TXTX('por página', within='main'), 0.8, at=c.A(4, 'rodapé', 0.6), label='[DESTAQUE] rodapé: itens por página', optional=True)
     c.mark(5)
     c.ev(js_ate_el("[...document.querySelectorAll('main tbody tr')].find(t=>/Pix/.test(t.innerText)&&t.innerText.includes('Compra'))||document.querySelector('main tbody tr')", y=300, dur_ms=700),
@@ -474,7 +475,7 @@ def js_campo_filtro(k, busca=None):
     """abre o k-ésimo campo do painel "Filtrar pedidos" (0 Tipo, 1 Material, 2 Forma de Pagamento) por .click(); com `busca`, digita
     na busca da lista (setter nativo + evento input, como o React espera)"""
     bus = ('' if busca is None else
-           "for(let i=0;i<20;i++){const inp=[...document.querySelectorAll('[data-radix-popper-content-wrapper] input[placeholder=\'Buscar...\']')].pop();"
+           "for(let i=0;i<20;i++){const inp=[...document.querySelectorAll('[data-radix-popper-content-wrapper] input[placeholder=\\'Buscar...\\']')].pop();"
            "if(inp){Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set.call(inp,%s);inp.dispatchEvent(new Event('input',{bubbles:true}));return 'aberto e buscou'}"
            "await new Promise(r=>setTimeout(r,100));}return 'SEM ALVO (busca)';" % json.dumps(busca))
     return ("(async()=>{const p=[...document.querySelectorAll('[data-radix-popper-content-wrapper]')].find(w=>w.innerText.includes('Filtrar pedidos'));"

@@ -1,6 +1,6 @@
 {
  "name": "t10-cap04",
- "title": "T10 · Cap. 4 · O Kardex, linha a linha (narração 79,0 s ESTIMADA; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário rafael)",
+ "title": "T10 · Cap. 4 · O Kardex, linha a linha (narração 85,8 s ESTIMADA; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário rafael)",
  "seed": "t10-cap04",
  "pace": 0.5,
  "cps": 14,
@@ -16,7 +16,8 @@
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
-  "initial-preferences-set": "true"
+  "initial-preferences-set": "true",
+  "cato_adoption_nudge_38814e47-876a-5977-a5f7-53af364c17bb_34c36c63-0890-5e89-8963-7c77b7996908": "{\"count\":99,\"lastShownAt\":0}"
  },
  "seedExtra": [
   "t10/inicio",
@@ -327,18 +328,61 @@
   {
    "do": "hover",
    "target": {
-    "selector": "main button:has(> svg.lucide-list-filter)"
+    "selector": "main tbody tr:has-text('+860 Kg') > td:nth-child(2)"
    },
    "seconds": 1.0,
-   "at": 60.26,
-   "label": "Filtros (sem contador): o Histórico abre em Este mês",
+   "at": 59.73,
+   "label": "[ZOOM] coluna Usuário da Compra de 09/11",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('+860 Kg') > td:nth-child(5)"
+   },
+   "seconds": 0.44,
+   "at": 63.29,
+   "label": "[ZOOM] coluna Pedido da Compra de 09/11 (o número do pedido)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L8",
-   "at": 64.43
+   "at": 64.28
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('+860 Kg') > td:nth-child(5)"
+   },
+   "seconds": 0.56,
+   "at": 64.28,
+   "label": "[ZOOM] coluna Pedido da Compra de 09/11 (o número do pedido) (continua)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Compra\", \"#\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody tr\")].filter(e=>!true||e.innerText.includes(\"+860 Kg\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a Compra de 09/11 mostra usuário e o número do pedido"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button:has(> svg.lucide-list-filter)"
+   },
+   "seconds": 1.0,
+   "at": 67.06,
+   "label": "Filtros (sem contador): o Histórico abre em Este mês",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 71.23
   },
   {
    "do": "hover",
@@ -346,7 +390,7 @@
     "selector": "main thead th:has-text('Data')"
    },
    "seconds": 0.6,
-   "at": 64.43,
+   "at": 71.23,
    "label": "coluna Data: só novembro",
    "optional": true,
    "timeout": 4
@@ -356,7 +400,7 @@
    "target": {
     "selector": "main button:has(> svg.lucide-list-filter)"
    },
-   "at": 64.94,
+   "at": 71.74,
    "label": "Filtros"
   },
   {
@@ -370,7 +414,7 @@
     "selector": "[role=dialog] button[role=combobox]",
     "hasText": "Este mês"
    },
-   "at": 66.31,
+   "at": 73.11,
    "label": "Período (abre a lista)"
   },
   {
@@ -380,7 +424,7 @@
     "name": "Este ano"
    },
    "seconds": 0.3,
-   "at": 67.97,
+   "at": 74.77,
    "label": "Este ano",
    "optional": true,
    "timeout": 4
@@ -392,7 +436,7 @@
     "name": "Todos os tempos"
    },
    "seconds": 0.5,
-   "at": 68.88,
+   "at": 75.68,
    "label": "Todos os tempos",
    "optional": true,
    "timeout": 4
@@ -403,7 +447,7 @@
     "role": "option",
     "name": "Este ano"
    },
-   "at": 70.02,
+   "at": 76.82,
    "label": "escolhe Este ano"
   },
   {
@@ -413,7 +457,7 @@
     "name": "Aplicar filtros",
     "exact": true
    },
-   "at": 71.08,
+   "at": 77.88,
    "label": "Aplicar filtros",
    "noScroll": true
   },
@@ -430,7 +474,7 @@
     "selector": "main button:has(> svg.lucide-list-filter)"
    },
    "seconds": 1.2,
-   "at": 74.2,
+   "at": 81.0,
    "label": "[ZOOM] Filtros com 1",
    "optional": true,
    "timeout": 4
@@ -438,7 +482,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.offsetParent!==null&&e.textContent.trim()===\"Edição Manual\").sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-420);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 75.5,
+   "at": 82.31,
    "label": "desce: entram as linhas de outubro"
   },
   {
@@ -454,7 +498,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 78.99
+   "at": 85.79
   }
  ]
 }

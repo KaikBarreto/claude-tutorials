@@ -1,6 +1,6 @@
 {
  "name": "t06-cap08",
- "title": "T6 · Cap. 8 · Cada um com o seu caixa (narração ESTIMADA 112,5 s; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:45:00-03:00; logado como Rafael Nogueira)",
+ "title": "T6 · Cap. 8 · Cada um com o seu caixa (narração ESTIMADA 113,8 s; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:45:00-03:00; logado como Rafael Nogueira)",
  "seed": "t06-cap08",
  "pace": 0.5,
  "cps": 40,
@@ -345,22 +345,14 @@
    "timeout": 4
   },
   {
-   "do": "click",
-   "target": {
-    "selector": "main button:text-is(\"Hoje\")"
-   },
-   "at": 66.36,
-   "label": "volta para Hoje"
-  },
-  {
    "do": "mark",
    "name": "L8",
-   "at": 67.77
+   "at": 65.72
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.children.length===0&&e.textContent.trim().startsWith(\"Transa\\u00e7\\u00f5es do Dia\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;const dy=Math.round(el.getBoundingClientRect().top-140);if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/1100),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 68.25,
+   "at": 66.2,
    "label": "rola até Transações do Dia"
   },
   {
@@ -371,7 +363,7 @@
     "within": "main"
    },
    "seconds": 0.6,
-   "at": 69.61,
+   "at": 67.56,
    "label": "Transações do Dia (selo e operador em cada linha)",
    "optional": true,
    "timeout": 4
@@ -379,7 +371,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.children.length===0&&e.textContent.trim()===\"Vis\\u00e3o Geral\")[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;const dy=Math.round(el.getBoundingClientRect().top-140);if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/1000),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 73.26,
+   "at": 71.21,
    "label": "rola até os gráficos"
   },
   {
@@ -390,7 +382,7 @@
     "within": "main"
    },
    "seconds": 0.6,
-   "at": 75.53,
+   "at": 73.48,
    "label": "gráfico Visão Geral",
    "optional": true,
    "timeout": 4
@@ -403,7 +395,7 @@
     "within": "main"
    },
    "seconds": 0.6,
-   "at": 77.51,
+   "at": 75.46,
    "label": "gráficos Compras e Vendas por Forma",
    "optional": true,
    "timeout": 4
@@ -416,20 +408,34 @@
     "within": "main"
    },
    "seconds": 0.6,
-   "at": 79.16,
+   "at": 77.11,
    "label": "gráfico Distribuição entre Caixas",
    "optional": true,
    "timeout": 4
   },
   {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const c=rolagem(null);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;if(y0<3)return 'ok';const dy=-y0;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
+   "at": 78.35,
+   "label": "sobe ao seletor de data"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button:text-is(\"Hoje\")"
+   },
+   "at": 79.15,
+   "label": "volta para Hoje"
+  },
+  {
    "do": "mark",
    "name": "L9",
-   "at": 80.42
+   "at": 81.79
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const c=rolagem(null);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;if(y0<3)return 'ok';const dy=-y0;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
-   "at": 80.42,
+   "at": 81.79,
    "label": "volta ao topo"
   },
   {
@@ -439,13 +445,13 @@
     "name": "#85 | Caixa - Rafael Nogueira",
     "within": "main"
    },
-   "at": 80.72,
+   "at": 82.09,
    "label": "aba #85"
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.children.length===0&&e.textContent.trim().startsWith(\"Resumo do Caixa Atual\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;const dy=Math.round(el.getBoundingClientRect().top-170);if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/1100),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 82.57,
+   "at": 83.94,
    "label": "rola até o Resumo do Caixa Atual"
   },
   {
@@ -456,7 +462,7 @@
     "within": "main"
    },
    "seconds": 0.6,
-   "at": 82.87,
+   "at": 84.23,
    "label": "ZOOM Resumo do Caixa Atual (L9)",
    "optional": true,
    "timeout": 4
@@ -469,7 +475,7 @@
     "within": "main"
    },
    "seconds": 0.6,
-   "at": 85.22,
+   "at": 86.59,
    "label": "Total Comprado",
    "optional": true,
    "timeout": 4
@@ -482,7 +488,7 @@
     "within": "main"
    },
    "seconds": 0.6,
-   "at": 87.42,
+   "at": 88.79,
    "label": "Projeção de Lucro",
    "optional": true,
    "timeout": 4
@@ -492,7 +498,7 @@
    "target": {
     "selector": "main button[aria-label=\"Ocultar valores\"]"
    },
-   "at": 92.25,
+   "at": 93.62,
    "label": "olho Ocultar valores"
   },
   {
@@ -500,18 +506,18 @@
    "target": {
     "selector": "main button[aria-label=\"Mostrar valores\"]"
    },
-   "at": 96.57,
+   "at": 97.94,
    "label": "olho Mostrar valores"
   },
   {
    "do": "mark",
    "name": "L10",
-   "at": 96.56
+   "at": 97.92
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const c=rolagem(null);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;if(y0<3)return 'ok';const dy=-y0;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
-   "at": 96.56,
+   "at": 97.92,
    "label": "volta ao topo"
   },
   {
@@ -522,7 +528,7 @@
     "within": "main"
    },
    "seconds": 0.6,
-   "at": 97.49,
+   "at": 98.85,
    "label": "botão Saldo de Cliente/Fornecedor",
    "optional": true,
    "timeout": 4
@@ -535,7 +541,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 112.48
+   "at": 113.85
   }
  ]
 }

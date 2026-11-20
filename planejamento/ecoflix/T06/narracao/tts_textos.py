@@ -66,8 +66,8 @@ No ponto de interrogação, o sistema explica as regras. A principal: compra, ve
 Já o saldo do banco e o saldo de clientes e fornecedores são da empresa toda.
 Na aba Início fica o Painel Gerencial, com o resumo do dia somando os caixas. Daqui também sai o Abrir Caixa pra outro usuário, como eu fiz com o Marcos.
 E se a empresa preferir um caixa só pra todo mundo, dá pra desligar em Configurações, Usabilidade, na opção Multi-Caixas.
-O painel não mostra só hoje. No calendário, eu escolho ontem e vejo os caixas e o resumo daquele dia. No botão Hoje, eu volto.
-Mais embaixo, as transações do dia com o nome de quem lançou, e os gráficos: quanto foi em dinheiro e quanto foi por Pix, e quanto cada caixa movimentou.
+O painel não mostra só hoje. No calendário, eu escolho ontem e vejo os caixas e o resumo daquele dia.
+Mais embaixo, as transações do dia com o nome de quem lançou, e os gráficos: quanto foi em dinheiro e quanto foi por Pix, e quanto cada caixa movimentou. E no botão Hoje, eu volto pro dia de hoje.
 Dentro de cada caixa tem o Resumo do Caixa Atual: o que comprou, o que vendeu, a projeção de lucro, as receitas e as despesas só deste caixa. O olhinho esconde os valores, se tiver gente por perto.
 E esse botão lança um recebimento ou um pagamento no saldo de um cliente ou fornecedor, sem sair do caixa. A janela é a mesma do tutorial Clientes, fornecedores e a ficha do parceiro.""",
 9: """Pra ver o caixa do Marcos, é só clicar na aba dele. Aqui estão os dezessete mil da gaveta dele e a hora em que abriu.

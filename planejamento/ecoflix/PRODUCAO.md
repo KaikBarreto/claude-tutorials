@@ -953,3 +953,7 @@ Decisões:
   05-08 e 17; cap12 com o PDF do extrato só no cabeçalho (gerar.py corrigido). Coordenador relançou os lotes de
   `andamento_160.md`. Handlers: `ext/publica.cnpj.ws`, `registrar_consulta_cnpj_ie`, `apply_balance_delta`; editados
   `cnpj-lookup` e `functions/cep-lookup` (compartilhado: só o CEP 12062150). PDFs (extrato e relatório) com cena pendente.
+  T04 fechamento (agente Sonnet, 20/11): rápido aprovado 04-07, 09-16; completo sem falha 05, 06, 07, 09, 10, 12, 13, 14
+  (06, 07, 09, 12, 13 com gesto ≥ 0,85 s na voz estimada: rever com a voz). Falta: `t04_lote160.sh 8 12 17` (cap08 e cap17
+  dependem das sementes da cadeia), completos 04 e 16 (correções sem teste). Lição: clique de linha vai no NOME (o centro da
+  linha caía no botão "..."); `js_garante` reclica sem cursor quando o efeito não vem; aviso de CNPJ repetido só no onBlur.

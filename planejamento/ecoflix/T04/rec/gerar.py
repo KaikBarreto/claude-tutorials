@@ -317,7 +317,7 @@ def setup_tela(aba=None, ficha=None, extra=()):
     if aba and aba != 'Clientes':
         s += [{'do': 'click', 'target': ABA(aba)}, {'do': 'waitFor', 'target': BUSCA('fornecedor' if aba == 'Fornecedores' else 'cliente'), 'timeout': 15}, AGUARDA]
     if ficha:
-        s += [{'do': 'click', 'target': LINHA(ficha)}, {'do': 'waitFor', 'target': SEL(f"{FICHA}[aria-label='Detalhes de {ficha}']"), 'timeout': 15}, AGUARDA]
+        s += [{'do': 'click', 'target': NOME_LINHA(ficha)}, {'do': 'waitFor', 'target': SEL(f"{FICHA}[aria-label='Detalhes de {ficha}']"), 'timeout': 15}, AGUARDA]
     s += list(extra) + [{'do': 'eval', 'js': ANIM}]
     return s
 
@@ -334,6 +334,15 @@ def js_rola(seletor, y, dur_ms=700):
     o contêiner rola). Devolve o topo final, 'ok' (já estava), 'SEM ALVO' ou 'SEM ROLAGEM'."""
     return ("(async()=>{" + ACHA_ROLAGEM + f"const el=[...document.querySelectorAll({json.dumps(seletor)})].filter(e=>e.offsetParent)[0];if(!el)return 'SEM ALVO';"
             "const c=rolagem(el);if(!c)return 'SEM ROLAGEM';"
+            f"let dy=Math.round(el.getBoundingClientRect().top-{int(y)});const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));"
+            "if(Math.abs(dy)<3)return 'ok';" + SUAVE.replace('DUR', str(int(dur_ms))) + "return Math.round(el.getBoundingClientRect().top)})()")
+
+
+def js_rola_linha(nome, y=420, dur_ms=700):
+    """rolagem suave da lista (aside) até a linha do parceiro `nome` ficar em y px CSS: o hover do selo não precisa rolar sozinho (a rolagem
+    do robô leva ~7 s no completo e fecha o tooltip). 'ok' se já estava."""
+    return ("(async()=>{" + ACHA_ROLAGEM + f"const el=[...document.querySelectorAll('main aside button')].find(b=>b.textContent.includes({json.dumps(nome)}));"
+            "if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';"
             f"let dy=Math.round(el.getBoundingClientRect().top-{int(y)});const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));"
             "if(Math.abs(dy)<3)return 'ok';" + SUAVE.replace('DUR', str(int(dur_ms))) + "return Math.round(el.getBoundingClientRect().top)})()")
 
@@ -356,6 +365,15 @@ def js_colar(texto):
     """cola o texto no campo em foco (execCommand insertText: o React recebe o input), ~0,05 s em vez de digitar letra a letra"""
     return ("(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM ALVO (nada em foco)';"
             f"document.execCommand('insertText',false,{json.dumps(texto)});return e.value}})()")
+
+
+def js_garante(elemento_js, condicao_js, espera=2.5):
+    """rede de segurança contra clique perdido (máquina cheia, lista que recarrega logo depois de fechar uma janela): espera `espera` s pela
+    condição; se ela não veio, clica sem cursor (el.click() no elemento de `elemento_js`) e espera de novo. Devolve 'ok' ou 'refeito'.
+    Não aparece no vídeo (o clique com cursor já foi dado antes)."""
+    return ("(async()=>{const ok=()=>{try{return !!(%s)}catch(e){return false}};const ate=async(s)=>{for(let i=0;i<s*10;i++){if(ok())return true;"
+            "await new Promise(r=>setTimeout(r,100))}return ok()};if(await ate(%s))return 'ok';"
+            "const el=(()=>{%s})();if(!el)return 'SEM ALVO';el.click();return (await ate(6))?'refeito':'SEM EFEITO'})()") % (condicao_js, espera, elemento_js)
 
 
 def js_clica_botao(texto, escopo='main'):
@@ -423,7 +441,7 @@ def cap01():
     c.hover(BUSCA('cliente'), 0.8, at=c.A(4, 'busca,', 0.5), label='busca Buscar cliente...')
     c.hover(SEL("main aside button[aria-label^='Filtros']"), 1.0, at=c.A(4, 'filtros', 0.9), label='Filtros (o Ordenar fica do lado)')
     c.mark(5)
-    c.click(LINHA('Aços Quiririm Ltda'), at=c.A(5, 'Clicando', 0.6), label='clica na Aços Quiririm: a ficha abre ao lado')
+    c.click(NOME_LINHA('Aços Quiririm Ltda'), at=c.A(5, 'Clicando', 0.6), label='clica na Aços Quiririm: a ficha abre ao lado')
     c.waitfor(target=SEL(FICHA_DE('Aços Quiririm Ltda')), timeout=10)
     c.confere(FICHA_DE('Aços Quiririm Ltda'), ['Aços Quiririm Ltda', 'Cliente', 'R$ 4.870,00', 'a receber'], 'ficha da Aços Quiririm')
     c.hover(SEL(FICHA_DE('Aços Quiririm Ltda') + ' h2, ' + FICHA_DE('Aços Quiririm Ltda') + ' h1'), 1.0, at=c.A(5, 'ficha', 0.5), label='a ficha ao lado')
@@ -683,13 +701,14 @@ def cap04():
     c.click(SALVAR, at=c.A(9, 'Salvar.', 0.6), label='Salvar')
     c.waitfor(text='Fornecedor cadastrado com sucesso!', timeout=12)
     c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.ev(js_rola_linha('Serralheria Bem-Te-Vi'), at=c.A(9, 'verde:', 0.5) - 1.6, label='rola a lista até a serralheria')
     c.hover(FISCAL_OK('Serralheria Bem-Te-Vi'), 2.0, at=c.A(9, 'verde:', 0.5), label='sinal verde da serralheria (Pronto para emitir NF-e)')
     c.confere('body', ['Pronto para emitir NF-e'], 'tooltip Pronto para emitir NF-e')
     c.mark(10)
     c.hover(INCOMPLETO('Rogério Alves Costa'), 4.0, at=c.A(10, 'triângulo', 0.5), label='triângulo do Rogério (o que falta para a NF-e)')
     c.confere('body', ['Faltam dados para emitir NF-e para este cadastro:'], 'tooltip do incompleto')
     c.mark(11)
-    c.click(LINHA('Rogério Alves Costa'), at=c.A(11, 'completar,', 0.3), label='clica no Rogério: a ficha abre ao lado')
+    c.click(NOME_LINHA('Rogério Alves Costa'), at=c.A(11, 'completar,', 0.3), label='clica no Rogério: a ficha abre ao lado')
     c.waitfor(target=SEL(FICHA_DE('Rogério Alves Costa')), timeout=10)
     c.click(BTN_FICHA('Rogério Alves Costa', 'Editar'), at=c.A(11, 'editar.', 0.5), label='Editar')
     c.waitfor(text='Editar Fornecedor', timeout=10)
@@ -729,7 +748,7 @@ def cap05():
     Indicador IE; regime Lucro Real pela escrituração; "É Indústria" ligado e "É uma Reciclagem" só mostrado; Salvar."""
     c = cap_novo(5, aba='Clientes', start=(700, 400))
     c.mark(1)
-    c.click(LINHA('Aços Quiririm Ltda'), at=c.A(1, 'Aços', 0.6), label='clica na Aços Quiririm: a ficha abre ao lado')
+    c.click(NOME_LINHA('Aços Quiririm Ltda'), at=c.A(1, 'Aços', 0.6), label='clica na Aços Quiririm: a ficha abre ao lado')
     c.waitfor(target=SEL(FICHA_DE('Aços Quiririm Ltda')), timeout=10)
     c.click(BTN_FICHA('Aços Quiririm Ltda', 'Editar'), at=c.A(1, 'Editar,', 0.9), label='Editar')
     c.waitfor(text='Editar Cliente', timeout=10)
@@ -814,6 +833,7 @@ def cap06():
     c.click(CAMPO('cpf_cnpj'), at=c.A(5, 'corrigir.', 0.6), label='clica no CNPJ')
     c.ev("(()=>{const e=document.querySelector('[role=dialog] #cpf_cnpj');if(!e)return 'SEM ALVO';e.focus();e.select();document.execCommand('delete');return 'cnpj apagado: '+JSON.stringify(e.value)})()", at=c.A(5, 'Quando', 0.3), label='apaga o CNPJ')
     c.type(CAMPO('cpf_cnpj'), '46280719000124', at=c.A(5, 'apaga', 0.2), label='digita o CNPJ da serralheria', noClick=True, cps=30)
+    c.press('Tab', label='sai do campo (o app confere o cadastro duplicado ao sair do CNPJ)')
     c.add({'do': 'eval', 'js': js_sem_texto('Atenção: a Receita informa que este CNPJ está'), 'label': 'confere o alerta vermelho sumiu'})
     c.add({'do': 'eval', 'js': js_sem_texto('A Sintegra não tem inscrição estadual ativa'), 'label': 'confere o aviso da inscrição sumiu'})
     c.confere('dlg', ['Já existe um fornecedor cadastrado como “Serralheria Bem-Te-Vi” com este CPF/CNPJ.'], 'o aviso de CNPJ já cadastrado')
@@ -829,7 +849,7 @@ def cap07():
     (ilustração do saldo único) e a aba Clientes com o mesmo saldo (-R$ 840,00 nas duas abas, 1.59.161)."""
     c = cap_novo(7, start=(700, 400))
     c.mark(1)
-    c.click(LINHA('Serralheria Bem-Te-Vi'), at=c.A(1, 'serralheria', 0.6), label='clica na Serralheria Bem-Te-Vi: a ficha abre ao lado')
+    c.click(NOME_LINHA('Serralheria Bem-Te-Vi'), at=c.A(1, 'serralheria', 0.6), label='clica na Serralheria Bem-Te-Vi: a ficha abre ao lado')
     c.waitfor(target=SEL(FICHA_DE('Serralheria Bem-Te-Vi')), timeout=10)
     c.hover(SALDO_FICHA('Serralheria Bem-Te-Vi'), 1.0, at=c.A(1, 'fornecedora', 0.5), label='a ficha da serralheria (Fornecedor)')
     c.mark(2)
@@ -851,7 +871,9 @@ def cap07():
     c.click(BTN('Cancelar', DLG), at=c.A(4, 'outro.', 0.3), label='Cancelar')
     c.waitfor(gone={'role': 'dialog'}, timeout=8)
     c.mark(5)
-    c.click(LINHA('Depósito Irmãos Siqueira'), at=c.A(5, 'Depósito', 0.6), label='clica no Depósito Irmãos Siqueira')
+    c.click(NOME_LINHA('Depósito Irmãos Siqueira'), at=c.A(5, 'Depósito', 0.6), label='clica no Depósito Irmãos Siqueira')
+    c.ev(js_garante("return [...document.querySelectorAll(\"main aside button\")].find(x=>x.textContent.includes('Depósito Irmãos Siqueira'))",
+                    "document.querySelector(\"main section[aria-label='Detalhes de Depósito Irmãos Siqueira']\")"), label='garante a ficha do depósito (rede de segurança)')
     c.waitfor(target=SEL(FICHA_DE('Depósito Irmãos Siqueira')), timeout=10)
     c.confere(FICHA_DE('Depósito Irmãos Siqueira'), ['Cliente+Fornecedor', '-R$ 840,00', 'a pagar'], 'ficha do depósito: -R$ 840,00 a pagar (1.59.161)')
     c.add({'do': 'eval', 'js': js_cor('Depósito Irmãos Siqueira', 'vermelho'), 'label': 'confere cor: depósito em Fornecedores (-R$ 840,00) vermelho'})
@@ -874,7 +896,7 @@ def cap08():
     (ilustração da ordem dos preços), a aba Preços (Compra/Venda, "Já comprados"), o preço Fixo do ferro pesado a R$ 1,00 e "Salvar preços"."""
     c = cap_novo(8, start=(700, 400))
     c.mark(1)
-    c.click(LINHA('Depósito Irmãos Siqueira'), at=c.A(1, 'Depósito', 0.6), label='clica no Depósito Irmãos Siqueira')
+    c.click(NOME_LINHA('Depósito Irmãos Siqueira'), at=c.A(1, 'Depósito', 0.6), label='clica no Depósito Irmãos Siqueira')
     c.waitfor(target=SEL(FICHA_DE('Depósito Irmãos Siqueira')), timeout=10)
     c.mark(2)
     c.click(BTN_FICHA('Depósito Irmãos Siqueira', 'Editar'), at=c.A(2, 'Editar,', 0.6), label='Editar')
@@ -912,7 +934,7 @@ def cap08():
     c.press('Escape', at=c.L(10) - 0.9, label='fecha a lista (Esc)')
     c.mark(10)
     c.click(BTN('Salvar preços', FICHA_DE('Depósito Irmãos Siqueira')), at=c.A(10, 'Salvar', 0.6), label='Salvar preços')
-    c.waitfor(text='Preços salvos', timeout=12, optional=True)
+    c.waitfor(text='Preços personalizados salvos', timeout=12)
     c.click(SEL(f"{FICHA_DE('Depósito Irmãos Siqueira')} button:has-text('Personalizados')"), at=c.A(10, 'Personalizados', 0.6), label='filtro Personalizados')
     c.confere(FICHA_DE('Depósito Irmãos Siqueira'), ['Ferro pesado'], 'Personalizados: o ferro pesado')
     c.fim()
@@ -939,9 +961,11 @@ def cap09():
     c.hover(SEL(f"{DLG} button[role=combobox]", nth=0), 0.8, at=c.A(3, 'veículo,', 0.5), label='o Tipo do campo (Texto curto, Número, Data, Sim/Não, Lista de opções)')
     c.press('Escape', at=c.L(4) - 1.2, label='fecha a janela de Configurações (Esc)')
     c.mark(4)
-    c.click(LINHA('Valdir Pereira'), at=c.A(4, 'cadastro', 0.6), label='clica no Valdir Pereira')
+    c.click(NOME_LINHA('Valdir Pereira'), at=c.A(4, 'cadastro', 0.6), label='clica no Valdir Pereira')
     c.waitfor(target=SEL(FICHA_DE('Valdir Pereira')), timeout=10)
     c.click(BTN_FICHA('Valdir Pereira', 'Editar'), at=c.A(4, 'Valdir,', 0.2), label='Editar')
+    c.ev(js_garante("return [...document.querySelectorAll(\"main section[aria-label='Detalhes de Valdir Pereira'] button\")].find(x=>x.textContent.trim()==='Editar')",
+                    "document.querySelector('[role=dialog]')"), label='garante a janela Editar (rede de segurança)')
     c.waitfor(text='Editar Fornecedor', timeout=10)
     c.ev(DLG_ROLA('Etiqueta', 300, 600), label='desce até a Etiqueta')
     c.click(SEL(f"{DLG} div:has(> label:has-text('Etiqueta')) button"), at=c.A(4, 'Etiqueta,', 0.5), label='abre o seletor de Etiqueta')
@@ -987,7 +1011,7 @@ def cap10():
     """A ficha do parceiro: Cooperativa Recomeço, cabeçalho, as 7 abas (cabem em 1600x900?), Visão geral, Acesso ao portal."""
     c = cap_novo(10, start=(700, 400))
     c.mark(1)
-    c.click(LINHA(COOP), at=c.A(1, 'Cooperativa', 0.6), label='clica na Cooperativa Recomeço: a ficha abre em Visão geral')
+    c.click(NOME_LINHA(COOP), at=c.A(1, 'Cooperativa', 0.6), label='clica na Cooperativa Recomeço: a ficha abre em Visão geral')
     c.waitfor(target=SEL(FC), timeout=10)
     c.confere(FC, ['Cooperativa Recomeço', 'Fornecedor', 'R$ 2.550,00', 'a pagar'], 'cabeçalho da ficha')
     c.add({'do': 'eval', 'js': ABAS_CABEM, 'label': 'confere: as 7 abas da ficha em 1600x900'})
@@ -1261,9 +1285,11 @@ def cap16():
     c.click(TXT('Visualize todos os saldos a receber e a pagar', within=REL, exact=False), label='clica no subtítulo (fecha o menu de exportação, se ainda aberto)')
     c.mark(10)
     c.click(OLHO('Aços Quiririm Ltda'), at=c.A(10, 'olho,', 0.6), label='olho da Aços Quiririm: abre a conta-corrente')
-    c.waitfor(text='Conta-Corrente do Cliente', timeout=15)
+    c.ev(js_garante("const tr=[...document.querySelectorAll('[role=dialog] tr')].find(r=>r.textContent.includes('Aços Quiririm Ltda'));return tr&&tr.querySelector('button:has(svg.lucide-eye)')",
+                    "/Conta-Corrente do (Cliente|Parceiro|Fornecedor)/.test(document.body.innerText)"), label='garante a conta-corrente aberta (rede de segurança)')
+    c.waitfor(text='Conta-Corrente do', timeout=15)
     c.confere('main', ['Aços Quiririm Ltda', 'R$ 4.870,00'], 'a ficha cheia na conta-corrente')
-    c.hover(TXT('Conta-Corrente do Cliente', exact=False), 1.4, at=c.A(10, 'extrato', 0.5), label='Conta-Corrente do Cliente, com o extrato')
+    c.hover(TXT('Conta-Corrente do', exact=False), 1.4, at=c.A(10, 'extrato', 0.5), label='Conta-Corrente do Cliente, com o extrato')
     c.fim()
     return c
 
@@ -1277,11 +1303,11 @@ def cap17():
     c.hover(FISCAL_OK('Serralheria Bem-Te-Vi'), 1.4, at=c.A(2, 'serralheria', 0.5), label='a serralheria com o sinal verde')
     c.mark(3)
     c.mark(4)
-    c.click(LINHA('Serralheria Bem-Te-Vi'), at=c.A(4, 'Marcou', 0.6), label='a ficha da serralheria (Cliente+Fornecedor)')
+    c.click(NOME_LINHA('Serralheria Bem-Te-Vi'), at=c.A(4, 'Marcou', 0.6), label='a ficha da serralheria (Cliente+Fornecedor)')
     c.waitfor(target=SEL(FICHA_DE('Serralheria Bem-Te-Vi')), timeout=10)
     c.hover(TXT('Cliente+Fornecedor', within=FICHA_DE('Serralheria Bem-Te-Vi')), 1.2, at=c.A(4, 'cliente', 0.5), label='selo Cliente+Fornecedor')
     c.mark(5)
-    c.click(LINHA(COOP), at=c.A(5, 'Abriu', 0.6), label='a ficha da cooperativa')
+    c.click(NOME_LINHA(COOP), at=c.A(5, 'Abriu', 0.6), label='a ficha da cooperativa')
     c.waitfor(target=SEL(FC), timeout=10)
     c.hover(ABA_FICHA('Pedidos'), 0.4, at=c.A(5, 'gráfico', 0.5), label='aba Pedidos')
     c.hover(ABA_FICHA('Conta-corrente'), 0.4, at=c.A(5, 'pagamento', 0.5), label='aba Conta-corrente')

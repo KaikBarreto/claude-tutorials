@@ -8,8 +8,9 @@ CAPS = {
 Quanto material tem hoje no pátio, de onde ele veio e quanto tinha no dia trinta e um.
 As respostas ficam no menu Materiais, em quatro telas que conversam entre si.
 Se você ainda não viu o tutorial Pedidos e histórico do caixa, dá uma olhada antes. É de lá que vêm os pedidos que mexem no estoque.""",
-1: """Vamos às quatro portas. Clicando em Materiais, aparecem as três primeiras: Estoque, Histórico e Relatório.
+1: """Vamos às quatro portas. Clicando em Materiais, aparecem as três primeiras: Estoque, Histórico, que é o cardécs, e Relatório.
 A quarta fica dentro do Estoque, aqui na coluna das tabelas de preço: a Posição de Estoque.
+Se a sua empresa usa uma tabela de preço só, essa coluna não aparece. Aí a Posição de Estoque é um botão no alto da tela.
 O Estoque mostra quanto tem agora. O Histórico conta cada entrada e cada saída. O Relatório soma o que você comprou e vendeu num período. E a Posição mostra quanto tinha numa data.
 A gente começa pelo saldo de agora.""",
 2: """Esta é a tela do saldo. Os três cartões de cima somam o pátio inteiro.
@@ -17,6 +18,7 @@ O Peso Total em Estoque é a soma do saldo de todos os materiais.
 O Total Pago é quanto esse estoque custou, pelo preço médio que você pagou. E a Projeção de Vendas é quanto ele vale pela tabela de venda.
 Olha o cobre mel: quarenta e dois quilos no Estoque Atual, pagos em média a quarenta e dois e cinquenta o quilo.
 Esse é o preço médio do material que você tem hoje. Por isso ele vem com o selo de estimativa.
+Uma dica: quando o material tem saldo e nenhuma compra lançada, aparece um triângulo amarelo. O sistema usa o preço do cadastro, e o valor pode não ser o que você pagou.
 O Estoque Atual é o saldo de verdade. Ele muda com tudo o que entra e sai: compra, venda, transferência, ajuste manual, exclusão e produção.
 Então, quando alguém pergunta quanto tem, a resposta é aqui. O ferro misto, por exemplo, está com seis mil quatrocentos e vinte quilos.""",
 3: """Agora, a transferência. Ontem, na separação, o Marcos tirou trezentos e vinte quilos de ferro pesado do meio do ferro misto.
@@ -32,6 +34,7 @@ Escolho o ferro pesado aqui na coluna dos materiais. Repara que a transferência
 É só ler da esquerda pra direita: tinha dois mil cento e oitenta quilos, entraram trezentos e vinte, ficou com dois mil e quinhentos.
 A linha de baixo veio antes: uma compra de ontem, de oitocentos e sessenta quilos. O estoque final dela, dois mil cento e oitenta, é o inicial da transferência.
 É uma corrente: o final de uma linha é o começo da seguinte. Assim dá pra seguir o material quilo a quilo.
+Cada linha mostra também quem lançou e, quando veio de um pedido, o número dele.
 Uma dica: o Histórico abre em Este mês. Hoje é dia dez, então ele mostra dez dias.
 Pra ver mais, é só trocar o período pra Este ano ou Todos os tempos. Assim, quem abre a tela no dia dois não acha que o histórico sumiu: só estava vendo dois dias.""",
 5: """Cada linha tem um tipo, com uma cor.
@@ -41,50 +44,73 @@ Edição Manual é um ajuste feito direto no estoque, sem compra nem venda. Excl
 Produção aparece pra quem usa a Produção, que depende do plano contratado: é a latinha que vira fardo, por exemplo. E o Saldo inicial é a quantidade com que o material entrou no sistema.
 Vou deixar só esses dois tipos. No sábado, dia trinta e um, o Rafael contou o pátio e ajustou o ferro pesado: menos catorze quilos.
 Abrindo a linha, aparece a observação que ele escreveu, o estoque antes e depois, quem fez e a hora.
+Uma dica: mudar a quantidade pelo Editar do material também vira uma Edição Manual, só que sem observação. Por isso, pra ajustar o saldo, prefira o Movimentar estoque, que tem o campo de observação pra você deixar o motivo.
 E aqui, uma compra de cento e oitenta quilos que tinha entrado duas vezes. A repetida foi excluída, e o estoque voltou.
-Uma dica sobre os filtros de Fornecedores e de Clientes: o de fornecedor mexe nas compras, e o de cliente, nas vendas.
-Com um deles marcado, a transferência, o ajuste manual e a exclusão saem da lista, porque não têm fornecedor nem cliente. Não é erro.
+Uma dica sobre os filtros de Fornecedores e de Clientes: o de fornecedor deixa só as compras dele, e o de cliente, só as vendas dele.
+A transferência, o ajuste manual e a exclusão saem da lista, porque não têm fornecedor nem cliente. Não é erro.
 Pra ver tudo de novo, é só limpar os filtros.""",
 6: """Toda linha de compra ou de venda abre o pedido que gerou ela. Clicando na compra de ontem, aparece o que veio.
 Oitocentos e sessenta quilos de ferro pesado, a noventa e cinco centavos, deu oitocentos e dezessete reais.
 Embaixo, o fornecedor, o Depósito Irmãos Siqueira, como foi pago, no Pix, e o total do pedido.
 E as fotos tiradas na hora da compra. Clicando, a foto amplia.
 Quando o contador pergunta de onde veio o ferro, a resposta está aqui: o pedido, o pagamento e as fotos, na mesma linha.""",
-7: """Agora o Relatório de Estoque: tudo o que você comprou e vendeu num período.
+7: """Agora, como achar uma movimentação no meio de centenas. Na coluna dos materiais, a busca aceita o código ou o nome, e o Ordenar muda a lista de código pra nome.
+No período, além das opções prontas, tem o Personalizado. O contador pediu a primeira semana de novembro? É só marcar o dia um e o dia sete.
+E quando você lembra do peso, mas não do dia? O filtro de quantidade movimentada resolve. Igual a oitocentos e sessenta, e sobra a compra de ontem. Ele ignora o sinal: acha a entrada e a saída com esse peso.
+O filtro de clientes mostra pra onde o material foi. Abrindo a venda do dia quatro, aparece o cliente, a Aços Quiririm, os itens, o pagamento e o total, do mesmo jeito que na compra.
+Pra mandar esse extrato pra alguém, é o Exportar. A janela já vem com o que está na tela: o período e o ferro pesado. Dá pra mudar aqui sem mexer nos filtros da tela.
+Exportar, e o extrato do ferro pesado sai em pê-dê-éfe. Em ékisel, é o mesmo caminho.
+Uma dica: se o período for grande demais, a tela avisa e pede um recorte menor. Nesse caso, o ékisel baixa o extrato inteiro. E o Como funciona resume as colunas e os tipos.""",
+8: """Agora o Relatório de Estoque: tudo o que você comprou e vendeu num período.
 Ele também abre em Este mês. Pra fechar outubro, escolho Mês passado.
 Uma dica: o Relatório conta só os pedidos finalizados, pela data de cada pedido. Pedido excluído ou estornado fica de fora.
 Em cima, quatro cartões: Total Comprado, Total Vendido, Lucro e Projeção de Lucro.
 Clicando num cartão, ele abre os detalhes, como o preço médio de compra e o material que mais comprou.
+O Total Vendido e o Lucro abrem do mesmo jeito: o material que mais vendeu, o mais lucrativo, a margem. E embaixo, como o mês foi pago: dinheiro, Pix, saldo e o que ficou em aberto.
 A Projeção de Lucro é uma estimativa.
 Ela imagina que você vendeu tudo o que comprou no mês, pelo preço médio de venda, ou pelo da tabela se o material não teve venda. É lucro bruto, sem as despesas.
 Uma dica: o saldo da tela de Estoque não é o comprado menos o vendido daqui.
 O Relatório só soma compras e vendas do período. O saldo vem acumulado desde o começo e muda também com transferência, ajuste manual, exclusão e produção. Quando os números não batem, é quase sempre isso.""",
-8: """Embaixo dos cartões fica o detalhamento, material por material.
+9: """Embaixo dos cartões fica o detalhamento, material por material.
 Olha o cobre mel em outubro: comprou novecentos e oitenta quilos, por quarenta e um mil seiscentos e cinquenta reais. Dividindo o valor pelos quilos, dá o preço médio de compra: quarenta e dois e cinquenta.
 Uma dica: a quantidade comprada daqui é a líquida, já sem a tara e a impureza. A Dona Cida pôs oitenta e seis quilos de latinha na balança. Tirando o saco e a sujeira, seis quilos, entraram oitenta quilos. Por isso esse número pode ser menor que o peso que você lembra de ter pesado.
 E o cobre mel vendeu mil quilos, por quarenta e sete mil e novecentos reais, a quarenta e sete e noventa em média.
 O Resultado é o vendido menos o comprado no mês: seis mil duzentos e cinquenta reais. E a Margem é esse resultado em porcentagem do que foi vendido: uns treze por cento.
 Já o Lucro sobre vendas olha só o que foi vendido: a diferença entre os dois preços médios, vezes os mil quilos. Dá cinco mil e quatrocentos. Também é estimativa.
-Uma dica: material com muita compra e nenhuma venda, como a bateria automotiva, mil trezentos e vinte quilos comprados, não é erro. É material que entrou e ainda não saiu do pátio.""",
-9: """Agora repara o que acontece quando eu filtro por um fornecedor, o Depósito Irmãos Siqueira. Ficam só as compras. O Total Vendido, o Lucro e as colunas de venda saem.
+Uma dica: material com muita compra e nenhuma venda, como a bateria automotiva, mil trezentos e vinte quilos comprados, não é erro. É material que entrou e ainda não saiu do pátio.
+Repara que o Resultado dela é zero, e não negativo. O Resultado nunca fica abaixo de zero. Passando o mouse, a conta aparece inteira.""",
+10: """Agora repara o que acontece quando eu filtro por um fornecedor, o Depósito Irmãos Siqueira. Ficam só as compras. O Total Vendido, o Lucro e as colunas de venda saem.
 É de propósito. O cobre misto do Siqueira foi pra mesma pilha do cobre do Valdir. Quando a Fundição compra, não tem como saber de quem era cada quilo.
 Então, com esse filtro, o relatório responde uma pergunta: quanto você comprou do Siqueira, de cada material, e a que preço.
 Pra ver venda, lucro e margem, é só tirar o filtro.""",
-10: """E a terceira pergunta do contador: quanto tinha no dia trinta e um. A Posição de Estoque abre no dia de hoje, no fim do dia.
+11: """Os outros filtros funcionam do mesmo jeito. O de clientes mexe só nas vendas: marcando a Fundição Bandeira do Vale, eu vejo quanto ela levou de cada material em outubro.
+O de usuários mostra o que cada pessoa lançou. Aqui, só as compras e as vendas que o Marcos registrou.
+E o de grupos junta os materiais da mesma família. Só o grupo Cobre, e os cartões de cima já somam só o cobre.
+Quer ver todos, mas separados? Em Por grupo, cada família ganha a sua faixa e o seu subtotal.
+O Ocultar itens zerados tira da lista o que não girou no mês. O sistema lembra dessa escolha.
+Clicando no título de uma coluna, a lista ordena por ela. Em Resultado, o material que mais rendeu vai pro topo. E a última linha soma tudo.""",
+12: """E a terceira pergunta do contador: quanto tinha no dia trinta e um. A Posição de Estoque abre no dia de hoje, no fim do dia.
 Hoje, o ferro pesado está com dois mil e quinhentos quilos.
 A Posição é uma foto do estoque. Você escolhe a data e a hora, e ela mostra o saldo de cada material naquele instante. O que entrou ou saiu depois fica fora da foto.
 Eu volto o calendário pra outubro e clico no dia trinta e um. A hora fica em vinte e três e cinquenta e nove, então entra tudo o que aconteceu no sábado.
 Ver posição.
 No dia trinta e um, o ferro pesado tinha quarenta e um mil oitocentos e sessenta quilos. A diferença pra hoje são as compras, as vendas e a transferência de novembro.
-Do lado, o valor desse estoque, pelo custo médio das compras até aquela data, e a projeção, pelo preço de venda de hoje. Embaixo, o total geral.""",
-11: """Com a foto do dia trinta e um na tela, é só exportar. No Exportar, escolho pê-dê-éfe.
-Aqui você escolhe as colunas e os materiais do arquivo. A tela guarda essa escolha pra próxima vez.
+E dá pra mudar a hora. Ao meio-dia do dia trinta e um, o ferro pesado tinha quarenta e um mil oitocentos e setenta e quatro quilos. Era o saldo antes da contagem, que tirou catorze.
+Do lado, o valor desse estoque, pelo custo médio das compras até aquela data, e a projeção, pelo preço de venda de hoje.
+Em Por grupo, a foto vem separada por família, com o subtotal de cada uma.
+Embaixo, o total geral.
+Uma dica: se aparecer saldo negativo numa data antiga, é lançamento feito fora de ordem, com data anterior. Material sem compra até aquela data aparece sem valor. E material zerado não entra na foto.""",
+13: """Com a foto do dia trinta e um na tela, é só exportar. No Exportar, escolho pê-dê-éfe.
+Aqui você escolhe as colunas e os materiais do arquivo. Não quer mostrar quanto pagou? É só tirar a coluna Valor do estoque. A tela guarda essa escolha pra próxima vez.
 Exportar, e o pê-dê-éfe abre numa aba nova, pronto pra baixar e mandar pro contador.
 Se o contador preferir planilha, o mesmo caminho em ékisel baixa o arquivo.
-O Histórico e o Relatório também exportam, cada um pelo seu botão.""",
-12: """Pronto! Recapitulando: a gente conferiu o saldo de cada material na tela de Estoque e transferiu trezentos e vinte quilos do ferro misto pro ferro pesado.
+O Histórico a gente já exportou. O Relatório exporta pelo Exportar Relatório, com o período e os filtros da tela. Se o Exportar não aparece pra um usuário, é permissão dele.
+Quem emite nota tem ainda o Estoque Fiscal, que compara esse estoque com o das notas. Ele fica no tutorial de transporte, serviço e contador.""",
+14: """Pronto! Recapitulando: a gente conferiu o saldo de cada material na tela de Estoque e transferiu trezentos e vinte quilos do ferro misto pro ferro pesado.
 Leu o cardécs linha a linha, conheceu os tipos de movimentação e abriu uma compra pra ver o pedido, o pagamento e as fotos.
+Achou uma movimentação pelo peso, filtrou por cliente e exportou o cardécs.
 No Relatório, viu o comprado, o vendido, o resultado e a margem do mês, e por que o filtro de fornecedor mostra só as compras.
+E filtrou o Relatório por cliente, usuário e grupo.
 E tirou a foto do estoque do dia trinta e um, exportada em pê-dê-éfe e ékisel pro contador.
 No próximo tutorial, a gente cuida das contas que vencem: as que você paga e as que você recebe. Até lá!""",
 }
@@ -96,12 +122,14 @@ TITULOS = {1: "As quatro portas do estoque.",
            4: "O cardécs, linha a linha.",
            5: "Os tipos de movimentação.",
            6: "O pedido por trás da linha.",
-           7: "Comprado, vendido e lucro.",
-           8: "Material por material.",
-           9: "O filtro de fornecedor.",
-           10: "A foto do estoque numa data.",
-           11: "Exportar para o contador.",
-           12: "Recapitulando."}
+           7: "Achar uma movimentação.",
+           8: "Comprado, vendido e lucro.",
+           9: "Material por material.",
+           10: "O filtro de fornecedor.",
+           11: "Clientes, usuários e grupos.",
+           12: "A foto do estoque numa data.",
+           13: "Exportar para o contador.",
+           14: "Recapitulando."}
 # Rótulo de área em cima do título (vinheta).
 KICKERS = {1: "Estoque",
            2: "Estoque",
@@ -109,12 +137,14 @@ KICKERS = {1: "Estoque",
            4: "Histórico",
            5: "Histórico",
            6: "Histórico",
-           7: "Relatório",
+           7: "Histórico",
            8: "Relatório",
            9: "Relatório",
-           10: "Posição",
-           11: "Posição",
-           12: "Resumo"}
+           10: "Relatório",
+           11: "Relatório",
+           12: "Posição",
+           13: "Posição",
+           14: "Resumo"}
 
 if __name__ == "__main__":
     tot = 0

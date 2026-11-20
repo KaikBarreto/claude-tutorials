@@ -133,7 +133,23 @@ def efeitos_cap09():
     return p, s, c
 
 
+def contas_aluguel():
+    """2 contas a receber pagas 'Aluguel de caçamba' (entram desde o início do cap11: o padrão da Nova Receita nasce delas)"""
+    bills, pays = [], []
+    for k, (dia, bt_id) in enumerate((('2026-08-26', '@id:bt.45'), ('2026-09-10', '@id:bt.74')), 1):
+        quando = f'{dia}T13:15:00.000Z'
+        bid = f'@id:titulo.t06.aluguel{k}'
+        bills.append({'id': bid, 'company_id': EMP, 'direction': 'receivable', 'description': 'Aluguel de caçamba', 'amount': 1400, 'currency': 'BRL',
+                      'due_date': dia, 'status': 'paid', 'paid_amount': 1400, 'paid_at': quando, 'category_id': categoria('Aluguel de caçamba'),
+                      'cost_center_id': '@id:cc.coleta', 'expected_bank_account_id': PRINCIPAL, 'expected_payment_method': 'transfer',
+                      'created_by': RAFAEL, 'created_at': quando, 'updated_at': quando})
+        pays.append({'id': f'@id:pgto.t06.aluguel{k}', 'company_id': EMP, 'bill_id': bid, 'amount': 1400, 'currency': 'BRL', 'payment_method': 'transfer',
+                     'paid_date': dia, 'bank_account_id': PRINCIPAL, 'bank_transaction_id': bt_id, 'created_by': RAFAEL, 'created_at': quando})
+    return bills, pays
+
+
 def apos_cap10():
+    bills, pays = contas_aluguel()
     p0, s0 = ultimo_saldo(PRINCIPAL), ultimo_saldo(SECUNDARIA)
     c0 = sum(b['amount'] for b in B['bank_transactions'] if b['bank_account_id'] == COFRE)
     p, s, c = efeitos_cap09()
@@ -152,6 +168,7 @@ def apos_cap10():
             bt('@id:bt.t06.tarifa_mes', SECUNDARIA, 'expense', -TAR_MES, 'Tarifa mensal do pacote de serviços', TARIFA_MES, r2(s0 - TAR_MES),
                category_id=categoria('Tarifas'), cash_register_id=C85),
         ],
+        'financial_bills': bills, 'bill_payments': pays,
         'cash_transactions': [ct('@id:ct.t06.saque86', C86, 'transfer', SAQ, f'↓ SAQUE · {nome} → Caixa #{N86}', SAQUE, group_id=grupo)],
         '_patch': {
             'bank_accounts': [{'match': {'id': PRINCIPAL}, 'set': {'balance': p}}, {'match': {'id': SECUNDARIA}, 'set': {'balance': s}},
@@ -251,16 +268,6 @@ def apos_cap11():
     p, s, c = efeitos_cap09()
     nome = conta(PRINCIPAL)['name']
     saldo = r2(p + REC)
-    bills, pays = [], []
-    for k, (dia, bt_id) in enumerate((('2026-08-26', '@id:bt.45'), ('2026-09-10', '@id:bt.74')), 1):
-        quando = f'{dia}T13:15:00.000Z'
-        bid = f'@id:titulo.t06.aluguel{k}'
-        bills.append({'id': bid, 'company_id': EMP, 'direction': 'receivable', 'description': 'Aluguel de caçamba', 'amount': 1400, 'currency': 'BRL',
-                      'due_date': dia, 'status': 'paid', 'paid_amount': 1400, 'paid_at': quando, 'category_id': categoria('Aluguel de caçamba'),
-                      'cost_center_id': '@id:cc.coleta', 'expected_bank_account_id': PRINCIPAL, 'expected_payment_method': 'transfer',
-                      'created_by': RAFAEL, 'created_at': quando, 'updated_at': quando})
-        pays.append({'id': f'@id:pgto.t06.aluguel{k}', 'company_id': EMP, 'bill_id': bid, 'amount': 1400, 'currency': 'BRL', 'payment_method': 'transfer',
-                     'paid_date': dia, 'bank_account_id': PRINCIPAL, 'bank_transaction_id': bt_id, 'created_by': RAFAEL, 'created_at': quando})
     return {
         '_doc': (f'T06 · depois do cap11 (08:5x): despesa "Gás da empilhadeira" R$ 50,00 em dinheiro no caixa #{N85} e receita "Aluguel de caçamba" '
                  f'R$ 120,00 por Pix na {nome}; 2 contas a receber pagas "Aluguel de caçamba" (R$ 1.400,00, 26/08 e 10/09) que espelham as entradas '
@@ -270,7 +277,6 @@ def apos_cap11():
         'bank_transactions': [bt('@id:bt.t06.aluguel', PRINCIPAL, 'deposit', REC, 'Aluguel de caçamba', RECEITA, saldo,
                                  category_id=categoria('Aluguel de caçamba'), cost_center_id='@id:cc.coleta', payment_method='transfer',
                                  cash_register_id=C85)],
-        'financial_bills': bills, 'bill_payments': pays,
         '_patch': {'bank_accounts': [{'match': {'id': PRINCIPAL}, 'set': {'balance': saldo}}, {'match': {'id': COFRE}, 'set': {'balance': r2(c - DESP)}}],
                    'cash_register': [{'match': {'id': C85}, 'set': {'opening_balance': r2(1500 - DESP)}}]},
     }

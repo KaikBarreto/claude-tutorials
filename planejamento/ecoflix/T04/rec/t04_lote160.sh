@@ -12,7 +12,7 @@ for n in $CAPS; do
   bash rec/t04/t04_ensaio.sh $NN rapido > rec/t04/_ens/lote-cap$NN.log 2>&1
   tail -3 rec/t04/_ens/lote-cap$NN.log >> $OUT
   python3 -I rec/t04/prever.py $NN --ens > rec/t04/_ens/t04-cap$NN.prever.txt 2>&1
-  if grep -q "falhos=0$" rec/t04/_ens/lote-cap$NN.log; then
+  if grep -q "rc=0 falhos=0$" rec/t04/_ens/lote-cap$NN.log; then
     case $n in
       2|4) python3 -I rec/t04/t04_sementes.py captura $n --porta 54304 >> $OUT 2>&1 ;;
       7) python3 -I rec/t04/t04_sementes.py captura $n --porta 54304 --nome apos-cap05 >> $OUT 2>&1 ;;

@@ -2,20 +2,19 @@
 
 Roteiro pronto para a voz e a gravação (molde do T3 da Domiflix; sem etapa de aprovação). Coluna Fala = texto da narração
 (voz Kaik Barreto), na grafia da legenda; a grafia de pronúncia do TTS está em `narracao/tts_textos.py`. Coluna Tela = o
-que o robô faz e onde a câmera foca, com os rótulos entre aspas como no código (`T10/inventario.md`, versão 1.59.154).
-Aula no computador (janela 1280×800), logado como Rafael Nogueira (MASTER). Cada capítulo parte de um navegador novo,
+que o robô faz e onde a câmera foca, com os rótulos entre aspas como no código (`T10/inventario.md`, versão 1.60.18).
+Aula no computador (tela 1600×900), logado como Rafael Nogueira (MASTER). Cada capítulo parte de um navegador novo,
 com a semente indicada; quando um capítulo continua uma tela do anterior, o `setup` do robô a reabre fora do vídeo.
 
 - **Título:** Estoque: saldo, histórico e posição
 - **Antes:** Pedidos e histórico do caixa (T9)
 - **Próximo:** Contas a Pagar e Receber (T13)
 - **Vinhetas (áreas):** ESTOQUE · HISTÓRICO · RELATÓRIO · POSIÇÃO · RESUMO (todos os capítulos menos o 0)
-- **Duração estimada:** ~14 min de vídeo (1.775 palavras e 9.516 caracteres de fala, ~11,4 min de voz a 2,6 palavras/s,
-  mais 12 vinhetas, as ilustrações e as ações; alvo da fonte: 16 min, a fala segue o tempo natural)
+- **Duração estimada:** ~19 min de vídeo (2.470 palavras de fala, ~15,8 min de voz a 2,6 palavras/s, mais 14 vinhetas, as ilustrações e as ações; aplicado ao app 1.60.18 em 20/11: 2 capítulos novos, cap. 7 e 11)
 - **FAKE_NOW:** `2026-11-10T08:30:00-03:00` (terça). O "dia 31" é 31/10, um sábado.
 - **Sementes:** `inicio` (mundo base com a "Tabela Depósitos" do T3 e os valores de `plano.md` → "Mundo"; caps. 0 a 3) e
-  `apos-cap03` (mais a transferência de 320 kg; caps. 4 a 12). Números falados que dependem da semente: caps. 2, 3, 4, 5,
-  6, 8 e 10 (tabela em `plano.md`).
+  `apos-cap03` (mais a transferência de 320 kg; caps. 4 a 14). Números falados que dependem da semente: caps. 2, 3, 4, 5,
+  6, 7, 9 e 12 (tabela em `plano.md`).
 - Marcas na coluna Tela: `[BACKEND: ...]` (o que o backend falso ainda precisa), `[ZOOM: ...]` (campo crítico, a frase
   inteira), `[ILUSTRAÇÃO: ...]` (desenho no estilo da marca, nunca tela do app).
 
@@ -33,8 +32,9 @@ com a semente indicada; quando um capítulo continua uma tela do anterior, o `se
 
 | Tela | Fala |
 | --- | --- |
-| Capítulo novo (semente `inicio`), no Dashboard; clique em "Materiais": abre "Estoque", "Histórico", "Relatório", "Ticket de Pesagem" e "Produção"; a câmera enquadra os três primeiros. | Vamos às quatro portas. Clicando em Materiais, aparecem as três primeiras: Estoque, Histórico e Relatório. |
-| Clique em "Estoque": a tela "Estoque" abre com a coluna "Tabelas de Preço" à esquerda; a câmera desce pela coluna até "Posição de Estoque", embaixo de "Nova Tabela", sem clicar. [Com uma tabela de preço só, o botão "Posição de Estoque" fica no cabeçalho da tela: ver `plano.md`] | A quarta fica dentro do Estoque, aqui na coluna das tabelas de preço: a Posição de Estoque. |
+| Capítulo novo (semente `inicio`), no Dashboard; clique em "Materiais": abre "Estoque", "Histórico (Kardex)", "Relatório", "Ticket de Pesagem" e "Produção"; a câmera enquadra os três primeiros. | Vamos às quatro portas. Clicando em Materiais, aparecem as três primeiras: Estoque, Histórico, que é o Kardex, e Relatório. |
+| Clique em "Estoque": a tela "Estoque" abre com a coluna "Tabelas de Preço" à esquerda; a câmera desce pela coluna até "Posição de Estoque", embaixo de "Nova Tabela", sem clicar. | A quarta fica dentro do Estoque, aqui na coluna das tabelas de preço: a Posição de Estoque. |
+| (a câmera segue na tela "Estoque", sem mexer: só a fala; o botão "Posição de Estoque" do cabeçalho, de quando a empresa tem uma tabela de preço só (`pages/Materiais.tsx`), não é gravado: nenhuma ilustração, decisão no `andamento_160.md`) | Se a sua empresa usa uma tabela de preço só, essa coluna não aparece. Aí a Posição de Estoque é um botão no alto da tela. |
 | [ILUSTRAÇÃO: as quatro portas: quatro portas lado a lado com os rótulos reais "Estoque", "Histórico", "Relatório" e "Posição de Estoque"; embaixo de cada uma entra, com a frase, o que ela responde: "quanto tem agora", "cada entrada e saída", "o que comprou e vendeu no período", "quanto tinha numa data"] | O Estoque mostra quanto tem agora. O Histórico conta cada entrada e cada saída. O Relatório soma o que você comprou e vendeu num período. E a Posição mostra quanto tinha numa data. |
 | De volta à tela "Estoque", quadro geral. | A gente começa pelo saldo de agora. |
 
@@ -47,6 +47,7 @@ com a semente indicada; quando um capítulo continua uma tela do anterior, o `se
 | A câmera passa para "Total Pago" e "Projeção de Vendas". | O Total Pago é quanto esse estoque custou, pelo preço médio que você pagou. E a Projeção de Vendas é quanto ele vale pela tabela de venda. |
 | A câmera desce para a "Lista de Materiais"; o mouse para na linha "Cobre mel". [ZOOM: "Estoque Atual" (42,000) e "Preço médio pago" (R$ 42,50) da linha "Cobre mel"] [BACKEND: `purchase_items` do Cobre mel todos a R$ 42,50, para o custo médio dar R$ 42,50] | Olha o cobre mel: quarenta e dois quilos no Estoque Atual, pagos em média a quarenta e dois e cinquenta o quilo. |
 | Mouse sobre o cabeçalho "Preço médio pago" (abre a explicação; a câmera fica no selo "estimativa", sem ler o texto). | Esse é o preço médio do material que você tem hoje. Por isso ele vem com o selo de estimativa. |
+| (o cursor fica parado no valor do "Preço médio pago"; o triângulo amarelo "⚠ Sem histórico de compra: usando o preço cadastrado, pode não refletir o custo real." só aparece em material com saldo e sem compra, que o mundo não tem: frase só falada) | Uma dica: quando o material tem saldo e nenhuma compra lançada, aparece um triângulo amarelo. O sistema usa o preço do cadastro, e o valor pode não ser o que você pagou. |
 | [ILUSTRAÇÃO: o que mexe no saldo: no centro, uma pilha de sucata com "Estoque Atual"; entram setas com "Compra", "Transferência", "Entrada manual" e "Produção"; saem setas com "Venda", "Transferência", "Saída manual" e "Exclusão"; cada seta acende com a palavra] | O Estoque Atual é o saldo de verdade. Ele muda com tudo o que entra e sai: compra, venda, transferência, ajuste manual, exclusão e produção. |
 | De volta à lista; a câmera na linha "Ferro misto" ("Estoque Atual" 6.420,000). | Então, quando alguém pergunta quanto tem, a resposta é aqui. O ferro misto, por exemplo, está com seis mil quatrocentos e vinte quilos. |
 
@@ -72,6 +73,7 @@ com a semente indicada; quando um capítulo continua uma tela do anterior, o `se
 | [ZOOM: a linha "Transferência": "Estoque Inicial" 2.180,000 Kg, "Movimentação" +320,000 Kg e "Estoque Final" 2.500,000 Kg] | É só ler da esquerda pra direita: tinha dois mil cento e oitenta quilos, entraram trezentos e vinte, ficou com dois mil e quinhentos. |
 | A câmera desce para a linha de baixo: a "Compra" de 09/11 (1.320,000 Kg, +860,000 Kg, 2.180,000 Kg). | A linha de baixo veio antes: uma compra de ontem, de oitocentos e sessenta quilos. O estoque final dela, dois mil cento e oitenta, é o inicial da transferência. |
 | [ILUSTRAÇÃO: a corrente: as duas linhas empilhadas; uma seta liga o "Estoque Final" da compra ao "Estoque Inicial" da transferência e acende com "começo da seguinte"] | É uma corrente: o final de uma linha é o começo da seguinte. Assim dá pra seguir o material quilo a quilo. |
+| [ZOOM: as colunas "Usuário" e "Pedido" da linha "Compra" de 09/11: "Rafael" e o número do pedido] | Cada linha mostra também quem lançou e, quando veio de um pedido, o número dele. |
 | A câmera sobe até o botão "Filtros" (sem contador) e mostra que a tabela só tem linhas de novembro. | Uma dica: o Histórico abre em Este mês. Hoje é dia dez, então ele mostra dez dias. |
 | Clique em "Filtros": painel "Filtros do Kardex"; em "Período" abre a lista e escolhe "Este ano"; clique em "Aplicar filtros": entram agosto, setembro e outubro (a paginação cresce) e o botão "Filtros" mostra 1. | Pra ver mais, é só trocar o período pra Este ano ou Todos os tempos. Assim, quem abre a tela no dia dois não acha que o histórico sumiu: só estava vendo dois dias. |
 
@@ -86,9 +88,10 @@ com a semente indicada; quando um capítulo continua uma tela do anterior, o `se
 | (a ilustração segue: acendem "Produção", com o cadeado, e "Saldo inicial") | Produção aparece pra quem usa a Produção, que depende do plano contratado: é a latinha que vira fardo, por exemplo. E o Saldo inicial é a quantidade com que o material entrou no sistema. |
 | De volta ao painel: marca "Edição Manual" e "Exclusão"; clique em "Aplicar filtros": ficam a "Edição Manual" de 31/10 (−14,000 Kg) e a "Exclusão" de 22/10 (−180,000 Kg). [BACKEND: as duas linhas de `plano.md` → "Mundo"] | Vou deixar só esses dois tipos. No sábado, dia trinta e um, o Rafael contou o pátio e ajustou o ferro pesado: menos catorze quilos. |
 | Clique na linha "Edição Manual": abre "Saída", "Observação" ("Contagem do pátio no fechamento do mês"), "Estoque" 41.874,000 Kg → 41.860,000 Kg, "Rafael Nogueira" e a hora. [ZOOM: "Observação" e "Estoque"] | Abrindo a linha, aparece a observação que ele escreveu, o estoque antes e depois, quem fez e a hora. |
+| (a linha aberta segue na tela; sem gesto novo) | Uma dica: mudar a quantidade pelo Editar do material também vira uma Edição Manual, só que sem observação. Por isso, pra ajustar o saldo, prefira o Movimentar estoque, que tem o campo de observação pra você deixar o motivo. |
 | A câmera vai à linha "Exclusão" de 22/10 (−180,000 Kg). | E aqui, uma compra de cento e oitenta quilos que tinha entrado duas vezes. A repetida foi excluída, e o estoque voltou. |
-| Clique em "Filtros": em "Tipo de movimentação" desmarca os dois; em "Fornecedores" marca "Depósito Irmãos Siqueira"; "Aplicar filtros": ficam as compras do Siqueira e as vendas. [BACKEND: filtro de parte pelos `order_id` de `purchases` (fornecedor) e `sales` (cliente)] | Uma dica sobre os filtros de Fornecedores e de Clientes: o de fornecedor mexe nas compras, e o de cliente, nas vendas. |
-| A câmera passa pela lista, agora sem "Transferência", "Edição Manual" e "Exclusão". | Com um deles marcado, a transferência, o ajuste manual e a exclusão saem da lista, porque não têm fornecedor nem cliente. Não é erro. |
+| Clique em "Filtros": em "Tipo de movimentação" desmarca os dois; em "Fornecedores" marca "Depósito Irmãos Siqueira"; "Aplicar filtros": ficam só as compras do Siqueira (desde a 1.60.18 o filtro de fornecedor tira também as vendas). [BACKEND: filtro de parte pelos `order_id` de `purchases` (fornecedor) e `sales` (cliente)] | Uma dica sobre os filtros de Fornecedores e de Clientes: o de fornecedor deixa só as compras dele, e o de cliente, só as vendas dele. |
+| A câmera passa pela lista, só com "Compra", sem "Transferência", "Edição Manual", "Exclusão" nem "Venda". | A transferência, o ajuste manual e a exclusão saem da lista, porque não têm fornecedor nem cliente. Não é erro. |
 | Clique em "Filtros" → "Limpar filtros": a lista volta com tudo, em "Este mês". | Pra ver tudo de novo, é só limpar os filtros. |
 
 ### cap06 · O pedido por trás da linha (vinheta: HISTÓRICO)
@@ -101,7 +104,19 @@ com a semente indicada; quando um capítulo continua uma tela do anterior, o `se
 | A câmera desce para "Fotos anexadas" (duas miniaturas); clique na primeira: a foto amplia; fecha. [BACKEND: `order_attachments` com 2 fotos fictícias (sucata de ferro numa caçamba, sem placa nem rosto) e URLs assinadas do bucket `order-attachments`] | E as fotos tiradas na hora da compra. Clicando, a foto amplia. |
 | Quadro geral da linha aberta. | Quando o contador pergunta de onde veio o ferro, a resposta está aqui: o pedido, o pagamento e as fotos, na mesma linha. |
 
-### cap07 · Comprado, vendido e lucro (vinheta: RELATÓRIO)
+### cap07 · Achar uma movimentação (vinheta: HISTÓRICO)
+
+| Tela | Fala |
+| --- | --- |
+| Capítulo novo (semente `apos-cap03`; o `setup` já abre "Histórico (Kardex)", em "Geral (Todos)"); na coluna "Materiais", digita "cobre" em "Buscar código ou material": ficam os três cobres; limpa. Clique em "Ordenar" ("Ordenar materiais"): "Código" e "Nome"; escolhe "Nome". [ZOOM: "Buscar código ou material" e "Ordenar"] | Agora, como achar uma movimentação no meio de centenas. Na coluna dos materiais, a busca aceita o código ou o nome, e o Ordenar muda a lista de código pra nome. |
+| Clique em "Ferro pesado"; "Filtros" → "Período" → "Personalizado": escolhe de 01/11/2026 a 07/11/2026; a tabela fica com a primeira semana de novembro. | No período, além das opções prontas, tem o Personalizado. O contador pediu a primeira semana de novembro? É só marcar o dia um e o dia sete. |
+| No mesmo painel, volta o período para "Este mês"; em "Quantidade movimentada" escolhe "Igual a" e digita 860. [ZOOM: "Quantidade movimentada" e "Considera o valor sem sinal: 40 encontra +40 e -40."] Fica só a "Compra" de 09/11 (+860 Kg). | E quando você lembra do peso, mas não do dia? O filtro de quantidade movimentada resolve. Igual a oitocentos e sessenta, e sobra a compra de ontem. Ele ignora o sinal: acha a entrada e a saída com esse peso. |
+| Limpa a quantidade; em "Clientes" marca "Aços Quiririm Ltda"; "Aplicar filtros": ficam só as vendas dele. Clique na venda de 04/11 (−38.992 Kg): abre os itens, "Cliente:", "Formas de Pagamento" e "Total do Pedido:". [BACKEND: `sale_items` e `orders_with_payments` da venda de 04/11, Pix] | O filtro de clientes mostra pra onde o material foi. Abrindo a venda do dia quatro, aparece o cliente, a Aços Quiririm, os itens, o pagamento e o total, do mesmo jeito que na compra. |
+| "Filtros" → "Limpar filtros". Clique em "Exportar" → "PDF": janela "Exportar Kardex (PDF)", já com "Este mês" e "Ferro pesado". [ZOOM: "Escolha o recorte do extrato. Mudar os filtros aqui não altera os filtros da tela."] | Pra mandar esse extrato pra alguém, é o Exportar. A janela já vem com o que está na tela: o período e o ferro pesado. Dá pra mudar aqui sem mexer nos filtros da tela. |
+| Clique em "Exportar PDF": aviso "Kardex exportado em PDF"; abre o PDF numa aba nova (o robô devolve o PDF: `pdf07_kardex` em `ilustracoes.json`, a aba entra como cena na edição). "Exportar" → "Excel": aviso "Kardex exportado em Excel". | Exportar, e o extrato do ferro pesado sai em PDF. Em Excel, é o mesmo caminho. |
+| Cursor no botão "Como funciona?", sem abrir. | Uma dica: se o período for grande demais, a tela avisa e pede um recorte menor. Nesse caso, o Excel baixa o extrato inteiro. E o Como funciona resume as colunas e os tipos. |
+
+### cap08 · Comprado, vendido e lucro (vinheta: RELATÓRIO)
 
 | Tela | Fala |
 | --- | --- |
@@ -110,12 +125,13 @@ com a semente indicada; quando um capítulo continua uma tela do anterior, o `se
 | Zoom no período "Mês passado". | Uma dica: o Relatório conta só os pedidos finalizados, pela data de cada pedido. Pedido excluído ou estornado fica de fora. |
 | A câmera nos quatro cartões: "Total Comprado", "Total Vendido", "Lucro" e "Projeção de Lucro". | Em cima, quatro cartões: Total Comprado, Total Vendido, Lucro e Projeção de Lucro. |
 | Clique em "Total Comprado": abre "Preço médio de compra", "Qtd. Comprada", "Materiais comprados" e "Material que mais comprou". | Clicando num cartão, ele abre os detalhes, como o preço médio de compra e o material que mais comprou. |
+| Clique em "Total Vendido" e em "Lucro": abrem os detalhes ("Preço médio de venda", "Material que mais vendeu", "Lucro s/ vendas total", "Resultado total", "Margem média", "Material mais lucrativo"); a câmera para em "Distribuição por forma de pagamento" ("Dinheiro", "Pix/Transferência", "Saldo", "Em aberto"). [BACKEND: `get_orders_payment_distribution` de outubro] | O Total Vendido e o Lucro abrem do mesmo jeito: o material que mais vendeu, o mais lucrativo, a margem. E embaixo, como o mês foi pago: dinheiro, Pix, saldo e o que ficou em aberto. |
 | Clique em "Projeção de Lucro" (selo "estimativa"): abre a explicação. | A Projeção de Lucro é uma estimativa. |
 | [ILUSTRAÇÃO: a projeção: a pilha "comprado em outubro" passa toda para "vendido", com uma etiqueta "preço médio de venda"; aparece o cartão "lucro projetado" e, embaixo, "não desconta despesas"] | Ela imagina que você vendeu tudo o que comprou no mês, pelo preço médio de venda, ou pelo da tabela se o material não teve venda. É lucro bruto, sem as despesas. |
 | [ILUSTRAÇÃO: Estoque × Relatório: dois cartões lado a lado: "Estoque" (o ferro pesado, 2.500 kg, com as setas de compra, venda, transferência, ajuste manual, exclusão e produção) e "Relatório de outubro" (só "comprado" e "vendido"); entre eles, um sinal de diferente] | Uma dica: o saldo da tela de Estoque não é o comprado menos o vendido daqui. |
 | (a ilustração segue: as setas a mais do lado do Estoque acendem; do lado do Relatório, o calendário de outubro) | O Relatório só soma compras e vendas do período. O saldo vem acumulado desde o começo e muda também com transferência, ajuste manual, exclusão e produção. Quando os números não batem, é quase sempre isso. |
 
-### cap08 · Material por material (vinheta: RELATÓRIO)
+### cap09 · Material por material (vinheta: RELATÓRIO)
 
 | Tela | Fala |
 | --- | --- |
@@ -126,8 +142,9 @@ com a semente indicada; quando um capítulo continua uma tela do anterior, o `se
 | [ILUSTRAÇÃO: resultado e margem: duas barras, "vendido R$ 47.900" e "comprado R$ 41.650"; a sobra "R$ 6.250" ganha o rótulo "Resultado"; depois a sobra vira uma fatia da barra do vendido: "13% = Margem"] | O Resultado é o vendido menos o comprado no mês: seis mil duzentos e cinquenta reais. E a Margem é esse resultado em porcentagem do que foi vendido: uns treze por cento. |
 | De volta à tabela; mouse no cabeçalho "Lucro s/ Vendas" (abre a explicação, sem ler). [ZOOM: a célula "Lucro s/ Vendas" do Cobre mel, R$ 5.400,00] | Já o Lucro s/ Vendas olha só o que foi vendido: a diferença entre os dois preços médios, vezes os mil quilos. Dá cinco mil e quatrocentos. Também é estimativa. |
 | A câmera desce até a linha "Bateria automotiva" ("Qtd. Comprada" 1.320,000; "Qtd. Vendida" 0,000). | Uma dica: material com muita compra e nenhuma venda, como a bateria automotiva, mil trezentos e vinte quilos comprados, não é erro. É material que entrou e ainda não saiu do pátio. |
+| Mouse na célula "Resultado" da "Bateria automotiva" (R$ 0,00): abre "… vendidos", "− R$ 4.092,00 comprados", "(prejuízo)" e "Lucro exibido: R$ 0,00". [ZOOM: o balão da célula] | Repara que o Resultado dela é zero, e não negativo. O Resultado nunca fica abaixo de zero. Passando o mouse, a conta aparece inteira. |
 
-### cap09 · O filtro de fornecedor (vinheta: RELATÓRIO)
+### cap10 · O filtro de fornecedor (vinheta: RELATÓRIO)
 
 | Tela | Fala |
 | --- | --- |
@@ -136,7 +153,18 @@ com a semente indicada; quando um capítulo continua uma tela do anterior, o `se
 | Zoom na tabela, só com "Código", "Material", "Qtd. Comprada", "Valor Comprado" e "Preço Médio Compra". | Então, com esse filtro, o relatório responde uma pergunta: quanto você comprou do Siqueira, de cada material, e a que preço. |
 | Abre "Fornecedores" e desmarca "Depósito Irmãos Siqueira": voltam os quatro cartões e todas as colunas. | Pra ver venda, lucro e margem, é só tirar o filtro. |
 
-### cap10 · A foto do estoque numa data (vinheta: POSIÇÃO)
+### cap11 · Clientes, usuários e grupos (vinheta: RELATÓRIO)
+
+| Tela | Fala |
+| --- | --- |
+| Capítulo novo (semente `apos-cap03`; o `setup` deixa o período em "Mês passado"); em "Detalhamento por Material", clique em "Clientes" e marca "Fundição Bandeira do Vale": as colunas de venda passam a mostrar só o que foi pra Fundição; as de compra não mudam. Desmarca. [BACKEND: `get_inventory_report_data` com `p_customer_ids`] | Os outros filtros funcionam do mesmo jeito. O de clientes mexe só nas vendas: marcando a Fundição Bandeira do Vale, eu vejo quanto ela levou de cada material em outubro. |
+| "Usuários" → marca "Marcos Antunes": ficam as compras e as vendas que ele lançou. Desmarca. [BACKEND: `p_creator_ids`; pedidos de outubro com `created_by` do Marcos, já no mundo base] | O de usuários mostra o que cada pessoa lançou. Aqui, só as compras e as vendas que o Marcos registrou. |
+| "Grupos" → marca "Cobre": ficam os três cobres e os cartões recalculam. | E o de grupos junta os materiais da mesma família. Só o grupo Cobre, e os cartões de cima já somam só o cobre. |
+| Desmarca o grupo; clique em "Por grupo": a tabela ganha uma faixa por grupo e a linha "Subtotal Ferrosos", "Subtotal Cobre"… [ZOOM: "Subtotal Cobre"] | Quer ver todos, mas separados? Em Por grupo, cada família ganha a sua faixa e o seu subtotal. |
+| Volta para "Por material"; liga "Ocultar itens zerados": somem as linhas sem compra nem venda no mês. | O Ocultar itens zerados tira da lista o que não girou no mês. O sistema lembra dessa escolha. |
+| Clique no título "Resultado": a lista ordena do maior para o menor; a câmera desce até a linha "TOTAL". | Clicando no título de uma coluna, a lista ordena por ela. Em Resultado, o material que mais rendeu vai pro topo. E a última linha soma tudo. |
+
+### cap12 · A foto do estoque numa data (vinheta: POSIÇÃO)
 
 | Tela | Fala |
 | --- | --- |
@@ -146,24 +174,31 @@ com a semente indicada; quando um capítulo continua uma tela do anterior, o `se
 | Clique na data (10/11/2026): abre o calendário de novembro; clique na seta do mês anterior e no dia 31: a data vira 31/10/2026 e a hora fica 23:59. [ZOOM: "Data e hora (padrão: fim do dia)" com 31/10/2026 e 23:59] | Eu volto o calendário pra outubro e clico no dia trinta e um. A hora fica em vinte e três e cinquenta e nove, então entra tudo o que aconteceu no sábado. |
 | Clique em "Ver posição": o título vira "Posição de estoque em 31/10/2026 23:59" e a tabela recarrega. | Ver posição. |
 | [ZOOM: a linha "Ferro pesado", "Saldo" 41.860,000] | No dia trinta e um, o ferro pesado tinha quarenta e um mil oitocentos e sessenta quilos. A diferença pra hoje são as compras, as vendas e a transferência de novembro. |
-| A câmera passa pelas colunas "Valor" e "Projeção venda", pela linha "Total geral" e pela nota do rodapé ("Valor = saldo × custo médio das compras até a data. Projeção = saldo × preço de venda atual."). | Do lado, o valor desse estoque, pelo custo médio das compras até aquela data, e a projeção, pelo preço de venda de hoje. Embaixo, o total geral. |
+| Em "Hora", troca 23:59 por 12:00; "Ver posição": o Ferro pesado mostra 41.874 Kg; volta a hora para 23:59 e "Ver posição". [ZOOM: "Hora" e o "Saldo"; valor a conferir no ensaio] | E dá pra mudar a hora. Ao meio-dia do dia trinta e um, o ferro pesado tinha quarenta e um mil oitocentos e setenta e quatro quilos. Era o saldo antes da contagem, que tirou catorze. |
+| A câmera passa pelas colunas "Valor" e "Projeção venda". | Do lado, o valor desse estoque, pelo custo médio das compras até aquela data, e a projeção, pelo preço de venda de hoje. |
+| Clique em "Por grupo": faixas por grupo e "Subtotal Ferrosos"; volta para "Por material". | Em Por grupo, a foto vem separada por família, com o subtotal de cada uma. |
+| A câmera desce até a linha "Total geral". | Embaixo, o total geral. |
+| [ZOOM: a nota inteira do rodapé: "Valor = saldo × custo médio das compras até a data. Projeção = saldo × preço de venda atual." e, abaixo, "Valores negativos indicam movimentações lançadas fora da ordem cronológica." e "Itens sem compra registrada até a data aparecem sem valorização."] | Uma dica: se aparecer saldo negativo numa data antiga, é lançamento feito fora de ordem, com data anterior. Material sem compra até aquela data aparece sem valor. E material zerado não entra na foto. |
 
-### cap11 · Exportar para o contador (vinheta: POSIÇÃO)
+### cap13 · Exportar para o contador (vinheta: POSIÇÃO)
 
 | Tela | Fala |
 | --- | --- |
 | Capítulo novo (semente `apos-cap03`; o `setup` deixa 31/10/2026 23:59 aplicado na Posição de Estoque); clique em "Exportar" → "PDF": janela "Exportar estoque (PDF)" com "Colunas do arquivo", "Grupos" e "Materiais". | Com a foto do dia trinta e um na tela, é só exportar. No Exportar, escolho PDF. |
-| A câmera em "Colunas do arquivo" (as seis marcadas) e no rodapé ("<n> de <n> materiais"). [BACKEND: upsert em `stock_export_preferences`] | Aqui você escolhe as colunas e os materiais do arquivo. A tela guarda essa escolha pra próxima vez. |
-| Clique em "Exportar": aviso "Posição de estoque exportada em PDF"; abre a aba nova com o PDF (o robô mostra a aba ~3 s, com "Baixar PDF" no canto, e volta). [BACKEND: nada; o PDF é feito no navegador e abre em aba nova (popup liberado no robô)] | Exportar, e o PDF abre numa aba nova, pronto pra baixar e mandar pro contador. |
+| A câmera em "Colunas do arquivo" (as seis marcadas): desmarca "Valor do estoque", passa por "Grupos" e "Marcar todos" / "Desmarcar todos" e marca a coluna de novo; rodapé ("<n> de <n> materiais"). [BACKEND: upsert em `stock_export_preferences`] | Aqui você escolhe as colunas e os materiais do arquivo. Não quer mostrar quanto pagou? É só tirar a coluna Valor do estoque. A tela guarda essa escolha pra próxima vez. |
+| Clique em "Exportar": aviso "Posição de estoque exportada em PDF"; abre a aba nova com o PDF (o robô devolve o PDF, `pdf13_posicao`; a aba entra como cena na edição). [BACKEND: nada; o PDF é feito no navegador e abre em aba nova (popup liberado no robô)] | Exportar, e o PDF abre numa aba nova, pronto pra baixar e mandar pro contador. |
 | "Exportar" → "Excel": "Exportar estoque (Excel)" → "Exportar": aviso "Posição de estoque exportada em Excel" (o arquivo baixa). | Se o contador preferir planilha, o mesmo caminho em Excel baixa o arquivo. |
-| Corte rápido: o botão "Exportar" do "Histórico de Materiais" aberto ("PDF", "Excel") e o botão "Exportar Relatório" do "Relatório de Estoque" (o robô grava cada um ~2 s, sem exportar). | O Histórico e o Relatório também exportam, cada um pelo seu botão. |
+| "Relatório de Estoque" de outubro (o `setup` do robô a reabre), clique em "Exportar Relatório": o PDF abre numa aba nova (o robô devolve o PDF, `pdf13_relatorio`; a aba entra como cena na edição). Cursor no "Exportar" do "Histórico de Materiais" não: o Kardex já foi exportado no capítulo 7. | O Histórico a gente já exportou. O Relatório exporta pelo Exportar Relatório, com o período e os filtros da tela. Se o Exportar não aparece pra um usuário, é permissão dele. |
+| (a tela do Relatório segue; sem gesto novo) | Quem emite nota tem ainda o Estoque Fiscal, que compara esse estoque com o das notas. Ele fica no tutorial de transporte, serviço e contador. |
 
-### cap12 · Recapitulando (vinheta: RESUMO)
+### cap14 · Recapitulando (vinheta: RESUMO)
 
 | Tela | Fala |
 | --- | --- |
 | Montagem rápida: a lista do "Estoque" com o ferro misto e o ferro pesado depois da transferência. | Pronto! Recapitulando: a gente conferiu o saldo de cada material na tela de Estoque e transferiu trezentos e vinte quilos do ferro misto pro ferro pesado. |
 | Montagem rápida: o Kardex do ferro pesado e a compra de 09/11 aberta, com as fotos. | Leu o Kardex linha a linha, conheceu os tipos de movimentação e abriu uma compra pra ver o pedido, o pagamento e as fotos. |
+| Montagem rápida: a busca por quantidade 860 e a venda de 04/11 aberta, e o PDF do Kardex. | Achou uma movimentação pelo peso, filtrou por cliente e exportou o Kardex. |
 | Montagem rápida: o "Relatório de Estoque" de outubro, na linha do cobre mel. | No Relatório, viu o comprado, o vendido, o resultado e a margem do mês, e por que o filtro de fornecedor mostra só as compras. |
+| Montagem rápida: os filtros "Clientes", "Usuários" e "Grupos" e a visão "Por grupo". | E filtrou o Relatório por cliente, usuário e grupo. |
 | Montagem rápida: "Posição de estoque em 31/10/2026 23:59" e a aba do PDF. | E tirou a foto do estoque do dia trinta e um, exportada em PDF e Excel pro contador. |
 | Cartão "Próximo: Contas a Pagar e Receber"; cartela final. | No próximo tutorial, a gente cuida das contas que vencem: as que você paga e as que você recebe. Até lá! |

@@ -21,3 +21,19 @@ python3 -I rec/t04/t04_pdf.py --ens
 FAKE_PORT=54304 bash rec/run.sh down
 ```
 Resultado em `rec/t04/_ens/lote160.txt`.
+
+## Atualização 20/11 (fim do ensaio de fechamento; 2 lotes usados)
+Causas e correções (gerar.py / t04_lote160.sh):
+- cap06: o aviso "Já existe um fornecedor..." só sai ao SAIR do campo CNPJ (onBlur em EntityFormDialog); adicionado `press Tab` depois de digitar. Passou (rápido e completo).
+- cap07/cap09/cap17 (e 16): clique aleatório dentro da linha caía no botão "..." (menu da linha) e a ficha não abria. Todo `click(LINHA(` virou `NOME_LINHA` (clica no nome). Mais `js_garante` (reclique sem cursor se o efeito não veio) no Depósito (cap07), Editar do Valdir (cap09) e olho do relatório (cap16). cap07 passou; cap09 passou.
+- cap08: faltava `apos-cap05` (cadeia, cap07) e o toast real é "Preços personalizados salvos" (não "Preços salvos"). Corrigido no gerar.py, NÃO reexecutado.
+- lote160.sh só captura semente com `rc=0 falhos=0` (antes capturou `apos-cap06` vazia do cap08 com rc=1).
+- cap04 completo: tooltip do selo/ficha do Rogério falhou porque a rolagem da lista pelo robô leva ~7 s e fecha o tooltip; adicionado `js_rola_linha` antes do hover. Não reexecutado.
+Estado das sementes: apos-cap04, apos-n1, apos-cap05 (ok); `apos-cap06` VAZIA e `apos-cap09` sem a cadeia (sem serralheria/Rogério): refazer.
+Completo (gravação sem --rapido): 0 falho em 5, 6, 7, 9, 10, 12, 13, 14; atrasos > 0,8 s em 6, 7, 9, 12(FIM), 13 (voz estimada: reajustar com a voz real). cap04 e cap16 falharam (acima).
+## Falta (comandos, instância 54304 de pé)
+```
+bash rec/t04/t04_lote160.sh 8 12 17 4 16      # 8 gera apos-cap06; 12 recaptura apos-cap09 com a cadeia; 17 depende dela
+bash rec/t04/t04_ensaio.sh 04 completo; bash rec/t04/t04_ensaio.sh 16 completo; bash rec/t04/t04_ensaio.sh 08 completo
+```
+Achado do app: cap06 tem 2 avisos de console "Select is changing from controlled to uncontrolled" (React, app).

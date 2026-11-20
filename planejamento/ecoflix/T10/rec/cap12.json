@@ -1,6 +1,6 @@
 {
  "name": "t10-cap12",
- "title": "T10 · Cap. 12 · Recapitulando (narração 49,8 s ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário rafael)",
+ "title": "T10 · Cap. 12 · A foto do estoque numa data (narração 105,2 s ESTIMADA; marcas L1..L11 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário rafael)",
  "seed": "t10-cap12",
  "pace": 0.5,
  "cps": 14,
@@ -16,7 +16,8 @@
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
-  "initial-preferences-set": "true"
+  "initial-preferences-set": "true",
+  "cato_adoption_nudge_38814e47-876a-5977-a5f7-53af364c17bb_34c36c63-0890-5e89-8963-7c77b7996908": "{\"count\":99,\"lastShownAt\":0}"
  },
  "seedExtra": [
   "t10/inicio",
@@ -114,194 +115,147 @@
    "at": 0.0
   },
   {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.offsetParent!==null&&e.textContent.trim()===\"Lista de Materiais\").sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-110);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 2.6,
-   "label": "a Lista de Materiais"
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Posição de Estoque",
+    "exact": true
+   },
+   "at": 5.17,
+   "label": "Posição de Estoque (coluna Tabelas de Preço)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Escolha a data",
+   "timeout": 15
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text('Ferro misto') td:nth-child(4)"
+    "selector": "main button:has(svg.lucide-calendar):has-text('10/11/2026')"
    },
-   "seconds": 1.4,
-   "at": 6.53,
-   "label": "Ferro misto 6.100 Kg",
+   "seconds": 0.8,
+   "at": 7.9,
+   "label": "data de hoje: 10/11/2026",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text('Ferro pesado') td:nth-child(4)"
+    "selector": "main input[aria-label='Hora']"
    },
-   "seconds": 0.6,
-   "at": 10.71,
-   "label": "Ferro pesado 2.500 Kg",
+   "seconds": 0.36,
+   "at": 8.73,
+   "label": "hora 23:59",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 11.77
-  },
-  {
-   "do": "goto",
-   "url": "/historico-materiais",
-   "at": 12.67,
-   "label": "Histórico de Materiais"
-  },
-  {
-   "do": "eval",
-   "js": "(()=>{const v=[...document.querySelectorAll('main tbody tr')].filter(r=>/Papel[ãa]o/.test(r.innerText)&&/-370|-30 Kg/.test(r.innerText));if(!v.length)return 'OK: papelão negativo fora da lista';const r=v[0].getBoundingClientRect();return (r.top<innerHeight&&r.bottom>0?'DIFERENTE: papelão negativo VISÍVEL ':'OK: papelão negativo só abaixo da dobra ')+'(y '+Math.round(r.top)+')'})()",
-   "label": "confere o papelão negativo (Kardex Geral) fora da tela"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "main [role=list] button:has-text('Ferro pesado')"
-   },
-   "at": 13.64,
-   "label": "Ferro pesado"
-  },
-  {
-   "do": "waitFor",
-   "target": {
-    "selector": "main tbody tr:has-text('Transferência')"
-   },
-   "timeout": 10
+   "at": 9.64
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr > td:nth-child(4) :text-is('Transferência')",
-    "nth": 0
+    "selector": "main input[aria-label='Hora']"
    },
-   "seconds": 0.6,
-   "at": 15.39,
-   "label": "os tipos",
+   "seconds": 0.24,
+   "at": 9.64,
+   "label": "hora 23:59 (continua)",
    "optional": true,
    "timeout": 4
   },
   {
-   "do": "click",
-   "target": {
-    "selector": "main tbody tr:has-text('+860 Kg') > td:nth-child(6)"
-   },
-   "at": 17.06,
-   "label": "abre a compra de 09/11"
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Posição de estoque em 10/11/2026 23:59\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere título: Posição de estoque em 10/11/2026 23:59"
   },
   {
-   "do": "waitFor",
-   "text": "Fotos anexadas",
-   "timeout": 10
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Ferro pesado') > td:nth-child(4)"
+   },
+   "seconds": 2.6,
+   "at": 10.75,
+   "label": "[ZOOM] Ferro pesado, Saldo 2.500,000",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.offsetParent!==null&&e.textContent.trim()===\"Fotos anexadas\").sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-420);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 20.42,
-   "label": "o pedido, o pagamento e as fotos"
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Ferro pesado\", \"2.500,000\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody tr\")].filter(e=>!true||e.innerText.includes(\"Ferro pesado\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Ferro pesado hoje 2.500,000"
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 21.84
-  },
-  {
-   "do": "goto",
-   "url": "/relatorio-estoque",
-   "at": 21.84,
-   "label": "Relatório de Estoque"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "main button[role=combobox]",
-    "hasText": "Este mês"
-   },
-   "at": 23.71,
-   "label": "período"
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "option",
-    "name": "Mês passado"
-   },
-   "at": 24.77,
-   "label": "Mês passado"
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.offsetParent!==null&&e.textContent.trim()===\"Cobre mel\").sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-420);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 25.96,
-   "label": "a linha do Cobre mel"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('Cobre mel') > td:nth-child(10)"
-   },
-   "seconds": 0.8,
-   "at": 26.97,
-   "label": "Resultado e Margem do Cobre mel",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const c=rolagem(document.querySelector(\"main\"+' *'));if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;if(y0<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0*(1-e);p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
-   "at": 28.66,
-   "label": "volta ao topo"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "role": "button",
-    "name": "Fornecedores",
-    "exact": true
-   },
-   "seconds": 0.8,
-   "at": 29.93,
-   "label": "filtro Fornecedores",
-   "optional": true,
-   "timeout": 4
+   "at": 14.7
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 32.44
-  },
-  {
-   "do": "goto",
-   "url": "/materiais/posicao-estoque",
-   "at": 32.44,
-   "label": "Posição de Estoque"
+   "at": 27.81
   },
   {
    "do": "click",
    "target": {
     "selector": "main button:has(svg.lucide-calendar):has-text('10/11/2026')"
    },
-   "at": 33.39,
-   "label": "data"
+   "at": 28.84,
+   "label": "data (abre o calendário de novembro)"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button[name='previous-month']"
+   },
+   "timeout": 6
   },
   {
    "do": "click",
    "target": {
     "selector": "[data-radix-popper-content-wrapper] button[name='previous-month']"
    },
-   "at": 34.0,
-   "label": "outubro"
+   "at": 29.98,
+   "label": "mês anterior (outubro)"
   },
   {
    "do": "click",
    "target": {
     "selector": "[data-radix-popper-content-wrapper] button[name='day']:text-is('31')"
    },
-   "at": 35.14,
+   "at": 31.73,
    "label": "dia 31"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main button:has(svg.lucide-calendar):has-text('31/10/2026')"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 33.27,
+   "label": "[ZOOM] Data e hora (padrão: fim do dia): 31/10/2026 e 23:59"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main input[aria-label='Hora']"
+   },
+   "seconds": 2.0,
+   "at": 34.01,
+   "label": "hora 23:59",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 40.0
   },
   {
    "do": "click",
@@ -310,7 +264,7 @@
     "name": "Ver posição",
     "exact": true
    },
-   "at": 36.28,
+   "at": 40.2,
    "label": "Ver posição"
   },
   {
@@ -319,22 +273,242 @@
    "timeout": 15
   },
   {
+   "do": "mark",
+   "name": "L6",
+   "at": 41.34
+  },
+  {
    "do": "hover",
    "target": {
-    "role": "button",
-    "name": "Exportar",
-    "exact": true
+    "selector": "main tbody tr:has-text('Ferro pesado') > td:nth-child(4)"
+   },
+   "seconds": 3.0,
+   "at": 43.51,
+   "label": "[ZOOM] Ferro pesado, Saldo 41.860,000 em 31/10",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Ferro pesado\", \"41.860,000\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody tr\")].filter(e=>!true||e.innerText.includes(\"Ferro pesado\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Ferro pesado em 31/10: 41.860,000"
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 54.68
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main input[aria-label='Hora']"
    },
    "seconds": 1.0,
-   "at": 38.33,
-   "label": "Exportar (PDF e Excel)",
+   "at": 55.71,
+   "label": "[ZOOM] Hora",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const el=document.querySelector(\"input[aria-label='Hora']\");if(!el)return 'SEM HORA';const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;set.call(el,'12:00');el.dispatchEvent(new Event('input',{bubbles:true}));el.dispatchEvent(new Event('change',{bubbles:true}));return el.value})()",
+   "at": 56.87,
+   "label": "troca a hora para 12:00"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ver posição",
+    "exact": true
+   },
+   "at": 56.87,
+   "label": "Ver posição (12:00)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Posição de estoque em 31/10/2026 12:00",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Ferro pesado') > td:nth-child(4)"
+   },
+   "seconds": 3.0,
+   "at": 60.95,
+   "label": "[ZOOM] Ferro pesado, Saldo ao meio-dia de 31/10",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Ferro pesado\", \"41.874,000\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody tr\")].filter(e=>!true||e.innerText.includes(\"Ferro pesado\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Ferro pesado às 12:00 de 31/10: 41.874,000"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const el=document.querySelector(\"input[aria-label='Hora']\");if(!el)return 'SEM HORA';const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;set.call(el,'23:59');el.dispatchEvent(new Event('input',{bubbles:true}));el.dispatchEvent(new Event('change',{bubbles:true}));return el.value})()",
+   "at": 67.45,
+   "label": "volta a hora para 23:59"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ver posição",
+    "exact": true
+   },
+   "at": 68.45,
+   "label": "Ver posição (23:59)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Posição de estoque em 31/10/2026 23:59",
+   "timeout": 15
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 69.15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th:has-text('Valor')"
+   },
+   "seconds": 1.2,
+   "at": 70.48,
+   "label": "coluna Valor",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th:has-text('Projeção venda')"
+   },
+   "seconds": 1.2,
+   "at": 76.18,
+   "label": "coluna Projeção venda",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
-   "name": "L5",
-   "at": 39.92
+   "name": "L9",
+   "at": 79.29
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main [aria-label='Ver por grupo']"
+   },
+   "at": 79.72,
+   "label": "Por grupo"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Subtotal Ferrosos\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Por grupo: Subtotal Ferrosos"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Subtotal Ferrosos",
+    "within": "main",
+    "nth": 0,
+    "exact": false
+   },
+   "seconds": 1.12,
+   "at": 83.96,
+   "label": "[ZOOM] Subtotal Ferrosos",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L10",
+   "at": 85.63
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Subtotal Ferrosos",
+    "within": "main",
+    "nth": 0,
+    "exact": false
+   },
+   "seconds": 0.28,
+   "at": 85.63,
+   "label": "[ZOOM] Subtotal Ferrosos (continua)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main [aria-label='Ver por material']"
+   },
+   "at": 85.63,
+   "label": "Por material"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.offsetParent!==null&&e.textContent.trim()===\"Total geral\").sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-470);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 85.93,
+   "label": "desce até o Total geral"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Total geral",
+    "exact": true
+   },
+   "seconds": 0.44,
+   "at": 86.97,
+   "label": "[ZOOM] linha Total geral",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L11",
+   "at": 87.96
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Total geral",
+    "exact": true
+   },
+   "seconds": 0.36,
+   "at": 87.96,
+   "label": "[ZOOM] linha Total geral (continua)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Total geral\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Total geral"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main p:has-text('Valores negativos indicam')",
+    "nth": 0
+   },
+   "seconds": 3.0,
+   "at": 90.58,
+   "label": "[ZOOM] a nota do rodapé inteira",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Valor = saldo × custo médio das compras até a data\", \"Projeção = saldo × preço de venda atual\", \"Valores negativos indicam movimentações lançadas fora da ordem cronológica\", \"Itens sem compra registrada até a data aparecem sem valorização\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a nota do rodapé: as quatro frases"
   },
   {
    "do": "eval",
@@ -344,7 +518,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 49.85
+   "at": 105.25
   }
  ]
 }

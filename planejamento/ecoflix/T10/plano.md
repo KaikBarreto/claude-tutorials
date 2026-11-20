@@ -5,38 +5,40 @@
 - **Objetivo:** responder as três perguntas do contador da Recicla Vale Metais: quanto tem hoje (Estoque), de onde
   veio (Histórico/Kardex) e quanto tinha no dia 31 (Posição de Estoque); e ler o Relatório de Estoque do mês.
 - **Áreas das vinhetas:** ESTOQUE · HISTÓRICO · RELATÓRIO · POSIÇÃO · RESUMO.
-- **Alvo da fonte:** ~16 min. Desktop (janela 1280×800), logado como **Rafael Nogueira** (MASTER: vê valores e exporta).
+- **Alvo da fonte:** ~16 min. Desktop (tela 1600×900), logado como **Rafael Nogueira** (MASTER: vê valores e exporta).
   `FAKE_NOW=2026-11-10T08:30:00-03:00` (terça). Sem módulo 🔒 próprio; cita o Gerencial e a Produção como
   "depende do plano contratado".
-- Base: `T10/inventario.md` (código 1.59.154).
+- Base: `T10/inventario.md` (código 1.60.18; aplicação de 20/11/2026: 15 capítulos, dois novos).
 
 ## Capítulos (os da fonte, na ordem)
 
 | # | Vinheta (área / título) | O que se mostra | Ilustração | Estado de partida |
 |---|---|---|---|---|
 | 0 | (sem vinheta) | Abertura: as três perguntas do contador; menu "Materiais"; cartão "Antes" | as três perguntas | `inicio` |
-| 1 | ESTOQUE / As quatro portas do estoque | "Materiais" → "Estoque", "Histórico", "Relatório"; a "Posição de Estoque" na coluna "Tabelas de Preço" | as quatro portas | `inicio` |
-| 2 | ESTOQUE / O saldo de cada material | cartões "Peso Total em Estoque", "Total Pago", "Projeção de Vendas"; linha do Cobre mel ("Estoque Atual", "Preço médio pago"); Ferro misto | o que mexe no saldo | `inicio` |
-| 3 | ESTOQUE / Transferir entre materiais | "Transferir estoque" do Ferro misto para o Ferro pesado, 320 kg; a barra de seleção ("Transferir Estoque" = Transferência em Lote, Gerencial) só mostrada | a separação no pátio | `inicio` → `apos-cap03` |
-| 4 | HISTÓRICO / O Kardex, linha a linha | "Histórico de Materiais", "Geral (Todos)" → "Ferro pesado"; a corrente Estoque Inicial → Movimentação → Estoque Final; ⚠️ "Este mês" → "Este ano" | Kardex = extrato; a corrente | `apos-cap03` |
-| 5 | HISTÓRICO / Os tipos de movimentação | selos; "Tipo de movimentação" (os sete); "Edição Manual" de 31/10 aberta (observação); "Exclusão" de 22/10; ⚠️ filtro "Fornecedores" | os tipos no pátio | `apos-cap03` (setup: Ferro pesado, "Este ano") |
+| 1 | ESTOQUE / As quatro portas do estoque | "Materiais" → "Estoque", "Histórico (Kardex)", "Relatório"; a "Posição de Estoque" na coluna "Tabelas de Preço"; o botão do cabeçalho (só falado) | as quatro portas; o botão sem coluna | `inicio` |
+| 2 | ESTOQUE / O saldo de cada material | cartões; linha do Cobre mel ("Estoque Atual", "Preço médio pago"); o triângulo "Sem histórico de compra" (só falado); Ferro misto | o que mexe no saldo; o aviso amarelo | `inicio` |
+| 3 | ESTOQUE / Transferir entre materiais | "Transferir estoque" do Ferro misto para o Ferro pesado, 320 kg; a barra de seleção só mostrada | a separação no pátio | `inicio` → `apos-cap03` |
+| 4 | HISTÓRICO / O Kardex, linha a linha | "Histórico de Materiais", "Geral (Todos)" → "Ferro pesado"; Estoque Inicial → Movimentação → Estoque Final; colunas "Usuário" e "Pedido"; "Este mês" → "Este ano" | Kardex = extrato; a corrente | `apos-cap03` |
+| 5 | HISTÓRICO / Os tipos de movimentação | selos; os sete tipos; "Edição Manual" de 31/10 aberta; dica do "Editar" (só falada); "Exclusão" de 22/10; filtro "Fornecedores" (só compras) | os tipos no pátio | `apos-cap03` (setup: Ferro pesado, "Este ano") |
 | 6 | HISTÓRICO / O pedido por trás da linha | a compra de 09/11 aberta: itens, "Fornecedor:", "Formas de Pagamento", "Total do Pedido:", "Fotos anexadas" | (só tela) | `apos-cap03` |
-| 7 | RELATÓRIO / Comprado, vendido e lucro | "Relatório de Estoque", "Mês passado"; os quatro cartões; "Total Comprado" aberto; "Projeção de Lucro"; ⚠️ saldo ≠ comprado − vendido; ⚠️ só pedidos finalizados | a projeção; Estoque × Relatório lado a lado | `apos-cap03` |
-| 8 | RELATÓRIO / Material por material | "Detalhamento por Material": Cobre mel de outubro (preço médio, Resultado, Margem, Lucro s/ Vendas); ⚠️ quantidade líquida; ⚠️ Bateria automotiva sem venda | resultado e margem; peso líquido | `apos-cap03` (setup: "Mês passado") |
-| 9 | RELATÓRIO / O filtro de fornecedor | "Fornecedores" → "Depósito Irmãos Siqueira": só compras; desmarca | a pilha sem dono | `apos-cap03` (setup: "Mês passado") |
-| 10 | POSIÇÃO / A foto do estoque numa data | "Posição de Estoque" de hoje; calendário → 31/10, 23:59; "Ver posição"; Ferro pesado 41.860 kg; "Valor", "Projeção venda", "Total geral" | a foto numa data | `apos-cap03` |
-| 11 | POSIÇÃO / Exportar para o contador | "Exportar" → "PDF" ("Exportar estoque (PDF)") → aba do PDF; "Excel"; os "Exportar" do Histórico e do Relatório | (só tela) | `apos-cap03` (setup: 31/10 aplicado) |
-| 12 | RESUMO / Recapitulando | montagem do que foi feito; cartão "Próximo: Contas a Pagar e Receber" | | |
+| **7** | **HISTÓRICO / Achar uma movimentação (novo)** | busca e "Ordenar"; "Personalizado" 01 a 07/11; "Quantidade movimentada" Igual a 860; "Clientes" Aços Quiririm e a venda de 04/11 aberta; "Exportar" PDF e Excel do Kardex; "Como funciona?" | PDF do Kardex na aba (cena `pdf`) | `apos-cap03` (setup: Kardex Geral) |
+| 8 | RELATÓRIO / Comprado, vendido e lucro (era 7) | "Mês passado"; os quatro cartões; "Total Comprado", "Total Vendido" e "Lucro" abertos; "Distribuição por forma de pagamento"; "Projeção de Lucro"; saldo ≠ comprado − vendido; só pedidos finalizados | a projeção; Estoque × Relatório | `apos-cap03` |
+| 9 | RELATÓRIO / Material por material (era 8) | Cobre mel de outubro; peso líquido; Bateria automotiva sem venda e o balão do "Resultado" (R$ 0,00) | resultado e margem; peso líquido | `apos-cap03` (setup: "Mês passado") |
+| 10 | RELATÓRIO / O filtro de fornecedor (era 9) | "Fornecedores" → "Depósito Irmãos Siqueira": só compras; desmarca | a pilha sem dono | `apos-cap03` (setup: "Mês passado") |
+| **11** | **RELATÓRIO / Clientes, usuários e grupos (novo)** | "Clientes" (Fundição Bandeira do Vale), "Usuários" (Marcos Antunes), "Grupos" (Cobre), "Por grupo" e "Subtotal", "Ocultar itens zerados", ordenar por "Resultado" e a linha "TOTAL" | (só tela) | `apos-cap03` (setup: "Mês passado") |
+| 12 | POSIÇÃO / A foto do estoque numa data (era 10) | "Posição de Estoque" de hoje; 31/10 23:59; "Ver posição"; Ferro pesado 41.860 kg; a "Hora" 12:00 (41.874 kg); "Valor", "Projeção venda"; "Por grupo"; "Total geral"; a nota do rodapé | a foto numa data | `apos-cap03` |
+| 13 | POSIÇÃO / Exportar para o contador (era 11) | "Exportar" → "PDF": desmarca "Valor do estoque", "Grupos", "Marcar todos" → aba do PDF; "Excel"; "Exportar Relatório" de outubro (aba HTML); Estoque Fiscal só falado | PDFs na aba (cenas `pdf`) | `apos-cap03` (setup: 31/10 aplicado) |
+| 14 | RESUMO / Recapitulando (era 12) | montagem do que foi feito (inclui os dois capítulos novos); cartão "Próximo: Contas a Pagar e Receber" | | |
 
 Transições faladas: 1 "Vamos às quatro portas"; 2 "Esta é a tela do saldo"; 3 "Agora, a transferência"; 4 "Agora o
 Histórico, de onde veio cada quilo"; 5 "Cada linha tem um tipo"; 6 "Toda linha de compra ou de venda abre o pedido";
-7 "Agora o Relatório de Estoque"; 8 "Embaixo dos cartões"; 9 "Agora repara o que acontece quando eu filtro";
-10 "E a terceira pergunta do contador"; 11 "Com a foto do dia 31 na tela, é só exportar".
+7 "Agora, como achar uma movimentação"; 8 "Agora o Relatório de Estoque"; 9 "Embaixo dos cartões"; 10 "Agora repara o que acontece quando eu
+filtro"; 11 "Os outros filtros funcionam do mesmo jeito"; 12 "E a terceira pergunta do contador"; 13 "Com a foto do dia 31 na tela, é só exportar".
 
 **Cuidados (⚠️) na fala, com "Uma dica:"**: saldo do Estoque ≠ comprado − vendido do Relatório (cap. 7, com a
 ilustração lado a lado); período em "Este mês" (cap. 4, trocando para "Este ano"; a opção da tela é "Todos os tempos");
 quantidade comprada líquida (cap. 8, peso líquido); filtro de Fornecedores/Clientes no Kardex tira manual, transferência
-e exclusão (cap. 5); compra sem venda não é erro (cap. 8, Bateria automotiva); só pedidos finalizados, pela data do
+e exclusão, e (1.60.18) o de fornecedor tira também as vendas (cap. 5); compra sem venda não é erro (cap. 8, Bateria automotiva); só pedidos finalizados, pela data do
 pedido, excluído sai (cap. 7). Nenhuma mensagem de erro na tela.
 
 ## Mundo: o que esta aula precisa
@@ -71,8 +73,8 @@ de `apos-cap03`.
   `order-attachments`, `material_groups`, `price_tables`/`price_table_items`, upsert em `stock_export_preferences`.
 - **Arquivos:** o PDF abre numa aba nova (o robô segue a aba ~3 s e volta; se o gravador não seguir aba nova, a fala do
   PDF fica sobre a toast); o Excel só baixa (toast).
-- **Setups fora do vídeo:** cap. 5 (Kardex do Ferro pesado em "Este ano"), caps. 8 e 9 (Relatório em "Mês passado"),
-  cap. 11 (Posição em 31/10/2026 23:59 aplicada).
+- **Setups fora do vídeo:** cap. 5 (Kardex do Ferro pesado em "Este ano"), cap. 7 (Kardex Geral), caps. 9, 10 e 11 (Relatório em "Mês passado"),
+  cap. 13 (Posição em 31/10/2026 23:59 aplicada).
 - Sem celular, sem página pública, sem outro usuário. Nada de erro encenado.
 - **Ilustrações** (desenho no estilo da marca, `docs/09-aula-ilustrada.md`; nunca tela do app): caps. 0, 1, 2, 3, 4 (duas),
   5, 7 (duas), 8 (duas), 9 e 10. Descrição e frase de cada uma no roteiro.
@@ -85,3 +87,15 @@ de `apos-cap03`.
 3. **Fotos da compra:** imagem fictícia gerada (sem placa, rosto ou marca). Alternativa: compra sem foto e a fala troca
    "as fotos" por "e, quando tem, as fotos anexadas".
 4. **"Todos os tempos"** é o rótulo da tela (a fonte diz "Todo o período"); a fala usa o da tela.
+
+## 20/11/2026 · aplicação no 1.60.18 (o que mudou no plano)
+- **Capítulos novos**: 7 "Achar uma movimentação" e 11 "Clientes, usuários e grupos". Renumeração: 7, 8, 9 viram 8, 9, 10; 10 vira 12; 11 vira 13;
+  12 vira 14 (15 capítulos, 0 a 14). Fala de 1.776 para 2.470 palavras (~15,8 min de voz).
+- **Mundo**: nada novo. O filtro "Usuários" usa o `created_by` que o mundo base já tem (outubro: Marcos lança quase tudo, Rafael alguns). Não há material sem
+  compra (a frase do triângulo amarelo fica só falada) nem corte da empresa com uma tabela de preço só (o botão do cabeçalho fica só falado).
+  A venda de 04/11 à Aços Quiririm (38.992 kg de Ferro pesado, Pix) já está no mundo base e abre no Kardex.
+- **PDF e HTML na tela** (pedido do Kaik, 19/11): o robô devolve o PDF do Kardex (cap. 7), o PDF da Posição (cap. 13) e o HTML do Relatório de Estoque
+  (cap. 13) no `actions.json`; as cenas `pdf` estão no `cenas/ilustracoes.json`.
+- **Decisões que dependem do Kaik**: a dica do "Editar" (cap. 5) recomenda o "Movimentar estoque" (a observação ali é opcional, então a fala diz "tem o
+  campo de observação"); o botão "Posição de Estoque" do cabeçalho e o triângulo amarelo ficam só falados, com ilustração (`ilu01_botao_posicao`,
+  `ilu02_sem_historico`).

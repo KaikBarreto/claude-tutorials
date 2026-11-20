@@ -1,11 +1,11 @@
-# Inventário · T10 · Estoque: saldo, histórico e posição (EcoSistema 1.59.154)
+# Inventário · T10 · Estoque: saldo, histórico e posição (EcoSistema 1.60.18, aplicado em 20/11/2026)
 
-Código lido (só leitura): `/home/claude/ecoflix/app-src-1.59.154/` (`APP_VERSION = "1.59.154"`, `src/config/version.ts:16`).
-Caminhos relativos a `src/`. Textos pt-BR de `i18n/locales/pt-BR/materials.json` (chave `materials:`) e
+Código lido (só leitura): `/dev/shm/ecoflix-src` (`APP_VERSION = "1.60.18"`, `src/config/version.ts:16`; a primeira versão deste
+inventário é de 1.59.154, e as linhas citadas abaixo podem ter andado). Veja "Mudou na 1.60.18" no fim. Caminhos relativos a `src/`. Textos pt-BR de `i18n/locales/pt-BR/materials.json` (chave `materials:`) e
 `common.json` (`dateFilter`). Desktop, logado como Rafael Nogueira (MASTER: vê valores e exporta).
 
 ## Onde fica (menu)
-`config/routes.ts:446-456`: menu **"Materiais"** com "Estoque" (`/materiais`), "Histórico" (`/historico-materiais`),
+`config/routes.ts:446-456`: menu **"Materiais"** com "Estoque" (`/materiais`), **"Histórico (Kardex)"** (`/historico-materiais`; `navigation.json` `stockHistory`),
 "Relatório" (`/relatorio-estoque`), "Ticket de Pesagem" e "Produção". A **Posição de Estoque**
 (`/materiais/posicao-estoque`) não está no menu: com várias tabelas de preço ligadas (o T3 cria a "Tabela Depósitos"),
 fica na coluna "Tabelas de Preço" da tela de Estoque, embaixo de "Nova Tabela" (`components/PriceTableSidebar.tsx:272-285`);
@@ -62,8 +62,9 @@ Rotas: `App.tsx:390,410,415,483`.
 - Tipos (selos coloridos, `:173-191`): "Compra", "Venda", "Transferência", "Edição Manual", "Exclusão", "Produção",
   "Saldo inicial". "Exclusão" = pedido excluído ou estornado (o estoque volta), ou material arquivado com estoque
   ("Arquivamento do material <nome>", `pages/Materiais.tsx:1327-1345`).
-- **Filtro de parte** (`utils/fetchStockMovements.ts:226-258`): "Fornecedores" mexe só nas compras, "Clientes" só nas
-  vendas; com qualquer um ligado, edição manual, transferência, exclusão, produção e saldo inicial saem da lista.
+- **Filtro de parte** (`utils/fetchStockMovements.ts:206-272`, regra do dono, 1.60.18): fornecedor ligado deixa só as COMPRAS dele
+  (as vendas saem); cliente ligado deixa só as VENDAS dele (as compras saem); os dois: compras do fornecedor mais vendas do
+  cliente. Edição manual, transferência, exclusão, produção e saldo inicial saem com qualquer um ligado.
 - Linha aberta (clique, `:1341-1420`): compra/venda mostra "Material", "Peso", "Valor Unit.", "Total";
   "Fornecedor:"/"Cliente:"; "Formas de Pagamento" ("Dinheiro: ...", "Pix/Transferência: ...", "Saldo: ..."); observação e
   Pix; "Total do Pedido:"; **"Fotos anexadas"** (miniaturas que ampliam; sem foto: "Nenhuma foto anexada.").
@@ -119,5 +120,43 @@ Rotas: `App.tsx:390,410,415,483`.
 - Cap. 3 "avulsa e em massa": na 1.59.154 a transferência **entre materiais** é só a avulsa (menu da linha). A da
   barra de seleção é "Transferência em Lote" entre unidades do grupo (Gerencial, T22).
 - ⚠️ do período: a opção é **"Todos os tempos"** (a fonte diz "Todo o período").
-- ⚠️ do Kardex: com o filtro de fornecedor, as **vendas continuam** (o filtro de fornecedor mexe só nas compras); o que
-  some é o que não tem parte (manual, transferência, exclusão, produção, saldo inicial).
+- ⚠️ do Kardex (corrigido na 1.60.18): com o filtro de fornecedor as vendas SAEM (antes continuavam). O que também some é o que
+  não tem parte (manual, transferência, exclusão, produção, saldo inicial).
+
+## Mudou na 1.60.18 (aplicado na aula em 20/11)
+- **Kardex, coluna "Materiais"** (`pages/MaterialHistory.tsx:536-628`): busca "Buscar código ou material" (`aria-label` "Buscar material"),
+  botão "Ordenar" (dica "Ordenar materiais": "Código", "Nome"), páginas de 25. Cap. 7.
+- **Kardex, Filtros** (`:884-980`): "Período" com "Personalizado" (calendário de dois meses que aplica sozinho quando o início e o fim
+  estão marcados), "Quantidade movimentada" (operador "Operador da quantidade": "Maior que", "Maior ou igual a", "Igual a", "Menor ou
+  igual a", "Menor que"; campo "Ex.: 40"; "Considera o valor sem sinal: 40 encontra +40 e -40."). Cap. 7.
+- **Kardex, exportar de verdade** (`components/estoque/KardexExportDialog.tsx`, `MaterialHistory.tsx:763,770`): "Exportar" →
+  "PDF"/"Excel" abre "Exportar Kardex (PDF)"/"(Excel)", "Escolha o recorte do extrato. Mudar os filtros aqui não altera os filtros da
+  tela."; botão "Exportar PDF"/"Exportar Excel"; avisos "Kardex exportado em PDF"/"em Excel". O PDF abre em aba nova (`openPdfInTab`
+  com a janela pré-aberta). Recorte acima de 20.000 linhas: "Recorte grande demais para a tela" (`fetchStockMovements.ts:53`). Cap. 7.
+- **"Como funciona?"** do Kardex (`:1480-1600`): resume colunas, tipos e filtros. Só citado.
+- **Linha de venda aberta**: "Cliente:", itens, "Formas de Pagamento", "Total do Pedido:" (`:1341-1420`). Cap. 7.
+- **Colunas "Usuário" e "Pedido"** da linha (`:1210-1218,1296-1310`): o primeiro nome de quem lançou e "#<número do pedido>". Cap. 4.
+- **"Editar" do material grava "Edição Manual"** sem observação (`pages/Materiais.tsx:1122-1133`; a nota 1.59.159 manteve os milhares
+  do "Quantidade em Estoque"). **"Movimentar estoque": a observação é OPCIONAL** (`StockMovementDialog.tsx:348-350`, "Descrição /
+  observação (opcional)"): a fala diz "tem o campo de observação", não "pede o motivo". Cap. 5.
+- **Relatório, cartões abertos**: "Total Vendido" ("Preço médio de venda", "Qtd. Vendida", "Materiais vendidos", "Material que mais
+  vendeu"), "Lucro" ("Lucro s/ vendas total", "Resultado total", "Margem", "Margem média", "Material mais lucrativo") e, no fim,
+  "Distribuição por forma de pagamento" ("Dinheiro", "Pix/Transferência", "Saldo", "Em aberto"; "Considera os pedidos do período; não
+  segue o filtro de material.") (`InventoryReport.tsx:650-754`, `materials.json` `report.kpiPayment*`). Cap. 8.
+- **Relatório, filtros** (desktop): chips "Fornecedores", "Clientes", "Usuários", "Grupos" (na gaveta do celular: "Usuário", "Grupo"),
+  "Por material"/"Por grupo" (`aria-label` "Ver por material"/"Ver por grupo") com "Subtotal <grupo>", chip "Ocultar itens zerados"
+  (`aria-pressed`, guarda a escolha no aparelho), ordenar pelo título de qualquer coluna, linha "TOTAL". Cap. 11.
+- **Resultado nunca negativo** (`utils/profitDisplay.ts:13-21`, `components/reports/ProfitCellTooltipContent.tsx:22-43`): mostra R$ 0,00 e
+  o balão traz a conta ("… vendidos", "− … comprados", "(prejuízo)", "Lucro exibido: R$ 0,00"). Cap. 9.
+- **Relatório, exportar de verdade**: o botão "Exportar Relatório" abre uma aba com HTML (`utils/inventoryReportHtmlGenerator.ts`,
+  `window.open` + `document.write`), com período e filtros da tela; com fornecedor marcado sai só compras. Cap. 13.
+- **Posição de Estoque, hora e grupo**: campo "Hora" (`<input type=time>`, `aria-label` "Hora") muda o instante da foto; "Por
+  grupo" com "Subtotal <grupo>"; rodapé com as quatro frases (`PosicaoEstoque.tsx:803-808`). Cap. 12.
+- **Janela "Exportar estoque"**: cada coluna é um checkbox (nome = rótulo da coluna), "Grupos", "Materiais" com "Marcar todos" e
+  "Desmarcar todos", "N de M materiais" (`StockExportDialog.tsx:288-430`). Cap. 13.
+- **Coluna "Tabelas de Preço"** (`PriceTableSidebar.tsx`): menu "..." da tabela ganhou "Duplicar tabela", "Fixar para meus pedidos e
+  tickets", "Definir como principal da empresa"; é assunto da T3. O botão "Posição de Estoque" do cabeçalho só existe sem várias
+  tabelas (`Materiais.tsx:2360-2370`): citado em fala, não gravado.
+- **"Sem histórico de compra"** (`materials.json` `avgCostPaidNoHistory`; `Materiais.tsx:3236-3252`): triângulo amarelo no "Preço médio
+  pago" de material com saldo e sem compra. O mundo não tem esse material: só falado.
+- Menu "Fiscal & Ambiental": "Estoque Fiscal" agora abre em `/fiscal-ambiental/estoque-fiscal/posicao` (T17); só citado no cap. 13.

@@ -416,8 +416,13 @@
    "label": "olho da Aços Quiririm: abre a conta-corrente"
   },
   {
+   "do": "eval",
+   "js": "(async()=>{const ok=()=>{try{return !!(/Conta-Corrente do (Cliente|Parceiro|Fornecedor)/.test(document.body.innerText))}catch(e){return false}};const ate=async(s)=>{for(let i=0;i<s*10;i++){if(ok())return true;await new Promise(r=>setTimeout(r,100))}return ok()};if(await ate(2.5))return 'ok';const el=(()=>{const tr=[...document.querySelectorAll('[role=dialog] tr')].find(r=>r.textContent.includes('Aços Quiririm Ltda'));return tr&&tr.querySelector('button:has(svg.lucide-eye)')})();if(!el)return 'SEM ALVO';el.click();return (await ate(6))?'refeito':'SEM EFEITO'})()",
+   "label": "garante a conta-corrente aberta (rede de segurança)"
+  },
+  {
    "do": "waitFor",
-   "text": "Conta-Corrente do Cliente",
+   "text": "Conta-Corrente do",
    "timeout": 15
   },
   {
@@ -428,7 +433,7 @@
   {
    "do": "hover",
    "target": {
-    "text": "Conta-Corrente do Cliente",
+    "text": "Conta-Corrente do",
     "exact": false,
     "within": "main"
    },

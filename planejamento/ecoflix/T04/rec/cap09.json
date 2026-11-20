@@ -253,7 +253,7 @@
   {
    "do": "click",
    "target": {
-    "selector": "main aside button:has-text('Valdir Pereira')"
+    "selector": "main aside button:has-text('Valdir Pereira') p.font-medium"
    },
    "at": 27.2,
    "label": "clica no Valdir Pereira"
@@ -275,6 +275,11 @@
    },
    "at": 28.51,
    "label": "Editar"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const ok=()=>{try{return !!(document.querySelector('[role=dialog]'))}catch(e){return false}};const ate=async(s)=>{for(let i=0;i<s*10;i++){if(ok())return true;await new Promise(r=>setTimeout(r,100))}return ok()};if(await ate(2.5))return 'ok';const el=(()=>{return [...document.querySelectorAll(\"main section[aria-label='Detalhes de Valdir Pereira'] button\")].find(x=>x.textContent.trim()==='Editar')})();if(!el)return 'SEM ALVO';el.click();return (await ate(6))?'refeito':'SEM EFEITO'})()",
+   "label": "garante a janela Editar (rede de segurança)"
   },
   {
    "do": "waitFor",
