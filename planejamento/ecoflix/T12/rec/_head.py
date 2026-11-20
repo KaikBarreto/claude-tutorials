@@ -398,6 +398,7 @@ FJ = 1.0                 # 1º clique dentro de uma janela ou página recém-abe
 # ---------------------------------------------------------------- alvos das telas de Coletas (conferidos por exploração, rec/t12/_ex)
 GRUPO = BTNX('Coletas & Logística', within=MENU)
 ITEM_MENU = lambda n: LINK(n, within=MENU)
+ORDENS_MENU = {'role': 'link', 'name': 'Ordens de Coleta', 'within': MENU}   # sem exact: com solicitações novas o ponto vermelho entra no nome (aria-label)
 COL_T = lambda t: SEL(f"main h3:text-is('{t}')")                                  # título da coluna do quadro
 CARD = lambda num, sub='': SEL(f"{CARTAO(num)} {sub}".strip())
 CARD_TXT = lambda num, t: SEL(f"{CARTAO(num)} :text-is('{t}')")

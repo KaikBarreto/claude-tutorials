@@ -1,4 +1,4 @@
-# Inventário · T14 "Bancos, cofre e conciliação bancária" (EcoSistema 1.59.154)
+# Inventário · T14 "Bancos, cofre e conciliação bancária" (EcoSistema 1.59.154; o que mudou no 1.60.18, os rótulos novos e as chamadas novas estão no fim)
 
 Código lido (só leitura): `/home/claude/ecoflix/app-src-1.59.154/`. Caminhos relativos a `src/`. Formato `arquivo:linha`.
 Rótulos entre aspas = texto exato da tela (pt-BR). Só o que a aula usa.
@@ -176,3 +176,14 @@ toast "Este lançamento está conciliado. Desfaça a conciliação antes de excl
 conta. Exporte o extrato de uma conta por vez."); linhas com memo começando por "SALDO" são descartadas; `BANKID`,
 `ACCTID`, `DTSTART`/`DTEND`, `LEDGERBAL` (`BALAMT`, `DTASOF`); sinal corrigido só para DEBIT/CREDIT (`:262-306`).
 Modelo de estrutura: `utils/ofx/fixtures/itau_sgml.ofx`.
+
+
+## 9. Acréscimos do 1.60.18 (20/11/2026; rótulos conferidos no código, caminhos relativos a `src/`)
+- **Histórico da conta** (`components/bank/BankTransactionsContent.tsx`): "Selecionar lançamentos" / "Cancelar seleção" (1337); barra "Selecione até 100 itens. Lançamentos protegidos não exibem caixa de seleção." (1381);
+  caixa de cabeçalho "Selecionar lançamentos elegíveis desta página"; "Limpar", "Alterar categoria", "Excluir selecionados"; menu "Ações do lançamento" com "Editar" e "Excluir"; ícone "Transferir para outra conta" (1914); linha de pedido "Ver detalhes" / "Ocultar detalhes".
+- **Excluir em lote** (`BulkDeleteBankMovementsDialog.tsx`): "Excluir {n} lançamentos?", "Entradas selecionadas", "Saídas selecionadas", aviso "{n} lançamentos excluídos."; RPC `delete_bank_transactions_batch_atomic(p_tx_ids)`.
+- **Alterar categoria** (`components/financial/BulkEditFinancialCategoryDialog.tsx`): "Alterar categoria de {n} lançamentos", "Despesas selecionadas", "Nova categoria (despesa)", "Valores e saldos não mudam."
+- **Cartão** (`CreditCardFormDialog.tsx`, `CreditCardContent.tsx`, `CreditCardBillsPanel.tsx`, `PayCreditCardBillModal.tsx`): "Novo Cartão de Crédito", ids `card-name`, `card-closing-day`, `card-due-day`, `card-limit`; RPCs `compute_card_bill_month`, `upsert_credit_card_bill`, `create_idempotent_manual_bank_transaction` (com `p_credit_card_bill_date`).
+- **Preenchimento inteligente** (`components/financial/FinancialDescriptionField.tsx`): "Padrão encontrado: ...", botão "Preencher", "Campos preenchidos. Desfazer preenchimento"; RPC `get_financial_description_suggestions` (1.60.18: o ramo do banco aceita `withdrawal`/`expense` para despesa e `deposit` para receita, migration 20261119223100).
+- **Conciliação** (hook `useBankReconciliation.ts`): `reconcile_match_group`, `reconcile_match_entry_split`, `reconcile_search_split_candidates`, `reconcile_create_balance_payment`; telas "Saldo do cliente/fornecedor" ("Baixar na conta-corrente"), "Casar com vários lançamentos", "Casar {n} linhas com um lançamento".
+- Não existe a mensagem "Abra o caixa antes de realizar saques": sem cofre o saque só vai para um caixa aberto; com cofre e caixa aberto o app pergunta "Atenção: este saque vai para o Cofre" (`cash-movement/WithdrawalForm.tsx:855`).

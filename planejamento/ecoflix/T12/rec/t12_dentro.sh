@@ -27,6 +27,7 @@ OKR=1
 if [ "$MODO" != "--so-completo" ]; then
   node rec/record.mjs "rec/t12/_ens/cap$NN.json" --rapido --preset ultrafast --crf 30 > "rec/t12/_ens/.cap$NN.out" 2>&1
   FR=$(grep -c "FALHOU" "rec/t12/_ens/.cap$NN.out"); SR=$(grep -c "SEM ALVO" "rec/t12/_ens/.cap$NN.out")
+  grep -q "actions .*t12-cap$NN.actions.json" "rec/t12/_ens/.cap$NN.out" || { FR=$((FR+99)); echo "cap$NN: gravador caiu sem actions.json (conta como falha)"; }
   echo "cap$NN rapido falhos $FR sem_alvo $SR $(date +%H:%M:%S)"
   python3 -I rec/t12/resumo.py "$NN" --ens > "rec/t12/_ens/resumo$NN.txt" 2>&1
   [ "$FR" = "0" ] || OKR=0
@@ -49,6 +50,7 @@ if [ "$OKR" = "1" ] && [ "$MODO" != "--so-rapido" ]; then
   if [ "$PRECISA" = "1" ]; then
     node rec/record.mjs "rec/t12/cap$NN.json" --preset ultrafast --crf 30 > "rec/t12/.cap$NN.out" 2>&1
     FC=$(grep -c "FALHOU" "rec/t12/.cap$NN.out"); SC=$(grep -c "SEM ALVO" "rec/t12/.cap$NN.out")
+    grep -q "actions .*t12-cap$NN.actions.json" "rec/t12/.cap$NN.out" || { FC=$((FC+99)); echo "cap$NN: gravador caiu sem actions.json (conta como falha)"; }
     echo "cap$NN completo falhos $FC sem_alvo $SC $(date +%H:%M:%S)"
     rm -f "rec/t12/t12-cap$NN.mp4"   # disco curto: fica a folha de contato
     python3 -I rec/t12/resumo.py "$NN" > "rec/t12/resumo$NN.txt" 2>&1

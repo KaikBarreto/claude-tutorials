@@ -992,3 +992,16 @@ Decisões:
   Conversão 16 kg de fio, R$ 28,80; Perda padrão 37,5%, capa 24 kg. Handlers só da T11: `add_production_entry_atomic`
   (grava `note`), `register_production_atomic` (novo). Capa de fio com código 17 (o 16 é o Fardo de alumínio).
   Ilustrações pendentes: ilu12_pdf (comprovante), ilu15_conversao, ilu16_perda_padrao.
+- **T13**: 20 capítulos (novos 06 preenchimento por padrão, 10 parcelas em grupo, 12 valor da ocorrência, 13 quitar em
+  lote, 14 estornar, 18 exportar; 6-13 antigos viraram 7, 8, 9, 11, 15, 16, 17, 19). Fala 1.951 → 3.076 palavras (aula
+  ~22 min). 20/20 no rápido. Completos dos sensíveis (08-13, 17) depois da voz. Handlers só da T13:
+  `update_installment_bill_group`, `delete_installment_bill_group`, `pay_recurring_financial_bill`,
+  `pay_financial_bills_batch`; `create_installment_bills` (compartilhado) grava `installment_group_id`. **Mundo base
+  (coordenador)**: `schema.json` ganhou `financial_bills.installment_group_id` à mão (o `types.ts` do app não tem a
+  coluna; a migration `20261117234500` tem: **ao regenerar o schema do types.ts, repor**); o filtro de banco de
+  `get_financial_description_suggestions` segue a migration `20261119223100` (a pagar: withdrawal|expense; a receber:
+  deposit). PDFs com cena pendente: cap16 comprovante, cap18 lista exportada (o robô não abre aba: a cena sai do arquivo).
+- **T12 rodada 2** (agente Sonnet): aprovados 00-07, 09-12, 14, 15 (08 e 12 também completos). Correções: lote conta
+  gravador caído como falha; cap12 abre a ficha completa `/cliente/...` (a lista só abre painel sem a aba Coletas);
+  cap13 com GPS simulado e `history.back()`; cap16 com `apos-cap15` sem `collection_settings` duplicado. Coordenador
+  rodando `t12_lote.sh 08 13 16`.

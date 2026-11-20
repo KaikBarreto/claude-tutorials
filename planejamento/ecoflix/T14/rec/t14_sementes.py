@@ -101,6 +101,7 @@ pneu = {'id': '@id:t14.conta.pneu', 'company_id': EMP, 'direction': 'payable', '
         'currency': 'BRL', 'due_date': '2026-11-09', 'status': 'paid', 'paid_amount': 180, 'category_id': manut, 'cost_center_id': CC.get('Pátio'),
         'expected_bank_account_id': PRINC, 'is_projection': False, 'created_by': RAFA, 'created_at': iso('2026-11-10 07:55'),
         'updated_at': iso('2026-11-10 07:55'), 'paid_at': iso('2026-11-09 11:00')}
+pneu0 = dict(pneu, id='@id:t14.conta.pneu0', due_date='2026-10-14', created_at=iso('2026-10-10 09:00'), updated_at=iso('2026-10-14 10:00'), paid_at=iso('2026-10-14 10:00'))
 t13 = [
     bt('t13.aluguel_emp', SEC, 'withdrawal', 2415, 'Pagamento: Aluguel da empilhadeira', iso('2026-11-10 08:12'), payment_method='transfer'),
     bt('t13.pneus_emp', SEC, 'withdrawal', 4720, 'Pagamento: Pneus da empilhadeira (2 parcelas)', iso('2026-11-10 08:14'), payment_method='transfer'),
@@ -114,7 +115,7 @@ t13 = [
        partner_type='customer', payment_method='transfer'),
 ]
 inicio = {
-    'suppliers': [moretti], 'financial_bills': [prensa, pneu], 'bank_transactions': t13,
+    'suppliers': [moretti], 'financial_bills': [prensa, pneu, pneu0], 'bank_transactions': t13,
     '_patch': {'financial_bills': [{'match': {'id': energia['id']}, 'set': {'status': 'paid', 'paid_amount': energia['amount'], 'paid_at': iso('2026-11-10 08:05'),
                                                                         'updated_at': iso('2026-11-10 08:05')}}],
                'balances': [{'match': {'id': quiririm['id']}, 'set': {'balance': r2(quiririm['balance'] - 2000), 'updated_at': iso('2026-11-10 08:15')}}],

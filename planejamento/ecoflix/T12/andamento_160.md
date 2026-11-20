@@ -4,3 +4,23 @@ Feito: fala (18 caps, 2.943 palavras, tts_textos.py), roteiro.md (regerado por s
 Lote de ensaio: `TUT_SENHA=... nohup bash rec/t12/t12_lote.sh [NN...]` em /home/claude/ecoflix; log rec/t12/_ens/lote.log; resumos _ens/resumoNN.txt.
 Falta: corrigir falhas do lote; sementes apos-cap05..15 saem do lote (cadeia 05,06,07,09,10,11,12,15). Derrubar: FAKE_PORT=54312 bash rec/run.sh down.
 Gerar.py = cat _head.py _caps1.py _caps2.py (editar as partes e reconcatenar).
+
+## Fechamento do ensaio (20/11, 2o lote)
+Causas e correções (gerar.py = cat _head _caps1 _caps2; ORDENS_MENU novo no _head):
+- cap06: `main input[type=number]` (a tela da ordem não tem <main>) -> `input[type=number]`; o arrasto do #8 caía num botão do cartão (dnd-kit não arrasta por botão): alvo agora o nome do parceiro no cartão; hover do "Sem cadastro" com within body.
+- cap08: rola_ate sem <main> na tela do relatório (escopo body); texto da ficha é "Relatório do fornecedor" (minúsculo); grupo do menu fecha: GRUPO com `unless` antes de Configurações; "Voltar às ordens" sem noScroll (página rolada). Última correção (noScroll) NÃO reensaiada.
+- cap09 (completo): link "Ordens de Coleta" ganha o ponto vermelho no nome (aria-label): ORDENS_MENU sem exact.
+- cap10: menu de três pontinhos (hover) ficava aberto e cobria "Novo veículo": Escape.
+- cap12: menu da linha sem aria-label (LINHA_MENU, só hover; clicar fecharia); aba da ficha é botão, não role=tab (corrigido, NÃO reensaiado).
+- cap16: "Gerenciar perguntas" é item do menu da linha do modelo; o tipo de resposta só existe no formulário Nova pergunta (corrigido, NÃO reensaiado).
+Lote 2: aprovados rápido+completo 06, 07, 09, 10, 11 (sementes apos-cap06/07/09/10/11 regravadas). Faltam: 08, 12, 16 (rápido) e 13, 14, 15 (rodaram em 1 s sem apos-cap12: inválidos) -> apos-cap12 e apos-cap15 ainda por gerar (apos-cap15.json atual é lixo).
+Comando: TUT_SENHA=... nohup bash rec/t12/t12_lote.sh 08 12 13 14 15 16 (em /home/claude/ecoflix). Instância 54312 derrubada.
+
+## Fechamento (20/11, lotes 3 e 4; limite de 2 lotes atingido)
+Aprovados no rápido (0 falho, sem aviso): 00-07, 09-12, 14, 15; cap08 e cap12 também no completo (0 falho). Sementes apos-cap12 e apos-cap15 geradas.
+- t12_dentro.sh: gravador que cai sem actions.json agora conta como falha (+99), no rápido e no completo.
+- cap12: a lista de Clientes e Fornecedores só abre o painel resumido (sem aba Coletas); a ficha completa é a rota /cliente/<nome>-<código>. Agora o robô abre a ficha por pushState+popstate (sem recarregar) e clica "main button:text-is('Coletas')". Aprovado.
+- cap08: "Voltar às ordens" recarrega o app (~5 s): atraso de 6 s no completo. Ajuste NÃO reensaiado: sobe ao topo em L3-7,0 e clica em L3-5,8.
+- cap13: tela da ordem (a_caminho) mostrava "Sem sinal de GPS" (robô de mesa sem GPS): GPS_FALSO no setup responde ao watchPosition (Niterói). A tela da ordem não tem menu nem "Voltar às ordens": history.back() e reabre o grupo antes de "Rotas". NÃO reensaiado.
+- cap16: apos-cap15 duplicava collection_settings (linha nova em vez de alteração) e a tela de Configurações ficava em esqueleto; semente consertada (_patch por company_id) e t12_semente.py corrigido. Interruptor do responsável sem aria-label: seletor por parágrafo (conferido por exploração). Passos 31 em diante NÃO reensaiados.
+Falta: bash rec/t12/t12_lote.sh 08 13 16 (em /home/claude/ecoflix, TUT_SENHA no ambiente); depois cap14/15 já ok, e apos-cap15 regravado pelo cap15 se quiser. Instância 54312 derrubada.

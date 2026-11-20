@@ -27,7 +27,7 @@ def post(u, corpo=None):
 
 def estado():
     cont = get('/__dev/state')
-    return {t: {r.get('id', json.dumps(r, sort_keys=True)): r for r in get(f'/__dev/state?table={t}')} for t, n in cont.items()
+    return {t: {r.get('id', r.get('company_id') if t == 'collection_settings' else json.dumps(r, sort_keys=True)): r for r in get(f'/__dev/state?table={t}')} for t, n in cont.items()
             if n and not any(f in t for f in FORA)}
 
 
@@ -49,8 +49,8 @@ def main():
         for k in a:
             if k in b and a[k] != b[k]:
                 st = {c: v for c, v in a[k].items() if b[k].get(c) != v}
-                mud.append({'match': {'id': k}, 'set': st})
-        sai = [{'id': k} for k in b if k not in a]
+                mud.append({'match': ({'company_id': k} if t == 'collection_settings' else {'id': k}), 'set': st})
+        sai = [({'company_id': k} if t == 'collection_settings' else {'id': k}) for k in b if k not in a]
         if novos:
             out[t] = novos
         if mud:

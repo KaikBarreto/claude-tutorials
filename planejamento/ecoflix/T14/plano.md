@@ -8,9 +8,9 @@
 - **Antes:** T13 "Contas a Pagar e Receber". **Próximo:** T15 "Relatório Financeiro e DRE" (fonte: "eu ganhei ou perdi
   dinheiro esse mês?").
 - **Duração:** alvo da fonte ~18 min; fala ~14,2 min (2.211 palavras a 2,6 palavras/s; 12.527 caracteres com os
-  títulos) + 15 vinhetas, 9 ilustrações e as esperas aceleradas → **~16,5 min** de vídeo.
+  títulos) + 15 vinhetas, 9 ilustrações e as esperas aceleradas → **~16,5 min** de vídeo (antes da aplicação ao 1.60.18; hoje 19 capítulos, fala de 3.209 palavras, ~24 min).
 - **Módulo:** nenhum (Fase 1). O "Funcionário" do painel só é citado, não aberto.
-- Base: `T14/inventario.md` (código 1.59.154). Banco, OFX e o site do banco **simulados**: nenhum banco, conta ou arquivo
+- Base: `T14/inventario.md` (código 1.59.154; aplicado ao 1.60.18 em 20/11/2026, ver `cobertura_160.md` e `andamento_160.md`). Banco, OFX e o site do banco **simulados**: nenhum banco, conta ou arquivo
   real; contas sem instituição (sem logo de terceiros).
 
 ## Capítulos
@@ -20,21 +20,24 @@
 | 0 | (abertura) | Vinheta; o problema do fim do mês; cartão "Antes". | [ILUSTRAÇÃO: banco × sistema que não batem] | `inicio` |
 | 1 | BANCOS / A tela e as contas | Menu "Financeiro" › "Movimentações Financeiras"; lista lateral (cofre, contas, "Nova Conta"); cartão da Conta Principal e os botões; histórico; "Resumo"; abas do topo. | nome da tela muda com o cofre (informação) | `inicio` |
 | 2 | BANCOS / Cadastrar e arquivar contas | "Nova Conta": "Conta Cooperativa", R$ 5.000,00, "Data desse saldo", cor; o "Ajuste de saldo - Saldo inicial" no histórico; "Editar" (dica do ajuste, sem salvar); "Tornar principal" mostrado; "Excluir" › "Arquivar" a "Poupança antiga". | ⚠️ saldo torto (dica); ⚠️ arquivar não tem volta (dica) | `inicio` |
-| 3 | COFRE / O cofre e o ajuste de saldo | "DINHEIRO (COFRE)": "O cofre da empresa" R$ 18.500,00; "Ajustar saldo" para R$ 18.560,00, motivo "Contagem do cofre"; a linha "Ajuste" no histórico. | [ILUSTRAÇÃO: cofre × banco]; ajuste fora da DRE (informação) | `apos-cap02` |
-| 4 | MOVIMENTAÇÕES / Movimentação, transferência e saque | "Nova Movimentação" Saída "Combustível da picape" R$ 350,00; "Transferência" Conta Secundária → Conta Principal R$ 8.000,00; "Saque" de R$ 2.000,00 para o cofre com tarifa de R$ 6,50 ("Efeitos desta transação"); "Sangria" citada. | ⚠️ mover dinheiro não é receita nem despesa (dica + [ILUSTRAÇÃO]); ⚠️ sem cofre, saque precisa de caixa aberto (dica) | `apos-cap03` |
-| 5 | CONCILIAÇÃO / O que é conciliar | [ILUSTRAÇÃO: conciliação]; aba "Conciliação" com a Conta Principal já escolhida; "Como funciona?". | | `apos-cap04` |
-| 6 | CONCILIAÇÃO / Importar o extrato | [ILUSTRAÇÃO: baixar o OFX no banco]; "Importar novo extrato", "Como pegar o arquivo do seu banco?", o arquivo, "Prévia do extrato", "Importar", a tabela e o rodapé. | ⚠️ conferir o sinal (dica) | `apos-cap04` |
-| 7 | CONCILIAÇÃO / Casar com o sistema | A sugestão da compra do Depósito Irmãos Siqueira; as demais sugestões (acelerado); a entrada de R$ 8.000,00 por "Mais ações" › "Casar com transferência". | ⚠️ não criar receita para transferência (dica) | `apos-cap06` |
-| 8 | CONCILIAÇÃO / Baixar uma conta | Boleto da água R$ 238,40 → "Baixar conta" → "Dar baixa de R$ 238,40" → "Baixada". | baixa só total por aqui (informação) | `apos-cap07` |
-| 9 | CONCILIAÇÃO / Criar um lançamento | Tarifa do pacote R$ 64,90: "Mais ações" (os destinos, "Funcionário"); "Criar despesa", categoria "Tarifas", "Criar R$ 64,90". | ⚠️ vale já lançado em Funcionários (dica) | `apos-cap08` |
-| 10 | CONCILIAÇÃO / Buscar e aceitar centavos | Pix da Serra Fina R$ 4.815,00 × venda de 03/11 R$ 4.815,20: "Buscar lançamento", "dif. −R$ 0,20", "Casar com valor diferente?", "Casar assim", "Diferenças casadas". | [ILUSTRAÇÃO: data e centavos]; não criar outra receita (dica) | `apos-cap09` |
-| 11 | CONCILIAÇÃO / Ignorar uma linha | Tarifa avulsa −R$ 12,00 e o estorno +R$ 12,00: marcar as duas, "Soma", "Ignorar (2)", "Ignorar 2 linhas?". | [ILUSTRAÇÃO: ignorar]; ⚠️ ignorar conta como resolvido (dica) | `apos-cap10` |
-| 12 | CONCILIAÇÃO / Valores repetidos | Dois Pix de R$ 380,00 no mesmo dia: o aviso âmbar, "Escolher lançamento", "Casar com o selecionado"; a outra linha já vem com a sugestão certa. | [ILUSTRAÇÃO: valores repetidos]; escolher pelo nome (dica) | `apos-cap11` |
-| 13 | CONCILIAÇÃO / Desfazer e cancelar | "Desfazer" numa "Casada" e casar de novo; "Desfazer" da "Criada" mostrado; "Cancelar conciliação" (lista e "CANCELAR", depois "Manter conciliação"); "Voltar" e "Continuar conciliação". | ⚠️ três botões (informação); ⚠️ lançamento conciliado não se exclui (dica) | `apos-cap12` |
-| 14 | FECHAMENTO / Fechar a conciliação | Rodapé com diferença zero; "Diferenças casadas"; "Finalizar conciliação"; "Conciliações anteriores (1)" com "Conciliado". | [ILUSTRAÇÃO: os três números]; ⚠️ sem lançamento tampão (dica) | `apos-cap12` |
-| 15 | RESUMO / Recapitulando | Montagem rápida dos capítulos; cartão "Próximo: Relatório Financeiro e DRE". | | (montagem) |
+| 3 | BANCOS / O cartão de crédito da empresa | "Novo Cartão" (Cartão Empresa, fecha dia 25, vence dia 5, limite R$ 10.000,00); "Nova despesa" com o preenchimento inteligente ("Padrão encontrado", "Preencher") e R$ 180,00 na fatura "Aberta" (disponível R$ 9.820,00); "Pagar Fatura" só mostrado. | o cartão e a fatura não seguem adiante (variante) | `apos-cap02` |
+| 4 | COFRE / O cofre e o ajuste de saldo | "DINHEIRO (COFRE)": "O cofre da empresa" R$ 18.500,00; "Ajustar saldo" para R$ 18.560,00, motivo "Contagem do cofre"; a linha "Ajuste" no histórico. | [ILUSTRAÇÃO: cofre × banco]; ajuste fora da DRE (informação) | `apos-cap02` |
+| 5 | MOVIMENTAÇÕES / Movimentação, transferência e saque | "Nova Movimentação" Saída "Combustível da picape" R$ 350,00; "Transferência" Conta Secundária → Conta Principal R$ 8.000,00; "Saque" de R$ 2.000,00 para o cofre com tarifa de R$ 6,50 ("Efeitos desta transação"); "Sangria" citada. | ⚠️ mover dinheiro não é receita nem despesa (dica + [ILUSTRAÇÃO]); ⚠️ sem cofre, saque precisa de caixa aberto (dica) | `apos-cap03` |
+| 6 | MOVIMENTAÇÕES / Corrigir e excluir lançamentos | Três despesas de teste (R$ 552,20): menu "Ações do lançamento" (Editar, Excluir mostrados); "Selecionar lançamentos", "Alterar categoria" (mostrado), "Excluir selecionados" (aplicado); a Conta Principal volta de R$ 44.684,77 a R$ 45.236,97. | lote é tudo ou nada (dica) | `lote` (apos-cap04 + 3 despesas) |
+| 7 | CONCILIAÇÃO / O que é conciliar | [ILUSTRAÇÃO: conciliação]; aba "Conciliação" com a Conta Principal já escolhida; "Como funciona?". | | `apos-cap04` |
+| 8 | CONCILIAÇÃO / Importar o extrato | [ILUSTRAÇÃO: baixar o OFX no banco]; "Importar novo extrato", "Como pegar o arquivo do seu banco?", o arquivo, "Prévia do extrato", "Importar", a tabela e o rodapé. | ⚠️ conferir o sinal (dica) | `apos-cap04` |
+| 9 | CONCILIAÇÃO / Casar com o sistema | A sugestão da compra do Depósito Irmãos Siqueira; as demais sugestões (acelerado); a entrada de R$ 8.000,00 por "Mais ações" › "Casar com transferência". | ⚠️ não criar receita para transferência (dica) | `apos-cap06` |
+| 10 | CONCILIAÇÃO / Baixar uma conta | Boleto da água R$ 238,40 → "Baixar conta" → "Dar baixa de R$ 238,40" → "Baixada". | baixa só total por aqui (informação) | `apos-cap07` |
+| 11 | CONCILIAÇÃO / Criar um lançamento | Tarifa do pacote R$ 64,90: "Mais ações" (os destinos, "Funcionário"); "Criar despesa", categoria "Tarifas", "Criar R$ 64,90". | ⚠️ vale já lançado em Funcionários (dica) | `apos-cap08` |
+| 12 | CONCILIAÇÃO / Buscar e aceitar centavos | Pix da Serra Fina R$ 4.815,00 × venda de 03/11 R$ 4.815,20: "Buscar lançamento", "dif. −R$ 0,20", "Casar com valor diferente?", "Casar assim", "Diferenças casadas". | [ILUSTRAÇÃO: data e centavos]; não criar outra receita (dica) | `apos-cap09` |
+| 13 | CONCILIAÇÃO / Ignorar uma linha | Tarifa avulsa −R$ 12,00 e o estorno +R$ 12,00: marcar as duas, "Soma", "Ignorar (2)", "Ignorar 2 linhas?". | [ILUSTRAÇÃO: ignorar]; ⚠️ ignorar conta como resolvido (dica) | `apos-cap10` |
+| 14 | CONCILIAÇÃO / Valores repetidos | Dois Pix de R$ 380,00 no mesmo dia: o aviso âmbar, "Escolher lançamento", "Casar com o selecionado"; a outra linha já vem com a sugestão certa. | [ILUSTRAÇÃO: valores repetidos]; escolher pelo nome (dica) | `apos-cap11` |
+| 15 | CONCILIAÇÃO / Desfazer e cancelar | "Desfazer" numa "Casada" e casar de novo; "Desfazer" da "Criada" mostrado; "Cancelar conciliação" (lista e "CANCELAR", depois "Manter conciliação"); "Voltar" e "Continuar conciliação". | ⚠️ três botões (informação); ⚠️ lançamento conciliado não se exclui (dica) | `apos-cap12` |
+| 16 | FECHAMENTO / Fechar a conciliação | Rodapé com diferença zero; "Diferenças casadas"; "Finalizar conciliação"; "Conciliações anteriores (1)" com "Conciliado". | [ILUSTRAÇÃO: os três números]; ⚠️ sem lançamento tampão (dica) | `apos-cap12` |
+| 17 | CONCILIAÇÃO / Outros casos do extrato | Segundo extrato (Conta Secundária, 8 linhas): "Saldo do cliente/fornecedor" (R$ 340,00), "Casar com vários lançamentos" (Pix de R$ 50.215,00), "Casar 2 linhas com um lançamento" (folha de R$ 19.800,00); "Achamos este lançamento em outra conta" só falado; "Criar receita" citado. | [ILUSTRAÇÃO: outra conta] | `apos-cap14` |
+| 18 | RESUMO / Recapitulando | Montagem rápida dos capítulos; cartão "Próximo: Relatório Financeiro e DRE". | | (montagem) |
 
-Transições faladas: 0→1 "Vamos começar pela tela"; 1→2 "Vamos começar pelas contas"; 2→3 o cofre; 3→4 "hoje cedo, três
+Transições faladas (numeração antiga; ver `roteiro.md`): 0→1 "Vamos começar pela tela"; 1→2 "Vamos começar pelas contas"; 2→3 o cofre; 3→4 "hoje cedo, três
 coisas no banco"; 4→5 a aba Conciliação; 5→6 "Primeiro, o extrato do banco"; 6→7 "Começa pelo mais fácil"; 7→8 o boleto
 da água; 8→9 "Esta outra linha não existe em lugar nenhum"; 9→10 o Pix da Serra Fina; 10→11 "Estas duas linhas se
 anulam"; 11→12 "duas linhas iguais"; 12→13 "Errou alguma?"; 13→14 "Hora de fechar".
@@ -50,7 +53,7 @@ bancárias e concilia). Empresa com `cash_account_enabled` true e **nenhum caixa
 |---|---|---|---|---|---|
 | DINHEIRO (COFRE) | cash | | (verde fixo) | | R$ 18.500,00 (RPC `get_dinheiro_balance`), tudo "Disponível no cofre" |
 | Conta Principal | bank | sim | #3B82F6 | R$ 46.382,57 | R$ 39.593,47 |
-| Conta Secundária | bank | | #8B5CF6 | R$ 25.000,00 | R$ 90.515,00 (os Pix de novembro fora do OFX da Principal; junção, `MUNDO_LINHA_DO_TEMPO.md`, seção 8) |
+| Conta Secundária | bank | | #8B5CF6 | R$ 25.000,00 | R$ 83.380,00 (os Pix de novembro fora do OFX da Principal e os dois Pix da T13, 2.415,00 e 4.720,00, pela Secundária; junção de 18/11); sai do cap05 com R$ 75.380,00 |
 | Poupança antiga | bank | | #F59E0B | R$ 0,00 | R$ 0,00 (último lançamento em 14/08/2026, o resgate que zerou a conta) |
 
 Nomes: os do T13 ("Conta Principal", "Conta Secundária"). Decidido na junção: "Conta Secundária" (nunca "Conta Reserva").
@@ -126,7 +129,7 @@ R$ 17.000,00); a conciliação finalizada do extrato (17 linhas: 13 casadas, 1 b
 
 ## Gravação
 - **Rotas:** `/dashboard` (só a entrada do cap01) e `/movimentacoes-bancarias` (abas "Movimentações Financeiras" e
-  "Conciliação"). Desktop 1280×800, um usuário, sem celular, sem página pública. Cada capítulo abre um navegador novo na
+  "Conciliação"). Desktop 1600×900 (padrão do mundo.json em 1.60.18), um usuário, sem celular, sem página pública. Cada capítulo abre um navegador novo na
   semente da tabela; o `setup` reabre fora do vídeo a conta ou o extrato onde o capítulo começa.
 - **Sementes:** `inicio`; `apos-cap02` (conta nova, poupança arquivada); `apos-cap03` (ajuste do cofre); `apos-cap04` (os
   quatro lançamentos); `apos-cap06` (extrato importado, 17 pendentes); `apos-cap07` (10 resolvidas; pendentes as linhas

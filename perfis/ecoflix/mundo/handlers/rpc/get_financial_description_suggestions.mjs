@@ -37,7 +37,8 @@ export default (a, { store, companyId, RpcError }) => {
     && !c.order_id && !c.reversal_for_order_id && !c.employee_movement_id && !c.group_id && !c.voided), 'created_at', 1000)
     .map((c) => ({ id: c.id, source: 'cash', description: c.description, category_id: c.category_id || null, partner_type: c.partner_type || null, partner_id: c.partner_id || null,
       cost_center_id: c.cost_center_id || null, bank_account_id: null, payment_method: 'cash', used_at: c.created_at }));
-  const banco = recente(doCid('bank_transactions').filter((b) => Date.parse(b.created_at) >= ha365 && b.type === tipo && !b.order_id && !b.employee_movement_id
+  const banco = recente(doCid('bank_transactions').filter((b) => Date.parse(b.created_at) >= ha365 && (a.p_direction === 'payable' ? ['withdrawal', 'expense'] : ['deposit']).includes(b.type) &&   // migration 20261119223100 (1.60.18)
+    !b.order_id && !b.employee_movement_id
     && !b.credit_card_bill_id && !b.group_id && !b.origin_company_id && b.source === 'manual' && !b.voided), 'created_at', 1000)
     .map((b) => ({ id: b.id, source: 'bank', description: b.description, category_id: b.category_id || null, partner_type: b.partner_type || null, partner_id: b.partner_id || null,
       cost_center_id: b.cost_center_id || null, bank_account_id: b.bank_account_id || null, payment_method: ['boleto', 'check'].includes(b.payment_method) ? b.payment_method : 'transfer', used_at: b.created_at }));

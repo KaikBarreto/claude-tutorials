@@ -178,6 +178,17 @@
    "timeout": 10
   },
   {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr button:visible >> nth=0"
+   },
+   "seconds": 0.4,
+   "at": 12.36,
+   "label": "menu da linha do modelo",
+   "optional": true,
+   "timeout": 4
+  },
+  {
    "do": "mark",
    "name": "L2",
    "at": 13.53
@@ -185,7 +196,7 @@
   {
    "do": "click",
    "target": {
-    "role": "button",
+    "role": "menuitem",
     "name": "Gerenciar perguntas"
    },
    "at": 13.53,
@@ -272,7 +283,25 @@
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] [role=combobox]"
+    "role": "button",
+    "name": "Nova pergunta",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 23.57,
+   "label": "Nova pergunta (para mostrar os tipos)"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "#pergunta-tipo"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#pergunta-tipo"
    },
    "at": 24.57,
    "label": "abre Tipo de resposta"
@@ -347,6 +376,16 @@
    "label": "fecha a lista de tipos"
   },
   {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "label": "Cancelar (volta à lista de perguntas)"
+  },
+  {
    "do": "mark",
    "name": "L4",
    "at": 37.53
@@ -394,7 +433,7 @@
   {
    "do": "click",
    "target": {
-    "selector": "main [role=switch][aria-label*='responsável']"
+    "selector": "main div:has(> div > p:text-is('Exigir assinatura do responsável no local')) > [role=switch]"
    },
    "at": 45.94,
    "label": "Exigir assinatura do responsável no local"
@@ -421,7 +460,6 @@
    "target": {
     "role": "link",
     "name": "Ordens de Coleta",
-    "exact": true,
     "within": "aside, [data-sidebar=sidebar]"
    },
    "at": 54.06,
@@ -448,7 +486,7 @@
    "do": "hover",
    "target": {
     "text": "Falta para concluir",
-    "within": "main"
+    "within": "body"
    },
    "seconds": 2.0,
    "at": 58.89,
@@ -465,7 +503,7 @@
    "do": "hover",
    "target": {
     "text": "Assinatura",
-    "within": "main",
+    "within": "body",
     "exact": true
    },
    "seconds": 1.0,

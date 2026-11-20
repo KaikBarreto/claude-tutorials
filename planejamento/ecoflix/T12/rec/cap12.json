@@ -251,20 +251,13 @@
   {
    "do": "hover",
    "target": {
-    "selector": "main button[aria-label^='Ações']:visible >> nth=0"
+    "selector": "main tbody tr button:visible >> nth=0"
    },
    "seconds": 1.0,
    "at": 11.92,
    "label": "menu da linha",
    "optional": true,
    "timeout": 4
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "main button[aria-label^='Ações']:visible >> nth=0"
-   },
-   "label": "abre o menu da linha"
   },
   {
    "do": "click",
@@ -298,11 +291,14 @@
    "label": "fecha o Editar"
   },
   {
-   "do": "click",
+   "do": "hover",
    "target": {
-    "selector": "main button[aria-label^='Ações']:visible >> nth=0"
+    "selector": "main tbody tr button:visible >> nth=0"
    },
-   "label": "abre o menu da linha"
+   "seconds": 0.6,
+   "label": "abre o menu da linha",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "click",
@@ -400,11 +396,19 @@
    "label": "ficha do Depósito Irmãos Siqueira"
   },
   {
+   "do": "eval",
+   "js": "(()=>{history.pushState({},'','/cliente/deposito-irmaos-siqueira-4');window.dispatchEvent(new PopStateEvent('popstate'));return location.pathname})()",
+   "label": "abre a ficha completa do parceiro"
+  },
+  {
+   "do": "waitFor",
+   "text": "Histórico de Pedidos",
+   "timeout": 15
+  },
+  {
    "do": "click",
    "target": {
-    "role": "tab",
-    "name": "Coletas",
-    "exact": true
+    "selector": "main button:text-is('Coletas')"
    },
    "at": 42.07,
    "label": "aba Coletas"
