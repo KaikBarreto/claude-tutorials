@@ -121,6 +121,8 @@ async function esperaRobo() {
   const ff = spawn('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', String(FPS), '-c:v', 'mjpeg', '-i', '-',
     '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '14', '-pix_fmt', 'yuv420p', '-r', String(FPS), '-movflags', '+faststart', tmp],
     { stdio: ['pipe', 'inherit', 'inherit'] });
+  // ffmpeg que morre cedo (ex.: largura ímpar com --dsf 1.3 em 16:9) deixava o laço preso no 'drain' até o vigia (10 min): sai já
+  let fim = false; ff.on('exit', c => { if (!fim) { console.error(`render_cenas: o ffmpeg saiu antes do fim (código ${c}); confira a largura (tem de ser par)`); process.exit(1); } });
   const t0 = Date.now();
   for (let i = 0; i < n; i++) {
     await esperaRobo();
@@ -130,7 +132,7 @@ async function esperaRobo() {
     vivo();
     if (i % 300 === 0) console.log(`cap${cap}: ${i}/${n} quadros (${((Date.now() - t0) / 1000).toFixed(0)} s)`);
   }
-  ff.stdin.end();
+  fim = true; ff.stdin.end();
   const code = await new Promise(r => ff.on('close', r));
   await b.close();
   if (code !== 0) { console.error('ffmpeg falhou', code); process.exit(1); }

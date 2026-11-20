@@ -1,6 +1,6 @@
 #!/bin/bash
-# T08 · renderiza as ilustrações v3 nas janelas do ilustracoes.json com os tempos da voz real, em 16:9 (--larg 1422, --dsf 1.3:
-# 1849x1040, maior que a caixa de 1763x992 do palco). Cada ilustração usa a página dela ("v3") e, se tiver, a pasta "anexo"
+# T08 · renderiza as ilustrações v3 nas janelas do ilustracoes.json com os tempos da voz real, em 16:9 (--larg 1422, --dsf 1.35:
+# 1920x1080, maior que a caixa de 1763x992 do palco; com 1,3 a largura sai ímpar e o x264 recusa). Cada ilustração usa a página dela ("v3") e, se tiver, a pasta "anexo"
 # (relativa ao TUT_HOME: o PNG do comprovante real). Saída: edit/out/ilus/<id>.mp4 e edit/out/ilus/janelas.json (at, dur por id).
 # Depois de cada render: piscadas.py (elemento que some e volta). REFAZ=1 refaz as que já existem.
 set -u
@@ -27,8 +27,9 @@ json.dump(J,open(O+'/janelas.json','w'),indent=1)
 P
 while read ID CAP DE ATE HTML ANEXO; do
   [ -s "$O/$ID.mp4" ] && [ -z "${REFAZ:-}" ] && continue
+  [[ " ${PULA:-} " == *" $ID "* ]] && continue   # PULA="id ..." deixa estas para depois (ex.: voz do capítulo ainda por chegar)
   EXTRA=(); [ "$ANEXO" != "-" ] && EXTRA=(--anexo "$ANEXO")
   flock $TUT/.stills.lock nice -n 19 node $SK/ferramentas/edit/cenas/render_cenas.cjs $CAP $N/cap$(printf %02d $CAP).json "$O/$ID.tmp.mp4" --html "$HTML" "${EXTRA[@]}" \
-    --de $DE --ate $ATE --larg 1422 --dsf 1.3 > "$O/$ID.log" 2>&1 && mv "$O/$ID.tmp.mp4" "$O/$ID.mp4"
+    --de $DE --ate $ATE --larg 1422 --dsf 1.35 > "$O/$ID.log" 2>&1 && mv "$O/$ID.tmp.mp4" "$O/$ID.mp4"
   echo "$ID rc=$? $(date +%H:%M) $(python3 -I $SK/perfis/ecoflix/cenas_v3/piscadas.py "$O/$ID.mp4" 2>&1 | head -1 | sed 's/.*: //')"
 done < "$O/lista.txt"

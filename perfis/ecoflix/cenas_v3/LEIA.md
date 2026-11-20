@@ -214,5 +214,5 @@ vidro, o Chromium fotografa antes de pintar um bloco: cartões somem por 1 a 3 q
 ## 16:9 (19/11)
 A gravação da trilha passou a 16:9 (1600x900), e a janela do palco a 1832x1030. O desenho das cenas continua com 800 de
 altura; a largura (`LARG` do motor) acompanha a janela: `--larg 1422` no `render_cenas.cjs` e no `auditar.cjs`. Cena pensada
-em 1280 ganha 71 px de respiro de cada lado (a câmera enquadra pela altura). Render final: `--larg 1422 --dsf 1.3`
-(1849x1040). Toda aula passa no `auditar.cjs --larg 1422`. As 6 janelas da T08 passam.
+em 1280 ganha 71 px de respiro de cada lado (a câmera enquadra pela altura). Render final: `--larg 1422 --dsf 1.35`
+(1920x1080; com 1,3 a largura sai ímpar, 1849, e o x264 recusa). Toda aula passa no `auditar.cjs --larg 1422`. As 6 janelas da T08 passam.
