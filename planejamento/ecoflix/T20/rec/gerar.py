@@ -626,7 +626,11 @@ def cap04():
     c.hover(SAIR, 2.2, at=c.A(8, 'ícone.', 0.9), label='[ZOOM] o ícone Sair no cartão do parceiro (sem clicar)')
     c.mark(9)
     # esqueceu a senha: no sistema, Editar > Portal da cooperativa com o acesso já salvo ("deixe em branco p/ manter"; a chave liga/desliga e o Remover login)
-    troca_para(c, '/clientes-fornecedores', c.L(9) - 7.0, 'navegador do sistema: Clientes e Fornecedores (corte)', 'Aços Quiririm Ltda')
+    # carga inteira (não a troca de rota por dentro do app): a lista de fornecedores em cache ainda tinha portal_password_enabled
+    # falso (salvo no começo do capítulo) e a aba Portal abria com a chave desligada (ensaio de 20/11, 23:3x)
+    c.ev("(()=>{location.assign('/clientes-fornecedores');return 'ok'})()", at=c.L(9) - 7.0, label='navegador do sistema: Clientes e Fornecedores (corte, carga inteira)')
+    c.waitfor(text='Aços Quiririm Ltda', timeout=30)
+    c.waitfor(idle=True, timeout=25)
     c.click(ABA('Fornecedores'), at=c.L(9) - 5.0, label='aba Fornecedores')
     c.click(LINHA(COOP), at=c.L(9) - 4.0, label='Cooperativa Recomeço')
     c.waitfor(target=SEL(FC), timeout=12)

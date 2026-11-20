@@ -1198,13 +1198,14 @@ def cap17():
     c.hover(TXTP('Ao pagar, as cobranças individuais das unidades são canceladas'), 1.5, at=c.A(5, 'filial', 0.5), label='aviso das cobranças (continua)')
     c.mark(6)
     c.hover(TXTP('Cobrança recorrente'), 1.4, at=c.A(6, 'Cobrança', 0.5), label='Cobrança recorrente, ligada (ZOOM)')
-    c.confere('main', ['Cobrança recorrente', 'Cobra o total do grupo automaticamente todo mês'], 'a chave Cobrança recorrente')
+    c.confere('body', ['Cobrança recorrente', 'Cobra o total do grupo automaticamente todo mês'], 'a chave Cobrança recorrente')
     c.mark(7)
     # o checkout pergunta a cada 5 s se o Pix foi pago, a contar da criação da cobrança: o clique em "Escolho" deixa a consulta que confirma
     # o pagamento ~0,5 s depois de "pronto:" (o bastidor marca a cobrança paga logo antes dela)
     c.click(BTNX('PIX'), at=c.A(7, 'Escolho', 0.4), label='PIX')
     c.waitfor(text='Aguardando confirmação do pagamento', timeout=12)   # PixPaymentView: QR, "Ou copie o código PIX:" e a espera
-    c.hover(BTNX('Cartão de Crédito'), 0.5, at=c.A(7, 'cartão', 0.5), label='Cartão de Crédito (sem clicar)')
+    # (depois do clique no Pix a tela troca os três botões pelo QR Code: a frase "cartão ou boleto" fica só na fala)
+    c.hover(TXTP('Aguardando confirmação do pagamento'), 0.5, at=c.A(7, 'cartão', 0.5), label='Aguardando confirmação do pagamento (o QR Code fica na tela)')
     c.mark(8)
     # com `at` na marca da L8 (sem ele a marca L8 só sairia no fim do capítulo); o eval espera a hora certa por dentro
     c.ev(JS_PAGA, at=c.L(8) - 0.9, label='bastidor: o Pix é pago (a cobrança fica RECEIVED antes da próxima consulta)')

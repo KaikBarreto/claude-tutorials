@@ -62,7 +62,7 @@ function vinculada() {
   const cP = X(htmlCartao('table', 'Principal', 'Cobre mel', reais(42), { w: CW }), -DX, 0), nP = cP.e.querySelector('.num');
   const cD = X(htmlCartao('link', 'Tabela Depósitos', 'Cobre mel', reais(44.2), { w: CW, res: true }), DX, 0), vD = vaga(cD, 200, 'rgba(108,240,168,.5)'), onD = cD.e.querySelector('.onda');
   const fios = X(htmlFluxo(2 * XE, 40, [`M10 20H${2 * XE - 10}`]), -XE, -20, { anc: [0, 0], z: -40 }), G = fios.e.children[0], pS = seta(G, `M${2 * XE - 19} 12L${2 * XE - 10} 20L${2 * XE - 19} 28`);
-  const chV = X(htmlChip(`${ic('link', 18)}+4%`), 0, -18, { anc: [.5, 1] }), chS = X(htmlChip('acompanha sozinha', 'n'), 0, 18, { anc: [.5, 0] });
+  const chV = X(htmlChip(`${ic('link', 18)}+4%`), 0, -18, { anc: [.5, 1], z: 40 }), chS = X(htmlChip('acompanha sozinha', 'n'), 0, 18, { anc: [.5, 0], z: 40 });
   fundo(0, 0, { aneis: false });
   const tit = titulo('Preços', 'Tabela vinculada', 'escuro');
   const S0 = enquadraRet(EIXO, ret(XE - 150, -80, XE + CW + 150, 80), { az: -.035, max: 1.45 / EE }), S1 = enquadraRet(EIXO, ret(-XE - CW, -80, XE + CW, 80), { az: -.02, max: 1.3 / EE });
@@ -94,7 +94,7 @@ function ordemPreco() {
   estilo('t03-vg', `.t03vg{position:absolute;inset:0;border-radius:var(--r3);border:1.5px solid rgba(190,245,218,.3);background:rgba(255,255,255,.035);display:flex;align-items:center;padding:0 20px;gap:13px}
 .t03vg i{display:block;width:150px;height:12px;border-radius:6px;background:rgba(255,255,255,.14)}`);
   const cM = X(degrau('package', 'Um material', '', { w: MW }), XM, 0);
-  const chQ = X(htmlChip(`${ic('circle-help', 18)}qual vale?`, 'am'), XM, 42 + 16, { anc: [.5, 0] });
+  const chQ = X(htmlChip(`${ic('circle-help', 18)}qual vale?`, 'am'), XM, 42 + 16, { anc: [.5, 0], z: 40 });   // z: sempre na frente do cartão de cima (a sombra dele não pode passar por cima do chip quando a câmera respira)
   // os três preços: primeiro só o lugar (contorno liso, com a etiqueta; tracejado cintila com a câmera em deriva e o piscadas.py acusa); o nome entra quando a fala o diz
   const preco = (i, icone, rot, sub, res) => { const p = X(`<div style="position:relative;width:${CW}px;height:84px">${degrau(icone, rot, sub, { w: CW, res })}<div class="t03vg">${selo('tag', 'n', 46)}<i></i></div></div>`, XC, (i - 1) * DY);
     p.c = p.e.firstElementChild; p.v = p.e.lastElementChild; p.od = p.c.querySelector('.onda'); return p; };
@@ -106,7 +106,7 @@ function ordemPreco() {
   const fios = X(htmlFluxo(FW, 2 * OY, [garfo(-1), garfo(0), garfo(1)]), XL, -OY, { anc: [0, 0], z: -40 }), G = [...fios.e.children];
   const pS = [-1, 0, 1].map((s, i) => seta(G[i], `M${x1 - 9} ${OY + s * DY - 8}L${x1} ${OY + s * DY}L${x1 - 9} ${OY + s * DY + 8}`));
   // a ordem, à direita de cada preço
-  const XO = XC + CW / 2 + 16, ord = ['Primeiro', 'Depois', 'Por último'].map((s, i) => X(htmlChip(`<b style="opacity:.62;margin-right:2px">${i + 1}</b>${s}`, i ? 'n' : ''), XO, (i - 1) * DY, { anc: [0, .5] }));
+  const XO = XC + CW / 2 + 16, ord = ['Primeiro', 'Depois', 'Por último'].map((s, i) => X(htmlChip(`<b style="opacity:.62;margin-right:2px">${i + 1}</b>${s}`, i ? 'n' : ''), XO, (i - 1) * DY, { anc: [0, .5], z: 40 }));
   const XF = XO + Math.max(...ord.map(o => o.w));
   fundo((XL + XR) / 2, 0, { aneis: false });
   const tit = titulo('Preços', 'A ordem do preço', 'escuro');
@@ -141,9 +141,9 @@ function ordemTabela() {
   const fx = X(htmlFluxoCartoes({ cartoes: [['user-round', 'Tabela do cliente ou fornecedor', 'se tem tabela no cadastro', 'n'], ['pin', 'A tabela que você fixou', 'só pro seu usuário', 'n'], ['building-2', 'Principal da empresa', 'se não fixou nenhuma', 'n']],
     vertical: true, cw: 380, vao: 78 }), 0, 0);
   const C = [0, 1, 2].map(i => parte(fx.e, i)), yc = i => -fx.h / 2 + C[i].offsetTop + C[i].offsetHeight / 2, ym = i => (yc(i) + yc(i + 1)) / 2, XL = -fx.w / 2, XR = fx.w / 2;
-  const num = [0, 1, 2].map(i => X(htmlOp(String(i + 1)), XL - 16 - 24, yc(i)));
-  const chV = X(htmlChip(`${ic('badge-check', 18)}vale a dele`), XR + 16, yc(0), { anc: [0, .5] });
-  const chS = X(htmlChip('senão', 'n'), 34, ym(0), { anc: [0, .5] }), chN = X(htmlChip('senão', 'n'), 34, ym(1), { anc: [0, .5] });
+  const num = [0, 1, 2].map(i => X(htmlOp(String(i + 1)), XL - 16 - 24, yc(i), { z: 40 }));
+  const chV = X(htmlChip(`${ic('badge-check', 18)}vale a dele`), XR + 16, yc(0), { anc: [0, .5], z: 40 });
+  const chS = X(htmlChip('senão', 'n'), 34, ym(0), { anc: [0, .5], z: 40 }), chN = X(htmlChip('senão', 'n'), 34, ym(1), { anc: [0, .5], z: 40 });
   fundo(0, 0);
   const tit = titulo('Tabelas de preço', 'Qual tabela o pedido abre', 'escuro');
   const S = enquadraRet(EIXO, ret(XL - 64, -fx.h / 2, XR + 16 + chV.w, fx.h / 2), { az: -.035, max: 1.4 / EE });
