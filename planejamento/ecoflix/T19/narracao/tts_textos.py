@@ -75,7 +75,7 @@ O saldo dela continua igual, e no extrato as férias aparecem numa linha própri
 O décimo terceiro é igual, uma parcela por vez. A primeira do Cláudio: mil e cinquenta reais.
 Uma dica: não lance férias nem décimo terceiro como bônus. O bônus entra no saldo do mês e bagunça a conta. E a rescisão, de quem sai da empresa, fica nesse mesmo menu.""",
 9: """Tudo isso fica guardado no Extrato. Em cima, o mês que começou agora: sem vale, sem bônus, e o saldo igual ao salário.
-Embaixo, cada movimento. O pagamento de hoje mostra a conta inteira e tem o Gerar Recibo, que pergunta o formato, folha A4 ou térmico, e abre o recibo do Edson numa aba nova. Junto dele fica o ajuste que volta o saldo pro salário.
+Embaixo, cada movimento. O pagamento de hoje mostra a conta inteira e tem o Gerar Recibo, que pergunta o formato, folha á-quatro ou térmico, e abre o recibo do Edson numa aba nova. Junto dele fica o ajuste que volta o saldo pro salário.
 Mais pra baixo, o recebimento de hoje e os vales e o bônus de outubro. E repara nessa linha: Ajuste de salário, de dois mil e oitocentos pra dois mil e novecentos.
 Quando você troca o salário no cadastro, o sistema lança esse ajuste sozinho e corrige o saldo pela diferença. Nada some do histórico.
 Uma dica: excluir um vale ou um pagamento aqui também desfaz o dinheiro no caixa ou no banco.

@@ -1036,3 +1036,11 @@ Decisões:
   opcional (hover da linha da Juliana). **T19: 18/18 no rápido.** Fala do cap13 corrigida: depois da saída o tablet volta
   para a CÂMERA (não para a lista). cap13: stub de `navigator.geolocation` no setup (o tablet não tem a permissão de
   localização do celular). cap14: "Data de início" é DateField (calendário), não aceita digitação.
+- 20/11 12:23 **Kaik viu a T08 pronta ("ficou muito bom") e liberou o resto ("pode seguir com todo o resto")**: voz das aulas
+  prontas em lotes, T03 com Prefixo (F10) e seleção em massa (F11), T15 sem as duas moedas (já estava fora). Voz: nós no
+  fluxo `E2aF9NQaqA00Zo9ZhjLg` (label `Tnn capMM <título> (1.60.18)` e `Tnn títulos (1.60.18)`, títulos separados por
+  `\n[pause]\n`, como na T08), lotes A = T02, T04, T06; B = T09, T10, T11, T12; C = T13, T14, T15, T19 (≈ 180 mil caracteres,
+  ≈ 188 mil créditos); listas exatas em `scratchpad/voz/Tnn.json`. T19 cap09: "folha A4" → "folha á-quatro" na voz (troca
+  `á-quatro` → `A4` no `config_narracao.json`). T03, T20 e T22 entram na voz quando fecharem. Ajudantes: voz (Sonnet),
+  T03 (Sonnet), T20 retomado depois do lote 3; T22 no lote 1. Saldo de créditos: a ferramenta de uso da conta pede
+  permissão nova (não deu para consultar); se faltar crédito, a geração falha sem cobrar.
