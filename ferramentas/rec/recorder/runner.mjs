@@ -887,7 +887,7 @@ export async function runScript(script, opts = {}) {
 
     // ---- grava ----
     diag.console.length = diag.pageErrors.length = diag.failed.length = diag.bad.length = 0;
-    cap = await startCapture(page, framesDir, { width: VIEWPORT.width * SCALE, height: VIEWPORT.height * SCALE, quality: opts.quality ?? 92 });
+    cap = await startCapture(page, framesDir, { width: Math.round(VIEWPORT.width * SCALE), height: Math.round(VIEWPORT.height * SCALE), quality: opts.quality ?? 92 });
     const first = await Promise.race([
       cap.firstFrame,
       sleep(2500).then(async () => {
@@ -984,7 +984,7 @@ export async function runScript(script, opts = {}) {
   // ---- telemetria ----
   const telem = tel.finalize({ t0Ms: capRes.t0Ms, endS });
   const telemetryFile = path.join(outDir, `${name}.telemetry.json`);
-  const videoMeta = { width: VIEWPORT.width * SCALE, height: VIEWPORT.height * SCALE, fps: 30, durationS: r3(endS), dsf: SCALE, viewportCss: VIEWPORT };
+  const videoMeta = { width: Math.round(VIEWPORT.width * SCALE), height: Math.round(VIEWPORT.height * SCALE), fps: 30, durationS: r3(endS), dsf: SCALE, viewportCss: VIEWPORT };
   fs.writeFileSync(
     telemetryFile,
     JSON.stringify(

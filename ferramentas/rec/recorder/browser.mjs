@@ -15,11 +15,14 @@ import { Telemetry } from './telemetry.mjs';
 const _vp = /^(\d+)x(\d+)$/.exec(process.env.TUT_VIEWPORT || '');
 const _tela = MUNDO.navegador?.tela; // mundo.json -> navegador.tela {largura, altura, escala}
 export const VIEWPORT = _vp ? { width: +_vp[1], height: +_vp[2] } : _tela ? { width: _tela.largura, height: _tela.altura } : { width: 1280, height: 800 };
-export const SCALE = Number(process.env.TUT_SCALE) || _tela?.escala || 2;
+// `let`: o aparelho (DEVICES[x].scale) troca a escala no início da sessão (um processo grava um capítulo).
+export let SCALE = Number(process.env.TUT_SCALE) || _tela?.escala || 2;
 /** Aparelhos para "device" no roteiro (o VIEWPORT acima muda no início da sessão: um processo grava um capítulo). */
 export const DEVICES = {
   phone: {
-    width: 390, height: 844, isMobile: true, hasTouch: true,
+    // escala própria: o quadro do celular é sempre 780x1688 (montar_cap.py); a 1,8 do computador 16:9 dá 1519,2 px de
+    // altura e o Chrome recusa o screencast ("Invalid parameters", 20/11, T00).
+    width: 390, height: 844, scale: 2, isMobile: true, hasTouch: true,
     userAgent: 'Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36',
     geolocation: MUNDO.navegador?.geolocalizacao || { latitude: -22.9035, longitude: -43.1038, accuracy: 15 }, // Niterói (mundo fictício)
   },
@@ -209,6 +212,8 @@ export async function openSession({
   ecotray = undefined,
   dirImpressoes = null, // onde o EcoTray falso guarda o que foi "impresso" (PDF/PNG)
 } = {}) {
+  const dev0 = device ? DEVICES[device] : null;
+  if (dev0?.scale && !Number(process.env.TUT_SCALE)) SCALE = dev0.scale; // antes de abrir o navegador (--force-device-scale-factor)
   const own = !browser;
   browser = browser || (await launchBrowser({ headed }));
   const session = anonymous ? null : await fakeLogin(email);
