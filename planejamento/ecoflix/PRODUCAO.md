@@ -1103,3 +1103,9 @@ Decisões:
   Build do 1.60.22 pela fila (`rec/build_1.60.22.sh`, log `rec/build_1.60.22.log`); `app/dist-1.60.18` guardado,
   `dist-1.60.10` apagado. Novos achados do Kaik (fora do pedido): rascunho ao lado mostra o número antigo no seletor até
   recarregar; uma vez o "Finalizar" abriu o Cato com a dica aberta.
+- 20/11 15:5x **App de gravação no 1.60.22** (build `bea545ecf` no ar na 8080; `app/dist-1.60.18` guardado). 1ª tentativa
+  morreu por memória no `vite build` (o app ficou fora do ar até eu religar; nada gravava). 2ª: apaguei a cópia 1.60.18 de
+  `/dev/shm` (agora `/dev/shm/ecoflix-src` é link para `/dev/shm/ecoflix-src22`, com `node_modules`) e passou.
+  **Robô do celular** (T00): com a escala 1,8 do computador 16:9, o screencast do celular pedia 702x1519,2 e o Chrome recusava;
+  `DEVICES.phone.scale = 2` + tamanho arredondado (skill + `$TUT_HOME/rec/recorder`). cap00b passou (780x1688); os 18 de
+  celular da T00 regravando no rápido (`rec/t00/_ens/lote_celular_2011.log`).
