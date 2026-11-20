@@ -234,6 +234,10 @@
    "js": "(()=>{if(window.__pdfs)return 'ja';window.__pdfs=[];const o=URL.createObjectURL.bind(URL);URL.createObjectURL=(b)=>{try{if(b&&b.type==='application/pdf')window.__pdfs.push(b)}catch(e){}return o(b)};return 'gancho'})()"
   },
   {
+   "do": "eval",
+   "js": "(()=>{if(window.__hide)return 'ja';window.__hide=[];const o=window.fetch.bind(window);window.fetch=function(u,i){try{const b=i&&typeof i.body==='string'?i.body:'';if(b.includes('hide_financial_details'))window.__hide.push(String(u&&u.url||u).split('?')[0].slice(-60)+' '+(b.match(/\"p?_?hide_financial_details\":\\s*(true|false)/)||[])[0])}catch(e){}return o(u,i)};return 'gancho'})()"
+  },
+  {
    "do": "waitFor",
    "gone": {
     "selector": "[data-sonner-toast]"
@@ -598,6 +602,11 @@
    "do": "eval",
    "js": "(async()=>{for(let i=0;i<30&&!(window.__pdfs&&window.__pdfs.length>0);i++)await new Promise(r=>setTimeout(r,200));const b=window.__pdfs&&window.__pdfs[0];if(!b)return 'SEM PDF';const u=new Uint8Array(await b.arrayBuffer());let s='';for(let i=0;i<u.length;i+=8192)s+=String.fromCharCode.apply(null,u.subarray(i,i+8192));return {pdf:\"venda-fundicao-sem-valores\",bytes:u.length,b64:btoa(s)}})()",
    "label": "PDF sem valores (para a edição)"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__hide||'sem gancho')",
+   "label": "diagnóstico: hide_financial_details enviado pelo app na venda"
   },
   {
    "do": "eval",

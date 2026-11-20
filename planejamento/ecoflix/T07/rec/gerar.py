@@ -392,6 +392,12 @@ JS_WS_GANCHO = ("(()=>{if(window.__cupons)return 'ja';window.__cupons=[];const o
                 "return o.apply(this,arguments)};return 'gancho'})()")
 
 
+# diagnóstico (1.60.18): guarda o valor de hide_financial_details que o app manda ao salvar a venda (RPC), para conferir o "Comprovante sem valores"
+JS_HIDE_GANCHO = ("(()=>{if(window.__hide)return 'ja';window.__hide=[];const o=window.fetch.bind(window);window.fetch=function(u,i){try{const b=i&&typeof i.body==='string'?i.body:'';"
+                  "if(b.includes('hide_financial_details'))window.__hide.push(String(u&&u.url||u).split('?')[0].slice(-60)+' '+(b.match(/\"p?_?hide_financial_details\":\\s*(true|false)/)||[])[0])}catch(e){}"
+                  "return o(u,i)};return 'gancho'})()")
+
+
 def js_cupom(nome):
     """devolve (base64) o último cupom que o app mandou para a impressora térmica, para a ilustração do comprovante"""
     return ("(async()=>{for(let i=0;i<30&&!(window.__cupons&&window.__cupons.length);i++)await new Promise(r=>setTimeout(r,200));"
@@ -1312,7 +1318,7 @@ def cap17():
                            + st_item('latão', 'Metal amarelo (latão)', 152) + [
                                {'do': 'click', 'target': OPCOES}, {'do': 'waitFor', 'text': 'Ajustes usados de vez em quando', 'timeout': 8},
                                {'do': 'click', 'target': SW_SEM_VALOR}, {'do': 'press', 'key': 'Escape'}, {'do': 'pause', 'seconds': 0.6},
-                               {'do': 'eval', 'js': JS_PDF_GANCHO}]))
+                               {'do': 'eval', 'js': JS_PDF_GANCHO}, {'do': 'eval', 'js': JS_HIDE_GANCHO}]))
     c.add({'do': 'balanca', 'peso': 60, 'subir': 0.6, 'oscilar': 0.6, 'at': 0.0, 'label': 'cobre mel na balança (60 kg)'})
     c.click(MAT, w=(1, 'cobre'), label='Material')
     c.type(MAT, 'cobre mel', w=(1, 'mel,', None, 0.4), clicar=False, cps=30, label='material: cobre mel')
@@ -1348,6 +1354,7 @@ def cap17():
     c.click(BTN('Visualizar', within=DLG), w=(7, 'Como'), label='Visualizar')
     c.click(BTNX('Visualizar PDF'), w=(7, 'comprovante', 1), label='Visualizar PDF (o PDF abre noutra aba)')
     c.ev(js_pdf(0, 'venda-fundicao-sem-valores'), label='PDF sem valores (para a edição)')
+    c.ev("JSON.stringify(window.__hide||'sem gancho')", label='diagnóstico: hide_financial_details enviado pelo app na venda')
     c.fim()
     return c
 
@@ -1356,7 +1363,7 @@ def cap18():
     """A internet cai: faixa e Modo Offline; Shift+C, Dona Cida com 14,6 kg de latinha em dinheiro: Compra salva localmente; Pendências no
     caixa; a internet volta e sincroniza; (ilustração L5)."""
     c = Cap(18, setup_login() + vai('/caixa', 'Nova Venda') + vai('/compra', 'Voltar para o caixa') + setup_tela('/venda', 'Selecionar cliente')[len(setup_login()):])
-    c.ev(JS_OFFLINE, w=(1, 'cair'), label='a internet cai (navigator.onLine e evento offline)')
+    c.ev(JS_OFFLINE, w=(1, 'cair', None, 6.0), label='a internet cai (navigator.onLine e evento offline; dispara no início do capítulo porque a faixa pode levar até 8 s: um ping em andamento tem de estourar)')
     c.waitfor(text='Sem conexão', timeout=8)
     c.hover({'text': 'Sem conexão', 'exact': False}, 1.6, w=(1, 'faixa'), label='faixa Sem conexão (zoom)')
     c.hover(P('Modo Offline', exact=False), 1.0, w=(1, 'trabalho'), label='Modo Offline')
@@ -1387,8 +1394,11 @@ def cap18():
     c.waitfor(text='Pendências de Sincronização', timeout=12)
     c.hover(P('Aparecida Ramos', exact=False), 2.0, w=(3, 'Pendencias'), label='cartão Aparecida Ramos em Pendências de Sincronização (zoom)')
     c.ev(JS_ONLINE, w=(4, 'Quando', None, 1.6), label='a internet volta (evento online)')
-    c.waitfor(text='sincronizadas com sucesso', timeout=20)
-    c.registra({'text': 'sincronizadas com sucesso', 'exact': False}, w=(4, 'Pronto:'), label='Operações sincronizadas com sucesso! (zoom; o aviso some sozinho: sem mover o mouse)')
+    # 1.60.18: a faixa verde "Operações sincronizadas com sucesso!" some em ~0,3 s (a faixa sai junto com a última pendência): o que fica na tela é a
+    # pendência saindo da lista; o robô espera ela sumir e lê o histórico do caixa
+    c.waitfor(gone={'text': 'Pendências de Sincronização', 'exact': False}, timeout=30)
+    c.hover(SEL("main button:has-text('Nova Compra')"), 0.4, w=(4, 'Pronto:'), label='a pendência saiu da lista (sem faixa de erro)')
+    c.ev("(()=>{const m=document.querySelector('main');if(!m)return 'SEM MAIN';const t=m.innerText.replace(/\\s+/g,' ');const i=t.indexOf('Aparecida Ramos');return i<0?'Aparecida Ramos NAO aparece no caixa':t.slice(Math.max(0,i-80),i+120)})()", label='lido: a compra da Dona Cida no caixa depois de sincronizar')
     c.fim()
     return c
 

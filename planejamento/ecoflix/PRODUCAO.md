@@ -1075,3 +1075,10 @@ Decisões:
 - 20/11 13:5x **Voz das 12 aulas completa** (215 nós `completed`, sem label duplicado; conta: 298.872 → 499.805 créditos,
   200.933 gastos). Pedido ao Kaik: exportar o fluxo "EcoFlix · Vozes de todas as aulas" em zip e anexar. Dica de economia de
   contexto: `creative_get_flow` grande vai para arquivo; contar os estados com Python em vez de ler.
+- 20/11 13:5x **T07 aplicada ao 1.60.18 (agente, 3 lotes)**: 20 capítulos, rápido 20/20 sem falha; completos sem falha em 05,
+  08, 09, 10, 13, 15, 16, 17, 18 (atrasos até 2,3 s com a máquina dividida; cap17 e cap18 6,8 s: no 18, a faixa "Sem conexão"
+  só aparece quando o ping em andamento estoura, até 8 s). Fala 3.557 → 3.628 palavras (cap04 margem automática; cap05 coluna
+  "Peso Bruto"; cap09 janela "Atualizar os preços?"; cap18 sem a faixa verde, que some em 0,3 s). Sementes regravadas e
+  `apos-cap18` nova. **Bloqueios**: cap17 (PDF com valores apesar do "sem valores": bug do app CONFIRMADO no código,
+  handoff `handoffs/2026-11-20_correcoes_T07.md`) e cap15 (cupom 58 mm com "Material não identificado": ajudante apurando
+  se é do app ou do simulador). Voz da T07 só depois disso.

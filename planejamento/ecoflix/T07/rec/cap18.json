@@ -1,6 +1,6 @@
 {
  "name": "t07-cap18",
- "title": "T07 · Cap. 18 · Sem internet (narração 65,6 s ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:35:00-03:00; usuário rafael)",
+ "title": "T07 · Cap. 18 · Sem internet (narração 65,1 s ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:35:00-03:00; usuário rafael)",
  "seed": "t07-cap18",
  "pace": 0.5,
  "cps": 14,
@@ -142,8 +142,8 @@
   {
    "do": "eval",
    "js": "(()=>{window.__off=true;if(!window.__f){window.__f=window.fetch.bind(window);window.fetch=(u,o)=>(window.__off&&String((u&&u.url)||u).includes('/auth/v1/health'))?Promise.reject(new TypeError('Failed to fetch')):window.__f(u,o)}Object.defineProperty(navigator,'onLine',{configurable:true,get:()=>false});window.dispatchEvent(new Event('offline'));return 'offline'})()",
-   "at": 1.61,
-   "label": "a internet cai (navigator.onLine e evento offline)"
+   "at": 0.0,
+   "label": "a internet cai (navigator.onLine e evento offline; dispara no início do capítulo porque a faixa pode levar até 8 s: um ping em andamento tem de estourar)"
   },
   {
    "do": "waitFor",
@@ -411,8 +411,11 @@
   },
   {
    "do": "waitFor",
-   "text": "sincronizadas com sucesso",
-   "timeout": 20
+   "gone": {
+    "text": "Pendências de Sincronização",
+    "exact": false
+   },
+   "timeout": 30
   },
   {
    "do": "mark",
@@ -420,22 +423,25 @@
    "at": 34.86
   },
   {
-   "do": "type",
+   "do": "hover",
    "target": {
-    "text": "sincronizadas com sucesso",
-    "exact": false
+    "selector": "main button:has-text('Nova Compra')"
    },
-   "text": "",
-   "noClick": true,
+   "seconds": 0.4,
+   "at": 38.86,
+   "label": "a pendência saiu da lista (sem faixa de erro)",
    "optional": true,
-   "timeout": 4,
-   "at": 39.36,
-   "label": "Operações sincronizadas com sucesso! (zoom; o aviso some sozinho: sem mover o mouse)"
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const m=document.querySelector('main');if(!m)return 'SEM MAIN';const t=m.innerText.replace(/\\s+/g,' ');const i=t.indexOf('Aparecida Ramos');return i<0?'Aparecida Ramos NAO aparece no caixa':t.slice(Math.max(0,i-80),i+120)})()",
+   "label": "lido: a compra da Dona Cida no caixa depois de sincronizar"
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 44.4
+   "at": 43.94
   },
   {
    "do": "eval",
@@ -445,7 +451,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 65.56
+   "at": 65.1
   }
  ]
 }

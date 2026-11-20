@@ -36,7 +36,7 @@
 | 15 | COMPROVANTE · O cupom e o cupom sem valor | "Imprimir Comprovante" → "Imprimir direto"; ilustração do cupom; "Opções avançadas" → "Comprovante sem valores" + balão | Vale só para o pedido | 1:30 |
 | 16 | VENDA · A tela de venda | Shift+V; Fundição Bandeira do Vale; latão; coluna "Lucro", "Lucro estimado"; ilustração; "Estoque Disponível"; liga "Comprovante sem valores" | Estoque Disponível já desconta a venda | 1:30 |
 | 17 | VENDA · Estoque insuficiente | Cobre mel 60 kg × 42 em estoque → "Estoque insuficiente" → origem "Cobre misto" 18 → "Transferir e Adicionar"; Pix; PDF sem valores | 🔒 outras unidades e, com elas, só com internet; agendada e gravada junto; "Inserir mesmo assim" | 1:00 |
-| 18 | SEM INTERNET · Sem internet | Faixa "Sem conexão…"; compra da Dona Cida → "Compra salva localmente…"; "Pendências de Sincronização"; volta: "Operações sincronizadas com sucesso!"; ilustração da fila | Erro não reenvia sozinho; "Tentar novamente" | 1:00 |
+| 18 | SEM INTERNET · Sem internet | Faixa "Sem conexão…"; compra da Dona Cida → "Compra salva localmente…"; "Pendências de Sincronização"; volta: a pendência sai da lista (a faixa verde some em 0,3 s no 1.60.18); ilustração da fila | Erro não reenvia sozinho; "Tentar novamente" | 1:00 |
 | 19 | RESUMO · Recapitulando | Montagem; "Próximo: Ticket de Pesagem" | | 0:50 |
 
 Transições faladas: 1→2 "Primeiro, quem está vendendo pra gente"; 2→3 "Hoje chegou um carroceiro novo"; 3→4 "Agora o preço";

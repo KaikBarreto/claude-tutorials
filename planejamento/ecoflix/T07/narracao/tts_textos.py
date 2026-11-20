@@ -120,7 +120,7 @@ A Fundição paga no Pix. Confirmar pagamento, e venda registrada. Como o Compro
 18: """E se a internet cair no meio do dia? A faixa no topo avisa, e o trabalho continua. A compra, a venda e o caixa funcionam sem internet.
 Chegou a Dona Cida com a latinha. A balança continua funcionando, porque o Ecotrêi está aqui no computador: catorze quilos e seiscentos. Finalizo em dinheiro, e a compra fica guardada no computador, com um número provisório.
 No caixa, ela aparece em Pendências de Sincronização, esperando a internet.
-Quando a internet volta, a fila sobe sozinha. Pronto: operação sincronizada, e a compra ganha o número de verdade.
+Quando a internet volta, a fila sobe sozinha. Pronto: a pendência sai da lista, e a compra já está no caixa.
 Uma dica: se uma operação ficar com Erro, ela não vai de novo sozinha, pra não lançar em dobro. Use o Tentar novamente, o ícone de atualizar do lado: ele reenvia sem duplicar. Sem esse botão, remova pela lixeira e refaça a operação normalmente.""",
 19: """Pronto! Recapitulando: a gente abriu a compra pelo caixa, pelo atalho e pelo contról-cá, viu o Não informado e cadastrou o Zé na hora.
 Viu qual preço vale, puxou o peso da balança, descontou a tara e a impureza, e fez a dupla pesagem da carroça.

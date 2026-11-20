@@ -129,3 +129,7 @@ as gravações). Cada item diz a aula em que apareceu. **No fim da produção, v
 - **T11 · Produção**: o gráfico do relatório diz "Total: N peças" fixo, mesmo em produto por quilo; ainda há "Custo
   estimado por peça" (ordem e Conversão) e "Custo/peça" (relatório) em produto por quilo.
 - **T19 · RH**: a dica flutuante do Cato (15 s) cobre o lápis da jornada.
+- **T07 (20/11)**: "Comprovante sem valores" não vale no "Visualizar PDF" logo depois de finalizar a venda (o ref do toggle é
+  zerado na limpeza do formulário antes do `handlePrintReceipt`; `Sale.tsx` ~3813 e ~5071). Cupom 58 mm da compra com
+  "Material não identificado" (em apuração: app ou simulador). Faixa "Operações sincronizadas com sucesso!" some em ~0,3 s.
+  Aviso de console `DialogContent requires a DialogTitle`. Handoff: `handoffs/2026-11-20_correcoes_T07.md`.
