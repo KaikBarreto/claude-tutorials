@@ -29,6 +29,8 @@ export default (body, { store, db, url, FunctionError }) => {
     }
   }
   if (!pedido) throw new FunctionError('Pedido não encontrado', 404);
+  // pedido "sem valor" (ou portal sem "Valores financeiros"): o valor nem sai do servidor (19/11/2026)
+  const semValor = pedido.hide_financial_details === true || p.cfg.valores === false;
   const mats = new Map(store.rows('materials').map((m) => [m.id, m]));
   const linhas = itens.map((i) => {
     const m = mats.get(i.material_id) || {};
@@ -44,8 +46,6 @@ export default (body, { store, db, url, FunctionError }) => {
   if (banco > 0) pagamentos.push({ method: 'Pix/Transferência', amount: banco });
   const saldo = Math.abs(soma(store.rows('balance_movements').filter((m) => m.order_id === orderId && m.movement_type === 'order')));
   if (saldo > 0) pagamentos.push({ method: 'Saldo', amount: saldo });
-  // pedido "sem valor" (ou portal sem "Valores financeiros"): o valor nem sai do servidor (19/11/2026)
-  const semValor = pedido.hide_financial_details === true || p.cfg.valores === false;
   const total = pagamentos.reduce((s, x) => s + x.amount, 0) || (pedido.total_amount ?? 0);
   const criador = pedido.created_by ? (store.rows('profiles').find((u) => u.id === pedido.created_by) || {}).full_name || '' : '';
   let photoQr = null;

@@ -1051,3 +1051,7 @@ Decisões:
   `entity-portal-report`, `portal-order-receipt` no 1.60.18; o agente mexeu também em arquivos compartilhados com a T12
   (`lib/coletas.mjs` com `cfg.locked`, `lib/portal.mjs`, `collection-request` aceitando sessão). Achado: o portal 1.60.18 não
   tem `<main>`. Ajudante novo (Sonnet) fecha T20 e confere a T12 (cap09 no portal + `t12_lote.sh 08 13 16`).
+- 20/11 12:3x **Crédito**: o Kaik pôs US$ 47 (limite 313.500 → 561.000; usado 298.872; ~262 mil livres; renova em 28/11 12:42 UTC).
+  Ajudante da voz liberado para os lotes A, B e C (~188 mil). Ficam ~74 mil para T03, T20 e T22 (~54 mil). As 11 restantes
+  (~195 mil estimados, texto ainda vai crescer) precisam de mais crédito depois. Regras de economia no `perfis/ecoflix/voz.json`
+  (`economia`): voz só com texto congelado; correção por frase com `emendar.py`; 1 versão; eleven_v4 mantido.

@@ -628,7 +628,9 @@ def cap04():
     c.click(TAB('Portal', within=DLG), at=c.L(9) - 1.6, label='aba Portal')
     c.waitfor(text='Pedir login no portal', timeout=10)
     rola_ate(c, 'Exigir senha', c.L(9) - 0.4, 'rola até Exigir senha', y=130, dur_ms=700, escopo=DLG, prefixo=True)
-    c.hover(SEL('#portal-password-enabled'), 1.6, at=c.A(9, 'chave', 0.7), label='[ZOOM] a chave Pedir login no portal')
+    # a fala manda desligar a chave: o robô desliga de verdade (o botão vira "Remover login"), mostra o botão e NÃO clica (nada é salvo)
+    c.click(SEL('#portal-password-enabled'), at=c.A(9, 'desligar', 0.2), label='[ZOOM] desliga a chave Pedir login no portal')
+    c.waitfor(target=BTN('Remover login', within=DLG), timeout=8)
     c.hover(BTN('Remover login', within=DLG), 1.4, at=c.A(9, 'Remover', 0.6), label='o botão Remover login (sem clicar)')
     c.fim()
     return c
