@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- T03 "Materiais e tabelas de preço" · os PDFs REAIS do Exportar na tela (kit v3, clima claro: papel é mundo físico).
+     Molde: T08/cenas_v3/comprovante.html (pedido do Kaik, 19/11: toda fala de PDF/comprovante mostra o papel real).
+     O app abre cada PDF numa aba nova; o robô devolve os dois no ensaio do cap14 (rec/t03/t03-cap14.actions.json, passos
+     "PDF do estoque" e "PDF da Tabela Depósitos A4"; arquivos em $TUT_HOME/t03/pdf/) e a edição os rasteriza em
+     $TUT_HOME/t03/edit/out/comprovantes/cap14-estoque.png e cap14-tabela.png (pdftoppm -r 300 -png -singlefile).
+     Aqui o papel é a imagem real, sem redesenho: a câmera passeia e o marca-texto verde acompanha a fala.
+       cap14 · linha 1 · pdf14_estoque · "Exportar, e o PDF abre numa aba nova, pronto pra salvar ou imprimir."
+       cap14 · linha 3 · pdf14_tabela  · "Pronto: a tabela com o preço de compra de cada material, do jeito que se entrega pro depósito."
+     As duas folhas ficam no mesmo lugar; cada janela mostra a sua.
+     Coordenadas: pontos do PDF (pdftotext -bbox), página A4 de 595,28 x 841,89 pt, desenhada com 1 px por pt.
+     Render: render_cenas.cjs 14 <cap14.json> saida.mp4 --html .../pdf.html --anexo $TUT_HOME/t03/edit/out/comprovantes
+             --larg 1422 --dsf 1.35 --de <s> --ate <s>.  Auditoria: auditar.cjs --aula planejamento/ecoflix/T03 --larg 1422 -->
+</head><body>
+<script type="module">
+import { pr, eo, W, vis, titulo, posTitulo, GL, mancha, piso, U, camera, plano, cena, estilo, enquadraRet }
+  from '../../../../perfis/ecoflix/cenas_v3/motor.js';
+import { ceuClaro } from '../../../../perfis/ecoflix/cenas_v3/fundo.js';
+
+const LP = 595.28, HP = 841.89, WP = Math.round(LP), HPX = Math.round(HP), E = .008, YC = HPX * E / 2 + .45;   // página (pt = px) e metros por px
+
+// marcas: [x0, y0, x1, y1, tipo]; tipo '' = marca-texto (cresce da esquerda), 'q' = moldura (para faixa preta, onde o
+// marca-texto não aparece), 'v' = marca-texto que desce (uma coluna inteira)
+function papel(src, marcas) {
+  estilo('folha', `
+.folha{position:relative;width:${WP}px;height:${HPX}px;background:#fff;border-radius:4px;box-shadow:0 34px 60px -18px rgba(30,80,60,.38),0 8px 16px -6px rgba(30,80,60,.14)}
+.folha img{display:block;width:${WP}px;height:${HPX}px;border-radius:4px}
+.folha .mk{position:absolute;border-radius:3px;background:rgba(80,208,136,.46);mix-blend-mode:multiply;transform-origin:0 50%;transform:scaleX(0)}
+.folha .mk.v{transform-origin:50% 0;transform:scaleY(0)}
+.folha .mk.q{background:none;mix-blend-mode:normal;border:2px solid #50D088;box-shadow:0 0 0 2px rgba(80,208,136,.28);border-radius:4px;transform:none;opacity:0}`);
+  const mk = Object.entries(marcas).map(([id, [x0, y0, x1, y1, tp]]) =>
+    `<i class="mk ${tp ?? ''}" data-m="${id}" style="left:${x0.toFixed(1)}px;top:${y0.toFixed(1)}px;width:${(x1 - x0).toFixed(1)}px;height:${(y1 - y0).toFixed(1)}px"></i>`).join('');
+  return `<div class="folha"><img src="${src}" alt="">${mk}</div>`;
+}
+function marca(e, id, t, a, d = .45) {
+  const m = (e._mk ??= {})[id] ??= e.querySelector(`[data-m="${id}"]`), k = eo(pr(t, a, d));
+  if (m.classList.contains('q')) { m.style.opacity = k.toFixed(3); m.style.transform = `scale(${(1.06 - .06 * k).toFixed(4)},${(1.3 - .3 * k).toFixed(4)})`; }
+  else m.style.transform = m.classList.contains('v') ? `scaleY(${k.toFixed(4)})` : `scaleX(${k.toFixed(4)})`;
+}
+// faixa de linhas do papel (pt, de cima para baixo) em metros, na largura inteira: para enquadraRet
+const faixa = (y0, y1) => [-WP / 2 * E, YC + (HPX / 2 - y1) * E, WP / 2 * E, YC + (HPX / 2 - y0) * E];
+const palco = () => { piso({ r: 26, x: 0, z: -2, passo: 1.3 }); U.uNevoa.value.set(.955, .975, .965, .8); ceuClaro({ halo: [.2, 3.8, -13] }); };
+
+function exportar(d) {
+  // janela 1: a Lista de Materiais (o estoque em PDF)
+  const t0 = W(1, 'exportar'), tpdf = W(1, 'pdf'), tab = W(1, 'abre'), tno = W(1, 'nova'), tpr = W(1, 'pronto'), tf1 = W(1, 'imprimir', 1, 'e');
+  // janela 2: a Tabela Depósitos em A4 (a tabela de preços em PDF)
+  const u0 = W(3, 'pronto'), uta = W(3, 'tabela'), upr = W(3, 'preco'), uca = W(3, 'cada'), uma = W(3, 'material'), uje = W(3, 'jeito'), uf = W(3, 'deposito', 1, 'e');
+  const MEIO = (tf1 + u0) / 2;
+  palco();
+  const p1 = plano(papel(`${d.anexo}/cap14-estoque.png`, {
+    emp: [119, 45, 252, 62], tit: [38, 123, 177, 142], cab: [39.5, 187, 555.5, 208, 'q'] }), { pos: [0, YC, 0], esc: E, sangra: true });
+  const p2 = plano(papel(`${d.anexo}/cap14-tabela.png`, {
+    fx: [28, 127.5, 567, 156, 'q'], pk: [519, 190.5, 566, 202], col: [523, 208.5, 566, 500, 'v'], cm: [52.5, 264.5, 100, 277] }), { pos: [0, YC, 0], esc: E, sangra: true });
+  const sp = mancha(6.4, 1.6, [0, 0, .1], { op: 0 });
+  const tit1 = titulo('Exportar', 'O estoque em PDF'), tit2 = titulo('Exportar', 'A tabela de preços em PDF');
+  const o = { topo: 70, margem: 56, el: .015 };   // de perto o título já saiu: o papel ocupa o quadro
+  const TUDO = enquadraRet(null, faixa(0, HP), { topo: 150, margem: 40, el: .02, az: .05 });
+  const F1 = enquadraRet(null, faixa(30, 350), { ...o, az: .03 });      // cabeçalho da empresa, "Lista de Materiais" e as primeiras linhas
+  const F2 = enquadraRet(null, faixa(14, 352), { ...o, az: -.025 });    // cabeçalho, "TABELA: TABELA DEPÓSITOS" e as primeiras linhas
+  camera([[t0 - 3, TUDO], [tpdf - .55, { ...TUDO, d: TUDO.d * .975, az: .04 }, 'lin'], [tpdf + .75, F1], [tf1 + 2, { ...F1, d: F1.d * .98, az: .01 }, 'lin'],
+    [u0 - 3, { ...TUDO, az: -.05 }], [uta - .5, { ...TUDO, d: TUDO.d * .975, az: -.04 }, 'lin'], [uta + .8, F2], [uf + 2, { ...F2, d: F2.d * .98, az: -.04 }, 'lin']]);
+  return t => {
+    const j2 = t > MEIO, a0 = j2 ? u0 : t0; p1.op = j2 ? 0 : 1; p2.op = j2 ? 1 : 0;
+    GL.style.opacity = eo(pr(t, a0 + .08, .5)).toFixed(3);
+    posTitulo(tit1, t, t0 - .9, t0 - .45, tpdf - .65); posTitulo(tit2, t, u0 - .9, u0 - .45, uta - .6);   // saem antes do mergulho
+    vis(p1.e, t, t0 - .15, NUNCA, { dy: 30 }); vis(p2.e, t, u0 - .15, NUNCA, { dy: 30 });
+    sp.material.uniforms.uOp.value = .55 * (+(j2 ? p2 : p1).e.style.opacity || 0);
+    marca(p1.e, 'tit', t, tab + .05); marca(p1.e, 'emp', t, tno - .05); marca(p1.e, 'cab', t, tpr - .05, .5);
+    marca(p2.e, 'fx', t, uta + .55, .5); marca(p2.e, 'pk', t, upr + .35); marca(p2.e, 'col', t, uca - .05, 1.5); marca(p2.e, 'cm', t, uje - .1);
+  };
+}
+const NUNCA = 1e9;
+const CAPS = { 14: exportar };
+cena(d => CAPS[d.cap](d), { fov: 26 });
+</script></body></html>

@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- T03 "Materiais e tabelas de preço" · ilustrações no kit v3 (perfis/ecoflix/cenas_v3/LEIA.md), 16:9 (--larg 1422).
+     Uma função por CENA e CAPS[cap] diz o que cada capítulo ilustrado usa. As janelas (de/ate) estão em ../cenas/ilustracoes.json.
+       cap11 · vinculada      (escuro)  ilu11_vinculada   "Tabela vinculada"            a Tabela Depósitos acompanha a Principal: muda lá, muda aqui
+       cap11 · ordemPreco     (escuro)  ilu11_ordem       "A ordem do preço"            personalizado, tabela do pedido, preço do material
+       cap12 · ordemTabela    (escuro)  ilu12_ordem       "Qual tabela o pedido abre"   a do cliente ou fornecedor; senão, a fixada; senão, a principal
+       cap13 · transferir     (claro)   ilu13_transferir  "Transferir entre materiais"  8 kg de ferro saem do Radiador de cobre e vão para o Ferro misto
+       cap15 · arquivar       (claro)   ilu15_arquivar    "Excluir é arquivar"          sai da lista e das buscas; compras, vendas e histórico continuam
+     O cap11 tem duas janelas: as duas cenas moram no mesmo mundo escuro, longe uma da outra, e a câmera troca de lugar entre elas.
+     Os PDFs do cap14 (papel real) estão em pdf.html.
+     Só textos e números da fala e da tela. Âncoras por palavra (W) sobre a voz real ($TUT_HOME/t03/narracao/capNN.json).
+     Acabamento: node perfis/ecoflix/cenas_v3/auditar.cjs --aula planejamento/ecoflix/T03 --larg 1422
+     Render de uma janela: node ferramentas/edit/cenas/render_cenas.cjs <cap> <capNN.json> saida.mp4 \
+               --html planejamento/ecoflix/T03/cenas_v3/cena.html --larg 1422 --dsf 1.35 --de <s> --ate <s>
+     Ícones lucide usados (o nome tem de estar literal nesta página): 'table' 'link' 'package' 'tag' 'user-round' 'circle-help'
+     'pin' 'building-2' 'badge-check' 'search' 'trash-2' 'eraser' 'archive' 'shopping-cart' 'receipt' 'history' 'arrow-right-left' 'wrench' -->
+</head><body>
+<script type="module">
+import { PI, cl, lerp, pr, eo, eio, eo5, eis, passa, golpe, W, el, ic, vis, foco, pulso, ondaEm, conta, titulo, posTitulo, selo,
+  htmlChip, htmlCartao, htmlOp, htmlFluxo, fluxo, CENA, GL, mundo, mancha, piso, anel, destaque, U, camera, lugar, plano, clima, cena,
+  estilo, enquadraRet, grupo }
+  from '../../../../perfis/ecoflix/cenas_v3/motor.js';
+import { ceuClaro, mundoEscuro } from '../../../../perfis/ecoflix/cenas_v3/fundo.js';
+import { baia } from '../../../../perfis/ecoflix/cenas_v3/objetos/baia.js';
+import { monte, pecas } from '../../../../perfis/ecoflix/cenas_v3/objetos/monte.js';
+import { pasta } from '../../../../perfis/ecoflix/cenas_v3/objetos/pasta.js';
+import { folha } from '../../../../perfis/ecoflix/cenas_v3/objetos/folha.js';
+import { htmlFluxoCartoes, fluxoCartoes, parte } from '../../../../perfis/ecoflix/cenas_v3/dados/fluxoCartoes.js';
+import { reais } from '../../../../perfis/ecoflix/cenas_v3/dados/base.js';
+
+// =====================================================================================================================
+// comuns
+const NUNCA = 1e9, EE = .0112, AMB = '#F2B63D';
+const arco = (a, b, p, alt) => [lerp(a[0], b[0], p), lerp(a[1], b[1], p) + alt * 4 * p * (1 - p), lerp(a[2], b[2], p)];
+const chipAmbar = () => estilo('t03-am', `.chip.am{background:linear-gradient(150deg,#F7CB68,#E59A22);color:#3A2A06;border-color:rgba(255,255,255,.4);box-shadow:0 12px 22px -8px rgba(229,154,34,.6)}`);
+// o lugar do número até a fala dizer o valor (tracejado), como na T08 e na T06
+const vaga = (c, w = 236, cor = 'rgba(190,245,218,.34)') => el(`<div class="ab" style="left:22px;bottom:20px;width:${w}px;height:44px;border-radius:12px;border:2px dashed ${cor}"></div>`, c.e);
+const chega = (c, v, t, a) => { const k = eo(pr(t, a, .3)); c.e.querySelector('.num').style.opacity = k.toFixed(3); v.style.opacity = (1 - k).toFixed(3); };
+const some = (o, k) => { o.visible = k > .002; if (o.visible) o.scale.setScalar(k); };   // objeto 3D que entra crescendo (k passa de 1 e volta)
+// degrau: cartão baixo de uma linha (selo + nome + legenda opcional), todos da mesma altura
+const degrau = (icone, rot, sub, o = {}) => `<div class="cartao ${o.res ? 'res' : ''}" style="position:relative;width:${o.w ?? 360}px;height:${o.h ?? 84}px;padding:0 20px;display:flex;align-items:center;gap:13px;white-space:nowrap">
+  ${selo(icone, o.cls ?? (o.res ? '' : 'n'), 46)}<div><div class="rot">${rot}</div>${sub ? `<div class="sub">${sub}</div>` : ''}</div>${o.res ? '<div class="onda"></div>' : ''}</div>`;
+// um lugar do mundo escuro: posições em px do desenho (y para baixo), deslocadas de OY (cada cena do capítulo no seu canto)
+function escuro(OY = 0) {
+  const EIXO = lugar([0, 0, 0]), E = mundoEscuro(EIXO, 0, EE);
+  return { EIXO, X: (html, x, y, o = {}) => E(html, x * EE, -(y + OY) * EE, 0, o), ret: (a, b, c, d) => [a * EE, -(d + OY) * EE, c * EE, -(b + OY) * EE],
+    fundo: (cx, cy, o) => E.fundo(cx * EE, -(cy + OY) * EE, o) };
+}
+const seta = (g, d, cor = 'var(--vc)') => { g.insertAdjacentHTML('beforeend', `<path d="${d}" stroke="${cor}" stroke-width="2.8" opacity="0"/>`); return g.lastElementChild; };
+
+// =====================================================================================================================
+// CENA "vinculada" · cap11, linha 3 · clima escuro (a regra que liga duas tabelas)
+// 3 "Vinculada quer dizer que ela acompanha a principal sozinha: quando o preço muda lá, como a gente fez com o cobre,
+//    muda aqui também."
+// A Tabela Depósitos (a vinculada) entra primeiro; a câmera abre para a Principal e o fio de +4% as liga; o preço do
+// Cobre mel muda na Principal (R$ 42,00 → R$ 42,50, cap. 6), a luz corre pelo fio e o preço chega na vinculada: R$ 44,20.
+function vinculada() {
+  const t0 = W(3, 'vinculada'), tac = W(3, 'acompanha'), tpr = W(3, 'principal'), tso = W(3, 'sozinha'), tmu = W(3, 'muda'), tla = W(3, 'la'), tco = W(3, 'cobre'),
+    tm2 = W(3, 'muda', 2), taq = W(3, 'aqui'), tfim = W(3, 'tambem', 1, 'e');
+  const { EIXO, X, ret, fundo } = escuro(0), CW = 330, DX = 330, XE = DX - CW / 2;   // XE = borda de dentro dos cartões
+  const cP = X(htmlCartao('table', 'Principal', 'Cobre mel', reais(42), { w: CW }), -DX, 0), nP = cP.e.querySelector('.num');
+  const cD = X(htmlCartao('link', 'Tabela Depósitos', 'Cobre mel', reais(44.2), { w: CW, res: true }), DX, 0), vD = vaga(cD, 200, 'rgba(108,240,168,.5)'), onD = cD.e.querySelector('.onda');
+  const fios = X(htmlFluxo(2 * XE, 40, [`M10 20H${2 * XE - 10}`]), -XE, -20, { anc: [0, 0], z: -40 }), G = fios.e.children[0], pS = seta(G, `M${2 * XE - 19} 12L${2 * XE - 10} 20L${2 * XE - 19} 28`);
+  const chV = X(htmlChip(`${ic('link', 18)}+4%`), 0, -18, { anc: [.5, 1] }), chS = X(htmlChip('acompanha sozinha', 'n'), 0, 18, { anc: [.5, 0] });
+  fundo(0, 0, { aneis: false });
+  const tit = titulo('Preços', 'Tabela vinculada', 'escuro');
+  const S0 = enquadraRet(EIXO, ret(XE - 150, -80, XE + CW + 150, 80), { az: -.035, max: 1.45 / EE }), S1 = enquadraRet(EIXO, ret(-XE - CW, -80, XE + CW, 80), { az: -.02, max: 1.3 / EE });
+  const cam = [[t0 - 3, S0], [tac - .3, { ...S0, az: -.02, d: S0.d * .985 }, 'lin'], [tac + .9, S1], [tfim + 2.5, { ...S1, az: .03, d: S1.d * .975 }, 'lin']];
+  return { cam, r: t => {
+    posTitulo(tit, t, t0 - .9, t0 - .45, tfim + 1.6);
+    vis(cD.e, t, t0 - .1, NUNCA, { dy: 22 }); chega(cD, vD, t, tm2 + .25);
+    vis(cP.e, t, tac + .25, NUNCA, { dy: 22 }); pulso(cP.e, t, tpr, .035, .8);
+    fios.e.style.opacity = eo(pr(t, tpr - .15, .3)).toFixed(3); fluxo(fios.e, 0, t, tpr - .1, .7, { luz: [tla - .05, tm2 + .25 - tla], fica: .7 }); pS.setAttribute('opacity', eo(pr(t, tpr + .5, .2)).toFixed(3));
+    vis(chV.e, t, tpr + .45, NUNCA, { dy: 10, sc: .8 }); vis(chS.e, t, tso - .1, NUNCA, { dy: -10, sc: .8 });
+    // muda lá: o preço da Principal sobe; muda aqui também: o da vinculada chega
+    conta(nP, t, tmu - .05, .55, 42, 42.5, reais); pulso(cP.e, t, tmu + .05, .05, .8); pulso(cP.e, t, tco, .03, .7);
+    pulso(chV.e, t, tm2 - .25, .08, .7); pulso(cD.e, t, taq, .045, .8); ondaEm(onD, t, taq);
+  } };
+}
+
+// =====================================================================================================================
+// CENA "ordemPreco" · cap11, linha 9 · clima escuro (a regra de qual preço vale)
+// 9 "E quando um material tem mais de um preço possível, qual vale? Uma dica: essa é a dúvida clássica, então vale
+//    guardar a ordem. Primeiro, o preço personalizado daquele cliente ou fornecedor. Depois, a tabela escolhida no
+//    pedido. E por último, o preço do material."
+// Um material e três lugares de preço ainda sem nome (a dúvida); a câmera abre para a ordem e cada lugar ganha o nome na
+// palavra que o diz, com a luz correndo pelo fio.
+function ordemPreco() {
+  const t0 = W(9, 'quando'), tmat = W(9, 'material'), tmais = W(9, 'mais'), tqual = W(9, 'qual'), tvale = W(9, 'vale'), tord = W(9, 'ordem'),
+    tpri = W(9, 'primeiro'), tper = W(9, 'personalizado'), tdep = W(9, 'depois'), ttab = W(9, 'tabela'), tult = W(9, 'ultimo'), tpm = W(9, 'preco', 3), tfim = W(9, 'material', 2, 'e');
+  chipAmbar();
+  const { EIXO, X, ret, fundo } = escuro(1500), MW = 236, XM = -372, CW = 372, XC = 151, DY = 122, XL = XM + MW / 2, XR = XC - CW / 2;   // XL = borda direita do material, XR = borda esquerda dos preços
+  estilo('t03-vg', `.t03vg{position:absolute;inset:0;border-radius:var(--r3);border:2px dashed rgba(190,245,218,.36);display:flex;align-items:center;padding:0 20px;gap:13px}
+.t03vg i{display:block;width:150px;height:12px;border-radius:6px;background:rgba(255,255,255,.14)}`);
+  const cM = X(degrau('package', 'Um material', '', { w: MW }), XM, 0);
+  const chQ = X(htmlChip(`${ic('circle-help', 18)}qual vale?`, 'am'), XM, 42 + 16, { anc: [.5, 0] });
+  // os três preços: primeiro só o lugar (tracejado, com a etiqueta); o nome entra quando a fala o diz
+  const preco = (i, icone, rot, sub, res) => { const p = X(`<div style="position:relative;width:${CW}px;height:84px">${degrau(icone, rot, sub, { w: CW, res })}<div class="t03vg">${selo('tag', 'n', 46)}<i></i></div></div>`, XC, (i - 1) * DY);
+    p.c = p.e.firstElementChild; p.v = p.e.lastElementChild; p.od = p.c.querySelector('.onda'); return p; };
+  const c = [preco(0, 'user-round', 'Preço personalizado', 'do cliente ou fornecedor', true), preco(1, 'table', 'Tabela escolhida', 'no pedido'), preco(2, 'package', 'Preço do material', '')];
+  const nome = (p, t, a) => { const k = eo(pr(t, a, .35)); p.c.style.opacity = k.toFixed(3); p.v.style.opacity = (1 - k).toFixed(3); p.c.style.transform = `translateY(${((1 - eo5(pr(t, a, .6))) * 10).toFixed(2)}px)`; };
+  // os fios: do material para cada preço (10 px de respiro nas duas pontas)
+  const FW = XR - XL, OY = 170, xv = 104, r = 22, x1 = FW - 10;
+  const garfo = s => s ? `M10 ${OY}H${xv - r}Q${xv} ${OY} ${xv} ${OY + s * r}V${OY + s * (DY - r)}Q${xv} ${OY + s * DY} ${xv + r} ${OY + s * DY}H${x1}` : `M10 ${OY}H${x1}`;
+  const fios = X(htmlFluxo(FW, 2 * OY, [garfo(-1), garfo(0), garfo(1)]), XL, -OY, { anc: [0, 0], z: -40 }), G = [...fios.e.children];
+  const pS = [-1, 0, 1].map((s, i) => seta(G[i], `M${x1 - 9} ${OY + s * DY - 8}L${x1} ${OY + s * DY}L${x1 - 9} ${OY + s * DY + 8}`));
+  // a ordem, à direita de cada preço
+  const XO = XC + CW / 2 + 16, ord = ['Primeiro', 'Depois', 'Por último'].map((s, i) => X(htmlChip(`<b style="opacity:.62;margin-right:2px">${i + 1}</b>${s}`, i ? 'n' : ''), XO, (i - 1) * DY, { anc: [0, .5] }));
+  const XF = XO + Math.max(...ord.map(o => o.w));
+  fundo((XL + XR) / 2, 0, { aneis: false });
+  const tit = titulo('Preços', 'A ordem do preço', 'escuro');
+  const S1 = enquadraRet(EIXO, ret(XM - MW / 2, -DY - 42, XC + CW / 2, DY + 42), { az: -.03, max: 1.36 / EE }), S2 = enquadraRet(EIXO, ret(XM - MW / 2, -DY - 42, XF, DY + 42), { az: .015, max: 1.36 / EE });
+  const cam = [[t0 - 3, S1], [tord - .55, { ...S1, az: -.01, d: S1.d * .985 }, 'lin'], [tord + .55, S2], [tfim + 2.5, { ...S2, az: .035, d: S2.d * .98 }, 'lin']];
+  const TF = [tpri - .1, tdep - .1, tult - .1], TN = [tper - .1, ttab - .1, tpm - .1];
+  return { cam, r: t => {
+    posTitulo(tit, t, t0 - .9, t0 - .45);
+    vis(cM.e, t, tmat - .15, NUNCA, { dy: 22 });
+    fios.e.style.opacity = eo(pr(t, tmais - .1, .3)).toFixed(3);
+    c.forEach((p, i) => { vis(p.e, t, tmais - .05 + i * .14, NUNCA, { dy: 18 }); nome(p, t, TN[i]);
+      G[i].style.opacity = eo(pr(t, tmais + i * .14, .3)).toFixed(3); fluxo(fios.e, i, t, TF[i], .7, { luz: [TF[i], .9], fica: .75 }); pS[i].setAttribute('opacity', eo(pr(t, TF[i] + .6, .2)).toFixed(3));
+      vis(ord[i].e, t, TF[i], NUNCA, { dx: -10, dy: 0, sc: .8 }); pulso(p.e, t, TN[i] + .1, .04, .8); });
+    ondaEm(c[0].od, t, tper + .15);
+    vis(chQ.e, t, tqual - .1, NUNCA, { dy: -10, sc: .8 }); pulso(chQ.e, t, tvale, .07, .8); foco(chQ.e, t, -9, tpri - .2, { min: .6 });
+  } };
+}
+
+function cap11() {
+  const a = vinculada(), b = ordemPreco(); camera([...a.cam, ...b.cam]);
+  return t => { clima(1); GL.style.visibility = 'hidden'; a.r(t); b.r(t); };
+}
+
+// =====================================================================================================================
+// CENA "ordemTabela" · cap12, linha 5 · clima escuro (a regra de qual tabela o pedido abre)
+// 5 "A ordem é esta: se o cliente ou fornecedor tem tabela no cadastro, vale a dele. Senão, a que você fixou. E se não
+//    fixou nenhuma, a principal."
+// Uma cascata de cima para baixo: cada "senão" desce um degrau.
+function ordemTabela() {
+  const t0 = W(5, 'a'), tse = W(5, 'se'), tva = W(5, 'vale'), tsn = W(5, 'senao'), tqu = W(5, 'que'), tfx = W(5, 'fixou'), tnn = W(5, 'nao'), tpr = W(5, 'principal'), tfim = W(5, 'principal', 1, 'e');
+  const { EIXO, X, ret, fundo } = escuro(0);
+  const fx = X(htmlFluxoCartoes({ cartoes: [['user-round', 'Tabela do cliente ou fornecedor', 'se tem tabela no cadastro', 'n'], ['pin', 'A tabela que você fixou', 'só pro seu usuário', 'n'], ['building-2', 'Principal da empresa', 'se não fixou nenhuma', 'n']],
+    vertical: true, cw: 380, vao: 78 }), 0, 0);
+  const C = [0, 1, 2].map(i => parte(fx.e, i)), yc = i => -fx.h / 2 + C[i].offsetTop + C[i].offsetHeight / 2, ym = i => (yc(i) + yc(i + 1)) / 2, XL = -fx.w / 2, XR = fx.w / 2;
+  const num = [0, 1, 2].map(i => X(htmlOp(String(i + 1)), XL - 16 - 24, yc(i)));
+  const chV = X(htmlChip(`${ic('badge-check', 18)}vale a dele`), XR + 16, yc(0), { anc: [0, .5] });
+  const chS = X(htmlChip('senão', 'n'), 34, ym(0), { anc: [0, .5] }), chN = X(htmlChip('senão', 'n'), 34, ym(1), { anc: [0, .5] });
+  fundo(0, 0);
+  const tit = titulo('Tabelas de preço', 'Qual tabela o pedido abre', 'escuro');
+  const S = enquadraRet(EIXO, ret(XL - 64, -fx.h / 2, XR + 16 + chV.w, fx.h / 2), { az: -.035, max: 1.4 / EE });
+  camera([[t0 - 3, S], [tfim + 2.5, { ...S, az: .04, d: S.d * .97 }, 'lin']]);
+  const T = [tse - .1, tqu - .1, tpr - .15];
+  return t => {
+    clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, t0 - .45);
+    fluxoCartoes(fx.e, t, T[0] - .1, NUNCA, { tempos: T });
+    num.forEach((n, i) => { vis(n.e, t, T[i] + .05, NUNCA, { sc: .6, dy: 0 }); });
+    vis(chV.e, t, tva - .1, NUNCA, { dx: -10, dy: 0, sc: .8 }); pulso(C[0], t, tva + .1, .035, .8);
+    vis(chS.e, t, tsn - .1, NUNCA, { dx: -10, dy: 0, sc: .8 }); pulso(C[1], t, tfx, .035, .8);
+    vis(chN.e, t, tnn - .2, NUNCA, { dx: -10, dy: 0, sc: .8 }); pulso(C[2], t, tpr + .1, .035, .8);
+  };
+}
+
+// =====================================================================================================================
+// CENA "transferir" · cap13, linha 3 · clima claro (o pátio: as duas baias)
+// 3 "Agora, transferir. Na desmontagem dos radiadores saíram oito quilos de ferro, das cintas e dos suportes. Esse peso
+//    entrou como radiador, mas é ferro misto."
+// A baia do Radiador de cobre; o ferro sobe do monte (8 kg, cintas e suportes); a câmera abre e o ferro vai para a baia
+// do Ferro misto.
+function transferir() {
+  const t0 = W(3, 'transferir'), tdes = W(3, 'desmontagem'), tsai = W(3, 'sairam'), toi = W(3, 'oito'), tci = W(3, 'cintas'), tpe = W(3, 'peso'), ten = W(3, 'entrou'),
+    tra = W(3, 'radiador'), tmas = W(3, 'mas'), tfm = W(3, 'ferro', 2), tmi = W(3, 'misto'), tfim = W(3, 'misto', 1, 'e');
+  piso({ r: 32, x: 0, z: 0, passo: 1.3 }); U.uNevoa.value.set(.955, .975, .965, .8); ceuClaro({ halo: [.3, 3.8, -15] });
+  const XA = -3.6, XB = 5.2, ROT = [-.12, .06, 0];
+  const BA = baia(CENA, [XA, 0, 0], { c: 4, l: 3, h: 1.5 }); monte(BA, [0, 0, -.2], { tipo: 'cobre', n: 70, r: 1.4, h: .95, mancha: false });
+  const BB = baia(CENA, [XB, 0, 0], { c: 4, l: 3, h: 1.5 }); monte(BB, [0, 0, -.2], { tipo: 'ferro', n: 80, r: 1.4, h: .9, mancha: false });
+  // o ferro que saiu na desmontagem: um punhado de peças que sobe do monte e depois vai para a outra baia
+  const FL = grupo(CENA, [XA, 0, 0]); pecas(FL, 'ferro', [[-.34, 0, .05], [.3, .05, -.1], [0, .16, .2], [-.12, .3, -.18], [.24, .34, .14], [-.3, .42, .1], [.05, .52, -.04], [.3, .6, .02]], { s: .82 });
+  const P0 = [XA, .75, -.1], PH = [XA + .2, 3.0, .35], PB = [XB, 1.0, -.1];
+  const CH = (html, pos, o = {}) => plano(html, { pos, rot: ROT, esc: .0125, anc: [.5, 1], ...o });
+  const chA = CH(htmlChip(`${ic('package', 18)}Radiador de cobre`, 'n'), [XA, 2.0, -1.62]), chB = CH(htmlChip(`${ic('package', 18)}Ferro misto`, 'n'), [XB, 2.0, -1.62]);
+  const ch8 = CH(htmlChip(`${ic('arrow-right-left', 18)}8 kg de ferro`), [XA, 4.25, .35]), chC = CH(htmlChip(`${ic('wrench', 18)}cintas e suportes`, 'n'), [XA + 1.25, 3.3, .35], { anc: [0, .5] });
+  const an = anel(2.3, [XB, 0, .2]);
+  const tit = titulo('Estoque', 'Transferir entre materiais');
+  const P1 = { x: XA - .1, y: 2.9, z: 0, d: 14, az: .1, el: .13 }, P2 = { x: .8, y: 2.6, z: 0, d: 18.4, az: .04, el: .13 };
+  camera([[t0 - 3, P1], [tmas - .9, { ...P1, d: 13.7, az: .08 }, 'lin'], [tmas + .45, P2], [tfim + 2.5, { ...P2, d: 18.1, az: .02 }, 'lin']]);
+  const tv0 = tmas + .1, tv1 = tmi + .25;
+  return t => {
+    GL.style.opacity = eo(pr(t, t0 + .08, .5)).toFixed(3); posTitulo(tit, t, t0 - .9, t0 - .45);
+    vis(chA.e, t, tdes - .1, NUNCA, { dy: 10, sc: .8 }); pulso(chA.e, t, tra, .06, .8); vis(chB.e, t, tfm - .1, NUNCA, { dy: 10, sc: .8 }); pulso(chB.e, t, tmi + .3, .06, .8);
+    // o ferro: sobe do monte, paira e vai para a outra baia
+    const s = eio(pr(t, tsai - .15, .9)), v = eio(pr(t, tv0, tv1 - tv0)), bob = .05 * Math.sin(t * 1.9) * s * (1 - v);
+    const q = v > 0 ? arco(PH, PB, v, .55) : [lerp(P0[0], PH[0], s), lerp(P0[1], PH[1], s) + bob, lerp(P0[2], PH[2], s)];
+    FL.position.set(q[0], q[1], q[2]); FL.rotation.y = .5 * s + 1.1 * v; some(FL, passa(pr(t, tsai - .15, .5), 1.2));
+    ch8.pos[0] = q[0]; ch8.pos[1] = q[1] + lerp(1.25, 2.5, v); ch8.pos[2] = q[2]; vis(ch8.e, t, toi - .1, NUNCA, { dy: 10, sc: .8 }); pulso(ch8.e, t, tpe + .1, .05, .8);
+    vis(chC.e, t, tci - .1, ten - .2, { dx: -10, dy: 0, sc: .8 });
+    destaque(an, t, tv1 - .1);
+  };
+}
+
+// =====================================================================================================================
+// CENA "arquivar" · cap15, linha 0 · clima claro (papel e pasta de arquivo)
+// 0 "Por último, o Excluir. Ele parece apagar, mas na verdade arquiva. O material sai da lista e das buscas do pedido, e
+//    as compras, as vendas e o histórico dele continuam lá."
+// A lista com o Radiador de cobre; o Excluir parece apagar; entra a pasta de arquivo; a linha sai da lista e desce para
+// dentro da pasta; ao lado dela, o que continua.
+function arquivar() {
+  const t0 = W(0, 'por'), tex = W(0, 'excluir'), tap = W(0, 'apagar'), tmas = W(0, 'mas'), tar = W(0, 'arquiva'), tsai = W(0, 'sai'), tli = W(0, 'lista'), tbu = W(0, 'buscas'),
+    tco = W(0, 'compras'), tve = W(0, 'vendas'), thi = W(0, 'historico'), tcn = W(0, 'continuam'), tfim = W(0, 'la', 1, 'e');
+  chipAmbar();
+  estilo('t03-ls', `.t03ln{margin-top:10px;height:46px;border-radius:12px;background:#EDF3F0;padding:0 14px;display:flex;align-items:center;font-weight:700;font-size:17px;color:#17191A;white-space:nowrap}
+.t03ln.vz{background:none;border:2px dashed rgba(23,25,26,.2)}
+.t03fl{position:relative;width:300px;height:46px;border-radius:12px;background:linear-gradient(165deg,#fff,#EAF6F0);border:1.5px solid rgba(80,208,136,.8);padding:0 14px;display:flex;align-items:center;font-weight:700;font-size:17px;color:#17191A;white-space:nowrap;box-shadow:0 14px 26px -10px rgba(30,80,60,.4)}
+.t03x{text-decoration:line-through;text-decoration-thickness:2.5px}`);
+  piso({ r: 30, x: .5, z: 0, passo: 1.3 }); U.uNevoa.value.set(.955, .975, .965, .8); ceuClaro({ halo: [.6, 3.6, -14] });
+  const RL = [0, .1, 0], EL = .0125, XP = 3.1;
+  const L = plano(`<div class="cartao" style="position:relative;width:340px;height:auto;padding:18px 20px 20px"><div class="cab">${selo('search', 'n', 42)}<div><div class="rot">Lista e buscas</div><div class="sub">do pedido</div></div></div>
+    <div class="t03ln" style="margin-top:14px">Ferro misto</div><div class="t03ln">Cobre mel</div><div class="t03ln vz"></div></div>`, { pos: [-3.2, 2.05, 0], rot: RL, esc: EL });
+  const vz = L.e.querySelector('.vz'), u0 = vz.offsetLeft + vz.offsetWidth / 2, v0 = vz.offsetTop + vz.offsetHeight / 2, S0 = L.ponto(u0, v0); S0[2] += .03;
+  const sL = mancha(5.2, 1.5, [-3.2, 0, .1], { op: .55 });
+  const R = plano(`<div class="t03fl">Radiador de cobre</div>`, { pos: S0, rot: RL, esc: EL, sobre: true, z: 30 });
+  const pe = L.ponto(L.w + 30, v0), chE = plano(htmlChip(`${ic('trash-2', 18)}Excluir`, 'am'), { pos: pe, rot: RL, esc: EL, anc: [0, .5] });
+  const pa = L.ponto(L.w + 30, v0 - 54), chA = plano(htmlChip(`${ic('eraser', 18)}<span>apagar</span>`, 'n'), { pos: pa, rot: RL, esc: EL, anc: [0, .5] }), txA = chA.e.querySelector('span');
+  // a pasta de arquivo e a ficha que desce para dentro dela
+  const PA = pasta(CENA, [XP, 0, 0], { w: 2.3 }), DEN = mundo(PA, PA.userData.dentro), FO = folha(CENA, [0, -9, 0], { w: 1.55, h: 1.05, cor: '#50D088', linhas: 2 });
+  const B1 = [XP, 3.05, DEN[2]], an = anel(2.0, [XP, 0, .2]);
+  const chQ = plano(htmlChip(`${ic('archive', 18)}arquiva`), { pos: [XP, 2.62, 0], esc: EL, anc: [.5, 1] });
+  const fica = [['shopping-cart', 'Compras'], ['receipt', 'Vendas'], ['history', 'Histórico']].map(([i, s], k) => plano(htmlChip(`${ic(i, 18)}${s}`, 'n'), { pos: [XP + 1.75, 1.95 - k * .66, 0], esc: EL, anc: [0, .5] }));
+  const tit = titulo('Materiais', 'Excluir é arquivar');
+  const C1 = { x: -1.9, y: 2.2, z: 0, d: 11.4, az: .05, el: .05 }, C2 = { x: .65, y: 1.95, z: 0, d: 16.7, az: .02, el: .06 };
+  camera([[t0 - 3, C1], [tar - .75, { ...C1, d: 11.1, az: .035 }, 'lin'], [tar + .55, C2], [tfim + 2.5, { ...C2, d: 16.45, az: -.005 }, 'lin']]);
+  const tv0 = tsai - .1, tv1 = tv0 + 1.15, td1 = tv1 + .95, ESC1 = .0047;
+  return t => {
+    GL.style.opacity = eo(pr(t, t0 - .6, .5)).toFixed(3); posTitulo(tit, t, t0 - 1.7, t0 - 1.3);   // o capítulo abre na cena: o título já está no alto no primeiro quadro
+    vis(L.e, t, t0 - .2, NUNCA, { dy: 22 }); sL.material.uniforms.uOp.value = .55 * (+L.e.style.opacity || 0); pulso(L.e, t, tli, .03, .8); pulso(L.e, t, tbu, .03, .8);
+    // o Excluir parece apagar
+    vis(chE.e, t, tex - .1, tv0 + .1, { dx: -10, dy: 0, sc: .8 }); vis(chA.e, t, tap - .1, tv0, { dx: -10, dy: 0, sc: .8 });
+    txA.className = t > tmas - .05 ? 't03x' : ''; foco(chA.e, t, -9, tmas + .1, { min: .55 });
+    // mas na verdade arquiva: a pasta entra
+    some(PA, passa(pr(t, tar - .25, .6), 1.3)); vis(chQ.e, t, tar + .1, NUNCA, { dy: 10, sc: .8 });
+    // a linha sai da lista, voa até a pasta e vira a ficha que desce para dentro dela
+    const p = eio(pr(t, tv0, tv1 - tv0)), q = eio(pr(t, tv1 - .05, td1 - tv1)), pos = arco(S0, B1, p, .5), yF = lerp(B1[1], DEN[1], q);
+    R.pos[0] = pos[0]; R.pos[1] = p < 1 ? pos[1] : yF; R.pos[2] = pos[2] + .03; R.esc = lerp(EL, ESC1, p); R.rot[1] = lerp(RL[1], 0, p);
+    R.op = eo(pr(t, t0 - .05, .4)) * (1 - cl((q - .12) / .3)); pulso(R.e, t, tex, .05, .8);
+    const kf = cl((p - .55) / .4); FO.visible = kf > .002; FO.scale.setScalar(Math.max(kf, .001)); FO.position.set(pos[0], (p < 1 ? pos[1] : yF) - .14, pos[2]);
+    // e o que continua lá
+    [tco, tve, thi].forEach((a, i) => { vis(fica[i].e, t, a - .1, NUNCA, { dx: -10, dy: 0, sc: .8 }); pulso(fica[i].e, t, tcn + i * .1, .05, .8); });
+    destaque(an, t, tcn - .1);
+  };
+}
+
+// =====================================================================================================================
+const CAPS = { 11: cap11, 12: ordemTabela, 13: transferir, 15: arquivar };
+cena(d => CAPS[d.cap](d), { fov: 26 });
+</script></body></html>
