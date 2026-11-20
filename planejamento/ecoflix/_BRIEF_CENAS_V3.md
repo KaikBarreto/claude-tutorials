@@ -17,8 +17,8 @@ gradientes = mundo físico; escuro de vidro = mundo dos dados), câmera contínu
   render com `--anexo`. Se o capítulo ainda não tem o PDF no ensaio, deixe a entrada como pendente e diga no relatório.
 - **Tempos**: a voz real pode não ter chegado. Monte as âncoras por palavra (`W(linha, 'palavra')`) sobre os tempos
   estimados de `cenas/tempos/`; com a voz real o coordenador só re-renderiza. Não prenda nada a segundos fixos.
-- **Render pela fila pesada** (20/11, gravação final em curso): `bash /home/claude/ecoflix/rec/fila.sh --prio 40 -- <render>`, um
-  trecho por tarefa da fila. A trava leve citada abaixo não vale mais: render ao lado da gravação deixa o robô 1,5 a 2x mais lento.
+- **Render pela fila pesada** (20/11, gravação final em curso): `bash /home/claude/ecoflix/rec/fila.sh --prio 12 -- <render>`, um
+  trecho por tarefa da fila (com `--prio 40` o render esperou 2 h e não pegou a vez: cada nível soma 3 min de espera). A trava leve citada abaixo não vale mais: render ao lado da gravação deixa o robô 1,5 a 2x mais lento.
 - **Meta**: as cenas são a parte mais vista da aula depois da tela; capricho vale mais que quantidade.
 
 ## Ler (só isto)
