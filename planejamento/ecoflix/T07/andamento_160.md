@@ -1,4 +1,10 @@
-# T07 · andamento da aplicação no app 1.60.18, tela 1600x900 (atualizado em 20/11)
+# T07 · andamento da aplicação no app 1.60.22, tela 1600x900 (atualizado em 20/11) · PRONTA PARA A VOZ
+
+## Reensaio no 1.60.22 (20/11, caps 15, 17 e 18)
+- Rápido 15/17/18: 0 falho, maxLate 0. Completo: cap15 0 falho (maxLate 1,09; 1ª tentativa falhou porque o aviso agora é "Comprovante enviado para impressora"; `gerar.py` espera só "Comprovante enviado para"), cap17 0 falho (maxLate 6,12), cap18 0 falho (maxLate 6,83; máquina dividida).
+- Cap15: cupom de 58 mm com o NOME dos materiais (Bateria automotiva, Cobre misto). Cap17: PDF sem preço nem total (0 "R$"). Cap18: fala inalterada, tela bate (pendência sai da lista, compra no caixa).
+- Achados 1, 2 e 3 abaixo ficam RESOLVIDOS no 1.60.22. Instância 54307 derrubada.
+
 
 Numeração (20 capítulos, 00 a 19) sem mudança desde 18/11: 09 Dois pedidos ao mesmo tempo, 10 Rascunho, 12 Abater o vale (novos do 1.60.10).
 
