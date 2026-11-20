@@ -1072,3 +1072,6 @@ Decisões:
 - 20/11 13:1x **Voz disparada também**: T13 títulos, T14, T15, T19 (fila baixou; lotes de 10 a 19 aceitos) e T03 (18 nós
   criados pelo coordenador, 20.463 créditos; custo por nó = caracteres exatos do texto). **Voz de 12 aulas no forno**
   (T02, T03, T04, T06, T09-T15, T19; ~208 mil créditos). Falta: conferir que tudo completou e pedir ao Kaik o zip do fluxo.
+- 20/11 13:5x **Voz das 12 aulas completa** (215 nós `completed`, sem label duplicado; conta: 298.872 → 499.805 créditos,
+  200.933 gastos). Pedido ao Kaik: exportar o fluxo "EcoFlix · Vozes de todas as aulas" em zip e anexar. Dica de economia de
+  contexto: `creative_get_flow` grande vai para arquivo; contar os estados com Python em vez de ler.
