@@ -11,7 +11,9 @@ export default (body, { store, url, FunctionError }) => {
   const p = parteDoPortal(store, token);
   if (!p) throw new FunctionError('Token inválido ou expirado', 404);
   if (!temModulo(store, p.companyId, 'portal_cliente')) throw new FunctionError('Portal indisponível', 403, { reason: 'portal_module_inactive' });
-  if (p.senha && !sessaoValida(url.searchParams.get('session'), p.ids)) return { requiresLogin: true };
+  // senha por seção: o relatório abre sem sessão só quando a aba Relatório está visível e LIVRE
+  const relatorioLivre = p.cfg.relatorio && p.cfg.locked.relatorio === false;
+  if (p.senha && !relatorioLivre && !sessaoValida(url.searchParams.get('session'), p.ids)) return { requiresLogin: true };
   const fim = url.searchParams.get('end') ? new Date(url.searchParams.get('end')).getTime() : agoraMs();
   const ini = url.searchParams.get('start') ? new Date(url.searchParams.get('start')).getTime() : agoraMs() - 30 * 86400000;
   const noPeriodo = (r) => {
@@ -35,11 +37,12 @@ export default (body, { store, url, FunctionError }) => {
   };
   if (p.supplierId) {
     const itens = store.rows('purchase_items');
-    for (const c of store.rows('purchases').filter((x) => x.company_id === p.companyId && x.supplier_id === p.supplierId && x.status === 'completed' && noPeriodo(x))) {
+    for (const c of store.rows('purchases').filter((x) => x.company_id === p.companyId && x.supplier_id === p.supplierId && x.status === 'completed' && !x.reverted_at && noPeriodo(x))) {
       for (const i of itens.filter((it) => it.purchase_id === c.id)) {
         const r = garante(i.material_id);
         if (!r) continue;
         r.purchased_qty += Number(i.quantity || 0) - Number(i.impurity || 0);
+        if (c.hide_financial_details === true) continue; // "sem valor": entra a quantidade, o valor e a moeda não (19/11/2026)
         r.purchased_value += Number(i.total_price || 0);
         moeda(r.purchased_currencies, c.currency);
       }
@@ -47,11 +50,12 @@ export default (body, { store, url, FunctionError }) => {
   }
   if (p.customerId) {
     const itens = store.rows('sale_items');
-    for (const v of store.rows('sales').filter((x) => x.company_id === p.companyId && x.customer_id === p.customerId && x.status === 'completed' && noPeriodo(x))) {
+    for (const v of store.rows('sales').filter((x) => x.company_id === p.companyId && x.customer_id === p.customerId && x.status === 'completed' && !x.reverted_at && noPeriodo(x))) {
       for (const i of itens.filter((it) => it.sale_id === v.id)) {
         const r = garante(i.material_id);
         if (!r) continue;
         r.sold_qty += Number(i.quantity || 0);
+        if (v.hide_financial_details === true) continue; // "sem valor": entra a quantidade, o valor não
         r.sold_value += Number(i.total_price || 0);
         moeda(r.sold_currencies, v.currency);
       }

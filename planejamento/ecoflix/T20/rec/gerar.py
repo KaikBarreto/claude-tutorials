@@ -590,9 +590,9 @@ def setup_portal_coop(sistema=False, extra=()):
 
 
 @capitulo
-def cap05():
+def cap07():
     """Histórico de pedidos: cartões, gráfico, a compra de 06/11 com os materiais e as fotos; o portal da Fundição (venda sem valor)."""
-    c = cap_(5, setup_portal_coop(), start=(900, 440))
+    c = cap_(7, setup_portal_coop(), start=(900, 440))
     c.mark(1)
     c.hover(TXT('Total Comprado'), 1.0, at=c.A(1, 'cartões,', 0.5), label='[ZOOM] os três cartões do Histórico (linhas 1 e 2)')
     c.mark(2)
@@ -626,9 +626,9 @@ def cap05():
 
 
 @capitulo
-def cap06():
+def cap08():
     """O saldo do parceiro: Saldo R$ 1.350,00 a receber, o extrato; no sistema o Pix de R$ 1.350,00; de volta ao portal, Em dia; Atualizar dados."""
-    c = cap_(6, setup_portal_coop(sistema=True), start=(900, 440))
+    c = cap_(8, setup_portal_coop(sistema=True), start=(900, 440))
     c.mark(1)
     c.click(TABP('saldo'), at=c.A(1, 'saldo', 0.7), label='aba Saldo')
     c.waitfor(text='Saldo Atual', timeout=10)
@@ -671,10 +671,10 @@ def cap06():
 
 
 @capitulo
-def cap07():
+def cap09():
     """Notas e relatório: NF-e 1250 da Fundição; na cooperativa o Relatório de Mês passado, o total R$ 18.755,00 e o Baixar PDF (sem clicar)."""
     setup = portal_entra(PORTAL_COOP, senha=True) + portal_entra(PORTAL_FUND)
-    c = cap_(7, setup, start=(900, 440))
+    c = cap_(9, setup, start=(900, 440))
     c.mark(1)
     c.click(TABP('notas'), at=c.A(1, 'Notas', 0.7), label='aba Notas Fiscais')
     c.waitfor(text='Autorizada', timeout=10)
@@ -701,9 +701,9 @@ def cap07():
 
 
 @capitulo
-def cap08():
+def cap11():
     """O parceiro pede a coleta: aba Coletas, Solicitar coleta (material, quantidade, data, período, observações), a solicitação enviada; o sino do sistema."""
-    c = cap_(8, setup_portal_coop(sistema=True), start=(900, 440))
+    c = cap_(11, setup_portal_coop(sistema=True), start=(900, 440))
     c.mark(1)
     c.click(TABP('coletas'), at=c.A(1, 'Coletas', 0.7), label='aba Coletas')
     c.waitfor(text='Minhas coletas', timeout=10)
@@ -741,9 +741,9 @@ def cap08():
 
 
 @capitulo
-def cap09():
+def cap12():
     """O comprovante do portal: a impressora da compra de 06/11 abre o comprovante A4 em janela nova (capturado em base64 para a ilustração)."""
-    c = cap_(9, setup_portal_coop(extra=[{'do': 'eval', 'js': POPS}]), start=(900, 440))
+    c = cap_(12, setup_portal_coop(extra=[{'do': 'eval', 'js': POPS}]), start=(900, 440))
     c.mark(1)
     rola_ate(c, 'Histórico de Pedidos', c.L(1) - 0.1, 'desce ao Histórico de Pedidos', y=150, dur_ms=700)
     c.hover(IMPRESSORA(COMPRA_0611), 1.0, at=c.A(1, 'impressora', 0.5), label='a impressora Gerar comprovante da compra de 06/11')
@@ -758,9 +758,9 @@ def cap09():
 
 
 @capitulo
-def cap10():
+def cap14():
     """As fotos do pedido: a página pública /fotos/ da compra de 06/11: cabeçalho, carrossel (Próxima foto, tela cheia), Dados do Pedido."""
-    c = cap_(10, [{'do': 'goto', 'url': FOTOS_1749}, {'do': 'waitFor', 'text': 'Fotos do pedido', 'timeout': 30}, AGUARDA, {'do': 'wait', 'seconds': 0.8}], start=(900, 440))
+    c = cap_(14, [{'do': 'goto', 'url': FOTOS_1749}, {'do': 'waitFor', 'text': 'Fotos do pedido', 'timeout': 30}, AGUARDA, {'do': 'wait', 'seconds': 0.8}], start=(900, 440))
     c.mark(1)
     c.mark(2)
     c.mark(3)
@@ -782,9 +782,9 @@ def cap10():
 
 
 @capitulo
-def cap11():
+def cap15():
     """Recapitulando: montagem das gravações dos capítulos 0 a 10, sem robô (só o relógio das marcas)."""
-    c = cap_(11, [], start=(900, 440))
+    c = cap_(15, [], start=(900, 440))
     for i in range(1, len(c.linhas) + 1):
         c.mark(i)
     c.fim()

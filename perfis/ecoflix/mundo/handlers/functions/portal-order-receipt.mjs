@@ -33,7 +33,7 @@ export default (body, { store, db, url, FunctionError }) => {
   const linhas = itens.map((i) => {
     const m = mats.get(i.material_id) || {};
     return { code: m.code || '', code_prefix: m.code_prefix || null, name: m.name || i.material_name || '', unit: m.unit || 'UN', quantity: i.quantity,
-      impurity: i.impurity ?? 0, unit_price: i.unit_price, total_price: i.total_price, tare_weight: i.tare_weight ?? null, impurity_kg: i.impurity_kg ?? null,
+      impurity: i.impurity ?? 0, unit_price: semValor ? 0 : i.unit_price, total_price: semValor ? 0 : i.total_price, tare_weight: i.tare_weight ?? null, impurity_kg: i.impurity_kg ?? null,
       impurity_pct: i.impurity_pct ?? null, first_weight: i.first_weight ?? null, second_weight: i.second_weight ?? null, weighing_mode: i.weighing_mode ?? null };
   });
   const soma = (xs) => xs.reduce((s, x) => s + Number(x.amount), 0);
@@ -44,10 +44,12 @@ export default (body, { store, db, url, FunctionError }) => {
   if (banco > 0) pagamentos.push({ method: 'Pix/Transferência', amount: banco });
   const saldo = Math.abs(soma(store.rows('balance_movements').filter((m) => m.order_id === orderId && m.movement_type === 'order')));
   if (saldo > 0) pagamentos.push({ method: 'Saldo', amount: saldo });
+  // pedido "sem valor" (ou portal sem "Valores financeiros"): o valor nem sai do servidor (19/11/2026)
+  const semValor = pedido.hide_financial_details === true || p.cfg.valores === false;
   const total = pagamentos.reduce((s, x) => s + x.amount, 0) || (pedido.total_amount ?? 0);
   const criador = pedido.created_by ? (store.rows('profiles').find((u) => u.id === pedido.created_by) || {}).full_name || '' : '';
   let photoQr = null;
-  const fotos = store.rows('order_attachments').filter((a) => a.order_id === pedido.id && a.order_kind === tipo).length;
+  const fotos = store.rows('order_attachments').filter((a) => a.order_id === pedido.id && a.order_kind === tipo && (!a.mime || /^image\//.test(a.mime))).length;
   if (co.show_photo_qr_on_receipt !== false && fotos > 0) {
     let share = store.rows('order_photo_shares').find((s) => s.order_id === pedido.id && s.order_kind === tipo);
     if (!share) share = db.insert('order_photo_shares', { order_id: pedido.id, order_kind: tipo, company_id: p.companyId }, { companyId: p.companyId });
@@ -62,18 +64,18 @@ export default (body, { store, db, url, FunctionError }) => {
       receipt_phrase: co.receipt_phrase || null, show_receipt_phrase: co.show_receipt_phrase ?? false, white_label_enabled: co.white_label_enabled ?? false,
       invert_customer_supplier_terms: co.invert_customer_supplier_terms === true, show_net_weight_only: co.show_net_weight_only ?? false,
       address_2: co.address_2 ?? null, show_address_2_in_documents: co.show_address_2_in_documents ?? false,
-      show_signatures_on_receipt: co.show_signatures_on_receipt ?? false, receipt_format: co.receipt_format ?? 'thermal_80mm',
+      show_signatures_on_receipt: co.show_signatures_on_receipt ?? false, receipt_signature_mode: ['counterparty', 'operator'].includes(co.receipt_signature_mode) ? co.receipt_signature_mode : 'both', receipt_format: co.receipt_format ?? 'thermal_80mm',
       receipt_item_layout: String(co.receipt_item_layout || '').trim().toLowerCase() === 'b' ? 'b' : 'a', material_prefixes: {},
       show_photo_qr_on_receipt: co.show_photo_qr_on_receipt !== false },
-    order: { id: pedido.id, order_number: pedido.order_number, order_type: tipo, total, total_amount: pedido.total_amount ?? null,
-      paid_amount: pedido.paid_amount ?? null, freight: pedido.freight || 0, discount: pedido.discount || 0, created_at: pedido.created_at,
+    order: { id: pedido.id, order_number: pedido.order_number, order_type: tipo, total: semValor ? 0 : total, total_amount: semValor ? 0 : (pedido.total_amount ?? null),
+      paid_amount: semValor ? null : (pedido.paid_amount ?? null), freight: semValor ? 0 : (pedido.freight || 0), discount: semValor ? 0 : (pedido.discount || 0), created_at: pedido.created_at,
       notes: pedido.notes || null, payment_method: pedido.payment_method || null, driver_name: pedido.driver_name || null,
-      vehicle_plate: pedido.vehicle_plate || null, hide_financial_details: pedido.hide_financial_details ?? false },
+      vehicle_plate: pedido.vehicle_plate || null, hide_financial_details: semValor },
     partner: { name: e.name, type: p.tipo, cpf_cnpj: e.cpf_cnpj ?? null, address: e.address ?? null, phone: e.phone ?? null, pix_key: e.pix_key ?? null,
       logradouro: e.logradouro ?? null, numero: e.numero ?? null, complemento: e.complemento ?? null, bairro: e.bairro ?? null, cidade: e.cidade ?? null,
       uf: e.uf ?? null, cep: e.cep ?? null, bank_name: e.bank_name ?? null, bank_agency: e.bank_agency ?? null, bank_account: e.bank_account ?? null,
       bank_account_type: e.bank_account_type ?? null, show_phone_in_docs: e.show_phone_in_docs ?? true, show_address_in_docs: e.show_address_in_docs ?? true,
       show_cpf_cnpj_in_docs: e.show_cpf_cnpj_in_docs ?? true, show_bank_in_docs: e.show_bank_in_docs ?? true, show_pix_in_docs: e.show_pix_in_docs ?? true },
-    items: linhas, paymentMethods: pagamentos, employeeName: criador, photoQr,
+    items: linhas, paymentMethods: semValor ? pagamentos.map((x) => ({ method: x.method, amount: 0 })) : pagamentos, employeeName: criador, photoQr,
   };
 };

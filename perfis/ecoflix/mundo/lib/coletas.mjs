@@ -118,7 +118,12 @@ export function parteDoPortal(store, token) {
   const cfg = {};
   for (const k of ['historico', 'resumo', 'grafico', 'valores', 'fotos', 'saldo', 'notas', 'relatorio', 'relatorio_valores', 'coletas', 'solicitar_coleta']) cfg[k] = on(k);
   cfg.precos = (row.portal_config || {}).precos === true && (!outro || (outro.portal_config || {}).precos !== false);
+  // senha por seção (portal-party.ts mergeLocked): chave ausente ou true = pede senha; só false libera; o lado vinculado, quando existe, também tranca
+  const trancada = (lk, k) => !lk || typeof lk !== 'object' || lk[k] !== false;
   cfg.locked = {};
+  for (const k of ['historico', 'saldo', 'notas', 'relatorio', 'coletas', 'precos']) {
+    cfg.locked[k] = trancada((row.portal_config || {}).locked, k) || (outro ? trancada((outro.portal_config || {}).locked, k) : false);
+  }
   return { row, tipo, outro, isDual: !!outro, customerId, supplierId, ids: [customerId, supplierId].filter(Boolean), companyId: row.company_id, cfg,
     senha: !!row.portal_password_enabled || !!(outro && outro.portal_password_enabled) };
 }

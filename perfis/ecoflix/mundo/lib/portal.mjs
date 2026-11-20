@@ -62,7 +62,7 @@ export function caminhoFotos(token, { empresa, tipo, ref }) {
 /** fotos de um pedido com a URL "assinada" do storage falso (o arquivo mora em rec/mundo/storage/order-attachments/...) */
 export function anexos(store, orderId, tipo) {
   const base = `http://${process.env.FAKE_HOST || '127.0.0.1'}:${process.env.FAKE_PORT || 54321}/storage/v1/object/sign/order-attachments`;
-  return store.rows('order_attachments').filter((a) => a.order_id === orderId && a.order_kind === tipo)
+  return store.rows('order_attachments').filter((a) => a.order_id === orderId && a.order_kind === tipo && (!a.mime || /^image\//.test(a.mime)))
     .sort((x, y) => String(x.created_at).localeCompare(String(y.created_at)))
     .map((a) => ({ id: a.id, fileName: a.file_name, url: `${base}/${a.storage_path}?token=falso` }));
 }
