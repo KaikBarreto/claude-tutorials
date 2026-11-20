@@ -940,3 +940,11 @@ Decisões:
   com a gravação final deu atrasos de até 16 s: tudo em série; (2) um `confere` com texto que o app não mostra mais espera
   ~6,7 s e empurra o resto do capítulo: na troca de versão, conferir os textos dos `confere` antes de pôr respiro na voz;
   (3) `--dsf 1.3` em 16:9 dá largura ímpar e o x264 recusa (o `render_cenas` agora sai na hora).
+- **T03**: 17 capítulos + cap01b (novos 07-10 margem automática, 12 menu da tabela; 07-11 antigos viraram 11, 13-16).
+  Fala 1.959 → 3.600 palavras (~23 min). Todos no rápido; completos 07, 10, 12, 14; faltavam 06 (rápido e completo) e
+  09 (completo): coordenador rodando no mundo base. Sementes `margem-fora`, `margem-material`; handlers
+  `save_price_table_margins`, `duplicate_price_table`, `set_my_preferred_price_table`. **schema.json e defaults.json do
+  mundo base regenerados do 1.60.18** (tabela nova `price_table_material_margins`; colunas `auto_margin_*` em
+  `price_tables`, `show_on_receipt` nos itens, `show_pack_conversion_on_orders` em `companies`); o mundo privado da T03
+  (`rec/t03/_mundo`) ficou igual ao base e saiu do `t03_env.sh`. Ilustrações pendentes: ilu07_margem, ilu09_fora,
+  ilu12_ordem e dois PDFs (pdf14_estoque, pdf14_tabela). **Para o Kaik**: Prefixo (F10) e seleção em massa (F11) ficaram fora.

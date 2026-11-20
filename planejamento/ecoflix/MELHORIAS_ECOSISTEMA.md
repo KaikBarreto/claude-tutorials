@@ -116,3 +116,5 @@ as gravações). Cada item diz a aula em que apareceu. **No fim da produção, v
 
 ## Achados no 1.60.18 (20/11)
 - **T02 · Relatório por Usuário**: o "Salvar PDF" depende de CDN (sem ela, não gera o arquivo).
+- **T03 · Editar Preços**: o filtro diz "Abaixo da compra" e o resumo diz "Venda abaixo da compra" (mesmo conceito, dois nomes).
+- **T03 · Editar Preços**: a "Margem típica" do resumo mostra decimais soltos.
