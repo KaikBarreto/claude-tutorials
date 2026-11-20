@@ -39,6 +39,7 @@ VOZ_PROV = os.path.join(HERE, '_voz')
 sys.path.insert(0, HERE)
 from t19_sementes import t19_slug, KIOSK as KIOSK_SLUG  # noqa: E402  (o mesmo slug do handler rpc/generate_ponto_slug.mjs)
 
+COMPANY = '38814e47-876a-5977-a5f7-53af364c17bb'   # stableId('company.reciclavale') do mundo
 RAFAEL = '34c36c63-0890-5e89-8963-7c77b7996908'      # stableId('user.rafael') do mundo
 try:
     VERSAO = open(os.path.join(TUT_HOME, 'app', 'dist', '.versao-app'), encoding='utf8').read().strip() or '1.60.18'
@@ -329,6 +330,8 @@ def storage(n, phone=False):
         'app_version': VERSAO, 'notification_shown_version': VERSAO, 'pwa-install-dismissed': 'true', 'theme': 'light',
         f'daily-tasks-reminder-last-shown-{RAFAEL}': HOJE[n], 'initial-preferences-set': 'true',
         f'dominex:daily-tasks-shown:{RAFAEL}': HOJE[n],
+        # a dica flutuante do Cato (CatoFab.tsx, 15 s depois de abrir a página) cobria o lápis e o canto da tela: já vista
+        f'cato_adoption_nudge_{COMPANY}_{RAFAEL}': json.dumps({'count': 16, 'lastShownAt': 1793000000000}),
     }
 
 
@@ -778,6 +781,8 @@ def cap06():
     c.hover(RESUMO('Bônus'), 0.6, at=c.A(1, 'duzentos', 0.75), label='Bônus R$ 250,00')
     c.mark(2)
     c.click(BOTAO_FICHA('Recebimento'), at=c.A(2, 'Antes,', 0.5), label='Recebimento')
+    c.wait(0.8)
+    c.click(BOTAO_FICHA('Recebimento'), label='Recebimento de novo (só se a janela não abriu)', unless=TXTX('Registrar devolução de valor pelo funcionário'))
     c.waitfor(text='Registrar devolução de valor pelo funcionário', timeout=10)
     VR = SEL(f"{DLG} input[placeholder='0,00']")
     c.confere('dlg', ['Vales/Adiantamentos pendentes:', 'R$ 500,00'], 'Vales/Adiantamentos pendentes R$ 500,00')
@@ -936,6 +941,7 @@ def cap08():
     c.click(SEL(f"{DLG} label[for='competence-pix']"), at=c.A(3, 'Pix,', 0.9), label='Forma de pagamento: PIX/Transferência (Banco)')
     c.click(CAMPO('competence-description'), at=c.A(3, 'observação,', 0.9), label='campo Observação')
     c.ev(colar('Período aquisitivo 2025/2026'), at=c.A(3, 'observação,', 0.1), label='Observação: Período aquisitivo 2025/2026')
+    c.ev("(()=>{const i=document.querySelector('[role=dialog] #competence-amount');if(i&&/^[0,.\\s]*$/.test(i.value)){i.focus();i.select();document.execCommand('insertText',false,'3733,33');return 'reforço'}return 'ok'})()", label='o valor entrou (reforço só se o campo ficou vazio)')
     c.click(BDLG('Confirmar'), at=c.A(3, 'Confirmar.', 0.9), label='Confirmar')
     c.waitfor(gone={'role': 'dialog'}, timeout=12)
     c.mark(4)
@@ -957,6 +963,7 @@ def cap08():
     c.click(SEL(f"{DLG} label[for='competence-pix']"), label='Forma de pagamento: PIX/Transferência (Banco)')
     c.click(CAMPO('competence-description'), label='campo Observação')
     c.ev(colar('1ª parcela 2026'), label='Observação: 1ª parcela 2026')
+    c.ev("(()=>{const i=document.querySelector('[role=dialog] #competence-amount');if(i&&/^[0,.\\s]*$/.test(i.value)){i.focus();i.select();document.execCommand('insertText',false,'1050,00');return 'reforço'}return 'ok'})()", label='o valor entrou (reforço só se o campo ficou vazio)')
     c.click(BDLG('Confirmar'), at=round(c.Lfim(5) - 0.8, 2), label='Confirmar')
     c.waitfor(gone={'role': 'dialog'}, timeout=12)
     c.mark(6)
@@ -1006,7 +1013,7 @@ def cap09():
     c.hover(TXTX('Valor pago', within=DLG), 0.8, at=c.A(2, 'conta', 0.75), label='Valor pago R$ 2.750,00 (pagamento detalhado)')
     c.click(SEL(f"{DLG} button:has-text('Gerar Recibo')"), at=c.A(2, 'Gerar', 0.9), label='Gerar Recibo (pagamento de hoje)')
     c.waitfor(text='Gerar recibo', timeout=8)
-    c.hover(TXT('Térmico', within=DLG), 0.5, at=c.A(2, 'térmico,', 0.75), label='formato Térmico (80 mm)')
+    c.hover(TXTX('Térmico', within=DLG), 0.5, at=c.A(2, 'térmico,', 0.75), label='formato Térmico (80 mm)')
     c.click(SEL(f"{DLG} button:has(span:text-is('A4'))"), at=c.A(2, 'abre', 0.9), label='formato A4 (abre o recibo em aba nova)')
     c.ev(js_aba_html(0, 'recibo-extrato-edson', 'Edson Moura'), label='HTML do recibo A4 do Edson (aba nova, para a ilustração do comprovante)')
     c.hover(TXTX('Reset para salário base', within=DLG), 0.8, at=c.A(2, 'ajuste', 0.75), label='Ajuste: Reset para salário base')
@@ -1194,7 +1201,7 @@ def cap13():
     """O tablet da empresa (1024x768, sem login do gestor na tela): a câmera, Buscar manualmente, a lista (A-Z e Quem falta), a saída do
     Diego, o cadeado do PIN; depois as configurações do ponto (reconhecimento facial) e o cadastro do Gabriel."""
     KIOSK = '/ponto/empresa/' + KIOSK_SLUG
-    setup = [{'do': 'eval', 'js': JS_CAMERA},
+    setup = [{'do': 'geo', 'lat': -23.0105, 'lng': -45.5412}, {'do': 'eval', 'js': JS_CAMERA},
              {'do': 'eval', 'js': f"(()=>{{history.pushState({{}},'',{json.dumps(KIOSK)});window.dispatchEvent(new PopStateEvent('popstate'));return 'quiosque'}})()"},
              {'do': 'waitFor', 'text': 'Buscar manualmente', 'timeout': 40}, {'do': 'wait', 'seconds': 0.8}]
     c = cap_novo(13, setup=setup, start=(512, 400), prewarm=[KIOSK], recolhe=False)
@@ -1309,7 +1316,9 @@ def cap14():
     c.waitfor(text='Registre quem não veio', timeout=10)
     escolhe(c, CAMPO('absence-employee'), 'Juliana Prado', c.A(11, 'inteiro', 0.9), c.A(11, 'vez.', 0.9), 'Funcionário: Juliana Prado')
     escolhe(c, CAMPO('absence-type'), 'Férias', c.A(11, 'As', 0.9), c.A(11, 'férias', 0.3), 'Tipo: Férias')
+    c.wait(0.7)
     c.digita(CAMPO('absence-start'), '07122026', c.W(11, 'sete'), 'Data de início 07/12/2026', folga_clique=1.0)
+    c.wait(0.5)
     c.digita(CAMPO('absence-end'), '05012027', c.W(11, 'cinco'), 'Data de fim 05/01/2027', folga_clique=1.0)
     c.confere('dlg', ['30 dias'], '30 dias de ausência')
     c.click(SEL(f"{DLG} button:text-is('Lançar ausência')"), at=c.A(11, 'Nesses', 0.9), label='Lançar ausência')

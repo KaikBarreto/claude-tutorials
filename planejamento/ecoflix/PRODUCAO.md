@@ -1026,3 +1026,9 @@ Decisões:
   `t15/previsto`; `_patch` do `created_at` do `bt.135`. **Mundo base**: `lib/eco.mjs` → `linhasDRE` devolve
   `bank_account_id`/`bank_account_name` como o RPC real. Valores vistos: Pátio R$ 28.500,00 de despesas; DFC de outubro
   com variação de R$ -67.749,00.
+- **T19**: 18 capítulos (novos 07 folha CLT, 08 férias e 13º, 10 relatório, 13 tablet; extrato 7→9, ponto 8→11, celular
+  9→12, folha 10→14, config 11→15, arquivar 12→16, recap 13→17). Fala 2.062 → 3.146 palavras. Rápido: 00-08, 10, 11,
+  15-17 limpos; 09 e 12 com 1 passo opcional; **não fecham 13** (tablet para em "Tirar foto agora") **e 14** ("Data de
+  início" da Ausência não aceita digitação); `apos-cap13/14` aproximadas. Valores vistos: líquido 2.168,11, INSS e saldos.
+  Handlers só da T19: `rpc/set_ponto_pin`, `functions/time-clock-portal`. 6 ilustrações novas pendentes (recibos, holerite,
+  relação de pagamento). Voz: respiro de 4,5 s na L2 do cap11. Tablet em 4:3; reconhecimento facial não é filmável.

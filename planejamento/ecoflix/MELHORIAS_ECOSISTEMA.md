@@ -128,3 +128,4 @@ as gravações). Cada item diz a aula em que apareceu. **No fim da produção, v
 - **T12 · Coletas**: "Cancelar ordem em vez disso" aparece na recusa de exclusão até em ordem concluída, que não pode ser cancelada.
 - **T11 · Produção**: o gráfico do relatório diz "Total: N peças" fixo, mesmo em produto por quilo; ainda há "Custo
   estimado por peça" (ordem e Conversão) e "Custo/peça" (relatório) em produto por quilo.
+- **T19 · RH**: a dica flutuante do Cato (15 s) cobre o lápis da jornada.

@@ -10,7 +10,9 @@
 - `plano.md`, `inventario.md` (bloco 1.60.18), `propostas_fala.md`, `cenas/ilustracoes.json` (6 novas, 12 renumeradas, `v3: pendente`).
 
 ## Falta
-- Ver o resultado do lote de ensaio (seção "Ensaio" abaixo) e corrigir o que falhou.
+- cap. 13 (tablet): o ensaio para em "Tirar foto agora" (a tela do tablet pede a câmera/rosto depois de tocar no nome; conferir a câmera falsa no quiosque, `JS_CAMERA` é injetada antes da navegação SPA). Seeds apos-cap13 e apos-cap14 estão COPIADAS (aproximadas): refazer 13 e 14 com `--seed`.
+- cap. 14: o campo "Data de início" da Ausência não aceita a digitação do robô (fica dd/mm/aaaa); o resto da folha passa. Ver `JS`/`digita` do `absence-start`.
+- cap. 9: hover "Térmico" falha (opcional). cap. 12: marcar "Confirme localização" estoura (opcional).
 - Voz de verdade: respiro de 4,5 s na L2 do cap. 11 (`pausas.py 11 <T>:4.5`, o `gerar.py` avisa o T) e reancorar com `python3 -I rec/t19/gerar.py`.
 - Conferir na tela os números da fala dos caps. 6 e 7 (INSS, líquido) e do 8 (férias 3.733,33, 13º 1.050,00) antes da voz final.
 
@@ -24,4 +26,4 @@ FAKE_PORT=54319 bash rec/run.sh down                                            
 ```
 
 ## Ensaio
-(preenchido ao fim do lote)
+3 lotes rodados. Fechados no rápido (0 falhos): 0 a 8, 10, 11, 15, 16, 17; fechados com 1 passo opcional falho: 9, 12; não fecham: 13, 14. Só ensaio rápido; nenhum completo. Conferências tela x fala: 0 diferentes (INSS, líquido da folha CLT do Marcos e saldos batem com a fala).

@@ -140,13 +140,13 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"1250\", \"R$ 23.950,00\", \"Autorizada\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"1250\", \"R$ 23.950,00\", \"Autorizada\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"body\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
    "label": "confere NF-e 1250"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text('1250')",
+    "selector": ":is(main,body) tbody tr:has-text('1250')",
     "nth": 0
    },
    "seconds": 1.6,
@@ -157,7 +157,7 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"1253\", \"Entrada\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"1253\", \"Entrada\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"body\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
    "label": "confere NF-e 1253 de entrada"
   },
   {
@@ -168,7 +168,7 @@
   {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text('1253')",
+    "selector": ":is(main,body) tbody tr:has-text('1253')",
     "nth": 0
    },
    "seconds": 1.8,
@@ -231,7 +231,7 @@
   {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text('1249')",
+    "selector": ":is(main,body) tbody tr:has-text('1249')",
     "nth": 0
    },
    "seconds": 1.6,
@@ -306,7 +306,7 @@
   {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text('Papelão')",
+    "selector": ":is(main,body) tbody tr:has-text('Papelão')",
     "nth": 0
    },
    "seconds": 0.8,
@@ -318,7 +318,7 @@
   {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text('PET')",
+    "selector": ":is(main,body) tbody tr:has-text('PET')",
     "nth": 0
    },
    "seconds": 0.8,
@@ -335,7 +335,7 @@
   {
    "do": "hover",
    "target": {
-    "selector": "main tfoot tr, main tr:has-text('Total')",
+    "selector": ":is(main,body) tfoot tr, main tr:has-text('Total')",
     "nth": -1
    },
    "seconds": 2.0,
@@ -352,7 +352,7 @@
   {
    "do": "click",
    "target": {
-    "selector": "main button:text-is('Material')"
+    "selector": ":is(main,body) button:text-is('Material')"
    },
    "at": 78.11,
    "label": "abre o filtro Material"
@@ -375,7 +375,7 @@
   {
    "do": "click",
    "target": {
-    "selector": "main button:has-text('Material ·'), main button:has-text('Papelão')",
+    "selector": ":is(main,body) button:has-text('Material ·'), main button:has-text('Papelão')",
     "nth": 0
    },
    "at": 79.42,
@@ -399,7 +399,7 @@
   {
    "do": "click",
    "target": {
-    "selector": "main button:has-text('Mês passado')",
+    "selector": ":is(main,body) button:has-text('Mês passado')",
     "nth": 0
    },
    "at": 80.64,
@@ -432,7 +432,7 @@
   {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text('Papelão')",
+    "selector": ":is(main,body) tbody tr:has-text('Papelão')",
     "nth": 0
    },
    "seconds": 1.0,

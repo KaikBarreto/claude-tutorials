@@ -4,6 +4,7 @@
 // usuários da empresa em user_notifications ("Nova solicitação de coleta"). Responde { ok: true, numero }.
 import { agoraIso, parteDoPortal, temModulo } from '../../lib/coletas.mjs';
 import { agoraMs } from '../../lib/eco.mjs';
+import { sessaoValida } from '../../lib/portal.mjs';
 
 const DIAS = ['domingo', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado'];
 export default (body, { store, db, FunctionError }) => {
@@ -11,7 +12,7 @@ export default (body, { store, db, FunctionError }) => {
   if (!body?.token) throw new FunctionError('Token é obrigatório', 400);
   if (!p) throw new FunctionError('Token inválido ou expirado', 404);
   if (!p.cfg.coletas || !p.cfg.solicitar_coleta) throw new FunctionError('A solicitação de coleta não está disponível neste portal.', 403);
-  if (p.senha) throw new FunctionError('Faça login no portal', 401, { requiresLogin: true });
+  if (p.senha && !sessaoValida(body?.session, p.ids)) throw new FunctionError('Faça login no portal', 401, { requiresLogin: true });
   if (!temModulo(store, p.companyId, 'portal_cliente')) throw new FunctionError('Portal indisponível', 403, { reason: 'portal_module_inactive' });
   if (!temModulo(store, p.companyId, 'coletas')) throw new FunctionError('Coletas não está disponível para esta empresa.', 403);
   const cfg = store.rows('collection_settings').find((s) => s.company_id === p.companyId) || {};
