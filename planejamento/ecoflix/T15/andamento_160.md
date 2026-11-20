@@ -13,6 +13,10 @@ do gráfico (cap03, placeholder `.recharts-bar-rectangle >> nth=0`); salvar o PD
 - Regerar robô: `cd` scratchpad `t15x` e `python3 patch_gerar.py`; texto: `python3 edit_texto.py`.
 **Pedido ao mundo base:** `bank_account_id/name` em `linhasDRE`.
 
-**Estado ao parar:** o lote (capítulos 00 a 15, fila prio 15) foi lançado às 09:54 de 20/11 e estava no capítulo 00, atrás de
-outras aulas na fila. A instância 54315 ficou LIGADA de propósito (o lote depende dela). Quando `lote_FIM.txt` existir:
-analisar, corrigir e, só se preciso, um segundo lote; depois derrubar com `FAKE_PORT=54315 bash rec/run.sh down`.
+**Estado (20/11, fim):** dois lotes rodados; os 16 capítulos (00 a 15) passam no ensaio sem passo falho nem tela diferente da fala.
+Correções: cap01 foco no campo Nome antes de digitar; cap03 coluna vermelha (despesas) do gráfico + espera pelo placeholder da busca;
+cap06 sem abrir centro de custo (o DRE padrão do 1.60.18 não mostra) e fala da linha 7 trocada; cap07 clica no grupo 06.02; cap08 fala
+da faixa cinza; cap11 semente `t15/previsto` (água vencida, telefone); cap12 setup por 'Saldo atual' + confere da variação; cap14 espera
+'Editar categoria'. Mundo: `linhasDRE` com bank_account_id/name; `t15/inicio` com created_at do bt.135 (Registrado em).
+Falta: gerar a voz; gravação final. Instância 54315 derrubada. `ilustracoes.json`: mostra do PDF atualizado.
+Sobras em rec/t15/_ens: MP4 e folhas de contato dos ensaios (apagar à mão, caminho a caminho).

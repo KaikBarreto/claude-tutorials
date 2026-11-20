@@ -1021,3 +1021,8 @@ Decisões:
   552,20, 44.684,77, 45.236,97. 8 handlers novos (conciliação, cartão, lote de banco). Ilustrações pendentes:
   ilu01_extrato_pdf (o Extrato abre em HTML numa aba nova), ilu17_outra_conta. O pedido ao mundo base (filtro de banco das
   sugestões) já foi aplicado.
+  T15 fechada (agente Sonnet, 20/11): **16/16 no rápido**, 0 tela diferente da fala. Fala mudou em 2 linhas (cap06: o DRE
+  padrão não abre centros de custo; cap08: a divisão por centro de custo nunca aparece no regime de caixa). Semente nova
+  `t15/previsto`; `_patch` do `created_at` do `bt.135`. **Mundo base**: `lib/eco.mjs` → `linhasDRE` devolve
+  `bank_account_id`/`bank_account_name` como o RPC real. Valores vistos: Pátio R$ 28.500,00 de despesas; DFC de outubro
+  com variação de R$ -67.749,00.
