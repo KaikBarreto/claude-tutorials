@@ -40,3 +40,12 @@ geral aplica. Linha = número da linha da tabela Tela × Fala do capítulo (a me
   aparece em duas aulas.
 - **Caixa do cap07**: semente própria `t03/caixa-0830` (caixa #85 do Rafael, 08:30, R$ 1.500,00, sem lançamentos), como pede o §9; o
   `base/caixa-aberto` (08:05) não é usado.
+
+## Achados do app (1.60.18), para o MELHORIAS
+
+- O filtro do resumo diz "Abaixo da compra" e a linha do resumo diz "Venda abaixo da compra": dois nomes para a mesma coisa.
+- "Margem típica" pode mostrar casas decimais soltas (ex.: 24,501), por causa dos três decimais do preço; a fala diz "perto de" só se for lido na tela.
+- Os preços de venda calculados guardam o milésimo (ex.: Ferro pesado 1,093): a fala avisa que isso é normal.
+- O cap. 11 cita a dica "ligue Múltiplas Tabelas de Preço em Configurações, Usabilidade": a coluna de tabelas só existe com a preferência ligada.
+- A troca de tabela num pedido com itens abre "Trocar tabela de preços?" ("Só nos próximos" ou "Atualizar N itens"): fica para a T7 (compra e venda).
+- Fora da aula (decisão do Kaik): "Prefixo" do código (F10) e a barra de seleção em massa (F11).

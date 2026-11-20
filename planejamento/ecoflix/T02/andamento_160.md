@@ -23,3 +23,10 @@ FAKE_PORT=54302 bash rec/run.sh down   # no fim
 ```
 ## Falta / pendências
 Ver o fim deste arquivo (preenchido ao fim do ensaio).
+
+## Estado ao fim (20/11)
+- Ensaio rápido: 14 de 14 capítulos sem passo falho (cap12 e cap13 corrigidos no 2º lote). Completos: 04 (atraso 1,0 s só em "liga Pedidos",
+  o conjunto de cliques do escritório é mais longo que a frase; refazer com a voz de verdade, se persistir folgar a fala), 05 e 07 aprovados.
+- Não gravados completos: 01, 02, 03 (digitação/foto, gestos já com folga no rápido) e 06, 08 a 13 ficam só no rápido.
+- Instância 54302 derrubada. Para voltar: ver comandos acima. `cenas/cenas.html` e `cenas/tempos/` seguem com os ids/caps antigos (estilo v3 pendente).
+- O relatório do cap12 (HTML da aba nova) sai no retorno da ação "relatório HTML" em `rec/t02/_ens/t02-cap12.actions.json` / gravação.

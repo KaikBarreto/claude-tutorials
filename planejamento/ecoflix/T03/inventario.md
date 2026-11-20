@@ -1,4 +1,4 @@
-# Inventário · T3 Materiais e tabelas de preço (EcoSistema 1.59.154)
+# Inventário · T3 Materiais e tabelas de preço (EcoSistema 1.60.18; seções 1 a 13 levantadas no 1.59.154, a 6 e a 14 conferidas no 1.60.18)
 
 Levantado em 10/11/2026 contra `/home/claude/ecoflix/app-src-1.59.154/` (`src/config/version.ts:16`, `APP_VERSION = "1.59.154"`).
 Leitura estática, só o que a aula usa. Caminhos relativos a `src/`. **mat** = `i18n/locales/pt-BR/materials.json`.
@@ -72,15 +72,19 @@ onde ele e o código discordam, vale o código (marcado **≠ guia**).
 - O "+" do campo Grupo abre "Novo grupo de material" (mesmos campos, "Salvar") e já seleciona o grupo no material.
 - Backend: `material_groups` (insert/update/delete).
 
-## 6. Editar Preços em Massa (`components/BulkPriceEditModal.tsx`, botão "Editar Tabela")
-- "Editar Preços em Massa" ("Altere os preços de compra e venda de todos os materiais"). Esquerda: "Tabelas disponíveis"
-  ("Buscar tabela...", selo "Padrão"). Direita: "Editando tabela de preços" + nome + "Padrão"; aviso "Alterações na tabela
-  principal serão refletidas em todas as tabelas vinculadas."; busca "Buscar por código ou nome..."; resumo "N material(is)
-  com alterações pendentes"; grade "Cód.", "Material", "Compra (R$)", "Venda (R$)" (célula alterada destacada; vinculada
-  mostra "Variação" e cadeados). "Cancelar" / "Salvar" (`:1135-1480`, `:1888-1905`).
-- Salvar na principal: `UPDATE materials` dos alterados + `rpc save_price_table_items` (`:130`, `:702-790`) → "Preços
-  atualizados! As tabelas vinculadas serão recalculadas automaticamente."; nada mudado: "Nenhuma alteração para salvar";
-  venda < compra: confirmação "Preço de venda abaixo do custo" (lote).
+## 6. Editar Preços (tela cheia, 1.60.18; botão "Editar Preços"; substitui o modal "Editar Preços em Massa")
+- Tela cheia "Editar Tabelas de Preço" ("Altere os preços de compra e venda de todos os materiais, tabela por tabela"), botão "Sair".
+  Em 1600x900 (largo): esquerda "Tabelas disponíveis" ("Buscar tabela...", selo "Padrão"); centro: título da tabela, selos "Padrão"
+  e "Reflete nas vinculadas", busca "Buscar por código ou nome...", grade "Cód.", "Material", "Compra (R$)", "Venda (R$)" (+ "Margem"
+  com a margem ligada; "Variação" na vinculada); direita `aside[aria-label="Resumo e regras da tabela"]` com o "Resumo" e o cartão.
+  Rodapé: aviso "N material(is) com alterações pendentes" (com margem: "+ margem automática"), "Cancelar" e "Salvar".
+- **Resumo:** "Materiais", "Alterados", "Venda abaixo da compra" (vermelho; clicável, vira o filtro "Abaixo da compra"), "Sem preço" (compra
+  e venda zeradas; clicável), "Margem típica" (mediana; dica "Metade dos materiais tem margem acima disso e metade abaixo"), "Margem
+  automática" ("Desligada" ou "Tabela toda · 15%" / "Por material") e "Fora da margem" (selo laranja "fora da margem", clicável: realinha a venda).
+- Salvar na principal: `UPDATE materials` dos alterados + `rpc save_price_table_items` → "Preços atualizados! As tabelas vinculadas serão
+  recalculadas automaticamente."; nada mudado: "Nenhuma alteração para salvar"; venda < compra: diálogo "Preço de venda abaixo do custo"
+  ("N material está com o preço de venda abaixo do preço de compra. Isso registra prejuízo nesses materiais. Deseja continuar?", linhas
+  "Bronze 29,00 → 28,00", "Cancelar" e "Salvar mesmo assim"). Com a margem: `rpc save_price_table_margins` (migration 20261119190000).
 
 ## 7. Nova Tabela de Preços (`components/PriceTableSettingsModal.tsx`; `hooks/usePriceTables.tsx:53-87`)
 - "Nova Tabela de Preços": "Nome da Tabela" ("Ex: Atacado, Varejo, Premium..."), caixa "Vincular à tabela principal" →
@@ -151,3 +155,28 @@ onde ele e o código discordam, vale o código (marcado **≠ guia**).
   A aula só abre e fecha (nenhum arquivo). Gravação numa chamada só, `rpc import_materials_spreadsheet_flexible_atomic`
   (`:171-176`): tudo ou nada; o `p_client_request_id` devolve `reused` no reenvio do mesmo arquivo (não duplica). Bate com
   a fonte e o guia (`t3-c03`).
+
+## 14. Margem automática (1.60.18; `lib/precos/margemAutomatica.ts`, cartão no aside do Editar Preços, `components/` de preços, `i18n` pt-BR)
+- **Regra:** sempre sobre a compra (markup). Em %: venda = compra × (1 + m/100). Em R$: venda = compra + m. Preços numeric(10,3). Alcance
+  "table" ou "material".
+- **Cartão "Margem automática"** ("Compra e venda amarradas por uma margem sobre a compra"): chave (`aria-label` "Margem automática"). Ao ligar,
+  "Alcance da margem": "Tabela toda" ("Uma margem só, todo material segue") e "Por material" ("Cada material tem a sua margem").
+  Tabela toda: "Margem sobre a compra" + botão "%"/"R$" (dica "Sobre a compra: R$ 10,00 com 30% vira R$ 13,00."); "Qual preço fica como
+  está?" com "Compra" ("A venda é recalculada") e "Venda" ("A compra é recalculada"); "Aplicar". Por material: "Manter a margem que cada
+  material já tem hoje, em" "%" / "R$"; "Nenhum preço muda. Material com compra ou venda zerada fica sem margem."; "Aplicar". Depois de
+  ligada: "Editar margem" (texto "Ao mudar a margem, a venda dos materiais que seguem a tabela é recalculada na hora."), "Mesma margem em
+  vários materiais" com o botão "Aplicar em N material(is) exibido(s)" (respeita a busca).
+- **Grade:** coluna "Margem" com cadeado por linha (`aria-label` "Personalizar a margem deste material" / "Voltar à margem da tabela"), selo
+  "personalizada" e pílula "%"/"R$" (`title` "Margem em porcentagem — clique para usar R$"). Mudar a compra recalcula a venda; mudar a venda
+  ajusta a compra (conforme "Qual preço fica como está?").
+- **Tabela vinculada:** não tem o cartão de margem (só "Tabela Vinculada" e "Base: Principal · +4%"); vincular uma tabela que tinha margem
+  desliga a margem. Desligar a chave desfaz só a configuração da margem; os preços já mexidos ficam até salvar ou cancelar.
+- **Cadastro do material:** em "Editar Material" (e "Novo Material"), com a margem ligada na tabela exibida: linha "Margem automática de
+  16,67%: a venda acompanha a compra" e a calculadora ao lado de "P. Venda" (`aria-label` "Calcular a venda pela margem"; popover "Calcular
+  venda pela margem": "Margem sobre a compra", prévia "Compra R$ 21,00 → Venda R$ 25,20", "Aplicar", "Tirar a margem deste material" /
+  "Voltar à margem da tabela"). A margem do material é gravada com "Atualizar".
+- **Backend:** `rpc save_price_table_margins` (20261119190000), tabela `price_table_material_margins`, colunas `auto_margin_*` em `price_tables`.
+- **Menu da tabela (cap. 12):** "Configurações" ("Editar Tabela de Preços"), "Duplicar tabela" (`rpc duplicate_price_table`, 20261111192000;
+  cópia independente), "Fixar para meus pedidos e tickets" / "Remover minha tabela fixada" (`rpc set_my_preferred_price_table`, 20261112162947),
+  "Definir como principal da empresa" (diálogo "Definir “…” como principal?"), "Excluir" ("Excluir Tabela de Preços").
+- **Não coberto:** "Prefixo" do código (F10) e a barra de seleção em massa (F11): dependem de decisão do Kaik.

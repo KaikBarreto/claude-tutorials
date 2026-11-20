@@ -928,3 +928,9 @@ Decisões:
 - Aulas com mudança visível (lista do Kaik): T07, T08, T02, T00, T04, T06/T09, T10, T11, T19, T20, T22, T26, T05, T18, T27;
   mais T03 (margem), T16/T17 (fiscal). Todas serão reensaiadas de qualquer forma (versão e tela novas).
 - Varredura 1.60.18 em 1600x900: `rec/varredura/tudo.sh` (resultado anterior em `rec/varredura/v160_10/`).
+
+## 20/11 · adaptação por aula ao 1.60.18 (agentes Sonnet, `_BRIEF_APLICAR_160.md` com o bloco de 20/11)
+- **T02**: 14 capítulos (eram 11; novos 06 Restrições e contas do banco, 07 O mapa das permissões, 12 Relatório por
+  Usuário; antigos 06-09 viraram 08-11, 10 virou 13). Fala 1.483 → 2.313 palavras. 14/14 no rápido; completos 04, 05, 07
+  (cap04 com 1,0 s em "liga Pedidos": rever com a voz real). Ilustrações pendentes do v3: ilu06_proprios, ilu07_mapa_grupos,
+  ilu12_relatorio_pdf (comprovante; o robô devolve o HTML do relatório). `cenas.html` e `tempos/` antigos ficaram velhos.

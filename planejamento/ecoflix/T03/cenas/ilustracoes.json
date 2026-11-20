@@ -1,13 +1,461 @@
 [
- {"cap":0,"id":"ilu00_cardapio","de":[0,"Oi",1],"ate":[1,"primeiro",1],"cauda":0.6,"resumo":"o cadastro de materiais é o cardápio do pátio, e a compra, a venda e a nota fiscal puxam dele","mostra":["Materiais","O cardápio do pátio","Recicla Vale Metais","Compra","Venda","Cobre mel","Ferro pesado","Alumínio latinha","R$ 42,00","R$ 47,40","R$ 0,95","R$ 1,25","R$ 6,20","R$ 7,40","Nota fiscal"]},
- {"cap":1,"id":"ilu01_totais","de":[3,"Total",1],"ate":[3,"hoje",1],"cauda":0.6,"resumo":"Total Pago é o estoque vezes o preço médio pago; Projeção de Vendas é o mesmo estoque vezes o preço de venda","mostra":["Total Pago × Projeção de Vendas","Total Pago","Projeção de Vendas","Estoque","Preço médio pago","Preço de Venda","quanto você pagou","vendendo tudo hoje"]},
- {"cap":3,"id":"ilu03_codigo","de":[1,"atalho",1],"ate":[2,"setenta",1],"cauda":0.6,"resumo":"o código é o atalho do balcão (digita o número, o material aparece); dá para usar o do caderno: 16 vira 70","mostra":["Materiais","O código é um atalho","1","2","3","4","13","14","15","16","70","Radiador de cobre","Compra","Venda","Radiador","Rafael"]},
- {"cap":4,"id":"ilu04_ncm","de":[0,"Pra",1],"ate":[0,"nota",2],"cauda":0.6,"resumo":"o NCM é um código de 8 dígitos que vai dentro da nota","mostra":["O NCM na nota","Nota fiscal","Radiador de cobre","NCM","7404.00.00","8 dígitos","Desperdícios e resíduos de cobre"]},
- {"cap":4,"id":"ilu04_nomefiscal","de":[5,"Por",1],"ate":[6,"iguais",1],"cauda":0.6,"resumo":"os três alumínios saem na nota como SUCATA DE ALUMÍNIO; a tela, os pedidos e os comprovantes ficam com o nome normal","mostra":["Nome na nota","Alumínio latinha","Alumínio perfil","Alumínio bloco","Nota fiscal","SUCATA DE ALUMÍNIO","Tela","Pedidos","Comprovantes","linhas iguais"]},
- {"cap":4,"id":"ilu04_onde","de":[8,"No",1],"ate":[8,"fiscal",1],"cauda":0.6,"resumo":"no material (e na planilha) vão o NCM e o nome na nota; CFOP, CST e ICMS ficam nos cenários fiscais, definidos pelo contador","mostra":["Nota fiscal","O que fica onde","No material","e na planilha","NCM","Nome na nota","Nos cenários fiscais","CFOP","CST","ICMS","mudam conforme","Operação","Regime","Parceiro","quem define","Contador"]},
- {"cap":5,"id":"ilu05_gavetas","de":[1,"Grupo",1],"ate":[1,"nova",1],"cauda":0.6,"resumo":"grupo é uma gaveta: cada material na sua; o radiador ganha a gaveta nova Radiadores","mostra":["Grupos","Grupo é uma gaveta","Ferrosos","Cobre","Alumínio","Metais","Outros","Radiadores","Ferro pesado","Cobre mel","Alumínio latinha","Bronze","Papelão","Radiador de cobre"]},
- {"cap":7,"id":"ilu07_vinculada","de":[3,"Vinculada",1],"ate":[3,"também",1],"cauda":0.6,"resumo":"a Tabela Depósitos é vinculada: acompanha a Principal com +4%, e quando o preço muda lá muda aqui também","mostra":["Preços","Tabela vinculada","Principal","Tabela Depósitos","+4%","Cobre mel","R$ 42,50","R$ 44,20","R$ 42,00"]},
- {"cap":7,"id":"ilu07_ordem","de":[7,"quando",1],"ate":[7,"material",2],"cauda":0.6,"resumo":"a ordem do preço: primeiro o personalizado do parceiro, depois a tabela do pedido, por último o preço do material","mostra":["Preços","A ordem do preço","Primeiro","Preço personalizado","cliente ou fornecedor","Depois","Tabela escolhida","no pedido","Por último","Preço do material"]},
- {"cap":8,"id":"ilu08_transferir","de":[3,"transferir",1],"ate":[3,"misto",1],"cauda":0.6,"resumo":"na desmontagem, os 8 kg de ferro das cintas e suportes saem do Radiador de cobre e vão para o Ferro misto","mostra":["Estoque","Transferir entre materiais","Radiador de cobre","Ferro misto","8 kg de ferro"]},
- {"cap":10,"id":"ilu10_arquivar","de":[0,"Por",1],"ate":[0,"lá",1],"cauda":0.6,"resumo":"excluir arquiva: o material sai da lista e das buscas, e as compras, as vendas e o histórico continuam","mostra":["Materiais","Excluir é arquivar","Lista e buscas","Ferro misto","Cobre mel","Radiador de cobre","apagar","arquiva","Compras","Vendas","Histórico"]}
+ {
+  "cap": 0,
+  "id": "ilu00_cardapio",
+  "de": [
+   0,
+   "Oi",
+   1
+  ],
+  "ate": [
+   1,
+   "primeiro",
+   1
+  ],
+  "cauda": 0.6,
+  "resumo": "o cadastro de materiais é o cardápio do pátio, e a compra, a venda e a nota fiscal puxam dele",
+  "mostra": [
+   "Materiais",
+   "O cardápio do pátio",
+   "Recicla Vale Metais",
+   "Compra",
+   "Venda",
+   "Cobre mel",
+   "Ferro pesado",
+   "Alumínio latinha",
+   "R$ 42,00",
+   "R$ 47,40",
+   "R$ 0,95",
+   "R$ 1,25",
+   "R$ 6,20",
+   "R$ 7,40",
+   "Nota fiscal"
+  ]
+ },
+ {
+  "cap": 1,
+  "id": "ilu01_totais",
+  "de": [
+   3,
+   "Total",
+   1
+  ],
+  "ate": [
+   3,
+   "hoje",
+   1
+  ],
+  "cauda": 0.6,
+  "resumo": "Total Pago é o estoque vezes o preço médio pago; Projeção de Vendas é o mesmo estoque vezes o preço de venda",
+  "mostra": [
+   "Total Pago × Projeção de Vendas",
+   "Total Pago",
+   "Projeção de Vendas",
+   "Estoque",
+   "Preço médio pago",
+   "Preço de Venda",
+   "quanto você pagou",
+   "vendendo tudo hoje"
+  ]
+ },
+ {
+  "cap": 3,
+  "id": "ilu03_codigo",
+  "de": [
+   1,
+   "atalho",
+   1
+  ],
+  "ate": [
+   2,
+   "setenta",
+   1
+  ],
+  "cauda": 0.6,
+  "resumo": "o código é o atalho do balcão (digita o número, o material aparece); dá para usar o do caderno: 16 vira 70",
+  "mostra": [
+   "Materiais",
+   "O código é um atalho",
+   "1",
+   "2",
+   "3",
+   "4",
+   "13",
+   "14",
+   "15",
+   "16",
+   "70",
+   "Radiador de cobre",
+   "Compra",
+   "Venda",
+   "Radiador",
+   "Rafael"
+  ]
+ },
+ {
+  "cap": 4,
+  "id": "ilu04_ncm",
+  "de": [
+   0,
+   "Pra",
+   1
+  ],
+  "ate": [
+   0,
+   "nota",
+   2
+  ],
+  "cauda": 0.6,
+  "resumo": "o NCM é um código de 8 dígitos que vai dentro da nota",
+  "mostra": [
+   "O NCM na nota",
+   "Nota fiscal",
+   "Radiador de cobre",
+   "NCM",
+   "7404.00.00",
+   "8 dígitos",
+   "Desperdícios e resíduos de cobre"
+  ]
+ },
+ {
+  "cap": 4,
+  "id": "ilu04_nomefiscal",
+  "de": [
+   5,
+   "Por",
+   1
+  ],
+  "ate": [
+   6,
+   "iguais",
+   1
+  ],
+  "cauda": 0.6,
+  "resumo": "os três alumínios saem na nota como SUCATA DE ALUMÍNIO; a tela, os pedidos e os comprovantes ficam com o nome normal",
+  "mostra": [
+   "Nome na nota",
+   "Alumínio latinha",
+   "Alumínio perfil",
+   "Alumínio bloco",
+   "Nota fiscal",
+   "SUCATA DE ALUMÍNIO",
+   "Tela",
+   "Pedidos",
+   "Comprovantes",
+   "linhas iguais"
+  ]
+ },
+ {
+  "cap": 4,
+  "id": "ilu04_onde",
+  "de": [
+   8,
+   "No",
+   1
+  ],
+  "ate": [
+   8,
+   "fiscal",
+   1
+  ],
+  "cauda": 0.6,
+  "resumo": "no material (e na planilha) vão o NCM e o nome na nota; CFOP, CST e ICMS ficam nos cenários fiscais, definidos pelo contador",
+  "mostra": [
+   "Nota fiscal",
+   "O que fica onde",
+   "No material",
+   "e na planilha",
+   "NCM",
+   "Nome na nota",
+   "Nos cenários fiscais",
+   "CFOP",
+   "CST",
+   "ICMS",
+   "mudam conforme",
+   "Operação",
+   "Regime",
+   "Parceiro",
+   "quem define",
+   "Contador"
+  ]
+ },
+ {
+  "cap": 5,
+  "id": "ilu05_gavetas",
+  "de": [
+   1,
+   "Grupo",
+   1
+  ],
+  "ate": [
+   1,
+   "nova",
+   1
+  ],
+  "cauda": 0.6,
+  "resumo": "grupo é uma gaveta: cada material na sua; o radiador ganha a gaveta nova Radiadores",
+  "mostra": [
+   "Grupos",
+   "Grupo é uma gaveta",
+   "Ferrosos",
+   "Cobre",
+   "Alumínio",
+   "Metais",
+   "Outros",
+   "Radiadores",
+   "Ferro pesado",
+   "Cobre mel",
+   "Alumínio latinha",
+   "Bronze",
+   "Papelão",
+   "Radiador de cobre"
+  ]
+ },
+ {
+  "cauda": 0.6,
+  "v3": "pendente",
+  "cap": 7,
+  "id": "ilu07_margem",
+  "de": [
+   2,
+   "dez",
+   1
+  ],
+  "ate": [
+   2,
+   "venda",
+   1
+  ],
+  "clima": "dados",
+  "resumo": "a margem é sempre sobre a compra: dez reais de compra com trinta por cento viram treze reais de venda",
+  "mostra": [
+   "Margem sobre a compra",
+   "Compra R$ 10,00",
+   "+ 30%",
+   "Venda R$ 13,00",
+   "venda = compra × (1 + margem)",
+   "em R$: venda = compra + margem"
+  ]
+ },
+ {
+  "cauda": 0.6,
+  "v3": "pendente",
+  "cap": 9,
+  "id": "ilu09_fora",
+  "de": [
+   5,
+   "No",
+   1
+  ],
+  "ate": [
+   5,
+   "compra",
+   1
+  ],
+  "clima": "dados",
+  "resumo": "o preço de venda não bate mais com a margem do material; o selo \"fora da margem\" recalcula a venda pela compra",
+  "mostra": [
+   "fora da margem",
+   "Alumínio latinha",
+   "Margem 19,35%",
+   "Venda R$ 7,80",
+   "Venda pela margem R$ 7,40"
+  ]
+ },
+ {
+  "cap": 11,
+  "id": "ilu11_vinculada",
+  "de": [
+   3,
+   "Vinculada",
+   1
+  ],
+  "ate": [
+   3,
+   "também",
+   1
+  ],
+  "cauda": 0.6,
+  "resumo": "a Tabela Depósitos é vinculada: acompanha a Principal com +4%, e quando o preço muda lá muda aqui também",
+  "mostra": [
+   "Preços",
+   "Tabela vinculada",
+   "Principal",
+   "Tabela Depósitos",
+   "+4%",
+   "Cobre mel",
+   "R$ 42,50",
+   "R$ 44,20",
+   "R$ 42,00"
+  ],
+  "clima": "dados",
+  "v3": "pendente"
+ },
+ {
+  "cap": 11,
+  "id": "ilu11_ordem",
+  "de": [
+   9,
+   "quando",
+   1
+  ],
+  "ate": [
+   9,
+   "material",
+   2
+  ],
+  "cauda": 0.6,
+  "resumo": "a ordem do preço: primeiro o personalizado do parceiro, depois a tabela do pedido, por último o preço do material",
+  "mostra": [
+   "Preços",
+   "A ordem do preço",
+   "Primeiro",
+   "Preço personalizado",
+   "cliente ou fornecedor",
+   "Depois",
+   "Tabela escolhida",
+   "no pedido",
+   "Por último",
+   "Preço do material"
+  ],
+  "clima": "dados",
+  "v3": "pendente"
+ },
+ {
+  "cauda": 0.6,
+  "v3": "pendente",
+  "cap": 12,
+  "id": "ilu12_ordem",
+  "de": [
+   5,
+   "A",
+   1
+  ],
+  "ate": [
+   5,
+   "principal",
+   1
+  ],
+  "clima": "dados",
+  "resumo": "qual tabela o pedido abre: primeiro a do cliente ou fornecedor, depois a que o usuário fixou, por último a principal da empresa",
+  "mostra": [
+   "Qual tabela o pedido abre",
+   "1. Tabela do cliente ou fornecedor",
+   "2. A tabela que você fixou",
+   "3. Principal da empresa"
+  ]
+ },
+ {
+  "cap": 13,
+  "id": "ilu13_transferir",
+  "de": [
+   3,
+   "transferir",
+   1
+  ],
+  "ate": [
+   3,
+   "misto",
+   1
+  ],
+  "cauda": 0.6,
+  "resumo": "na desmontagem, os 8 kg de ferro das cintas e suportes saem do Radiador de cobre e vão para o Ferro misto",
+  "mostra": [
+   "Estoque",
+   "Transferir entre materiais",
+   "Radiador de cobre",
+   "Ferro misto",
+   "8 kg de ferro"
+  ],
+  "clima": "fisico",
+  "v3": "pendente"
+ },
+ {
+  "cap": 14,
+  "id": "pdf14_estoque",
+  "tipo": "comprovante",
+  "cena": "pdf",
+  "de": [
+   1,
+   "Exportar",
+   1
+  ],
+  "ate": [
+   1,
+   "imprimir",
+   1
+  ],
+  "cauda": 0.6,
+  "clima": "dados",
+  "v3": "pendente",
+  "resumo": "o PDF \"Lista de Materiais\" aberto na aba nova, com os materiais e as colunas escolhidas",
+  "mostra": [
+   "Lista de Materiais",
+   "Recicla Vale Metais",
+   "Código",
+   "Nome",
+   "Estoque Atual",
+   "Preço de Venda",
+   "Radiador de cobre"
+  ]
+ },
+ {
+  "cap": 14,
+  "id": "pdf14_tabela",
+  "tipo": "comprovante",
+  "cena": "pdf",
+  "de": [
+   2,
+   "Seleciono",
+   1
+  ],
+  "ate": [
+   3,
+   "depósito",
+   1
+  ],
+  "cauda": 0.6,
+  "clima": "dados",
+  "v3": "pendente",
+  "resumo": "o PDF da Tabela de Preços da Tabela Depósitos em A4, com o preço de compra de cada material",
+  "mostra": [
+   "Tabela Depósitos",
+   "Tabela de Preços",
+   "Cobre mel",
+   "R$ 44,20",
+   "Bronze",
+   "Preço de compra"
+  ]
+ },
+ {
+  "cap": 15,
+  "id": "ilu15_arquivar",
+  "de": [
+   0,
+   "Por",
+   1
+  ],
+  "ate": [
+   0,
+   "lá",
+   1
+  ],
+  "cauda": 0.6,
+  "resumo": "excluir arquiva: o material sai da lista e das buscas, e as compras, as vendas e o histórico continuam",
+  "mostra": [
+   "Materiais",
+   "Excluir é arquivar",
+   "Lista e buscas",
+   "Ferro misto",
+   "Cobre mel",
+   "Radiador de cobre",
+   "apagar",
+   "arquiva",
+   "Compras",
+   "Vendas",
+   "Histórico"
+  ],
+  "clima": "fisico",
+  "v3": "pendente"
+ }
 ]

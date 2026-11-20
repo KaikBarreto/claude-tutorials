@@ -113,3 +113,6 @@ as gravações). Cada item diz a aula em que apareceu. **No fim da produção, v
   - T25: a Agenda já não conta o fiado em dobro; o gráfico de 6 meses termina no fim do período do filtro; o
     Marketplace saiu da rotina semanal.
   - Ordem de gravação lista a T25 duas vezes; as pendências pulam do 9 para o 11.
+
+## Achados no 1.60.18 (20/11)
+- **T02 · Relatório por Usuário**: o "Salvar PDF" depende de CDN (sem ela, não gera o arquivo).

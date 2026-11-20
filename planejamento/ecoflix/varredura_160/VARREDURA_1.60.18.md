@@ -131,5 +131,21 @@ Ensaio rápido sem MP4; uma linha por capítulo com falha (rc, passos falhos, 1�
 - 05 rc=1 SEM-ACTIONS Node.js v22.23.4
 - 08 rc=1 falhos=2 console=0 1a_falha=#9 hover 'Falar com atendente': 'alvo nao encontrado em 4s: {"selector":"[role=dialog][aria-label^=\\"Cato.ai\\"] button:has-text(\\"Falar com ate'
 
-## t22: 5 de 6 capítulos limpos
+## t22: 9 de 12 capítulos limpos
 - 05 rc=0 falhos=1 console=0 1a_falha=#0 hover 'Ranking por Lucro': 'alvo nao encontrado em 4s: {"text":"Ranking por Lucro","within":"main"}. Nenhum elemento casa: confira o texto'
+- 10 rc=1 falhos=1 console=0 1a_falha=#22 waitFor '': 'alvo nao encontrado em 8s: {"text":"Confirmar execução?"}. Nenhum elemento casa: confira o texto/papel (combob'
+- 11 rc=1 SEM-ACTIONS Node.js v22.23.4
+
+## t25: 9 de 12 capítulos limpos
+- 03 rc=1 falhos=1 console=0 1a_falha=#9 eval 'confere Ferro pesado, 50.000 kg': "page.evaluate: SyntaxError: Failed to execute 'querySelectorAll' on 'Document': 'main div.relative.group:has(>"
+- 07 rc=0 falhos=1 console=1 1a_falha=#7 hover 'Pressione Enter para abrir': 'alvo nao encontrado em 4s: {"selector":"[role=dialog] :text-is(\'Pressione Enter para abrir\')"}. Nenhum element'
+- 08 rc=1 falhos=1 console=0 1a_falha=#2 waitFor '': 'alvo nao encontrado em 15s: {"text":"Tarefas para hoje"}. Nenhum elemento casa: confira o texto/papel (combobo'
+
+## t26: 9 de 14 capítulos limpos
+- 09 rc=1 falhos=1 console=0 1a_falha=#1 waitFor '': 'alvo nao encontrado em 8s: {"selector":"main section:has(> header h2:text-is(\'Em contato\')) p:text-is(\'Retalho'
+- 10 rc=1 SEM-ACTIONS Node.js v22.23.4
+- 11 rc=1 SEM-ACTIONS Node.js v22.23.4
+- 12 rc=1 SEM-ACTIONS Node.js v22.23.4
+- 13 rc=1 SEM-ACTIONS Node.js v22.23.4
+
+## t27: 8 de 8 capítulos limpos

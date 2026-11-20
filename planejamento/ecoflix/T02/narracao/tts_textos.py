@@ -36,7 +36,7 @@ Pensa assim: a tela é a porta, e as ações são o que a pessoa pode fazer lá 
 Pra Juliana, eu ligo a tela Contas a Pagar e Receber. Abro as ações dela e ligo duas: Criar Conta e Dar Baixa em Conta. O contador mostra duas de quatro.
 Uma dica: primeiro a tela, depois as ações. Olha o que acontece se eu ligar o Registrar Venda com a tela Caixa desligada: o sistema avisa pra conferir a combinação, porque sem a tela a pessoa não chega no caixa. Desligo, e o aviso some.
 Pra achar mais rápido, tem a busca. Digito nota, e aparece o Fiscal e Ambiental. Ligo a tela e as ações de emitir /ˈẽniˈɛfiˈe/ e /ˈẽːniˈɛːfiˈɛːsiˈeː/.
-Do mesmo jeito, ligo o resto do escritório: o banco, o relatório financeiro, os pedidos e os clientes e fornecedores. O Caixa fica desligado.
+Do mesmo jeito, ligo o resto do escritório: o banco, o relatório financeiro, [pause] os pedidos [pause] e os clientes e fornecedores. O Caixa fica desligado.
 Uma dica: duas travas mandam mais que qualquer chave daqui. A primeira é o plano. Tela de módulo que a empresa não contratou nem aparece nesta lista, nem pro dono. Sem o módulo de Funcionários, por exemplo, ninguém vê a tela de Funcionários.
 A segunda é o próprio sistema, que confere a permissão de novo a cada operação, lá no servidor. Então não tem como contornar por fora.
 Criar Usuário, e a Juliana entra na equipe.""",
@@ -94,7 +94,7 @@ Sem o Criar Ticket de Pesagem com Valores e sem o Ver Totais e Valores Financeir
 Aqui não muda nada no Marcos, então eu cancelo.""",
 12: """Ainda nesta aba tem um botão que pouca gente nota: o Relatório por Usuário. Ele mostra quanto cada pessoa comprou e vendeu.
 Primeiro o período. Já vem em Este mês, e dá pra trocar por outro.
-Depois, quem entra. Vêm todos marcados. Tiro a Juliana, que não lança pedido. E dá pra desmarcar todos de uma vez, e marcar de novo.
+Depois, quem entra. Vêm todos marcados, e dá pra desmarcar todos de uma vez, e marcar de novo. Aqui eu tiro a Juliana, que não lança pedido.
 Dá pra baixar em Excel, ou abrir pra imprimir e salvar em PDF. O relatório traz as compras e as vendas de cada um, com os pedidos detalhados.""",
 13: """Pronto! Recapitulando: a gente achou a aba Usuários e Permissões, nas Configurações, e viu que ela depende da permissão Gerenciar Usuários.
 Criou o Marcos com nome, e-mail, a senha definida na hora e a foto, e deu a ele o Operador Padrão.
