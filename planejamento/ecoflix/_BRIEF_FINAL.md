@@ -35,7 +35,8 @@ nos três): copie `t03/edit/t03_mix.py` e `t03_music_bed.py` (mesmo som, pouca m
 4. **PDF e comprovante na tela**: toda fala sobre PDF/comprovante mostra o papel real (cena `comprovante` do
    `ilustracoes.json`, molde `T08/cenas_v3/comprovante.html`; o PDF sai do `actions.json` da gravação final).
 5. **Edição**: instale a área de edição sem ocupar disco à toa (`TUT_HOME=$TUT_HOME TUTORIAL=tNN PERFIL=ecoflix bash
-   instalar.sh`; `models` já é link). `specs.json` com título e kicker de cada capítulo (do `tts_textos.py` → `TITULOS` e
+   instalar.sh`; `models` já é link; troque a cópia `tNN/edit/cenas/node_modules`, 70 MB, por link simbólico para
+   `/home/claude/claude-tutorials/ferramentas/edit/cenas/node_modules`, como já estão T02, T03, T06 e T08). `specs.json` com título e kicker de cada capítulo (do `tts_textos.py` → `TITULOS` e
    `KICKERS`), zooms e destaques só onde a fala aponta algo pequeno, `acelera` nos silêncios longos; ilustrações renderizadas
    com a voz real (`render_ilus_v3.sh`, `--larg 1422 --dsf 1.35`, `piscadas.py` em cada uma) e encaixadas por `specs_ilus.py`;
    `montar_cap.py`, `auditar_camera.py` (zoom brusco, recorte, alvo fora do quadro), render dos capítulos, `finish.py`,
@@ -44,7 +45,7 @@ nos três): copie `t03/edit/t03_mix.py` e `t03_music_bed.py` (mesmo som, pouca m
    texto na tela sem travessão e sem dado real; título de capítulo certo; nada cortado; áudio sem estouro.
 7. **Entrega**: `entregar.py` → aula final 1080p em `tNN/edit/out/Tnn/aula_final.mp4` + legendas, e uma prévia 720p de até
    28 MB em `$TUT_HOME/entrega_previa/EcoFlix Tnn - <título> 1.60.22 (previa 720p).mp4`.
-8. **Disco** (sobra pouco: ~0,7 GB para tudo; na T02 chegou a zero no `finish.py`; a T03 de 23 min ocupou ~0,6 GB no fim): `proj` e `video_sem_audio.mp4` em
+8. **Disco** (sobra pouco: ~1,3 GB para tudo; na T02 chegou a zero no `finish.py`; a T03 de 23 min ocupou ~0,6 GB no fim): `proj` e `video_sem_audio.mp4` em
    `/dev/shm/tNN_*` (link simbólico em `out/Tnn/`), `df -h /` antes de cada passo pesado e pare se ficar abaixo de 600 MB; no fim, apague `out/Tnn/proj`, `out/Tnn/video_sem_audio.mp4` e as pastas
    `out/capNN` (regeráveis), sempre com caminho absoluto literal. Fica: `aula_final.mp4`, legendas, `capitulos.json`, a prévia,
    as gravações finais em `rec/tNN/` e as ilustrações em `out/ilus/`.
