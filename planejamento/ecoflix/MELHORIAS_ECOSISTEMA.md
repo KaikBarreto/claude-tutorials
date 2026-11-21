@@ -139,3 +139,4 @@ as gravações). Cada item diz a aula em que apareceu. **No fim da produção, v
 - **T20 (20/11)**: em Clientes e Fornecedores, o menu da linha abre no hover e intercepta o clique em "Editar" (o robô passou a
   clicar por script). O relatório do portal do parceiro sai como HTML, não PDF.
 - **T03 (21/11)**: a 1600 px de largura, a barra de seleção em massa de Materiais corta o botão "Excluir" e o X de fechar fica atrás do botão do Cato (com "Definir resíduo do MTR" a barra não cabe). Na aula a fala cita "Excluir" e ele mal aparece.
+- **T06 (21/11)**: no Saque, o aviso diz "Diminuirá em R$ 3006,50" (sem ponto de milhar). Nova Receita por Pix avisa "Depósito realizado com sucesso!" (não é depósito). No Fechar Caixa do 1.60.22, a tabela comprado e vendido por material saiu da "Projeção de Lucro" para o "Relatório de Pedidos do Caixa" (a Projeção ficou só com a lista por material).

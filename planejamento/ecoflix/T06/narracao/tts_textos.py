@@ -116,7 +116,7 @@ Clico em Fechar Caixa. A janela faz a conta do dia.
 Abriu com mil e quinhentos, e saíram quatrocentos e noventa e dois e noventa em compras e cinquenta reais de despesa, em dinheiro. A venda, a tarifa e a receita foram pelo banco, então não mexem na gaveta.
 Restante em caixa: novecentos e cinquenta e sete reais e dez centavos. É o que o sistema espera achar na gaveta.
 Cada cartão separa o que foi em dinheiro do que foi por Pix ou transferência. Só a coluna do dinheiro mexe na gaveta: as compras e o gás da empilhadeira.
-Abrindo a Projeção de Lucro, você confere o dia material por material: quanto comprou e quanto vendeu de cada um.
+A Projeção de Lucro mostra o dia material por material. E no Relatório de Pedidos do Caixa você confere quanto comprou e quanto vendeu de cada um.
 Agora vem a conferência. De um lado, o que o sistema espera. Do outro, o que você conta na gaveta.
 Se os dois batem, o caixa fecha sem diferença. Se não batem, a diferença fica registrada, pra mais ou pra menos.
 O Valor de Fechamento já vem com o esperado. Mesmo assim, conte a gaveta e digite o que contou.

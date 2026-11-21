@@ -28,7 +28,8 @@ nos três): copie `t03/edit/t03_mix.py` e `t03_music_bed.py` (mesmo som, pouca m
    atrasado. Atraso que nasce dentro da frase: respiro DEPOIS do trecho denso com `pausas.py NN T:DUR` (T na linha do tempo
    ORIGINAL, num vão REAL de silêncio do `emendas/capNN.orig.json`; confira o código de saída, nunca `| tail`), e o
    `acelera` no specs encurta o silêncio na edição. Na T08 a voz real saiu ~8% mais rápida que a estimada.
-3. **Gravação final**: script `rec/tNN/tNN_final.sh` no molde do da T08, tudo pela fila (`rec/fila.sh --prio NN`), um
+3. **Gravação final**: script `rec/tNN/tNN_final.sh` no molde do da T06 (grava com `--out /dev/shm/tNN_rec` e depois move
+   mp4, actions, telemetria e folha para `rec/tNN/`: os quadros de um capítulo de 160 s encheram o disco), tudo pela fila (`rec/fila.sh --prio NN`), um
    capítulo por vez, em segundo plano (prazo 7200000); olhe só no fim. Antes, `pgrep -af tNN_` vazio. Capítulo com
    `maxLate >= 0,8` ou passo falho: corrija e regrave só ele (no máximo 2 rodadas de regravação).
 4. **PDF e comprovante na tela**: toda fala sobre PDF/comprovante mostra o papel real (cena `comprovante` do
@@ -43,7 +44,7 @@ nos três): copie `t03/edit/t03_mix.py` e `t03_music_bed.py` (mesmo som, pouca m
    texto na tela sem travessão e sem dado real; título de capítulo certo; nada cortado; áudio sem estouro.
 7. **Entrega**: `entregar.py` → aula final 1080p em `tNN/edit/out/Tnn/aula_final.mp4` + legendas, e uma prévia 720p de até
    28 MB em `$TUT_HOME/entrega_previa/EcoFlix Tnn - <título> 1.60.22 (previa 720p).mp4`.
-8. **Disco** (sobra pouco: ~1,2 GB para tudo; na T02 chegou a zero no `finish.py`; a T03 de 23 min ocupou ~0,6 GB no fim): `proj` e `video_sem_audio.mp4` em
+8. **Disco** (sobra pouco: ~0,7 GB para tudo; na T02 chegou a zero no `finish.py`; a T03 de 23 min ocupou ~0,6 GB no fim): `proj` e `video_sem_audio.mp4` em
    `/dev/shm/tNN_*` (link simbólico em `out/Tnn/`), `df -h /` antes de cada passo pesado e pare se ficar abaixo de 600 MB; no fim, apague `out/Tnn/proj`, `out/Tnn/video_sem_audio.mp4` e as pastas
    `out/capNN` (regeráveis), sempre com caminho absoluto literal. Fica: `aula_final.mp4`, legendas, `capitulos.json`, a prévia,
    as gravações finais em `rec/tNN/` e as ilustrações em `out/ilus/`.
