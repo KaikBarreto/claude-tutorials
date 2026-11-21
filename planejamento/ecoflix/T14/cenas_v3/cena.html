@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- T14 "Bancos, cofre e conciliação bancária" · ilustrações no kit v3 (perfis/ecoflix/cenas_v3/LEIA.md), 16:9 (--larg 1422).
+     Uma função por CENA e CAPS[cap] diz o que cada capítulo ilustrado usa. As janelas (de/ate) estão em ../cenas/ilustracoes.json.
+     Âncoras por palavra (W) sobre a voz real ($TUT_HOME/t14/narracao/capNN.json), conferidas linha a linha (21/11).
+       cap00 · bancoSistema  (escuro)  ilu00_banco_sistema  "Extrato e sistema"   linhas 0 e 1: o extrato do banco menos o sistema dá a diferença; a meta é zerar (linha por linha), mas hoje ninguém sabe de onde ela vem
+       cap04 · cofreBanco    (claro)   ilu03_cofre_banco    "O cofre e o banco"   linha 0: o cofre (guardado + caixas abertos) mais o banco (as contas) dão o total da empresa
+       cap05 · soMuda        (escuro)  ilu04_lugar          "Só muda de lugar"    linha 5: transferência (Conta Secundária para Principal) e saque (para o cofre) só trocam o dinheiro de pote; o total não muda e fica fora da DRE
+       cap07 · conciliar     (escuro)  ilu05_conciliar      "O que é conciliar"   linhas 0 a 2: cada linha do extrato com seu par no sistema; diferença zero; a linha que sobra (a tarifa) é o que ficou sem lançar
+       cap08 · ofx           (escuro)  ilu06_ofx            "Exportar em OFX"     linha 0: no site ou app do banco, Extrato, Período, Exportar em OFX; o PDF é pra ler, o OFX é pra conciliar
+       cap12 · centavos      (escuro)  ilu10_centavos       "Data e valor diferentes"  linha 1: a venda do dia 3 (R$ 4.815,20) e o Pix do dia 9 (R$ 4.815,00): pagou depois e deixou os centavos de fora
+     Saíram do ilustracoes.json (21/11), porque a tela do app já mostra o assunto na hora da fala, ou a ideia está numa cena vizinha:
+       ilu11_ignorar  (cap13, linha 1)  a tela mostra as duas linhas (TARIFA AVULSA e o estorno), o robô marca as duas e a soma +R$ 0,00 aparece no zoom
+       ilu11_tarifa   (cap13, linha 4)  é uma dica falada; a tela mostra as duas linhas Ignorada, e a mesma regra volta no cap16 (linha 3: se a diferença não zerar, alguma linha foi ignorada sem motivo)
+       ilu12_repetidos (cap14, linha 1) a tela mostra os dois Pix de R$ 380,00 com o aviso âmbar e, na linha 2, a lista com as duas compras
+       ilu14_tres_numeros (cap16, linha 1) o rodapé com Saldo do banco, Saldo conciliado e Diferença (zero, em verde) está na tela na hora da fala
+       ilu17_outra_conta (cap17, linha 5) o aviso "Achamos este lançamento em outra conta" e o botão aparecem na própria linha, em zoom
+     Pendente: ilu01_extrato_pdf (cap01, linha 5): o robô ainda não gravou a T14 (não há PDF do Extrato no actions.json do cap01). Fala: "O Extrato gera o movimento
+       da conta em PDF ou em Excel, no período que você escolher." A tela já mostra a escolha do formato (o robô para o mouse em Formato, "PDF ou Excel", no diálogo Exportar Extrato Bancário).
+     Só textos e números da fala ou da tela (R$ 44.933,47 e R$ 45.236,97 são os saldos do cap00; os 4 pares e a tarifa de R$ 64,90 vêm do extrato do cap07 em diante;
+     R$ 4.815,20 e R$ 4.815,00, ditos no cap12).
+     Acabamento: node perfis/ecoflix/cenas_v3/auditar.cjs --aula planejamento/ecoflix/T14 --larg 1422
+     Render de uma janela: node ferramentas/edit/cenas/render_cenas.cjs <cap> <capNN.json> saida.mp4 \
+               --html planejamento/ecoflix/T14/cenas_v3/cena.html --larg 1422 --dsf 1.35 --de <s> --ate <s>
+     Ícones lucide usados (o nome tem de estar literal nesta página): 'landmark' 'monitor' 'scale' 'list' 'clock' 'coins' 'vault' 'lock' 'wallet' 'sigma' 'arrow-left-right' 'ban'
+     'arrow-up-right' 'receipt' 'circle-check' 'calendar-days' 'download' 'file-text' 'file-check' 'circle-help' -->
+</head><body>
+<script type="module">
+import { PI, cl, lerp, pr, eo, eio, eo5, eis, passa, golpe, W, el, ic, vis, foco, pulso, ondaEm, conta, titulo, posTitulo, selo,
+  htmlChip, htmlCartao, htmlOp, htmlFluxo, fluxo, CENA, GL, THREE, mat, caixa, malha, grupo, mundo, mancha, piso, anel, destaque, U, camera, posCam,
+  lugar, plano, clima, cena, estilo, enquadraRet }
+  from '../../../../perfis/ecoflix/cenas_v3/motor.js';
+import { ceuClaro, mundoEscuro } from '../../../../perfis/ecoflix/cenas_v3/fundo.js';
+import { htmlFluxoCartoes, fluxoCartoes, parte } from '../../../../perfis/ecoflix/cenas_v3/dados/fluxoCartoes.js';
+import { reais } from '../../../../perfis/ecoflix/cenas_v3/dados/base.js';
+import { cofre } from '../../../../perfis/ecoflix/cenas_v3/objetos/cofre.js';
+import { registradora } from '../../../../perfis/ecoflix/cenas_v3/objetos/registradora.js';
+import { banco } from '../../../../perfis/ecoflix/cenas_v3/objetos/banco.js';
+
+// =====================================================================================================================
+// comuns
+const NUNCA = 1e9, EE = .0112, ROTC = [-.2, .08, 0];
+const cores = () => estilo('t14-cor', `.chip.am{background:linear-gradient(150deg,#F7CB68,#E59A22);color:#3A2A06;border-color:rgba(255,255,255,.4);box-shadow:0 12px 22px -8px rgba(229,154,34,.6)}
+.selo.vm{background:linear-gradient(150deg,#FF9A8C,#E5564A);box-shadow:0 10px 18px -6px rgba(229,86,74,.6),inset 0 1px 0 rgba(255,255,255,.45)}`);
+const cartaoP = (icone, rot, sub, cls, cw = 190) => htmlFluxoCartoes({ cartoes: [[icone, rot, sub, cls]], cw });   // cartão pequeno (selo + rótulo + legenda)
+const subK = (p, i, t, a) => { const s = parte(p.e, i).querySelector('.d-s'); if (s) s.style.opacity = eo(pr(t, a, .3)).toFixed(3); };   // a legenda do cartão i entra na palavra que a diz
+const subDe = (p, t, a) => { const s = p.e.querySelector('.sub'); if (s) s.style.opacity = eo(pr(t, a, .3)).toFixed(3); };   // idem, para o degrau
+const poeTxt = (e, s) => { if (e && e.textContent !== s) e.textContent = s; };
+// o lugar do número até a fala dizer o valor (tracejado), como na T06 e na T08
+const vaga = (c, w = 236, cor = 'rgba(255,255,255,.3)') => el(`<div class="ab" style="left:22px;bottom:20px;width:${w}px;height:44px;border-radius:12px;border:2px dashed ${cor}"></div>`, c.e);
+const chega = (c, v, t, a) => { const k = eo(pr(t, a, .3)); c.e.querySelector('.num').style.opacity = k.toFixed(3); v.style.opacity = (1 - k).toFixed(3); };
+const some = (o, k) => { o.visible = k > .002; if (o.visible) o.scale.setScalar(k); };   // objeto 3D que entra crescendo (k passa de 1 e volta)
+// degrau: cartão baixo de uma linha (selo + nome + legenda opcional)
+const degrau = (icone, rot, sub, o = {}) => `<div class="cartao ${o.cc ?? ''}" style="position:relative;width:${o.w ?? 360}px;height:${o.h ?? 84}px;padding:0 20px;display:flex;align-items:center;gap:13px;white-space:nowrap">
+  ${selo(icone, o.cls ?? 'n', o.selo ?? 46)}<div><div class="rot">${rot}</div>${sub ? `<div class="sub">${sub}</div>` : ''}</div>${o.res ? '<div class="onda"></div>' : ''}</div>`;
+// um lugar do mundo escuro: posições em px do desenho (y para baixo)
+function escuro() {
+  const EIXO = lugar([0, 0, 0]), E = mundoEscuro(EIXO, 0, EE);
+  return { EIXO, X: (html, x, y, o = {}) => E(html, x * EE, -y * EE, 0, o), ret: (a, b, c, d) => [a * EE, -d * EE, c * EE, -b * EE], fundo: (cx, cy, o) => E.fundo(cx * EE, -cy * EE, o) };
+}
+const aqui = (p, x, y) => { p.pos[0] = x * EE; p.pos[1] = -y * EE; };
+const STAND = (t, tit, t0, sai) => { clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, t0 - .45, sai); };
+
+// =====================================================================================================================
+// CENA "bancoSistema" · cap00, linhas 0 e 1 · clima escuro (extrato do banco, sistema, diferença)
+// 0 "Oi! Neste tutorial a gente vai fazer o extrato do banco bater com o sistema da Recicla Vale Metais, linha por linha, até a diferença zerar."
+// 1 "Sabe quando o banco mostra um saldo, o sistema mostra outro, e ninguém sabe de onde vem a diferença? É isso que a gente resolve aqui."
+// Extrato do banco menos Sistema igual Diferença. Na linha 0 a meta: linha por linha, a diferença zera (R$ 0,00). Na linha 1 o problema:
+// os dois saldos aparecem diferentes e a diferença vira uma pergunta.
+function bancoSistema() {
+  const t0 = .4, tex = W(0, 'extrato'), tsi = W(0, 'sistema'), tli = W(0, 'linha'), tdf = W(0, 'diferenca'), tze = W(0, 'zerar'),
+    tba = W(1, 'banco'), tsa = W(1, 'saldo'), ts2 = W(1, 'sistema'), tou = W(1, 'outro'), tni = W(1, 'ninguem'), ton = W(1, 'onde'), td2 = W(1, 'diferenca'), tfim = W(1, 'aqui', 1, 'e');
+  cores();
+  const { EIXO, X, ret, fundo } = escuro(), CW = 330, PIT = CW + 92, Y = 0;
+  const cBan = X(htmlCartao('landmark', 'Extrato do banco', 'Saldo', 'R$ 44.933,47', { w: CW, h: 132 }), -PIT, Y);
+  const cSis = X(htmlCartao('monitor', 'Sistema', 'Saldo', 'R$ 45.236,97', { w: CW, h: 132 }), 0, Y);
+  const cDif = X(htmlCartao('scale', 'Diferença', 'até zerar', 'R$ 0,00', { w: CW, h: 132, res: true }), PIT, Y);
+  const opM = X(htmlOp('−'), -PIT / 2, Y, { z: 40 }), opI = X(htmlOp('='), PIT / 2, Y, { z: 40 });
+  const chL = X(htmlChip(`${ic('list', 18)}linha por linha`, 'n'), 0, 118, { anc: [.5, 0], z: 40 });
+  const vB = vaga(cBan, 236), vS = vaga(cSis, 236), vD = vaga(cDif, 236, 'rgba(108,240,168,.5)');
+  const nB = cBan.e.querySelector('.num'), nS = cSis.e.querySelector('.num'), nD = cDif.e.querySelector('.num'), sD = cDif.e.querySelector('.sub'), onD = cDif.e.querySelector('.onda');
+  fundo(0, 0, { aneis: false });
+  const tit = titulo('Conciliação', 'Extrato e sistema', 'escuro');
+  const S1 = enquadraRet(EIXO, ret(-PIT - CW / 2 - 8, -66 - 14, PIT + CW / 2 + 8, 118 + 50), { az: -.03, max: 1.4 / EE });
+  camera([[t0 - 3, S1], [tfim + 2.5, { ...S1, az: .03, d: S1.d * .985 }, 'lin']]);
+  return t => {
+    STAND(t, tit, t0);
+    vis(cBan.e, t, tex - .1, NUNCA, { dy: 18 }); vis(opM.e, t, tsi - .3, NUNCA, { dy: 10, sc: .8 }); vis(cSis.e, t, tsi - .1, NUNCA, { dy: 18 });
+    vis(chL.e, t, tli - .1, NUNCA, { dy: 10, sc: .8 });
+    vis(opI.e, t, tdf - .3, NUNCA, { dy: 10, sc: .8 }); vis(cDif.e, t, tdf - .1, NUNCA, { dy: 18 });
+    // a meta: a diferença zera; depois o problema: os saldos diferem e a diferença vira pergunta
+    chega(cBan, vB, t, tsa - .05); conta(nB, t, tsa - .05, 1.1, 0, 44933.47, reais); pulso(cBan.e, t, tba, .03, .8);
+    chega(cSis, vS, t, tou - .05); conta(nS, t, tou - .05, 1.1, 0, 45236.97, reais); pulso(cSis.e, t, ts2, .03, .8);
+    chega(cDif, vD, t, tze - .05); ondaEm(onD, t, tze + .05); pulso(cDif.e, t, tze + .05, .04, .8);
+    const q = t > tni - .05; poeTxt(nD, q ? '?' : 'R$ 0,00'); poeTxt(sD, q ? 'de onde vem' : 'até zerar'); nD.style.color = q ? 'var(--am)' : ''; sD.style.opacity = t > tze - .05 || q ? 1 : 0;
+    if (q) pulso(cDif.e, t, td2, .05, .8);
+    const a = eo(pr(t, tni - .05, .3)); void a; void ton;
+  };
+}
+
+// =====================================================================================================================
+// CENA "cofreBanco" · cap04, linha 0 · clima claro (o dinheiro vivo e o dinheiro nas contas)
+// 0 "Agora o cofre. Ele é todo o dinheiro vivo da empresa: o que está guardado e o que está nos caixas abertos. O banco é o dinheiro
+//    nas contas. Os dois juntos dão o total da empresa."
+// O cofre abre (guardado); a registradora aparece com a gaveta aberta (caixas abertos): juntos são o cofre. O banco entra (as contas).
+// Na conta da frente: Cofre mais Banco igual Total da empresa.
+function cofreBanco() {
+  const t0 = W(0, 'agora'), tco = W(0, 'cofre'), ttd = W(0, 'todo'), tgu = W(0, 'guardado'), tcx = W(0, 'caixas'), tab = W(0, 'abertos'),
+    tba = W(0, 'banco'), tct = W(0, 'contas'), tju = W(0, 'juntos'), tto = W(0, 'total'), tem = W(0, 'empresa', 2), tfim = W(0, 'empresa', 2, 'e');
+  cores();
+  piso({ r: 26, x: 0, z: 0, passo: 1.3 }); U.uNevoa.value.set(.955, .975, .965, .8); ceuClaro({ halo: [-.2, 3.2, -12] });
+  const SX = -2.6, RX = -.9, BX = 1.3;
+  const COF = cofre(CENA, [SX, 0, 0], { s: 1.25 }); COF.rotation.y = .16;
+  const REG = registradora(CENA, [RX, 0, .15], { s: 2.4, cupom: false }), BA = banco(CENA, [BX, 0, -1.8], { s: .34 });
+  const FX = [-3.0, .3, 3.6], FY = .52, FZ = 5.6, EC = .0062, CWD = 322;
+  const cart = (i, ...a) => plano(htmlCartao(...a), { pos: [FX[i], FY, FZ], rot: ROTC, esc: EC });
+  const c1 = cart(0, 'vault', 'DINHEIRO (COFRE)', 'todo o dinheiro vivo', '', { w: CWD, h: 108 }), c2 = cart(1, 'landmark', 'Banco', 'o dinheiro nas contas', '', { w: CWD, h: 108 }),
+    c3 = cart(2, 'sigma', 'Total da empresa', 'os dois juntos', '', { w: CWD, h: 108, res: true });
+  const oM = plano(htmlOp('+'), { pos: [(FX[0] + FX[1]) / 2, FY, FZ + .03], rot: ROTC, esc: EC }), oI = plano(htmlOp('='), { pos: [(FX[1] + FX[2]) / 2, FY, FZ + .03], rot: ROTC, esc: EC });
+  const on3 = c3.e.querySelector('.onda'), sC = FX.map(x => mancha(2.0, .8, [x, 0, FZ - .1], { op: 0 }));
+  const chip = (txt, x, y) => plano(htmlChip(txt, 'n'), { pos: [x, y, 0], rot: ROTC, esc: .0098, anc: [.5, 1] });
+  const chG = chip(`${ic('lock', 18)}guardado`, SX - .45, 2.42), chA = chip(`${ic('wallet', 18)}nos caixas abertos`, RX + .5, 2.42), chC = chip(`${ic('landmark', 18)}nas contas`, BX, 2.95);
+  const tit = titulo('Cofre', 'O cofre e o banco');
+  const P1 = { x: -.7, y: 1.45, z: 2.4, d: 13.4, az: .1, el: .2 }, P2 = { x: -.1, y: 1.5, z: 2.4, d: 14.2, az: .06, el: .2 }, P3 = { x: .3, y: 1.55, z: 2.4, d: 15.0, az: .03, el: .2 };
+  camera([[t0 - 3, P1], [tba - .9, { ...P1, d: 13.2, az: .09 }, 'lin'], [tba + .6, P2], [tju - .4, { ...P2, d: 14.4, az: .05 }, 'lin'], [tju + .8, P3], [tfim + 2.5, { ...P3, d: 15.2, az: .02 }, 'lin']]);
+  return t => {
+    GL.style.opacity = eo(pr(t, t0 + .08, .5)).toFixed(3); posTitulo(tit, t, t0 - .9, t0 - .45);
+    // o cofre: abre em "todo o dinheiro vivo"; a registradora é um caixa aberto
+    COF.userData.abre(eio(pr(t, ttd - .25, .95)));
+    some(REG, passa(pr(t, tcx - .2, .6), 1.3)); REG.userData.abre(eio(pr(t, tab - .1, .55)));
+    some(BA, passa(pr(t, tba - .2, .6), 1.3));
+    vis(chG.e, t, tgu - .1, NUNCA, { dy: 10, sc: .8 }); vis(chA.e, t, tcx - .1, NUNCA, { dy: 10, sc: .8 }); vis(chC.e, t, tct - .1, NUNCA, { dy: 10, sc: .8 });
+    // a conta da frente
+    vis(c1.e, t, tco - .1, NUNCA, { dy: 22 }); vis(oM.e, t, tba - .3, NUNCA, { sc: .6, dy: 0 }); vis(c2.e, t, tba - .1, NUNCA, { dy: 22 });
+    vis(oI.e, t, tju - .1, NUNCA, { sc: .6, dy: 0 }); vis(c3.e, t, tto - .1, NUNCA, { dy: 22, sc: .94 }); pulso(c3.e, t, tem, .04, .8); ondaEm(on3, t, tem);
+    [c1, c2, c3].forEach((c, i) => { sC[i].material.uniforms.uOp.value = .55 * Math.min(1, +c.e.style.opacity || 0); });
+  };
+}
+
+// =====================================================================================================================
+// CENA "soMuda" · cap05, linha 5 · clima escuro (o dinheiro só troca de pote)
+// 5 "Uma dica: transferência entre contas suas, saque e depósito só mudam o dinheiro de lugar. A empresa não fica mais rica nem mais pobre,
+//    então nada disso entra na DRE."
+// Conta Secundária, Conta Principal e o cofre numa fileira; a transferência e o saque são as setas entre eles; o dinheiro só muda de lugar;
+// o Total da empresa não muda e fica fora da DRE.
+function soMuda() {
+  const t0 = W(5, 'uma'), ttr = W(5, 'transferencia'), tct = W(5, 'contas'), tsa = W(5, 'saque'), tso = W(5, 'so'), tlu = W(5, 'lugar'),
+    tem = W(5, 'empresa'), tna = W(5, 'nao'), tpo = W(5, 'pobre'), tnd = W(5, 'nada'), tdr = W(5, 'dre'), tfim = W(5, 'dre', 1, 'e');
+  cores();
+  const { EIXO, X, ret, fundo } = escuro(), YR = -60, YT = 150;
+  const fl = X(htmlFluxoCartoes({ cartoes: [['landmark', 'Conta Secundária', '', 'n'], ['landmark', 'Conta Principal', '', 'n'], ['vault', 'DINHEIRO (COFRE)', '', 'n']], cw: 230, vao: 150 }), 0, YR);
+  const VAO = 150, CWR = (fl.w - 2 * VAO) / 3, x1 = -fl.w / 2 + CWR + VAO / 2, x2 = -fl.w / 2 + 2 * CWR + 1.5 * VAO, YC = YR - fl.h / 2 - 14;
+  const chTr = X(htmlChip(`${ic('arrow-left-right', 18)}Transferência`, 'n'), x1, YC, { anc: [.5, 1], z: 40 }), chSa = X(htmlChip(`${ic('landmark', 18)}Saque`, 'n'), x2, YC, { anc: [.5, 1], z: 40 });
+  const chLu = X(htmlChip('só muda de lugar', 'am'), 0, 36, { anc: [.5, 0], z: 40 });
+  const tot = X(htmlCartao('sigma', 'Total da empresa', 'Não muda', '', { w: 330, h: 96, mt: 0 }), -90, YT);
+  const chDr = X(htmlChip(`${ic('ban', 18)}Fora da DRE`, 'am'), -90 + 165 + 34, YT, { anc: [0, .5], z: 40 }); chDr.e.style.transformOrigin = '0 50%';
+  fundo(0, 40, { aneis: false });
+  const tit = titulo('Movimentações', 'Só muda de lugar', 'escuro');
+  const XR = Math.max(fl.w / 2, -90 + 165 + 34 + chDr.w);
+  const S1 = enquadraRet(EIXO, ret(-Math.max(fl.w / 2, 255) - 8, YC - 46, XR + 8, YT + 48 + 6), { az: -.03, max: 1.4 / EE });
+  camera([[t0 - 3, S1], [tfim + 2.5, { ...S1, az: .03, d: S1.d * .985 }, 'lin']]);
+  return t => {
+    STAND(t, tit, t0);
+    fluxoCartoes(fl.e, t, ttr - .1, NUNCA, { tempos: [ttr - .05, tct - .05, tsa - .05] });
+    vis(chTr.e, t, ttr, NUNCA, { dy: 10, sc: .8 }); vis(chSa.e, t, tsa, NUNCA, { dy: 10, sc: .8 });
+    vis(chLu.e, t, tso - .05, NUNCA, { dy: 10, sc: .8 }); pulso(chLu.e, t, tlu, .05, .8);
+    vis(tot.e, t, tem - .1, NUNCA, { dy: 18 }); { const s = tot.e.querySelector('.sub'); s.style.opacity = eo(pr(t, tna - .1, .3)).toFixed(3); } pulso(tot.e, t, tpo, .03, .8);
+    vis(chDr.e, t, tdr - .15, NUNCA, { dy: 10, sc: .8 }); pulso(chDr.e, t, tdr + .05, .05, .8); void tnd;
+  };
+}
+
+// =====================================================================================================================
+// CENA "conciliar" · cap07, linhas 0 a 2 · clima escuro (cada linha do extrato com seu par)
+// 0 "Com as contas em dia, a conciliação. Conciliar é conferir cada linha do extrato do banco com um lançamento do sistema."
+// 1 "Quando toda linha tem par, a diferença entre o saldo do banco e o do sistema chega a zero."
+// 2 "E a linha que sobra mostra o que ficou sem lançar, como uma tarifa que ninguém viu. É isso que deixa o fechamento do mês certo."
+// Duas colunas: o extrato do banco (quatro linhas) e os lançamentos do sistema, ligados par a par; com todas pareadas a Diferença é R$ 0,00;
+// aparece uma linha a mais (TARIFA PACOTE SERVICOS, R$ 64,90) sem par: é o que ficou sem lançar.
+function conciliar() {
+  const t0 = W(0, 'com'), tex = W(0, 'extrato'), tli = W(0, 'linha'), tlc = W(0, 'lancamento'), tsi = W(0, 'sistema'),
+    tpa = W(1, 'par'), tdf = W(1, 'diferenca'), tze = W(1, 'zero'),
+    tso = W(2, 'sobra'), tse = W(2, 'sem'), tni = W(2, 'ninguem'), tfe = W(2, 'fechamento'), tce = W(2, 'certo'), tfim = W(2, 'certo', 1, 'e');
+  cores();
+  const { EIXO, X, ret, fundo } = escuro(), RW = 360, XL = -255, XR = 255, YH = -188, RY = [-122, -48, 26, 100], YT = 174, YD = 296;
+  const P = [['03/11', '−R$ 2.250,00'], ['05/11', '−R$ 6.800,00'], ['09/11', '−R$ 180,00'], ['10/11', '−R$ 1.874,30']];
+  const row = (ic1, rot, sub, cls, x, y) => X(degrau(ic1, rot, sub, { w: RW, h: 64, selo: 40, cls }), x, y);
+  const hB = X(htmlChip(`${ic('landmark', 18)}Extrato do banco`, 'n'), XL, YH, { z: 40 }), hS = X(htmlChip(`${ic('monitor', 18)}Lançamentos do sistema`, 'n'), XR, YH, { z: 40 });
+  const L = P.map(([d, v], i) => row('arrow-up-right', v, d, 'vm', XL, RY[i])), R = P.map(([d, v], i) => row('receipt', v, d, 'n', XR, RY[i]));
+  const FW = 150, FY0 = RY[0] - 10, FH = RY[3] - RY[0] + 20, fi = X(htmlFluxo(FW, FH, RY.map(y => `M10 ${y - FY0}H${FW - 10}`)), 0, FY0, { anc: [.5, 0], z: -40 });
+  const rT = row('receipt', 'TARIFA PACOTE SERVICOS', '−R$ 64,90', 'a', XL, YT), chS = X(htmlChip(`${ic('clock', 18)}sem lançar`, 'am'), XR, YT, { z: 40 });
+  const dif = X(htmlCartao('scale', 'Diferença', 'saldo do banco e do sistema', 'R$ 0,00', { w: 420, h: 132, res: true }), 0, YD), vD = vaga(dif, 236, 'rgba(108,240,168,.5)'), onD = dif.e.querySelector('.onda');
+  const chF = X(htmlChip(`${ic('circle-check', 18)}fechamento do mês certo`), 210 + 14, YD, { anc: [0, .5], z: 40 }); chF.e.style.transformOrigin = '0 50%';
+  fundo(0, 40, { aneis: false });
+  const tit = titulo('Conciliação', 'O que é conciliar', 'escuro');
+  const XE = 210 + 14 + chF.w;
+  const S1 = enquadraRet(EIXO, ret(-RW - 75 - 8, YH - 30, Math.max(RW + 75, XE) + 8, YD + 70), { az: -.03, max: 1.4 / EE });
+  camera([[t0 - 3, S1], [tfim + 2.5, { ...S1, az: .03, d: S1.d * .985 }, 'lin']]);
+  return t => {
+    STAND(t, tit, .4);
+    fi.e.style.opacity = eo(pr(t, tlc, .3)).toFixed(3);
+    vis(hB.e, t, tex - .1, NUNCA, { dy: 10, sc: .85 }); vis(hS.e, t, tlc - .1, NUNCA, { dy: 10, sc: .85 }); void tsi;
+    L.forEach((p, i) => vis(p.e, t, tex + .25 + .17 * i, NUNCA, { dy: 18 }));
+    R.forEach((p, i) => { const a = tlc + .12 + .17 * i; vis(p.e, t, a, NUNCA, { dy: 18 }); fluxo(fi.e, i, t, a - .3, .55, { fica: .75, luz: [tpa - .15 + .13 * i, .8] }); });
+    // com todas pareadas, a diferença é zero
+    vis(dif.e, t, tdf - .1, NUNCA, { dy: 18 }); chega(dif, vD, t, tze - .05); ondaEm(onD, t, tze + .05); pulso(dif.e, t, tze + .05, .04, .8);
+    // a linha que sobra
+    vis(rT.e, t, tso - .1, NUNCA, { dy: 18 }); vis(chS.e, t, tse - .05, NUNCA, { dy: 10, sc: .8 }); pulso(rT.e, t, tni, .04, .8);
+    dif.e.style.opacity = ((+dif.e.style.opacity || 0) * lerp(1, .5, eo(pr(t, tso, .4)))).toFixed(4);
+    vis(chF.e, t, tfe - .1, NUNCA, { dy: 10, sc: .8 }); pulso(chF.e, t, tce, .05, .8); void tli;
+  };
+}
+
+// =====================================================================================================================
+// CENA "ofx" · cap08, linha 0 · clima escuro (o caminho no banco e o formato)
+// 0 "O extrato sai do site ou do app do banco. Você abre o extrato, escolhe o período e exporta no formato OFX. O PDF serve pra ler;
+//    pra conciliar, é o OFX."
+// Em cima: Extrato (site ou app do banco), Período, Exportar (OFX). Embaixo: o PDF é pra ler; o OFX é pra conciliar.
+function ofx() {
+  const t0 = W(0, 'o'), tex = W(0, 'extrato'), tsi = W(0, 'site'), tab = W(0, 'abre'), tpe = W(0, 'periodo'), tes = W(0, 'escolhe'), tex2 = W(0, 'exporta'), tfo = W(0, 'formato'),
+    tpd = W(0, 'pdf'), tse = W(0, 'serve'), tle = W(0, 'ler'), tpr = W(0, 'pra', 2), tcn = W(0, 'conciliar'), tof = W(0, 'ofx', 2), tfim = W(0, 'ofx', 2, 'e');
+  cores();
+  const { EIXO, X, ret, fundo } = escuro(), YA = -110, YB = 105;
+  const fl = X(htmlFluxoCartoes({ cartoes: [['landmark', 'Extrato', 'site ou app do banco', 'n'], ['calendar-days', 'Período', 'você escolhe', 'n'], ['download', 'Exportar', 'formato OFX', 'res']], cw: 230, vao: 110 }), 0, YA);
+  const pdf = X(htmlFluxoCartoes({ cartoes: [['file-text', 'PDF', 'pra ler', 'n']], cw: 230 }), -140, YB), of = X(htmlFluxoCartoes({ cartoes: [['file-check', 'OFX', 'pra conciliar', 'res']], cw: 230 }), 140, YB);
+  fundo(0, 0, { aneis: false });
+  const tit = titulo('Extrato', 'Exportar em OFX', 'escuro');
+  const S1 = enquadraRet(EIXO, ret(-fl.w / 2 - 8, YA - fl.h / 2 - 6, fl.w / 2 + 8, YB + pdf.h / 2 + 6), { az: -.03, max: 1.4 / EE });
+  camera([[t0 - 3, S1], [tfim + 2.5, { ...S1, az: .03, d: S1.d * .985 }, 'lin']]);
+  return t => {
+    STAND(t, tit, .4);
+    fluxoCartoes(fl.e, t, tex - .1, NUNCA, { tempos: [tex - .05, tpe - .05, tex2 - .05] });
+    subK(fl, 0, t, tsi); subK(fl, 1, t, tes); subK(fl, 2, t, tfo); void tab;
+    fluxoCartoes(pdf.e, t, tpd - .1, NUNCA, { tempos: [tpd - .1] }); subK(pdf, 0, t, tle); pulso(parte(pdf.e, 0), t, tse, .03, .8);
+    fluxoCartoes(of.e, t, tpr - .1, NUNCA, { tempos: [tpr - .1] }); subK(of, 0, t, tcn); pulso(parte(of.e, 0), t, tof, .05, .8);
+  };
+}
+
+// =====================================================================================================================
+// CENA "centavos" · cap12, linha 1 · clima escuro (a venda do dia 3 e o Pix do dia 9)
+// 1 "É que a venda foi registrada no dia três, por quatro mil oitocentos e quinze reais e vinte. A Serra Fina pagou depois e deixou os
+//    centavos de fora."
+// O Pix do dia 9 (R$ 4.815,00) já estava na tela; entra a venda do dia 3 (R$ 4.815,20); a seta "pagou depois" liga as duas e a diferença
+// de R$ 0,20 fica marcada.
+function centavos() {
+  const t0 = W(1, 'e'), tve = W(1, 'venda'), tdi = W(1, 'dia'), tqu = W(1, 'quatro'), tvi = W(1, 'vinte'), tpg = W(1, 'pagou'), tde = W(1, 'depois'), tce = W(1, 'centavos'), tfo = W(1, 'fora'), tfim = W(1, 'fora', 1, 'e');
+  cores();
+  const { EIXO, X, ret, fundo } = escuro(), CW = 440, GAP = 220, XL = -(CW + GAP) / 2, XR = (CW + GAP) / 2, Y = 0;
+  const cV = X(htmlCartao('receipt', 'Venda', '03/11 · Serra Fina Alumínio Reciclagem', 'R$ 4.815,20', { w: CW, h: 132 }), XL, Y);
+  const cP = X(htmlCartao('landmark', 'Pix recebido', '09/11 · Serra Fina Alumínio', '+R$ 4.815,00', { w: CW, h: 132 }), XR, Y);
+  const vV = vaga(cV, 236);
+  const FY0 = Y - 12, fi = X(htmlFluxo(GAP, 24, [`M10 12H${GAP - 10}`]), 0, FY0, { anc: [.5, 0], z: -40 });
+  const chD = X(htmlChip(`${ic('clock', 18)}pagou depois`, 'n'), 0, Y - 38, { anc: [.5, 1], z: 40 });
+  const chC = X(htmlChip(`${ic('coins', 18)}dif. −R$ 0,20`, 'am'), 0, 120, { anc: [.5, 0], z: 40 });
+  fundo(0, 0, { aneis: false });
+  const tit = titulo('Buscar lançamento', 'Data e valor diferentes', 'escuro');
+  const S1 = enquadraRet(EIXO, ret(XL - CW / 2 - 8, Y - 66 - 14, XR + CW / 2 + 8, 120 + 50), { az: -.03, max: 1.4 / EE });
+  camera([[t0 - 3, S1], [tfim + 2.5, { ...S1, az: .03, d: S1.d * .985 }, 'lin']]);
+  return t => {
+    STAND(t, tit, .4);
+    fi.e.style.opacity = eo(pr(t, tpg - .3, .3)).toFixed(3);
+    vis(cP.e, t, t0, NUNCA, { dy: 18 });
+    vis(cV.e, t, tve - .1, NUNCA, { dy: 18 }); pulso(cV.e, t, tdi, .03, .8); chega(cV, vV, t, tqu - .05); conta(cV.e.querySelector('.num'), t, tqu - .05, 2.2, 0, 4815.20, reais); pulso(cV.e, t, tvi + .2, .04, .8);
+    fluxo(fi.e, 0, t, tpg - .2, .6, { fica: .75, luz: [tpg - .2, .9] }); vis(chD.e, t, tpg - .05, NUNCA, { dy: 10, sc: .8 }); pulso(chD.e, t, tde, .05, .8); pulso(cP.e, t, tde + .2, .03, .8);
+    vis(chC.e, t, tce - .1, NUNCA, { dy: -10, sc: .8 }); pulso(chC.e, t, tfo, .05, .8);
+  };
+}
+
+// =====================================================================================================================
+const CAPS = { 0: bancoSistema, 4: cofreBanco, 5: soMuda, 7: conciliar, 8: ofx, 12: centavos };
+cena(d => CAPS[d.cap](d), { fov: 26 });
+</script></body></html>
