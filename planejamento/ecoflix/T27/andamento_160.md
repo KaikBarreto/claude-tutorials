@@ -18,3 +18,6 @@ Falta: reensaio completo de 06 e 03 (hovers encurtados); `cenas/tempos/` ficou c
 
 **Frases só com ilustração (sem tela real):** cap05 L3 (tabela de preços, ticket, fechamento: cartões), L5 (QR com logo: o pedido do robô não tem foto), L7 (comprovante do Portal), L8 (rosto no ponto e Logo para Nota Fiscal); cap06 L7 (documentos seguem sem rodapé); cap03 L8 (logo escuro some: o logo do mundo é a versão clara); cap01 L3 (gaveta que não aparece: a tela só mostra a gaveta presente).
 **Achados para o MELHORIAS:** (1) com White Label ligado e logo removido o cartão diz "Seu logo está sendo exibido no lugar do logo EcoSistema" e o selo "Ativo" (falso naquele estado); (2) "Nome Exibido no Sistema" segue sem uso; (3) cor sem "#" é salva com "salvas!" e nada muda, sem validação; (4) o "Seguir o tema" fica em Aparência, fora do White Label, e o logo escuro some no menu padrão; (5) a cobertura de 20/11 errou sobre o interruptor travado (corrigido acima).
+
+## 21/11 16:56 · reensaio da coordenação
+- Completos: cap06 0 falho, maxLate 0,70; cap03 0 falho, 0,07. Instância 54327 derrubada. **T27 pronta para a voz.**

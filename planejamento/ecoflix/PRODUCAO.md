@@ -1151,3 +1151,4 @@ Decisões:
 - 21/11 15:50 **T25 pronta para a voz**: reensaio completo de 04, 07 e 10 com 0 falho (maxLate 0,27 / 3,03 / 2,21, voz estimada). T27 despachada (Sonnet).
 - 21/11 1x:xx **T27 aplicada no 1.60.22** (Sonnet): 9 caps (novo cap06 Desligar e voltar atrás), 6.061 caracteres; rápido e completo 0 falho; cobertura corrigida (o interruptor não trava sem logo). Reensaio de 06 e 03 rodando (coordenação, instância 54327).
 - 21/11 1x:xx **T21 em 3 etapas**: o ajudante Sonnet esgotou o contexto na pesquisa (o Cato virou agente: cartões de ação, NF-e, memória, rotinas; plano de 18 caps). Pesquisa e mundo sobreposto em `T21/andamento_160.md`. Etapa 1 (fala, roteiro com as respostas do Cato conferidas no código) despachada (Sonnet); etapa 2 (handlers do overlay, sementes) e 3 (robô, ensaio) depois.
+- 21/11 16:56 **T27 pronta para a voz**: reensaio de 06 e 03 com 0 falho (maxLate 0,70 / 0,07).
