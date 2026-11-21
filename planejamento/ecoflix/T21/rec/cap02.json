@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
@@ -135,12 +135,17 @@
    "timeout": 4
   },
   {
+   "do": "mark",
+   "name": "L2",
+   "at": 6.07
+  },
+  {
    "do": "hover",
    "target": {
     "selector": "[role=dialog]:has-text(\"Antes da primeira conversa com o Cato\") li:has-text(\"O Cato lê os dados da sua conta\")"
    },
    "seconds": 0.8,
-   "at": 2.3,
+   "at": 7.97,
    "label": "a câmera desce pelos pontos (1º)",
    "optional": true,
    "timeout": 4
@@ -151,20 +156,15 @@
     "selector": "[role=dialog]:has-text(\"Antes da primeira conversa com o Cato\") li:has-text(\"Pra montar a resposta, esses trechos passam\")"
    },
    "seconds": 0.6,
-   "at": 3.97,
+   "at": 14.26,
    "label": "a câmera desce pelos pontos (2º)",
    "optional": true,
    "timeout": 4
   },
   {
-   "do": "mark",
-   "name": "L2",
-   "at": 6.07
-  },
-  {
    "do": "eval",
    "js": "(async()=>{const d=[...document.querySelectorAll('[role=dialog]')].find(x=>x.innerText.includes(\"Antes da primeira conversa com o Cato\"));if(!d)return 'SEM ALVO';const c=[...d.querySelectorAll('*')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);if(!c)return 'sem rolagem (cabe)';const y0=c.scrollTop,dy=c.scrollHeight-c.clientHeight-y0;c.scrollTop=y0+dy;return 'fundo '+Math.round(c.scrollTop)})()",
-   "at": 16.31,
+   "at": 23.82,
    "label": "sob a ilustração: o miolo da janela rola até o fim (pontos de voz, erros e botões)"
   },
   {
@@ -218,7 +218,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const d=[...document.querySelectorAll('[role=dialog]')].find(x=>x.innerText.includes(\"Antes da primeira conversa com o Cato\"));if(!d)return 'SEM ALVO';const c=[...d.querySelectorAll('*')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);if(!c)return 'sem rolagem (cabe)';const y0=c.scrollTop,dy=c.scrollHeight-c.clientHeight-y0;c.scrollTop=y0+dy;return 'fundo '+Math.round(c.scrollTop)})()",
-   "at": 43.48,
+   "at": 38.32,
    "label": "sob o corte do Marcos: a janela no fim (o botão à vista)"
   },
   {
@@ -267,11 +267,6 @@
    "timeout": 8
   },
   {
-   "do": "waitFor",
-   "selector": "[role=dialog][aria-label^=\"Cato.ai\"]",
-   "timeout": 8
-  },
-  {
    "do": "hover",
    "target": {
     "selector": "[data-sonner-toast]:has-text(\"Cato autorizado\")"
@@ -280,17 +275,6 @@
    "at": 55.32,
    "label": "aviso Cato autorizado",
    "noScroll": true,
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] p:has-text(\"Oi, Rafael\")"
-   },
-   "seconds": 1.0,
-   "at": 58.03,
-   "label": "o painel do Cato abre à direita",
    "optional": true,
    "timeout": 4
   },

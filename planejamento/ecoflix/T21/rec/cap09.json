@@ -1,0 +1,473 @@
+{
+ "name": "t21-cap09",
+ "title": "T21 · Cap. 9 · Contas, caixa e banco (narração ESTIMADA 65,5 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "seed": "t21-cap09",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 900,
+  "y": 560
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t14/inicio",
+  "t14/apos-cap02",
+  "t14/apos-cap03",
+  "t14/apos-cap04",
+  "t14/apos-cap06",
+  "t14/apos-cap07",
+  "t14/apos-cap08",
+  "t14/apos-cap09",
+  "t14/apos-cap10",
+  "t14/apos-cap11",
+  "t14/apos-cap12",
+  "t14/apos-cap14",
+  "t15/inicio",
+  "t15/apos-cap01",
+  "t15/apos-cap02",
+  "t15/apos-cap10",
+  "t21/inicio",
+  "t21/apos-cap02",
+  "t21/apos-cap03",
+  "t21/apos-cap06"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "selector": "button[aria-label=\"Sair\"]",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/materiais"
+  },
+  {
+   "do": "waitFor",
+   "selector": "button[aria-label=\"Abrir o Cato\"]",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[aria-label=\"Abrir o Cato\"]"
+   },
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "selector": "[role=dialog][aria-label^=\"Cato.ai\"]",
+   "timeout": 10
+  },
+  {
+   "do": "wait",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|indispon[ií]vel|SEM RESPOSTA SIMULADA|Deu um problema|N[ãa]o consegui/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
+   },
+   "at": 2.56,
+   "label": "campo Pergunte ao Cato (A5)",
+   "noScroll": true
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
+   },
+   "text": "Dá baixa na primeira parcela da Fundição Bandeira do Vale, recebi por Pix na Conta Principal",
+   "cps": 40,
+   "at": 3.31,
+   "label": "digita: Dá baixa na primeira parcela da Fundição Bandeira do Vale, recebi por Pix na Conta Principal",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[aria-label=\"Enviar\"]"
+   },
+   "at": 10.2,
+   "label": "Enviar (A5)",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Confirmar registro",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] :text(\"Fatura venda #1731\") >> nth=-1"
+   },
+   "seconds": 0.6,
+   "at": 14.24,
+   "label": "cartão: Registrar recebimento, Fatura venda #1731 (parcela 1/3), R$ 4.790,00",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 9.79
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:has-text(\"Confirmar registro\") >> nth=-1",
+    "noScroll": true
+   },
+   "at": 10.09,
+   "label": "clique em Confirmar registro"
+  },
+  {
+   "do": "waitFor",
+   "text": "Conta baixada",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 13.41
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
+   },
+   "at": 23.62,
+   "label": "campo Pergunte ao Cato (A6)",
+   "noScroll": true
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
+   },
+   "text": "Abre o caixa ",
+   "cps": 40,
+   "at": 24.37,
+   "label": "digita: Abre o caixa ",
+   "noClick": true
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 25.6
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
+   },
+   "text": "com 1.500 reais",
+   "cps": 40,
+   "at": 25.6,
+   "label": "digita (continua): com 1.500 reais",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[aria-label=\"Enviar\"]"
+   },
+   "at": 27.1,
+   "label": "Enviar (A6)",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Confirmar abertura",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:has-text(\"Confirmar abertura\") >> nth=-1",
+    "noScroll": true
+   },
+   "at": 30.68,
+   "label": "clique em Confirmar abertura"
+  },
+  {
+   "do": "waitFor",
+   "text": "Caixa aberto",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
+   },
+   "at": 31.06,
+   "label": "campo Pergunte ao Cato (A7)",
+   "noScroll": true
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
+   },
+   "text": "Lança uma saíd",
+   "cps": 40,
+   "at": 31.81,
+   "label": "digita: Lança uma saíd",
+   "noClick": true
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 33.16
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
+   },
+   "text": "a de 85 reais no caixa, gás da empilhadeira, categoria Combustível",
+   "cps": 40,
+   "at": 33.16,
+   "label": "digita (continua): a de 85 reais no caixa, gás da empilhadeira, categoria Combustível",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[aria-label=\"Enviar\"]"
+   },
+   "at": 38.23,
+   "label": "Enviar (A7)",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Confirmar lançamento",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:has-text(\"Confirmar lançamento\") >> nth=-1",
+    "noScroll": true
+   },
+   "at": 39.08,
+   "label": "clique em Confirmar lançamento"
+  },
+  {
+   "do": "waitFor",
+   "text": "Lançamento no caixa registrado",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
+   },
+   "at": 43.94,
+   "label": "campo Pergunte ao Cato (A8)",
+   "noScroll": true
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
+   },
+   "text": "Transfere 2.000",
+   "cps": 40,
+   "at": 44.69,
+   "label": "digita: Transfere 2.000",
+   "noClick": true
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 46.04
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
+   },
+   "text": " da Conta Secundária pra Conta Principal",
+   "cps": 40,
+   "at": 46.04,
+   "label": "digita (continua):  da Conta Secundária pra Conta Principal",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[aria-label=\"Enviar\"]"
+   },
+   "at": 49.29,
+   "label": "Enviar (A8)",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Confirmar transferência",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] :text(\"Conta Secundária\") >> nth=-1"
+   },
+   "seconds": 0.8,
+   "at": 53.34,
+   "label": "cartão: saldo de cada conta antes e depois",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:has-text(\"Confirmar transferência\") >> nth=-1",
+    "noScroll": true
+   },
+   "at": 53.63,
+   "label": "clique em Confirmar transferência"
+  },
+  {
+   "do": "waitFor",
+   "text": "Transferência registrada",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
+   },
+   "at": 53.18,
+   "label": "campo Pergunte ao Cato (A9)",
+   "noScroll": true
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 54.28
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
+   },
+   "text": "Fecha o caixa, contei 1.415",
+   "cps": 40,
+   "at": 54.28,
+   "label": "digita: Fecha o caixa, contei 1.415",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[aria-label=\"Enviar\"]"
+   },
+   "at": 56.62,
+   "label": "Enviar (A9)",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Confirmar fechamento",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] :text(\"Saldo esperado\") >> nth=-1"
+   },
+   "seconds": 1.0,
+   "at": 60.67,
+   "label": "cartão: Saldo esperado e Saldo contado (diferença R$ 0,00)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:has-text(\"Confirmar fechamento\") >> nth=-1",
+    "noScroll": true
+   },
+   "seconds": 1.2,
+   "at": 63.31,
+   "label": "Confirmar fechamento (sem clicar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 65.5
+  }
+ ]
+}

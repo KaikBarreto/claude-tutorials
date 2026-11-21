@@ -1181,13 +1181,14 @@ def cap14():
     c.click(SEL(f"{TAREFA} button:has-text('/2026')"), at=c.A(2, 'quinta,', 0.8), label='Data * (abre o calendário)')
     c.click(SEL(f"{POP} button[name=day]:text-is('12')"), at=c.A(2, 'doze,', 0.6), label='dia 12', noScroll=True)
     c.select(SEL(f'{TAREFA} button[role=combobox]', hasText='Média'), 'Alta', at=c.A(2, 'prioridade', 0.9), label='Prioridade: Alta')
-    c.confere(TAREFA, ['Enviar proposta', JEQ, 'Rafael Nogueira', '12/11/2026', 'Alta'], 'Nova tarefa preenchida')
+    c.confere_campos(['Enviar proposta'], 'título da Nova tarefa', escopo=TAREFA)
+    c.confere(TAREFA, [JEQ, 'Rafael Nogueira', '12/11/2026', 'Alta'], 'Nova tarefa preenchida')
     c.click(BTN('Salvar', within=TAREFA), at=c.A(2, 'Salvar.', 0.8), label='Salvar (Nova tarefa)')
     c.waitfor(text='Tarefa criada', timeout=10)
     c.mark(3)
     c.hover(CARD_TAREFA('Pendente', 'Enviar proposta'), 0.8, at=c.A(3, 'Pendente.', 0.6), label='Enviar proposta em Pendente')
     c.wait(1.2)
-    c.drag(CARD_TAREFA('Pendente', 'Enviar proposta'), COL_TAREFA('Em andamento'), at=c.A(3, 'Comecei', 0.4), hold=0.5,
+    c.drag(CARD_TAREFA('Pendente', 'Enviar proposta'), SEL("main div.rounded-xl:has(> div > h3:text-is('Em andamento')) div.flex-1.rounded-lg"), at=c.A(3, 'Comecei', 0.4), hold=0.5,
            label='arrasta Enviar proposta para Em andamento')
     c.waitfor(target=CARD_TAREFA('Em andamento', 'Enviar proposta'), timeout=8)
     c.mark(4)

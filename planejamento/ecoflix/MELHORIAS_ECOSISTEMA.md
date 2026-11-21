@@ -145,3 +145,4 @@ as gravações). Cada item diz a aula em que apareceu. **No fim da produção, v
 - **T25 (21/11)**: a janela "Tarefas para hoje" não abre (1.60.18 e 1.60.22). O texto "Pressione Enter para abrir" sai quebrado por um `kbd` no meio. O "?" não abre a lista de atalhos. Na configuração do Dashboard ainda aparecem "Card Lucro" e "Evolução do Lucro".
 - **T27 (21/11)**: com o White Label ligado e o logo removido, o cartão segue dizendo "Seu logo está sendo exibido". O campo "Nome Exibido" não é usado em lugar nenhum. Cor digitada sem "#" é salva com a mensagem de sucesso e nada muda.
 - **T21 (21/11)**: "Ver itens e tributos" do Cato (`CatoFiscalDetails`) não é renderizado em lugar nenhum no 1.60.22 (componente órfão).
+- **T26 (21/11)**: no 1.60.22 o chip da tarefa na Agenda deixou de ser botão; no kanban de tarefas, a área de soltar é só uma faixa de 80 px (difícil acertar o arrasto). Corrigidos no 1.60.22: achados 1, 2 e 6 da T26 e o histórico vazio.

@@ -1,0 +1,454 @@
+{
+ "name": "t21-cap14",
+ "title": "T21 · Cap. 14 · Pedidos, rotinas e revisões (narração ESTIMADA 42,1 s; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "seed": "t21-cap14",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 900,
+  "y": 560
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t14/inicio",
+  "t14/apos-cap02",
+  "t14/apos-cap03",
+  "t14/apos-cap04",
+  "t14/apos-cap06",
+  "t14/apos-cap07",
+  "t14/apos-cap08",
+  "t14/apos-cap09",
+  "t14/apos-cap10",
+  "t14/apos-cap11",
+  "t14/apos-cap12",
+  "t14/apos-cap14",
+  "t15/inicio",
+  "t15/apos-cap01",
+  "t15/apos-cap02",
+  "t15/apos-cap10",
+  "t21/inicio",
+  "t21/apos-cap02",
+  "t21/apos-cap03",
+  "t21/apos-cap06"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "selector": "button[aria-label=\"Sair\"]",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/materiais"
+  },
+  {
+   "do": "waitFor",
+   "selector": "button[aria-label=\"Abrir o Cato\"]",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[aria-label=\"Abrir o Cato\"]"
+   },
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "selector": "[role=dialog][aria-label^=\"Cato.ai\"]",
+   "timeout": 10
+  },
+  {
+   "do": "wait",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
+   },
+   "noScroll": true
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
+   },
+   "text": "Lança uma compra de 120 kg de alumínio latinha da Aparecida Ramos, a 6,20",
+   "cps": 140,
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[aria-label=\"Enviar\"]"
+   },
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Nenhuma compra foi lançada",
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "seconds": 1.2
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
+   },
+   "noScroll": true
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
+   },
+   "text": "Pix, pela Conta Principal",
+   "cps": 140,
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[aria-label=\"Enviar\"]"
+   },
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Lançar compra",
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "seconds": 1.2
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:has-text(\"Lançar compra\") >> nth=-1"
+   },
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "lançada",
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "seconds": 1.2
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
+   },
+   "noScroll": true
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
+   },
+   "text": "Lança uma venda de 500 kg de alumínio perfil pra Serra Fina, a 10,40, no saldo, vencimento 10/12",
+   "cps": 140,
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[aria-label=\"Enviar\"]"
+   },
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Lançar venda",
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "seconds": 1.2
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:has-text(\"Lançar venda\") >> nth=-1"
+   },
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "lançada",
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "seconds": 1.2
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|indispon[ií]vel|SEM RESPOSTA SIMULADA|Deu um problema|N[ãa]o consegui/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button[aria-label=\"Mais opções do Cato\"]",
+    "noScroll": true
+   },
+   "at": 0.81,
+   "label": "três pontinhos (Mais opções do Cato)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=menuitem]:has-text(\"Acompanhar pedidos\")",
+    "noScroll": true
+   },
+   "at": 2.08,
+   "label": "Acompanhar pedidos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Pedidos lançados por você no Cato",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] :text(\"Para acompanhar\") >> nth=-1"
+   },
+   "seconds": 1.0,
+   "at": 9.29,
+   "label": "Para acompanhar: a venda da Serra Fina e a compra da Aparecida",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button[aria-label=\"Voltar à conversa\"]",
+    "noScroll": true
+   },
+   "at": 11.1,
+   "label": "Voltar à conversa"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 12.0
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button[aria-label=\"Mais opções do Cato\"]",
+    "noScroll": true
+   },
+   "at": 12.0,
+   "label": "três pontinhos (de novo)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=menuitem]:has-text(\"Suas rotinas\")",
+    "noScroll": true
+   },
+   "at": 13.0,
+   "label": "Suas rotinas"
+  },
+  {
+   "do": "waitFor",
+   "text": "Ver sinais agora",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:has-text(\"Ver sinais agora\")",
+    "noScroll": true
+   },
+   "at": 14.65,
+   "label": "clique em Ver sinais agora"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] :text(\"Estoque sem saída\") >> nth=-1"
+   },
+   "seconds": 1.5,
+   "at": 18.67,
+   "label": "sinais: Estoque sem saída há pelo menos 30 dias",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 22.75
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:has-text(\"Programar\")",
+    "noScroll": true
+   },
+   "at": 23.73,
+   "label": "Programar (Agendamentos)"
+  },
+  {
+   "do": "waitFor",
+   "text": "O que acompanhar",
+   "timeout": 8
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] select#cato-routine-focus",
+    "noScroll": true
+   },
+   "option": "Contas a vencer e vencidas",
+   "at": 27.25,
+   "label": "O que acompanhar: Contas a vencer e vencidas",
+   "optional": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] #cato-routine-enabled",
+    "noScroll": true
+   },
+   "at": 29.04,
+   "label": "liga Receber este resumo"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:has-text(\"Salvar agendamento\") >> nth=-1",
+    "noScroll": true
+   },
+   "at": 32.66,
+   "label": "clique em Salvar agendamento"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button[aria-label=\"Voltar à conversa\"]",
+    "noScroll": true
+   },
+   "at": 32.06,
+   "label": "Voltar à conversa"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 32.96
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button[aria-label=\"Mais opções do Cato\"]",
+    "noScroll": true
+   },
+   "at": 32.96,
+   "label": "três pontinhos (de novo)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=menuitem]:has-text(\"Respostas revisadas\")",
+    "noScroll": true
+   },
+   "at": 39.31,
+   "label": "Respostas revisadas"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nenhuma resposta revisada",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] :text(\"Nenhuma resposta revisada\") >> nth=-1"
+   },
+   "seconds": 1.5,
+   "at": 39.97,
+   "label": "Nenhuma resposta revisada",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 42.05
+  }
+ ]
+}

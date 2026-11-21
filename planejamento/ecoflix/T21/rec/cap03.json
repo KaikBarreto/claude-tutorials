@@ -1,6 +1,6 @@
 {
  "name": "t21-cap03",
- "title": "T21 · Cap. 3 · As perguntas prontas (narração ESTIMADA 43,1 s; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T21 · Cap. 3 · A memória do Cato (narração ESTIMADA 68,9 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t21-cap03",
  "pace": 0.5,
  "cps": 40,
@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
@@ -112,168 +112,239 @@
    "target": {
     "selector": "button[aria-label=\"Abrir o Cato\"]"
    },
-   "at": 1.75,
-   "label": "abre o Cato (o painel abre à direita)",
+   "at": 0.25,
+   "label": "abre o Cato",
    "noScroll": true
   },
   {
    "do": "waitFor",
-   "text": "Pergunte o que quiser sobre seu negócio",
+   "text": "Quer que o Cato lembre de você?",
    "timeout": 8
   },
   {
-   "do": "eval",
-   "js": "JSON.stringify({rota:location.pathname,prontas:[...document.querySelectorAll('[role=dialog][aria-label^=\\\"Cato.ai\\\"] button')].map(b=>b.innerText.trim()).filter(t=>t.endsWith('?')).slice(0,6)})",
-   "label": "as perguntas prontas da tela"
-  },
-  {
    "do": "hover",
    "target": {
-    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] div.max-w-sm button >> nth=0"
+    "text": "Quer que o Cato lembre de você?",
+    "exact": true
    },
-   "seconds": 0.3,
-   "at": 4.28,
-   "label": "as quatro perguntas prontas (1ª)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] div.max-w-sm button >> nth=3"
-   },
-   "seconds": 0.4,
-   "at": 5.67,
-   "label": "as quatro perguntas prontas (4ª)",
+   "seconds": 1.0,
+   "at": 2.53,
+   "label": "janela Quer que o Cato lembre de você?",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 7.74
+   "at": 5.17
   },
   {
    "do": "hover",
    "target": {
-    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] div.max-w-sm button >> nth=2"
+    "text": "Ele guarda apenas preferências declaradas",
+    "within": "[role=dialog]:has-text(\"Quer que o Cato lembre de você?\")"
    },
-   "seconds": 0.3,
-   "at": 8.58,
-   "label": "clicar numa delas",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
-   },
-   "seconds": 0.8,
-   "at": 10.17,
-   "label": "campo Pergunte ao Cato…",
-   "noScroll": true,
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "button[aria-label=\"Enviar\"]"
-   },
-   "seconds": 0.8,
-   "at": 13.44,
-   "label": "botão Enviar",
-   "noScroll": true,
+   "seconds": 2.5,
+   "at": 7.59,
+   "label": "ZOOM Ele guarda apenas preferências declaradas e assuntos recentes. Saldos, preços e quantidades são sempre consultados novamente no sistema.",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 15.08
+   "at": 21.38
   },
   {
-   "do": "click",
+   "do": "hover",
    "target": {
-    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:has-text(\"Como tá indo meu negócio esse mês?\")"
+    "text": "A memória é pessoal dentro desta empresa",
+    "within": "[role=dialog]:has-text(\"Quer que o Cato lembre de você?\")"
    },
-   "at": 16.34,
-   "label": "clique em Como tá indo meu negócio esse mês?"
-  },
-  {
-   "do": "waitFor",
-   "text": "Pensando…",
-   "timeout": 6
+   "seconds": 2.0,
+   "at": 21.93,
+   "label": "ZOOM A memória é pessoal dentro desta empresa. Ela não é compartilhada com outros usuários e não guarda senhas, documentos ou autorizações.",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 20.06
+   "at": 29.55
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Agora não",
+    "exact": true,
+    "within": "[role=dialog]:has-text(\"Quer que o Cato lembre de você?\")"
+   },
+   "seconds": 0.4,
+   "at": 34.55,
+   "label": "Agora não (sem clicar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Usar memória",
+    "exact": true,
+    "within": "[role=dialog]:has-text(\"Quer que o Cato lembre de você?\")"
+   },
+   "at": 31.32,
+   "label": "clique em Usar memória"
   },
   {
    "do": "waitFor",
-   "text": "Consultei seu resumo financeiro",
-   "timeout": 12
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] li:has-text(\"Vendas: R$ 118.620,20\")"
-   },
-   "seconds": 1.2,
-   "at": 25.52,
-   "label": "ZOOM Vendas R$ 118.620,20",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] strong:has-text(\"R$ 69.589,55\")"
-   },
-   "seconds": 1.5,
-   "at": 29.85,
-   "label": "ZOOM resultado R$ 69.589,55",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Vendas: R$ 118.620,20\", \"R$ 69.589,55\", \"Regime de caixa\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog][aria-label^=\\\"Cato.ai\\\"]\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
-   "label": "confere R1 na tela"
+   "gone": "[role=dialog]:has-text(\"Quer que o Cato lembre de você?\")",
+   "timeout": 8
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 34.68
+   "at": 36.58
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] [role=toolbar] button:has-text(\"Memória\")"
+   },
+   "at": 39.34,
+   "label": "botão Memória (embaixo do painel)",
+   "noScroll": true
   },
   {
    "do": "waitFor",
-   "text": "Compara com outubro",
-   "timeout": 6
+   "text": "Memória do Cato",
+   "timeout": 8
   },
   {
    "do": "hover",
    "target": {
-    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:has-text(\"Compara com outubro\")"
+    "text": "Lembrar entre conversas",
+    "exact": true
    },
-   "seconds": 0.4,
-   "at": 36.35,
-   "label": "sugestões de próxima pergunta (1ª)",
+   "seconds": 0.6,
+   "at": 43.33,
+   "label": "Memória do Cato, aba Minha memória, chave Lembrar entre conversas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog]:has-text(\"Memória do Cato\") button:has-text(\"Adicionar nota\")"
+   },
+   "at": 42.35,
+   "label": "Adicionar nota"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#cato-memory-note"
+   },
+   "text": "Prefiro os valores em tabela, do maior para o menor.",
+   "cps": 30,
+   "at": 43.55,
+   "label": "digita a nota"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog]:has-text(\"Memória do Cato\") button:has-text(\"Salvar nota\")"
+   },
+   "at": 43.94,
+   "label": "Salvar nota"
+  },
+  {
+   "do": "waitFor",
+   "text": "Prefiro os valores em tabela",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog]:has-text(\"Memória do Cato\") button[aria-label=\"Editar memória\"] >> nth=0"
+   },
+   "seconds": 0.5,
+   "at": 44.14,
+   "label": "lápis (Editar memória)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "hover",
    "target": {
-    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:has-text(\"Quais despesas tive esse mês?\")"
+    "selector": "[role=dialog]:has-text(\"Memória do Cato\") button[aria-label=\"Apagar memória\"] >> nth=0"
    },
-   "seconds": 1.2,
-   "at": 39.01,
-   "label": "sugestões (2ª; a 3ª fica fora da faixa, que rola de lado)",
+   "seconds": 0.5,
+   "at": 43.23,
+   "label": "lixeira (Apagar memória)",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog]:has-text(\"Memória do Cato\") button:has-text(\"Apagar toda a minha memória\")"
+   },
+   "seconds": 0.8,
+   "at": 36.98,
+   "label": "Apagar toda a minha memória (sem clicar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 47.56
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Notas e preferências expiram em 90 dias",
+    "within": "[role=dialog]:has-text(\"Memória do Cato\")"
+   },
+   "seconds": 2.0,
+   "at": 48.64,
+   "label": "ZOOM Notas e preferências expiram em 90 dias; assuntos recentes, em 30 dias. Pausar não apaga o que foi salvo.",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 58.31
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog]:has-text(\"Memória do Cato\") button:has-text(\"Da empresa\")"
+   },
+   "at": 59.21,
+   "label": "aba Da empresa"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "A equipe com acesso total pode publicar",
+    "within": "[role=dialog]:has-text(\"Memória do Cato\")"
+   },
+   "seconds": 1.5,
+   "at": 66.12,
+   "label": "ZOOM A equipe com acesso total pode publicar contexto útil para todos.",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 68.21,
+   "label": "fecha a janela da memória",
+   "optional": true
   },
   {
    "do": "eval",
@@ -283,7 +354,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 43.09
+   "at": 68.92
   }
  ]
 }

@@ -10,7 +10,7 @@ são os do código do 1.60.22, conferidos no ensaio; `rec/t26/gerar.py` é a fon
 - **Capítulos:** 17 (0 a 16). Novos em 21/11: 8 (automação com várias ações), 12 (checklist na oportunidade), 13 (probabilidade, origem e tarefas). Renumerados: Nova oportunidade 8→9, Arrastar o cartão 9→10, A ficha 10→11, Tarefas e Agenda 11→14, Filtros 12→15 (agora também com Perdidos, a ordem na coluna e arrastar para Ganho), Recapitulando 13→16.
 - **Vinhetas (áreas):** CRM · CRM · FUNIS · ESTÁGIOS · REGRAS · AUTOMAÇÕES · MODELOS · AUTOMAÇÕES · OPORTUNIDADES · KANBAN · OPORTUNIDADES · OPORTUNIDADES · OPORTUNIDADES · TAREFAS · FILTROS · RESUMO (todos os capítulos menos o 0)
 - **FAKE_NOW:** `2026-11-10T08:30:00-03:00` nos capítulos 0 a 14; `2026-11-10T17:30:00-03:00` nos 15 e 16 (o fim do dia, com seis oportunidades). Desktop, tema claro, logado como Rafael Nogueira (MASTER). Cada capítulo abre um navegador novo com a semente indicada (`rec/t26/gerar.py` → SEMENTE).
-- **Fala:** 2.943 palavras (antes 1.817). Sem travessão; número por extenso; valores calculados só depois de vistos na tela no ensaio (R$ 23.650,00 e R$ 37.000,00 do cap15 saíram do ensaio).
+- **Fala:** 2.943 palavras (antes 1.817). Sem travessão; número por extenso; valores calculados só depois de vistos na tela no ensaio (R$ 23.650,00, R$ 37.000,00 e 25/11 foram vistos na tela no ensaio).
 - Marcas: `[ILUSTRAÇÃO: ...]` desenho por código no estilo da marca, nunca tela inventada (ver `cenas/ilustracoes.json`).
 
 
