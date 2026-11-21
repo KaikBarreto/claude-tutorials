@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- T13 "Contas a Pagar e Receber" · o PAPEL REAL do comprovante na tela (kit v3, clima claro: papel é mundo físico). Molde: T10/cenas_v3/pdf.html.
+     Pedido do Kaik (19/11): toda fala de PDF ou comprovante mostra o papel real, sem redesenho; a câmera passeia e o marca-texto verde acompanha a fala.
+     O PDF é o que o robô anexa à conta no cap16 ($TUT_HOME/rec/t13/assets/comprovante-pix-energia-outubro.pdf, A4 em pé, 1 página, documento fictício
+     do tutorial). A edição o deixa, fora do git, em $TUT_HOME/t13/edit/out/comprovantes/ :
+       cap16-comprovante.png   pdftoppm -r 350 -png -singlefile   (o .bbox.html ao lado traz as coordenadas em pontos: pdftotext -bbox)
+     Janela (../cenas/ilustracoes.json), sobre a voz real ($TUT_HOME/t13/narracao/cap16.json):
+       cap16 · linha 2 · pdf16_comprovante_pix_energia  "Anexar, e escolho o comprovante. O arquivo sobe na hora, com o aviso Anexo adicionado. Pode ser PDF ou foto, até do celular."
+     Marca-texto: o título na palavra "comprovante"; o bloco com pagador, referente, valor e data em "arquivo" (o que sobe na conta).
+     Render: render_cenas.cjs <cap> <capNN.json> saida.mp4 --html .../pdf.html --anexo $TUT_HOME/t13/edit/out/comprovantes
+             --larg 1422 --dsf 1.35 --de <s> --ate <s>.  Auditoria: auditar.cjs --aula planejamento/ecoflix/T13 --larg 1422 -->
+</head><body>
+<script type="module">
+import { pr, eo, W, vis, titulo, posTitulo, GL, mancha, piso, U, camera, plano, cena, estilo, enquadraRet }
+  from '../../../../perfis/ecoflix/cenas_v3/motor.js';
+import { ceuClaro } from '../../../../perfis/ecoflix/cenas_v3/fundo.js';
+
+const NUNCA = 1e9;
+// O papel é desenhado MAIOR que no quadro (K px por pt) para o Chromium não ampliar a camada. FOLHA: A4 em pé.
+const FOLHA = { wpt: 595, K: 2.4, E: .008 / 2.4 };
+
+// marcas: [x0, y0, x1, y1]; marca-texto que cresce da esquerda
+function papel(src, o) {
+  const K = o.K, WP = Math.round(o.wpt * K), HPX = Math.round(o.hpt * K), m = K * o.E, r = 4.2 * K;
+  estilo('folha13', `
+.folha{position:relative;background:#fff}
+.folha img{display:block;width:100%;height:100%;border-radius:inherit}
+.folha .mk{position:absolute;background:rgba(80,208,136,.46);mix-blend-mode:multiply;transform-origin:0 50%;transform:scaleX(0)}`);
+  const mk = Object.entries(o.marcas).map(([id, [x0, y0, x1, y1]]) =>
+    `<i class="mk" data-m="${id}" style="left:${(x0 * K).toFixed(1)}px;top:${(y0 * K).toFixed(1)}px;width:${((x1 - x0) * K).toFixed(1)}px;height:${((y1 - y0) * K).toFixed(1)}px;border-radius:${(2.8 * K).toFixed(1)}px"></i>`).join('');
+  const s = 1.45, sombra = `0 ${(22.7 * K * s).toFixed(0)}px ${(40 * K * s).toFixed(0)}px ${(-12 * K * s).toFixed(0)}px rgba(30,80,60,.38),0 ${(5.4 * K * s).toFixed(0)}px ${(10.8 * K * s).toFixed(0)}px ${(-4 * K * s).toFixed(0)}px rgba(30,80,60,.14)`;
+  const yc = HPX * o.E / 2 + .45;
+  return { ...o, m, yc, html: `<div class="folha" style="width:${WP}px;height:${HPX}px;border-radius:${r}px;box-shadow:${sombra}"><img src="${src}" alt="">${mk}</div>` };
+}
+function marca(e, id, t, a, d = .45) { const mk = (e._mk ??= {})[id] ??= e.querySelector(`[data-m="${id}"]`); mk.style.transform = `scaleX(${eo(pr(t, a, d)).toFixed(4)})`; }
+// trecho do papel (pt, de cima para baixo; por padrão na largura inteira) em metros: para enquadraRet
+const faixa = (P, y0, y1, x0 = 0, x1 = P.wpt) => [(x0 - P.wpt / 2) * P.m, P.yc + (P.hpt / 2 - y1) * P.m, (x1 - P.wpt / 2) * P.m, P.yc + (P.hpt / 2 - y0) * P.m];
+const palco = (r = 24) => { piso({ r, x: 0, z: -2, passo: 1.3 }); U.uNevoa.value.set(.955, .975, .965, .8); ceuClaro({ halo: [.2, 3.6, -12] }); };
+const poe = (P, larg = 5.2) => ({ p: plano(P.html, { pos: [0, P.yc, 0], esc: P.E, sangra: true }), s: mancha(larg, 1.6, [0, 0, .1], { op: 0 }) });
+const ALTO = (P, y1, o = {}) => enquadraRet(null, faixa(P, 0, y1), { topo: 150, margem: 48, el: .02, az: .04, ...o });
+const PERTO = (P, y0, y1, o = {}) => enquadraRet(null, faixa(P, y0, y1, o.x0, o.x1), { topo: 70, margem: 56, el: .015, az: .02, ...o });
+// a janela abre com o título já no alto e o papel chegando
+const abre = (t, a, tit, sai, P, a0 = a - 1.7) => { posTitulo(tit, t, Math.max(a0, a - 1.7), a - 1.3, sai); vis(P.p.e, t, a - .6, NUNCA, { dy: 72 }); };
+
+// =====================================================================================================================
+// cap16, linha 2 · o comprovante do Pix da energia (A4 em pé): o título em "comprovante" e, em "arquivo", o bloco do pagador ao valor e à data
+function comprovante16(d) {
+  const t0 = W(2, 'anexar'), tco = W(2, 'comprovante'), tar = W(2, 'arquivo'), tsu = W(2, 'sobe'), tpd = W(2, 'pdf'), tfim = W(2, 'celular', 1, 'e');
+  palco(26);
+  const P = papel(`${d.anexo}/cap16-comprovante.png`, { ...FOLHA, hpt: 842, marcas: { tit: [55, 72, 462, 86], blo: [55, 108, 357, 176] } }), F = poe(P, 5.2);
+  const tit = titulo('Anexo', 'O comprovante do Pix');
+  const A = ALTO(P, 205, { margem: 56, az: .05 }), B = PERTO(P, 62, 186, { x0: 36, x1: 482, margem: 50, az: .02 });
+  camera([[t0 - 3, A], [tco - .1, { ...A, d: A.d * .985, az: .045 }, 'lin'], [tar - .05, B], [tfim + 2, { ...B, d: B.d * .985, az: .0 }, 'lin']]);
+  return t => {
+    GL.style.opacity = eo(pr(t, t0 - .25, .35)).toFixed(3); abre(t, t0, tit, tar - .45, F);
+    F.s.material.uniforms.uOp.value = .55 * (+F.p.e.style.opacity || 0);
+    marca(F.p.e, 'tit', t, tco - .05); marca(F.p.e, 'blo', t, tar + .05, .6);
+  };
+}
+
+const CAPS = { 16: comprovante16 };
+cena(d => CAPS[d.cap](d), { fov: 26 });
+</script></body></html>

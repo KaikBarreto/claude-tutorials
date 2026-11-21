@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- T11 "Produção" · ilustrações no kit v3 (perfis/ecoflix/cenas_v3/LEIA.md), 16:9 (--larg 1422). Molde: T10/cenas_v3/cena.html.
+     Uma função por CENA e CAPS[cap] diz o que cada capítulo ilustrado usa. As janelas (de/ate) estão em ../cenas/ilustracoes.json.
+       cap00 · patio       (claro)   ilu00_patio       "O problema do pátio"      linha 1: a latinha chega solta, com terra, água e aço; prensada vira fardo; quanto custou cada quilo?
+       cap01 · caminho     (escuro)  ilu01_caminho     "O caminho da produção"    linhas 1 a 3: ficha, ordem, lançamento, estoque e custo
+       cap03 · por_quilo   (escuro)  ilu03_por_quilo   "Quanto entra por quilo"   linha 6: a ficha leva 1 kg e a ordem multiplica (500 kg de fardo, 50 kg de cobre)
+       cap04 · ima         (claro)   ilu04_ima         "O coproduto"              linha 1: no ímã saem as latas de aço, que viram chaparia; quanto sai, só depois de separar
+       cap09 · tolerancia  (escuro)  ilu09_tolerancia  "Tolerância de perda"      linhas 1 e 2: a faixa de 2% em volta do teórico; fora dela o motivo é obrigatório
+       cap13 · baixa       (escuro)  ilu12_baixa       "Quando o estoque baixa"   linhas 6 e 7: a cada dia lançado, ou só quando a ordem é finalizada
+     O PDF do relatório (cap12, linha 7) está em pdf.html (papel real do ensaio).
+     Saíram do ilustracoes.json (21/11), porque a tela do app já mostra o assunto na hora da fala, ou a ideia está numa cena vizinha:
+       ilu02_receita      (cap02, linha 1)  a tela da ficha (Nova) mostra a receita com "entra" à esquerda e "sai" à direita logo em seguida (linhas 2 a 4)
+       ilu05_plano        (cap05, linha 1)  repete o caminho do cap01; a tela mostra quanto, quando e com quem campo a campo
+       ilu08_teorico_real (cap08, linhas 0 e 1)  a tela mostra o teórico (480) no campo e o Real (498) com a diferença em vermelho na hora; o conceito entra na cena da tolerância
+       ilu10_custo        (cap11, linha 4)  a janela de finalizar mostra o custo do lote, os R$ 6,43 e o estimado na própria ordem
+       ilu11_rendimento   (cap12, linhas 2 e 3)  os cartões do relatório mostram 96,4% e 3,8% enquanto a voz lê; a conta é dita, não precisa de desenho
+       ilu13_estorno      (cap14, linha 4)  o Kardex na tela mostra a linha de estorno devolvendo os 80 kg
+       ilu15_conversao    (cap15, linha 1)  a tela mostra o resultado (16 kg de fio, R$ 28,80 por quilo) antes de gravar
+       ilu16_perda_padrao (cap16, linhas 1 e 2)  a tela já confere a conta (37,5% de 100 kg) e mostra o selo "Vem da perda"
+     Só textos e números da fala ou da tela (nada de dado real, sem travessão em texto).
+     Âncoras por palavra (W) sobre a voz real ($TUT_HOME/t11/narracao/capNN.json).
+     Acabamento: node perfis/ecoflix/cenas_v3/auditar.cjs --aula planejamento/ecoflix/T11 --larg 1422
+     Render de uma janela: node ferramentas/edit/cenas/render_cenas.cjs <cap> <capNN.json> saida.mp4 \
+               --html planejamento/ecoflix/T11/cenas_v3/cena.html --larg 1422 --dsf 1.35 --de <s> --ate <s>
+     Ícones lucide usados (o nome tem de estar literal nesta página): 'package' 'mountain' 'droplets' 'hammer' 'badge-check' 'circle-help'
+     'magnet' 'coins' 'clipboard-list' 'calendar-days' 'settings' 'triangle-alert' 'calendar-check' 'x' 'info' 'check' -->
+</head><body>
+<script type="module">
+import { PI, cl, lerp, pr, eo, eio, eo5, eis, passa, W, el, ic, vis, foco, pulso, ondaEm, kg, conta, titulo, posTitulo, selo,
+  htmlChip, htmlCartao, htmlOp, htmlFluxo, fluxo, CENA, GL, THREE, mat, caixa, malha, grupo, mundo, mancha, piso, anel, destaque, U, camera, posCam,
+  lugar, plano, clima, cena, estilo, enquadraRet }
+  from '../../../../perfis/ecoflix/cenas_v3/motor.js';
+import { ceuClaro, mundoEscuro } from '../../../../perfis/ecoflix/cenas_v3/fundo.js';
+import { monte, pecas } from '../../../../perfis/ecoflix/cenas_v3/objetos/monte.js';
+import { prensa, aperta } from '../../../../perfis/ecoflix/cenas_v3/objetos/prensa.js';
+import { fardo } from '../../../../perfis/ecoflix/cenas_v3/objetos/fardo.js';
+import { esteira, corre } from '../../../../perfis/ecoflix/cenas_v3/objetos/esteira.js';
+import { ima, campo, trilho } from '../../../../perfis/ecoflix/cenas_v3/objetos/ima.js';
+import { htmlFluxoCartoes, fluxoCartoes, parte } from '../../../../perfis/ecoflix/cenas_v3/dados/fluxoCartoes.js';
+
+// =====================================================================================================================
+// comuns
+const NUNCA = 1e9, EE = .0112;
+const arco = (a, b, p, alt) => [lerp(a[0], b[0], p), lerp(a[1], b[1], p) + alt * 4 * p * (1 - p), lerp(a[2], b[2], p)];
+const some = (o, k, s = 1) => { o.visible = k > .002; if (o.visible) o.scale.setScalar(k * s); };   // objeto 3D que entra crescendo
+const cores = () => estilo('t11-cor', `.chip.am{background:linear-gradient(150deg,#F7CB68,#E59A22);color:#3A2A06;border-color:rgba(255,255,255,.4);box-shadow:0 12px 22px -8px rgba(229,154,34,.6)}`);
+const CH = (html, pos, o = {}) => plano(html, { pos, rot: [-.12, .06, 0], esc: .0125, anc: [.5, 1], ...o });   // chip no mundo claro
+// um lugar do mundo escuro: posições em px do desenho (y para baixo)
+function escuro() {
+  const EIXO = lugar([0, 0, 0]), E = mundoEscuro(EIXO, 0, EE);
+  return { EIXO, X: (html, x, y, o = {}) => E(html, x * EE, -y * EE, 0, o), ret: (a, b, c, d) => [a * EE, -d * EE, c * EE, -b * EE], fundo: (cx, cy, o) => E.fundo(cx * EE, -cy * EE, o) };
+}
+const brilha = (e, t, a) => { /* número ou cartão que "bate" */ pulso(e, t, a, .04, .8); };
+
+// =====================================================================================================================
+// CENA "patio" · cap00, linha 1 · clima claro (a latinha solta vira fardo; quanto custou cada quilo?)
+// 1 "Na Recicla Vale Metais, a latinha chega solta, com terra, água e até lata de aço no meio. Prensada, ela vira fardo e vende
+//    melhor. Mas quanto custou cada quilo desse fardo?"
+// O monte de latinha solta (com os chips terra, água e lata de aço); a prensa aperta e o fardo sai e pousa do outro lado; a pergunta.
+function patio() {
+  const t0 = W(1, 'na'), tla = W(1, 'latinha'), tso = W(1, 'solta'), tte = W(1, 'terra'), tag = W(1, 'agua'), tac = W(1, 'aco'), tpr = W(1, 'prensada'), tvi = W(1, 'vira'), tfa = W(1, 'fardo'),
+    tve = W(1, 'vende'), tme = W(1, 'melhor'), tqu = W(1, 'quanto'), tcu = W(1, 'custou'), tci = W(1, 'cada'), tfim = W(1, 'fardo', 2, 'e');
+  piso({ r: 34, x: 0, z: 0, passo: 1.3 }); U.uNevoa.value.set(.955, .975, .965, .8); ceuClaro({ halo: [.3, 3.8, -15] });
+  const XA = -5.6, XP = 0, XF = 5.2;
+  const PIL = monte(CENA, [XA, 0, 0], { tipo: 'latinha', n: 110, r: 1.5, h: 1.1, mancha: true });
+  const PR = prensa(CENA, [XP, 0, 0]);
+  const FA = fardo(CENA, [XF, 0, .5], { tipo: 'latinha', w: 1.1, h: .85, d: .85 });
+  const chL = CH(htmlChip(`${ic('package', 18)}latinha solta`, 'n'), [XA, 2.2, 0]), chT = CH(htmlChip(`${ic('mountain', 18)}terra`, 'am'), [XA - 2.5, 3.3, 0]),
+    chA = CH(htmlChip(`${ic('droplets', 18)}água`, 'am'), [XA, 3.3, 0]), chS = CH(htmlChip('lata de aço', 'am'), [XA + 2.7, 3.3, 0]);
+  const chP = CH(htmlChip(`${ic('hammer', 18)}prensada`, 'n'), [XP, 4.0, 0]), chF = CH(htmlChip(`${ic('package', 18)}fardo`, 'n'), [XF, 1.9, .5]),
+    chV = CH(htmlChip(`${ic('badge-check', 18)}vende melhor`), [XF, 2.8, .5]), chQ = CH(htmlChip(`${ic('circle-help', 18)}quanto custou cada quilo?`, 'am'), [XF - .5, 3.7, .5]);
+  const tit = titulo('Produção', 'O problema do pátio');
+  const P1 = { x: -.5, y: 1.9, z: 0, d: 19.6, az: .09, el: .18 };
+  camera([[t0 - 3, P1], [tfim + 2.5, { ...P1, d: 19.0, az: .04 }, 'lin']]);
+  return t => {
+    GL.style.opacity = eo(pr(t, t0 + .08, .5)).toFixed(3); posTitulo(tit, t, t0 - .9, t0 - .45);
+    const k = eio(pr(t, tpr, 1.0)); some(PIL, passa(pr(t, tla - .2, .6), 1.2) * (1 - .4 * k));
+    vis(chL.e, t, tso - .1, NUNCA, { dy: 10, sc: .8 }); vis(chT.e, t, tte - .1, NUNCA, { dy: 10, sc: .8 }); vis(chA.e, t, tag - .1, NUNCA, { dy: 10, sc: .8 }); vis(chS.e, t, tac - .1, NUNCA, { dy: 10, sc: .8 });
+    some(PR, passa(pr(t, tpr - .5, .7), 1.1)); aperta(PR, eio(pr(t, tpr, 1.0)) * (1 - eio(pr(t, tvi + .1, .8))));
+    vis(chP.e, t, tpr - .1, NUNCA, { dy: 10, sc: .8 });
+    const p = eio(pr(t, tvi, 1.1)), q = arco([XP, .25, 1.6], [XF, 0, .5], p, .9); FA.visible = p > .01; FA.position.set(q[0], q[1], q[2]); FA.rotation.y = (1 - p) * .8; FA.scale.setScalar(Math.min(1, p * 6));
+    vis(chF.e, t, tfa - .1, NUNCA, { dy: 10, sc: .8 }); vis(chV.e, t, tve - .1, NUNCA, { dy: 10, sc: .8 }); pulso(chV.e, t, tme, .05, .8);
+    vis(chQ.e, t, tqu - .1, NUNCA, { dy: 10, sc: .8 }); pulso(chQ.e, t, tci, .05, .8);
+  };
+}
+
+// =====================================================================================================================
+// CENA "caminho" · cap01, linhas 1 a 3 · clima escuro (ficha, ordem, lançamento, estoque, custo)
+// 1 "O caminho é este. Primeiro, a ficha técnica: a receita, com o que entra e o que sai. Depois, a ordem: quanto produzir e quem
+//    vai produzir."
+// 2 "No fim do dia, o lançamento: quanto cada um produziu e quanta latinha foi usada de verdade. Aí o estoque se mexe sozinho: a
+//    latinha sai, e o fardo entra."
+// 3 "E quando a ordem é finalizada, o sistema fecha o custo de cada quilo."
+// Estação 1: ficha, ordem e lançamento, cada um com o que a fala diz dele. Estação 2: a câmera abre e entram o estoque e o custo.
+function caminho() {
+  const t0 = W(1, 'o'), tfi = W(1, 'ficha'), ten = W(1, 'entra'), tsa = W(1, 'sai'), tor = W(1, 'ordem'), tqp = W(1, 'quanto'), tqm = W(1, 'quem'),
+    tlc = W(2, 'lancamento'), tq2 = W(2, 'quanto'), tl1 = W(2, 'latinha'), tai = W(2, 'ai'), tes = W(2, 'estoque'), tl2 = W(2, 'latinha', 2), ts2 = W(2, 'sai'), tf2 = W(2, 'fardo'), te2 = W(2, 'entra'),
+    tfz = W(3, 'finalizada'), tcu = W(3, 'custo'), tfim = W(3, 'quilo', 1, 'e');
+  cores();
+  const { EIXO, X, ret, fundo } = escuro(), YC = -20, VAO = 64;
+  const F = X(htmlFluxoCartoes({ cartoes: [['clipboard-list', 'Ficha técnica', 'a receita', 'n'], ['calendar-days', 'Ordem', 'o plano', 'n'], ['scale', 'Lançamento', 'no fim do dia', 'n'], ['package', 'Estoque', 'se mexe sozinho', 'a'], ['coins', 'Custo', 'de cada quilo', 'res']], cw: 190, vao: VAO }), 0, YC);
+  const cw = (F.w - 4 * VAO) / 5, cx = i => -F.w / 2 + cw / 2 + i * (cw + VAO);
+  const sub = (i, txt, y) => X(htmlChip(txt, 'n'), cx(i), YC + y, { z: 40 });
+  const c0 = [sub(0, 'o que entra', 75), sub(0, 'o que sai', 125)], c1 = [sub(1, 'quanto produzir', 75), sub(1, 'quem vai produzir', 125)], c2 = [sub(2, 'quanto cada um produziu', 75), sub(2, 'latinha usada de verdade', 125)],
+    c3 = [sub(3, 'a latinha sai', 75), sub(3, 'o fardo entra', 125)];
+  const chZ = X(htmlChip(`${ic('badge-check', 18)}ordem finalizada`, 'am'), cx(1), YC - 85, { z: 40 });
+  fundo(0, 40, { aneis: false });
+  const tit = titulo('Produção', 'O caminho da produção', 'escuro');
+  const S1 = enquadraRet(EIXO, ret(cx(0) - cw / 2 - 10, YC - 120, cx(2) + cw / 2 + 24, YC + 150), { az: -.03, max: 1.4 / EE }), S2 = enquadraRet(EIXO, ret(-F.w / 2 - 10, YC - 120, F.w / 2 + 10, YC + 150), { az: .0, max: 1.4 / EE });
+  camera([[t0 - 3, S1], [tai - .6, { ...S1, az: -.012, d: S1.d * .985 }, 'lin'], [tai + .7, S2], [tfim + 2.5, { ...S2, az: .03, d: S2.d * .98 }, 'lin']]);
+  const T = [tfi - .15, tor - .15, tlc - .15, tes - .15, tcu - .15];
+  return t => {
+    clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, t0 - .45);
+    fluxoCartoes(F.e, t, tfi - .4, NUNCA, { tempos: T });
+    [[c0[0], ten], [c0[1], tsa], [c1[0], tqp], [c1[1], tqm], [c2[0], tq2], [c2[1], tl1], [c3[0], tl2], [c3[1], tf2]].forEach(([c, a]) => vis(c.e, t, a - .1, NUNCA, { dy: -10, sc: .85 }));
+    vis(chZ.e, t, tfz - .1, NUNCA, { dy: 10, sc: .85 }); pulso(parte(F.e, 1), t, tfz, .04, .8); pulso(parte(F.e, 3), t, ts2 + .2, .04, .8); pulso(parte(F.e, 4), t, tcu + .5, .05, .9);
+  };
+}
+
+// =====================================================================================================================
+// CENA "por_quilo" · cap03, linha 6 · clima escuro (a ficha leva 1 kg e a ordem multiplica)
+// 6 "É sempre assim: a ficha leva a quantidade de um quilo, e a ordem multiplica. Quinhentos quilos de fardo pedem quinhentos
+//    quilos de latinha. Cinquenta quilos de cobre pedem oitenta quilos de fio."
+// Duas linhas de conta, a ficha (por quilo) à esquerda, a ordem (o lote) à direita: 1 kg × 500 = 500 kg; 1,6 kg × 50 = 80 kg.
+function porQuilo() {
+  const t0 = W(6, 'e'), tfi = W(6, 'ficha'), tum = W(6, 'um'), tor = W(6, 'ordem'), tmu = W(6, 'multiplica'), t5 = W(6, 'quinhentos'), tpe = W(6, 'pedem'), tl2 = W(6, 'latinha'), tci = W(6, 'cinquenta'), tqc = W(6, 'quilos', 3),
+    tco = W(6, 'cobre'), toi = W(6, 'oitenta'), tfm = W(6, 'fio', 1, 'e');
+  cores();
+  const { EIXO, X, ret, fundo } = escuro(), R1 = -10, R2 = 150, XF = -180, XM = 50, XO = 280, CW = 330, CH_ = 120;
+  const cart = (x, y, ...a) => X(htmlCartao(...a, { w: CW, h: CH_, fn: 32 }), x, y);
+  const hF = X(htmlChip('Na ficha', 'n'), XF, -120, { z: 40 }), hO = X(htmlChip('Na ordem', 'am'), XO, -120, { z: 40 });
+  const f1 = cart(XF, R1, 'package', 'Latinha', 'para 1 kg de fardo', '1 kg'), o1 = cart(XO, R1, 'package', 'Latinha', 'para 500 kg de fardo', '0 kg', { res: true }), m1 = X(htmlChip('× 500', 'am'), XM, R1, { z: 40 });
+  const f2 = cart(XF, R2, 'package', 'Fio', 'para 1 kg de cobre', '1,6 kg'), o2 = cart(XO, R2, 'package', 'Fio', 'para 50 kg de cobre', '0 kg', { res: true }), m2 = X(htmlChip('× 50', 'am'), XM, R2, { z: 40 });
+  const n1 = o1.e.querySelector('.num'), n2 = o2.e.querySelector('.num'), w1 = o1.e.querySelector('.onda'), w2 = o2.e.querySelector('.onda');
+  fundo(0, 20, { aneis: false });
+  const tit = titulo('Ficha técnica', 'Quanto entra por quilo', 'escuro');
+  const S = enquadraRet(EIXO, ret(XF - CW / 2 - 12, -145, XO + CW / 2 + 12, R2 + CH_ / 2 + 8), { az: .0, max: 1.4 / EE });
+  camera([[t0 - 3, S], [tfm + 2.5, { ...S, az: .03, d: S.d * .985 }, 'lin']]);
+  return t => {
+    clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, t0 - .45);
+    vis(hF.e, t, tfi - .1, NUNCA, { dy: 10, sc: .85 }); vis(hO.e, t, tor - .1, NUNCA, { dy: 10, sc: .85 });
+    vis(f1.e, t, tum - .1, NUNCA, { dy: 18 }); vis(m1.e, t, t5 - .15, NUNCA, { sc: .7, dy: 0 }); vis(o1.e, t, t5 - .05, NUNCA, { dy: 18 }); conta(n1, t, tpe, 1.0, 0, 500); ondaEm(w1, t, tl2 + .1); pulso(o1.e, t, tl2 + .1, .04, .8);
+    vis(f2.e, t, tci - .1, NUNCA, { dy: 18 }); vis(m2.e, t, tci + .35, NUNCA, { sc: .7, dy: 0 }); vis(o2.e, t, tco - .05, NUNCA, { dy: 18 }); conta(n2, t, toi, .5, 0, 80); ondaEm(w2, t, toi + .45); pulso(o2.e, t, toi + .45, .04, .8);
+  };
+}
+
+// =====================================================================================================================
+// CENA "ima" · cap04, linha 1 · clima claro (o coproduto: o ímã tira as latas de aço da latinha)
+// 1 "Quando a latinha passa no ímã, as latas de aço que vieram no meio saem. Elas viram chaparia, que também tem valor. Mas
+//    quanto sai, só dá pra saber depois de separar."
+// A latinha anda na esteira, passa sob o ímã; as latas de aço sobem para ele e vão para o monte de chaparia; a pergunta fica no ar.
+function ima4() {
+  const t0 = W(1, 'quando'), tla = W(1, 'latinha'), tpa = W(1, 'passa'), tim = W(1, 'ima'), tac = W(1, 'aco'), tsa = W(1, 'saem'), tch = W(1, 'chaparia'), tva = W(1, 'valor'), tqu = W(1, 'quanto'), tse = W(1, 'separar'),
+    tfim = W(1, 'separar', 1, 'e');
+  piso({ r: 34, x: 0, z: 0, passo: 1.3 }); U.uNevoa.value.set(.955, .975, .965, .8); ceuClaro({ halo: [.3, 3.8, -15] });
+  const XI = -3.4, XM = 3.6;
+  const ES = esteira(CENA, [-3.2, 0, 0], { c: 8, l: 1.2, h: .9 });
+  const IM = ima(CENA, [XI, 2.35, 0]); trilho(CENA, XI - 2.2, XI + 2.2, 2.35 + IM.userData.topo, 0);
+  const CG = grupo(CENA, [-8, .9, 0]); pecas(CG, 'latinha', Array.from({ length: 12 }, (_, i) => [(i - 5.5) * .2, (i % 2) * .09, ((i * 37) % 5 - 2) * .14]), { s: 1 });
+  const AC = grupo(CENA, [0, 0, 0]); pecas(AC, 'ferro', [[-.25, 0, .05], [.22, .04, -.1], [0, .12, .08], [.08, .24, -.05]], { s: .8 });
+  const MO = monte(CENA, [XM, 0, .2], { tipo: 'ferro', n: 60, r: 1.2, h: .8, mancha: true });
+  const xc = t => -7.6 + 1.27 * (t - tla + .1);   // a latinha anda na esteira; o centro dela passa sob o ímã na palavra "aço"
+  const chL = CH(htmlChip(`${ic('package', 18)}latinha`, 'n'), [0, 2.3, 0]), chI = CH(htmlChip(`${ic('magnet', 18)}ímã`, 'n'), [XI - 1.7, 3.0, 0], { anc: [1, .5] }), chA = CH(htmlChip('lata de aço', 'am'), [XI - 1.1, 1.9, 1.0], { anc: [1, .5] }),
+    chC = CH(htmlChip(`${ic('package', 18)}chaparia`, 'n'), [XM, 1.9, .2]), chV = CH(htmlChip(`${ic('coins', 18)}tem valor`), [XM, 2.8, .2]), chQ = CH(htmlChip(`${ic('circle-help', 18)}quanto sai? só depois de separar`, 'am'), [XM - 1.3, 3.7, .2]);
+  const tit = titulo('Ficha técnica', 'O coproduto');
+  const P1 = { x: -1.2, y: 1.9, z: 0, d: 17.6, az: .08, el: .17 };
+  camera([[t0 - 3, P1], [tfim + 2.5, { ...P1, d: 17.0, az: .03 }, 'lin']]);
+  return t => {
+    GL.style.opacity = eo(pr(t, t0 + .08, .5)).toFixed(3); posTitulo(tit, t, t0 - .9, t0 - .45);
+    corre(ES, 1.27 * t);
+    const x = xc(t), ap = passa(pr(t, tla - .2, .5), 1.2) * (1 - eo(pr(t, tva - .7, .6))); CG.position.x = x; some(CG, ap);
+    chL.pos[0] = x; chL.pos[1] = 2.0; vis(chL.e, t, tla - .05, tac - .1, { dy: 10, sc: .8 });
+    vis(chI.e, t, tim - .1, NUNCA, { dy: 10, sc: .8 }); campo(IM, eo(pr(t, tim, .8)) * (1 - eo(pr(t, tch + .8, .8))));
+    // as latas de aço: viajam na carga, sobem até o ímã na palavra "saem", e de lá vão para o monte de chaparia
+    const up = eio(pr(t, tsa - .2, .9)), go = eio(pr(t, tch + .15, 1.5)), ini = [x, 1.12, 0], tip = [XI, 1.5, 0], alvo = [XM, 1.0, .2];
+    let q = up < 1 ? [lerp(ini[0], tip[0], up), lerp(ini[1], tip[1], up), lerp(ini[2], tip[2], up)] : arco(tip, alvo, go, 1.1);
+    AC.visible = t > tla && go < .995; AC.position.set(q[0], q[1], q[2]); AC.rotation.y = 1.4 * go; AC.scale.setScalar(Math.min(1, (t - tla) * 4, 1 - pr(go, .9, .1) * .5));
+    chA.pos[0] = q[0] - .9; chA.pos[1] = q[1] + .1; chA.pos[2] = q[2] + 1; vis(chA.e, t, tac - .1, tch - .1, { dy: 10, sc: .8 });
+    some(MO, passa(pr(t, tch - .2, .7), 1.1) * lerp(.8, 1, eo(pr(t, tch + 1.2, .8))));
+    vis(chC.e, t, tch - .05, NUNCA, { dy: 10, sc: .8 }); vis(chV.e, t, tva - .05, NUNCA, { dy: 10, sc: .8 }); vis(chQ.e, t, tqu - .1, NUNCA, { dy: 10, sc: .8 }); pulso(chQ.e, t, tse, .05, .8);
+  };
+}
+
+// =====================================================================================================================
+// CENA "tolerancia" · cap09, linhas 1 e 2 · clima escuro (a faixa de tolerância em volta do teórico)
+// 1 "É a tolerância de perda. Na Recicla Vale ela é de dois por cento: em quatrocentos e oitenta quilos, até nove quilos e
+//    seiscentos gramas de diferença passam sem motivo."
+// 2 "Os dezoito quilos passaram disso, então o motivo é obrigatório. Dentro da tolerância, a linha só avisa e não pede nada. O
+//    valor da tolerância fica nas Configurações, que a gente vê no fim."
+// A régua em quilos: o teórico (480) no meio, a faixa de 9,6 kg para cada lado; os 498 kg caem fora e pedem motivo.
+function tolerancia() {
+  const t0 = W(1, 'e'), ttl = W(1, 'tolerancia'), tdo = W(1, 'dois'), tqu = W(1, 'quatrocentos'), tno = W(1, 'nove'), tse = W(1, 'seiscentos'), tsm = W(1, 'sem'), tmo = W(1, 'motivo'),
+    tdz = W(2, 'dezoito'), tqs = W(2, 'quilos'), tps = W(2, 'passaram'), tob = W(2, 'obrigatorio'), tde = W(2, 'dentro'), tav = W(2, 'avisa'), tnp = W(2, 'nada'), tcf = W(2, 'configuracoes'), tfim = W(2, 'fim', 1, 'e');
+  cores();
+  const { EIXO, X, ret, fundo } = escuro(), YR = 10, RW = 1040, RH = 170, K = 23.5, XV = v => 50 + (v - 465) * K, ST = 480, TOL = 9.6, REAL = 498;   // px dentro do cartão, 23,5 px por quilo
+  const cx = v => XV(v) - RW / 2;   // o mesmo valor, em px do centro do cartão
+  const reg = X(`<div class="cartao" style="position:relative;width:${RW}px;height:${RH}px;padding:0">
+    <div class="eixo" style="position:absolute;left:30px;right:30px;top:112px;height:4px;border-radius:2px;background:var(--tr, rgba(255,255,255,.22))"></div>
+    <div class="faixa" style="position:absolute;left:${XV(ST - TOL)}px;width:${(2 * TOL * K).toFixed(1)}px;top:78px;height:72px;border-radius:14px;background:rgba(80,208,136,.26);border:2px solid #50D088;transform-origin:50% 50%;transform:scaleX(0)"></div>
+    <div class="teor" style="position:absolute;left:${XV(ST) - 2}px;top:62px;width:4px;height:104px;border-radius:2px;background:#fff;opacity:0"></div>
+    <div class="ponte" style="position:absolute;left:${XV(ST)}px;width:${((REAL - ST) * K).toFixed(1)}px;top:36px;height:14px;border:2px solid #F2B63D;border-bottom:none;border-radius:8px 8px 0 0;opacity:0"></div>
+    <div class="dif" style="position:absolute;left:${XV(ST)}px;width:${((REAL - ST) * K).toFixed(1)}px;top:10px;text-align:center;font-weight:800;font-size:19px;color:#F2B63D;opacity:0">18 kg</div>
+    <div class="real" style="position:absolute;left:${XV(REAL) - 12}px;top:101px;width:26px;height:26px;border-radius:50%;background:#F2B63D;box-shadow:0 0 0 6px rgba(242,182,61,.28);opacity:0"></div>
+  </div>`, 0, YR);
+  const eFa = reg.e.querySelector('.faixa'), eTe = reg.e.querySelector('.teor'), ePo = reg.e.querySelector('.ponte'), eDi = reg.e.querySelector('.dif'), eRe = reg.e.querySelector('.real');
+  const YT = YR - RH / 2 - 36, YB = YR + RH / 2 + 38;
+  const chTol = X(htmlChip('tolerância 2%', 'am'), cx(ST - TOL) - 40, YT, { z: 40 }), chTeo = X(htmlChip('teórico 480 kg', 'n'), cx(ST), YT, { z: 40 }), chCf = X(htmlChip(`${ic('settings', 18)}Configurações`, 'n'), cx(REAL) + 120, YT, { z: 40 });
+  const chBn = X(htmlChip('± 9,6 kg', 'n'), cx(ST), YB, { z: 40 }), chSm = X(htmlChip(`${ic('check', 18)}sem motivo`), cx(ST) - 135, YB + 52, { z: 40 }), chAv = X(htmlChip(`${ic('info', 18)}só avisa`), cx(ST) + 135, YB + 52, { z: 40 }),
+    chRe = X(htmlChip('498 kg', 'am'), cx(REAL), YB, { z: 40 }), chOb = X(htmlChip(`${ic('triangle-alert', 18)}motivo obrigatório`, 'am'), cx(REAL), YB + 52, { z: 40 });
+  fundo(0, 40, { aneis: false });
+  const tit = titulo('Lançamento', 'Tolerância de perda', 'escuro');
+  const S = enquadraRet(EIXO, ret(-RW / 2 - 8, YT - 24, RW / 2 + 8, YB + 52 + 24), { az: -.02, max: 1.4 / EE });
+  camera([[t0 - 3, S], [tfim + 2.5, { ...S, az: .03, d: S.d * .985 }, 'lin']]);
+  return t => {
+    clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, t0 - .45);
+    vis(reg.e, t, ttl - .1, NUNCA, { dy: 20 });
+    vis(chTol.e, t, tdo - .1, NUNCA, { dy: 10, sc: .85 });
+    eTe.style.opacity = eo(pr(t, tqu - .1, .4)).toFixed(3); vis(chTeo.e, t, tqu - .1, NUNCA, { dy: 10, sc: .85 });
+    eFa.style.transform = `scaleX(${eio(pr(t, tno - .1, .9)).toFixed(4)})`; vis(chBn.e, t, tse - .15, NUNCA, { dy: 10, sc: .85 }); pulso(chBn.e, t, tse + .5, .05, .8);
+    vis(chSm.e, t, tsm - .1, NUNCA, { dy: -10, sc: .85 });
+    eRe.style.opacity = eo(pr(t, tdz - .1, .4)).toFixed(3); ePo.style.opacity = eo(pr(t, tdz - .1, .5)).toFixed(3); eDi.style.opacity = eo(pr(t, tdz, .4)).toFixed(3); vis(chRe.e, t, tdz - .05, NUNCA, { dy: 10, sc: .85 });
+    vis(chOb.e, t, tob - .15, NUNCA, { dy: -10, sc: .85 }); pulso(chOb.e, t, tob + .1, .04, .8);
+    vis(chAv.e, t, tav - .1, NUNCA, { dy: -10, sc: .85 });
+    eFa.style.boxShadow = `0 0 ${(26 * eo(pr(t, tde, .5)) * (1 - eo(pr(t, tnp + .6, .6)))).toFixed(1)}px rgba(80,208,136,.65)`;
+    vis(chCf.e, t, tcf - .1, NUNCA, { dy: 10, sc: .85 });
+  };
+}
+
+// =====================================================================================================================
+// CENA "baixa" · cap13, linhas 6 e 7 · clima escuro (quando o estoque baixa)
+// 6 "Em Quando dar baixa no estoque, a Recicla Vale usa o padrão: cada dia lançado já mexe no estoque."
+// 7 "Desligado, os dias vão se acumulando, e o estoque só mexe quando a ordem é finalizada."
+// Duas linhas: o padrão (cada dia lançado -> o estoque mexe) e o desligado (os dias se acumulam -> ordem finalizada -> o estoque mexe).
+function baixa() {
+  const t0 = W(6, 'em'), tpa = W(6, 'padrao'), tca = W(6, 'cada'), tdi = W(6, 'dia'), tmx = W(6, 'mexe'), tes = W(6, 'estoque'),
+    tdl = W(7, 'desligado'), tds = W(7, 'dias'), tac = W(7, 'acumulando'), tqu = W(7, 'quando'), tor = W(7, 'ordem'), tfz = W(7, 'finalizada'), tfim = W(7, 'finalizada', 1, 'e');
+  cores();
+  const { EIXO, X, ret, fundo } = escuro(), Y1 = -50, Y2 = 125, VAO = 74;
+  const B = X(htmlFluxoCartoes({ cartoes: [['calendar-days', 'Dias lançados', 'vão se acumulando', 'a'], ['calendar-check', 'Ordem finalizada', 'o fim do lote', 'n'], ['package', 'Estoque', 'só mexe agora', 'res']], cw: 190, vao: VAO }), 0, Y2);
+  const cw = (B.w - 2 * VAO) / 3, cx = i => -B.w / 2 + cw / 2 + i * (cw + VAO);
+  const A = X(htmlFluxoCartoes({ cartoes: [['calendar-days', 'Cada dia lançado', 'já mexe no estoque', 'a'], ['package', 'Estoque', 'a cada dia', 'res']], cw, vao: cw + 2 * VAO }), 0, Y1);   // a fileira de cima liga a coluna 1 à 3: o estoque fica sob o estoque
+  const chP = X(htmlChip(`${ic('settings', 18)}padrão`, 'n'), -B.w / 2 + 62, Y1 - 78, { z: 40 }), chD = X(htmlChip(`${ic('x', 18)}desligado`, 'am'), -B.w / 2 + 75, Y2 - 78, { z: 40 });
+  fundo(0, 40, { aneis: false });
+  const tit = titulo('Configurações', 'Quando o estoque baixa', 'escuro');
+  const S = enquadraRet(EIXO, ret(-B.w / 2 - 10, Y1 - 110, B.w / 2 + 10, Y2 + 60), { az: -.02, max: 1.4 / EE });
+  camera([[t0 - 3, S], [tfim + 2.5, { ...S, az: .03, d: S.d * .985 }, 'lin']]);
+  return t => {
+    clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, t0 - .45);
+    vis(chP.e, t, tpa - .1, NUNCA, { dy: 10, sc: .85 });
+    fluxoCartoes(A.e, t, tca - .3, NUNCA, { tempos: [tca - .1, tmx - .1] }); pulso(parte(A.e, 1), t, tmx + .5, .05, .9); pulso(parte(A.e, 1), t, tes + .5, .03, .7);
+    vis(chD.e, t, tdl - .1, NUNCA, { dy: 10, sc: .85 });
+    fluxoCartoes(B.e, t, tds - .3, NUNCA, { tempos: [tds - .1, tor - .1, tfz - .1] }); pulso(parte(B.e, 0), t, tac, .04, .8); pulso(parte(B.e, 2), t, tfz + .5, .05, .9);
+  };
+}
+
+// =====================================================================================================================
+const CAPS = { 0: patio, 1: caminho, 3: porQuilo, 4: ima4, 9: tolerancia, 13: baixa };
+cena(d => CAPS[d.cap](d), { fov: 26 });
+</script></body></html>

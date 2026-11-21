@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- T13 "Contas a Pagar e Receber" · ilustrações no kit v3 (perfis/ecoflix/cenas_v3/LEIA.md), 16:9 (--larg 1422).
+     Uma função por CENA e CAPS[cap] diz o que cada capítulo ilustrado usa. As janelas (de/ate) estão em ../cenas/ilustracoes.json.
+     Âncoras por palavra (W) sobre a voz real ($TUT_HOME/t13/narracao/capNN.json), conferidas linha a linha (21/11).
+       cap00 · contas      (escuro)  ilu00_contas     "Pagar e receber"      linhas 0 a 2: a conta de luz e o fiado, soltos, entram na lista com data, categoria e de quem é; A Pagar e A Receber numa tela só
+       cap02 · vencidas    (escuro)  ilu02_vencidas   "Vencidas e Vence em 7 dias"  linha 2: o que já passou do vencimento (a água) e o que vence de hoje a sete dias (a energia), numa faixa de tempo
+       cap07 · parcelas    (escuro)  ilu06_parcelas   "Parcelar ou repetir"  linhas 7 e 8: a compra dos pneus vira três contas separadas (paga uma, as outras seguem); parcelar tem fim, repetir volta todo mês
+       cap08 · molde       (escuro)  ilu07_molde      "O molde da conta"     linha 6: o molde do aluguel cria todas até a data de parar; sem data, mantém os próximos três meses e cria a seguinte
+       cap11 · dinheiro    (escuro)  ilu09_dinheiro   "A baixa mexe em dinheiro"  linhas 5 e 6: Pix sai da conta do banco, dinheiro sai do caixa aberto, a categoria vai à DRE; tudo junto ou nada
+       cap15 · fiado       (escuro)  ilu10_fiado      "O que fica na lista"  linhas 6 e 7: Saldo menos Parcelas; se tudo virou parcela a linha some; se só uma parte, mostra só a sobra
+     O papel do comprovante da energia (cap16) está em pdf.html.
+     Saíram do ilustracoes.json (21/11), porque a tela do app já mostra o assunto na hora da fala, ou a ideia está numa cena vizinha:
+       ilu08_futuras (cap09, linha 2)  o robô para o mouse em "Só esta conta" e em "Esta e as próximas" (as duas opções estão na tela) e, depois do Salvar, a lista mostra novembro no dia 12 e de dezembro em diante no 15
+       ilu13_lote    (cap13, linha 2)  a tela mostra a barra com as duas linhas e o total de R$ 4.720,00 e, no zoom do robô, o diálogo do Quitar em lote que explica o lançamento único
+     Pendente: pdf18_lista_exportada (cap18, linha 0): o robô só abre a janela do Exportar e cancela; não existe PDF gravado.
+     Só textos e números da fala ou da tela (R$ 14.370,00 e 3x de R$ 4.790,00 são o saldo e as parcelas da Fundição Bandeira do Vale, ditos no cap15).
+     Acabamento: node perfis/ecoflix/cenas_v3/auditar.cjs --aula planejamento/ecoflix/T13 --larg 1422
+     Render de uma janela: node ferramentas/edit/cenas/render_cenas.cjs <cap> <capNN.json> saida.mp4 \
+               --html planejamento/ecoflix/T13/cenas_v3/cena.html --larg 1422 --dsf 1.35 --de <s> --ate <s>
+     Ícones lucide usados (o nome tem de estar literal nesta página): 'map-pin' 'arrow-up-right' 'arrow-down-left' 'zap' 'user-round' 'calendar-days' 'tag'
+     'triangle-alert' 'calendar-clock' 'droplets' 'truck' 'receipt' 'flag' 'repeat' 'copy' 'landmark' 'banknote' 'chart-column' 'link' 'wallet' 'layers' 'list' -->
+</head><body>
+<script type="module">
+import { PI, cl, lerp, pr, eo, eio, eo5, eis, passa, golpe, W, el, ic, vis, foco, pulso, ondaEm, titulo, posTitulo, selo,
+  htmlChip, htmlCartao, htmlFluxo, fluxo, CENA, GL, THREE, mat, caixa, malha, grupo, mundo, mancha, piso, anel, destaque, U, camera, posCam,
+  lugar, lugarDeFrente, plano, clima, cena, estilo, enquadraRet }
+  from '../../../../perfis/ecoflix/cenas_v3/motor.js';
+import { ceuClaro, mundoEscuro } from '../../../../perfis/ecoflix/cenas_v3/fundo.js';
+import { htmlFluxoCartoes, fluxoCartoes, parte } from '../../../../perfis/ecoflix/cenas_v3/dados/fluxoCartoes.js';
+
+// =====================================================================================================================
+// comuns
+const NUNCA = 1e9, EE = .0112;
+const cores = () => estilo('t13-cor', `.chip.am{background:linear-gradient(150deg,#F7CB68,#E59A22);color:#3A2A06;border-color:rgba(255,255,255,.4);box-shadow:0 12px 22px -8px rgba(229,154,34,.6)}
+.chip.vm{background:linear-gradient(150deg,#FF9A8C,#E5564A);color:#3A0A06;border-color:rgba(255,255,255,.4);box-shadow:0 12px 22px -8px rgba(229,86,74,.6)}
+.selo.vm{background:linear-gradient(150deg,#FF9A8C,#E5564A);box-shadow:0 10px 18px -6px rgba(229,86,74,.6),inset 0 1px 0 rgba(255,255,255,.45)}`);
+const cartaoP = (icone, rot, sub, cls, cw = 190) => htmlFluxoCartoes({ cartoes: [[icone, rot, sub, cls]], cw });   // cartão pequeno (selo + rótulo + legenda)
+const subEm = (p, t, a) => { const s = parte(p.e, 0).querySelector('.d-s'); if (s) s.style.opacity = eo(pr(t, a, .3)).toFixed(3); };   // a legenda entra na palavra que a diz
+const subDe = (p, t, a) => { const s = p.e.querySelector('.sub'); if (s) s.style.opacity = eo(pr(t, a, .3)).toFixed(3); };   // idem, para o degrau
+const poeTxt = (e, s) => { if (e && e.textContent !== s) e.textContent = s; };
+// degrau: cartão baixo de uma linha (selo + nome + legenda opcional)
+const degrau = (icone, rot, sub, o = {}) => `<div class="cartao ${o.cc ?? ''}" style="position:relative;width:${o.w ?? 360}px;height:${o.h ?? 84}px;padding:0 20px;display:flex;align-items:center;gap:13px;white-space:nowrap">
+  ${selo(icone, o.cls ?? 'n', o.selo ?? 46)}<div><div class="rot">${rot}</div>${sub ? `<div class="sub">${sub}</div>` : ''}</div>${o.res ? '<div class="onda"></div>' : ''}</div>`;
+// mês: cartão baixo, só o nome e a data
+const mes = (rot, sub, w = 150, h = 72) => `<div class="cartao" style="position:relative;width:${w}px;height:${h}px;display:flex;flex-direction:column;align-items:center;justify-content:center;white-space:nowrap"><div class="rot">${rot}</div><div class="sub">${sub}</div></div>`;
+// um lugar do mundo escuro: posições em px do desenho (y para baixo)
+function escuro() {
+  const EIXO = lugar([0, 0, 0]), E = mundoEscuro(EIXO, 0, EE);
+  return { EIXO, X: (html, x, y, o = {}) => E(html, x * EE, -y * EE, 0, o), ret: (a, b, c, d) => [a * EE, -d * EE, c * EE, -b * EE], fundo: (cx, cy, o) => E.fundo(cx * EE, -cy * EE, o), L: E.lista };
+}
+const aqui = (p, x, y) => { p.pos[0] = x * EE; p.pos[1] = -y * EE; };
+// fios que saem de um cartão (em cima, centro em x = 0) e descem até cartões na fileira de baixo (dx = centro de cada um); 10 px de respiro nas duas pontas
+function garfoPara(X, dxs, yTopo, FH) {
+  const FW = 2 * Math.max(...dxs.map(Math.abs)) + 40, XM = FW / 2, r = 14, ym = Math.round(FH / 2);
+  const d = dx => { const s = Math.sign(dx); return s ? `M${XM} 0V${ym - r}Q${XM} ${ym} ${XM + s * r} ${ym}H${XM + dx - s * r}Q${XM + dx} ${ym} ${XM + dx} ${ym + r}V${FH}` : `M${XM} 0V${FH}`; };
+  return X(htmlFluxo(FW, FH, dxs.map(d)), 0, yTopo, { anc: [.5, 0], z: -40 });
+}
+// o inverso: de cartões na fileira de cima (centro em dx) para um cartão embaixo (centro em x = 0)
+function juntaDe(X, dxs, yTopo, FH) {
+  const FW = 2 * Math.max(...dxs.map(Math.abs)) + 40, XM = FW / 2, r = 14, ym = Math.round(FH / 2);
+  const d = dx => { const s = Math.sign(dx); return s ? `M${XM + dx} 0V${ym - r}Q${XM + dx} ${ym} ${XM + dx - s * r} ${ym}H${XM + s * r}Q${XM} ${ym} ${XM} ${ym + r}V${FH}` : `M${XM} 0V${FH}`; };
+  return X(htmlFluxo(FW, FH, dxs.map(d)), 0, yTopo, { anc: [.5, 0], z: -40 });
+}
+const STAND = (t, tit, t0, sai) => { clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, t0 - .45, sai); };
+
+// =====================================================================================================================
+// CENA "contas" · cap00, linhas 0 a 2 · clima escuro (a lista de contas)
+// 0 "Oi! Neste tutorial a gente vai organizar o que a Recicla Vale Metais tem pra pagar e pra receber."
+// 1 "Sabe a conta de luz que só aparece no dia do vencimento? E o cliente que levou a prazo, e ninguém lembra quando paga?"
+// 2 "Aqui, tudo entra com data, categoria e de quem é. O que a empresa paga e o que ela recebe, numa tela só."
+// A Recicla Vale Metais e as duas colunas (A Pagar, A Receber); a conta de luz e o fiado chegam soltos, fora de lugar; na linha 2
+// eles se encaixam nas colunas e ganham data, categoria e de quem é.
+function contas() {
+  const t0 = .4, tre = W(0, 'recicla'), tpa = W(0, 'pagar'), trc = W(0, 'receber'),
+    tlz = W(1, 'luz'), tve = W(1, 'vencimento'), tcl = W(1, 'cliente'), tpz = W(1, 'prazo'),
+    tag = W(2, 'aqui'), tda = W(2, 'data'), tca = W(2, 'categoria'), tqu = W(2, 'quem'), tpg = W(2, 'paga'), trb = W(2, 'recebe'), tnu = W(2, 'numa'), tso = W(2, 'so'), tfim = W(2, 'so', 1, 'e');
+  cores();
+  const { EIXO, X, ret, fundo } = escuro(), CX = 200, YC = -120, YL = -10, YF = 110, YN = 215, CW = 360;
+  const emp = X(htmlChip(`${ic('map-pin', 18)}Recicla Vale Metais`, 'n'), 0, -220, { z: 40 });
+  const pag = X(degrau('arrow-up-right', 'A Pagar', '', { w: CW, cls: 'vm' }), -CX, YC), rec = X(degrau('arrow-down-left', 'A Receber', '', { w: CW, cls: '' }), CX, YC);
+  const en = X(degrau('zap', 'Energia', 'Vence hoje', { w: CW, cls: 'a' }), -CX, YL), fi = X(degrau('user-round', 'Fundição Bandeira do Vale', 'Fiado', { w: CW, cls: 'n' }), CX, YL);
+  const S0 = { en: [-300, 205], fi: [300, 155] };   // onde chegam, soltos
+  const F = [['calendar-days', 'Data', tda, -175], ['tag', 'Categoria', tca, 0], ['user-round', 'De quem', tqu, 175]].map(([i, n, ti, x]) => ({ ti, p: X(htmlChip(`${ic(i, 18)}${n}`, 'n'), x, YF, { z: 40 }) }));
+  const chN = X(htmlChip('numa tela só', 'am'), 0, YN, { z: 40 });
+  fundo(0, 0);
+  const tit = titulo('Contas', 'Pagar e receber', 'escuro');
+  const S1 = enquadraRet(EIXO, ret(-CX - CW / 2 - 100, -222 - 20, CX + CW / 2 + 100, 237), { az: -.03, max: 1.4 / EE }), S2 = enquadraRet(EIXO, ret(-CX - CW / 2 - 10, -242, CX + CW / 2 + 10, YN + 22), { az: .0, max: 1.4 / EE });
+  camera([[t0 - 3, S1], [tag - .4, { ...S1, az: -.012, d: S1.d * .985 }, 'lin'], [tag + .9, S2], [tfim + 2.5, { ...S2, az: .03, d: S2.d * .98 }, 'lin']]);
+  return t => {
+    STAND(t, tit, t0);
+    vis(emp.e, t, tre - .1, NUNCA, { dy: 10, sc: .8 }); vis(pag.e, t, tpa - .1, NUNCA, { dy: 18 }); vis(rec.e, t, trc - .1, NUNCA, { dy: 18 });
+    vis(en.e, t, tlz - .1, NUNCA, { dy: 18 }); subDe(en, t, tve - .05); vis(fi.e, t, tcl - .1, NUNCA, { dy: 18 }); subDe(fi, t, tpz - .05);
+    const k = eio(pr(t, tag - .05, 1.0));   // as duas contas soltas se encaixam nas colunas
+    aqui(en, lerp(S0.en[0], -CX, k), lerp(S0.en[1], YL, k)); aqui(fi, lerp(S0.fi[0], CX, k), lerp(S0.fi[1], YL, k));
+    for (const f of F) vis(f.p.e, t, f.ti - .1, NUNCA, { dy: 10, sc: .8 });
+    vis(chN.e, t, tnu - .1, NUNCA, { dy: 10, sc: .8 }); pulso(chN.e, t, tso, .05, .8); pulso(pag.e, t, tpg, .04, .8); pulso(rec.e, t, trb, .04, .8);
+  };
+}
+
+// =====================================================================================================================
+// CENA "vencidas" · cap02, linha 2 · clima escuro (a faixa do tempo)
+// 2 "Vencidas é o que passou do vencimento e não foi pago, como a água. Vence em 7 dias é o que vence de hoje até daqui a sete dias, como a energia."
+// Uma faixa só, dividida em hoje: à esquerda o que já passou (Vencidas, a água); à direita o que vem (Vence em 7 dias, a energia).
+function vencidas() {
+  const t0 = W(2, 'vencidas'), tpa = W(2, 'passou'), tvc = W(2, 'vence'), tho = W(2, 'hoje'), tse = W(2, 'sete'), tc1 = W(2, 'como', 1), tc2 = W(2, 'como', 2), tfim = W(2, 'energia', 1, 'e');
+  cores();
+  const { EIXO, X, ret, fundo } = escuro(), BW = 900, BH = 96, YB = 60;
+  const meia = (icone, cls, rot, sub, fundoCss, dm) => `<div data-m="${dm}" style="flex:1;display:flex;align-items:center;gap:14px;padding:0 26px;background:${fundoCss};opacity:0;white-space:nowrap">${selo(icone, cls, 46)}<div><div class="rot">${rot}</div><div class="sub">${sub}</div></div></div>`;
+  const faixa = X(`<div class="cartao" style="position:relative;width:${BW}px;height:${BH}px;display:flex;padding:0;overflow:hidden">
+    ${meia('triangle-alert', 'vm', 'Vencidas', 'passou do vencimento', 'linear-gradient(90deg,rgba(255,141,126,.24),rgba(255,141,126,.05))', 'v')}<i style="width:2px;background:var(--tr)"></i>
+    ${meia('calendar-clock', 'a', 'Vence em 7 dias', 'de hoje até daqui a sete dias', 'linear-gradient(90deg,rgba(247,197,90,.05),rgba(247,197,90,.24))', 'a')}</div>`, 0, YB);
+  const ag = X(htmlChip(`${ic('droplets', 18)}Água`, 'vm'), -BW / 4, YB - BH / 2 - 14, { anc: [.5, 1], z: 40 }), en = X(htmlChip(`${ic('zap', 18)}Energia`, 'am'), BW / 4, YB - BH / 2 - 14, { anc: [.5, 1], z: 40 });
+  const hj = X(htmlChip('Hoje', 'n'), 0, YB + BH / 2 + 14, { anc: [.5, 0], z: 40 }), d7 = X(htmlChip('7 dias', 'n'), BW / 2, YB + BH / 2 + 14, { anc: [1, 0], z: 40 });
+  fundo(0, YB, { aneis: false });
+  const tit = titulo('Cartões', 'Vencidas e Vence em 7 dias', 'escuro');
+  const S1 = enquadraRet(EIXO, ret(-BW / 2 - 12, YB - BH / 2 - 14 - 44, BW / 2 + 12, YB + BH / 2 + 14 + 44), { az: -.03, max: 1.4 / EE });
+  camera([[t0 - 3, S1], [tfim + 2.5, { ...S1, az: .03, d: S1.d * .985 }, 'lin']]);
+  const mv = faixa.e.querySelector('[data-m=v]'), ma = faixa.e.querySelector('[data-m=a]');
+  return t => {
+    STAND(t, tit, t0);
+    vis(faixa.e, t, t0 - .05, NUNCA, { dy: 18 }); mv.style.opacity = eo(pr(t, t0 - .05, .4)).toFixed(3); ma.style.opacity = eo(pr(t, tvc - .1, .4)).toFixed(3);
+    pulso(mv, t, tpa, .03, .8);
+    vis(ag.e, t, tc1 - .05, NUNCA, { dy: 10, sc: .8 });
+    vis(hj.e, t, tho - .1, NUNCA, { dy: -10, sc: .8 }); vis(d7.e, t, tse - .1, NUNCA, { dy: -10, sc: .8 });
+    vis(en.e, t, tc2 - .05, NUNCA, { dy: 10, sc: .8 });
+  };
+}
+
+// =====================================================================================================================
+// CENA "parcelas" · cap07, linhas 7 e 8 · clima escuro (a compra vira três contas; parcelar ou repetir)
+// 7 "Cada parcela vira uma conta separada. Dá pra pagar uma sem mexer nas outras."
+// 8 "Parcelar é pra dívida com fim, como esses pneus. Pro gasto que volta todo mês, é o Repetir, que vem agora."
+// Estação 1: a compra dos pneus (7.080) se abre em três contas; a primeira é paga e as outras seguem Pendente.
+// Estação 2 (a câmera desce): Parcelar acaba em três meses; Repetir volta todo mês.
+function parcelas() {
+  const t0 = W(7, 'cada'), tvi = W(7, 'vira'), tum = W(7, 'uma'), tco = W(7, 'conta'), tse = W(7, 'separada'), tpg = W(7, 'pagar'), tou = W(7, 'outras'),
+    tpa = W(8, 'parcelar'), tdv = W(8, 'divida'), tfm = W(8, 'fim'), tpn = W(8, 'pneus'), tga = W(8, 'gasto'), tvo = W(8, 'volta'), tmz = W(8, 'mes'), tre = W(8, 'repetir'), tfim = W(8, 'agora', 1, 'e');
+  cores();
+  const { EIXO, X, ret, fundo } = escuro(), YS = -150, YP = 40, OY = 410, PW = 200, VAO = 24;
+  const src = X(htmlCartao('truck', 'Pneus do caminhão truck', 'Auto Peças Vale Forte', 'R$ 7.080,00', { w: 400, h: 132 }), 0, YS);
+  const P = [['23/11', -(PW + VAO)], ['23/12', 0], ['23/01', PW + VAO]].map(([d, x]) => X(cartaoP('receipt', d, 'R$ 2.360,00', 'n', PW), x, YP));
+  const PH = P[0].h, YCH = YP + PH / 2 + 14;
+  const pend = P.map((p, i) => X(htmlChip('Pendente', 'am'), p.pos[0] / EE, YCH, { anc: [.5, 0], z: 40 })), paga = X(htmlChip('Paga', ''), P[0].pos[0] / EE, YCH, { anc: [.5, 0], z: 45 });
+  const FY0 = YS + 66 + 10, FH = Math.round(YP - PH / 2 - 10 - FY0), fi = garfoPara(X, P.map(p => p.pos[0] / EE), FY0, FH);
+  // estação 2
+  const LW = 250, CP = 150, X0 = -512, XC = i => X0 + LW + 24 + 75 + CP * i, YR1 = OY - 60, YR2 = OY + 60;
+  const lP = X(degrau('calendar-days', 'Parcelar', 'Dívida com fim', { w: LW, cls: '' }), X0 + LW / 2, YR1), lR = X(degrau('repeat', 'Repetir', 'Volta todo mês', { w: LW, cls: 'a' }), X0 + LW / 2, YR2);
+  const M = ['Novembro', 'Dezembro', 'Janeiro', 'Fevereiro', 'Março'], mP = [0, 1, 2].map(i => X(htmlChip(M[i], ''), XC(i), YR1, { z: 40 })), mR = M.map((m, i) => X(htmlChip(m, ''), XC(i), YR2, { z: 40 }));
+  const fimC = X(htmlChip(`${ic('flag', 18)}Fim`, 'n'), XC(3), YR1, { z: 40 });
+  fundo(0, 140, { aneis: false });
+  const tit = titulo('Parcelas', 'Parcelar ou repetir', 'escuro');
+  const S1 = enquadraRet(EIXO, ret(-PW - VAO - PW / 2 - 6, YS - 66, PW + VAO + PW / 2 + 6, YCH + 46), { az: -.03, max: 1.4 / EE }), S2 = enquadraRet(EIXO, ret(X0 - 6, YR1 - 42, X0 + 1024 + 6, YR2 + 42), { az: .0, max: 1.4 / EE });
+  camera([[t0 - 3, S1], [tpa - .45, { ...S1, az: -.012, d: S1.d * .99 }, 'lin'], [tpa + .65, S2], [tfim + 2.5, { ...S2, az: .03, d: S2.d * .98 }, 'lin']]);
+  const T = [tvi - .05, tum - .05, tco - .05], SAI1 = tpa - .3;
+  return t => {
+    STAND(t, tit, t0);
+    vis(src.e, t, t0 - .05, SAI1, { dy: 18 }); fi.e.style.opacity = (eo(pr(t, tvi - .3, .3)) * (1 - eo(pr(t, SAI1, .3)))).toFixed(3);
+    P.forEach((p, i) => { vis(p.e, t, T[i], SAI1, { dy: 18 }); fluxo(fi.e, i, t, T[i] - .3, .55, { fica: .75, luz: [T[i] - .3, .75] }); subEm(p, t, T[i] + .15); });
+    // a primeira é paga; as outras seguem pendentes
+    pend.forEach((c, i) => { vis(c.e, t, T[i] + .45, SAI1, { dy: 8, sc: .85 }); if (i === 0) c.e.style.opacity = ((+c.e.style.opacity || 0) * (1 - eo(pr(t, tpg, .3)))).toFixed(3); });
+    vis(paga.e, t, tpg, SAI1, { dy: 8, sc: .85 }); pulso(paga.e, t, tpg + .1, .06, .8); pulso(pend[1].e, t, tou, .04, .6); pulso(pend[2].e, t, tou + .12, .04, .6);
+    // estação 2
+    vis(lP.e, t, tpa - .1, NUNCA, { dy: 18 }); subDe(lP, t, tdv - .05);
+    mP.forEach((m, i) => vis(m.e, t, tdv + .1 + .24 * i, NUNCA, { dy: 10, sc: .85 })); vis(fimC.e, t, tfm - .05, NUNCA, { dy: 10, sc: .85 }); pulso(lP.e, t, tpn, .03, .8);
+    vis(lR.e, t, tga - .1, NUNCA, { dy: 18 }); subDe(lR, t, tvo - .05);
+    mR.forEach((m, i) => vis(m.e, t, tvo + .12 + .2 * i, NUNCA, { dy: 10, sc: .85 })); pulso(lR.e, t, tre, .04, .8);
+  };
+}
+
+// =====================================================================================================================
+// CENA "molde" · cap08, linha 6 · clima escuro (o molde da conta e os meses)
+// 6 "O sistema guarda um molde da conta. Com data de parar, ele já cria todas até ela. Sem data, ele mantém sempre os próximos
+//    três meses na lista e cria a seguinte sozinho, conforme o tempo passa."
+// O molde do aluguel em cima; com data de parar os seis meses saem dele de uma vez (12/11 a 12/04); sem data, só os três primeiros
+// ficam acesos (Hoje, Próximos 3 meses) e, com o tempo, a faixa anda e a seguinte acende.
+function molde() {
+  const t0 = W(6, 'o'), tmo = W(6, 'molde'), tco = W(6, 'com'), tpa = W(6, 'parar'), tcr = W(6, 'cria', 1), tto = W(6, 'todas'), tat = W(6, 'ate'),
+    tse = W(6, 'sem'), tpr = W(6, 'proximos'), ttr = W(6, 'tres'), tc2 = W(6, 'cria', 2), tsg = W(6, 'seguinte'), tco2 = W(6, 'conforme'), tpassa = W(6, 'passa'), tfim = W(6, 'passa', 1, 'e');
+  cores();
+  const { EIXO, X, ret, fundo } = escuro(), YM = -175, YR = 10, PIT = 160, MW = 150, MH = 72, YB = 66, YH = 104;
+  const mo = X(degrau('copy', 'Molde', 'Aluguel da empilhadeira · R$ 2.300,00 · Todo dia 12', { w: 600, h: 96, cls: '' }), 0, YM);
+  const chA = X(htmlChip('Repetir até 12/04/2027', 'am'), 300 + 14, YM, { anc: [0, .5], z: 40 }); chA.e.style.transformOrigin = '0 50%';
+  const N = [['Novembro', '12/11'], ['Dezembro', '12/12'], ['Janeiro', '12/01'], ['Fevereiro', '12/02'], ['Março', '12/03'], ['Abril', '12/04']];
+  const C = N.map(([r, s], i) => X(mes(r, s, MW, MH), (i - 2.5) * PIT, YR));
+  const FY0 = YM + 48 + 10, FH = Math.round(YR - MH / 2 - 10 - FY0), fi = garfoPara(X, N.map((_, i) => (i - 2.5) * PIT), FY0, FH);
+  const BWD = 3 * MW + 2 * (PIT - MW), XB0 = -2.5 * PIT - MW / 2;   // a faixa dos três meses: começa na quina do primeiro cartão
+  const br = X(`<div style="width:${BWD}px;height:8px;border-radius:4px;background:linear-gradient(90deg,#2FB271,#6CF0A8);box-shadow:0 0 14px rgba(80,208,136,.5)"></div>`, XB0 + BWD / 2, YB);
+  const hj = X(htmlChip('Hoje', 'am'), XB0, YH, { anc: [0, 0], z: 40 }), p3 = X(htmlChip('Próximos 3 meses', 'n'), XB0 + BWD / 2, YH, { anc: [.5, 0], z: 40 });
+  fundo(0, 0, { aneis: false });
+  const tit = titulo('Repetir', 'O molde da conta', 'escuro');
+  const XR = (N.length / 2) * PIT, XE = 300 + 14 + chA.w;
+  const S1 = enquadraRet(EIXO, ret(-Math.max(XR, 300) - 8, YM - 48, Math.max(XR, XE) + 8, YH + 40), { az: -.03, max: 1.4 / EE });
+  camera([[t0 - 3, S1], [tfim + 2.5, { ...S1, az: .03, d: S1.d * .985 }, 'lin']]);
+  const TC = i => lerp(tcr - .05, tto + .15, i / 5);
+  return t => {
+    STAND(t, tit, t0);
+    vis(mo.e, t, tmo - .35, NUNCA, { dy: 18 }); vis(chA.e, t, tpa - .1, tse - .05, { dy: 10, sc: .8 }); pulso(chA.e, t, tat, .05, .8);
+    fi.e.style.opacity = eo(pr(t, tcr - .35, .3)).toFixed(3);
+    const dim = eo(pr(t, tse, .45));
+    C.forEach((c, i) => {
+      vis(c.e, t, TC(i), NUNCA, { dy: 18 }); fluxo(fi.e, i, t, TC(i) - .3, .55, { fica: .75, luz: [TC(i) - .3, .75] });
+      const lum = i < 3 ? 1 : i === 3 ? 1 - .65 * dim * (1 - eo(pr(t, tsg, .4))) : 1 - .65 * dim;   // sem data, só os próximos três meses existem
+      c.e.style.opacity = ((+c.e.style.opacity || 0) * lum).toFixed(4);
+    });
+    // a faixa dos três meses anda um mês para a frente com o tempo
+    const k = eio(pr(t, tco2 - .1, 1.0)), dx = k * PIT, on = eo(pr(t, tpr - .1, .4));
+    aqui(br, XB0 + BWD / 2 + dx, YB); aqui(hj, XB0 + dx, YH); aqui(p3, XB0 + BWD / 2 + dx, YH);
+    vis(br.e, t, tpr - .1, NUNCA, { dy: 0, sc: 1 }); vis(hj.e, t, tpr - .05, NUNCA, { dy: -8, sc: .85 }); vis(p3.e, t, ttr - .1, NUNCA, { dy: -8, sc: .85 });
+    pulso(C[3].e, t, tsg + .3, .05, .8);
+  };
+}
+
+// =====================================================================================================================
+// CENA "dinheiro" · cap11, linhas 5 e 6 · clima escuro (a baixa mexe em dinheiro e vai à DRE)
+// 5 "Uma dica: dar baixa mexe em dinheiro de verdade. No Pix, o valor sai da conta do banco; em dinheiro, sai do caixa aberto. E o
+//    lançamento leva a categoria da conta, por isso aparece certinho na DRE, o relatório do resultado da empresa."
+// 6 "E é tudo junto: ou a baixa grava inteira, ou nada muda."
+// A conta da energia (Pendente → Paga na baixa); dela saem o Pix (conta do banco) e o dinheiro (caixa aberto); a categoria
+// segue e os dois caminhos terminam na DRE; no fim, "tudo junto".
+function dinheiro() {
+  const t0 = W(5, 'uma'), tba = W(5, 'baixa'), tpx = W(5, 'pix'), tbc = W(5, 'banco'), tdi = W(5, 'dinheiro', 2), tcx = W(5, 'caixa'), tlc = W(5, 'lancamento'), tct = W(5, 'categoria'),
+    tdr = W(5, 'dre'), trs = W(5, 'resultado'), tem = W(5, 'empresa'), tju = W(6, 'junto'), tin = W(6, 'inteira'), tfim = W(6, 'muda', 1, 'e');
+  cores();
+  const { EIXO, X, ret, fundo } = escuro(), YS = -190, YR = -30, YD = 150, CWD = 320, DX = 175;
+  const src = X(degrau('zap', 'Energia elétrica de outubro', '', { w: 480, h: 84, cls: 'a' }), 0, YS);
+  const pend = X(htmlChip('Pendente', 'am'), 240 + 14, YS, { anc: [0, .5], z: 40 }), paga = X(htmlChip('Paga', ''), 240 + 14, YS, { anc: [0, .5], z: 45 });
+  pend.e.style.transformOrigin = paga.e.style.transformOrigin = '0 50%';
+  const R = [X(cartaoP('landmark', 'Pix', 'sai da conta do banco', 'n', CWD), -DX, YR), X(cartaoP('banknote', 'Dinheiro', 'sai do caixa aberto', 'n', CWD), DX, YR)];
+  const RW = Math.max(R[0].w, R[1].w), RH = R[0].h; R.forEach((q, i) => aqui(q, (i ? 1 : -1) * (RW / 2 + 12), YR));
+  const DXS = [-(RW / 2 + 12), RW / 2 + 12], FY0 = YS + 42 + 10, FH = Math.round(YR - RH / 2 - 10 - FY0), fi = garfoPara(X, DXS, FY0, FH);
+  const dre = X(degrau('chart-column', 'DRE', 'Resultado da empresa', { w: 440, h: 96, cls: '', cc: 'res', res: true }), 0, YD);
+  const JY0 = YR + RH / 2 + 10, JH = Math.round(YD - 48 - 10 - JY0), jn = juntaDe(X, DXS, JY0, JH);
+  const ct = X(htmlChip(`${ic('tag', 18)}categoria · Energia elétrica`, 'am'), -(220 + 14), YD, { anc: [1, .5], z: 40 }); ct.e.style.transformOrigin = '100% 50%';
+  const tj = X(htmlChip(`${ic('link', 18)}tudo junto`, 'am'), 0, YD + 48 + 26, { anc: [.5, 0], z: 40 });
+  fundo(0, 40, { aneis: false });
+  const tit = titulo('Dar baixa', 'A baixa mexe em dinheiro', 'escuro');
+  const XL = 234 + ct.w, XRt = 254 + pend.w, XRm = Math.max(XRt, RW + 24);
+  const S1 = enquadraRet(EIXO, ret(-Math.max(XL, RW + 24) / 1 - 6, YS - 42, XRm + 6, YR + RH / 2 + 6), { az: -.03, max: 1.4 / EE }), S2 = enquadraRet(EIXO, ret(-Math.max(XL, RW + 24) - 6, YS - 42, XRm + 6, YD + 48 + 26 + 50), { az: .0, max: 1.4 / EE });
+  camera([[t0 - 3, S1], [tct - .9, { ...S1, az: -.012, d: S1.d * .985 }, 'lin'], [tct + .5, S2], [tfim + 2.5, { ...S2, az: .03, d: S2.d * .98 }, 'lin']]);
+  return t => {
+    STAND(t, tit, t0);
+    vis(src.e, t, t0 - .05, NUNCA, { dy: 18 }); vis(pend.e, t, t0 + .1, NUNCA, { dy: 8, sc: .85 }); pend.e.style.opacity = ((+pend.e.style.opacity || 0) * (1 - eo(pr(t, tba + .15, .3)))).toFixed(3);
+    vis(paga.e, t, tba + .15, NUNCA, { dy: 8, sc: .85 }); pulso(paga.e, t, tba + .25, .06, .8);
+    fi.e.style.opacity = eo(pr(t, tpx - .35, .3)).toFixed(3);
+    vis(R[0].e, t, tpx - .1, NUNCA, { dy: 18 }); fluxo(fi.e, 0, t, tpx - .35, .55, { fica: .75, luz: [tpx - .35, .75] }); subEm(R[0], t, tbc - .1);
+    vis(R[1].e, t, tdi - .1, NUNCA, { dy: 18 }); fluxo(fi.e, 1, t, tdi - .35, .55, { fica: .75, luz: [tdi - .35, .75] }); subEm(R[1], t, tcx - .1);
+    vis(ct.e, t, tct - .1, NUNCA, { dy: 10, sc: .8 });
+    jn.e.style.opacity = eo(pr(t, tct - .1, .3)).toFixed(3); fluxo(jn.e, 0, t, tct - .05, .6, { fica: .75, luz: [tct - .05, .8] }); fluxo(jn.e, 1, t, tct - .05, .6, { fica: .75, luz: [tct - .05, .8] });
+    vis(dre.e, t, tdr - .1, NUNCA, { dy: 20 }); { const s = dre.e.querySelector('.sub'); s.style.opacity = eo(pr(t, trs - .1, .3)).toFixed(3); } ondaEm(dre.e.querySelector('.onda'), t, tem + .1);
+    vis(tj.e, t, tju - .1, NUNCA, { dy: 10, sc: .8 }); pulso(tj.e, t, tin, .05, .8);
+  };
+}
+
+// =====================================================================================================================
+// CENA "fiado" · cap15, linhas 6 e 7 · clima escuro (Saldo menos Parcelas é o que fica na lista)
+// 6 "Uma dica: se o saldo de um cliente sumir da lista, olha se a venda foi parcelada. Na venda a prazo em parcelas, o mesmo dinheiro
+//    fica no saldo e nas parcelas. Pra não cobrar duas vezes, a lista desconta do saldo o que já virou parcela."
+// 7 "Se tudo virou parcela, a linha de saldo some. Se só uma parte virou, ela mostra só o que sobra."
+// Três cartões numa conta: Saldo (14.370) menos Parcelas (3x de 4.790) igual ao que fica Na lista. Tudo virou parcela: a linha some.
+// Só uma parte virou: o cartão das parcelas e o da lista trocam o texto e a lista mostra só a sobra.
+function fiado() {
+  const t0 = W(6, 'uma'), tsa = W(6, 'saldo', 1), tpa = W(6, 'parcelas', 1), tme = W(6, 'mesmo'), tdn = W(6, 'dinheiro'), tdc = W(6, 'cobrar'), tl2 = W(6, 'lista', 2), tds = W(6, 'desconta'), tvi = W(6, 'virou'),
+    ttu = W(7, 'tudo'), tso = W(7, 'some'), tpt = W(7, 'parte'), tmo = W(7, 'mostra'), tfim = W(7, 'sobra', 1, 'e');
+  cores();
+  const { EIXO, X, ret, fundo } = escuro(), CW = 330, PIT = CW + 92, Y = 0;
+  const cSal = X(htmlCartao('wallet', 'Saldo', 'Fundição Bandeira do Vale', 'R$ 14.370,00', { w: CW, h: 132 }), -PIT, Y);
+  const cPar = X(htmlCartao('layers', 'Parcelas', '3x de R$ 4.790,00', 'R$ 14.370,00', { w: CW, h: 132 }), 0, Y);
+  const cLis = X(htmlCartao('list', 'Na lista', '', '', { w: CW, h: 132, res: true }), PIT, Y);
+  const opM = X(htmlChip('−', 'n'), -PIT / 2, Y, { z: 40 }), opI = X(htmlChip('=', 'n'), PIT / 2, Y, { z: 40 });
+  const sPar = cPar.e.querySelector('.sub'), nPar = cPar.e.querySelector('.num'), sLis = cLis.e.querySelector('.sub'), nLis = cLis.e.querySelector('.num');
+  fundo(0, 0, { aneis: false });
+  const tit = titulo('Fiado', 'O que fica na lista', 'escuro');
+  const S1 = enquadraRet(EIXO, ret(-PIT - CW / 2 - 8, -66 - 14, PIT + CW / 2 + 8, 66 + 14), { az: -.03, max: 1.4 / EE });
+  camera([[t0 - 3, S1], [tfim + 2.5, { ...S1, az: .03, d: S1.d * .985 }, 'lin']]);
+  return t => {
+    STAND(t, tit, t0);
+    vis(cSal.e, t, tsa - .1, NUNCA, { dy: 18 });
+    vis(opM.e, t, tpa - .25, NUNCA, { dy: 10, sc: .8 }); vis(cPar.e, t, tpa - .1, NUNCA, { dy: 18 });
+    pulso(cSal.e, t, tme, .03, .8); pulso(cPar.e, t, tme + .15, .03, .8);
+    pulso(opM.e, t, tds, .08, .8);
+    vis(opI.e, t, tl2 - .25, NUNCA, { dy: 10, sc: .8 }); vis(cLis.e, t, tl2 - .1, NUNCA, { dy: 18 });
+    // Na lista: tudo virou parcela, a linha some; só uma parte virou, mostra só a sobra
+    const B = t > tpt - .1;
+    poeTxt(sLis, B ? 'Só o que sobra' : 'Já está nas parcelas'); poeTxt(nLis, B ? 'só a sobra' : t > tso - .05 ? 'a linha some' : '');
+    poeTxt(sPar, B ? 'Só uma parte' : '3x de R$ 4.790,00'); poeTxt(nPar, B ? 'uma parte' : 'R$ 14.370,00');
+    sLis.style.opacity = eo(pr(t, tvi - .1, .3)).toFixed(3); pulso(cLis.e, t, tso, .04, .8); pulso(cLis.e, t, tmo, .04, .8); pulso(cPar.e, t, tpt, .04, .8);
+  };
+}
+
+// =====================================================================================================================
+const CAPS = { 0: contas, 2: vencidas, 7: parcelas, 8: molde, 11: dinheiro, 15: fiado };
+cena(d => CAPS[d.cap](d), { fov: 26 });
+</script></body></html>
