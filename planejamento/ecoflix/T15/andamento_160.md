@@ -20,3 +20,7 @@ da faixa cinza; cap11 semente `t15/previsto` (água vencida, telefone); cap12 se
 'Editar categoria'. Mundo: `linhasDRE` com bank_account_id/name; `t15/inicio` com created_at do bt.135 (Registrado em).
 Falta: gerar a voz; gravação final. Instância 54315 derrubada. `ilustracoes.json`: mostra do PDF atualizado.
 Sobras em rec/t15/_ens: MP4 e folhas de contato dos ensaios (apagar à mão, caminho a caminho).
+
+## 21/11 · ilustrações v3 prontas (para o fechamento)
+- 5 cenas escuras em `T15/cenas_v3/cena.html` (cap00 L1, cap01 L11-13, cap02 L1, cap08 L3-7 com as contas do pátio, cap13 L8); 5 tiradas (a tela mostra). Auditoria 0.
+- **No fechamento**: `ilu07_patio` ainda tem 1 piscada (39,37 s, tremor do texto da tabela cheia): zerar antes de encaixar. cap15 L2 "O PDF é pra mandar pro contador ou guardar.": capturar o PDF do Histórico na gravação final e mostrar o papel real (cena `pdf`); se não sair, a tela mostra o menu Exportar com PDF e Excel.

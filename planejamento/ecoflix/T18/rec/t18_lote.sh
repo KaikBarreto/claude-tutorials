@@ -4,6 +4,7 @@
 cd /home/claude/ecoflix
 for item in "$@"; do
   NN=${item%%:*}; MODO=${item##*:}
+  LIVRE=$(df -m / | awk 'NR==2{print $4}'); echo "disco livre ${LIVRE} MB"; [ "$LIVRE" -lt 400 ] && { echo "PARADO: disco abaixo de 400 MB"; exit 9; }
   echo "== $item na fila $(date +%H:%M:%S)"
   bash /home/claude/ecoflix/rec/fila.sh --prio 18 -- bash rec/t18/t18_corpo.sh "$NN" "$MODO"
   echo "== $item saiu com $? $(date +%H:%M:%S)"

@@ -54,13 +54,13 @@ json.dump(d, open(p, 'w', encoding='utf8'), ensure_ascii=False, indent=1)
 PY
     fi
     OUT="rec/t18/_ens/.cap$NN.out"
-    timeout $TMO node rec/record.mjs rec/t18/_ens/cap$NN.json --rapido --preset ultrafast --crf 30 > "$OUT" 2>&1; RC=$?
-    mkdir -p /dev/shm/t18rec; mv -f rec/t18/_ens/t18-cap$NN.mp4 rec/t18/_ens/t18-cap$NN.contact.jpg /dev/shm/t18rec/ 2>/dev/null
+    mkdir -p /dev/shm/t18_ens; timeout $TMO node rec/record.mjs rec/t18/_ens/cap$NN.json --out /dev/shm/t18_ens --rapido --preset ultrafast --crf 30 > "$OUT" 2>&1; RC=$?
+    mkdir -p /dev/shm/t18rec; for e in actions.json telemetry.json; do mv -f /dev/shm/t18_ens/t18-cap$NN.$e rec/t18/_ens/ 2>/dev/null; done; mv -f /dev/shm/t18_ens/t18-cap$NN.mp4 /dev/shm/t18_ens/t18-cap$NN.contact.jpg /dev/shm/t18rec/ 2>/dev/null
     echo "fim cap$NN r $(date +%H:%M:%S) exit $RC"; grep -c "SEM ALVO" "$OUT" | sed 's/^/SEM ALVO: /'; tail -3 "$OUT" ;;
   c)
     OUT="rec/t18/.cap$NN.out"
-    timeout $TMO node rec/record.mjs rec/t18/cap$NN.json --preset ultrafast --crf 30 > "$OUT" 2>&1; RC=$?
-    mkdir -p /dev/shm/t18rec; mv -f rec/t18/t18-cap$NN.mp4 rec/t18/t18-cap$NN.contact.jpg /dev/shm/t18rec/ 2>/dev/null
+    mkdir -p /dev/shm/t18_ens; timeout $TMO node rec/record.mjs rec/t18/cap$NN.json --out /dev/shm/t18_ens --preset ultrafast --crf 30 > "$OUT" 2>&1; RC=$?
+    mkdir -p /dev/shm/t18rec; for e in actions.json telemetry.json; do mv -f /dev/shm/t18_ens/t18-cap$NN.$e rec/t18/ 2>/dev/null; done; mv -f /dev/shm/t18_ens/t18-cap$NN.mp4 /dev/shm/t18_ens/t18-cap$NN.contact.jpg /dev/shm/t18rec/ 2>/dev/null
     echo "fim cap$NN c $(date +%H:%M:%S) exit $RC"; grep -c "SEM ALVO" "$OUT" | sed 's/^/SEM ALVO: /'; tail -3 "$OUT" ;;
 esac
 exit $RC
