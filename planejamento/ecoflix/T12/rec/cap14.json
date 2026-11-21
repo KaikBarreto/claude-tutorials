@@ -1,6 +1,6 @@
 {
  "name": "t12-cap14",
- "title": "T12 · Cap. 14 · O relatório das coletas (narração 51,1 s ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T07:00:00-03:00)",
+ "title": "T12 · Cap. 14 · O relatório das coletas (narração 42,6 s; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T07:00:00-03:00)",
  "seed": "t12-cap14",
  "pace": 0.5,
  "cps": 9,
@@ -12,8 +12,8 @@
  "anonymous": true,
  "storage": {
   "cato_adoption_nudge_38814e47-876a-5977-a5f7-53af364c17bb_34c36c63-0890-5e89-8963-7c77b7996908": "{\"count\":99,\"lastShownAt\":4102444800000}",
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
   "pwa-install-dismissed": "true",
   "theme": "light",
@@ -146,7 +146,7 @@
     "exact": true,
     "within": "aside, [data-sidebar=sidebar]"
    },
-   "at": 0.04,
+   "at": 0.0,
    "label": "menu Relatório"
   },
   {
@@ -165,7 +165,7 @@
     "selector": "main button[role=combobox]"
    },
    "seconds": 0.3,
-   "at": 2.99,
+   "at": 2.24,
    "label": "Período: Este mês",
    "optional": true,
    "timeout": 4
@@ -176,7 +176,7 @@
     "selector": "main div.grid:has(:text-is('Total de coletas')) >> nth=-1"
    },
    "seconds": 3.5,
-   "at": 4.03,
+   "at": 2.96,
    "label": "Este mês: os quatro números",
    "optional": true,
    "timeout": 4
@@ -184,14 +184,14 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 10.8
+   "at": 8.72
   },
   {
    "do": "click",
    "target": {
     "selector": "main button[role=combobox]"
    },
-   "at": 10.8,
+   "at": 8.72,
    "label": "abre Período"
   },
   {
@@ -221,7 +221,7 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 19.35
+   "at": 16.32
   },
   {
    "do": "scroll",
@@ -232,18 +232,18 @@
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 19.55,
+   "at": 16.54,
    "label": "cursor em repouso (ilustração)"
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 27.06
+   "at": 23.08
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Por status\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-130);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 27.06,
+   "at": 23.08,
    "label": "desce às tabelas"
   },
   {
@@ -254,7 +254,7 @@
     "exact": true
    },
    "seconds": 0.6,
-   "at": 28.63,
+   "at": 24.44,
    "label": "Por status",
    "optional": true,
    "timeout": 4
@@ -267,7 +267,7 @@
     "exact": true
    },
    "seconds": 1.5,
-   "at": 32.05,
+   "at": 27.4,
    "label": "Por motorista, veículo e parceiro",
    "optional": true,
    "timeout": 4
@@ -275,12 +275,12 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 38.19
+   "at": 32.52
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim().startsWith(\"Per\\u00edodo\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-160);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 38.19,
+   "at": 32.52,
    "label": "sobe ao Período"
   },
   {
@@ -301,7 +301,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 51.13
+   "at": 42.56
   }
  ]
 }

@@ -1,6 +1,6 @@
 {
  "name": "t12-cap08",
- "title": "T12 · Cap. 8 · O relatório para o parceiro (narração 61,8 s ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T07:00:00-03:00)",
+ "title": "T12 · Cap. 8 · O relatório para o parceiro (narração 51,6 s; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T07:00:00-03:00)",
  "seed": "t12-cap08",
  "pace": 0.5,
  "cps": 9,
@@ -12,8 +12,8 @@
  "anonymous": true,
  "storage": {
   "cato_adoption_nudge_38814e47-876a-5977-a5f7-53af364c17bb_34c36c63-0890-5e89-8963-7c77b7996908": "{\"count\":99,\"lastShownAt\":4102444800000}",
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
   "pwa-install-dismissed": "true",
   "theme": "light",
@@ -107,7 +107,7 @@
    "target": {
     "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#8')) button:text-is('Relatório')"
    },
-   "at": 0.88,
+   "at": 0.16,
    "label": "#8: Relatório"
   },
   {
@@ -123,7 +123,7 @@
     "exact": true
    },
    "seconds": 0.4,
-   "at": 10.2,
+   "at": 8.88,
    "label": "Copiar link",
    "optional": true,
    "timeout": 4
@@ -135,7 +135,7 @@
     "name": "Compartilhar no WhatsApp"
    },
    "seconds": 0.4,
-   "at": 12.55,
+   "at": 10.96,
    "label": "Compartilhar no WhatsApp (não clica)",
    "optional": true,
    "timeout": 4
@@ -148,7 +148,7 @@
     "exact": true
    },
    "seconds": 0.6,
-   "at": 13.31,
+   "at": 11.84,
    "label": "Imprimir (não clica)",
    "optional": true,
    "timeout": 4
@@ -156,7 +156,7 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 14.82
+   "at": 13.2
   },
   {
    "do": "click",
@@ -165,13 +165,13 @@
     "name": "Copiar link",
     "exact": true
    },
-   "at": 14.92,
+   "at": 13.3,
    "label": "Copiar link (clica)"
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"body *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Equipamentos\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-260);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 17.84,
+   "at": 15.28,
    "label": "desce a Equipamentos"
   },
   {
@@ -181,7 +181,7 @@
     "exact": true
    },
    "seconds": 1.5,
-   "at": 19.51,
+   "at": 16.56,
    "label": "Equipamentos do relatório",
    "optional": true,
    "timeout": 4
@@ -189,18 +189,27 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"body *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Relat\\u00f3rio de Coleta 8\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-140);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 22.64,
+   "at": 21.77,
    "label": "sobe ao topo do relatório"
   },
   {
-   "do": "click",
+   "do": "hover",
    "target": {
     "role": "link",
     "name": "Voltar às ordens",
     "exact": true
    },
-   "at": 23.84,
-   "label": "Voltar às ordens"
+   "seconds": 0.2,
+   "at": 22.67,
+   "label": "Voltar às ordens",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "history.back()",
+   "at": 23.57,
+   "label": "volta ao quadro (sem recarregar o app)"
   },
   {
    "do": "waitFor",
@@ -222,12 +231,12 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 29.44
+   "at": 24.97
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim().startsWith(\"Relat\\u00f3rio do fornecedor\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-280);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 29.84,
+   "at": 25.37,
    "label": "ficha: Relatório do Fornecedor"
   },
   {
@@ -237,7 +246,7 @@
     "name": "Abrir link do Fornecedor"
    },
    "seconds": 0.8,
-   "at": 35.42,
+   "at": 29.85,
    "label": "Abrir link do Fornecedor (não clica)",
    "optional": true,
    "timeout": 4
@@ -245,12 +254,12 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 38.14
+   "at": 32.25
   },
   {
    "do": "press",
    "key": "Escape",
-   "at": 38.14,
+   "at": 32.25,
    "label": "fecha a ficha"
   },
   {
@@ -276,7 +285,7 @@
     "exact": true,
     "within": "aside, [data-sidebar=sidebar]"
    },
-   "at": 40.32,
+   "at": 34.11,
    "label": "menu Configurações (Coletas)"
   },
   {
@@ -287,7 +296,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Relat\\u00f3rio p\\u00fablico\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-200);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 41.56,
+   "at": 35.79,
    "label": "desce a Relatório público"
   },
   {
@@ -297,7 +306,7 @@
     "exact": true
    },
    "seconds": 1.2,
-   "at": 41.76,
+   "at": 36.59,
    "label": "Mostrar valores no relatório que o cliente abre",
    "optional": true,
    "timeout": 4
@@ -305,7 +314,7 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 49.58
+   "at": 42.33
   },
   {
    "do": "hover",
@@ -314,7 +323,7 @@
     "within": "main"
    },
    "seconds": 2.5,
-   "at": 49.58,
+   "at": 42.33,
    "label": "o aviso do link público",
    "optional": true,
    "timeout": 4
@@ -327,7 +336,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 61.76
+   "at": 51.6
   }
  ]
 }

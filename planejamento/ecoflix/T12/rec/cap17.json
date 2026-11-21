@@ -1,0 +1,473 @@
+{
+ "name": "t12-cap17",
+ "title": "T12 · Cap. 17 · Recapitulando (narração 48,6 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T07:00:00-03:00)",
+ "seed": "t12-cap17",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 470
+ },
+ "anonymous": true,
+ "storage": {
+  "cato_adoption_nudge_38814e47-876a-5977-a5f7-53af364c17bb_34c36c63-0890-5e89-8963-7c77b7996908": "{\"count\":99,\"lastShownAt\":4102444800000}",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t12/inicio",
+  "t12/apos-cap15",
+  "t12/rastreamento"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "••••••••"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "url": "/dashboard",
+   "timeout": 40
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "goto",
+   "url": "/coletas/frota"
+  },
+  {
+   "do": "waitFor",
+   "text": "Veículos e motoristas disponíveis para as coletas",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "seconds": 0.3
+  },
+  {
+   "do": "goto",
+   "url": "/coletas/equipamentos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Caçambas, bags, caixas e paletes em campo",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "seconds": 0.3
+  },
+  {
+   "do": "goto",
+   "url": "/coletas/rastreamento"
+  },
+  {
+   "do": "waitFor",
+   "text": "Acompanhe a frota em tempo real",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "seconds": 0.3
+  },
+  {
+   "do": "goto",
+   "url": "/coletas/relatorio"
+  },
+  {
+   "do": "waitFor",
+   "text": "Indicadores e histórico das coletas",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "seconds": 0.3
+  },
+  {
+   "do": "goto",
+   "url": "/coletas/configuracoes"
+  },
+  {
+   "do": "waitFor",
+   "text": "Ajuste a numeração, as janelas e as regras do portal de coletas",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "seconds": 0.3
+  },
+  {
+   "do": "goto",
+   "url": "/coletas/ordens"
+  },
+  {
+   "do": "waitFor",
+   "text": "Solicite, agende e acompanhe as ordens de coleta",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if([...document.querySelectorAll('a')].some(a=>a.textContent.trim()==='Frota'&&a.offsetParent))return 'ja aberto';const b=[...document.querySelectorAll('button')].find(b=>b.textContent.trim().startsWith('Coletas & Logística'));if(!b)return 'SEM ALVO';b.click();return 'aberto'})()"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "link",
+    "name": "Frota",
+    "exact": true,
+    "within": "aside, [data-sidebar=sidebar]"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "wait",
+   "seconds": 0.5
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const pos={coords:{latitude:-22.9035,longitude:-43.1038,accuracy:15,altitude:null,altitudeAccuracy:null,heading:null,speed:null},timestamp:Date.now()};const g=navigator.geolocation;g.watchPosition=(ok)=>{setTimeout(()=>ok(pos),50);return 1};g.getCurrentPosition=(ok)=>setTimeout(()=>ok(pos),50);g.clearWatch=()=>{};return 'gps'})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Transi[çc][ãa]o inv[áa]lida|n[ãa]o encontrad|Localiza[çc][ãa]o n[ãa]o registrada|Sem sinal de GPS/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA ECOFLIX'))window.__avisos.push('TRILHA ECOFLIX')},300);return 1})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__animFix)return 'ja';window.__animFix=setInterval(()=>{for(const a of document.getAnimations())if(a.currentTime!==null&&a.currentTime<0)a.startTime=document.timeline.currentTime},100);return 'anim fix'})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main h3:text-is('Agendada')"
+   },
+   "seconds": 0.5,
+   "at": 2.24,
+   "label": "o quadro",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#COL-9')) :text-is('Auto Peças Vale Forte')"
+   },
+   "seconds": 1.5,
+   "at": 3.68,
+   "label": "ordem 9: Auto Peças Vale Forte",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 8.8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#COL-8')) :text-is('Depósito Irmãos Siqueira')"
+   },
+   "seconds": 1.5,
+   "at": 9.44,
+   "label": "ordem 8: Depósito Irmãos Siqueira",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main h3:text-is('Concluídas')"
+   },
+   "seconds": 0.8,
+   "at": 13.6,
+   "label": "coluna Concluídas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 17.04
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#COL-9')) button[aria-label='Ações da ordem']"
+   },
+   "at": 17.36,
+   "label": "ordem 9: Ações da ordem"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 20.7,
+   "label": "fecha o menu"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#COL-8')) button:text-is('Relatório')"
+   },
+   "seconds": 1.0,
+   "at": 20.88,
+   "label": "ordem 8: Relatório",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 23.12
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#COL-10')) :text-is('via portal')"
+   },
+   "seconds": 1.5,
+   "at": 23.92,
+   "label": "ordem 10: via portal",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 26.72
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Frota",
+    "exact": true,
+    "within": "aside, [data-sidebar=sidebar]"
+   },
+   "at": 26.72,
+   "label": "menu Frota"
+  },
+  {
+   "do": "waitFor",
+   "text": "Veículos e motoristas disponíveis para as coletas",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button:has-text('FVL8A52')"
+   },
+   "seconds": 0.6,
+   "at": 27.36,
+   "label": "FVL8A52 na frota",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Equipamentos",
+    "exact": true,
+    "within": "aside, [data-sidebar=sidebar]"
+   },
+   "at": 28.88,
+   "label": "menu Equipamentos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Caçambas, bags, caixas e paletes em campo",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Tipos de equipamento",
+    "within": "main",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "at": 31.12,
+   "label": "Equipamentos",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Rastreamento",
+    "exact": true,
+    "within": "aside, [data-sidebar=sidebar]"
+   },
+   "at": 32.54,
+   "label": "menu Rastreamento"
+  },
+  {
+   "do": "waitFor",
+   "text": "Acompanhe a frota em tempo real",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Tiago Freitas",
+    "within": "main"
+   },
+   "seconds": 1.2,
+   "at": 35.0,
+   "label": "Tiago Freitas no mapa",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 36.48
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Relatório",
+    "exact": true,
+    "within": "aside, [data-sidebar=sidebar]"
+   },
+   "at": 36.48,
+   "label": "menu Relatório"
+  },
+  {
+   "do": "waitFor",
+   "text": "Indicadores e histórico das coletas",
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Configurações",
+    "exact": true,
+    "within": "aside, [data-sidebar=sidebar]"
+   },
+   "at": 38.2,
+   "label": "menu Configurações (Coletas)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Ajuste a numeração, as janelas e as regras do portal de coletas",
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Checklist da coleta\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-140);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 40.06,
+   "label": "desce ao bloco Checklist da coleta"
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 42.22
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 470
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 42.72,
+   "label": "cursor em repouso (próximo tutorial)"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 48.56
+  }
+ ]
+}

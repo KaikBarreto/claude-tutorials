@@ -4,7 +4,8 @@
 EcoSistema 1.60.18 no Supabase falso (mundo da Recicla Vale Metais), computador 1600x900, logado como Rafael Nogueira (MASTER).
 Cada passo é preso a uma palavra da fala: `at` = início da palavra - folga (o custo do gesto, docs/04 "Custo real dos gestos"), e a marca
 Ln entra no início de cada linha. Quando a voz chegar, rodar de novo com o capNN.json da voz (nada a reescrever).
-O cap17 (Recapitulando) é montagem das gravações dos capítulos 2 a 16: sem robô.
+O cap17 (Recapitulando) é um passeio calmo pelo estado final (quadro, Frota, Equipamentos, Rastreamento, Relatório e Configurações), como
+na T08 e na T06 (fechamento de 21/11).
 Rodar de qualquer pasta: `python3 -I rec/t12/gerar.py [NN ...]`; ensaiar em lote: `bash rec/t12/t12_lote.sh NN [NN ...]`.
 
 Renumeração de 20/11 (aplicação do 1.60.18): novos 7 (editar, cancelar e excluir), 8 (relatório para o parceiro), 12 (movimentações e ficha do
@@ -67,12 +68,12 @@ NOMES = ['Abertura', 'O que o módulo de Coletas resolve', 'O quadro das ordens'
          'Veículos e motoristas', 'As caçambas e onde estão', 'Movimentações e a ficha do parceiro', 'Onde está o caminhão',
          'O relatório das coletas', 'As regras das coletas', 'Checklist e assinaturas', 'Recapitulando']
 SEMENTE = {0: None, 1: None, 2: None, 3: None, 4: None, 5: None, 6: 'apos-cap05', 7: 'apos-cap06', 8: 'apos-cap07', 9: 'apos-cap07',
-           10: 'apos-cap09', 11: 'apos-cap10', 12: 'apos-cap11', 13: 'apos-cap12', 14: 'apos-cap12', 15: 'apos-cap12', 16: 'apos-cap15', 17: None}
+           10: 'apos-cap09', 11: 'apos-cap10', 12: 'apos-cap11', 13: 'apos-cap12', 14: 'apos-cap12', 15: 'apos-cap12', 16: 'apos-cap15', 17: 'apos-cap15'}
 
 
 def sementes(n):
     """a semente de cada capítulo é cumulativa (tudo desde o início da aula): só a última da cadeia vai junto da base"""
-    return ['t12/inicio'] + ([f't12/{SEMENTE[n]}'] if SEMENTE[n] else []) + (['t12/rastreamento'] if n == 13 else [])
+    return ['t12/inicio'] + ([f't12/{SEMENTE[n]}'] if SEMENTE[n] else []) + (['t12/rastreamento'] if n in (13, 17) else [])
 
 
 def norm(s):
@@ -464,7 +465,7 @@ def cap01():
     c.hover(COL_T('Agendada'), 0.6, at=c.A(1, 'buscar', 0.5), label='quadro: coluna Agendada')
     c.hover(CARD_TXT(8, 'Depósito Irmãos Siqueira'), 0.8, at=c.A(1, 'caçamba', 0.5), label='cartão da troca de caçamba (#8)')
     c.hover(CARD_TXT(7, 'Marcelo Tavares'), 0.8, at=c.A(1, 'combina', 0.5), label='cartão do Marcelo (#7)')
-    c.cursor((760, 460), at=c.A(1, 'dele', 0.3), label='cursor em repouso')
+    c.cursor((760, 460), at=c.A(1, 'dele', 1.3), label='cursor em repouso')
     for i in (2, 3, 4):
         c.mark(i)
         c.flush(1e9)
@@ -507,7 +508,7 @@ def cap02():
     c.click(TXT('Mês', within='main'), at=c.A(6, 'mês', FC), label='Calendário: Mês')
     c.hover(BTN('Hoje', within='main'), 1.0, at=c.A(6, 'Hoje', FH), label='botão Hoje')
     c.mark(7)
-    c.click(VIEW('Quadro'), at=c.L(7) - 0.5, label='volta ao Quadro')
+    c.click(VIEW('Quadro'), at=c.L(7) - 1.4, label='volta ao Quadro')
     c.waitfor(text='Solicitada', timeout=10)
     c.click(BTNX('Filtros', within='main'), at=c.A(7, 'Filtros', FC), label='Filtros')
     c.waitfor(text='Limpar Filtros', timeout=10)
@@ -546,10 +547,10 @@ def cap03():
     c.click(TXTX('Cadastrado', within=DLG, exact=True), at=c.A(2, 'único', 0.2), label='volta para Cadastrado')
     c.mark(3)
     c.hover(SEL('#ordem-tipo'), 0.8, at=c.L(3) - 0.2, label='Tipo: Fornecedor')
-    c.click(SEL('#ordem-tipo'), at=c.A(3, 'Cliente', FC), label='abre o Tipo (Fornecedor e Cliente)')
-    c.hover(OPT('Cliente'), 0.9, label='Tipo: a opção Cliente')
-    c.press('Escape', label='fecha o Tipo (continua Fornecedor)')
-    c.click(SEL(f"{DLG} button:has-text('Selecionar')"), at=c.A(3, 'Parceiro', FJ, nth=1), label='Parceiro: Selecionar…')
+    c.click(SEL('#ordem-tipo'), at=c.A(3, 'Se', 0.3), label='abre o Tipo (Fornecedor e Cliente)')
+    c.hover(OPT('Cliente'), 0.9, at=c.A(3, 'Tipo', FH, nth=1), label='Tipo: a opção Cliente')
+    c.press('Escape', at=c.A(3, 'No', 0.25), label='fecha o Tipo (continua Fornecedor)')
+    c.click(SEL(f"{DLG} button:has-text('Selecionar')"), at=c.A(3, 'Parceiro', FJ), label='Parceiro: Selecionar…')
     c.waitfor(target=BUSCA_PARC, timeout=10)
     c.type(BUSCA_PARC, 'Vale Forte', label='busca Vale Forte', cps=40, noClick=True)
     c.click(BTNX('Auto Peças Vale Forte', within=f'{DLG} >> nth=-1'), at=c.A(3, 'Vale', FC), label='escolhe Auto Peças Vale Forte')
@@ -661,7 +662,7 @@ def cap06():
     c.ev(js_clicar('button', 'Adicionar'), label='Entreguei: Adicionar os bags (sem cursor)')
     c.mark(6)
     c.clicar_fixo(SEL("div.fixed button:has-text('Concluir coleta')"), (800, 866), js_clicar('div.fixed button', 'Concluir coleta'),
-                  c.A(6, 'Concluir', 0.1), 'Concluir coleta')
+                  c.A(6, 'Concluir', -0.9), 'Concluir coleta')
     c.waitfor(text='Relatório de Coleta 8', timeout=15)
     c.hover(TXTX('Relatório de Coleta 8', exact=True), 1.5, at=c.A(6, 'relatório', FH), label='Relatório de Coleta 8')
     c.mark(7)
@@ -701,7 +702,7 @@ def cap07():
     c.mark(2)
     c.click({'role': 'menuitem', 'name': 'Editar'}, at=c.A(2, 'Editar', FC), label='Editar')
     c.waitfor(target=SEL('#ordem-obs'), timeout=10)
-    c.click(SEL('#ordem-obs'), at=c.A(2, 'observações', FC), label='Observações (campo)')
+    c.click(SEL('#ordem-obs'), at=c.A(2, 'observações', 1.3), label='Observações (campo)')
     c.press('End', label='vai ao fim do texto')
     c.type(SEL('#ordem-obs'), ' Ligar antes de chegar.', at=c.A(2, 'ligar', 0.05), label='Observações: Ligar antes de chegar', cps=40, noClick=True)
     c.hover(SEL('#ordem-janela'), 0.8, at=c.A(2, 'motorista', FH, nth=1), label='o resto também se edita')
@@ -718,8 +719,8 @@ def cap07():
     c.waitfor(text='Excluir ordem de coleta?', timeout=8)
     c.click(BTN('Excluir', within=ALERTA), at=c.A(4, 'Esta', FC), label='confirma o Excluir')
     c.waitfor(text='Não deu para excluir', timeout=10)
-    c.hover(TXTX('Não dá para excluir a ordem de coleta', within=ALERTA), 2.5, at=c.A(4, 'explica', FH), label='Não deu para excluir: o motivo')
-    c.click(BTN('Fechar', within=ALERTA), at=c.L(5) - 0.3, label='Fechar')
+    c.hover(TXTX('Não dá para excluir a ordem de coleta', within=ALERTA), 1.0, at=c.A(4, 'explica', FH), label='Não deu para excluir: o motivo')
+    c.click(BTN('Fechar', within=ALERTA), at=c.L(5) - 1.1, label='Fechar')
     c.mark(5)
     c.cursor(NEUTRO, at=c.A(5, 'dica', 0.3), label='cursor em repouso (a dica)')
     c.fim()
@@ -742,8 +743,9 @@ def cap08():
     rola_ate(c, 'Equipamentos', c.A(2, 'recolhido', 0.6), 'desce a Equipamentos', y=260, dur_ms=800, escopo='body')
     c.hover(TXTX('Equipamentos', exact=True), 1.5, at=c.A(2, 'entregue', FH), label='Equipamentos do relatório')
     c.mark(3)
-    rola_ate(c, 'Relatório de Coleta 8', c.L(3) - 7.0, 'sobe ao topo do relatório', y=140, dur_ms=800, escopo='body')   # a rolagem de volta ao topo dentro do clique custava ~5 s
-    c.click(LINK('Voltar às ordens'), at=c.L(3) - 5.8, label='Voltar às ordens')   # voltar recarrega o app: ~5 s até o quadro aparecer   # a página foi rolada até Equipamentos: sem noScroll, o robô rola de volta ao topo
+    rola_ate(c, 'Relatório de Coleta 8', c.L(3) - 3.4, 'sobe ao topo do relatório', y=140, dur_ms=800, escopo='body')   # a rolagem de volta ao topo dentro do clique custava ~5 s
+    c.hover(LINK('Voltar às ordens'), 0.2, at=c.L(3) - 2.5, label='Voltar às ordens')
+    c.ev('history.back()', at=c.L(3) - 1.6, label='volta ao quadro (sem recarregar o app)')   # voltar recarrega o app: ~5 s até o quadro aparecer   # a página foi rolada até Equipamentos: sem noScroll, o robô rola de volta ao topo
     c.waitfor(text=PAGINAS['/coletas/ordens'], timeout=15)
     c.click(CARD_TXT(8, 'Depósito Irmãos Siqueira'), label='abre a ficha da ordem 8')
     c.waitfor(text='Detalhes da ordem de coleta.', timeout=10)
@@ -752,10 +754,10 @@ def cap08():
     c.mark(4)
     c.press('Escape', at=c.L(4) - 0.3, label='fecha a ficha')
     c.click(GRUPO, label='abre Coletas & Logística', unless=ITEM_MENU('Configurações'))
-    c.click(ITEM_MENU('Configurações'), at=c.A(4, 'Configurações', FC), label='menu Configurações (Coletas)')
+    c.click(ITEM_MENU('Configurações'), at=c.A(4, 'Configurações', 1.3), label='menu Configurações (Coletas)')
     c.waitfor(text=PAGINAS['/coletas/configuracoes'], timeout=15)
-    rola_ate(c, 'Relatório público', c.A(4, 'Mostrar', 0.8), 'desce a Relatório público', y=200, dur_ms=800)
-    c.hover(TXTX('Mostrar valores no relatório que o cliente abre', exact=True), 1.2, at=c.A(4, 'Mostrar', FH), label='Mostrar valores no relatório que o cliente abre')
+    rola_ate(c, 'Relatório público', c.A(4, 'Mostrar', 0.9), 'desce a Relatório público', y=200, dur_ms=800)
+    c.hover(TXTX('Mostrar valores no relatório que o cliente abre', exact=True), 1.2, at=c.A(4, 'Mostrar', 0.1), label='Mostrar valores no relatório que o cliente abre')
     c.mark(5)
     c.hover(TXTX('O link do relatório é público', within='main'), 2.5, at=c.L(5) - 0.2, label='o aviso do link público')
     c.fim()
@@ -852,16 +854,16 @@ def cap10():
     c.click(SEL("main button:has-text('FKD2E41'):has-text('Caminhão truck')"), at=c.A(2, 'caminhão', FC), label='FKD2E41')
     c.confere('main', ['6.380', '14.000'], 'FKD2E41: tara 6.380 e capacidade 14.000 (ilustração)')
     c.hover(SEL("main div:has(> h3:text-is('Capacidade operacional')) + div.grid"), 1.5, at=c.A(2, 'tara', FH), label='Tara e Capacidade do FKD2E41')
-    c.hover(ACOES('FKD2E41'), 2.0, at=c.A(2, 'Editar', FH), label='menu de três pontinhos: Editar e Excluir')
-    c.cursor(NEUTRO, at=c.A(2, 'pontinhos', -0.6), label='tira o cursor do menu')
+    c.hover(ACOES('FKD2E41'), 1.5, at=c.A(2, 'Editar', FH), label='menu de três pontinhos: Editar e Excluir')
+    c.cursor(NEUTRO, at=c.A(2, 'pontinhos', -0.1), label='tira o cursor do menu')
     c.press('Escape', label='fecha o menu da linha')   # o menu abre por hover e o cursor teleportado não o fecha: sem isso ele cobre o Novo veículo
     c.mark(3)
     c.flush(1e9)
     c.mark(4)
-    c.click(BTN('Novo veículo'), at=c.A(4, 'Novo', FC), label='Novo veículo')
+    c.click(BTN('Novo veículo'), at=c.A(4, 'Novo', 1.6), label='Novo veículo')
     c.waitfor(target=SEL('#veiculo-placa'), timeout=10)
     c.click(SEL('#veiculo-placa'), label='Placa (campo)')
-    c.type(SEL('#veiculo-placa'), 'FVL8A52', at=c.A(4, 'placa', 0.05), label='Placa FVL8A52', cps=40, noClick=True)
+    c.type(SEL('#veiculo-placa'), 'FVL8A52', at=c.A(4, 'veículo', 0.0), label='Placa FVL8A52', cps=40, noClick=True)
     c.click(SEL('#veiculo-descricao'), label='Descrição / Apelido (campo)')
     c.type(SEL('#veiculo-descricao'), 'Caminhão poliguindaste', label='Descrição: Caminhão poliguindaste', cps=40, noClick=True)
     c.mark(5)
@@ -880,7 +882,7 @@ def cap10():
     c.click(SEL('#veiculo-cap-kg'), at=c.A(6, 'oito', FC), label='Capacidade (campo)')
     c.type(SEL('#veiculo-cap-kg'), '8500', at=c.A(6, 'oito', 0.05), label='Capacidade (kg) 8500', cps=40, noClick=True)
     c.mark(7)
-    c.clicar_fixo(SEL(f"{DLG} button:has-text('Cadastrar')"), (1000, 800), js_clicar(f'{DLG} button', 'Cadastrar'), c.A(7, 'Cadastrar', 0.1),
+    c.clicar_fixo(SEL(f"{DLG} button:has-text('Cadastrar')"), (1000, 800), js_clicar(f'{DLG} button', 'Cadastrar'), c.A(7, 'Cadastrar', -0.5),
                   'Cadastrar veículo')
     c.waitfor(text='Veículo cadastrado', timeout=10)
     c.hover(SEL("main button:has-text('FVL8A52')"), 1.0, at=c.A(7, 'poliguindaste', FH), label='FVL8A52 na frota')
@@ -897,11 +899,11 @@ def cap10():
     c.type(SEL('#motorista-tel'), '12900004417', label='Telefone', cps=40, noClick=True)
     c.mark(10)
     c.click(SEL('#motorista-cnh'), at=c.A(10, 'CNH', FC), label='CNH (campo)')
-    c.type(SEL('#motorista-cnh'), '04581273671', at=c.A(10, 'número', 0.05), label='CNH', cps=40, noClick=True)
+    c.type(SEL('#motorista-cnh'), '04581273671', at=c.A(10, 'número', 0.6), label='CNH', cps=40, noClick=True)
     c.click(SEL('#motorista-cnh-cat'), label='abre Categoria')
     c.type(SEL('[role=listbox]'), 'C', label='Categoria: procura C', cps=40, noClick=True)
     c.press('Enter', label='Categoria C')
-    c.click(SEL('#motorista-cnh-val'), at=c.A(10, 'validade', FC), label='Validade da CNH (campo)')
+    c.click(SEL('#motorista-cnh-val'), at=c.A(10, 'validade', 1.9), label='Validade da CNH (campo)')
     c.type(SEL('#motorista-cnh-val'), '18062030', label='Validade da CNH 18/06/2030', cps=40, noClick=True)
     c.mark(11)
     c.click(BTN('Cadastrar', within=DLG), at=c.A(11, 'Cadastrar', 1.0), label='Cadastrar motorista')
@@ -946,10 +948,10 @@ def cap11():
     c.hover(OPT('Em manutenção'), 0.6, at=c.A(5, 'manutenção', FH), label='Condição: Em manutenção')
     c.hover(OPT('Baixada'), 1.0, at=c.A(5, 'Baixada', FH), label='Condição: Baixada')
     c.mark(6)
-    c.click(OPT('Em manutenção'), at=c.L(6) - 0.5, label='escolhe Em manutenção')
-    c.click(BTN('Salvar', within=DLG), at=c.L(6) + 0.1, label='Salvar a unidade')
+    c.click(OPT('Em manutenção'), at=c.A(5, 'Baixada', -0.7), label='escolhe Em manutenção')   # respiro de 1,2 s depois de "Baixada." (pausas.py 11 43.6:1.2)
+    c.click(BTN('Salvar', within=DLG), at=c.L(6) - 0.25, label='Salvar a unidade')
     c.waitfor(gone=SEL(DLG), timeout=10)
-    c.click(BTN('Nova unidade'), at=c.A(6, 'Nova', FC), label='Nova unidade')
+    c.click(BTN('Nova unidade'), at=c.A(6, 'Nova', FC, nth=1), label='Nova unidade')
     c.waitfor(target=SEL('#equipamento-id'), timeout=10)
     c.click(SEL('#equipamento-id'), label='Identificação (campo)')
     c.type(SEL('#equipamento-id'), 'Caçamba 06', at=c.A(6, 'Caçamba', 0.05, nth=1), label='Identificação: Caçamba 06', cps=40, noClick=True)
@@ -971,7 +973,7 @@ def cap11():
     c.click(SEL(f"{DLG} button[aria-pressed]:has-text('Minha base') >> nth=1"), at=c.A(8, 'Minha', FJ), label='Para: Minha base')
     c.click(BTN('Registrar', within=DLG), label='Registrar')
     c.waitfor(text='Movimentação registrada', timeout=10)
-    c.hover(TXTX('Posição atual', within='main', exact=True), 1.2, at=c.A(8, 'base', FH, nth=1), label='Posição atual: Minha base')
+    c.hover(TXTX('Posição atual', within='main', exact=True), 0.6, at=c.A(8, 'base', FH, nth=1), label='Posição atual: Minha base')
     c.mark(9)
     c.cursor((760, 460), at=c.A(9, 'dica', 0.3), label='cursor em repouso (ilustração)')
     c.mark(10)
@@ -982,14 +984,14 @@ def cap11():
     c.mark(11)
     rola_ate(c, 'Contados por quantidade', c.L(11) - 0.2, 'desce a Contados por quantidade', y=150)
     c.click(BTNX('Ver saldo por'), at=c.A(11, 'Ver', FC), label='Ver saldo por fornecedor')
-    c.hover(TXTX('Ocultar saldos', within='main'), 1.8, at=c.A(11, 'parceiro', FH), label='o saldo de bags com cada parceiro')
+    c.hover(TXTX('Ocultar saldos', within='main'), 1.4, at=c.A(11, 'vejo', FH), label='o saldo de bags com cada parceiro')
     c.mark(12)
     rola_topo_js = ("(async()=>{" + ACHA_ROLAGEM + "const c=rolagem(document.querySelector('main [role=tab]'));if(!c)return 'SEM ROLAGEM';"
                     "const y0=c.scrollTop,t0=performance.now();if(y0<3)return 'ok';" + SUAVE.replace('DUR', '600').replace('DESTINO', 'y0*(1-e)') +
                     "return 'topo:'+Math.round(c.scrollTop)})()")
     c.ev(rola_topo_js, at=c.L(12) - 0.6, label='sobe às abas')
     c.click(TAB('Movimentações'), label='aba Movimentações')
-    c.hover(TXTX('Ordem 8', within='main', exact=False), 1.2, at=c.A(12, 'ordem', FH), label='as da troca de hoje: Ordem 8')
+    c.hover(TXTX('Ordem 8', within='main', exact=False), 0.8, at=c.A(12, 'ordem', FH), label='as da troca de hoje: Ordem 8')
     c.fim()
     return c
 
@@ -1000,15 +1002,15 @@ def cap12():
     anuladas e a aba Coletas da ficha do Depósito Irmãos Siqueira."""
     c = Cap(12, start=NEUTRO, setup=setup_em('/coletas/equipamentos', extra=[{'do': 'click', 'target': TAB('Movimentações')}, {'do': 'wait', 'seconds': 1.0}]))
     c.mark(1)
-    c.hover(TAB('Movimentações'), 0.4, at=c.A(1, 'aba', FH), label='aba Movimentações')
-    c.click(BTN('Nova movimentação'), at=c.A(1, 'Nova', FC, nth=1), label='Nova movimentação')
+    c.hover(TAB('Movimentações'), 0.3, at=c.A(1, 'eu', 0.3), label='aba Movimentações')
+    c.click(BTN('Nova movimentação'), at=c.A(1, 'Na', 0.2), label='Nova movimentação')   # voz real: o formulário tem 9 gestos até o Registrar (respiro: pausas.py 12 9.25:1.6)
     c.waitfor(text='Nova movimentação', timeout=10)
-    c.click(SEL(f"{DLG} button[aria-pressed]:has-text('Minha base') >> nth=0"), at=c.A(1, 'minha', FC), label='De: Minha base')
-    c.click(SEL(f"{DLG} button[aria-pressed]:has-text('Parceiro') >> nth=1"), at=c.A(1, 'Cooperativa', 1.2), label='Para: Parceiro')
+    c.click(SEL(f"{DLG} button[aria-pressed]:has-text('Minha base') >> nth=0"), label='De: Minha base')
+    c.click(SEL(f"{DLG} button[aria-pressed]:has-text('Parceiro') >> nth=1"), label='Para: Parceiro')
     c.click(BTNX('Selecionar parceiro'), label='Selecionar parceiro…')
     c.waitfor(target=BUSCA_PARC, timeout=10)
     c.type(BUSCA_PARC, 'Recomeço', label='busca Recomeço', cps=40, noClick=True)
-    c.click(BTNX('Cooperativa Recomeço', within=f'{DLG} >> nth=-1'), at=c.A(1, 'Recomeço', FC), label='escolhe Cooperativa Recomeço')
+    c.click(BTNX('Cooperativa Recomeço', within=f'{DLG} >> nth=-1'), label='escolhe Cooperativa Recomeço')
     c.click(SEL(f"{DLG} button[role=combobox]:has-text('Tipo de equipamento')"), label='Tipo de equipamento')
     c.click(OPT('Bag 1 m³'), label='Tipo: Bag 1 m³')
     c.click(PH('Quantidade'), label='Quantidade (campo)')
@@ -1016,30 +1018,30 @@ def cap12():
     c.click(BTN('Registrar', within=DLG), at=c.A(1, 'Registrar', FC), label='Registrar')
     c.waitfor(text='Movimentação registrada', timeout=10)
     c.mark(2)
-    c.hover(LINHA_MENU, 1.0, at=c.A(2, 'menu', FH), label='menu da linha')   # o menu abre por hover; clicar de novo o fecharia
+    c.hover(LINHA_MENU, 0.4, at=c.A(2, 'menu', FH), label='menu da linha')   # o menu abre por hover; clicar de novo o fecharia
     c.click({'role': 'menuitem', 'name': 'Editar'}, at=c.A(2, 'Editar', FC), label='Editar movimentação')
     c.waitfor(text='Editar movimentação', timeout=8)
-    c.hover(TXTX('Tipo e unidade não mudam aqui', within=DLG), 2.0, at=c.A(2, 'Pra', FH), label='Editar movimentação: o que muda e o que não muda')
-    c.press('Escape', label='fecha o Editar')
-    c.hover(LINHA_MENU, 0.6, label='abre o menu da linha')
-    c.click({'role': 'menuitem', 'name': 'Excluir'}, label='Excluir')
-    c.waitfor(text='Excluir movimentação?', timeout=8)
+    c.hover(TXTX('Tipo e unidade não mudam aqui', within=DLG), 1.0, at=c.A(2, 'Pra', FH), label='Editar movimentação: o que muda e o que não muda')
     c.mark(3)
-    c.hover(TXTX('Motivo (opcional)', within=ALERTA), 1.4, at=c.A(3, 'motivo', FH), label='Excluir movimentação?: Motivo (opcional)')
+    c.press('Escape', at=c.A(2, 'anula', 0.0), label='fecha o Editar')
+    c.hover(LINHA_MENU, 0.3, label='abre o menu da linha')
+    c.click({'role': 'menuitem', 'name': 'Excluir'}, at=c.L(3) - 0.19, label='Excluir')
+    c.waitfor(text='Excluir movimentação?', timeout=8)
+    c.hover(TXTX('Motivo (opcional)', within=ALERTA), 0.7, at=c.A(3, 'motivo', FH), label='Excluir movimentação?: Motivo (opcional)')
     c.click(BTN('Cancelar', within=ALERTA), label='Cancelar (não exclui)')
     c.click(BTNX('Filtros', within='main'), at=c.A(3, 'Filtros', FC), label='Filtros')
     c.hover(TXTX('Mostrar anuladas'), 1.2, at=c.A(3, 'Mostrar', FH), label='Mostrar anuladas')
     c.press('Escape', label='fecha os Filtros')
     c.mark(4)
-    c.click(ITEM_MENU('Clientes e Fornecedores'), at=c.A(4, 'ficha', FC), label='menu Clientes e Fornecedores')
+    c.click(ITEM_MENU('Clientes e Fornecedores'), at=c.A(3, 'você', 0.2), label='menu Clientes e Fornecedores')   # sem vão real de silêncio para respiro aqui: sai no fim da linha 3
     c.waitfor(text='Depósito Irmãos Siqueira', timeout=15)
-    c.click(TXTX('Depósito Irmãos Siqueira', within='main'), label='ficha do Depósito Irmãos Siqueira')
+    c.click(TXTX('Depósito Irmãos Siqueira', within='main'), at=c.L(4) - 0.19, label='ficha do Depósito Irmãos Siqueira')
     # 1.60.18: a lista abre só o painel resumido (sem aba Coletas); a ficha completa é a rota /cliente/<nome>-<código>, aberta aqui sem recarregar
     c.ev("(()=>{history.pushState({},'','/cliente/deposito-irmaos-siqueira-4');window.dispatchEvent(new PopStateEvent('popstate'));return location.pathname})()", label='abre a ficha completa do parceiro')
     c.waitfor(text='Histórico de Pedidos', timeout=15)
     c.click(SEL("main button:text-is('Coletas')"), at=c.A(4, 'Coletas', FC), label='aba Coletas')   # as abas da ficha completa são botões, não role=tab
     c.waitfor(text='Com este parceiro agora', timeout=10)
-    c.hover(TXTX('Com este parceiro agora', within='main'), 1.0, at=c.A(4, 'agora', FH), label='Com este parceiro agora')
+    c.hover(TXTX('Com este parceiro agora', within='main'), 0.8, at=c.A(4, 'coletas', 0.0, nth=1), label='Com este parceiro agora')
     c.hover(BTNX('Agendar coleta'), 1.2, at=c.A(4, 'agendar', FH), label='Agendar coleta')
     c.fim()
     return c
@@ -1070,11 +1072,11 @@ def cap13():
     # o seletor aberto 5 s antes fechava com o refresh da tela (completo): abre 1,2 s antes da escolha
     c.click(SEL("main button[role=combobox]"), at=c.A(4, 'sete', FC) - 1.2, label='Trajeto de uma coleta')
     c.click(OPT('Ordem #7 · a_caminho'), at=c.A(4, 'sete', FC), label='escolhe a ordem 7')
-    c.hover(SEL('main .leaflet-container'), 2.5, label='o trajeto da ordem 7 no mapa')
+    c.hover(SEL('main .leaflet-container'), 0.6, label='o trajeto da ordem 7 no mapa')
     c.mark(5)
-    c.click(ORDENS_MENU, at=c.L(5) - 0.4, label='Ordens de Coleta')
+    c.click(ORDENS_MENU, at=c.L(5) - 1.2, label='Ordens de Coleta')   # no respiro antes da linha 5 (pausas.py 13 37.4:2.3)
     c.waitfor(text=PAGINAS['/coletas/ordens'], timeout=15)
-    c.click(CARD_BTN(7, 'Preencher'), label='#7: Preencher')
+    c.click(CARD_BTN(7, 'Preencher'), at=c.L(5) - 0.19, label='#7: Preencher')
     c.waitfor(text='Ordem #7', timeout=15)
     c.hover(TXTX('Localização em registro', within='body'), 2.2, at=c.A(5, 'aviso', FH), label='aviso: Localização em registro')
     c.ev('history.back()', at=c.A(5, 'Rotas', FH + 3.0), label='volta ao quadro (a tela da ordem não tem menu)')   # a tela da ordem não tem o link Voltar às ordens
@@ -1163,29 +1165,30 @@ def cap16():
     c.click(BTN('Novo modelo'), at=c.A(1, 'Novo', FC), label='Novo modelo')
     c.waitfor(text='Nome *', timeout=10)
     c.click(SEL(f"{DLG} input >> nth=0"), label='Nome (campo)')
-    c.type(SEL(f"{DLG} input >> nth=0"), 'Coleta com caçamba', at=c.A(1, 'Coleta', 0.05, nth=1), label='Nome: Coleta com caçamba', cps=40, noClick=True)
-    c.click(BTN('Criar modelo', within=DLG), at=c.A(1, 'Criar', FC), label='Criar modelo')
+    c.type(SEL(f"{DLG} input >> nth=0"), 'Coleta com caçamba', at=c.A(1, 'nome', 0.2), label='Nome: Coleta com caçamba', cps=40, noClick=True)
+    c.click(BTN('Criar modelo', within=DLG), at=c.A(1, 'caçamba', 0.0), label='Criar modelo')
     c.waitfor(gone=SEL(DLG), timeout=10)
     c.mark(2)
-    c.hover(SEL("main tbody tr button:visible >> nth=0"), 0.4, at=c.A(2, 'Gerenciar', FC + 2.5), label='menu da linha do modelo')   # menu por hover
+    c.hover(SEL("main tbody tr button:visible >> nth=0"), 0.2, label='menu da linha do modelo')   # menu por hover
     c.click({'role': 'menuitem', 'name': 'Gerenciar perguntas'}, at=c.A(2, 'Gerenciar', FC), label='Gerenciar perguntas')
     c.click(BTN('Nova pergunta', within=DLG), at=c.A(2, 'Nova', FC), label='Nova pergunta')
     c.waitfor(text='Pergunta *', timeout=10)
+    # voz real (respiros: pausas.py 16 19.5:1.6 42.772:2.6): a pergunta é digitada enquanto a fala a descreve; os dois hovers vêm logo depois
     c.click(SEL(f"{DLG} textarea, {DLG} input[placeholder*='Pergunta'] >> nth=0"), label='Pergunta (campo)')
-    c.type(SEL(f"{DLG} textarea, {DLG} input[placeholder*='Pergunta'] >> nth=0"), 'Local estava acessível para o veículo?', at=c.A(2, 'local', 0.1),
+    c.type(SEL(f"{DLG} textarea, {DLG} input[placeholder*='Pergunta'] >> nth=0"), 'Local estava acessível para o veículo?', at=c.A(2, 'A', -0.2),
            label='Pergunta: Local estava acessível para o veículo?', cps=75, noClick=True)
-    c.hover(TXTX('Tipo de resposta', within=DLG), 0.4, at=c.A(2, 'sim', FH), label='Tipo de resposta: Sim ou não')
-    c.hover(TXTX('Pergunta obrigatória', within=DLG), 0.4, at=c.A(2, 'obrigatória', FH), label='Pergunta obrigatória')
-    c.click(BTN('Adicionar pergunta', within=DLG), label='Adicionar pergunta')
+    c.hover(TXTX('Tipo de resposta', within=DLG), 0.3, label='Tipo de resposta: Sim ou não')
+    c.hover(TXTX('Pergunta obrigatória', within=DLG), 0.3, label='Pergunta obrigatória')
+    c.click(BTN('Adicionar pergunta', within=DLG), at=c.A(2, 'veículo', 0.4), label='Adicionar pergunta')
     c.waitfor(text='Local estava acessível para o veículo?', timeout=10)
     c.mark(3)
-    c.click(BTN('Nova pergunta', within=DLG), at=c.A(3, 'foto', FC + 2.5), label='Nova pergunta (para mostrar os tipos)')   # o tipo só aparece no formulário
+    c.click(BTN('Nova pergunta', within=DLG), at=c.L(3) - 1.5, label='Nova pergunta (para mostrar os tipos)')   # o tipo só aparece no formulário
     c.waitfor(target=SEL('#pergunta-tipo'), timeout=10)
-    c.click(SEL('#pergunta-tipo'), at=c.A(3, 'foto', FC), label='abre Tipo de resposta')
-    c.hover(OPT('Foto'), 0.6, label='tipo Foto')
-    c.hover(OPT('Número'), 0.5, at=c.A(3, 'número', FH), label='tipo Número')
-    c.hover(OPT('Texto livre'), 0.5, at=c.A(3, 'texto', FH), label='tipo Texto livre')
-    c.hover(OPT('Escolher uma opção'), 0.5, at=c.A(3, 'escolha', FH), label='tipo Escolher uma opção')
+    c.click(SEL('#pergunta-tipo'), at=c.A(3, 'foto', 1.4), label='abre Tipo de resposta')
+    c.hover(OPT('Foto'), 0.3, at=c.A(3, 'foto', FH), label='tipo Foto')
+    c.hover(OPT('Número'), 0.3, at=c.A(3, 'número', FH), label='tipo Número')
+    c.hover(OPT('Texto livre'), 0.3, at=c.A(3, 'texto', FH), label='tipo Texto livre')
+    c.hover(OPT('Escolher uma opção'), 0.3, at=c.A(3, 'escolha', FH), label='tipo Escolher uma opção')
     c.hover(OPT('Conforme / Não conforme / Não se aplica'), 0.8, at=c.A(3, 'conformidade', FH), label='tipo Conforme / Não conforme / Não se aplica')
     c.press('Escape', label='fecha a lista de tipos')
     c.click(BTN('Cancelar', within=DLG), label='Cancelar (volta à lista de perguntas)')
@@ -1195,16 +1198,57 @@ def cap16():
     c.click(OPT('Coleta com caçamba'), label='escolhe Coleta com caçamba')
     c.hover(TXTX('Usado em toda coleta nova.', within='main'), 1.2, at=c.A(4, 'nova', FH), label='ajuda: usado em toda coleta nova')
     c.click(SEL("main div:has(> div > p:text-is('Exigir assinatura do responsável no local')) > [role=switch]"), at=c.A(4, 'assinatura', FC), label='Exigir assinatura do responsável no local')
-    c.hover(TXTX('Exigir assinatura do motorista', within='main'), 1.2, at=c.A(4, 'motorista', FH), label='Exigir assinatura do motorista')
+    c.hover(TXTX('Exigir assinatura do motorista', within='main'), 0.6, at=c.A(4, 'Também', 0.6), label='Exigir assinatura do motorista')
     c.mark(5)
-    c.click(GRUPO, at=round(c.L(5) - 1.2, 2), label='abre Coletas & Logística', unless=ORDENS_MENU)   # em Configurações o grupo fica fechado
+    c.click(GRUPO, at=c.A(4, 'motorista', 0.3, nth=1), label='abre Coletas & Logística', unless=ORDENS_MENU)   # em Configurações o grupo fica fechado
     c.click(ORDENS_MENU, label='Ordens de Coleta')
     c.waitfor(text=PAGINAS['/coletas/ordens'], timeout=15)
-    c.click(CARD_BTN('COL-7', 'Preencher'), label='#COL-7: Preencher')
+    c.click(CARD_BTN('COL-7', 'Preencher'), at=c.L(5) - 0.19, label='#COL-7: Preencher')
     c.waitfor(text='Checklist', timeout=15)
     c.hover(TXTX('Falta para concluir', within='body'), 2.0, at=c.A(5, 'falta', FH), label='Falta para concluir')
     c.mark(6)
     c.hover(TXTX('Assinatura', within='body', exact=True), 1.0, at=c.L(6) - 0.2, label='bloco Assinatura')
+    c.fim()
+    return c
+
+
+@capitulo
+def cap17():
+    """Recapitulando: passeio calmo pelo estado final da aula (semente apos-cap15 + rastreamento), sem criar nem alterar nada: o quadro
+    (ordens 9, 8 e 10), Frota, Equipamentos, Rastreamento, Relatório e Configurações. A linha 7 (próximo tutorial) fica com a tela parada."""
+    c = Cap(17, start=NEUTRO, setup=setup_em('/coletas/ordens', aquece=['/coletas/frota', '/coletas/equipamentos', '/coletas/rastreamento', '/coletas/relatorio',
+                                                                        '/coletas/configuracoes'], extra=ABRE_GRUPO + [{'do': 'eval', 'js': GPS_FALSO}]))
+    N = lambda k: f'COL-{k}'
+    c.mark(1)
+    c.hover(COL_T('Agendada'), 0.5, at=c.A(1, 'quadro', FH), label='o quadro')
+    c.hover(CARD_TXT(N(9), 'Auto Peças Vale Forte'), 1.5, at=c.A(1, 'Auto', FH), label='ordem 9: Auto Peças Vale Forte')
+    c.mark(2)
+    c.hover(CARD_TXT(N(8), 'Depósito Irmãos Siqueira'), 1.5, at=c.A(2, 'Depósito', FH), label='ordem 8: Depósito Irmãos Siqueira')
+    c.hover(COL_T('Concluídas'), 0.8, at=c.A(2, 'concluiu', FH), label='coluna Concluídas')
+    c.mark(3)
+    c.click(CARD_MENU(N(9)), at=c.A(3, 'editar', FC), label='ordem 9: Ações da ordem')
+    c.press('Escape', at=c.A(3, 'mandar', 0.3), label='fecha o menu')
+    c.hover(CARD_BTN(N(8), 'Relatório'), 1.0, at=c.A(3, 'relatório', FH), label='ordem 8: Relatório')
+    c.mark(4)
+    c.hover(CARD_TXT(N(10), 'via portal'), 1.5, at=c.A(4, 'cooperativa', FH), label='ordem 10: via portal')
+    c.mark(5)
+    c.click(ITEM_MENU('Frota'), at=c.L(5) - 0.4, label='menu Frota')
+    c.waitfor(text=PAGINAS['/coletas/frota'], timeout=15)
+    c.hover(SEL("main button:has-text('FVL8A52')"), 0.6, at=c.A(5, 'poliguindaste', 0.2), label='FVL8A52 na frota')
+    c.click(ITEM_MENU('Equipamentos'), at=c.A(5, 'Caçamba', 1.0), label='menu Equipamentos')
+    c.waitfor(text=PAGINAS['/coletas/equipamentos'], timeout=15)
+    c.hover(TXTX('Tipos de equipamento', within='main', exact=True), 0.8, at=c.A(5, 'lançou', 0.2), label='Equipamentos')
+    c.click(ITEM_MENU('Rastreamento'), at=c.A(5, 'viu', 0.3), label='menu Rastreamento')
+    c.waitfor(text=PAGINAS['/coletas/rastreamento'], timeout=15)
+    c.hover(TXTX('Tiago Freitas', within='main'), 1.2, at=c.A(5, 'mapa', 1.2), label='Tiago Freitas no mapa')
+    c.mark(6)
+    c.click(ITEM_MENU('Relatório'), at=c.L(6) - 0.3, label='menu Relatório')
+    c.waitfor(text=PAGINAS['/coletas/relatorio'], timeout=15)
+    c.click(ITEM_MENU('Configurações'), at=c.A(6, 'ajustou', 0.4), label='menu Configurações (Coletas)')
+    c.waitfor(text=PAGINAS['/coletas/configuracoes'], timeout=15)
+    rola_ate(c, 'Checklist da coleta', c.A(6, 'montou', 0.3), 'desce ao bloco Checklist da coleta', y=140, dur_ms=700)
+    c.mark(7)
+    c.cursor(NEUTRO, at=c.L(7) + 0.3, label='cursor em repouso (próximo tutorial)')
     c.fim()
     return c
 

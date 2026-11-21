@@ -4,7 +4,8 @@
 EcoSistema 1.60.18 no Supabase falso (mundo da Recicla Vale Metais), computador 1600x900, logado como Rafael Nogueira (MASTER).
 Cada passo é preso a uma palavra da fala: `at` = início da palavra - folga (o custo do gesto, docs/04 "Custo real dos gestos"), e a marca
 Ln entra no início de cada linha. Quando a voz chegar, rodar de novo com o capNN.json da voz (nada a reescrever).
-O cap17 (Recapitulando) é montagem das gravações dos capítulos 2 a 16: sem robô.
+O cap17 (Recapitulando) é um passeio calmo pelo estado final (quadro, Frota, Equipamentos, Rastreamento, Relatório e Configurações), como
+na T08 e na T06 (fechamento de 21/11).
 Rodar de qualquer pasta: `python3 -I rec/t12/gerar.py [NN ...]`; ensaiar em lote: `bash rec/t12/t12_lote.sh NN [NN ...]`.
 
 Renumeração de 20/11 (aplicação do 1.60.18): novos 7 (editar, cancelar e excluir), 8 (relatório para o parceiro), 12 (movimentações e ficha do
@@ -67,12 +68,12 @@ NOMES = ['Abertura', 'O que o módulo de Coletas resolve', 'O quadro das ordens'
          'Veículos e motoristas', 'As caçambas e onde estão', 'Movimentações e a ficha do parceiro', 'Onde está o caminhão',
          'O relatório das coletas', 'As regras das coletas', 'Checklist e assinaturas', 'Recapitulando']
 SEMENTE = {0: None, 1: None, 2: None, 3: None, 4: None, 5: None, 6: 'apos-cap05', 7: 'apos-cap06', 8: 'apos-cap07', 9: 'apos-cap07',
-           10: 'apos-cap09', 11: 'apos-cap10', 12: 'apos-cap11', 13: 'apos-cap12', 14: 'apos-cap12', 15: 'apos-cap12', 16: 'apos-cap15', 17: None}
+           10: 'apos-cap09', 11: 'apos-cap10', 12: 'apos-cap11', 13: 'apos-cap12', 14: 'apos-cap12', 15: 'apos-cap12', 16: 'apos-cap15', 17: 'apos-cap15'}
 
 
 def sementes(n):
     """a semente de cada capítulo é cumulativa (tudo desde o início da aula): só a última da cadeia vai junto da base"""
-    return ['t12/inicio'] + ([f't12/{SEMENTE[n]}'] if SEMENTE[n] else []) + (['t12/rastreamento'] if n == 13 else [])
+    return ['t12/inicio'] + ([f't12/{SEMENTE[n]}'] if SEMENTE[n] else []) + (['t12/rastreamento'] if n in (13, 17) else [])
 
 
 def norm(s):

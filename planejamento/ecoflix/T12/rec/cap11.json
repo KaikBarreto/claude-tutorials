@@ -1,6 +1,6 @@
 {
  "name": "t12-cap11",
- "title": "T12 · Cap. 11 · As caçambas e onde estão (narração 121,5 s ESTIMADA; marcas L1..L12 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T07:00:00-03:00)",
+ "title": "T12 · Cap. 11 · As caçambas e onde estão (narração 102,4 s; marcas L1..L12 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T07:00:00-03:00)",
  "seed": "t12-cap11",
  "pace": 0.5,
  "cps": 9,
@@ -12,8 +12,8 @@
  "anonymous": true,
  "storage": {
   "cato_adoption_nudge_38814e47-876a-5977-a5f7-53af364c17bb_34c36c63-0890-5e89-8963-7c77b7996908": "{\"count\":99,\"lastShownAt\":4102444800000}",
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
   "pwa-install-dismissed": "true",
   "theme": "light",
@@ -146,7 +146,7 @@
     "exact": true,
     "within": "aside, [data-sidebar=sidebar]"
    },
-   "at": 0.8,
+   "at": 0.32,
    "label": "menu Equipamentos"
   },
   {
@@ -161,7 +161,7 @@
     "exact": true
    },
    "seconds": 0.6,
-   "at": 3.98,
+   "at": 2.8,
    "label": "caçambas, bags, caixas e paletes",
    "optional": true,
    "timeout": 4
@@ -169,7 +169,7 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 6.85
+   "at": 5.44
   },
   {
    "do": "hover",
@@ -179,7 +179,7 @@
     "exact": true
    },
    "seconds": 0.3,
-   "at": 6.85,
+   "at": 5.44,
    "label": "Tipos de equipamento",
    "optional": true,
    "timeout": 4
@@ -200,7 +200,7 @@
     "selector": "main tr:has-text('Bag 1 m³')"
    },
    "seconds": 2.0,
-   "at": 12.98,
+   "at": 11.12,
    "label": "Bag 1 m³: por quantidade",
    "optional": true,
    "timeout": 4
@@ -208,7 +208,7 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 18.74
+   "at": 15.68
   },
   {
    "do": "click",
@@ -217,7 +217,7 @@
     "name": "Novo tipo",
     "exact": true
    },
-   "at": 19.33,
+   "at": 16.08,
    "label": "Novo tipo"
   },
   {
@@ -241,7 +241,7 @@
    },
    "text": "Palete de madeira",
    "cps": 40,
-   "at": 21.42,
+   "at": 18.58,
    "label": "Nome: Palete de madeira",
    "noClick": true
   },
@@ -251,7 +251,7 @@
     "selector": "#tipo-identificavel"
    },
    "seconds": 2.0,
-   "at": 24.41,
+   "at": 20.8,
    "label": "chave: Cada unidade tem identificação própria (desligada)",
    "optional": true,
    "timeout": 4
@@ -264,7 +264,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 31.85,
+   "at": 26.19,
    "label": "Cadastrar o tipo"
   },
   {
@@ -277,12 +277,12 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 33.28
+   "at": 27.55
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Unidades identific\\u00e1veis\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-140);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 33.28,
+   "at": 27.55,
    "label": "desce às Unidades identificáveis"
   },
   {
@@ -296,7 +296,7 @@
     "selector": "main [role=listitem]:has-text('Caçamba 05')"
    },
    "seconds": 0.6,
-   "at": 34.18,
+   "at": 28.19,
    "label": "Caçamba 05",
    "optional": true,
    "timeout": 4
@@ -307,7 +307,7 @@
     "selector": "main [role=listitem]:has-text('Caçamba 05') :text-is('Depósito Irmãos Siqueira')"
    },
    "seconds": 1.5,
-   "at": 39.03,
+   "at": 32.51,
    "label": "Caçamba 05 no Depósito Irmãos Siqueira",
    "optional": true,
    "timeout": 4
@@ -315,14 +315,14 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 43.88
+   "at": 36.11
   },
   {
    "do": "click",
    "target": {
     "selector": "main [role=listitem]:has-text('Caçamba 02')"
    },
-   "at": 43.88,
+   "at": 36.11,
    "label": "Caçamba 02"
   },
   {
@@ -333,7 +333,7 @@
     "exact": true,
     "within": "main"
    },
-   "at": 44.93,
+   "at": 37.31,
    "label": "Editar a unidade"
   },
   {
@@ -348,7 +348,7 @@
    "target": {
     "selector": "#equipamento-condicao"
    },
-   "at": 46.21,
+   "at": 38.43,
    "label": "abre Condição"
   },
   {
@@ -359,7 +359,7 @@
     "exact": true
    },
    "seconds": 0.6,
-   "at": 47.43,
+   "at": 39.39,
    "label": "Condição: Em manutenção",
    "optional": true,
    "timeout": 4
@@ -372,15 +372,10 @@
     "exact": true
    },
    "seconds": 1.0,
-   "at": 50.85,
+   "at": 42.19,
    "label": "Condição: Baixada",
    "optional": true,
    "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L6",
-   "at": 52.28
   },
   {
    "do": "click",
@@ -389,8 +384,13 @@
     "name": "Em manutenção",
     "exact": true
    },
-   "at": 52.28,
+   "at": 43.49,
    "label": "escolhe Em manutenção"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 44.75
   },
   {
    "do": "click",
@@ -400,7 +400,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 52.58,
+   "at": 44.75,
    "label": "Salvar a unidade"
   },
   {
@@ -417,7 +417,7 @@
     "name": "Nova unidade",
     "exact": true
    },
-   "at": 53.32,
+   "at": 46.25,
    "label": "Nova unidade"
   },
   {
@@ -441,7 +441,7 @@
    },
    "text": "Caçamba 06",
    "cps": 40,
-   "at": 57.74,
+   "at": 49.28,
    "label": "Identificação: Caçamba 06",
    "noClick": true
   },
@@ -483,7 +483,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 59.55,
+   "at": 51.13,
    "label": "Cadastrar unidade"
   },
   {
@@ -494,12 +494,12 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 61.13
+   "at": 52.65
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Unidades identific\\u00e1veis\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-24);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 61.13,
+   "at": 52.65,
    "label": "sobe a lista (Caçamba 06 à vista)"
   },
   {
@@ -524,7 +524,7 @@
   {
    "do": "mark",
    "name": "L8",
-   "at": 66.42
+   "at": 56.33
   },
   {
    "do": "click",
@@ -534,7 +534,7 @@
     "exact": true,
     "within": "main"
    },
-   "at": 66.7,
+   "at": 56.65,
    "label": "Movimentar"
   },
   {
@@ -548,7 +548,7 @@
     "selector": "[role=dialog] button[aria-pressed=true]:has-text('Externo')"
    },
    "seconds": 0.6,
-   "at": 68.52,
+   "at": 58.41,
    "label": "De: Externo (compra nova)",
    "optional": true,
    "timeout": 4
@@ -558,7 +558,7 @@
    "target": {
     "selector": "[role=dialog] button[aria-pressed]:has-text('Minha base') >> nth=1"
    },
-   "at": 72.3,
+   "at": 61.13,
    "label": "Para: Minha base"
   },
   {
@@ -583,8 +583,8 @@
     "within": "main",
     "exact": true
    },
-   "seconds": 1.2,
-   "at": 77.33,
+   "seconds": 0.6,
+   "at": 66.09,
    "label": "Posição atual: Minha base",
    "optional": true,
    "timeout": 4
@@ -592,7 +592,7 @@
   {
    "do": "mark",
    "name": "L9",
-   "at": 78.53
+   "at": 67.05
   },
   {
    "do": "scroll",
@@ -603,18 +603,18 @@
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 78.74,
+   "at": 67.27,
    "label": "cursor em repouso (ilustração)"
   },
   {
    "do": "mark",
    "name": "L10",
-   "at": 93.3
+   "at": 79.24
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Onde tudo est\\u00e1 agora\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-120);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 93.3,
+   "at": 79.24,
    "label": "desce a Onde tudo está agora"
   },
   {
@@ -625,7 +625,7 @@
     "exact": true
    },
    "seconds": 0.3,
-   "at": 97.16,
+   "at": 82.44,
    "label": "Na base",
    "optional": true,
    "timeout": 4
@@ -638,7 +638,7 @@
     "exact": true
    },
    "seconds": 0.3,
-   "at": 98.9,
+   "at": 83.64,
    "label": "Em campo",
    "optional": true,
    "timeout": 4
@@ -651,7 +651,7 @@
     "exact": true
    },
    "seconds": 0.3,
-   "at": 100.42,
+   "at": 84.84,
    "label": "Com parceiros",
    "optional": true,
    "timeout": 4
@@ -659,12 +659,12 @@
   {
    "do": "mark",
    "name": "L11",
-   "at": 102.0
+   "at": 86.2
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Contados por quantidade\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-150);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 102.0,
+   "at": 86.2,
    "label": "desce a Contados por quantidade"
   },
   {
@@ -673,7 +673,7 @@
     "role": "button",
     "name": "Ver saldo por"
    },
-   "at": 105.4,
+   "at": 89.04,
    "label": "Ver saldo por fornecedor"
   },
   {
@@ -682,8 +682,8 @@
     "text": "Ocultar saldos",
     "within": "main"
    },
-   "seconds": 1.8,
-   "at": 109.88,
+   "seconds": 1.4,
+   "at": 91.12,
    "label": "o saldo de bags com cada parceiro",
    "optional": true,
    "timeout": 4
@@ -691,12 +691,12 @@
   {
    "do": "mark",
    "name": "L12",
-   "at": 111.39
+   "at": 93.92
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const c=rolagem(document.querySelector('main [role=tab]'));if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,t0=performance.now();if(y0<3)return 'ok';await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0*(1-e),behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
-   "at": 111.39,
+   "at": 93.92,
    "label": "sobe às abas"
   },
   {
@@ -715,8 +715,8 @@
     "within": "main",
     "exact": false
    },
-   "seconds": 1.2,
-   "at": 119.19,
+   "seconds": 0.8,
+   "at": 100.88,
    "label": "as da troca de hoje: Ordem 8",
    "optional": true,
    "timeout": 4
@@ -729,7 +729,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 121.45
+   "at": 102.4
   }
  ]
 }

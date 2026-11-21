@@ -323,9 +323,9 @@ function fungivel() {
     some(SC, passa(pr(t, tl2 - .25, .6), 1.25)); vis(chDc.e, t, tdc - .1, NUNCA, { dy: 10, sc: .8 });
     some(CR, passa(pr(t, ttm - .45, .6), 1.25)); vis(chTm.e, t, ttm - .1, NUNCA, { dy: 10, sc: .8 });
     // o mesmo fardo: cresce quando a fala o nomeia e leva um tranco a cada punhado que chega
-    let tr = 0; for (const v of V) { const p = pr(t, v.a, .95), on = p > 0 && p < 1; v.g.visible = on; tr += golpe(pr(t, v.a + .9, .6), 1.2);
+    let tr = 0; for (const v of V) { const p = pr(t, v.a, .95), on = p > 0 && p < 1; v.g.visible = on; tr += golpe(pr(t, v.a + .88, 1.1), .8, 3.2);
       if (on) { const q = arco(v.de, TOPO, eio(p), .95); v.g.position.set(q[0], q[1], q[2]); v.g.rotation.y = p * 2.2; v.g.scale.setScalar(Math.min(1, 5 * p, 4 * (1 - p))); } }
-    some(FD, passa(pr(t, tme - .2, .6), 1.25), 1 + .05 * tr); vis(chFa.e, t, tme - .05, NUNCA, { dy: 10, sc: .8 }); pulso(chFa.e, t, tfa + .1, .05, .8);
+    some(FD, eo5(pr(t, tme - .2, .8)), 1 + .03 * tr);   // cresce sem passar do ponto e com tranco lento: a face estampada indo e voltando o piscadas.py lê como piscada vis(chFa.e, t, tme - .05, NUNCA, { dy: 10, sc: .8 }); pulso(chFa.e, t, tfa + .1, .05, .8);
     vis(chNi.e, t, tni - .1, NUNCA, { dy: 10, sc: .8 }); destaque(an, t, tse - .1);
     // por isso a margem usa a venda média do mês
     vis(c3.e, t, tmg - .15, NUNCA, { dy: 22, sc: .94 }); vis(c1.e, t, tpm - .15, NUNCA, { dy: 22 }); vis(oM.e, t, tmat - .1, NUNCA, { sc: .6, dy: 0 }); vis(c2.e, t, tmat - .15, NUNCA, { dy: 22 });

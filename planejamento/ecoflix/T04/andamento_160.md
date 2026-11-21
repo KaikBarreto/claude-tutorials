@@ -37,3 +37,7 @@ bash rec/t04/t04_lote160.sh 8 12 17 4 16      # 8 gera apos-cap06; 12 recaptura 
 bash rec/t04/t04_ensaio.sh 04 completo; bash rec/t04/t04_ensaio.sh 16 completo; bash rec/t04/t04_ensaio.sh 08 completo
 ```
 Achado do app: cap06 tem 2 avisos de console "Select is changing from controlled to uncontrolled" (React, app).
+
+## 21/11 · ilustrações v3 prontas (para o fechamento)
+- 7 cenas em `T04/cenas_v3/cena.html` (+ `pdf.html` do Relatório de Saldos no cap16 L8, papel do ensaio: no fechamento, usar o PDF da gravação final).
+- **Pendente no fechamento**: cap12 L11 "O PDF detalhado mostra, em cada pedido, os materiais, o peso e o preço." O ensaio devolveu a aba sem corpo ("SEM HTML"): a gravação final precisa capturar esse PDF (gancho de PDF como na T08/T20) e mostrar o papel real; se não sair, relatar a frase.
