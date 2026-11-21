@@ -1,13 +1,13 @@
 {
  "name": "t27-cap06",
- "title": "T27 · Cap. 6 · A empresa toda, na hora (narração 31,2 s ESTIMADA; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário Juliana Prado)",
+ "title": "T27 · Cap. 6 · Desligar e voltar atrás (narração 59,2 s ESTIMADA; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário Rafael Nogueira)",
  "seed": "t27-cap06",
  "pace": 0.5,
  "cps": 14,
  "tail": 1.5,
  "start": {
-  "x": 720,
-  "y": 150
+  "x": 1240,
+  "y": 300
  },
  "anonymous": true,
  "seedExtra": [
@@ -16,13 +16,13 @@
   "t27/apos-cap04"
  ],
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "pwa-install-dismissed": "true",
   "theme": "light",
   "initial-preferences-set": "true",
-  "daily-tasks-reminder-last-shown-66b11dd1-346a-5c96-aa7d-2c5c2838e0e2": "2026-11-10",
-  "dominex:daily-tasks-shown:66b11dd1-346a-5c96-aa7d-2c5c2838e0e2": "2026-11-10"
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10"
  },
  "prewarm": [
   "/login"
@@ -44,7 +44,7 @@
    "target": {
     "placeholder": "seu@email.com"
    },
-   "text": "juliana.prado@reciclavalemetais.example",
+   "text": "$TUT_USER",
    "cps": 40
   },
   {
@@ -65,12 +65,57 @@
   },
   {
    "do": "waitFor",
-   "text": "Olá, Juliana!",
+   "text": "Olá, Rafael!",
    "timeout": 40
   },
   {
    "do": "waitFor",
    "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/configuracoes"
+  },
+  {
+   "do": "waitFor",
+   "text": "Configurações do Sistema",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main img[alt='Logo']"
+   },
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button:has(h3:text-is('White Label'))"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "White Label Ativo",
+   "timeout": 10
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 1240,
+    "y": 300
+   },
+   "by": 0,
+   "duration": 0.2,
+   "after": 0
   },
   {
    "do": "eval",
@@ -86,28 +131,74 @@
   {
    "do": "hover",
    "target": {
-    "selector": "[aria-label='Menu da conta']"
+    "text": "White Label Ativo",
+    "exact": true
    },
-   "seconds": 1.0,
-   "at": 4.97,
-   "label": "card da conta: Juliana Prado",
-   "noScroll": true,
+   "seconds": 1.6,
+   "at": 2.69,
+   "label": "cartão White Label Ativo (Cor Primária guardada logo abaixo)",
    "optional": true,
    "timeout": 3
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 6.99
+   "at": 6.76
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.rounded-xl:has(p:text-is('White Label Desativado')) > button[role=switch], main div.rounded-xl:has(p:text-is('White Label Ativo')) > button[role=switch]"
+   },
+   "seconds": 0.4,
+   "at": 7.9,
+   "label": "o interruptor ligado",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div.rounded-xl:has(p:text-is('White Label Desativado')) > button[role=switch], main div.rounded-xl:has(p:text-is('White Label Ativo')) > button[role=switch]"
+   },
+   "at": 9.09,
+   "label": "desliga o interruptor do White Label"
+  },
+  {
+   "do": "waitFor",
+   "text": "White Label Desativado",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "White Label Desativado",
+    "exact": true
+   },
+   "seconds": 1.2,
+   "at": 11.03,
+   "label": "White Label Desativado (aviso \"White Label desativado.\")",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"White Label Desativado\", \"O logo da EcoSistema está sendo exibido\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere cartão do interruptor desligado"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 13.48
   },
   {
    "do": "hover",
    "target": {
     "selector": "img[alt='EcoSistema']"
    },
-   "seconds": 0.86,
-   "at": 7.29,
-   "label": "o logo da Recicla Vale no topo do menu da Juliana",
+   "seconds": 2.4,
+   "at": 13.94,
+   "label": "o menu voltou ao logo do EcoSistema",
    "noScroll": true,
    "optional": true,
    "timeout": 3
@@ -115,38 +206,239 @@
   {
    "do": "hover",
    "target": {
-    "role": "link",
-    "name": "Dashboard",
-    "exact": true
+    "selector": "button[aria-label='Configurações']"
    },
-   "seconds": 1.6,
-   "at": 8.8,
-   "label": "barrinha azul do item ativo (Dashboard)",
+   "seconds": 1.27,
+   "at": 17.2,
+   "label": "a cor voltou ao padrão (a barrinha do item ativo)",
    "noScroll": true,
    "optional": true,
    "timeout": 3
   },
   {
-   "do": "mark",
-   "name": "L3",
-   "at": 11.97
+   "do": "eval",
+   "js": "(async()=>{let v='';for(let i=0;i<40;i++){v=getComputedStyle(document.documentElement).getPropertyValue('--primary').trim();if(v!=='213 70% 40%')return 'OK: --primary '+v+' (cor padrão, não é mais o azul)';await new Promise(r=>setTimeout(r,100))}return 'DIFERENTE: --primary '+v})()",
+   "label": "confere que a cor voltou ao padrão (não é mais o azul)"
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 22.79
+   "at": 18.92
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div.rounded-xl:has(p:text-is('White Label Desativado')) > button[role=switch], main div.rounded-xl:has(p:text-is('White Label Ativo')) > button[role=switch]"
+   },
+   "at": 19.12,
+   "label": "liga o interruptor de novo"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__corT0=performance.now();window.__corMs=null;const f=()=>{const v=getComputedStyle(document.documentElement).getPropertyValue('--primary').trim();if(v==='213 70% 40%'){window.__corMs=Math.round(performance.now()-window.__corT0);return}if(performance.now()-window.__corT0<15000)setTimeout(f,50)};f();return 'vigia da cor'})()",
+   "label": "vigia quando a cor volta"
+  },
+  {
+   "do": "waitFor",
+   "text": "White Label Ativo",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Personalizações\"&&e.offsetParent);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-250);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 20.14,
+   "label": "desce até as Personalizações (a Cor Primária guardada)"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "[aria-label='Menu da conta']"
+    "selector": "input[placeholder='#22c55e']"
+   },
+   "seconds": 2.4,
+   "at": 21.96,
+   "label": "Cor Primária #1F5FAD, guardada",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"#1F5FAD\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"main\"+' input, '+\"main\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Cor Primária guardada depois de religar"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const v=getComputedStyle(document.documentElement).getPropertyValue('--primary').trim();return v==='213 70% 40%'?'OK: --primary '+v+' (trocou '+window.__corMs+' ms depois do clique)':'DIFERENTE: --primary '+v})()",
+   "label": "confere a cor aplicada de novo (azul #1F5FAD)"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 26.18
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Logo da Empresa\"&&e.offsetParent);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-200);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 26.33,
+   "label": "sobe até o Logo da Empresa"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Remover",
+    "exact": true,
+    "nth": 0
+   },
+   "seconds": 0.3,
+   "at": 28.0,
+   "label": "Remover do logo",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Remover",
+    "exact": true,
+    "nth": 0
+   },
+   "at": 29.16,
+   "label": "clica em Remover (o logo)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Remover logo da empresa?",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Remover logo da empresa?",
+    "exact": true
+   },
+   "seconds": 0.46,
+   "at": 29.85,
+   "label": "confirmação: Remover logo da empresa?",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Remover logo da empresa?\", \"O logo personalizado será removido\", \"Cancelar\", \"Remover\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=alertdialog]\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere confirmação de remover o logo"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=alertdialog] button:text-is('Remover')"
+   },
+   "at": 30.96,
+   "label": "confirma em Remover"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nenhum logo enviado",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 32.61
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "img[alt='EcoSistema']"
    },
    "seconds": 1.6,
-   "at": 27.8,
-   "label": "Juliana: só vê o resultado",
+   "at": 33.81,
+   "label": "o menu voltou ao logo do EcoSistema",
    "noScroll": true,
    "optional": true,
    "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "White Label Ativo",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "at": 38.53,
+   "label": "o cartão segue White Label Ativo",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Faça upload do logo ao lado para poder ativar o White Label",
+    "exact": true
+   },
+   "seconds": 2.6,
+   "at": 40.04,
+   "label": "aviso: Faça upload do logo ao lado para poder ativar o White Label",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"White Label Ativo\", \"Faça upload do logo ao lado para poder ativar o White Label\", \"Nenhum logo enviado\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere logo removido, White Label ainda ativo"
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 41.76
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.rounded-xl:has(p:text-is('White Label Desativado')) > button[role=switch], main div.rounded-xl:has(p:text-is('White Label Ativo')) > button[role=switch]"
+   },
+   "seconds": 1.17,
+   "at": 52.31,
+   "label": "o interruptor: é ele que desliga de verdade",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 53.35
+  },
+  {
+   "do": "upload",
+   "target": {
+    "text": "Nenhum logo enviado",
+    "exact": true
+   },
+   "file": "assets/recicla-vale-logo-claro.png",
+   "at": 54.13,
+   "label": "escolhe o logo recicla-vale-logo-claro.png"
+  },
+  {
+   "do": "waitFor",
+   "text": "Logo atualizado com sucesso!",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "img[alt='EcoSistema']"
+   },
+   "seconds": 1.4,
+   "at": 56.99,
+   "label": "o logo da Recicla Vale de volta no menu",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify([...document.querySelectorAll('main img')].map(i=>[i.alt,i.naturalWidth]))",
+   "label": "confere o logo carregado (largura > 0)"
   },
   {
    "do": "eval",
@@ -156,7 +448,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 31.2
+   "at": 59.17
   }
  ]
 }

@@ -1,6 +1,6 @@
 {
  "name": "t27-cap03",
- "title": "T27 · Cap. 3 · Ligar o White Label (narração 42,4 s ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário Rafael Nogueira)",
+ "title": "T27 · Cap. 3 · Ligar o White Label (narração 62,7 s ESTIMADA; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário Rafael Nogueira)",
  "seed": "t27-cap03",
  "pace": 0.5,
  "cps": 14,
@@ -14,8 +14,8 @@
   "t27/inicio"
  ],
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "pwa-install-dismissed": "true",
   "theme": "light",
   "initial-preferences-set": "true",
@@ -286,6 +286,59 @@
    "timeout": 3
   },
   {
+   "do": "mark",
+   "name": "L8",
+   "at": 41.12
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "img[alt='EcoSistema']"
+   },
+   "seconds": 5.0,
+   "at": 44.23,
+   "label": "o menu é escuro: o logo da Recicla Vale (versão clara) lê bem",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 53.77
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#tab-btn-appearance"
+   },
+   "at": 54.45,
+   "label": "aba Aparência"
+  },
+  {
+   "do": "waitFor",
+   "text": "Menu (lateral e superior)",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Seguir o tema\"&&e.offsetParent);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-520);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 55.97,
+   "label": "desce até Menu (lateral e superior)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Seguir o tema",
+    "exact": true
+   },
+   "seconds": 3.0,
+   "at": 57.48,
+   "label": "Seguir o tema (Claro no tema claro, escuro no escuro), sem clicar",
+   "optional": true,
+   "timeout": 3
+  },
+  {
    "do": "eval",
    "js": "JSON.stringify(window.__avisos || \"sem observador\")",
    "label": "avisos de erro na tela"
@@ -293,7 +346,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 42.42
+   "at": 62.7
   }
  ]
 }

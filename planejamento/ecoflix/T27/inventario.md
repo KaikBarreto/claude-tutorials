@@ -1,6 +1,6 @@
-# Inventário · T27 White Label (EcoSistema 1.59.154)
+# Inventário · T27 White Label (EcoSistema 1.60.22)
 
-Código: `/home/claude/ecoflix/app-src-1.59.154/` (`APP_VERSION = "1.59.154"`, `src/config/version.ts:16`). Leitura estática.
+Código: `/dev/shm/ecoflix-src22/src` (`APP_VERSION = "1.60.22"`, `src/config/version.ts:16`). Leitura estática; atualizado em 21/11 (as telas do White Label são as mesmas do 1.59.154; os números de linha abaixo são do 1.59.154 e andaram pouco).
 Caminhos relativos a `src/`, exceto `supabase/functions/...`. Rótulos entre aspas = texto exato da tela.
 Não tem tela própria: é um painel dentro de Configurações → "Empresa".
 
@@ -23,8 +23,10 @@ Não tem tela própria: é um painel dentro de Configurações → "Empresa".
 
 ## 3. Interruptor e personalizações (`components/CompanySettings.tsx:1120-1230`)
 - Cartão do interruptor: "White Label Ativo" / "White Label Desativado"; "Seu logo está sendo exibido no lugar do logo
-  EcoSistema" / "O logo da EcoSistema está sendo exibido". O interruptor fica **desabilitado sem logo** (`:1148`), com o
-  aviso âmbar "Faça upload do logo ao lado para poder ativar o White Label" (`:1152-1157`). O toast "Você precisa fazer
+  EcoSistema" / "O logo da EcoSistema está sendo exibido". O interruptor fica **desabilitado só quando não há logo e o White Label está
+  desligado** (`disabled={... (!logo_url && !white_label_enabled)}`, `:1145`; **corrige** a cobertura de 20/11, que dizia que ele trava também
+  ligado), e o aviso âmbar "Faça upload do logo ao lado para poder ativar o White Label" (`:1150-1155`) aparece sempre que não há logo, ligado ou
+  desligado. O toast "Você precisa fazer
   upload do logo primeiro para ativar o White Label" (`:663`) não aparece pela tela (o interruptor já está travado).
 - Ligar/desligar (`:659-685`): avisos "White Label ativado! Seu logo agora será exibido em todo o sistema." / "White Label
   desativado."; invalida `["white-label"]` (`:360`): o menu troca na hora para quem ligou.
@@ -76,3 +78,20 @@ recebe a troca sem sair. O hook lê o módulo **só** de `company_modules` (`rem
 7. O menu do app é escuro por padrão (`hooks/useNavThemePreference.tsx:29`): o logo da empresa precisa ler bem no fundo
    quase preto do menu e no papel do comprovante. Dentro do menu escuro, a cor entra só na barrinha do item ativo
    (`index.css:301-343,589-591`).
+
+## 8. 1.60.22: o que a aula passou a cobrir (cobertura de 20/11, conferida no código de 21/11)
+| O quê | Onde | Rótulo / regra |
+|---|---|---|
+| Sem o módulo a gaveta não existe; no teste ele vem liberado | `CompanySettings.tsx:151,1093` (`hasModule`); `hooks/useCompanyModules.tsx:323-329` (`isTrial` libera tudo); `supabase/functions/self-register/index.ts:564` | cap01 L3 |
+| Sem ícone, o menu recolhido usa o ícone do EcoSistema | `SidebarMenuContent.tsx:300-304` (`iconSrc = (canUseCustomLogo && companyIcon) ? companyIcon : logoIcon`) | cap02 L6 |
+| Menu escuro por padrão; saída: Configurações → "Aparência" → "Menu (lateral e superior)" → "Seguir o tema" ("Claro no tema claro, escuro no escuro") | `hooks/useNavThemePreference.tsx:29`; `components/settings/SettingsAppearanceContent.tsx:82-134`; aba `#tab-btn-appearance` (`pages/Settings.tsx:41`) | cap03 L8 e L9 (só aponta; clicar muda a aparência da conta) |
+| A cor só entra se o código começar com "#" (sem ele o tema não aplica nada, e o "Salvar Personalizações" avisa "salvas" do mesmo jeito) | `hooks/useWhiteLabelTheme.tsx:5-6,52-55`; `CompanySettings.tsx:687-711` não valida | cap04 L4. A cobertura dizia também "seis caracteres": o código só confere o "#", então a fala só diz o "#" |
+| Desligar: "White Label desativado."; somem o selo e as "Personalizações"; menu, cor e rodapé dos documentos voltam; a cor fica guardada (o desligar só grava `white_label_enabled`) | `CompanySettings.tsx:659-685`; `useWhiteLabel.tsx:62-70` (`primaryColor` só com `effectiveWhiteLabel`) | cap06 L2 a L4 |
+| Remover o logo: "Remover logo da empresa?" / "O logo personalizado será removido e o logo padrão (símbolo de reciclagem) será usado nos comprovantes." / "Cancelar" / "Remover"; "Logo removido com sucesso!"; área "Nenhum logo enviado" / "PNG ou JPG, até 5MB". Ligado e sem logo: o menu volta ao EcoSistema (`canUseCustomLogo` falso), o cartão segue "White Label Ativo" e o aviso âmbar aparece; os documentos seguem sem o rodapé (`white_label_enabled`) | `CompanySettings.tsx:775-795,873-890,1698-1718`; `useWhiteLabel.tsx:66`; `utils/priceTableGenerator.ts:344` | cap06 L5 a L7 |
+| Outros documentos sem o rodapé: tabela de preços, ticket de pesagem, fechamento de caixa e relatórios | `priceTableGenerator.ts:344`, `weighingTicketGenerator.ts:478-482`, `cashClosingPdfGenerator.ts`, `cashClosingHtmlGenerator.ts` | cap05 L3 (ilustração) |
+| O QR das fotos leva o logo da empresa no meio com o White Label e o logo (sem eles, o ícone do EcoSistema) | `utils/qrCode.ts:5-23,89-98`; opção do QR é do T1 | cap05 L5 (ilustração; o pedido do robô não tem foto) |
+| Portal: topo na cor e rodapé do EcoSistema fora só com White Label **e** cor; o comprovante baixado pelo parceiro depende só do interruptor (`white_label_enabled` volta da edge) | `pages/EntityPortal.tsx:937-965,1983`; `supabase/functions/portal-order-receipt/index.ts:193,533` | cap05 L6 e L7 (ilustração; a página é do T20) |
+| Cadastro do rosto no ponto: logo e cor da empresa com o White Label | `pages/FaceEnrollment.tsx:53-56` | cap05 L8 (ilustração; a tela é do T19) |
+| Logo da nota fiscal é outro campo ("Logo para Nota Fiscal", "Aparecerá no DANFE (máx. 200KB).") na página "Configuração Fiscal" | `components/notas-fiscais/EmpresaSection.tsx:683-686`; `pages/ConfiguracaoFiscal.tsx:1355` | cap05 L8 (ilustração; a tela é do T16) |
+| Comprovante de pedido que nasceu de ticket mostra "Ticket: <nome>" e "Caixa: <nome>" no lugar de "Operador"; assinatura segue `receipt_signature_mode` | `utils/orderReceiptA4Generator.ts:801-802`; `thermalReceiptGenerator.ts` (assinaturas) | cap05: usar pedido sem ticket |
+| Canal realtime renomeado `company-updates:<empresa>:<uuid>` (a fala continua certa) | `hooks/useCompanyUpdateSubscription.ts:20-23` | cap07 |

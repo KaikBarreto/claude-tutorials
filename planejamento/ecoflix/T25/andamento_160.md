@@ -21,3 +21,6 @@ Nada de PDF na fala (o menu Exportar Relatório só abre).
 **Achados para o MELHORIAS:** (1) a janela "Tarefas para hoje" não abre na gravação do 1.60.18 e 1.60.22 (marca do dia removida, página recarregada, tarefa de hoje pendente): a fala do cap10 passou a usar a faixa do Dashboard; ver se é o app (overlay) ou o mundo falso.
 (2) "Pressione Enter para abrir" é quebrado por um kbd (seletor por texto exato não acha). (3) O "?" ainda não abre a lista de atalhos; "Card Lucro"/"Evolução do Lucro" na janela de configurações do Dashboard. (4) O cartão do comparativo do Total Compras mostra "Mês atual" de novembro mesmo com o filtro em "Mês passado".
 (5) A Agenda do mês: o centro da célula do dia cai na tarefa e abre "Editar Tarefa": clicar no número do dia.
+
+## 21/11 15:50 · reensaio da coordenação
+- Completos com voz estimada: cap04 0 falho, maxLate 0,27; cap07 0 falho, 3,03; cap10 0 falho, 2,21 (atrasos ficam para as âncoras da voz real). Instância 54325 derrubada. **T25 pronta para a voz.**

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """T27 · gera rec/t27/cap00..cap07.json (roteiros do robô) a partir da voz (t27/narracao/capNN.json).
 
-EcoFlix T27 "White Label": EcoSistema 1.59.154 no COMPUTADOR (janela 1280x800, tema claro, menu lateral aberto e escuro),
+EcoFlix T27 "White Label": EcoSistema 1.60.22 no COMPUTADOR (janela 1600x900, tema claro, menu lateral aberto e escuro),
 Supabase falso com o mundo da Recicla Vale Metais, logado como Rafael Nogueira (MASTER); no cap06, como Juliana Prado.
 FAKE_NOW 2026-11-10T08:30:00-03:00 em todos os capítulos.
 Os `at` saem da palavra que anuncia cada passo: A(linha, palavra, folga) = início da palavra - folga (folga = custo do gesto,
@@ -17,7 +17,7 @@ Label ligado; cap04) e `apos-cap04` (+ Cor Primária #1F5FAD; caps 5 a 7), em ca
 clara do logo fictício do T1 (`t27_logo_claro.py`: o mesmo desenho sobre placa branca; o do T1, de letra azul-escura, some no
 menu escuro), em rec/mundo/storage/avatars/recicla-vale-logo-claro.png.
 
-Particularidades (app 1.59.154):
+Particularidades (app 1.60.22; 21/11: 9 capítulos, o 6 "Desligar e voltar atrás" é novo e a Equipe e o Recap viram 7 e 8):
  - Logo do topo do menu (img alt "EcoSistema", mesmo com o logo da empresa), botão de recolher o menu (cabeçalho), "Configurações" e o
    card da conta (rodapé do menu) ficam fora da faixa y 96..730 do robô: `noScroll`.
  - Menu recolhido abre ao passar o mouse (Sidebar.tsx): depois de recolher, o cursor vai para o meio da tela e o ícone só é
@@ -39,7 +39,10 @@ import unicodedata
 HERE = os.path.dirname(os.path.abspath(__file__))
 TUT = os.path.normpath(os.path.join(HERE, '..', '..'))
 NARR = os.path.join(TUT, 't27', 'narracao')
-VERSAO = '1.60.18'
+try:
+    VERSAO = open(os.path.join(TUT, 'app', 'dist', '.versao-app'), encoding='utf8').read().strip() or '1.60.22'
+except OSError:
+    VERSAO = '1.60.22'
 FAKE_NOW = '2026-11-10T08:30:00-03:00'
 HOJE = '2026-11-10'
 EMAIL_JULIANA = 'juliana.prado@reciclavalemetais.example'   # usuária fictícia do mundo (T2); a senha vem de $TUT_SENHA
@@ -66,9 +69,9 @@ def storage(uid):
 
 
 NOMES = ['Abertura', 'O que muda', 'O logo e o ícone', 'Ligar o White Label', 'A cor da marca', 'Onde a marca aparece',
-         'A empresa toda, na hora', 'Recapitulando']
+         'Desligar e voltar atrás', 'A empresa toda, na hora', 'Recapitulando']
 CADEIA = ['t27/inicio', 't27/apos-cap03', 't27/apos-cap04']
-ATE = {0: 1, 1: 1, 2: 1, 3: 1, 4: 2, 5: 3, 6: 3, 7: 3}
+ATE = {0: 1, 1: 1, 2: 1, 3: 1, 4: 2, 5: 3, 6: 3, 7: 3, 8: 3}
 SEMENTE = {n: CADEIA[:k] for n, k in ATE.items()}
 
 # Observador de avisos na tela (aceite do ensaio): erro do app e janela que não pode aparecer na chegada ao sistema.
@@ -178,6 +181,9 @@ class Cap:
             d['cps'] = cps
         return s._p(d, at, label, kw)
 
+    def upload(s, target, arquivo, at=None, label=None, **kw):
+        return s._p({'do': 'upload', 'target': target, 'file': arquivo}, at, label, kw)
+
     def press(s, key, at=None, label=None, **kw):
         return s._p({'do': 'press', 'key': key}, at, label, kw)
 
@@ -265,6 +271,8 @@ TOGGLE_MENU = SEL('header button:has(svg.lucide-panel-left-close), header button
 CONFIG_RODAPE = SEL("button[aria-label='Configurações']")  # rodapé do menu (y 752..788)
 CARD_CONTA = SEL("[aria-label='Menu da conta']")          # card da conta no rodapé do menu
 ABA_EMPRESA = SEL('#tab-btn-company')
+ABA_APARENCIA = SEL('#tab-btn-appearance')
+SEGUIR_TEMA = TXT('Seguir o tema')
 IDENTIDADE = TXT('Identidade Visual')
 LOGO_IMG, ICONE_IMG = SEL("main img[alt='Logo']"), SEL("main img[alt='Ícone']")
 SUBST = lambda k: BTN('Substituir', nth=k)                # 0 = do logo, 1 = do ícone
@@ -276,6 +284,9 @@ WL_GAVETA = SEL("main button:has(h3:text-is('White Label'))")
 WL_SELO = SEL("main button:has(h3:text-is('White Label')) div:text-is('Ativo')")
 WL_SWITCH = SEL("main div.rounded-xl:has(p:text-is('White Label Desativado')) > button[role=switch], "
                 "main div.rounded-xl:has(p:text-is('White Label Ativo')) > button[role=switch]")
+NENHUM_LOGO = TXT('Nenhum logo enviado')
+AVISO_LOGO = TXT('Faça upload do logo ao lado para poder ativar o White Label')
+CONFIRMA_REMOVER = SEL("[role=alertdialog] button:text-is('Remover')")
 PERSONALIZACOES = TXT('Personalizações')
 NOME_WL = SEL('#wl-company-name')
 COR_ROTULO = TXT('Cor Primária')
@@ -370,6 +381,9 @@ JS_FECHA = ("(()=>{const j=window.__janelas||[];let k=0;for(const w of j){try{if
 JS_COR_INICIA = ("(()=>{window.__corT0=performance.now();window.__corMs=null;const f=()=>{const v=getComputedStyle(document.documentElement)"
                  ".getPropertyValue('--primary').trim();if(v==='213 70% 40%'){window.__corMs=Math.round(performance.now()-window.__corT0);return}"
                  "if(performance.now()-window.__corT0<15000)setTimeout(f,50)};f();return 'vigia da cor'})()")
+JS_COR_PADRAO = ("(async()=>{let v='';for(let i=0;i<40;i++){v=getComputedStyle(document.documentElement).getPropertyValue('--primary').trim();"
+                 "if(v!=='213 70% 40%')return 'OK: --primary '+v+' (cor padrão, não é mais o azul)';await new Promise(r=>setTimeout(r,100))}"
+                 "return 'DIFERENTE: --primary '+v})()")
 JS_COR = ("(()=>{const v=getComputedStyle(document.documentElement).getPropertyValue('--primary').trim();"
           "return v==='213 70% 40%'?'OK: --primary '+v+' (trocou '+window.__corMs+' ms depois do clique)':'DIFERENTE: --primary '+v})()")
 
@@ -393,7 +407,7 @@ def cap00():
 
 def cap01():
     """O que muda: do Dashboard ao botão Configurações do rodapé do menu, aba Empresa, Identidade Visual, a gaveta White Label aberta
-    ("White Label Desativado"). L3 e L4 vão sob a ilustração "muda × continua"."""
+    ("White Label Desativado"). L3 (sem o módulo a gaveta não aparece) com a câmera na gaveta; L4 e L5 vão sob a ilustração "muda × continua"."""
     c = Cap(1, setup=LOGIN, start=(720, 150))
     c.mark(1)
     c.click(CONFIG_RODAPE, at=c.A(1, 'Configurações,', 1.5), label='Configurações (rodapé do menu)', noScroll=True)   # cursor cruza a tela: ~1,5 s
@@ -407,14 +421,17 @@ def cap01():
     c.hover(TXT('White Label Desativado'), 0.4, at=c.A(2, 'desativado.', 1.4), label='White Label Desativado e o interruptor desligado')
     c.confere('main', ['White Label Desativado', 'O logo da EcoSistema está sendo exibido'], 'cartão do interruptor desligado')
     c.mark(3)
+    c.hover(WL_GAVETA, 4.2, at=c.A(3, 'gaveta', 0.6), label='a gaveta White Label (só aparece com o módulo; no teste ele vem liberado)')
     c.mark(4)
+    c.mark(5)
     c.fim()
     return c
 
 
 def cap02():
     """O logo e o ícone (sem enviar nada: os dois vieram do T1): o logo e o Substituir/Remover, a ilustração "qual imagem vai onde" (L3,
-    com a rolagem até o Ícone por baixo), o ícone e o Substituir dele, o zoom no recomendado do ícone (L5) e no do logo (L6, 5MB)."""
+    com a rolagem até o Ícone por baixo), o ícone e o Substituir dele, o zoom no recomendado do ícone (L5), os botões do ícone (L6: sem
+    ícone o menu recolhido segue com o do EcoSistema) e o zoom no recomendado do logo (L7, 5MB)."""
     c = Cap(2, setup=setup_config(), start=(1000, 300))
     c.mark(1)
     c.hover(LOGO_IMG, 2.2, at=c.A(1, 'logo', 0.6), label='Logo da Empresa: o logo da Recicla Vale (enviado no tutorial da empresa)')
@@ -429,16 +446,20 @@ def cap02():
     c.hover(ICONE_IMG, 2.2, at=c.A(4, 'Ícone', 0.6, nth=1), label='o ícone da Recicla Vale (também do tutorial da empresa)')
     c.mark(5)
     c.hover(SUBST(1), 0.8, at=c.A(5, 'Substituir.', 0.6), label='Substituir do ícone (sem clicar)')
-    c.hover(REC_ICONE, 3.6, at=c.A(5, 'recomenda', 0.6), label='Recomendado: formato quadrado (1:1), PNG transparente, 128×128px')
+    c.hover(REC_ICONE, 3.0, at=c.A(5, 'recomenda', 0.6), label='Recomendado: formato quadrado (1:1), PNG transparente, 128×128px')
     c.mark(6)
-    c.hover(REC_LOGO, 8.5, at=c.A(6, 'Uma', 0.6), label='Recomendado: formato horizontal, PNG ou JPG, máximo 5MB')
+    c.hover(ICONE_IMG, 1.6, at=c.A(6, 'mandar', 0.6), label='o ícone (e se você não mandar o ícone?)')
+    c.hover(REMOVER(1), 1.6, at=c.A(6, 'continua', 0.6), label='Remover do ícone (sem clicar): sem ícone, o menu recolhido segue com o do EcoSistema')
+    c.mark(7)
+    c.hover(REC_LOGO, 8.0, at=c.A(7, 'Uma', 0.6), label='Recomendado: formato horizontal, PNG ou JPG, máximo 5MB')
     c.fim()
     return c
 
 
 def cap03():
     """Ligar o White Label: a gaveta aberta no setup ("White Label Desativado"), o zoom no cartão do interruptor (dica do logo), liga,
-    "White Label Ativo" e o selo, o logo da Recicla Vale no menu, recolhe o menu (ícone; zoom em L5 e L6) e abre de novo. Vira apos-cap03."""
+    "White Label Ativo" e o selo, o logo da Recicla Vale no menu, recolhe o menu (ícone; zoom em L5 e L6), abre de novo (L7) e, nas duas
+    últimas linhas, a dica do menu escuro (ilustração) e a aba Aparência com "Seguir o tema" (só aponta, não clica). Vira apos-cap03."""
     c = Cap(3, setup=setup_config() + abre_wl('White Label Desativado'), start=(1240, 300))
     c.mark(1)
     c.hover(TXT('White Label Desativado'), 0.5, at=c.A(1, 'hora', 0.9), label='cartão White Label Desativado')
@@ -460,14 +481,21 @@ def cap03():
     c.mark(7)
     c.click(TOGGLE_MENU, at=c.A(7, 'Abro', 0.7), label='abre o menu de novo', noScroll=True)
     c.hover(LOGO_MENU, 1.2, at=c.A(7, 'volta', 0.6), label='volta o logo da Recicla Vale', noScroll=True)
+    c.mark(8)
+    c.hover(LOGO_MENU, 5.0, at=c.A(8, 'escuro.', 0.6), label='o menu é escuro: o logo da Recicla Vale (versão clara) lê bem', noScroll=True)
+    c.mark(9)
+    c.click(ABA_APARENCIA, at=c.A(9, 'Aparência,', 1.2), label='aba Aparência')
+    c.waitfor(text='Menu (lateral e superior)', timeout=10)
+    rola_ate(c, 'Seguir o tema', at=c.A(9, 'Menu,', 0.9), label='desce até Menu (lateral e superior)', y=520, dur_ms=600)
+    c.hover(SEGUIR_TEMA, 3.0, at=c.A(9, 'Seguir', 0.6), label='Seguir o tema (Claro no tema claro, escuro no escuro), sem clicar')
     c.fim()
     return c
 
 
 def cap04():
     """A cor da marca: as Personalizações (gaveta aberta no setup, com o selo Ativo), o Nome Exibido (sem zoom, sem digitar), a Cor
-    Primária #1F5FAD digitada e o Preview, Salvar Personalizações (botão, interruptor e barrinha do menu no azul) e o Reset (sem clicar).
-    Vira apos-cap04."""
+    Primária #1F5FAD digitada e o Preview, o zoom no código com o "#" (L4), Salvar Personalizações (botão, interruptor e barrinha do menu
+    no azul) e o Reset (sem clicar). Vira apos-cap04."""
     c = Cap(4, setup=setup_config() + abre_wl('White Label Ativo'), start=(1240, 300))
     c.mark(1)
     rola_ate(c, 'Personalizações', at=c.A(1, 'aparecem', 0.9), label='desce até as Personalizações', y=250, dur_ms=800)
@@ -482,50 +510,108 @@ def cap04():
     c.hover(PREVIEW, 2.2, at=c.A(3, 'quadradinho', 0.6), label='Preview no azul da Recicla Vale')
     c.confere_campos(['#1F5FAD'], 'Cor Primária digitada')
     c.mark(4)
-    c.click(SALVAR_WL, at=c.A(4, 'Salvar', 0.7), label='Salvar Personalizações')
+    c.hover(COR_TEXTO, 6.0, at=c.A(4, 'código', 0.6), label='zoom: o código #1F5FAD começa com o jogo da velha')
+    c.mark(5)
+    c.click(SALVAR_WL, at=c.A(5, 'Salvar', 0.7), label='Salvar Personalizações')
     c.ev(JS_COR_INICIA, label='vigia quando a cor troca')
     c.waitfor(text='Configurações de White Label salvas!', timeout=8)
-    c.hover(SALVAR_WL, 0.3, at=c.A(4, 'botões,', 0.6), label='botão no azul')
-    c.hover(WL_SWITCH, 0.4, at=c.A(4, 'interruptores', 0.85), label='interruptor no azul')
-    c.hover(CONFIG_RODAPE, 1.2, at=c.A(4, 'barrinha', 0.95), label='barrinha azul do item ativo no menu (Configurações)', noScroll=True)
+    c.hover(SALVAR_WL, 0.3, at=c.A(5, 'botões,', 0.6), label='botão no azul')
+    c.hover(WL_SWITCH, 0.4, at=c.A(5, 'interruptores', 0.85), label='interruptor no azul')
+    c.hover(CONFIG_RODAPE, 1.2, at=c.A(5, 'barrinha', 0.95), label='barrinha azul do item ativo no menu (Configurações)', noScroll=True)
     c.ev(JS_COR, label='confere a cor aplicada (azul #1F5FAD)')
-    c.mark(5)
-    c.hover(COR_TEXTO, 1.4, at=c.A(5, 'Cor', 0.6), label='Cor Primária (vazia = verde padrão)')
-    c.hover(RESET, 1.6, at=c.A(5, 'Reset', 0.6), label='Reset (sem clicar: só limpa o campo)')
-    c.hover(SALVAR_WL, 1.2, at=c.A(5, 'Salvar', 0.6), label='Salvar Personalizações (a volta pro verde vale depois dele)')
+    c.mark(6)
+    c.hover(COR_TEXTO, 1.4, at=c.A(6, 'Cor', 0.6), label='Cor Primária (vazia = cores padrão)')
+    c.hover(RESET, 1.6, at=c.A(6, 'Reset', 0.6), label='Reset (sem clicar: só limpa o campo)')
+    c.hover(SALVAR_WL, 1.2, at=c.A(6, 'Salvar', 0.6), label='Salvar Personalizações (a volta às cores padrão vale depois dele)')
     c.fim()
     return c
 
 
 def cap05():
-    """Onde a marca aparece: L1 e L2 sob a ilustração do mapa (o Dashboard com o logo e o azul por baixo); L3 Pedidos, o "⋮" do pedido
-    mais recente e "Ver comprovante" (janela nova: o PDF real do app vai para a edição); L4 e L5 sob a ilustração do Portal e do
-    remover × desligar."""
+    """Onde a marca aparece: L1 a L3 sob a ilustração do mapa (o Dashboard com o logo e o azul por baixo; L3 acrescenta os cartões da tabela
+    de preços, do ticket de pesagem e do fechamento de caixa); L4 Pedidos, o "⋮" do pedido mais recente e "Ver comprovante" (janela nova: o
+    PDF real do app vai para a edição; L5 põe o QR com o logo por cima do PDF); L6 a L8 sob as ilustrações do Portal, do rosto no ponto e da
+    nota fiscal."""
     c = Cap(5, setup=LOGIN + [{'do': 'eval', 'js': JS_GANCHO}], start=(720, 150))
     c.mark(1)
     c.mark(2)
-    # Pedidos abre sob a ilustração do mapa (até ~0,6 s depois de "EcoSistema."): quando ela sai, a lista já está na tela e o cursor perto
-    # da coluna Ações (cursor do menu até o "⋮" custa ~2 s; não cabe entre o fim da ilustração e "pedido.")
-    c.click(PEDIDOS_MENU, at=c.A(2, 'EcoSistema.', 4.6), label='Pedidos no menu (sob a ilustração)')   # clique ~1,7 s + lista ~2,2 s + rolagem e cursor ~1,2 s
-    c.waitfor(target=MENU_LINHA1, timeout=15)   # as linhas de verdade (a tabela abre com linhas de espera, sem o "⋮")
-    c.ev(js_tabela_direita(), label='mostra a coluna Ações da tabela (rolagem horizontal suave)')
-    c.cursor((1130, 330), label='cursor perto da coluna Ações')
     c.mark(3)
-    c.hover(MENU_LINHA1, 0.2, at=c.A(3, 'um', 1.4), label='menu ⋮ do pedido mais recente (abre ao passar o mouse)')
-    c.click(VER_COMPROVANTE, at=c.A(3, 'pedido.', 0.3), label='Ver comprovante (abre a janela nova)', noScroll=True)
+    # Pedidos abre sob a ilustração do mapa (até o fim de L3): quando ela sai, a lista já está na tela e o cursor perto da coluna Ações
+    # (clique ~1,7 s + lista ~2,2 s + rolagem e cursor ~1,2 s)
+    c.click(PEDIDOS_MENU, at=c.A(3, 'relatórios.', 4.8), label='Pedidos no menu (sob a ilustração)')
+    c.waitfor(target=MENU_LINHA1, timeout=15)   # as linhas de verdade (a tabela abre com linhas de espera, sem o "⋮")
+    c.ev(js_tabela_direita(), label='mostra a coluna Ações da tabela (rolagem horizontal suave, se precisar)')
+    c.cursor((1230, 330), label='cursor perto da coluna Ações')
+    c.mark(4)
+    c.hover(MENU_LINHA1, 0.2, at=c.A(4, 'um', 1.4), label='menu ⋮ do pedido mais recente (abre ao passar o mouse)')
+    c.click(VER_COMPROVANTE, at=c.A(4, 'pedido.', 0.3), label='Ver comprovante (abre a janela nova)', noScroll=True)
     c.ev(JS_PDF, label='captura o PDF do comprovante (a edição mostra o PDF real)')
     c.cursor((760, 250), label='cursor fora da tabela')
-    c.mark(4)
-    c.ev(JS_FECHA, at=c.A(4, 'Portal', 0.0), label='fecha a janela do comprovante (sob a ilustração)')
     c.mark(5)
+    c.mark(6)
+    c.ev(JS_FECHA, at=c.A(6, 'Portal', 0.0), label='fecha a janela do comprovante (sob a ilustração)')
+    c.mark(7)
+    c.mark(8)
     c.fim()
     return c
 
 
 def cap06():
+    """Desligar e voltar atrás (capítulo novo da 1.60.22): a gaveta aberta no setup ("White Label Ativo", Cor Primária salva). Caminho 1: o
+    interruptor desliga ("White Label desativado."), o menu volta ao logo do EcoSistema e a cor ao padrão; liga de novo e a cor volta sozinha.
+    Caminho 2: "Remover" do logo, a confirmação, "Logo removido com sucesso!", o menu volta ao EcoSistema mas o cartão segue "White Label
+    Ativo" e o aviso âmbar pede o logo; L7 sob a ilustração "remover × desligar"; o logo claro é enviado de novo ("Logo atualizado com
+    sucesso!"). Termina igual a apos-cap04 (logo no lugar, ligado, cor salva)."""
+    c = Cap(6, setup=setup_config() + abre_wl('White Label Ativo'), start=(1240, 300))
+    c.mark(1)
+    c.hover(TXT('White Label Ativo'), 1.6, at=c.A(1, 'dois', 0.9), label='cartão White Label Ativo (Cor Primária guardada logo abaixo)')
+    c.mark(2)
+    c.hover(WL_SWITCH, 0.4, at=c.A(2, 'interruptor.', 0.9), label='o interruptor ligado')
+    c.click(WL_SWITCH, at=c.A(2, 'Desligo,', 0.7), label='desliga o interruptor do White Label')
+    c.waitfor(text='White Label Desativado', timeout=8)
+    c.hover(TXT('White Label Desativado'), 1.2, at=c.A(2, 'avisa:', 0.5), label='White Label Desativado (aviso "White Label desativado.")')
+    c.confere('main', ['White Label Desativado', 'O logo da EcoSistema está sendo exibido'], 'cartão do interruptor desligado')
+    c.mark(3)
+    c.hover(LOGO_MENU, 2.4, at=c.A(3, 'menu', 0.6), label='o menu voltou ao logo do EcoSistema', noScroll=True)
+    c.hover(CONFIG_RODAPE, 1.6, at=c.A(3, 'cor', 0.6), label='a cor voltou ao padrão (a barrinha do item ativo)', noScroll=True)
+    c.ev(JS_COR_PADRAO, label='confere que a cor voltou ao padrão (não é mais o azul)')
+    c.mark(4)
+    c.click(WL_SWITCH, at=c.A(4, 'Ligo', 0.7), label='liga o interruptor de novo')
+    c.ev(JS_COR_INICIA, label='vigia quando a cor volta')
+    c.waitfor(text='White Label Ativo', timeout=8)
+    rola_ate(c, 'Personalizações', at=c.A(4, 'cor', 0.9), label='desce até as Personalizações (a Cor Primária guardada)', y=250, dur_ms=700)
+    c.hover(COR_TEXTO, 2.4, at=c.A(4, 'continuou', 0.6), label='Cor Primária #1F5FAD, guardada')
+    c.confere_campos(['#1F5FAD'], 'Cor Primária guardada depois de religar')
+    c.ev(JS_COR, label='confere a cor aplicada de novo (azul #1F5FAD)')
+    c.mark(5)
+    rola_ate(c, 'Logo da Empresa', at=c.A(5, 'segundo', 0.9), label='sobe até o Logo da Empresa', y=200, dur_ms=700)
+    c.hover(REMOVER(0), 0.3, at=c.A(5, 'remover', 0.6), label='Remover do logo')
+    c.click(REMOVER(0), at=c.A(5, 'logo.', 0.2), label='clica em Remover (o logo)')
+    c.waitfor(text='Remover logo da empresa?', timeout=8)
+    c.hover(TXT('Remover logo da empresa?'), 0.8, at=c.A(5, 'pergunta', 0.5), label='confirmação: Remover logo da empresa?')
+    c.confere('[role=alertdialog]', ['Remover logo da empresa?', 'O logo personalizado será removido', 'Cancelar', 'Remover'], 'confirmação de remover o logo')
+    c.click(CONFIRMA_REMOVER, at=c.A(5, 'Confirmo', 0.6), label='confirma em Remover')
+    c.waitfor(text='Nenhum logo enviado', timeout=10)
+    c.mark(6)
+    c.hover(LOGO_MENU, 1.6, at=c.A(6, 'menu', 0.6), label='o menu voltou ao logo do EcoSistema', noScroll=True)
+    c.hover(TXT('White Label Ativo'), 0.8, at=c.A(6, 'ativo.', 0.9), label='o cartão segue White Label Ativo')
+    c.hover(AVISO_LOGO, 2.6, at=c.A(6, 'pede', 0.6), label='aviso: Faça upload do logo ao lado para poder ativar o White Label')
+    c.confere('main', ['White Label Ativo', 'Faça upload do logo ao lado para poder ativar o White Label', 'Nenhum logo enviado'], 'logo removido, White Label ainda ativo')
+    c.mark(7)
+    c.hover(WL_SWITCH, 3.0, at=c.A(7, 'interruptor', 0.6), label='o interruptor: é ele que desliga de verdade')
+    c.mark(8)
+    c.upload(NENHUM_LOGO, 'assets/recicla-vale-logo-claro.png', at=c.A(8, 'mando', 0.8), label='escolhe o logo recicla-vale-logo-claro.png')
+    c.waitfor(text='Logo atualizado com sucesso!', timeout=10)
+    c.hover(LOGO_MENU, 1.4, at=c.A(8, 'lugar', 0.9), label='o logo da Recicla Vale de volta no menu', noScroll=True)
+    c.ev("JSON.stringify([...document.querySelectorAll('main img')].map(i=>[i.alt,i.naturalWidth]))", label='confere o logo carregado (largura > 0)')
+    c.fim()
+    return c
+
+
+def cap07():
     """A empresa toda, na hora: sessão da Juliana (login fora do vídeo) no Dashboard dela, com o logo da Recicla Vale e a barrinha
     azul; L3 sob a ilustração "a troca chegando a todos"."""
-    c = Cap(6, setup=login(EMAIL_JULIANA, 'Olá, Juliana!'), start=(720, 150), uid=JULIANA)
+    c = Cap(7, setup=login(EMAIL_JULIANA, 'Olá, Juliana!'), start=(720, 150), uid=JULIANA)
     c.mark(1)
     c.hover(CARD_CONTA, 1.0, at=c.A(1, 'Juliana,', 0.6), label='card da conta: Juliana Prado', noScroll=True)
     c.mark(2)
@@ -538,10 +624,11 @@ def cap06():
     return c
 
 
-def cap07():
+def cap08():
     """Recapitulando (a montagem da edição usa trechos dos capítulos; este passeio pelo estado final fica de reserva): a gaveta, o logo
-    e o ícone, o interruptor ligado e o logo no menu, a Cor Primária, os Pedidos com o menu do comprovante. L6 é o cartão Próximo."""
-    c = Cap(7, setup=setup_config() + abre_wl('White Label Ativo'), start=(1240, 300))
+    e o ícone, o interruptor ligado e o logo no menu, a Cor Primária, os Pedidos com o menu do comprovante. L5 (interruptor × remover o
+    logo) e L6 (a equipe) são montagem; L7 é o cartão Próximo."""
+    c = Cap(8, setup=setup_config() + abre_wl('White Label Ativo'), start=(1240, 300))
     c.mark(1)
     c.hover(WL_GAVETA, 1.0, at=c.A(1, 'White', 0.6), label='a gaveta White Label na aba Empresa')
     c.hover(ICONE_IMG, 1.6, at=c.A(1, 'logo', 0.9), label='o logo e o ícone quadrado')
@@ -557,13 +644,14 @@ def cap07():
     c.waitfor(target=MENU_LINHA1, timeout=15)
     c.hover(SEL('main tbody tr:first-child td:nth-child(2)'), 1.2, at=c.A(4, 'rodapé', 0.6), label='o pedido mais recente da lista (sem abrir o menu)')
     c.mark(5)
-    c.cursor((760, 150), at=c.A(5, 'viu', 0.6), label='cursor fora da tabela (a equipe toda)')
+    c.cursor((760, 150), at=c.A(5, 'diferença', 0.6), label='cursor fora da tabela (montagem do interruptor × remover o logo)')
     c.mark(6)
+    c.mark(7)
     c.fim()
     return c
 
 
-CAPS_ROBO = {n: globals()[f'cap{n:02d}'] for n in range(8) if f'cap{n:02d}' in globals()}
+CAPS_ROBO = {n: globals()[f'cap{n:02d}'] for n in range(9) if f'cap{n:02d}' in globals()}
 
 if __name__ == '__main__':
     quais = [int(a) for a in sys.argv[1:]] or sorted(CAPS_ROBO)
