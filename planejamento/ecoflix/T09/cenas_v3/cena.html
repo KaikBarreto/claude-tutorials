@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- T09 "Pedidos e histórico do caixa" · ilustrações no kit v3 (perfis/ecoflix/cenas_v3/LEIA.md), 16:9 (--larg 1422).
+     Uma função por CENA e CAPS[cap] diz o que cada capítulo ilustrado usa. As janelas (de/ate) estão em ../cenas/ilustracoes.json.
+       cap00 · pedidoSumido  (escuro)  ilu00_pedido         "O pedido de três semanas atrás"  linhas 0 e 1: achar, corrigir, imprimir; a Auto Peças liga e o pedido não aparece no nome dela
+       cap01 · duasTelas     (escuro)  ilu01_telas          "Duas telas que andam juntas"     linhas 0 a 2: Pedidos, Histórico do Caixa, e todo pedido nasce dentro de um caixa
+       cap04 · correcoes     (escuro)  ilu04_caixa_fechado  "Pedido de caixa fechado"         linha 6: sem dinheiro, com dinheiro, ou reabrir o caixa, corrigir lá dentro e fechar de novo
+                                       ilu04_soma           "Não soma por cima"               linhas 11 a 13: desfaz o antigo, grava o certo; no fim, só os 18 kg e só a diferença
+       cap06 · popups        (escuro)  ilu06_popups         "Liberar os pop-ups"              linhas 1 e 2: o PDF abre numa aba nova; cadeado, Pop-ups, Permitir
+     Os papéis reais (comprovantes e relatórios dos caps 04, 06, 07 e 09) estão em pdf.html.
+     Saiu do ilustracoes.json (21/11), porque a tela do app já mostra o assunto na hora da fala:
+       ilu05_estornado (cap05, linha 5): a tela está na lista, com o zoom da linha anterior no selo "Estornado em 05/11" da própria
+       compra; a frase (7 s) só comenta o que está ali, e a ilustração taparia a linha de que ela fala.
+     Só textos e números da fala e da tela (R$ 148,80 é o valor da compra de 24 kg na lista; R$ 111,60 é a diferença, do roteiro da
+     coordenação; ecosistematecnologia.com.br é o endereço que sai no rodapé do comprovante).
+     Âncoras por palavra (W) sobre a voz real ($TUT_HOME/t09/narracao/capNN.json).
+     Acabamento: node perfis/ecoflix/cenas_v3/auditar.cjs --aula planejamento/ecoflix/T09 --larg 1422
+     Render de uma janela: node ferramentas/edit/cenas/render_cenas.cjs <cap> <capNN.json> saida.mp4 \
+               --html planejamento/ecoflix/T09/cenas_v3/cena.html --larg 1422 --dsf 1.35 --de <s> --ate <s>
+     Ícones lucide usados (o nome tem de estar literal nesta página): 'search' 'pencil' 'printer' 'calendar-days' 'phone' 'receipt'
+     'search-x' 'map-pin' 'clipboard-list' 'archive' 'wallet' 'shopping-cart' 'link' 'ban' 'banknote' 'lock-open' 'lock' 'undo-2'
+     'save' 'equal' 'package' 'layers' 'file-text' 'square-arrow-out-up-right' 'app-window' 'check' 'user-round' -->
+</head><body>
+<script type="module">
+import { pr, eo, eo5, W, ic, vis, pulso, ondaEm, titulo, posTitulo, selo, htmlChip, htmlOp, htmlFluxo, fluxo, GL, lugar, clima, cena, estilo, enquadraRet }
+  from '../../../../perfis/ecoflix/cenas_v3/motor.js';
+import { camera } from '../../../../perfis/ecoflix/cenas_v3/motor.js';
+import { mundoEscuro } from '../../../../perfis/ecoflix/cenas_v3/fundo.js';
+import { htmlFluxoCartoes, fluxoCartoes, parte } from '../../../../perfis/ecoflix/cenas_v3/dados/fluxoCartoes.js';
+import { htmlBalao, balao } from '../../../../perfis/ecoflix/cenas_v3/dados/balao.js';
+import { htmlCalendario, calendario } from '../../../../perfis/ecoflix/cenas_v3/dados/calendario.js';
+
+// =====================================================================================================================
+// comuns (os mesmos da T04)
+const NUNCA = 1e9, EE = .0112, AMB = '#F2B63D';
+const cores = () => estilo('t09-cor', `.chip.am{background:linear-gradient(150deg,#F7CB68,#E59A22);color:#3A2A06;border-color:rgba(255,255,255,.4);box-shadow:0 12px 22px -8px rgba(229,154,34,.6)}
+.t09c .sub{font-size:14.5px}.t09c .num{font-size:30px;margin-top:5px;white-space:nowrap}`);
+const cartaoP = (icone, rot, sub, cls, cw = 190) => htmlFluxoCartoes({ cartoes: [[icone, rot, sub, cls]], cw });   // cartão pequeno (selo + rótulo + legenda)
+// degrau: cartão baixo de uma linha (selo + nome + legenda opcional)
+const degrau = (icone, rot, sub, o = {}) => `<div class="cartao ${o.cc ?? ''}" style="position:relative;width:${o.w ?? 360}px;height:${o.h ?? 84}px;padding:0 20px;display:flex;align-items:center;gap:13px;white-space:nowrap">
+  ${selo(icone, o.cls ?? 'n', o.selo ?? 46)}<div><div class="rot">${rot}</div>${sub ? `<div class="sub"${o.fs ? ` style="font-size:${o.fs}px"` : ''}>${sub}</div>` : ''}</div>${o.res ? '<div class="onda"></div>' : ''}</div>`;
+// um lugar do mundo escuro: posições em px do desenho (y para baixo)
+function escuro() {
+  const EIXO = lugar([0, 0, 0]), E = mundoEscuro(EIXO, 0, EE);
+  return { EIXO, X: (html, x, y, o = {}) => E(html, x * EE, -y * EE, 0, o), ret: (a, b, c, d) => [a * EE, -d * EE, c * EE, -b * EE], fundo: (cx, cy, o) => E.fundo(cx * EE, -cy * EE, o) };
+}
+const ponta = (g, d, cor = 'var(--vc)') => { g.insertAdjacentHTML('beforeend', `<path d="${d}" stroke="${cor}" stroke-width="2.8" opacity="0"/>`); return g.lastElementChild; };
+const fileira = (P, xc, vao = 10) => { let x = xc - (P.reduce((s, p) => s + p.w, 0) + vao * (P.length - 1)) / 2; for (const p of P) { p.pos[0] = (x + p.w / 2) * EE; x += p.w + vao; } };   // chips lado a lado, centrados em xc
+
+// =====================================================================================================================
+// CENA "pedidoSumido" · cap00, linhas 0 e 1 · clima escuro (o caso da aula)
+// 0 "Oi! Neste tutorial a gente vai achar aquele pedido de três semanas atrás, corrigir o que saiu errado e imprimir o
+//    comprovante de novo."
+// 1 "Na Recicla Vale Metais, a Auto Peças Vale Forte ligou pedindo o comprovante da bateria que vendeu em vinte e um de
+//    outubro. E o pedido não aparece no nome dela."
+// Em cima, o que a aula faz (achar, corrigir, imprimir); a câmera abre para o caso: a ligação, o dia 21 de outubro no
+// calendário e o pedido que não aparece.
+function pedidoSumido() {
+  const t0 = W(0, 'oi'), tac = W(0, 'achar'), ttr = W(0, 'tres'), tcg = W(0, 'corrigir'), tim = W(0, 'imprimir'),
+    tna = W(1, 'na'), trv = W(1, 'recicla'), tau = W(1, 'auto'), tpd = W(1, 'pedindo'), tve = W(1, 'vendeu'), tvi = W(1, 'vinte'), tpe = W(1, 'pedido'), tnao = W(1, 'nao'), tnm = W(1, 'nome'), tfim = W(1, 'dela', 1, 'e');
+  cores();
+  const { EIXO, X, ret, fundo } = escuro(), Y1 = -205;
+  const fx = X(htmlFluxoCartoes({ cartoes: [['search', 'Achar', 'aquele pedido', 'n'], ['pencil', 'Corrigir', 'o que saiu errado', 'n'], ['printer', 'Imprimir', 'o comprovante de novo', 'res']], cw: 236 }), 0, Y1);
+  const TOPO = Y1 - fx.h / 2 - 14 - 38, chT = X(htmlChip(`${ic('calendar-days', 18)}de três semanas atrás`, 'am'), -fx.w / 2, Y1 - fx.h / 2 - 14, { anc: [0, 1], z: 40 });
+  const YT = Y1 + fx.h / 2 + 96, cal = X(htmlCalendario({ mes: 'Outubro', ano: 2026, inicio: 4, dias: 31, marcas: [[21, '']], icone: 'calendar-days' }), 0, YT, { anc: [.5, 0] }), YM = YT + cal.h / 2, XC = cal.w / 2 + 44;
+  const chR = X(htmlChip(`${ic('map-pin', 18)}Recicla Vale Metais`, 'n'), 0, YT - 14, { anc: [.5, 1], z: 40 });
+  const bal = X(htmlBalao({ lado: 'e', icone: 'phone', nome: 'Auto Peças Vale Forte', texto: 'Cadê o comprovante da bateria?', w: 214 }), -XC, YM, { anc: [1, .5] });
+  const cP = X(cartaoP('receipt', 'O pedido', 'da bateria', 'n', 226), XC, YM - 28, { anc: [0, .5] }), chN = X(htmlChip(`${ic('search-x', 18)}não aparece no nome dela`, 'am'), XC, YM - 28 + cP.h / 2 + 14, { anc: [0, 0], z: 40 });
+  fundo(0, 0);
+  const tit = titulo('Pedidos e histórico do caixa', 'O pedido de três semanas atrás', 'escuro');
+  const XL = Math.min(-fx.w / 2, -XC - bal.w), XR = Math.max(fx.w / 2, XC + chN.w, XC + cP.w);
+  const S1 = enquadraRet(EIXO, ret(-fx.w / 2, TOPO, fx.w / 2, Y1 + fx.h / 2), { az: -.03, max: 1.4 / EE }), S2 = enquadraRet(EIXO, ret(XL, TOPO, XR, YT + cal.h), { az: .0, max: 1.4 / EE });
+  camera([[t0 - 3, S1], [tna - .45, { ...S1, az: -.012, d: S1.d * .985 }, 'lin'], [tna + .75, S2], [tfim + 2.5, { ...S2, az: .03, d: S2.d * .98 }, 'lin']]);
+  return t => {
+    clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, t0 - .45);
+    fluxoCartoes(fx.e, t, tac - .4, NUNCA, { tempos: [tac - .15, tcg - .15, tim - .15] }); vis(chT.e, t, ttr - .1, NUNCA, { dy: 10, sc: .8 });
+    vis(chR.e, t, trv - .1, NUNCA, { dy: 10, sc: .8 });
+    balao(bal.e, t, tau - .1, NUNCA, { pensa: tpd - tau - .1, d: 1.3 });
+    calendario(cal.e, t, tve - .4, NUNCA, { tempos: [tvi] });
+    vis(cP.e, t, tpe - .15, NUNCA, { dy: 20 }); vis(chN.e, t, tnao - .1, NUNCA, { dy: -10, sc: .8 }); pulso(chN.e, t, tnm, .05, .8);
+  };
+}
+
+// =====================================================================================================================
+// CENA "duasTelas" · cap01, linhas 0 a 2 · clima escuro (o trabalho de cada tela)
+// 0 "Pedidos mostra cada compra e cada venda, uma por linha, de todos os caixas. É a tela pra achar um pedido, corrigir e
+//    imprimir de novo."
+// 1 "O Histórico do Caixa mostra os caixas já fechados: o dia de cada operador, com quanto abriu e quanto fechou. É a tela
+//    pra rever um dia inteiro e, se precisar, reabrir aquele caixa."
+// 2 "Todo pedido nasce dentro de um caixa. Por isso as duas telas andam juntas."
+// À esquerda, Pedidos (uma compra ou venda por linha); a câmera abre e, à direita, o Histórico do Caixa (um caixa fechado
+// por linha); no fim, cada pedido se liga ao caixa em que nasceu.
+function duasTelas() {
+  const t0 = W(0, 'pedidos'), tcp = W(0, 'compra'), tvd = W(0, 'venda'), tli = W(0, 'linha'), ttd = W(0, 'todos'), tac = W(0, 'achar'), tcg = W(0, 'corrigir'), tim = W(0, 'imprimir'),
+    thi = W(1, 'historico'), tfe = W(1, 'fechados'), tdi = W(1, 'dia'), top = W(1, 'operador'), tab = W(1, 'abriu'), trv = W(1, 'rever'), tre = W(1, 'reabrir'),
+    ttp = W(2, 'todo'), tna = W(2, 'nasce'), tde = W(2, 'dentro'), tcx = W(2, 'caixa'), tdu = W(2, 'duas'), tju = W(2, 'juntas'), tfim = W(2, 'juntas', 1, 'e');
+  cores();
+  const { EIXO, X, ret, fundo } = escuro(), CW = 372, XE = -330, XD = 330, YH = -128, RH = 64, RY = [-34, 42, 118], YC1 = 192, YC2 = 244, VAO = XD - XE - CW;
+  const lin = (icone, rot, x, i) => X(degrau(icone, rot, '', { w: CW, h: RH, selo: 40 }), x, RY[i]);
+  // Pedidos
+  const hP = X(degrau('clipboard-list', 'Pedidos', 'cada compra e cada venda', { w: CW, cls: '', res: true }), XE, YH);
+  const rP = [lin('shopping-cart', 'Compra · 10/11', XE, 0), lin('receipt', 'Venda · 10/11', XE, 1), lin('shopping-cart', 'Compra · 21/10', XE, 2)];
+  const chTd = X(htmlChip('de todos os caixas', 'n'), XE, YC1, { z: 40 });
+  const aP = [X(htmlChip('achar'), XE, YC2, { z: 40 }), X(htmlChip('corrigir'), XE, YC2, { z: 40 }), X(htmlChip('imprimir de novo'), XE, YC2, { z: 40 })]; fileira(aP, XE);
+  // Histórico do Caixa
+  const hC = X(degrau('archive', 'Histórico do Caixa', 'os caixas já fechados', { w: CW, cls: '', res: true }), XD, YH);
+  const rC = [lin('wallet', 'Rafael · 10/11', XD, 0), lin('wallet', 'Marcos · 10/11', XD, 1), lin('wallet', 'Marcos · 21/10', XD, 2)];
+  const chAb = X(htmlChip('quanto abriu e quanto fechou', 'n'), XD, YC1, { z: 40 });
+  const aC = [X(htmlChip('rever um dia inteiro'), XD, YC2, { z: 40 }), X(htmlChip('reabrir aquele caixa'), XD, YC2, { z: 40 })]; fileira(aC, XD);
+  // todo pedido nasce dentro de um caixa: um fio de cada pedido ao caixa dele (10 px de respiro nas duas pontas)
+  const x1 = VAO - 10, yf = i => 20 + RY[i] - RY[0], fi = X(htmlFluxo(VAO, RY[2] - RY[0] + 40, [0, 1, 2].map(i => `M10 ${yf(i)}H${x1}`)), XE + CW / 2, RY[0] - 20, { anc: [0, 0], z: -40 });
+  const G = [...fi.e.children], PT = G.map((g, i) => ponta(g, `M${x1 - 9} ${yf(i) - 8}L${x1} ${yf(i)}L${x1 - 9} ${yf(i) + 8}`));
+  const YL = YH - 42 - 16, chL = X(htmlChip(`${ic('link', 18)}todo pedido nasce dentro de um caixa`, 'am'), 0, YL, { anc: [.5, 1], z: 40 });
+  fundo(0, 30, { aneis: false });
+  const tit = titulo('Pedidos e histórico do caixa', 'O trabalho de cada tela', 'escuro');
+  const TOPO = YL - 38, BASE = YC2 + 19, ME = Math.max(CW, aP.reduce((s, p) => s + p.w, 20)) / 2, MD = Math.max(CW, aC.reduce((s, p) => s + p.w, 10)) / 2;
+  const S1 = enquadraRet(EIXO, ret(XE - ME, TOPO, XE + ME, BASE), { az: -.035, max: 1.4 / EE }), S2 = enquadraRet(EIXO, ret(XE - ME, TOPO, XD + MD, BASE), { az: -.005, max: 1.4 / EE });
+  camera([[t0 - 3, S1], [thi - .75, { ...S1, az: -.015, d: S1.d * .985 }, 'lin'], [thi + .55, S2], [ttp - .3, { ...S2, az: .012, d: S2.d * .988 }, 'lin'], [tfim + 2.5, { ...S2, az: .04, d: S2.d * .972 }, 'lin']]);
+  return t => {
+    clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, t0 - .45);
+    vis(hP.e, t, t0 - .1, NUNCA, { dy: 20 });
+    vis(rP[0].e, t, tcp - .1, NUNCA, { dy: 16 }); vis(rP[1].e, t, tvd - .1, NUNCA, { dy: 16 }); vis(rP[2].e, t, tli - .1, NUNCA, { dy: 16 });
+    vis(chTd.e, t, ttd - .1, NUNCA, { dy: -10, sc: .8 });
+    vis(aP[0].e, t, tac - .1, NUNCA, { dy: -10, sc: .8 }); vis(aP[1].e, t, tcg - .1, NUNCA, { dy: -10, sc: .8 }); vis(aP[2].e, t, tim - .1, NUNCA, { dy: -10, sc: .8 });
+    vis(hC.e, t, thi - .1, NUNCA, { dy: 20 }); pulso(hC.e, t, tfe, .03, .8);
+    vis(rC[0].e, t, tdi - .1, NUNCA, { dy: 16 }); vis(rC[1].e, t, tdi + .18, NUNCA, { dy: 16 }); vis(rC[2].e, t, top - .1, NUNCA, { dy: 16 });
+    vis(chAb.e, t, tab - .1, NUNCA, { dy: -10, sc: .8 });
+    vis(aC[0].e, t, trv - .1, NUNCA, { dy: -10, sc: .8 }); vis(aC[1].e, t, tre - .1, NUNCA, { dy: -10, sc: .8 });
+    // cada pedido dentro do caixa dele
+    vis(chL.e, t, ttp - .1, NUNCA, { dy: 10, sc: .8 }); fi.e.style.opacity = eo(pr(t, tna - .3, .3)).toFixed(3);
+    [tna - .1, tde, tcx - .1].forEach((a, i) => { fluxo(fi.e, i, t, a, .55, { luz: [a, .75], fica: .75 }); PT[i].setAttribute('opacity', eo(pr(t, a + .38, .2)).toFixed(3)); pulso(rC[i].e, t, a + .5, .035, .8); });
+    pulso(hP.e, t, tdu, .035, .8); pulso(hC.e, t, tdu + .14, .035, .8); ondaEm(hP.e.querySelector('.onda'), t, tju); ondaEm(hC.e.querySelector('.onda'), t, tju);
+  };
+}
+
+// =====================================================================================================================
+// CENA "caixaFechado" · cap04, linha 6 · clima escuro (as saídas para corrigir um pedido de caixa já fechado)
+// 6 "Uma dica: se a correção de um pedido em dinheiro precisa ficar no caixa daquele dia, reabra o caixa, corrija lá dentro
+//    e feche de novo. A gente faz isso no fim do tutorial. E tudo isso vale igual pra venda."
+// Em cima, as duas saídas que a tela acabou de mostrar (linhas 0 a 5: sem dinheiro, mantém o caixa original; com dinheiro,
+// vai pra um caixa aberto e o antigo fica estornado); a câmera abre e a dica monta a terceira, um passo por palavra.
+function caixaFechado() {
+  const t0 = W(6, 'uma'), tse = W(6, 'se'), tdi = W(6, 'dinheiro'), tpr = W(6, 'precisa'), tre = W(6, 'reabra'), tco = W(6, 'corrija'), tfe = W(6, 'feche'), tno = W(6, 'novo'), tfi = W(6, 'fim'),
+    tva = W(6, 'vale'), tvd = W(6, 'venda'), tfim = W(6, 'venda', 1, 'e');
+  cores();
+  const { EIXO, X, ret, fundo } = escuro(), YA = -196, YB = -100, YC = 96;
+  const fC = X(htmlFluxoCartoes({ cartoes: [['lock-open', 'Reabrir o caixa', 'daquele dia', 'n'], ['pencil', 'Corrigir', 'lá dentro', 'n'], ['lock', 'Fechar de novo', 'sem estorno', 'res']], cw: 214 }), 0, YC);
+  const cw = Math.max(300, (fC.w - 74) / 2), par = (a, b, y) => X(htmlFluxoCartoes({ cartoes: [a, b], cw }), 0, y);
+  const fA = par(['ban', 'Sem dinheiro', 'no pedido', 'n'], ['archive', 'Mantém o caixa original', 'sem mexer no fechamento', 'n'], YA);
+  const fB = par(['banknote', 'Com dinheiro', 'no pedido', 'a'], ['wallet', 'Vai pra um caixa aberto', 'o pedido antigo fica estornado', 'n'], YB);
+  const LW = Math.max(fA.w, fB.w, fC.w), YCH = YC - fC.h / 2 - 14;
+  const chD = X(htmlChip(`${ic('banknote', 18)}em dinheiro, no caixa daquele dia`, 'am'), -LW / 2, YCH, { anc: [0, 1], z: 40 });
+  const chF = X(htmlChip('no fim do tutorial', 'n'), LW / 2, YCH, { anc: [1, 1], z: 40 });
+  const chV = X(htmlChip(`${ic('receipt', 18)}vale igual pra venda`), 0, YC + fC.h / 2 + 16, { anc: [.5, 0], z: 40 });
+  fundo(0, -40);
+  const tit = titulo('Correções', 'Pedido de caixa fechado', 'escuro');
+  const TOPO = YA - fA.h / 2, S1 = enquadraRet(EIXO, ret(-LW / 2, TOPO, LW / 2, YB + fB.h / 2), { az: -.03, max: 1.4 / EE }), S2 = enquadraRet(EIXO, ret(-LW / 2, TOPO, LW / 2, YC + fC.h / 2 + 54), { az: .0, max: 1.4 / EE });
+  camera([[t0 - 3, S1], [tpr - .7, { ...S1, az: -.018, d: S1.d * .988 }, 'lin'], [tpr + .45, S2], [tfim + 2.5, { ...S2, az: .03, d: S2.d * .98 }, 'lin']]);
+  return t => {
+    clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, t0 - .45);
+    fluxoCartoes(fA.e, t, t0 - .2, NUNCA, { tempos: [t0 - .1, t0 + .25] }); fluxoCartoes(fB.e, t, tse - .5, NUNCA, { tempos: [tse - .3, tse + .1] });
+    pulso(parte(fB.e, 0), t, tdi, .045, .8);
+    vis(chD.e, t, tpr - .1, NUNCA, { dy: 10, sc: .8 });
+    fluxoCartoes(fC.e, t, tre - .4, NUNCA, { tempos: [tre - .15, tco - .15, tfe - .15] }); pulso(parte(fC.e, 2), t, tno, .04, .8);
+    vis(chF.e, t, tfi - .1, NUNCA, { dy: 10, sc: .8 }); vis(chV.e, t, tva - .1, NUNCA, { dy: -10, sc: .8 }); pulso(chV.e, t, tvd, .05, .8);
+  };
+}
+
+// =====================================================================================================================
+// CENA "naoSoma" · cap04, linhas 11 a 13 · clima escuro (o que o sistema faz ao salvar uma edição)
+// 11 "Agora, o que o sistema faz ao salvar. Ele não soma por cima. Primeiro desfaz o pedido antigo inteiro: tira os vinte e
+//     quatro quilos do estoque e devolve o dinheiro pro caixa."
+// 12 "Depois grava o pedido certo como se fosse a primeira vez: quarenta e dois quilos no estoque, e duzentos e sessenta e
+//     quarenta saindo do caixa."
+// 13 "No fim, o estoque ganha só os dezoito quilos que faltavam, e do caixa sai só a diferença que a Aparecida recebe. Nada
+//     duplica."
+// Os dois pedidos lado a lado (o antigo e o certo); a câmera abre para as linhas Estoque e Caixa e cada casa entra no número
+// que a fala diz; abre de novo para a coluna do fim: só os 18 kg e só a diferença.
+function naoSoma() {
+  const t0 = W(11, 'agora'), tsi = W(11, 'sistema'), tsa = W(11, 'salvar'), tna = W(11, 'nao'), tpr = W(11, 'primeiro'), tdf = W(11, 'desfaz'), tan = W(11, 'antigo'), tti = W(11, 'tira'), tvi = W(11, 'vinte'),
+    tdv = W(11, 'devolve'), tdh = W(11, 'dinheiro'),
+    tdp = W(12, 'depois'), tgr = W(12, 'grava'), tce = W(12, 'certo'), tqu = W(12, 'quarenta'), tdu = W(12, 'duzentos'), tsd = W(12, 'saindo'),
+    tnf = W(13, 'no'), tes = W(13, 'estoque'), tdz = W(13, 'dezoito'), tcx = W(13, 'caixa'), tdif = W(13, 'diferenca'), tap = W(13, 'aparecida'), tnd = W(13, 'nada'), tdup = W(13, 'duplica'), tfim = W(13, 'duplica', 1, 'e');
+  cores();
+  const { EIXO, X, ret, fundo } = escuro(), WL = 176, WC = 258, HC = 94, XLb = -478, X1 = -232, X2 = 54, XO = 225, X3 = 396, YH = -112, YE = 0, YK = 110;
+  const casa = (sub, num, x, y, res) => X(`<div class="cartao t09c ${res ? 'res' : ''}" style="position:relative;width:${WC}px;height:${HC}px;padding:13px 20px"><div class="sub">${sub}</div><div class="num">${num}</div>${res ? '<div class="onda"></div>' : ''}</div>`, x, y);
+  const hA = X(degrau('undo-2', 'Pedido antigo', '24 kg · R$ 148,80', { w: WC, cls: 'a' }), X1, YH), hB = X(degrau('save', 'Pedido certo', '42 kg · R$ 260,40', { w: WC, cls: '' }), X2, YH);
+  const hF = X(degrau('equal', 'No fim', 'nada duplica', { w: WC, cls: '', cc: 'res', res: true }), X3, YH), sF = hF.e.querySelector('.sub');
+  const YS = YH - 42 - 14, chNS = X(htmlChip(`${ic('layers', 18)}não soma por cima`, 'am'), (X1 + X2) / 2, YS - 38 - 12, { anc: [.5, 1], z: 40 });
+  const ch1 = X(htmlChip('<b>1</b>&nbsp;desfaz o antigo inteiro', 'n'), X1, YS, { anc: [.5, 1], z: 40 }), ch2 = X(htmlChip('<b>2</b>&nbsp;grava como a primeira vez', 'n'), X2, YS, { anc: [.5, 1], z: 40 });
+  const lE = X(degrau('package', 'Estoque', '', { w: WL, h: HC }), XLb, YE), lK = X(degrau('wallet', 'Caixa', '', { w: WL, h: HC }), XLb, YK);
+  const e1 = casa('tira do estoque', '−24 kg', X1, YE), k1 = casa('devolve pro caixa', '+R$ 148,80', X1, YK);
+  const e2 = casa('entra no estoque', '+42 kg', X2, YE), k2 = casa('sai do caixa', '−R$ 260,40', X2, YK);
+  const e3 = casa('só os que faltavam', '+18 kg', X3, YE, true), k3 = casa('só a diferença', '−R$ 111,60', X3, YK, true);
+  const oE = X(htmlOp('='), XO, YE, { z: 40 }), oK = X(htmlOp('='), XO, YK, { z: 40 });
+  const chAp = X(htmlChip(`${ic('user-round', 18)}que a Aparecida recebe`, 'n'), X3, YK + HC / 2 + 16, { anc: [.5, 0], z: 40 });
+  fundo(-40, 0, { aneis: false });
+  const tit = titulo('Correções', 'Não soma por cima', 'escuro');
+  const TOPO = YS - 38 - 12 - 38, D1 = X2 + WC / 2, BASE = YK + HC / 2, o = { max: 1.42 / EE };
+  const S1 = enquadraRet(EIXO, ret(X1 - WC / 2, TOPO, D1, YH + 42), { az: -.03, ...o }), S2 = enquadraRet(EIXO, ret(XLb - WL / 2, TOPO, D1, BASE), { az: -.012, ...o }),
+    S3 = enquadraRet(EIXO, ret(XLb - WL / 2, TOPO, X3 + WC / 2, BASE + 54), { az: .012, ...o });
+  camera([[t0 - 3, S1], [tpr - .55, { ...S1, az: -.018, d: S1.d * .985 }, 'lin'], [tpr + .6, S2], [tnf - .5, { ...S2, az: .0, d: S2.d * .985 }, 'lin'], [tnf + .75, S3], [tfim + 2.5, { ...S3, az: .04, d: S3.d * .978 }, 'lin']]);
+  return t => {
+    clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, t0 - .45);
+    vis(hA.e, t, tsi - .15, NUNCA, { dy: 20 }); vis(hB.e, t, tsa - .15, NUNCA, { dy: 20 }); vis(chNS.e, t, tna - .1, NUNCA, { dy: 10, sc: .8 });
+    // 1: desfaz o antigo inteiro
+    vis(ch1.e, t, tdf - .1, NUNCA, { dy: 10, sc: .8 }); pulso(hA.e, t, tan, .035, .8);
+    vis(lE.e, t, tti - .15, NUNCA, { dy: 18 }); vis(e1.e, t, tvi - .15, NUNCA, { dy: 18 });
+    vis(lK.e, t, tdv - .15, NUNCA, { dy: 18 }); vis(k1.e, t, tdh - .15, NUNCA, { dy: 18 });
+    // 2: grava o certo como se fosse a primeira vez
+    vis(ch2.e, t, tgr - .1, NUNCA, { dy: 10, sc: .8 }); pulso(hB.e, t, tce, .035, .8);
+    vis(e2.e, t, tqu - .15, NUNCA, { dy: 18 }); vis(k2.e, t, tdu - .15, NUNCA, { dy: 18 }); pulso(k2.e, t, tsd, .03, .8);
+    // no fim: só os 18 kg e só a diferença
+    vis(hF.e, t, tnf - .1, NUNCA, { dy: 20 }); sF.style.opacity = eo(pr(t, tnd - .1, .3)).toFixed(3);
+    vis(oE.e, t, tes - .1, NUNCA, { sc: .6, dy: 0 }); vis(e3.e, t, tdz - .15, NUNCA, { dy: 18, sc: .94 }); ondaEm(e3.e.querySelector('.onda'), t, tdz + .35);
+    vis(oK.e, t, tcx - .1, NUNCA, { sc: .6, dy: 0 }); vis(k3.e, t, tdif - .15, NUNCA, { dy: 18, sc: .94 }); ondaEm(k3.e.querySelector('.onda'), t, tdif + .35);
+    vis(chAp.e, t, tap - .1, NUNCA, { dy: -10, sc: .8 });
+    pulso(hF.e, t, tdup, .04, .9); ondaEm(hF.e.querySelector('.onda'), t, tdup);
+  };
+}
+
+// =====================================================================================================================
+// CENA "popups" · cap06, linhas 1 e 2 · clima escuro (liberar a aba nova no navegador: a tela do app não mostra isso)
+// 1 "Todo PDF do sistema abre numa aba nova, e alguns navegadores bloqueiam isso na primeira vez."
+// 2 "Uma dica: pra liberar, clique no cadeado ao lado do endereço do site, procure Pop-ups e marque Permitir. É uma vez só."
+// Em cima, o PDF que abre numa aba nova (e o bloqueio); a câmera abre para o endereço do site e os três passos.
+function popups() {
+  const t0 = W(1, 'todo'), tpd = W(1, 'pdf'), tab = W(1, 'abre'), tno = W(1, 'nova'), tnv = W(1, 'navegadores'), tbl = W(1, 'bloqueiam'),
+    tdi = W(2, 'uma'), tli = W(2, 'liberar'), tca = W(2, 'cadeado'), ten = W(2, 'endereco'), tpo = W(2, 'pop-ups'), tpe = W(2, 'permitir'), tvz = W(2, 'vez'), tfim = W(2, 'so', 1, 'e');
+  cores();
+  const { EIXO, X, ret, fundo } = escuro(), Y1 = -190, YB = -34, YF = 82;
+  const fP = X(htmlFluxoCartoes({ cartoes: [['file-text', 'PDF do sistema', 'comprovante, relatório', 'n'], ['square-arrow-out-up-right', 'Aba nova', 'abre nela', 'n']], cw: 250, vao: 110 }), 0, Y1);
+  const chB = X(htmlChip(`${ic('ban', 18)}bloqueado na primeira vez`, 'am'), fP.w / 2, Y1 - fP.h / 2 - 14, { anc: [1, 1], z: 40 });
+  const fL = X(htmlFluxoCartoes({ cartoes: [['lock', 'Cadeado', 'ao lado do endereço', 'n'], ['app-window', 'Pop-ups', 'procure', 'n'], ['check', 'Permitir', 'marque', 'res']], cw: 216 }), 0, YF);
+  const bar = X(`<div class="cartao" style="position:relative;width:${fL.w}px;height:62px;padding:0 14px;border-radius:999px;display:flex;align-items:center;gap:12px;white-space:nowrap">${selo('lock', 'n', 38)}<div class="rot" style="font-size:18px;font-weight:700">ecosistematecnologia.com.br</div></div>`, 0, YB);
+  const sl = bar.e.querySelector('.selo');
+  const chV = X(htmlChip('é uma vez só'), fL.w / 2, YF + fL.h / 2 + 16, { anc: [1, 0], z: 40 });
+  fundo(0, -40);
+  const tit = titulo('Comprovantes', 'Liberar os pop-ups', 'escuro');
+  const TOPO = Y1 - fP.h / 2 - 14 - 38, LW = Math.max(fP.w, fL.w);
+  const S1 = enquadraRet(EIXO, ret(-fP.w / 2, TOPO, fP.w / 2, Y1 + fP.h / 2), { az: -.03, max: 1.4 / EE }), S2 = enquadraRet(EIXO, ret(-LW / 2, TOPO, LW / 2, YF + fL.h / 2 + 54), { az: .0, max: 1.4 / EE });
+  camera([[t0 - 3, S1], [tdi - .5, { ...S1, az: -.012, d: S1.d * .985 }, 'lin'], [tdi + .75, S2], [tfim + 2.5, { ...S2, az: .03, d: S2.d * .98 }, 'lin']]);
+  return t => {
+    clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, t0 - .45);
+    fluxoCartoes(fP.e, t, tpd - .4, NUNCA, { tempos: [tpd - .15, tab + .1] }); pulso(parte(fP.e, 1), t, tno, .035, .8);
+    vis(chB.e, t, tbl - .1, NUNCA, { dy: 10, sc: .8 });
+    vis(bar.e, t, tli - .15, NUNCA, { dy: 18 }); pulso(sl, t, tca, .16, .8);
+    fluxoCartoes(fL.e, t, tca - .35, NUNCA, { tempos: [tca - .1, tpo - .15, tpe - .15] }); pulso(parte(fL.e, 0), t, ten, .03, .8);
+    vis(chV.e, t, tvz - .1, NUNCA, { dy: -10, sc: .8 });
+  };
+}
+
+// =====================================================================================================================
+// o cap04 tem duas janelas (linha 6 e linhas 11 a 13): a cena é escolhida pelo trecho pedido ao render (d.de) ou, na falta dele, pelo tempo
+const CAPS = { 0: pedidoSumido, 1: duasTelas, 6: popups };
+cena(d => {
+  if (d.cap !== 4) return CAPS[d.cap](d);
+  return null;
+}, { fov: 26 });
+</script></body></html>
