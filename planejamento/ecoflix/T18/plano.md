@@ -4,30 +4,33 @@
 - **Antes:** T17 Transporte, serviço e o contador. **Próximo:** T19 Funcionários e ponto eletrônico ("a equipe do pátio dentro
   do sistema").
 - **Áreas das vinhetas:** AMBIENTAL · CONFIGURAÇÃO · MTR · CDF · NOTA FISCAL · RESUMO.
-- **Alvo da fonte:** ~12 min. **Estimativa:** ~10,5 min de vídeo (1.403 palavras, ~9,0 min de fala, + 10 vinhetas e as esperas).
+- **Alvo da fonte:** ~12 min. **Estimativa (1.60.22):** 14 capítulos, 2.311 palavras (antes 1.403), ~14,7 min de fala; com 13 vinhetas e as esperas, ~17 min de vídeo.
 - Tudo simulado: nenhum acesso real ao SIGOR (órgão ambiental de SP) nem à SEFAZ. A fala mostra os campos e diz que quem define a
   obrigação e a classificação é o órgão ambiental e a licença da empresa; não ensina norma. Regime do exemplo Lucro Real (não aparece).
-- Base: `T18/inventario.md` (código 1.59.154). Desktop, logado como **Rafael Nogueira** (MASTER).
-- **FAKE_NOW:** `2026-11-10T09:30:00-03:00` nos capítulos 0 a 5 (junção: depois das NF-e do T16 e do T17); **corte** para `2026-11-10T10:40:00-03:00` do 6 ao 10 (o MTR da
-  carga da tarde já foi emitido, fora do vídeo). Mesma terça do T17: a carga aqui usa o **GHT7B19 com o Jair Lopes**, porque o
+- Base: `T18/inventario.md` (código 1.60.22). Desktop, logado como **Rafael Nogueira** (MASTER).
+- **FAKE_NOW:** `2026-11-10T09:30:00-03:00` nos capítulos 0 a 6 (junção: depois das NF-e do T16 e do T17); **corte** para `2026-11-10T10:40:00-03:00` do 7 ao 13 (o MTR da
+  carga da tarde, 2611000325, sai no cap06 pelo modelo). Mesma terça do T17: a carga aqui usa o **GHT7B19 com o Jair Lopes**, porque o
   FKD2E41 e o Edson estão na viagem a Itamonte do T17.
 - **Os dois papéis da Recicla Vale** (é o que a ilustração do cap01 explica): no MTR ela é a **geradora** (manda chaparia para a
   Aços Quiririm reciclar); no CDF ela é a **destinadora** (recebeu as sucatas da Auto Peças Vale Forte em outubro e certifica o destino).
 
-## Capítulos (os da fonte, na ordem)
+## Capítulos (1.60.22; 14, numeração nova)
 | # | Vinheta (área / título) | O que se mostra | Ilustração | Estado de partida |
 |---|---|---|---|---|
-| 0 | (sem vinheta) | Abertura; menu "Fiscal & Ambiental" › "Ambiental (MTR/CDF)"; 🔒; "Antes" | o dia: a chaparia sai, a Auto Peças espera o certificado | `inicio` |
-| 1 | AMBIENTAL / O que é MTR e CDF | abas "MTR" e "CDF"; ⚠️ a ordem no tempo | a cadeia do resíduo (gerador, transportador, destinador) com a Recicla Vale nos dois papéis; a linha do tempo MTR → baixa → CDF | `inicio` |
-| 2 | AMBIENTAL / Licença e fiscalização | "Novo MTR" ainda bloqueado; ⚠️ "eu sou obrigado?" | a licença, o órgão e a fiscalização pedindo MTR e CDF | `inicio` |
-| 3 | CONFIGURAÇÃO / Acesso e resíduos | ⚠️ UF + acesso antes de emitir; "Configurações": acesso ao SIGOR (⚠️ credencial do próprio usuário), sincronizar, "Novo resíduo" "Sucata de ferro" (unidade "TON - Tonelada"); Materiais: "Definir resíduo do MTR" nos três ferros | (não) | `inicio` |
-| 4 | MTR / Emitir o MTR da carga | "Novo MTR": transportador e destinador cadastrados na hora, Jair + GHT7B19, "Puxar da nota fiscal" (3,6 TON), responsável; "MTR emitido" nº 2611000318; ⚠️ cota | (não) | `apos-cap03` |
-| 5 | MTR / Acompanhar e baixar o PDF | a linha "Emitido"; "Ver tentativas"; "Baixar PDF"; "Usar como modelo" | o PDF do MTR vai com o motorista | `apos-cap04` |
-| 6 | MTR / Cancelar um MTR | corte 10:40: o MTR da tarde (nº 2611000325) "Cancelar MTR" → "Cancelado"; ⚠️ cancelado conta na cota | (não) | `apos-cap05` (10:40) |
-| 7 | CDF / O certificado do destino | "Novo CDF" de outubro para a Auto Peças Vale Forte com três MTR; "CDF emitido"; a lista por status | três cargas de outubro chegando, baixa no SIGOR, um CDF do mês | `apos-cap06` |
-| 8 | CDF / Baixar e guardar | "Ações" › "Baixar PDF"; ⚠️ documento de fiscalização | o PDF na pasta da licença, com os MTR do período | `apos-cap07` |
-| 9 | NOTA FISCAL / A nota da mesma carga | a NF-e da chaparia em Notas Fiscais › "Saída"; 🚫 documentos independentes; o que o MTR aproveita | três faixas: NF-e, MTR, CDF da mesma carga | `apos-cap07` |
-| 10 | RESUMO / Recapitulando | montagem; "Próximo: Funcionários e ponto eletrônico" | (não) | — |
+| 0 | (sem vinheta) | Abertura; menu "Fiscal & Ambiental" › "Ambiental (MTR/CDF)"; módulo e "Antes" | o dia: a chaparia sai, a Auto Peças espera o certificado | `inicio` |
+| 1 | AMBIENTAL / O que é MTR e CDF | abas "MTR" e "CDF" (mouse); a ordem no tempo | a cadeia do resíduo e a linha do tempo | `inicio` |
+| 2 | AMBIENTAL / Licença e fiscalização | Manifestos vazio; "eu sou obrigado?" | licença, órgão e fiscalização | `inicio` |
+| 3 | CONFIGURAÇÃO / Acesso e resíduos | "Novo MTR" desligado (dica); Configurações: Sistema, CPF, senha, unidade, ambiente (Produção/Homologação), "Salvar acesso", "Testar acesso salvo", senha e "Esqueci minha senha", "Sincronizar dados do SIGOR", "Novo resíduo" "Sucata de ferro" (Densidade), editar/excluir, permissão (cartão), Materiais: "Definir resíduo do MTR" com a lista "Nenhum" e "Sucata de ferro" | a dica de outro estado e a permissão (cartões) | `inicio` |
+| 4 | MTR / Emitir o MTR da carga | "Novo MTR" em tela cheia: Resumo do MTR, transportador (cadastrar), destinador (CNPJ + lupa), Jair + GHT7B19, "Gerenciar motoristas", data (hoje), "Puxar da nota fiscal" (uma e duas notas; "item ficou de fora"), "Desfazer", responsável, "Emitir MTR" nº 2611000318, cota | (não) | `apos-cap03` |
+| 5 | MTR / Acompanhar e baixar o PDF | a linha "Emitido"; "Ver tentativas"; "Baixar PDF" (capturado); ícone "Usar como modelo" | o PDF do MTR com o motorista | `apos-cap04` |
+| 6 | MTR / O próximo manifesto mais rápido (novo) | "Usar como modelo": quantidade 3,2, "Adicionar resíduo", "Usar resíduo salvo", "Resíduo perigoso (opcional)", observação; emite o 2611000325 | (não) | `apos-cap04` |
+| 7 | MTR / Cancelar um MTR | corte 10:40: "Cancelar MTR" do 2611000325 → "Cancelado"; cancelado conta na cota | (não) | `apos-cap06` (10:40) |
+| 8 | MTR / Quando o envio não passa (novo) | lista com cinco status; Erro: "Ver tentativas", "Corrigir e tentar novamente", "Tentar novamente"; "Confirmar no órgão" (só "Ver tentativas") | (não) | `apos-cap07` |
+| 9 | CDF / O certificado do destino | "Novo CDF" de outubro (cinco etapas clicáveis), MTRs opcionais, "Emitir CDF" nº 2611000041; a lista | as cargas de outubro e o CDF do mês | `apos-cap07` |
+| 10 | CDF / Baixar e guardar | "Ações" › "Baixar PDF" (capturado); documento de fiscalização | o PDF na pasta da licença | `apos-cap09` |
+| 11 | CDF / Quando o certificado não sai (novo) | "Ver erro", "Tentar novamente" ("CDF reenviado"), "Excluir rascunho", "Gerar PDF" | (não) | `apos-cap10` |
+| 12 | NOTA FISCAL / A nota da mesma carga | a NF-e 1257 em Notas Fiscais › "Saída"; documentos independentes; a linha do 2611000318 | três faixas: NF-e, MTR, CDF | `apos-cap10` |
+| 13 | RESUMO / Recapitulando | montagem; "Próximo: Funcionários e ponto eletrônico" | (não) | `apos-cap10` |
 
 Transições faladas: 0→1 "Primeiro, o que é cada um"; 1→2 "Por que isso importa"; 2→3 "Antes do primeiro MTR"; 3→4 "Hora de emitir";
 4→5 "Com o MTR emitido"; 5→6 "Mais tarde"; 6→7 "Agora, o outro lado"; 7→8 "Com o certificado emitido"; 8→9 "E como tudo isso conversa
@@ -59,7 +62,7 @@ Além do `MUNDO_FICTICIO.md` (a consolidar lá):
 - **Resíduo salvo criado na tela:** "Sucata de ferro" (metais ferrosos, sólido, granel, reciclagem, "TON - Tonelada"); ligado em
   Materiais a **Ferro pesado, Ferro misto e Chaparia**.
 - **NF-e da carga:** saída autorizada hoje (10/11, 09h20, com chave) para a **Aços Quiririm Ltda**: chaparia **3.600 kg** × R$ 0,98 =
-  **R$ 3.528,00** (item em kg). Número **1254** (o seguinte aos do T17). Emitida sem pedido (o pedido fecha na entrega); o
+  **R$ 3.528,00** (item em kg). Número **1257** (o seguinte às notas do mundo do T17; antes 1254). Emitida sem pedido (o pedido fecha na entrega); o
   pátio tem 3.750 kg de chaparia em 10/11 08:30 (junção, `MUNDO_LINHA_DO_TEMPO.md`).
 - **Parceiros criados na tela (cap04):** transportador **Recicla Vale Metais Ltda** (CNPJ da semente, unidade 203918) e destinador
   **Aços Quiririm Ltda** (CNPJ da semente, unidade **187402**).
@@ -88,3 +91,11 @@ Além do `MUNDO_FICTICIO.md` (a consolidar lá):
 - **Ilustrações (7):** cap00 o dia; cap01 a cadeia do resíduo e a linha do tempo; cap02 licença e fiscalização; cap05 o PDF com o
   motorista; cap07 as cargas de outubro e o CDF do mês; cap08 a pasta da licença; cap09 os três documentos da mesma carga. Estilo da
   marca (`docs/09-aula-ilustrada.md`), rótulos reais do app, sem tela inventada, sem brasão nem logo de órgão.
+
+## Atualização 1.60.22 (21/11)
+- **Sementes** (`t18_sementes.py`): `inicio` (NF-e até 1256 do T17 mais a 1257 da chaparia, R$ 3.528,00), `apos-cap03`, `04`, `06`, `07`, `09`, `10` (cumulativas).
+- **MTR 2611000318** (cap04, `pdf_url t18/mtr-2611000318.pdf`); **2611000325** (cap06, modelo, 3,2 TON, emitido às 10h40 de relógio do vídeo; cancelado no cap07). Do cap08: três MTRs de 04/11 (Erro, "Confirmar no órgão", Rascunho) para os casos de falha.
+- **CDF 2611000041** (cap09; Ações › Baixar PDF no cap10). Do cap11: um CDF com erro ("Um ou mais MTRs ainda não foram recebidos no SIGOR..."), um rascunho e o 2611000037 emitido sem PDF (Gerar PDF).
+- **PDFs simulados** em `rec/mundo/storage/nfe-danfes/t18/` (`t18_pdfs.py`): sem brasão, com rodapé "Documento simulado"; o robô devolve cada um para a ilustração (`"tipo": "comprovante"`).
+- **Handlers próprios:** `sigor-mtr-emit.mjs` (números 318, 325, 333, 341) e `sigor-cdf-emit.mjs` (reenvio do erro, Gerar PDF, números 041, 057, 065).
+- **Fora da fala (sem tela):** a recusa do órgão com o banner "Revise o campo indicado" e o "procure o suporte" do Confirmar no órgão; a dica de outro estado e a de permissão são cartões, não telas do app.

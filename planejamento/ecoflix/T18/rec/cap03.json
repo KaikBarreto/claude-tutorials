@@ -1,6 +1,6 @@
 {
  "name": "t18-cap03",
- "title": "T18 · Cap. 3 · Acesso e resíduos (narração 114,0 s ESTIMADA; marcas L1..L12 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T09:30:00-03:00)",
+ "title": "T18 · Cap. 3 · Acesso e resíduos (narração 208,6 s ESTIMADA; marcas L1..L17 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T09:30:00-03:00)",
  "seed": "t18-cap03",
  "pace": 0.5,
  "cps": 9,
@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
   "pwa-install-dismissed": "true",
   "theme": "light",
@@ -178,11 +178,16 @@
    "at": 32.53
   },
   {
+   "do": "mark",
+   "name": "L5",
+   "at": 50.03
+  },
+  {
    "do": "click",
    "target": {
     "selector": "#mtr-cpf"
    },
-   "at": 35.54,
+   "at": 53.05,
    "label": "CPF da pessoa usuária do SIGOR (zoom) (campo)"
   },
   {
@@ -200,7 +205,7 @@
    "target": {
     "selector": "#mtr-senha"
    },
-   "at": 38.96,
+   "at": 56.47,
    "label": "Senha do SIGOR (pontinhos) (campo)"
   },
   {
@@ -218,7 +223,7 @@
    "target": {
     "selector": "#mtr-cod-unidade"
    },
-   "at": 43.34,
+   "at": 60.84,
    "label": "Código da unidade geradora: 203918 (campo)"
   },
   {
@@ -233,19 +238,27 @@
   },
   {
    "do": "mark",
-   "name": "L5",
-   "at": 43.88
+   "name": "L6",
+   "at": 61.39
   },
   {
-   "do": "hover",
+   "do": "click",
    "target": {
     "selector": "#mtr-ambiente"
    },
-   "seconds": 0.5,
-   "at": 45.99,
-   "label": "Ambiente: Produção",
-   "optional": true,
-   "timeout": 4
+   "at": 68.35,
+   "label": "Ambiente (abre: Produção e Homologação)"
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 68.8
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 72.89,
+   "label": "fecha a lista do Ambiente (fica Produção)"
   },
   {
    "do": "click",
@@ -254,13 +267,30 @@
     "name": "Salvar acesso",
     "exact": true
    },
-   "at": 50.79,
+   "at": 73.59,
    "label": "Salvar acesso"
   },
   {
+   "do": "waitFor",
+   "text": "Acesso salvo, teste pendente",
+   "timeout": 15
+  },
+  {
    "do": "mark",
-   "name": "L6",
-   "at": 51.29
+   "name": "L8",
+   "at": 74.09
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Acesso salvo, teste pendente",
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 75.81,
+   "label": "quadro: Acesso salvo, teste pendente",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "click",
@@ -269,7 +299,7 @@
     "name": "Testar acesso salvo",
     "exact": true
    },
-   "at": 52.08,
+   "at": 80.72,
    "label": "Testar acesso salvo"
   },
   {
@@ -278,9 +308,61 @@
    "timeout": 15
   },
   {
+   "do": "hover",
+   "target": {
+    "text": "Acesso validado",
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 83.71,
+   "label": "quadro: Acesso validado (resposta do órgão)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Último teste:",
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 87.35,
+   "label": "Último teste (data e hora)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
    "do": "mark",
-   "name": "L7",
-   "at": 56.2
+   "name": "L9",
+   "at": 89.16
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#mtr-senha"
+   },
+   "seconds": 1.0,
+   "at": 91.32,
+   "label": "Senha: •••••• (digite para alterar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Esqueci minha senha",
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "at": 97.39,
+   "label": "dica: Esqueci minha senha (portal)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L10",
+   "at": 104.39
   },
   {
    "do": "click",
@@ -289,7 +371,7 @@
     "name": "Sincronizar dados do SIGOR",
     "exact": true
    },
-   "at": 56.38,
+   "at": 104.57,
    "label": "Sincronizar dados do SIGOR"
   },
   {
@@ -299,8 +381,8 @@
   },
   {
    "do": "mark",
-   "name": "L8",
-   "at": 68.01
+   "name": "L11",
+   "at": 120.45
   },
   {
    "do": "click",
@@ -309,7 +391,7 @@
     "name": "Novo resíduo",
     "exact": true
    },
-   "at": 68.85,
+   "at": 121.3,
    "label": "Novo resíduo"
   },
   {
@@ -324,7 +406,7 @@
    "target": {
     "selector": "#mtr-preset-apelido"
    },
-   "at": 72.09,
+   "at": 124.54,
    "label": "Nome do resíduo: Sucata de ferro (campo)"
   },
   {
@@ -339,8 +421,8 @@
   },
   {
    "do": "mark",
-   "name": "L9",
-   "at": 77.62
+   "name": "L12",
+   "at": 130.07
   },
   {
    "do": "click",
@@ -348,7 +430,7 @@
     "selector": "main button[role=combobox]",
     "hasText": "Buscar código IBAMA"
    },
-   "at": 77.78,
+   "at": 130.23,
    "label": "Código IBAMA (abre)"
   },
   {
@@ -371,7 +453,7 @@
    "target": {
     "selector": "main div:has(> label:text-is('Classe *')) button[role=combobox]"
    },
-   "at": 78.46,
+   "at": 130.91,
    "label": "Classe: a da licença (II A) (abre)"
   },
   {
@@ -388,7 +470,7 @@
    "target": {
     "selector": "main div:has(> label:text-is('Estado físico *')) button[role=combobox]"
    },
-   "at": 79.22,
+   "at": 131.67,
    "label": "Estado físico: Sólido (abre)"
   },
   {
@@ -405,7 +487,7 @@
    "target": {
     "selector": "main div:has(> label:text-is('Acondicionamento *')) button[role=combobox]"
    },
-   "at": 80.51,
+   "at": 132.95,
    "label": "Acondicionamento: Granel (abre)"
   },
   {
@@ -427,7 +509,7 @@
    "target": {
     "selector": "main div:has(> label:text-is('Tratamento *')) button[role=combobox]"
    },
-   "at": 81.95,
+   "at": 134.4,
    "label": "Tratamento: Reciclação (abre)"
   },
   {
@@ -446,21 +528,21 @@
   },
   {
    "do": "mark",
-   "name": "L10",
-   "at": 90.04
+   "name": "L13",
+   "at": 142.99
   },
   {
    "do": "click",
    "target": {
     "selector": "main div:has(> label:text-is('Unidade *')) button[role=combobox]"
    },
-   "at": 93.24,
+   "at": 146.19,
    "label": "Unidade: TON - Tonelada (abre)"
   },
   {
    "do": "press",
    "key": "Enter",
-   "at": 97.43,
+   "at": 150.37,
    "label": "Unidade: TON - Tonelada"
   },
   {
@@ -475,13 +557,25 @@
    "label": "Unidade com TON - Tonelada (zoom)"
   },
   {
+   "do": "hover",
+   "target": {
+    "text": "Obrigatório quando a unidade é Litro ou m³.",
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "at": 155.62,
+   "label": "Densidade: obrigatória em litro ou m³",
+   "optional": true,
+   "timeout": 4
+  },
+  {
    "do": "click",
    "target": {
     "role": "button",
     "name": "Salvar resíduo",
     "exact": true
    },
-   "at": 97.63,
+   "at": 158.63,
    "label": "Salvar resíduo"
   },
   {
@@ -491,13 +585,83 @@
   },
   {
    "do": "mark",
-   "name": "L11",
-   "at": 98.13
+   "name": "L14",
+   "at": 159.13
   },
   {
    "do": "mark",
-   "name": "L12",
-   "at": 102.81
+   "name": "L15",
+   "at": 163.8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button[title='Editar']"
+   },
+   "seconds": 0.5,
+   "at": 165.53,
+   "label": "ícone Editar do resíduo salvo",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[title='Excluir']"
+   },
+   "at": 167.71,
+   "label": "Excluir (abre a confirmação)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Isso não afeta os MTRs já emitidos",
+   "timeout": 10
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "Isso não afeta os MTRs já emitidos",
+    "within": "[role=alertdialog]"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 169.02,
+   "label": "Excluir não afeta os MTRs emitidos (zoom)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Voltar",
+    "exact": true,
+    "within": "[role=alertdialog]"
+   },
+   "at": 171.73,
+   "label": "Voltar (não exclui)"
+  },
+  {
+   "do": "mark",
+   "name": "L16",
+   "at": 172.13
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 900,
+    "y": 470
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 172.63,
+   "label": "cursor em repouso (cartão da permissão)"
+  },
+  {
+   "do": "mark",
+   "name": "L17",
+   "at": 188.35
   },
   {
    "do": "click",
@@ -506,7 +670,7 @@
     "name": "Materiais",
     "within": "aside, [data-sidebar=sidebar]"
    },
-   "at": 103.4,
+   "at": 188.94,
    "label": "menu Materiais",
    "unless": {
     "role": "link",
@@ -523,7 +687,7 @@
     "exact": true,
     "within": "aside, [data-sidebar=sidebar]"
    },
-   "at": 104.61,
+   "at": 190.15,
    "label": "Materiais › Estoque"
   },
   {
@@ -580,11 +744,16 @@
    "target": {
     "selector": "#bulk-material-mtr-residuo"
    },
-   "label": "Resíduo do MTR (abre)"
+   "at": 196.07,
+   "label": "Resíduo do MTR (abre: Nenhum e os salvos)"
   },
   {
-   "do": "press",
-   "key": "Enter",
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Sucata de ferro"
+   },
+   "at": 199.71,
    "label": "Sucata de ferro"
   },
   {
@@ -609,7 +778,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 114.01
+   "at": 208.62
   }
  ]
 }

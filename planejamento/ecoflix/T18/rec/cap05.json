@@ -1,6 +1,6 @@
 {
  "name": "t18-cap05",
- "title": "T18 · Cap. 5 · Acompanhar e baixar o PDF (narração 35,5 s ESTIMADA; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T09:30:00-03:00)",
+ "title": "T18 · Cap. 5 · Acompanhar e baixar o PDF (narração 37,5 s ESTIMADA; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T09:30:00-03:00)",
  "seed": "t18-cap05",
  "pace": 0.5,
  "cps": 9,
@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
   "pwa-install-dismissed": "true",
   "theme": "light",
@@ -116,7 +116,7 @@
   {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text('2611000318') td:has-text('Aços Quiririm')"
+    "selector": "main tbody tr:has-text('2611000318') td >> nth=1"
    },
    "seconds": 0.3,
    "at": 4.05,
@@ -182,7 +182,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.8,
-   "at": 13.35,
+   "at": 15.1,
    "label": "tentativa Autorizada",
    "optional": true,
    "timeout": 4
@@ -192,7 +192,7 @@
    "target": {
     "selector": "[role=dialog] button:text-is('Fechar') >> nth=-1"
    },
-   "at": 15.88,
+   "at": 16.16,
    "label": "Fechar"
   },
   {
@@ -200,13 +200,19 @@
    "target": {
     "selector": "main tbody tr:has-text('2611000318') button[title='Baixar PDF']"
    },
-   "at": 19.53,
+   "at": 16.26,
    "label": "Baixar PDF (abre aba nova)"
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 20.03
+   "at": 16.76
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const o=(performance.getEntriesByType('resource').map(e=>e.name).find(n=>n.includes('/rest/v1/'))||'').split('/rest/v1/')[0];if(!o)return 'SEM ORIGEM';const r=await fetch(o+'/storage/v1/object/public/nfe-danfes/t18/mtr-2611000318.pdf');if(!r.ok)return 'ERRO '+r.status;const u=new Uint8Array(await r.arrayBuffer());let s='';for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'PDF:'+btoa(s)})()",
+   "at": 20.38,
+   "label": "PDF do MTR 2611000318 (aba nova, para a ilustração)"
   },
   {
    "do": "scroll",
@@ -217,13 +223,24 @@
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 24.3,
+   "at": 22.33,
    "label": "cursor em repouso (ilustração do PDF com o motorista)"
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 26.98
+   "at": 25.0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('2611000318') button[title='Baixar PDF']"
+   },
+   "seconds": 0.5,
+   "at": 29.69,
+   "label": "Baixar PDF da linha",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "hover",
@@ -231,7 +248,7 @@
     "selector": "main tbody tr:has-text('2611000318') button[title='Usar como modelo']"
    },
    "seconds": 1.2,
-   "at": 29.06,
+   "at": 33.99,
    "label": "ícone Usar como modelo (zoom, sem clicar)",
    "optional": true,
    "timeout": 4
@@ -244,7 +261,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 35.52
+   "at": 37.5
   }
  ]
 }

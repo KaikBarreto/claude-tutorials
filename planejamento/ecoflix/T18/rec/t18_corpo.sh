@@ -55,10 +55,12 @@ PY
     fi
     OUT="rec/t18/_ens/.cap$NN.out"
     timeout $TMO node rec/record.mjs rec/t18/_ens/cap$NN.json --rapido --preset ultrafast --crf 30 > "$OUT" 2>&1; RC=$?
+    mkdir -p /dev/shm/t18rec; mv -f rec/t18/_ens/t18-cap$NN.mp4 rec/t18/_ens/t18-cap$NN.contact.jpg /dev/shm/t18rec/ 2>/dev/null
     echo "fim cap$NN r $(date +%H:%M:%S) exit $RC"; grep -c "SEM ALVO" "$OUT" | sed 's/^/SEM ALVO: /'; tail -3 "$OUT" ;;
   c)
     OUT="rec/t18/.cap$NN.out"
-    timeout $TMO node rec/record.mjs rec/t18/cap$NN.json > "$OUT" 2>&1; RC=$?
+    timeout $TMO node rec/record.mjs rec/t18/cap$NN.json --preset ultrafast --crf 30 > "$OUT" 2>&1; RC=$?
+    mkdir -p /dev/shm/t18rec; mv -f rec/t18/t18-cap$NN.mp4 rec/t18/t18-cap$NN.contact.jpg /dev/shm/t18rec/ 2>/dev/null
     echo "fim cap$NN c $(date +%H:%M:%S) exit $RC"; grep -c "SEM ALVO" "$OUT" | sed 's/^/SEM ALVO: /'; tail -3 "$OUT" ;;
 esac
 exit $RC

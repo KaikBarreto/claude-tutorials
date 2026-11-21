@@ -1,6 +1,6 @@
 {
  "name": "t18-cap09",
- "title": "T18 · Cap. 9 · A nota da mesma carga (narração 51,8 s ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T10:40:00-03:00)",
+ "title": "T18 · Cap. 9 · O certificado do destino (narração 113,6 s ESTIMADA; marcas L1..L11 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T10:40:00-03:00)",
  "seed": "t18-cap09",
  "pace": 0.5,
  "cps": 9,
@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
   "pwa-install-dismissed": "true",
   "theme": "light",
@@ -70,7 +70,12 @@
   },
   {
    "do": "goto",
-   "url": "/fiscal-ambiental/nfe/saida"
+   "url": "/fiscal-ambiental/ambiental/cdf"
+  },
+  {
+   "do": "waitFor",
+   "text": "Certificados de Destinação Final",
+   "timeout": 30
   },
   {
    "do": "waitFor",
@@ -88,24 +93,6 @@
   {
    "do": "waitFor",
    "text": "Manifestos de Transporte de Resíduos",
-   "timeout": 30
-  },
-  {
-   "do": "waitFor",
-   "idle": true,
-   "timeout": 25
-  },
-  {
-   "do": "wait",
-   "seconds": 0.3
-  },
-  {
-   "do": "goto",
-   "url": "/fiscal-ambiental/ambiental/cdf"
-  },
-  {
-   "do": "waitFor",
-   "text": "Certificados de Destinação Final",
    "timeout": 30
   },
   {
@@ -136,56 +123,22 @@
    "do": "click",
    "target": {
     "role": "button",
-    "name": "Fiscal & Ambiental",
-    "within": "aside, [data-sidebar=sidebar]"
-   },
-   "at": 1.09,
-   "label": "abre Fiscal & Ambiental",
-   "unless": {
-    "role": "link",
-    "name": "Notas Fiscais (NF-e)",
-    "exact": true,
-    "within": "aside, [data-sidebar=sidebar]"
-   }
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "link",
-    "name": "Notas Fiscais (NF-e)",
-    "exact": true,
-    "within": "aside, [data-sidebar=sidebar]"
-   },
-   "at": 1.93,
-   "label": "Notas Fiscais (NF-e) no menu"
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Saída",
+    "name": "CDF",
     "exact": true,
     "within": "nav[aria-label='Navegação da seção']"
    },
-   "at": 3.17,
-   "label": "aba Saída"
+   "at": 1.95,
+   "label": "sub-aba CDF"
   },
   {
-   "do": "type",
-   "target": {
-    "selector": "main tbody tr:has-text('1254')"
-   },
-   "text": "",
-   "noClick": true,
-   "optional": true,
-   "timeout": 4,
-   "at": 6.61,
-   "label": "NF-e 1254 da Aços Quiririm (R$ 3.528,00, Autorizada)"
+   "do": "waitFor",
+   "text": "Nenhum CDF emitido ainda.",
+   "timeout": 15
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 9.97
+   "at": 6.32
   },
   {
    "do": "scroll",
@@ -196,48 +149,399 @@
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 9.97,
-   "label": "cursor em repouso (ilustração das três faixas)"
+   "at": 6.32,
+   "label": "cursor em repouso (ilustração das cargas de outubro)"
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 23.75
-  },
-  {
-   "do": "mark",
-   "name": "L4",
-   "at": 29.26
+   "at": 18.44
   },
   {
    "do": "click",
    "target": {
-    "role": "link",
-    "name": "Ambiental (MTR/CDF)",
-    "exact": true,
-    "within": "aside, [data-sidebar=sidebar]"
+    "role": "button",
+    "name": "Novo CDF",
+    "exact": true
    },
-   "at": 43.11,
-   "label": "Ambiental (MTR/CDF)"
+   "at": 23.05,
+   "label": "Novo CDF"
   },
   {
    "do": "waitFor",
-   "text": "Manifestos de Transporte de Resíduos",
-   "timeout": 20
+   "text": "PERÍODO",
+   "timeout": 10
   },
   {
    "do": "mark",
-   "name": "L5",
-   "at": 43.81
+   "name": "L4",
+   "at": 23.65
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text('2611000318')"
+    "selector": "nav[aria-label='Etapas do novo CDF']"
    },
-   "seconds": 1.2,
-   "at": 48.85,
-   "label": "linha do 2611000318 (ligada pela chave)",
+   "seconds": 1.4,
+   "at": 27.85,
+   "label": "as cinco etapas em cima (clicáveis)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has-text('dd/mm/aaaa') >> nth=0"
+   },
+   "at": 33.27,
+   "label": "Data inicial (abre o calendário)"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const b=[...document.querySelectorAll(\"button[name=previous-month]\")].find(b=>b.offsetParent!==null);if(!b)return 'SEM ALVO';b.click();return 'clicado'})()",
+   "label": "mês anterior (outubro)"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const b=[...document.querySelectorAll('button[name=day]')].find(b=>b.textContent.trim()===\"1\"&&!b.disabled&&!b.className.includes('day-outside')&&b.getAttribute('aria-hidden')!=='true');if(!b)return 'SEM ALVO';b.click();return 'dia '+\"1\"})()",
+   "label": "dia 01/10/2026"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has-text('dd/mm/aaaa') >> nth=0"
+   },
+   "at": 34.2,
+   "label": "Data final (abre o calendário)"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const b=[...document.querySelectorAll(\"button[name=previous-month]\")].find(b=>b.offsetParent!==null);if(!b)return 'SEM ALVO';b.click();return 'clicado'})()",
+   "label": "mês anterior (outubro)"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const b=[...document.querySelectorAll('button[name=day]')].find(b=>b.textContent.trim()===\"31\"&&!b.disabled&&!b.className.includes('day-outside')&&b.getAttribute('aria-hidden')!=='true');if(!b)return 'SEM ALVO';b.click();return 'dia '+\"31\"})()",
+   "label": "dia 31/10/2026"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 36.95
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Avançar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 36.95,
+   "label": "Avançar (Destinador)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:text-is('CNPJ do destinador *')) input"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 41.05,
+   "label": "CNPJ do destinador já preenchido (zoom)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Unidade SIGOR: 203918",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "at": 43.07,
+   "label": "Unidade SIGOR da Recicla Vale",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Nome completo"
+   },
+   "at": 47.71,
+   "label": "Nome do responsável: Rafael Nogueira (campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Nome completo"
+   },
+   "text": "Rafael Nogueira",
+   "cps": 40,
+   "label": "Nome do responsável: Rafael Nogueira",
+   "noClick": true
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 49.37
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Avançar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 49.37,
+   "label": "Avançar (Gerador)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:text-is('CNPJ do gerador')) input"
+   },
+   "at": 52.33,
+   "label": "CNPJ da Auto Peças Vale Forte (campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:text-is('CNPJ do gerador')) input"
+   },
+   "text": "96384120000109",
+   "cps": 40,
+   "label": "CNPJ da Auto Peças Vale Forte",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:text-is('Unidade no SIGOR')) input"
+   },
+   "at": 53.02,
+   "label": "Unidade no SIGOR: 184527 (campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:text-is('Unidade no SIGOR')) input"
+   },
+   "text": "184527",
+   "cps": 40,
+   "label": "Unidade no SIGOR: 184527",
+   "noClick": true
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 55.71
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Avançar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 55.71,
+   "label": "Avançar (MTRs incluídos)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "o certificado será emitido pelo gerador informado",
+    "within": "[role=dialog]"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 60.42,
+   "label": "Números dos MTRs: opcional (zoom)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Um número por linha, ou separados por vírgula"
+   },
+   "at": 65.44,
+   "label": "Números dos MTRs (campo)"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const el=document.querySelector(\"[role=dialog] textarea\");if(!el)return 'SEM ALVO';el.focus();el.select&&el.select();document.execCommand('insertText',false,\"2610001542\\n2610001877\\n2610002203\");return 'colado: '+el.value.slice(0,60)})()",
+   "at": 68.41,
+   "label": "os três números de MTR"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "MTR(s) informado(s)",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "at": 70.87,
+   "label": "3 MTR(s) informado(s)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 71.93
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Avançar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 71.93,
+   "label": "Avançar (Confirmar)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "os MTRs informados",
+    "within": "[role=dialog]"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 72.39,
+   "label": "aviso: MTR já recebido no SIGOR (zoom)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:text-is('Observação')) textarea"
+   },
+   "seconds": 0.8,
+   "at": 85.04,
+   "label": "Observação do certificado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 88.91
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.offsetParent!==null&&e.textContent.trim().startsWith(\"A emissão do CDF é\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 89.01,
+   "label": "desce até o aviso de emissão definitiva"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Período:",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "at": 91.62,
+   "label": "resumo: Período, Destinador, Gerador, MTRs",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Emitir CDF",
+    "exact": true
+   },
+   "at": 95.59,
+   "label": "Emitir CDF"
+  },
+  {
+   "do": "waitFor",
+   "text": "CDF emitido com sucesso",
+   "timeout": 25
+  },
+  {
+   "do": "mark",
+   "name": "L10",
+   "at": 96.09
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "Nº do certificado",
+    "within": "[role=dialog]"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 100.67,
+   "label": "Nº do certificado: 2611000041 (zoom)"
+  },
+  {
+   "do": "mark",
+   "name": "L11",
+   "at": 102.21
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Concluir",
+    "exact": true
+   },
+   "at": 102.31,
+   "label": "Concluir"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main tbody tr:has-text('2611000041')"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 104.74,
+   "label": "linha do CDF 2611000041 (zoom)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('2611000041') td >> nth=2"
+   },
+   "seconds": 0.6,
+   "at": 105.53,
+   "label": "Gerador: CNPJ formatado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('2611000041') td >> nth=3"
+   },
+   "seconds": 0.6,
+   "at": 107.05,
+   "label": "Status: Emitido",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('2611000041') button[title='Ações']"
+   },
+   "seconds": 0.8,
+   "at": 107.81,
+   "label": "menu de ações",
    "optional": true,
    "timeout": 4
   },
@@ -249,7 +553,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 51.82
+   "at": 113.64
   }
  ]
 }

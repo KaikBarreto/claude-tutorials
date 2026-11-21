@@ -1,4 +1,4 @@
-# Inventário · T18 Ambiental: MTR e CDF (EcoSistema 1.59.154)
+# Inventário · T18 Ambiental: MTR e CDF (EcoSistema 1.59.154, atualizado para 1.60.22 em 21/11)
 
 Código lido em `/home/claude/ecoflix/app-src-1.59.154/` (só leitura). Caminhos relativos a `src/`. Rótulo entre aspas =
 texto exato da tela. 🔒 Módulo **Notas Fiscais** (`screen_notas_fiscais`; emitir e cancelar pedem `action_emit_ambiental`).
@@ -115,3 +115,12 @@ Para SP o sistema é o **SIGOR** (`utils/mtrSistema.ts:11-17`: `sigor_sp` → "S
 - H2. A fonte manda "copiar a unidade SIGLA - Nome": no código ela é escolhida na lista; o aviso da fonte está desatualizado.
 - H3. O resumo do CDF usa travessão entre as datas ("Período: 01/10/2026 — 31/10/2026", `NovoCdfModal.tsx:669-671`): só na tela, a fala
   não lê.
+
+
+## 9. Atualização 1.60.22 (21/11; rótulos lidos em `/dev/shm/ecoflix-src22/src`)
+- **Novo MTR e Novo CDF em tela cheia** (`notas-fiscais/FiscalFullscreenWizard.tsx`, ainda `role=dialog`; botão "Sair"); "Resumo do MTR" ao lado (conta "etapas pendentes", "Tudo pronto para emitir o MTR"); o CDF tem cinco etapas clicáveis (`nav[aria-label='Etapas do novo CDF']`).
+- **Lupa do CNPJ** no parceiro (`CnpjLookupInput.tsx`, botão "Buscar dados pelo CNPJ"); botão de mais "Gerenciar motoristas"; calendário sem dias anteriores a hoje.
+- **Puxar da nota fiscal** (`mtr/MtrPuxarDaNotaDialog.tsx`): várias notas, "Conferir (N)", prévia com "N item convertido de quilo para tonelada", "N item ficou de fora" (material sem resíduo salvo), "Voltar", "Usar no MTR", e "Desfazer" na linha.
+- **Materiais › Definir resíduo do MTR** (`BulkMaterialMtrResiduoDialog.tsx`, `#bulk-material-mtr-residuo`): a lista começa em "Nenhum" (que tira a ligação); botão "Definir resíduo em N" / "Limpar resíduo de N".
+- **MTR: lista e erros** (`mtr/MtrTab.tsx`, `MtrAttemptHistoryDialog.tsx`): ícones "Corrigir e tentar novamente" (Erro), "Tentar novamente", "Ver tentativas", "Usar como modelo", "Baixar PDF", "Cancelar MTR"; "Confirmar no órgão" só tem "Ver tentativas" ("Não reenvie antes de conferir..."); "Rascunho". Resíduo perigoso (opcional): Número ONU, Classe de risco, Grupo de embalagem.
+- **CDF: lista** (`cdf/CdfTab.tsx`): menu "Ações" com "Baixar PDF", "Gerar PDF" (emitido sem PDF), "Ver erro" ("Falha na emissão do CDF"), "Tentar novamente" ("CDF reenviado"), "Excluir rascunho" ("Excluir rascunho?", "Rascunho excluído"). MTRs incluídos é opcional quando o gerador é informado.

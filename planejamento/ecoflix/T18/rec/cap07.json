@@ -1,6 +1,6 @@
 {
  "name": "t18-cap07",
- "title": "T18 · Cap. 7 · O certificado do destino (narração 85,1 s ESTIMADA; marcas L1..L11 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T10:40:00-03:00)",
+ "title": "T18 · Cap. 7 · Cancelar um MTR (narração 42,3 s ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T10:40:00-03:00)",
  "seed": "t18-cap07",
  "pace": 0.5,
  "cps": 9,
@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
   "pwa-install-dismissed": "true",
   "theme": "light",
@@ -70,24 +70,6 @@
   },
   {
    "do": "goto",
-   "url": "/fiscal-ambiental/ambiental/cdf"
-  },
-  {
-   "do": "waitFor",
-   "text": "Certificados de Destinação Final",
-   "timeout": 30
-  },
-  {
-   "do": "waitFor",
-   "idle": true,
-   "timeout": 25
-  },
-  {
-   "do": "wait",
-   "seconds": 0.3
-  },
-  {
-   "do": "goto",
    "url": "/fiscal-ambiental/ambiental/mtr"
   },
   {
@@ -120,371 +102,114 @@
    "at": 0
   },
   {
-   "do": "click",
+   "do": "type",
    "target": {
-    "role": "button",
-    "name": "CDF",
-    "exact": true,
-    "within": "nav[aria-label='Navegação da seção']"
+    "selector": "main tbody tr:has-text('2611000325')"
    },
-   "at": 1.95,
-   "label": "sub-aba CDF"
-  },
-  {
-   "do": "waitFor",
-   "text": "Nenhum CDF emitido ainda.",
-   "timeout": 15
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 1.21,
+   "label": "linha do 2611000325"
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 6.32
+   "at": 7.61
   },
   {
-   "do": "scroll",
-   "point": {
-    "x": 900,
-    "y": 470
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('2611000325') button[title='Cancelar MTR']"
    },
-   "by": 0,
-   "duration": 0.3,
-   "after": 0,
-   "at": 6.32,
-   "label": "cursor em repouso (ilustração das cargas de outubro)"
-  },
-  {
-   "do": "mark",
-   "name": "L3",
-   "at": 18.44
+   "seconds": 1.2,
+   "at": 10.51,
+   "label": "ícone Cancelar MTR (zoom)",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "click",
    "target": {
-    "role": "button",
-    "name": "Novo CDF",
-    "exact": true
+    "selector": "main tbody tr:has-text('2611000325') button[title='Cancelar MTR']"
    },
-   "at": 23.05,
-   "label": "Novo CDF"
+   "at": 16.3,
+   "label": "Cancelar MTR (ícone)"
   },
   {
    "do": "waitFor",
-   "text": "PERÍODO",
+   "text": "O cancelamento será enviado ao sistema ambiental",
    "timeout": 10
   },
   {
    "do": "mark",
+   "name": "L3",
+   "at": 16.85
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "O cancelamento será enviado ao sistema ambiental",
+    "within": "[role=alertdialog]"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 18.79,
+   "label": "texto do diálogo (zoom)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar MTR",
+    "exact": true,
+    "within": "[role=alertdialog]"
+   },
+   "at": 24.49,
+   "label": "Cancelar MTR (confirma)"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main tbody tr:has-text('2611000325') :text-is('Cancelado')"
+   },
+   "timeout": 15
+  },
+  {
+   "do": "mark",
    "name": "L4",
-   "at": 23.65
+   "at": 25.09
   },
   {
-   "do": "click",
+   "do": "hover",
    "target": {
-    "selector": "[role=dialog] button:has-text('dd/mm/aaaa') >> nth=0"
+    "selector": "main tbody tr:has-text('2611000325') td >> nth=4"
    },
-   "at": 24.39,
-   "label": "Data inicial (abre o calendário)"
-  },
-  {
-   "do": "eval",
-   "js": "(()=>{const b=[...document.querySelectorAll(\"button[name=previous-month]\")].find(b=>b.offsetParent!==null);if(!b)return 'SEM ALVO';b.click();return 'clicado'})()",
-   "label": "mês anterior (outubro)"
-  },
-  {
-   "do": "eval",
-   "js": "(()=>{const b=[...document.querySelectorAll('button[name=day]')].find(b=>b.textContent.trim()===\"1\"&&!b.disabled&&!b.className.includes('day-outside')&&b.getAttribute('aria-hidden')!=='true');if(!b)return 'SEM ALVO';b.click();return 'dia '+\"1\"})()",
-   "label": "dia 01/10/2026"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] button:has-text('dd/mm/aaaa') >> nth=0"
-   },
-   "at": 25.32,
-   "label": "Data final (abre o calendário)"
-  },
-  {
-   "do": "eval",
-   "js": "(()=>{const b=[...document.querySelectorAll(\"button[name=previous-month]\")].find(b=>b.offsetParent!==null);if(!b)return 'SEM ALVO';b.click();return 'clicado'})()",
-   "label": "mês anterior (outubro)"
-  },
-  {
-   "do": "eval",
-   "js": "(()=>{const b=[...document.querySelectorAll('button[name=day]')].find(b=>b.textContent.trim()===\"31\"&&!b.disabled&&!b.className.includes('day-outside')&&b.getAttribute('aria-hidden')!=='true');if(!b)return 'SEM ALVO';b.click();return 'dia '+\"31\"})()",
-   "label": "dia 31/10/2026"
+   "seconds": 0.8,
+   "at": 27.12,
+   "label": "selo Cancelado",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 27.56
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Avançar",
-    "exact": true,
-    "within": "[role=dialog]"
-   },
-   "at": 27.56,
-   "label": "Avançar (Destinador)"
+   "at": 32.35
   },
   {
    "do": "type",
    "target": {
-    "selector": "[role=dialog] div:has(> label:text-is('CNPJ do destinador *')) input"
+    "selector": "div:text-matches('^[0-9.]+/[0-9.]+ Documentos$')"
    },
    "text": "",
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 31.67,
-   "label": "CNPJ do destinador já preenchido (zoom)"
-  },
-  {
-   "do": "click",
-   "target": {
-    "placeholder": "Nome completo"
-   },
-   "at": 34.76,
-   "label": "Nome do responsável: Rafael Nogueira (campo)"
-  },
-  {
-   "do": "type",
-   "target": {
-    "placeholder": "Nome completo"
-   },
-   "text": "Rafael Nogueira",
-   "cps": 40,
-   "label": "Nome do responsável: Rafael Nogueira",
-   "noClick": true
-  },
-  {
-   "do": "mark",
-   "name": "L6",
-   "at": 36.42
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Avançar",
-    "exact": true,
-    "within": "[role=dialog]"
-   },
-   "at": 36.42,
-   "label": "Avançar (Gerador)"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] div:has(> label:text-is('CNPJ do gerador')) input"
-   },
-   "at": 39.38,
-   "label": "CNPJ da Auto Peças Vale Forte (campo)"
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "[role=dialog] div:has(> label:text-is('CNPJ do gerador')) input"
-   },
-   "text": "96384120000109",
-   "cps": 40,
-   "label": "CNPJ da Auto Peças Vale Forte",
-   "noClick": true
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] div:has(> label:text-is('Unidade no SIGOR')) input"
-   },
-   "at": 40.07,
-   "label": "Unidade no SIGOR: 184527 (campo)"
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "[role=dialog] div:has(> label:text-is('Unidade no SIGOR')) input"
-   },
-   "text": "184527",
-   "cps": 40,
-   "label": "Unidade no SIGOR: 184527",
-   "noClick": true
-  },
-  {
-   "do": "mark",
-   "name": "L7",
-   "at": 42.76
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Avançar",
-    "exact": true,
-    "within": "[role=dialog]"
-   },
-   "at": 42.76,
-   "label": "Avançar (MTRs incluídos)"
-  },
-  {
-   "do": "click",
-   "target": {
-    "placeholder": "Um número por linha, ou separados por vírgula"
-   },
-   "label": "Números dos MTRs (campo)"
-  },
-  {
-   "do": "eval",
-   "js": "(()=>{const el=document.querySelector(\"[role=dialog] textarea\");if(!el)return 'SEM ALVO';el.focus();el.select&&el.select();document.execCommand('insertText',false,\"2610001542\\n2610001877\\n2610002203\");return 'colado: '+el.value.slice(0,60)})()",
-   "at": 44.15,
-   "label": "os três números de MTR"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "MTR(s) informado(s)",
-    "within": "[role=dialog]"
-   },
-   "seconds": 0.6,
-   "at": 46.61,
-   "label": "3 MTR(s) informado(s)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L8",
-   "at": 47.67
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Avançar",
-    "exact": true,
-    "within": "[role=dialog]"
-   },
-   "at": 47.67,
-   "label": "Avançar (Confirmar)"
-  },
-  {
-   "do": "type",
-   "target": {
-    "text": "os MTRs informados",
-    "within": "[role=dialog]"
-   },
-   "text": "",
-   "noClick": true,
-   "optional": true,
-   "timeout": 4,
-   "at": 48.13,
-   "label": "aviso: MTR já recebido no SIGOR (zoom)"
-  },
-  {
-   "do": "mark",
-   "name": "L9",
-   "at": 60.17
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.offsetParent!==null&&e.textContent.trim().startsWith(\"A emissão do CDF é\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 60.27,
-   "label": "desce até o aviso de emissão definitiva"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Período:",
-    "within": "[role=dialog]"
-   },
-   "seconds": 1.0,
-   "at": 62.88,
-   "label": "resumo: Período, Destinador, Gerador, MTRs",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Emitir CDF",
-    "exact": true
-   },
-   "at": 66.85,
-   "label": "Emitir CDF"
-  },
-  {
-   "do": "waitFor",
-   "text": "CDF emitido com sucesso",
-   "timeout": 25
-  },
-  {
-   "do": "mark",
-   "name": "L10",
-   "at": 67.35
-  },
-  {
-   "do": "type",
-   "target": {
-    "text": "Nº do certificado",
-    "within": "[role=dialog]"
-   },
-   "text": "",
-   "noClick": true,
-   "optional": true,
-   "timeout": 4,
-   "at": 71.93,
-   "label": "Nº do certificado: 2611000041 (zoom)"
-  },
-  {
-   "do": "mark",
-   "name": "L11",
-   "at": 73.47
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Concluir",
-    "exact": true
-   },
-   "at": 73.57,
-   "label": "Concluir"
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "main tbody tr:has-text('2611000041')"
-   },
-   "text": "",
-   "noClick": true,
-   "optional": true,
-   "timeout": 4,
-   "at": 76.0,
-   "label": "linha do CDF 2611000041 (zoom)"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('2611000041') td >> nth=3"
-   },
-   "seconds": 0.6,
-   "at": 77.7,
-   "label": "Status: Emitido",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('2611000041') button[title='Ações']"
-   },
-   "seconds": 0.8,
-   "at": 79.82,
-   "label": "menu de ações",
-   "optional": true,
-   "timeout": 4
+   "at": 36.38,
+   "label": "selo da cota (zoom)"
   },
   {
    "do": "eval",
@@ -494,7 +219,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 85.12
+   "at": 42.33
   }
  ]
 }

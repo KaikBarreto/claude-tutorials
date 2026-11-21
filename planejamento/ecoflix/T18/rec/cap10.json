@@ -1,6 +1,6 @@
 {
  "name": "t18-cap10",
- "title": "T18 · Cap. 10 · Recapitulando (narração 40,8 s ESTIMADA; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T10:40:00-03:00)",
+ "title": "T18 · Cap. 10 · Baixar e guardar (narração 28,2 s ESTIMADA; marcas L1..L3 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T10:40:00-03:00)",
  "seed": "t18-cap10",
  "pace": 0.5,
  "cps": 9,
@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
   "pwa-install-dismissed": "true",
   "theme": "light",
@@ -21,7 +21,7 @@
  },
  "seedExtra": [
   "t18/inicio",
-  "t18/apos-cap07"
+  "t18/apos-cap09"
  ],
  "prewarm": [
   "/login"
@@ -70,11 +70,11 @@
   },
   {
    "do": "goto",
-   "url": "/fiscal-ambiental/ambiental/mtr"
+   "url": "/fiscal-ambiental/ambiental/cdf"
   },
   {
    "do": "waitFor",
-   "text": "Manifestos de Transporte de Resíduos",
+   "text": "Certificados de Destinação Final",
    "timeout": 30
   },
   {
@@ -85,6 +85,10 @@
   {
    "do": "wait",
    "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const o=window.open;window.__pops=[];window.open=function(...a){const w=o.apply(this,a);window.__pops.push(w);return w};return 'ok'})()"
   },
   {
    "do": "eval",
@@ -102,6 +106,30 @@
    "at": 0
   },
   {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('2611000041') button[title='Ações']"
+   },
+   "at": 3.4,
+   "label": "Ações da linha do CDF"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Baixar PDF"
+   },
+   "at": 4.89,
+   "label": "Baixar PDF (abre aba nova)",
+   "noScroll": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const o=(performance.getEntriesByType('resource').map(e=>e.name).find(n=>n.includes('/rest/v1/'))||'').split('/rest/v1/')[0];if(!o)return 'SEM ORIGEM';const r=await fetch(o+'/storage/v1/object/public/nfe-danfes/t18/cdf-2611000041.pdf');if(!r.ok)return 'ERRO '+r.status;const u=new Uint8Array(await r.arrayBuffer());let s='';for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'PDF:'+btoa(s)})()",
+   "at": 7.92,
+   "label": "PDF do CDF 2611000041 (aba nova, para a ilustração)"
+  },
+  {
    "do": "scroll",
    "point": {
     "x": 900,
@@ -110,23 +138,18 @@
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 0.5,
-   "label": "cursor em repouso (montagem)"
+   "at": 8.0,
+   "label": "cursor em repouso (ilustração do certificado)"
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 13.08
+   "at": 10.11
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 25.35
-  },
-  {
-   "do": "mark",
-   "name": "L4",
-   "at": 33.52
+   "at": 22.99
   },
   {
    "do": "eval",
@@ -136,7 +159,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 40.77
+   "at": 28.19
   }
  ]
 }

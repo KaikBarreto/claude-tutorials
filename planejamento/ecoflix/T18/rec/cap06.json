@@ -1,6 +1,6 @@
 {
  "name": "t18-cap06",
- "title": "T18 · Cap. 6 · Cancelar um MTR (narração 48,0 s ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T10:40:00-03:00)",
+ "title": "T18 · Cap. 6 · O próximo manifesto mais rápido (narração 83,0 s ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T09:30:00-03:00)",
  "seed": "t18-cap06",
  "pace": 0.5,
  "cps": 9,
@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
   "pwa-install-dismissed": "true",
   "theme": "light",
@@ -21,7 +21,7 @@
  },
  "seedExtra": [
   "t18/inicio",
-  "t18/apos-cap05"
+  "t18/apos-cap04"
  ],
  "prewarm": [
   "/login"
@@ -104,112 +104,342 @@
   {
    "do": "type",
    "target": {
-    "selector": "main tbody tr:has-text('2611000325')"
+    "selector": "main tbody tr:has-text('2611000318')"
    },
    "text": "",
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 0.0,
-   "label": "linha do 2611000325"
-  },
-  {
-   "do": "mark",
-   "name": "L2",
-   "at": 13.23
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('2611000325') button[title='Cancelar MTR']"
-   },
-   "seconds": 1.2,
-   "at": 16.13,
-   "label": "ícone Cancelar MTR (zoom)",
-   "optional": true,
-   "timeout": 4
+   "at": 0.15,
+   "label": "linha do 2611000318"
   },
   {
    "do": "click",
    "target": {
-    "selector": "main tbody tr:has-text('2611000325') button[title='Cancelar MTR']"
+    "selector": "main tbody tr:has-text('2611000318') button[title='Usar como modelo']"
    },
-   "at": 21.92,
-   "label": "Cancelar MTR (ícone)"
+   "at": 7.8,
+   "label": "Usar como modelo"
   },
   {
    "do": "waitFor",
-   "text": "O cancelamento será enviado ao sistema ambiental",
-   "timeout": 10
+   "text": "TRANSPORTE E DESTINO",
+   "timeout": 15
   },
   {
-   "do": "mark",
-   "name": "L3",
-   "at": 22.47
-  },
-  {
-   "do": "type",
+   "do": "hover",
    "target": {
-    "text": "O cancelamento será enviado ao sistema ambiental",
-    "within": "[role=alertdialog]"
+    "text": "Unidade SIGOR: 203918",
+    "within": "[role=dialog]"
    },
-   "text": "",
-   "noClick": true,
+   "seconds": 0.7,
+   "at": 9.37,
+   "label": "transportador já escolhido (CNPJ e unidade)",
    "optional": true,
-   "timeout": 4,
-   "at": 24.41,
-   "label": "texto do diálogo (zoom)"
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Unidade SIGOR: 187402",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.7,
+   "at": 10.66,
+   "label": "destinador já escolhido (CNPJ e unidade)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "placeholder": "Digite ou busque o motorista"
+   },
+   "seconds": 0.4,
+   "at": 11.72,
+   "label": "motorista Jair Lopes",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "placeholder": "Digite ou busque a placa"
+   },
+   "seconds": 0.4,
+   "at": 12.63,
+   "label": "placa GHT7B19",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:text-is('Data de expedição *')) button"
+   },
+   "seconds": 0.6,
+   "at": 15.06,
+   "label": "Data de expedição: hoje",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "click",
    "target": {
     "role": "button",
-    "name": "Cancelar MTR",
+    "name": "Avançar",
     "exact": true,
-    "within": "[role=alertdialog]"
+    "within": "[role=dialog]"
    },
-   "at": 30.11,
-   "label": "Cancelar MTR (confirma)"
+   "at": 16.67,
+   "label": "Avançar (Resíduos)"
   },
   {
    "do": "waitFor",
-   "target": {
-    "selector": "main tbody tr:has-text('2611000325') :text-is('Cancelado')"
-   },
-   "timeout": 15
+   "text": "Resíduo 1",
+   "timeout": 10
   },
   {
    "do": "mark",
-   "name": "L4",
-   "at": 30.71
+   "name": "L2",
+   "at": 17.17
   },
   {
-   "do": "hover",
+   "do": "click",
    "target": {
-    "selector": "main tbody tr:has-text('2611000325') td >> nth=4"
+    "selector": "[role=dialog] div:has(> label:text-is('Quantidade *')) input >> nth=0"
    },
-   "seconds": 0.8,
-   "at": 32.74,
-   "label": "selo Cancelado",
-   "optional": true,
-   "timeout": 4
+   "at": 21.74,
+   "label": "Quantidade (campo)"
   },
   {
-   "do": "mark",
-   "name": "L5",
-   "at": 37.97
+   "do": "press",
+   "key": "Control+a",
+   "label": "seleciona 3,6"
   },
   {
    "do": "type",
    "target": {
-    "selector": "div:text-matches('^[0-9.]+/[0-9.]+ Documentos$')"
+    "selector": "[role=dialog] div:has(> label:text-is('Quantidade *')) input >> nth=0"
+   },
+   "text": "3,2",
+   "cps": 9,
+   "label": "Quantidade: 3,2",
+   "noClick": true
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:text-is('Quantidade *')) input >> nth=0"
    },
    "text": "",
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 42.0,
-   "label": "selo da cota (zoom)"
+   "label": "Quantidade * 3,2 (zoom)"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 25.95
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar resíduo",
+    "exact": true
+   },
+   "at": 29.07,
+   "label": "Adicionar resíduo"
+  },
+  {
+   "do": "waitFor",
+   "text": "Resíduo 2",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Preencher a partir de um resíduo salvo"
+   },
+   "at": 34.92,
+   "label": "Usar resíduo salvo (abre a lista)"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 38.74,
+   "label": "fecha a lista"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] span:text-is('Resíduo 2') >> xpath=.. >> button"
+   },
+   "at": 40.61,
+   "label": "lixeira do Resíduo 2"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 43.27
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[aria-expanded]:has-text('Resíduo perigoso (opcional)') >> nth=0"
+   },
+   "at": 44.5,
+   "label": "Resíduo perigoso (opcional): abre"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Número ONU",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "at": 47.78,
+   "label": "Número ONU, Classe de risco, Grupo de embalagem (zoom)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[aria-expanded]:has-text('Resíduo perigoso (opcional)') >> nth=0"
+   },
+   "at": 54.18,
+   "label": "Resíduo perigoso: fecha"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:text-is('Observação do resíduo')) input >> nth=0"
+   },
+   "seconds": 0.8,
+   "at": 57.42,
+   "label": "Observação do resíduo (opcional)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Avançar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 60.58,
+   "label": "Avançar (Responsável)"
+  },
+  {
+   "do": "waitFor",
+   "text": "RESPONSÁVEL",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 61.08
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:text-is('Observação')) textarea"
+   },
+   "seconds": 1.2,
+   "at": 66.65,
+   "label": "Observação copiada, com a chave da nota (zoom)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:text-is('Observação')) textarea"
+   },
+   "at": 70.68,
+   "label": "Observação (campo)"
+  },
+  {
+   "do": "press",
+   "key": "Control+a",
+   "label": "seleciona a observação"
+  },
+  {
+   "do": "press",
+   "key": "Delete",
+   "label": "apaga a observação"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 75.02
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 900,
+    "y": 470
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 75.02,
+   "label": "cursor sai dos campos (Resumo do MTR ao lado)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Tudo pronto para emitir o MTR",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "label": "Tudo pronto para emitir o MTR",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Emitir MTR",
+    "exact": true
+   },
+   "at": 75.51,
+   "label": "Emitir MTR"
+  },
+  {
+   "do": "waitFor",
+   "text": "MTR emitido com sucesso",
+   "timeout": 25
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "Nº do manifesto",
+    "within": "[role=dialog]"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 78.23,
+   "label": "Nº do manifesto: 2611000325 (zoom)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Concluir",
+    "exact": true
+   },
+   "at": 81.55,
+   "label": "Concluir"
   },
   {
    "do": "eval",
@@ -219,7 +449,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 47.95
+   "at": 82.95
   }
  ]
 }

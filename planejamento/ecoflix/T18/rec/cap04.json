@@ -1,6 +1,6 @@
 {
  "name": "t18-cap04",
- "title": "T18 · Cap. 4 · Emitir o MTR da carga (narração 99,7 s ESTIMADA; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T09:30:00-03:00)",
+ "title": "T18 · Cap. 4 · Emitir o MTR da carga (narração 161,6 s ESTIMADA; marcas L1..L13 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T09:30:00-03:00)",
  "seed": "t18-cap04",
  "pace": 0.5,
  "cps": 9,
@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
   "pwa-install-dismissed": "true",
   "theme": "light",
@@ -162,18 +162,48 @@
    "timeout": 10
   },
   {
+   "do": "mark",
+   "name": "L2",
+   "at": 9.36
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "Resumo do MTR",
+    "within": "[role=dialog]"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 17.51,
+   "label": "Resumo do MTR (zoom)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "etapas pendentes",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "at": 19.89,
+   "label": "3 etapas pendentes",
+   "optional": true,
+   "timeout": 4
+  },
+  {
    "do": "click",
    "target": {
     "selector": "[role=dialog] button[role=combobox]",
     "hasText": "Selecione o transportador"
    },
-   "at": 8.71,
+   "at": 22.19,
    "label": "Transportador (abre)"
   },
   {
    "do": "mark",
-   "name": "L2",
-   "at": 9.36
+   "name": "L3",
+   "at": 22.84
   },
   {
    "do": "click",
@@ -181,7 +211,7 @@
     "role": "option",
     "name": "Cadastrar novo transportador"
    },
-   "at": 10.38,
+   "at": 23.86,
    "label": "Cadastrar novo transportador"
   },
   {
@@ -189,7 +219,7 @@
    "target": {
     "placeholder": "Razão social do parceiro"
    },
-   "at": 10.89,
+   "at": 24.37,
    "label": "Razão social: Recicla Vale Metais Ltda (campo)"
   },
   {
@@ -207,7 +237,7 @@
    "target": {
     "placeholder": "00.000.000/0000-00"
    },
-   "at": 18.93,
+   "at": 32.41,
    "label": "CNPJ da Recicla Vale (campo)"
   },
   {
@@ -225,7 +255,7 @@
    "target": {
     "placeholder": "Ex: 123456"
    },
-   "at": 19.61,
+   "at": 33.1,
    "label": "Código da unidade no SIGOR: 203918 (campo)"
   },
   {
@@ -245,7 +275,7 @@
     "name": "Salvar e usar",
     "exact": true
    },
-   "at": 21.21,
+   "at": 34.69,
    "label": "Salvar e usar (transportador)"
   },
   {
@@ -259,13 +289,13 @@
     "selector": "[role=dialog] button[role=combobox]",
     "hasText": "Selecione o destinador"
    },
-   "at": 22.14,
+   "at": 36.12,
    "label": "Destinador (abre)"
   },
   {
    "do": "mark",
-   "name": "L3",
-   "at": 22.69
+   "name": "L4",
+   "at": 36.67
   },
   {
    "do": "click",
@@ -273,33 +303,15 @@
     "role": "option",
     "name": "Cadastrar novo destinador"
    },
-   "at": 23.48,
+   "at": 37.46,
    "label": "Cadastrar novo destinador"
-  },
-  {
-   "do": "click",
-   "target": {
-    "placeholder": "Razão social do parceiro"
-   },
-   "at": 23.76,
-   "label": "Razão social: Aços Quiririm Ltda (campo)"
-  },
-  {
-   "do": "type",
-   "target": {
-    "placeholder": "Razão social do parceiro"
-   },
-   "text": "Aços Quiririm Ltda",
-   "cps": 40,
-   "label": "Razão social: Aços Quiririm Ltda",
-   "noClick": true
   },
   {
    "do": "click",
    "target": {
     "placeholder": "00.000.000/0000-00"
    },
-   "at": 25.28,
+   "at": 42.15,
    "label": "CNPJ da Aços Quiririm (zoom) (campo)"
   },
   {
@@ -315,9 +327,36 @@
   {
    "do": "click",
    "target": {
+    "role": "button",
+    "name": "Buscar dados pelo CNPJ",
+    "exact": true
+   },
+   "at": 43.46,
+   "label": "lupa: Buscar dados pelo CNPJ"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{for(let i=0;i<40;i++){const e=document.querySelector('[placeholder=\"Razão social do parceiro\"]');if(e&&e.value.toUpperCase().includes(\"AÇOS QUIRIRIM\"))return 'OK '+e.value;await new Promise(r=>setTimeout(r,250))}return 'SEM VALOR'})()",
+   "label": "a razão social vem sozinha"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Razão social do parceiro"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 45.81,
+   "label": "Razão social preenchida pela lupa (zoom)"
+  },
+  {
+   "do": "click",
+   "target": {
     "placeholder": "Ex: 123456"
    },
-   "at": 27.56,
+   "at": 46.25,
    "label": "Código da unidade do destinador: 187402 (campo)"
   },
   {
@@ -337,7 +376,7 @@
     "name": "Salvar e usar",
     "exact": true
    },
-   "at": 30.37,
+   "at": 49.82,
    "label": "Salvar e usar (destinador)"
   },
   {
@@ -345,7 +384,7 @@
    "target": {
     "placeholder": "Digite ou busque o motorista"
    },
-   "at": 31.15,
+   "at": 51.1,
    "label": "Motorista: Jair (campo)"
   },
   {
@@ -365,15 +404,15 @@
   },
   {
    "do": "mark",
-   "name": "L4",
-   "at": 31.85
+   "name": "L5",
+   "at": 51.8
   },
   {
    "do": "click",
    "target": {
     "placeholder": "Digite ou busque a placa"
    },
-   "at": 33.6,
+   "at": 53.55,
    "label": "Veículo / placa (campo)"
   },
   {
@@ -384,13 +423,45 @@
   {
    "do": "hover",
    "target": {
-    "selector": "[role=dialog] div:has(> label:text-is('Data de expedição *')) button"
+    "role": "button",
+    "name": "Gerenciar motoristas",
+    "exact": true
    },
-   "seconds": 0.6,
-   "at": 39.57,
-   "label": "Data de expedição: hoje",
+   "seconds": 1.0,
+   "at": 62.38,
+   "label": "botão de mais: Gerenciar motoristas",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:text-is('Data de expedição *')) button"
+   },
+   "at": 66.96,
+   "label": "Data de expedição (abre o calendário)"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 67.4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "button[name=day]:text-is('9')"
+   },
+   "seconds": 0.8,
+   "at": 70.27,
+   "label": "dias anteriores a hoje ficam desligados",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 72.54,
+   "label": "fecha o calendário (a expedição fica hoje)"
   },
   {
    "do": "click",
@@ -400,13 +471,13 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 41.19,
+   "at": 72.64,
    "label": "Avançar (Resíduos)"
   },
   {
    "do": "mark",
-   "name": "L5",
-   "at": 41.69
+   "name": "L7",
+   "at": 73.14
   },
   {
    "do": "click",
@@ -416,7 +487,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 44.81,
+   "at": 76.26,
    "label": "Puxar da nota fiscal"
   },
   {
@@ -431,7 +502,7 @@
    "target": {
     "placeholder": "Buscar por número, parceiro ou chave..."
    },
-   "at": 46.99,
+   "at": 78.44,
    "label": "busca: Quiririm (campo)"
   },
   {
@@ -447,10 +518,10 @@
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] label:has-text('1254')"
+    "selector": "[role=dialog] label:has-text('1257')"
    },
-   "at": 49.08,
-   "label": "marca a NF-e de hoje (1254)"
+   "at": 80.54,
+   "label": "marca a NF-e de hoje (1257)"
   },
   {
    "do": "click",
@@ -459,13 +530,13 @@
     "name": "Conferir (1)",
     "exact": true
    },
-   "at": 51.51,
+   "at": 82.97,
    "label": "Conferir (1)"
   },
   {
    "do": "mark",
-   "name": "L6",
-   "at": 53.12
+   "name": "L8",
+   "at": 84.58
   },
   {
    "do": "type",
@@ -476,7 +547,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 55.56,
+   "at": 87.01,
    "label": "3,6 TON - Tonelada (zoom)"
   },
   {
@@ -485,7 +556,7 @@
     "text": "1 item convertido de quilo para tonelada"
    },
    "seconds": 1.0,
-   "at": 56.75,
+   "at": 88.2,
    "label": "1 item convertido de quilo para tonelada (zoom)",
    "optional": true,
    "timeout": 4
@@ -496,10 +567,111 @@
     "text": "Vai pra Observações do Gerador"
    },
    "seconds": 0.8,
-   "at": 59.4,
+   "at": 90.86,
    "label": "Vai pra Observações do Gerador (chave)",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 94.34
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Voltar') >> nth=-1"
+   },
+   "at": 94.34,
+   "label": "Voltar à lista de notas"
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Buscar por número, parceiro ou chave..."
+   },
+   "at": 95.19,
+   "label": "busca (campo)"
+  },
+  {
+   "do": "press",
+   "key": "Control+a",
+   "label": "seleciona a busca"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar por número, parceiro ou chave..."
+   },
+   "text": "Bandeira",
+   "cps": 40,
+   "label": "busca: Bandeira (a nota do cobre)",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] label:has-text('1250')"
+   },
+   "at": 96.83,
+   "label": "marca também a NF-e do cobre (1250)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Conferir (2)",
+    "exact": true
+   },
+   "at": 108.07,
+   "label": "Conferir (2)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "2 notas escolhidas",
+    "within": "[role=dialog]"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "label": "2 notas escolhidas (zoom)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "ficou de fora",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.2,
+   "at": 109.51,
+   "label": "item ficou de fora: material sem resíduo salvo vinculado (zoom)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Voltar') >> nth=-1"
+   },
+   "label": "Voltar à lista de notas"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] label:has-text('1250')"
+   },
+   "label": "desmarca a NF-e do cobre"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Conferir (1)",
+    "exact": true
+   },
+   "label": "Conferir (1) de novo: só a chaparia"
   },
   {
    "do": "click",
@@ -508,13 +680,13 @@
     "name": "Usar no MTR",
     "exact": true
    },
-   "at": 62.39,
+   "at": 111.09,
    "label": "Usar no MTR"
   },
   {
    "do": "mark",
-   "name": "L7",
-   "at": 62.89
+   "name": "L10",
+   "at": 111.59
   },
   {
    "do": "hover",
@@ -523,8 +695,21 @@
     "within": "[role=dialog]"
    },
    "seconds": 1.0,
-   "at": 64.23,
+   "at": 112.94,
    "label": "Puxado da nota fiscal",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Desfazer",
+    "exact": true
+   },
+   "seconds": 0.9,
+   "at": 121.64,
+   "label": "Desfazer o que veio da nota",
    "optional": true,
    "timeout": 4
   },
@@ -536,20 +721,20 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 70.63,
+   "at": 124.73,
    "label": "Avançar (Responsável)"
   },
   {
    "do": "mark",
-   "name": "L8",
-   "at": 71.13
+   "name": "L11",
+   "at": 125.23
   },
   {
    "do": "click",
    "target": {
     "placeholder": "Nome completo"
    },
-   "at": 72.64,
+   "at": 126.73,
    "label": "Nome do responsável: Rafael Nogueira (campo)"
   },
   {
@@ -567,7 +752,7 @@
    "target": {
     "placeholder": "Ex: Gerente ambiental"
    },
-   "at": 73.39,
+   "at": 127.48,
    "label": "Cargo: Sócio-administrador (campo)"
   },
   {
@@ -586,15 +771,15 @@
     "selector": "[role=dialog] div:has(> label:text-is('Observação')) textarea"
    },
    "seconds": 0.8,
-   "at": 75.59,
+   "at": 129.68,
    "label": "Observação com a chave da NF-e",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
-   "name": "L9",
-   "at": 79.08
+   "name": "L12",
+   "at": 133.17
   },
   {
    "do": "scroll",
@@ -605,7 +790,7 @@
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 79.08,
+   "at": 133.17,
    "label": "cursor sai dos campos (Resumo do MTR ao lado)"
   },
   {
@@ -626,7 +811,7 @@
     "name": "Emitir MTR",
     "exact": true
    },
-   "at": 79.56,
+   "at": 133.66,
    "label": "Emitir MTR"
   },
   {
@@ -644,13 +829,13 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 85.48,
+   "at": 139.57,
    "label": "Nº do manifesto: 2611000318 (zoom)"
   },
   {
    "do": "mark",
-   "name": "L10",
-   "at": 87.63
+   "name": "L13",
+   "at": 141.72
   },
   {
    "do": "click",
@@ -659,20 +844,19 @@
     "name": "Concluir",
     "exact": true
    },
-   "at": 87.73,
+   "at": 141.82,
    "label": "Concluir"
   },
   {
-   "do": "type",
+   "do": "hover",
    "target": {
     "selector": "div:text-matches('^[0-9.]+/[0-9.]+ Documentos$')"
    },
-   "text": "",
-   "noClick": true,
+   "seconds": 2.4,
+   "at": 148.56,
+   "label": "selo da cota (zoom): nível, limite e emitidos",
    "optional": true,
-   "timeout": 4,
-   "at": 91.58,
-   "label": "selo da cota (zoom)"
+   "timeout": 4
   },
   {
    "do": "eval",
@@ -682,7 +866,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 99.74
+   "at": 161.65
   }
  ]
 }
