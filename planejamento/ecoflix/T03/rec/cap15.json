@@ -1,6 +1,6 @@
 {
  "name": "t03-cap15",
- "title": "T03 · Cap. 15 · Excluir um material (narração 63,6 s ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário rafael)",
+ "title": "T03 · Cap. 15 · Excluir um material (narração 52,1 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário rafael)",
  "seed": "t03-cap15",
  "pace": 0.5,
  "cps": 14,
@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
@@ -123,7 +123,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const tr=[...document.querySelectorAll('main tbody tr')].find(r=>r.innerText.includes(\"Radiador de cobre\"));if(!tr)return 'SEM ALVO: linha';const b=tr.querySelector('td:last-child button');if(!b)return 'SEM ALVO: botao';b.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true,cancelable:true,button:0,pointerType:'mouse'}));for(let i=0;i<30;i++){const it=[...document.querySelectorAll('[role=menuitem]')].find(e=>e.textContent.trim()===\"Excluir\");if(it){it.click();return 'ok'}await new Promise(r=>setTimeout(r,100));}return 'SEM ALVO: item'})()",
-   "at": 12.62,
+   "at": 10.54,
    "label": "abre o Excluir do radiador (fim da ilustração, sem cursor)"
   },
   {
@@ -139,7 +139,7 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 13.44
+   "at": 10.9
   },
   {
    "do": "hover",
@@ -148,7 +148,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 2.4,
-   "at": 15.92,
+   "at": 13.23,
    "label": "aviso: possui 110 Kg em estoque (zoom)",
    "optional": true,
    "timeout": 4
@@ -156,7 +156,7 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 25.55
+   "at": 21.14
   },
   {
    "do": "click",
@@ -165,7 +165,7 @@
     "name": "Sim, Excluir",
     "exact": true
    },
-   "at": 25.75,
+   "at": 21.34,
    "label": "Sim, Excluir"
   },
   {
@@ -198,7 +198,7 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 30.53
+   "at": 25.9
   },
   {
    "do": "click",
@@ -206,7 +206,7 @@
     "text": "Desfazer",
     "exact": true
    },
-   "at": 30.73,
+   "at": 26.1,
    "label": "Desfazer",
    "timeout": 12,
    "noScroll": true
@@ -230,7 +230,7 @@
     "selector": "main tbody tr:has-text('Radiador de cobre') td:nth-child(4)"
    },
    "seconds": 1.4,
-   "at": 33.92,
+   "at": 28.49,
    "label": "o radiador volta com 110 Kg",
    "optional": true,
    "timeout": 4
@@ -243,12 +243,12 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 40.22
+   "at": 33.18
   },
   {
    "do": "eval",
    "js": "(()=>{const el=document.querySelector(\"main input[placeholder=\\\"Buscar material por c\\u00f3digo ou nome...\\\"]\");if(!el)return 'SEM ALVO';const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;set.call(el,\"\");el.dispatchEvent(new Event('input',{bubbles:true}));el.dispatchEvent(new Event('change',{bubbles:true}));return el.value})()",
-   "at": 41.12,
+   "at": 34.08,
    "label": "limpa a busca (sem cursor)"
   },
   {
@@ -264,7 +264,7 @@
    "target": {
     "selector": "main button[role=checkbox][aria-label='Selecionar Ferro pesado']"
    },
-   "at": 45.73,
+   "at": 37.06,
    "label": "marca o ferro pesado"
   },
   {
@@ -272,7 +272,7 @@
    "target": {
     "selector": "main button[role=checkbox][aria-label='Selecionar Ferro misto']"
    },
-   "at": 48.09,
+   "at": 39.06,
    "label": "marca o ferro misto"
   },
   {
@@ -286,24 +286,52 @@
     "text": "Transferir Estoque",
     "exact": true
    },
-   "seconds": 2.0,
-   "at": 50.44,
+   "seconds": 1.6,
+   "at": 41.05,
    "label": "a barra de seleção (zoom)",
+   "noScroll": true,
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 54.16
+   "at": 44.19
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Definir prefixo",
+    "exact": true
+   },
+   "seconds": 1.4,
+   "at": 44.78,
+   "label": "Definir prefixo na barra",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "click",
    "target": {
-    "selector": "div.fixed button:has(svg.lucide-x)"
+    "selector": "main tbody tr:has-text('Ferro misto') button[role=checkbox]"
    },
-   "at": 59.98,
-   "label": "X da barra: desmarca tudo"
+   "at": 49.43,
+   "label": "desmarca o ferro misto"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('Ferro pesado') button[role=checkbox]"
+   },
+   "label": "desmarca o ferro pesado: a barra some"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "text": "Transferir Estoque"
+   },
+   "timeout": 6
   },
   {
    "do": "eval",
@@ -318,7 +346,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 63.55
+   "at": 52.08
   }
  ]
 }

@@ -138,3 +138,4 @@ as gravações). Cada item diz a aula em que apareceu. **No fim da produção, v
   o gravador agora cala o balão; no app ele segue por cima do conteúdo).
 - **T20 (20/11)**: em Clientes e Fornecedores, o menu da linha abre no hover e intercepta o clique em "Editar" (o robô passou a
   clicar por script). O relatório do portal do parceiro sai como HTML, não PDF.
+- **T03 (21/11)**: a 1600 px de largura, a barra de seleção em massa de Materiais corta o botão "Excluir" e o X de fechar fica atrás do botão do Cato (com "Definir resíduo do MTR" a barra não cabe). Na aula a fala cita "Excluir" e ele mal aparece.

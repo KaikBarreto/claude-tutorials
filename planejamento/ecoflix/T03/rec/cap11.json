@@ -1,6 +1,6 @@
 {
  "name": "t03-cap11",
- "title": "T03 · Cap. 11 · Várias tabelas de preço (narração 209,9 s ESTIMADA; marcas L1..L13 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário rafael)",
+ "title": "T03 · Cap. 11 · Várias tabelas de preço (narração 170,0 s; marcas L1..L13 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário rafael)",
  "seed": "t03-cap11",
  "pace": 0.5,
  "cps": 14,
@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
@@ -138,7 +138,7 @@
     "within": "main"
    },
    "seconds": 0.6,
-   "at": 1.91,
+   "at": 0.83,
    "label": "coluna Tabelas de Preço",
    "optional": true,
    "timeout": 4
@@ -151,7 +151,7 @@
     "exact": true
    },
    "seconds": 1.0,
-   "at": 3.34,
+   "at": 2.21,
    "label": "só a Principal",
    "optional": true,
    "timeout": 4
@@ -159,7 +159,7 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 21.11
+   "at": 17.38
   },
   {
    "do": "click",
@@ -168,7 +168,7 @@
     "name": "Nova Tabela",
     "exact": true
    },
-   "at": 21.99,
+   "at": 18.14,
    "label": "Nova Tabela"
   },
   {
@@ -184,7 +184,7 @@
    "text": "Tabela Depósitos",
    "cps": 30,
    "noClick": true,
-   "at": 23.78,
+   "at": 19.75,
    "label": "Nome da Tabela: Tabela Depósitos"
   },
   {
@@ -192,7 +192,7 @@
    "target": {
     "selector": "[role=dialog] #is-linked"
    },
-   "at": 25.33,
+   "at": 21.37,
    "label": "Vincular à tabela principal"
   },
   {
@@ -203,7 +203,7 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 28.27
+   "at": 24.16
   },
   {
    "do": "type",
@@ -211,7 +211,7 @@
     "selector": "[role=dialog] input[inputmode=decimal]"
    },
    "text": "4",
-   "at": 28.27,
+   "at": 24.16,
    "label": "Valor da variação 4",
    "clear": true
   },
@@ -227,7 +227,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 2.2,
-   "at": 31.07,
+   "at": 26.16,
    "label": "Exemplo de cálculo: R$ 10,00 > R$ 10,40 (+4%) (zoom)",
    "optional": true,
    "timeout": 4
@@ -235,12 +235,12 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 39.12
+   "at": 32.61
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 49.94
+   "at": 40.21
   },
   {
    "do": "click",
@@ -250,7 +250,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 50.14,
+   "at": 40.41,
    "label": "Criar Tabela"
   },
   {
@@ -266,7 +266,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.offsetParent!==null&&e.textContent.trim()===\"Cobre mel\").sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-430);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 53.8,
+   "at": 43.75,
    "label": "desce até o Cobre mel"
   },
   {
@@ -280,7 +280,7 @@
     "selector": "main tbody tr:has-text('Cobre mel') td:nth-child(7)"
    },
    "seconds": 1.4,
-   "at": 57.51,
+   "at": 46.91,
    "label": "Cobre mel Preço de Compra R$ 44,20 (zoom: linha Cobre mel)",
    "optional": true,
    "timeout": 4
@@ -291,7 +291,7 @@
     "selector": "main tbody tr:has-text('Cobre mel') td:nth-child(8)"
    },
    "seconds": 1.0,
-   "at": 60.39,
+   "at": 49.07,
    "label": "Preço de Venda R$ 47,90 (o da principal)",
    "optional": true,
    "timeout": 4
@@ -299,13 +299,13 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const c=rolagem(document.querySelector(\"main\"+' *'));if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;if(y0<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0*(1-e);p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
-   "at": 63.33,
+   "at": 50.98,
    "label": "volta ao topo (a barra com o Editar Preços)"
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 64.03
+   "at": 51.68
   },
   {
    "do": "click",
@@ -314,7 +314,7 @@
     "name": "Editar Preços",
     "exact": true
    },
-   "at": 67.65,
+   "at": 53.72,
    "label": "Editar Preços"
   },
   {
@@ -327,7 +327,7 @@
    "target": {
     "selector": "[role=dialog] aside[aria-label='Tabelas de preços disponíveis'] button:has-text('Tabela Depósitos')"
    },
-   "at": 68.26,
+   "at": 55.24,
    "label": "Tabela Depósitos na lista da esquerda"
   },
   {
@@ -341,7 +341,7 @@
     "selector": "[role=dialog] thead th:has-text('Variação')"
    },
    "seconds": 0.5,
-   "at": 74.18,
+   "at": 59.87,
    "label": "coluna Variação",
    "optional": true,
    "timeout": 4
@@ -352,7 +352,7 @@
     "selector": "[role=dialog] tbody tr:has-text('Fio de cobre') button[title^='Variação padrão']"
    },
    "seconds": 0.5,
-   "at": 75.62,
+   "at": 60.99,
    "label": "cadeado fechado (Variação padrão)",
    "optional": true,
    "timeout": 4
@@ -362,7 +362,7 @@
    "target": {
     "selector": "[role=dialog] tbody tr:has-text('Fio de cobre') button[title^='Variação padrão']"
    },
-   "at": 81.16,
+   "at": 65.72,
    "label": "abre o cadeado do fio de cobre encapado"
   },
   {
@@ -371,22 +371,22 @@
     "selector": "[role=dialog] tbody tr:has-text('Fio de cobre') td:nth-child(4) input"
    },
    "text": "2",
-   "at": 86.61,
+   "at": 70.19,
    "label": "variação própria do fio de cobre: 2",
    "clear": true
   },
   {
    "do": "mark",
    "name": "L7",
-   "at": 91.49
+   "at": 74.0
   },
   {
    "do": "hover",
    "target": {
     "selector": "[role=dialog] tbody tr:has-text('Fio de cobre')"
    },
-   "seconds": 1.0,
-   "at": 91.49,
+   "seconds": 0.4,
+   "at": 74.0,
    "label": "só o fio de cobre mudou (zoom na linha)",
    "optional": true,
    "timeout": 4
@@ -397,7 +397,7 @@
     "selector": "[role=dialog] aside[aria-label='Resumo e regras da tabela']"
    },
    "seconds": 1.0,
-   "at": 91.84,
+   "at": 74.35,
    "label": "painel da direita: sem o cartão Margem automática",
    "optional": true,
    "timeout": 4
@@ -410,7 +410,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 106.26,
+   "at": 86.12,
    "label": "Cancelar (nada é salvo)",
    "noScroll": true
   },
@@ -424,7 +424,7 @@
   {
    "do": "mark",
    "name": "L8",
-   "at": 123.18
+   "at": 99.66
   },
   {
    "do": "hover",
@@ -432,7 +432,7 @@
     "selector": "a[href='/clientes-fornecedores']"
    },
    "seconds": 0.6,
-   "at": 124.22,
+   "at": 99.69,
    "label": "menu lateral (abre ao passar o mouse)",
    "noScroll": true,
    "optional": true,
@@ -443,7 +443,7 @@
    "target": {
     "selector": "a[href='/clientes-fornecedores']"
    },
-   "at": 126.73,
+   "at": 101.88,
    "label": "Clientes e Fornecedores",
    "noScroll": true
   },
@@ -472,7 +472,7 @@
     "role": "button",
     "name": "Fornecedores"
    },
-   "at": 128.09,
+   "at": 103.86,
    "label": "aba Fornecedores"
   },
   {
@@ -515,7 +515,7 @@
     "text": "Depósito Irmãos Siqueira",
     "within": "main"
    },
-   "at": 129.84,
+   "at": 105.14,
    "label": "Depósito Irmãos Siqueira"
   },
   {
@@ -531,7 +531,7 @@
     "exact": true,
     "within": "main"
    },
-   "at": 131.89,
+   "at": 106.82,
    "label": "Editar"
   },
   {
@@ -542,12 +542,12 @@
   {
    "do": "mark",
    "name": "L9",
-   "at": 133.33
+   "at": 107.98
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.offsetParent!==null&&e.textContent.trim()===\"Tabela de Preços Padrão\").sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-380);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 133.63,
+   "at": 108.28,
    "label": "desce até Tabela de Preços Padrão"
   },
   {
@@ -555,7 +555,7 @@
    "target": {
     "selector": "[role=dialog] div.space-y-2:has(> label:has-text('Tabela de Preços Padrão')) button[role=combobox]"
    },
-   "at": 135.05,
+   "at": 109.38,
    "label": "Tabela de Preços Padrão (abre)"
   },
   {
@@ -564,7 +564,7 @@
     "role": "option",
     "name": "Tabela Depósitos"
    },
-   "at": 137.1,
+   "at": 110.98,
    "label": "Tabela Depósitos (zoom)"
   },
   {
@@ -575,7 +575,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 138.01,
+   "at": 111.86,
    "label": "Salvar",
    "noScroll": true
   },
@@ -587,12 +587,12 @@
   {
    "do": "mark",
    "name": "L10",
-   "at": 142.79
+   "at": 116.16
   },
   {
    "do": "eval",
    "js": "(()=>{history.pushState({},'','/caixa');window.dispatchEvent(new PopStateEvent('popstate'));return location.pathname})()",
-   "at": 148.62,
+   "at": 120.98,
    "label": "vai ao Caixa (por baixo da ilustração)"
   },
   {
@@ -603,14 +603,14 @@
   {
    "do": "mark",
    "name": "L11",
-   "at": 164.01
+   "at": 133.25
   },
   {
    "do": "click",
    "target": {
     "selector": "main button:has-text('Nova Compra')"
    },
-   "at": 165.88,
+   "at": 134.73,
    "label": "Nova Compra"
   },
   {
@@ -625,7 +625,7 @@
    "target": {
     "selector": "#supplier-desktop-top"
    },
-   "at": 170.97,
+   "at": 138.11,
    "label": "Selecionar Fornecedor"
   },
   {
@@ -644,7 +644,7 @@
     "text": "Depósito Irmãos Siqueira",
     "within": "[role=dialog]"
    },
-   "at": 173.63,
+   "at": 140.65,
    "label": "Depósito Irmãos Siqueira"
   },
   {
@@ -655,7 +655,7 @@
   {
    "do": "mark",
    "name": "L12",
-   "at": 175.49
+   "at": 142.1
   },
   {
    "do": "type",
@@ -666,7 +666,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 175.49,
+   "at": 142.1,
    "label": "Tabela de Preços: Tabela Depósitos (zoom, sem o mouse)"
   },
   {
@@ -674,7 +674,7 @@
    "target": {
     "placeholder": "Escreva o nome ou código do material"
    },
-   "at": 176.29,
+   "at": 142.73,
    "label": "campo do material"
   },
   {
@@ -685,7 +685,7 @@
    "text": "cobre",
    "cps": 30,
    "noClick": true,
-   "at": 177.72,
+   "at": 143.63,
    "label": "material: cobre"
   },
   {
@@ -695,7 +695,7 @@
     "name": "Cobre mel",
     "exact": false
    },
-   "at": 178.31,
+   "at": 144.25,
    "label": "Cobre mel"
   },
   {
@@ -706,7 +706,7 @@
   {
    "do": "mark",
    "name": "L13",
-   "at": 181.53
+   "at": 146.9
   },
   {
    "do": "type",
@@ -717,7 +717,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 181.53,
+   "at": 146.9,
    "label": "Valor/kg 44,20 (zoom)"
   },
   {
@@ -730,7 +730,7 @@
    "target": {
     "placeholder": "Escreva o nome ou código do material"
    },
-   "at": 182.42,
+   "at": 147.57,
    "label": "campo do material de novo"
   },
   {
@@ -741,7 +741,7 @@
    "text": "bronze",
    "cps": 30,
    "noClick": true,
-   "at": 183.34,
+   "at": 147.9,
    "label": "troca para bronze",
    "clear": true
   },
@@ -752,7 +752,7 @@
     "name": "Bronze",
     "exact": false
    },
-   "at": 184.65,
+   "at": 148.97,
    "label": "Bronze"
   },
   {
@@ -771,7 +771,7 @@
    "target": {
     "text": "Preço especial aplicado para Bronze"
    },
-   "seconds": 5.98,
+   "seconds": 5.07,
    "label": "aviso Preço especial aplicado (o mouse segura o aviso) (zoom: Valor/kg 30,50 com o aviso)",
    "timeout": 6,
    "noScroll": true,
@@ -795,7 +795,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 209.94
+   "at": 170.0
   }
  ]
 }

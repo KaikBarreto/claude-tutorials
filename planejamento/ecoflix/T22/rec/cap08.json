@@ -239,13 +239,13 @@
   },
   {
    "do": "eval",
-   "js": "(()=>{const b=[...document.querySelectorAll(\"main button\")].find(e=>e.offsetParent&&e.innerText.trim()===\"Regime de Caixa\");if(!b)return 'SEM ALVO';b.click();return 'ok'})()",
+   "js": "(async()=>{for(let i=0;i<32;i++){const b=[...document.querySelectorAll('[role=tab]')].find(e=>e.innerText.replace(/\\s+/g,' ').includes(\"Regime de Caixa\"));if(b){b.click();return 'ok'}await new Promise(r=>setTimeout(r,250))}return 'SEM ALVO'})()",
    "at": 41.21,
    "label": "Regime de Caixa (o resultado vai para -R$ 26.650,00)"
   },
   {
    "do": "eval",
-   "js": "(()=>{const b=[...document.querySelectorAll(\"main button\")].find(e=>e.offsetParent&&e.innerText.trim()===\"Regime de Compet\\u00eancia\");if(!b)return 'SEM ALVO';b.click();return 'ok'})()",
+   "js": "(async()=>{for(let i=0;i<32;i++){const b=[...document.querySelectorAll('[role=tab]')].find(e=>e.innerText.replace(/\\s+/g,' ').includes(\"Regime de Compet\\u00eancia\"));if(b){b.click();return 'ok'}await new Promise(r=>setTimeout(r,250))}return 'SEM ALVO'})()",
    "at": 43.79,
    "label": "Regime de Competência (volta ao resultado positivo)"
   },

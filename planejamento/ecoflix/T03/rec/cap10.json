@@ -1,6 +1,6 @@
 {
  "name": "t03-cap10",
- "title": "T03 · Cap. 10 · A margem no cadastro do material (narração 75,1 s ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário rafael)",
+ "title": "T03 · Cap. 10 · A margem no cadastro do material (narração 60,7 s; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário rafael)",
  "seed": "t03-cap10",
  "pace": 0.5,
  "cps": 14,
@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
@@ -127,7 +127,7 @@
     "selector": "main tbody tr:has-text('Radiador de cobre') td:last-child button"
    },
    "seconds": 0.4,
-   "at": 2.67,
+   "at": 1.87,
    "label": "menu da linha do radiador",
    "optional": false,
    "timeout": 8
@@ -160,7 +160,7 @@
     "role": "menuitem",
     "name": "Editar"
    },
-   "at": 5.02,
+   "at": 3.98,
    "label": "Editar"
   },
   {
@@ -171,7 +171,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.offsetParent!==null&&e.textContent.trim()===\"Valores e estoque\").sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-150);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 5.72,
+   "at": 4.8,
    "label": "desce até Valores e estoque"
   },
   {
@@ -182,7 +182,7 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 16.4
+   "at": 12.9
   },
   {
    "do": "hover",
@@ -190,7 +190,7 @@
     "selector": "[role=dialog] p:has-text('Margem automática de')"
    },
    "seconds": 1.4,
-   "at": 16.4,
+   "at": 12.9,
    "label": "linha Margem automática de ...: a venda acompanha a compra (zoom)",
    "optional": true,
    "timeout": 4
@@ -200,7 +200,7 @@
    "target": {
     "selector": "button[aria-label=\"Calcular a venda pela margem\"]"
    },
-   "at": 19.19,
+   "at": 14.86,
    "label": "calculadora ao lado do P. Venda"
   },
   {
@@ -214,7 +214,7 @@
     "selector": "[data-radix-popper-content-wrapper] input"
    },
    "text": "20",
-   "at": 22.2,
+   "at": 17.65,
    "label": "margem 20",
    "clear": true
   },
@@ -229,7 +229,7 @@
     "selector": "[data-radix-popper-content-wrapper] p:has-text('Compra R$')"
    },
    "seconds": 1.4,
-   "at": 26.02,
+   "at": 20.69,
    "label": "a conta: Compra R$ 21,00 > Venda R$ 25,20 (zoom)",
    "optional": true,
    "timeout": 4
@@ -242,7 +242,7 @@
     "exact": true,
     "within": "[data-radix-popper-content-wrapper]"
    },
-   "at": 31.25,
+   "at": 25.27,
    "label": "Aplicar"
   },
   {
@@ -260,7 +260,7 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 32.09
+   "at": 26.11
   },
   {
    "do": "type",
@@ -268,7 +268,7 @@
     "selector": "[role=dialog] #purchase_price"
    },
    "text": "22",
-   "at": 34.7,
+   "at": 28.54,
    "label": "P. Compra 22",
    "clear": true
   },
@@ -287,8 +287,8 @@
    "target": {
     "selector": "[role=dialog] #sale_price"
    },
-   "seconds": 1.2,
-   "at": 40.25,
+   "seconds": 0.86,
+   "at": 32.7,
    "label": "P. Venda 26,40 (zoom)",
    "optional": true,
    "timeout": 4
@@ -296,14 +296,25 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 42.15
+   "at": 34.11
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] #sale_price"
+   },
+   "seconds": 0.2,
+   "at": 34.11,
+   "label": "P. Venda 26,40 (zoom) (continua)",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "click",
    "target": {
     "selector": "button[aria-label=\"Calcular a venda pela margem\"]"
    },
-   "at": 42.35,
+   "at": 34.31,
    "label": "abre a calculadora de novo"
   },
   {
@@ -320,7 +331,7 @@
     "within": "[data-radix-popper-content-wrapper]"
    },
    "seconds": 1.0,
-   "at": 44.55,
+   "at": 36.14,
    "label": "Tirar a margem deste material",
    "optional": true,
    "timeout": 4
@@ -328,12 +339,12 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 54.35
+   "at": 43.87
   },
   {
    "do": "press",
    "key": "Escape",
-   "at": 55.05,
+   "at": 44.57,
    "label": "fecha a calculadora"
   },
   {
@@ -351,7 +362,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 66.62,
+   "at": 54.28,
    "label": "Cancelar (nada é salvo)",
    "noScroll": true
   },
@@ -370,7 +381,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 75.05
+   "at": 60.72
   }
  ]
 }

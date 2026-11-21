@@ -5,8 +5,12 @@ Repositório da skill: `/home/claude/claude-tutorials` (caminhos relativos a ele
 A aula já tem: fala aprovada, robô ensaiado (no 1.60.18 ou no 1.60.22), **voz real processada** (`$TUT_HOME/tNN/narracao/capNN.json`, sem
 "estimado", e `titulos/titulos.json`) e as ilustrações v3 feitas ou em andamento (`Tnn/cenas_v3/`, `Tnn/cenas/ilustracoes.json`).
 **Tarefa**: gravação final com a voz, montagem e prévia da aula, no padrão da T08 (aprovada pelo Kaik: "ficou muito bom").
-Sem aprovação no meio: termine e relate. Fechada antes no mesmo molde: a **T02** (`$TUT_HOME/t02/edit/`, `rec/t02/t02_final.sh`;
-`ilus_local.json` para ajuste de ilustração sem editar o `ilustracoes.json`).
+Sem aprovação no meio: termine e relate. Fechadas antes no mesmo molde: a **T02** (`$TUT_HOME/t02/edit/`, `rec/t02/t02_final.sh`;
+`ilus_local.json` para ajuste de ilustração sem editar o `ilustracoes.json`) e a **T03**, a mais recente (`$TUT_HOME/t03/edit/`,
+`rec/t03/t03_final.sh`, `t03_specs.py`, `fechar_t03.sh`, `montar_t03.sh`; resumo em `planejamento/ecoflix/T03/andamento_160.md`).
+**Aula de 17 min ou mais estoura a memória** no `music_bed.py`, no `mix.py` e no fim do `finish.py` (a T03, com 23 min, caiu
+nos três): copie `t03/edit/t03_mix.py` e `t03_music_bed.py` (mesmo som, pouca memória) e as 3 linhas do `t03/edit/finish.py`
+(`MIX_PY`, leitura em `float32`, `limit(..., inplace=True)`) e monte com `MIX_PY=$TUT_HOME/tNN/edit/tNN_mix.py`.
 
 ## Modelo a copiar: a T08
 - Gravação final: `$TUT_HOME/rec/t08/t08_final.sh` (um capítulo por vez pela fila, instância religada no `FAKE_NOW` do
@@ -39,7 +43,7 @@ Sem aprovação no meio: termine e relate. Fechada antes no mesmo molde: a **T02
    texto na tela sem travessão e sem dado real; título de capítulo certo; nada cortado; áudio sem estouro.
 7. **Entrega**: `entregar.py` → aula final 1080p em `tNN/edit/out/Tnn/aula_final.mp4` + legendas, e uma prévia 720p de até
    28 MB em `$TUT_HOME/entrega_previa/EcoFlix Tnn - <título> 1.60.22 (previa 720p).mp4`.
-8. **Disco** (sobra pouco: ~1,8 GB para tudo; na T02 chegou a zero no `finish.py`): `proj` e `video_sem_audio.mp4` em
+8. **Disco** (sobra pouco: ~1,2 GB para tudo; na T02 chegou a zero no `finish.py`; a T03 de 23 min ocupou ~0,6 GB no fim): `proj` e `video_sem_audio.mp4` em
    `/dev/shm/tNN_*` (link simbólico em `out/Tnn/`), `df -h /` antes de cada passo pesado e pare se ficar abaixo de 600 MB; no fim, apague `out/Tnn/proj`, `out/Tnn/video_sem_audio.mp4` e as pastas
    `out/capNN` (regeráveis), sempre com caminho absoluto literal. Fica: `aula_final.mp4`, legendas, `capitulos.json`, a prévia,
    as gravações finais em `rec/tNN/` e as ilustrações em `out/ilus/`.

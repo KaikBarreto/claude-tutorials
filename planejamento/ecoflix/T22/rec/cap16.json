@@ -25,7 +25,8 @@
   "t22/apos-cap03",
   "t22/apos-cap09",
   "t22/apos-cap10",
-  "t22/venda-outra-unidade"
+  "t22/venda-outra-unidade",
+  "base/caixa-aberto"
  ],
  "prewarm": [
   "/login"
@@ -186,9 +187,9 @@
   },
   {
    "do": "eval",
-   "js": "(()=>{history.pushState({},'','/caixa');dispatchEvent(new PopStateEvent('popstate'));return location.pathname})()",
+   "js": "(async()=>{let a=document.querySelector('a[href=\"/caixa\"]');if(!a){const b=[...document.querySelectorAll('button')].find(e=>e.textContent.trim().startsWith('Financeiro'));if(b){b.click();await new Promise(r=>setTimeout(r,500));a=document.querySelector('a[href=\"/caixa\"]')}}if(!a)return 'SEM ALVO';a.click();return 'ok'})()",
    "at": 11.26,
-   "label": "Caixa (bastidor)"
+   "label": "Caixa (menu, bastidor)"
   },
   {
    "do": "waitFor",

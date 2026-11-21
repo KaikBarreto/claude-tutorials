@@ -61,7 +61,8 @@ from PIL import ImageFont  # noqa: E402
 FT = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "kit", "fonts", "Montserrat-600.ttf")
 font = ImageFont.truetype(FT, 13) if os.path.exists(FT) else None  # a fonte padrão do PIL não tem acentos
 for i, (im, (t, lab)) in enumerate(zip(ims, marks)):
-    x, y = (i % cols) * w, (i // cols) * (h + 22); sheet.paste(im, (x, y + 22)); d.text((x + 6, y + 4), f"{int(t // 60)}:{t % 60:04.1f}  {lab}", fill="black", font=font)
+    x, y = (i % cols) * w, (i // cols) * (h + 22); sheet.paste(im, (x, y + 22)); t = round(t, 1)  # arredonda antes: 1259,97 virava "20:60.0"
+    d.text((x + 6, y + 4), f"{int(t // 60)}:{t % 60:04.1f}  {lab}", fill="black", font=font)
 SO_LEG or sheet.save(os.path.join(OUT, "conferencia.jpg"), quality=88); SO_LEG or print("folha:", os.path.join(OUT, "conferencia.jpg"))
 
 # ------------------------------------------------------------------ cópia com nome + legendas

@@ -52,7 +52,7 @@ NOMES = ['Abertura', 'Como o Gerencial funciona', 'Criar o grupo e o código', '
 _E = ['t22/inicio', 't22/apos-cap02', 't22/apos-cap03', 't22/apos-cap09', 't22/apos-cap10']
 _A3 = _E[:3]
 SEMENTE = {0: _E[:1], 1: _E[:1], 2: _E[:1], 3: _E[:2], 4: ['t22/inicio', 't22/codigo-vencido'],
-           **{n: _A3 for n in (5, 6, 7, 8, 9, 10, 11, 12)}, 13: _E[:4], 14: _E[:4], 15: _E[:5], 16: _E[:5] + ['t22/venda-outra-unidade'], 17: _E[:5], 18: _E[:5]}
+           **{n: _A3 for n in (5, 6, 7, 8, 9, 10, 12)}, 11: _E[:4], 13: _E[:4], 14: _E[:4], 15: _E[:5], 16: _E[:5] + ['t22/venda-outra-unidade', 'base/caixa-aberto'], 17: _E[:5], 18: _E[:5]}
 
 sys.path.insert(0, NARR)
 try:
@@ -317,6 +317,13 @@ def js_clica_texto(texto, escopo='main', tag='button'):
     """clique por eval (sem cursor) no `tag` cujo texto visível é `texto`"""
     return ("(()=>{const b=[...document.querySelectorAll(%s)].find(e=>e.offsetParent&&e.innerText.trim()===%s);if(!b)return 'SEM ALVO';b.click();return 'ok'})()"
             % (json.dumps(f'{escopo} {tag}'), json.dumps(texto)))
+
+
+def js_clica_aba(texto):
+    """clique por eval (sem cursor) na aba (role=tab) cujo texto CONTÉM `texto`; espera até 8 s a aba voltar à tela (a troca de regime pode
+    trocar a página por um "Consolidando filiais..." por um instante)"""
+    return ("(async()=>{for(let i=0;i<32;i++){const b=[...document.querySelectorAll('[role=tab]')].find(e=>e.innerText.replace(/\\s+/g,' ').includes(%s));"
+            "if(b){b.click();return 'ok'}await new Promise(r=>setTimeout(r,250))}return 'SEM ALVO'})()" % json.dumps(texto))
 
 
 ANIMA = "(()=>{const a=document.getAnimations().filter(x=>x.currentTime<0);a.forEach(x=>x.startTime=document.timeline.currentTime);return a.length})()"
@@ -688,8 +695,8 @@ def cap08():
     c.mark(3)
     c.mark(4)
     c.hover(DRE_RESULTADO, 0.4, at=c.L(4) - 0.6, label='o resultado (a câmera fica nele)')
-    c.ev(js_clica_texto('Regime de Caixa'), at=c.A(4, 'caixa', 0.1), label='Regime de Caixa (o resultado vai para -R$ 26.650,00)')
-    c.ev(js_clica_texto('Regime de Competência'), at=c.A(4, 'competência', 0.1), label='Regime de Competência (volta ao resultado positivo)')
+    c.ev(js_clica_aba('Regime de Caixa'), at=c.A(4, 'caixa', 0.1), label='Regime de Caixa (o resultado vai para -R$ 26.650,00)')
+    c.ev(js_clica_aba('Regime de Competência'), at=c.A(4, 'competência', 0.1), label='Regime de Competência (volta ao resultado positivo)')
     c.mark(5)
     c.ev(js_topo(600), at=c.L(5) - 0.9, label='sobe para o alto da DRE')
     c.click(BTNX('Comparativo'), at=c.A(5, 'Comparativo', 0.6), label='Comparativo (em competência)')
@@ -801,6 +808,9 @@ def cap10():
     return c
 
 
+# a Visão Geral mostra 10 materiais por página (o Papelão é o 13º): no setup (fora do vídeo) a página passa a mostrar 25
+PAG25 = [{'do': 'click', 'target': SEL('main div.flex:has(> span:text-is("por página")) button[role=combobox]')}, {'do': 'click', 'target': {'role': 'option', 'name': '25'}},
+         {'do': 'waitFor', 'text': 'Papelão', 'timeout': 8}]
 ACOES_MAT = lambda nome: SEL(f'main button[aria-label^="Ações de {nome}"]')
 ITEM_MENU = lambda nome: SEL(f'[role=menuitem]:has-text("{nome}")')
 
@@ -808,9 +818,10 @@ ITEM_MENU = lambda nome: SEL(f'[role=menuitem]:has-text("{nome}")')
 def cap11():
     """Corrigir o estoque de uma unidade: Estoque Gerencial › Visão Geral › ⋯ da linha Papelão › Corrigir saldo (Unidade: Filial Pindamonhangaba,
     Saída de 30, motivo, Registrar saída); depois Transferir entre materiais (só a janela, Cancelar). A ilustração do aviso de divergência é da
-    coordenação. Semente apos-cap03 (não segue)."""
+    coordenação. Semente apos-cap09 (catálogo do grupo já ligado: com o material sem catálogo a janela Corrigir saldo mostra 0 Kg, porque o handler falso
+    get_group_material_stock não trata o id canônico = materials.id; a RPC real trata). Não segue."""
     c = Cap(11, setup_ger(url='/gerencial/estoque', espera='Tabela Unificada de Materiais', extra=vai('/gerencial', 'Dashboard Gerencial') + abre_menu_ger()
-                          + vai('/gerencial/estoque', 'Tabela Unificada de Materiais')),
+                          + vai('/gerencial/estoque', 'Tabela Unificada de Materiais') + PAG25),
             pace=0.5, start=(700, 300), storage_extra={'gerencial-estoque-tab': 'visao-geral'})
     c.mark(1)
     c.hover(LINHA('Papelão'), 0.8, at=c.A(1, 'papelão', 0.5), label='a linha do Papelão')
@@ -828,7 +839,7 @@ def cap11():
     c.click(SEL(f'{DLG} #adjust-quantity'), at=c.A(3, 'trinta', 0.6), label='Quantidade')
     c.type(SEL(f'{DLG} #adjust-quantity'), '30', at=c.A(3, 'trinta', 0.05), noClick=True, label='Quantidade 30')
     c.hover(TXT('Depois do ajuste', within=DLG), 1.4, at=c.A(3, 'saldo', 0.5), label='Saldo atual e Depois do ajuste (ZOOM)')
-    c.confere('dlg', ['Saldo atual', 'Depois do ajuste', '__LER__'], 'LER: saldo atual e depois do ajuste do Papelão na filial')
+    c.confere('dlg', ['Saldo atual', 'Depois do ajuste', '3.900', '3.870'], 'saldo atual 3.900 kg e depois do ajuste 3.870 kg do Papelão na filial')
     c.mark(4)
     c.click(SEL(f'{DLG} #adjust-description'), at=c.A(4, 'Escrevo', 0.6), label='Motivo da correção')
     c.colar(f'{DLG} #adjust-description'.replace('[role=dialog]', '[role=dialog]'), 'Inventário conferido no pátio', at=c.A(4, 'motivo.', 0.2), label='Motivo: Inventário conferido no pátio')
@@ -1028,7 +1039,7 @@ def cap15():
     """Lote, fila e o pedido da filial: a Sandra marca Papelão e Plástico PET no Materiais e pede a transferência (Transferir Estoque › Enviar 2
     Transferência(s)); (a ilustração cobre a troca para o Rafael); na matriz, Estoque Gerencial › Transferências (contador); Nova: lote (Selecionar
     todos com saldo; só Ferro misto; quantidade acima do saldo avisa; 500 kg; Solicitar); Cancelar o Plástico PET; Executar todas (2); Visão Geral › ⋯ do
-    Inox › Transferir entre unidades. Semente apos-cap10 (não segue)."""
+    Alumínio bloco › Transferir entre unidades. Semente apos-cap10 (não segue)."""
     setup = login(SANDRA_EMAIL, 'Olá, Sandra!') + vai('/materiais', 'Materiais') + [AGUARDA]
     c = Cap(15, setup, pace=0.5, start=(700, 300))
     c.mark(1)
@@ -1092,10 +1103,10 @@ def cap15():
     c.ev(js_topo(500), at=c.L(9) - 0.9, label='sobe')
     c.click(TAB('visao-geral'), at=c.A(9, 'Visão', 0.6), label='Visão Geral')
     c.waitfor(text='Tabela Unificada de Materiais', timeout=10)
-    c.click(ACOES_MAT('Inox'), at=c.A(9, 'menu', 0.6), label='⋯ da linha Inox')
+    c.click(ACOES_MAT('Alumínio bloco'), at=c.A(9, 'menu', 0.6), label='⋯ da linha Alumínio bloco')
     c.click(ITEM_MENU('Transferir entre unidades'), at=c.A(9, 'Transferir', 0.6), label='Transferir entre unidades')
-    c.waitfor(text='De qual unidade sai o Inox?', timeout=8)
-    c.hover(TXTP('De qual unidade sai o Inox?', within=DLG), 1.4, at=c.A(9, 'abre', 0.5), label='De qual unidade sai o Inox? (ZOOM)')
+    c.waitfor(text='De qual unidade sai o Alumínio bloco?', timeout=8)
+    c.hover(TXTP('De qual unidade sai o Alumínio bloco?', within=DLG), 1.4, at=c.A(9, 'abre', 0.5), label='De qual unidade sai o Alumínio bloco? (ZOOM)')
     c.click(BTN('Cancelar', within=DLG), at=round(c.dur - 1.0, 2), label='Cancelar')
     c.fim()
     return c
@@ -1126,8 +1137,10 @@ def cap16():
     c.click(SEL('main div.flex:has(> div > p:text-is("Recicla Vale Metais")) button[role=switch]'), at=c.A(1, 'Ligo', 0.6), label='liga a chave da matriz')
     c.waitfor(text='Configuração atualizada', timeout=8)
     c.mark(2)
-    # o Caixa mora dentro do grupo Financeiro do menu: a troca de tela é de bastidor (rota do próprio app, sem recarregar), até o botão Nova Venda
-    c.ev("(()=>{history.pushState({},'','/caixa');dispatchEvent(new PopStateEvent('popstate'));return location.pathname})()", at=c.L(2) - 0.5, label='Caixa (bastidor)')
+    # o Caixa mora dentro do grupo Financeiro do menu: a troca de tela é de bastidor (clique no menu, sem cursor), até o botão Nova Venda
+    c.ev("(async()=>{let a=document.querySelector('a[href=\"/caixa\"]');if(!a){const b=[...document.querySelectorAll('button')].find(e=>e.textContent.trim().startsWith('Financeiro'));"
+         "if(b){b.click();await new Promise(r=>setTimeout(r,500));a=document.querySelector('a[href=\"/caixa\"]')}}"
+         "if(!a)return 'SEM ALVO';a.click();return 'ok'})()", at=c.L(2) - 0.5, label='Caixa (menu, bastidor)')
     c.waitfor(text='Nova Venda', timeout=20)
     c.click(BTN('Nova Venda'), label='Nova Venda')
     c.waitfor(text='Voltar para o caixa', timeout=25)
