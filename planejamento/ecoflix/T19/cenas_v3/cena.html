@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- T19 "Funcionários RH" · ilustrações de conceito no kit v3 (perfis/ecoflix/cenas_v3/LEIA.md), 16:9 (--larg 1422).
+     Uma função por CENA e CAPS[cap] diz o que cada capítulo ilustrado usa (os papéis reais, recibo, holerite e relação, estão em pdf.html).
+     As janelas (de/ate) estão em ../cenas/ilustracoes.json (linhas contadas de 0, como a voz). Âncoras por palavra (W) sobre a voz real
+     ($TUT_HOME/t19/narracao/capNN.json), conferidas linha a linha (21/11).
+       cap00 · caderninho  (claro)   ilu00_caderninho     "Cada coisa no lugar dela"  linha 1: o vale sai do caixa, o caderno não ajuda ninguém no dia do pagamento; aqui cada coisa tem lugar: Saldo, Extrato, Ponto (da linha 0)
+       cap05 · contaSaldo  (escuro)  ilu05_conta_saldo    "A conta do saldo"          linha 6: saldo = salário + bônus − faltas − vales, só depois do último pagamento; pagou, recomeça do salário (números do Diego, linha 5)
+       cap06 · semSaida    (escuro)  ilu06_sem_saida      "Pagamento sem saída"       linha 9: os vales comem o salário inteiro, o sistema avisa que nenhum dinheiro vai sair e pede a confirmação
+       cap08 · gavetas     (escuro)  ilu08_tres_gavetas   "Cada coisa na sua gaveta"  linha 5: férias e 13º (R$ 3.733,33 e R$ 1.050,00, linhas 2 e 4) não são bônus; bônus entra no saldo e bagunça a conta; rescisão no mesmo menu
+       cap11 · doisLinks   (escuro)  ilu08_dois_links     "Dois links diferentes"     linha 6: link pessoal (um por funcionário, no celular) e link do tablet (um por empresa); o tablet não mostra o link pessoal de ninguém
+     Saíram do ilustracoes.json (21/11), porque a tela do app já mostra o assunto na hora da fala, ou a ideia está numa cena vizinha:
+       ilu02_iceberg (cap02, linha 4)    na linha 5 a própria calculadora do app abre e mostra fundo de garantia, décimo terceiro, férias, INSS e o custo total (R$ 4.264,00); a janela da linha 4
+                                         só diria "o salário é só a ponta" e os itens do iceberg só são falados na linha 6, já com a tela mostrando
+       ilu03_clt_informal (cap03, l. 4)  a diferença CLT x informal está na tela do pagamento (cap06 linha 5, a chave Normal/CLT, e o resumo com INSS e imposto de renda no cap07 linha 4)
+       ilu06_ciclo (cap06, linha 13)     a frase "recomeça do salário" já é a da cena do saldo (cap05) e a tela mostra o saldo de volta a R$ 2.900,00 na linha 12
+       ilu07_lixeira (cap09, linha 5)    a tela mostra a lixeira na própria linha do extrato; é a dica falada da linha 4 e 5, sem conceito novo
+       ilu08_link_celular (cap11, l. 3)  a tela está no menu do Gabriel com "Copiar link do ponto"; só diz "enviar por mensagem"
+       ilu09_hora_sistema (cap12, l. 8)  dica de uma frase, e a tela é a confirmação do ponto no celular, com a hora do sistema
+       ilu10_falta_sozinha (cap14, l. 2) a tela mostra a Folha de Ponto com o dia 05 em Falta e depois em Atestado, na hora da fala
+       ilu11_jornada (cap15, linha 6)    a tela mostra a jornada da Juliana salva, ao lado da jornada da empresa
+       ilu12_arquivar (cap16, linha 5)   a tela mostra o diálogo com Arquivar e Excluir definitivamente (e o aviso "sem volta") na fala
+     Papéis reais (pdf.html), um por fala de PDF ou comprovante: recibo do Edson (cap06 l.11), holerite do Marcos (cap07 l.7), recibo A4 do Edson (cap09 l.1), Relação de pagamento (cap10 l.2).
+     Pendente: espelho de ponto em PDF (cap14, linha 6: "o espelho de ponto em PDF ou a planilha"): o robô só passa o mouse na escolha (Espelho de Ponto (PDF) / Planilha para contabilidade (Excel))
+       e não gravou o PDF no actions.json do cap14; a tela já mostra a escolha do formato. Também não há o recibo térmico (cap09 linha 1, "folha A4 ou térmico"): só o A4 foi gravado.
+     Só textos e números da fala ou da tela, contas conferidas: 1.980,00 + 0,00 − 90,00 − 200,00 = 1.690,00 (cap05); férias R$ 3.733,33 e 13º R$ 1.050,00 (cap08).
+     Acabamento: node perfis/ecoflix/cenas_v3/auditar.cjs --aula planejamento/ecoflix/T19 --larg 1422
+     Render de uma janela: node ferramentas/edit/cenas/render_cenas.cjs <cap> <capNN.json> saida.mp4 \
+               --html planejamento/ecoflix/T19/cenas_v3/cena.html --larg 1422 --dsf 1.35 --de <s> --ate <s>
+     Ícones lucide usados (o nome tem de estar literal nesta página): 'wallet' 'notebook' 'calendar-check' 'receipt' 'clock' 'banknote' 'gift' 'calendar-x' 'hand-coins' 'circle-check'
+     'triangle-alert' 'smartphone' 'tablet' 'ban' 'menu' 'user-round' 'palmtree' -->
+</head><body>
+<script type="module">
+import { PI, cl, lerp, pr, eo, eio, eo5, eis, passa, golpe, W, el, ic, vis, foco, pulso, ondaEm, conta, titulo, posTitulo, selo,
+  htmlChip, htmlCartao, htmlOp, htmlFluxo, fluxo, CENA, GL, THREE, mat, caixa, malha, grupo, mundo, mancha, piso, anel, destaque, U, camera, posCam,
+  lugar, plano, clima, cena, estilo, enquadraRet }
+  from '../../../../perfis/ecoflix/cenas_v3/motor.js';
+import { ceuClaro, mundoEscuro } from '../../../../perfis/ecoflix/cenas_v3/fundo.js';
+import { reais } from '../../../../perfis/ecoflix/cenas_v3/dados/base.js';
+import { htmlExtrato, extrato, marca } from '../../../../perfis/ecoflix/cenas_v3/dados/extrato.js';
+import { registradora } from '../../../../perfis/ecoflix/cenas_v3/objetos/registradora.js';
+import { pasta } from '../../../../perfis/ecoflix/cenas_v3/objetos/pasta.js';
+import { folha } from '../../../../perfis/ecoflix/cenas_v3/objetos/folha.js';
+
+// =====================================================================================================================
+// comuns
+const NUNCA = 1e9, EE = .0112, ROTC = [-.2, .08, 0];
+const cores = () => estilo('t19-cor', `.chip.am{background:linear-gradient(150deg,#F7CB68,#E59A22);color:#3A2A06;border-color:rgba(255,255,255,.4);box-shadow:0 12px 22px -8px rgba(229,154,34,.6)}
+.selo.vm{background:linear-gradient(150deg,#FF9A8C,#E5564A);box-shadow:0 10px 18px -6px rgba(229,86,74,.6),inset 0 1px 0 rgba(255,255,255,.45)}`);
+const poeTxt = (e, s) => { if (e && e.textContent !== s) e.textContent = s; };
+const some = (o, k) => { o.visible = k > .002; if (o.visible) o.scale.setScalar(k); };   // objeto 3D que entra crescendo (k passa de 1 e volta)
+const opac = (e, k) => { e.style.opacity = eo(cl(k)).toFixed(3); };
+// degrau: cartão baixo de uma linha (selo + nome + legenda opcional)
+const degrau = (icone, rot, sub, o = {}) => `<div class="cartao ${o.cc ?? ''}" style="position:relative;width:${o.w ?? 360}px;height:${o.h ?? 84}px;padding:0 20px;display:flex;align-items:center;gap:13px;white-space:nowrap">
+  ${selo(icone, o.cls ?? 'n', o.selo ?? 46)}<div><div class="rot">${rot}</div>${sub ? `<div class="sub">${sub}</div>` : ''}</div>${o.res ? '<div class="onda"></div>' : ''}</div>`;
+// um lugar do mundo escuro: posições em px do desenho (y para baixo)
+function escuro() {
+  const EIXO = lugar([0, 0, 0]), E = mundoEscuro(EIXO, 0, EE);
+  return { EIXO, X: (html, x, y, o = {}) => E(html, x * EE, -y * EE, 0, o), ret: (a, b, c, d) => [a * EE, -d * EE, c * EE, -b * EE], fundo: (cx, cy, o) => E.fundo(cx * EE, -cy * EE, o) };
+}
+const STAND = (t, tit, t0, sai) => { clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, t0 - .45, sai); };
+// caixa (px do desenho) de um plano posto em (x, y) com âncora (ax, ay), e a união de várias
+const bx = (p, x, y, ax = .5, ay = .5) => [x - ax * p.w, y - ay * p.h, x + (1 - ax) * p.w, y + (1 - ay) * p.h];
+const uni = (...b) => [Math.min(...b.map(q => q[0])), Math.min(...b.map(q => q[1])), Math.max(...b.map(q => q[2])), Math.max(...b.map(q => q[3]))];
+const chipX = (X, txt, cls, x, y, ax, ay) => { const p = X(htmlChip(txt, cls), x, y, { anc: [ax, ay], z: 40 }); p.e.style.transformOrigin = `${ax * 100}% ${ay * 100}%`; return p; };
+
+// =====================================================================================================================
+// CENA "caderninho" · cap00, linha 1 · clima claro (o caixa, o caderno e os três lugares)
+// 1 "Num ferro-velho, vale sai do caixa quase toda semana. Se fica só no caderno, no dia do pagamento alguém precisa lembrar de tudo.
+//    Aqui, cada coisa fica no lugar dela."
+// A registradora (o caixa) abre em "caixa"; a pasta (o caderno) chega em "caderno"; "lembrar de tudo" fica âmbar. Em "Aqui" entram os três lugares,
+// os mesmos que a linha 0 prometeu: Saldo (quanto cada um ganha), Extrato (o que já adiantou) e Ponto (a que horas bateu o ponto).
+function caderninho() {
+  const t0 = W(1, 'num'), tva = W(1, 'vale'), tcx = W(1, 'caixa'), tca = W(1, 'caderno'), tlb = W(1, 'lembrar'), ttu = W(1, 'tudo'), taq = W(1, 'aqui'), tcd = W(1, 'cada'),
+    tlu = W(1, 'lugar'), tde = W(1, 'dela'), tfim = W(1, 'dela', 1, 'e');
+  cores();
+  piso({ r: 26, x: 0, z: 0, passo: 1.3 }); U.uNevoa.value.set(.955, .975, .965, .8); ceuClaro({ halo: [-.2, 3.2, -12] });
+  const RX = -1.9, PX = 1.3;
+  const REG = registradora(CENA, [RX, 0, .15], { s: 3.0, cupom: false });
+  const PA = pasta(CENA, [PX, 0, -.2], { w: 2.4 }); PA.rotation.y = -.12;
+  const FO = folha(PA, [0, 0, 0], { w: .9, h: 1.15, cor: '#50D088', linhas: 3 }); FO.position.set(PA.userData.dentro[0] ?? 0, (PA.userData.dentro[1] ?? .6) + .3, (PA.userData.dentro[2] ?? 0) + .02);
+  const FX = [-3.0, .3, 3.6], FY = .52, FZ = 5.6, EC = .0062, CWD = 322;
+  const cart = (i, ...a) => plano(htmlCartao(...a), { pos: [FX[i], FY, FZ], rot: ROTC, esc: EC });
+  const c1 = cart(0, 'wallet', 'Saldo', 'quanto cada um ganha', '', { w: CWD, h: 108 }), c2 = cart(1, 'receipt', 'Extrato', 'o que já adiantou', '', { w: CWD, h: 108 }),
+    c3 = cart(2, 'clock', 'Ponto', 'a que horas bateu o ponto', '', { w: CWD, h: 108, res: true });
+  const on3 = c3.e.querySelector('.onda'), sC = FX.map(x => mancha(2.0, .8, [x, 0, FZ - .1], { op: 0 }));
+  const chip = (txt, cls, x, y) => plano(htmlChip(txt, cls), { pos: [x, y, 0], rot: ROTC, esc: .0098, anc: [.5, 1] });
+  const chV = chip(`${ic('wallet', 18)}vale sai do caixa`, 'n', RX, 2.42), chC = chip(`${ic('notebook', 18)}só no caderno`, 'n', PX, 2.6), chL = chip(`${ic('calendar-check', 18)}lembrar de tudo`, 'am', PX, 3.1);
+  const tit = titulo('Funcionários RH', 'Cada coisa no lugar dela');
+  const P1 = { x: -.7, y: 1.45, z: 2.4, d: 13.4, az: .1, el: .2 }, P2 = { x: -.1, y: 1.5, z: 2.4, d: 14.2, az: .06, el: .2 }, P3 = { x: .3, y: 1.55, z: 2.4, d: 15.0, az: .03, el: .2 };
+  camera([[t0 - 3, P1], [tca - .9, { ...P1, d: 13.2, az: .09 }, 'lin'], [tca + .6, P2], [taq - .4, { ...P2, d: 14.4, az: .05 }, 'lin'], [taq + .8, P3], [tfim + 2.5, { ...P3, d: 15.2, az: .02 }, 'lin']]);
+  return t => {
+    GL.style.opacity = eo(pr(t, t0 + .08, .5)).toFixed(3); posTitulo(tit, t, t0 - .9, t0 - .45);
+    some(REG, passa(pr(t, tva - .2, .6), 1.3)); REG.userData.abre(eio(pr(t, tcx - .1, .55)));
+    some(PA, passa(pr(t, tca - .25, .6), 1.3));
+    vis(chV.e, t, tva - .1, NUNCA, { dy: 10, sc: .8 }); vis(chC.e, t, tca - .1, NUNCA, { dy: 10, sc: .8 }); vis(chL.e, t, tlb - .1, NUNCA, { dy: 10, sc: .8 }); pulso(chL.e, t, ttu, .05, .8);
+    // os três lugares
+    vis(c1.e, t, taq - .1, NUNCA, { dy: 22 }); vis(c2.e, t, tcd - .1, NUNCA, { dy: 22 }); vis(c3.e, t, tlu - .1, NUNCA, { dy: 22, sc: .94 }); pulso(c3.e, t, tde, .04, .8); ondaEm(on3, t, tde);
+    [c1, c2, c3].forEach((c, i) => { sC[i].material.uniforms.uOp.value = .55 * Math.min(1, +c.e.style.opacity || 0); });
+  };
+}
+
+// =====================================================================================================================
+// CENA "contaSaldo" · cap05, linha 6 · clima escuro (a conta do saldo e o recomeço)
+// 6 "Uma dica: o saldo é sempre o salário, mais os bônus, menos as faltas e os vales, contando só o que aconteceu depois do último pagamento.
+//    Pagou, ele recomeça do salário."
+// A conta entra linha a linha (os números do Diego, ditos e na tela na linha 5: 1.980, 0, 90, 200 = 1.690). "Depois do último pagamento" é o corte;
+// em "Pagou" as faltas e os vales se apagam e o saldo volta ao salário (R$ 1.980,00).
+function contaSaldo() {
+  const t0 = W(6, 'uma'), tsa = W(6, 'saldo'), tsl = W(6, 'salario'), tbo = W(6, 'bonus'), tfa = W(6, 'faltas'), tva = W(6, 'vales'), tco = W(6, 'contando'), tde = W(6, 'depois'),
+    tpg = W(6, 'pagou'), tre = W(6, 'recomeca'), tfim = W(6, 'salario', 2, 'e');
+  cores();
+  const { EIXO, X, ret, fundo } = escuro(), CX = -230;
+  const ex = X(htmlExtrato({ icone: 'wallet', titulo: 'Saldo do Diego', sub: 'depois do último pagamento', w: 440,
+    linhas: [['banknote', 'Salário', '', 1980], ['gift', 'Bônus', '', 0], ['calendar-x', 'Faltas', '', -90], ['hand-coins', 'Vales/Adiantamentos', '', -200]], total: ['Saldo', 1690] }), CX, 0);
+  const XC = CX + ex.w / 2 + 34;
+  const chA = chipX(X, `${ic('calendar-check', 18)}só depois do último pagamento`, 'n', XC, -70, 0, .5), chB = chipX(X, `${ic('circle-check', 18)}Pagou: recomeça do salário`, '', XC, 70, 0, .5);
+  fundo(0, 0, { aneis: false });
+  const tit = titulo('Saldo', 'A conta do saldo', 'escuro');
+  const R = uni(bx(ex, CX, 0), bx(chA, XC, -70, 0, .5), bx(chB, XC, 70, 0, .5));
+  const S1 = enquadraRet(EIXO, ret(...R), { az: -.03, max: 1.4 / EE });
+  camera([[t0 - 3, S1], [tfim + 2.5, { ...S1, az: .03, d: S1.d * .985 }, 'lin']]);
+  const L = [...ex.e.querySelectorAll('.ln')], N = ex.e.querySelector('.tot .num');
+  return t => {
+    STAND(t, tit, t0);
+    extrato(ex.e, t, tsa - .1, NUNCA, { tempos: [tsl - .05, tbo - .05, tfa - .05, tva - .05], tTotal: tco - .05 });
+    vis(chA.e, t, tde - .1, NUNCA, { dy: 10, sc: .8 });
+    // pagou: o que veio depois do pagamento se apaga e o saldo recomeça do salário
+    const k = eo(pr(t, tpg, .5));
+    [1, 2, 3].forEach(i => { L[i].style.opacity = ((+L[i].style.opacity || 0) * lerp(1, .28, k)).toFixed(3); });
+    if (t > tpg - .02) poeTxt(N, reais(lerp(1690, 1980, eo5(pr(t, tre - .05, .9)))));
+    marca(ex.e, 0, t, tre - .05); vis(chB.e, t, tpg - .05, NUNCA, { dy: 10, sc: .8 }); pulso(chB.e, t, tre, .05, .8); pulso(ex.e, t, tre + .3, .02, .8);
+  };
+}
+
+// =====================================================================================================================
+// CENA "semSaida" · cap06, linha 9 · clima escuro (os vales comem o salário e nenhum dinheiro sai)
+// 9 "Uma dica: se os vales comerem o salário inteiro, o sistema avisa que nenhum dinheiro vai sair e pede pra você confirmar."
+// Vales, Salário, o menos, o igual: Pagamento R$ 0,00 (nenhum dinheiro vai sair). O aviso do sistema e o botão Confirmar.
+function semSaida() {
+  const t0 = W(9, 'uma'), tva = W(9, 'vales'), tsl = W(9, 'salario'), tin = W(9, 'inteiro'), tav = W(9, 'avisa'), tne = W(9, 'nenhum'), tsa = W(9, 'sair'), tco = W(9, 'confirmar'), tfim = W(9, 'confirmar', 1, 'e');
+  cores();
+  const { EIXO, X, ret, fundo } = escuro(), YT = 112, X1 = -417, XO1 = -216, X2 = -15, XO2 = 186, X3 = 402;
+  const cS = X(degrau('banknote', 'Salário', 'inteiro', { w: 310 }), X1, 0), cV = X(degrau('hand-coins', 'Vales/Adiantamentos', 'comem o salário', { w: 310, cls: 'vm' }), X2, 0);
+  const cR = X(htmlCartao('wallet', 'Pagamento', 'nenhum dinheiro vai sair', 'R$ 0,00', { w: 340, h: 132, res: true }), X3, 0), onR = cR.e.querySelector('.onda');
+  const op1 = X(htmlOp('−'), XO1, 0, { z: 40 }), op2 = X(htmlOp('='), XO2, 0, { z: 40 });
+  const chA = chipX(X, `${ic('triangle-alert', 18)}o sistema avisa`, 'am', 0, YT, .5, 0), chC = chipX(X, `${ic('circle-check', 18)}Confirmar`, '', X3, YT, .5, 0);
+  fundo(0, 40, { aneis: false });
+  const tit = titulo('Pagamento', 'Sem saída de dinheiro', 'escuro');
+  const R = uni(bx(cS, X1, 0), bx(cR, X3, 0), bx(chA, 0, YT, .5, 0), bx(chC, X3, YT, .5, 0));
+  const S1 = enquadraRet(EIXO, ret(...R), { az: -.03, max: 1.4 / EE });
+  camera([[t0 - 3, S1], [tfim + 2.5, { ...S1, az: .03, d: S1.d * .985 }, 'lin']]);
+  return t => {
+    STAND(t, tit, t0);
+    vis(cV.e, t, tva - .1, NUNCA, { dy: 18 }); pulso(cV.e, t, tin, .03, .8);
+    vis(op1.e, t, tsl - .35, NUNCA, { dy: 10, sc: .8 }); vis(cS.e, t, tsl - .1, NUNCA, { dy: 18 }); pulso(cS.e, t, tin, .04, .8);
+    vis(chA.e, t, tav - .05, NUNCA, { dy: 10, sc: .8 });
+    vis(op2.e, t, tne - .35, NUNCA, { dy: 10, sc: .8 }); vis(cR.e, t, tne - .1, NUNCA, { dy: 18, sc: .94 }); ondaEm(onR, t, tsa); pulso(cR.e, t, tsa, .04, .8);
+    vis(chC.e, t, tco - .1, NUNCA, { dy: 10, sc: .8 }); pulso(chC.e, t, tco + .1, .06, .8);
+  };
+}
+
+// =====================================================================================================================
+// CENA "gavetas" · cap08, linha 5 · clima escuro (férias, 13º e rescisão têm gaveta própria; bônus entra no saldo)
+// 5 "Uma dica: não lance férias nem décimo terceiro como bônus. O bônus entra no saldo do mês e bagunça a conta. E a rescisão, de quem sai
+//    da empresa, fica nesse mesmo menu."
+// À direita as gavetas: Férias (R$ 3.733,33), 13º salário (R$ 1.050,00), Rescisão; "não como bônus". À esquerda o saldo do mês, onde o bônus entra
+// e a conta bagunça se entrar o que não é dele. Um chip "mesmo menu" fecha as três gavetas.
+function gavetas() {
+  const t0 = W(5, 'uma'), tfe = W(5, 'ferias'), tde = W(5, 'decimo'), tco = W(5, 'como'), tbo = W(5, 'bonus', 2), tba = W(5, 'bagunca'), tre = W(5, 'rescisao'), tme = W(5, 'mesmo'), tmn = W(5, 'menu'), tfim = W(5, 'menu', 1, 'e');
+  cores();
+  const { EIXO, X, ret, fundo } = escuro(), XS = -340, XG = 250, YG = [-108, 0, 108], DW = 340, DH = 92;
+  const sd = X(degrau('wallet', 'Saldo de salário', 'o bônus entra aqui', { w: DW, h: DH }), XS, 0);
+  const gF = X(degrau('palmtree', 'Férias', 'R$ 3.733,33', { w: DW, h: DH }), XG, YG[0]), g13 = X(degrau('calendar-check', '13º salário', 'R$ 1.050,00', { w: DW, h: DH }), XG, YG[1]),
+    gR = X(degrau('user-round', 'Rescisão', 'de quem sai da empresa', { w: DW, h: DH }), XG, YG[2]);
+  const chN = chipX(X, `${ic('ban', 18)}não como bônus`, 'am', -45, -50, .5, .5), chB = chipX(X, 'bagunça a conta', 'am', XS, 100, .5, 0), chM = chipX(X, `${ic('menu', 18)}mesmo menu`, 'n', XG, -172, .5, 1);
+  fundo(0, 0, { aneis: false });
+  const tit = titulo('Férias e 13º', 'Cada coisa na sua gaveta', 'escuro');
+  const R = uni(bx(sd, XS, 0), bx(gF, XG, YG[0]), bx(gR, XG, YG[2]), bx(chM, XG, -172, .5, 1), bx(chB, XS, 100, .5, 0));
+  const S1 = enquadraRet(EIXO, ret(...R), { az: -.03, max: 1.4 / EE });
+  camera([[t0 - 3, S1], [tfim + 2.5, { ...S1, az: .03, d: S1.d * .985 }, 'lin']]);
+  return t => {
+    STAND(t, tit, t0);
+    vis(gF.e, t, tfe - .1, NUNCA, { dy: 18 }); vis(g13.e, t, tde - .1, NUNCA, { dy: 18 });
+    vis(chN.e, t, tco - .05, NUNCA, { dy: 10, sc: .8 }); pulso(chN.e, t, tbo - .6, .05, .8);
+    vis(sd.e, t, tbo - .1, NUNCA, { dy: 18 }); pulso(sd.e, t, tbo + .55, .03, .8);
+    vis(chB.e, t, tba - .05, NUNCA, { dy: -10, sc: .8 });
+    vis(gR.e, t, tre - .1, NUNCA, { dy: 18 });
+    vis(chM.e, t, tme - .1, NUNCA, { dy: 10, sc: .8 }); pulso(chM.e, t, tmn, .05, .8);
+  };
+}
+
+// =====================================================================================================================
+// CENA "doisLinks" · cap11, linha 6 · clima escuro (link pessoal x link do tablet)
+// 6 "Uma dica: são dois links diferentes. O pessoal é um por funcionário, pro celular dele. O do tablet é um por empresa. E o tablet não mostra
+//    o link pessoal de ninguém."
+// Dois cartões que não se misturam (≠): o link pessoal (um por funcionário, no celular) e o link do tablet (um por empresa). O tablet não mostra o link pessoal de ninguém.
+function doisLinks() {
+  const t0 = W(6, 'uma'), tdo = W(6, 'dois'), tli = W(6, 'links'), tdf = W(6, 'diferentes'), tpe = W(6, 'pessoal'), tu1 = W(6, 'um'), tce = W(6, 'celular'),
+    ttb = W(6, 'tablet'), tu2 = W(6, 'um', 2), tem = W(6, 'empresa'), tna = W(6, 'nao'), tni = W(6, 'ninguem'), tfim = W(6, 'ninguem', 1, 'e');
+  cores();
+  const { EIXO, X, ret, fundo } = escuro(), CW = 400, XL = -300, XR = 300, YC = 0;
+  const cP = X(htmlCartao('smartphone', 'Link pessoal', 'pro celular dele', 'um por funcionário', { w: CW, h: 150, fn: 25, mt: 16 }), XL, YC), cT = X(htmlCartao('tablet', 'Link do tablet', 'o tablet da empresa', 'um por empresa', { w: CW, h: 150, fn: 25, mt: 16, res: true }), XR, YC);
+  const nP = cP.e.querySelector('.num'), nT = cT.e.querySelector('.num'), sP = cP.e.querySelector('.sub'), sT = cT.e.querySelector('.sub'), onT = cT.e.querySelector('.onda');
+  const op = X(htmlOp('≠'), 0, YC, { z: 40 });
+  const chN = chipX(X, `${ic('ban', 18)}não mostra o link pessoal`, 'am', XR, 75 + 34, .5, 0);
+  fundo(0, 0, { aneis: false });
+  const tit = titulo('Ponto eletrônico', 'Dois links diferentes', 'escuro');
+  const R = uni(bx(cP, XL, YC), bx(cT, XR, YC), bx(chN, XR, 109, .5, 0));
+  const S1 = enquadraRet(EIXO, ret(...R), { az: -.03, max: 1.4 / EE });
+  camera([[t0 - 3, S1], [tfim + 2.5, { ...S1, az: .03, d: S1.d * .985 }, 'lin']]);
+  return t => {
+    STAND(t, tit, t0);
+    vis(cP.e, t, tdo - .1, NUNCA, { dy: 18 }); vis(cT.e, t, tli - .1, NUNCA, { dy: 18 }); vis(op.e, t, tdf - .15, NUNCA, { dy: 0, sc: .6 });
+    opac(sP, pr(t, tce - .05, .3)); opac(sT, pr(t, ttb - .05, .3)); opac(nP, pr(t, tu1 - .05, .3)); opac(nT, pr(t, tu2 - .05, .3));
+    pulso(cP.e, t, tpe, .03, .8); pulso(cT.e, t, ttb + .1, .03, .8); ondaEm(onT, t, tem); pulso(cT.e, t, tem, .03, .8);
+    vis(chN.e, t, tna - .05, NUNCA, { dy: 10, sc: .8 }); pulso(chN.e, t, tni, .05, .8);
+  };
+}
+
+// =====================================================================================================================
+const CAPS = { 0: caderninho, 5: contaSaldo, 6: semSaida, 8: gavetas, 11: doisLinks };
+cena(d => CAPS[d.cap](d), { fov: 26 });
+</script></body></html>

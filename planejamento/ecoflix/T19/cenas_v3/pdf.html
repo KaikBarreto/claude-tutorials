@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- T19 "Funcionários RH" · o PAPEL REAL na tela (kit v3, clima claro: papel é mundo físico). Molde: T13/cenas_v3/pdf.html.
+     Pedido do Kaik (19/11): toda fala de PDF ou comprovante mostra o papel real, sem redesenho; a câmera passeia e o marca-texto verde acompanha a fala.
+     Os papéis vêm do robô: o ensaio (rec/t19/_ens/t19-capNN.actions.json) devolve o HTML da aba nova (ação "HTML do ... para a ilustração do comprovante");
+     a edição o imprime em PDF A4 (Chromium, @page do próprio app) e rasteriza, fora do git, em $TUT_HOME/t19/edit/out/comprovantes/ :
+       capNN-xxx.pdf   capNN-xxx.png (pdftoppm -r 350 -png -singlefile, página 1)   capNN-xxx.bbox.html (pdftotext -bbox: coordenadas em pontos)
+     Janelas (../cenas/ilustracoes.json), sobre a voz real ($TUT_HOME/t19/narracao/capNN.json), linhas conferidas uma a uma (21/11):
+       cap06 · linha 11 · pdf06_recibo        "Aí o sistema pergunta se você quer o recibo. Gerar Recibo, e ele abre numa aba nova, pronto pra imprimir ou mandar pro Edson."
+              marca-texto: título em "recibo"; valor líquido em "imprimir"; o nome em "Edson"
+       cap07 · linha 7  · pdf07_holerite      "Como ele é CLT, o sistema oferece o holerite: o documento com cada provento e cada desconto, pra entregar pro Marcos."
+              marca-texto: título em "holerite"; as linhas de proventos em "provento"; as de descontos em "desconto"; o nome em "Marcos"
+       cap09 · linha 1  · pdf09_recibo_a4     "... tem o Gerar Recibo, que pergunta o formato, folha A4 ou térmico, e abre o recibo do Edson numa aba nova."
+              chip "Folha A4" em "A4" (o papel gravado é o A4; o térmico não foi gravado e a tela já mostra a escolha); título em "recibo"; nome em "Edson"
+       cap10 · linha 2  · pdf10_relacao       "E a Relação de pagamento mostra, hoje, quanto pagar a cada um e o total da folha. Sai em PDF ou em Excel. ..."
+              marca-texto: título em "Relação"; coluna Saldo a pagar em "quanto"; TOTAL A PAGAR em "total"; chips PDF e Excel nas palavras
+     Contas conferidas: recibo 2.900,00 + 250,00 = 3.150,00 − 400,00 = 2.750,00; holerite 2.400,00 + 180,00 = 2.580,00 − 411,89 (207,89 + 144,00 + 0,00 + 60,00) = 2.168,11;
+     Relação 2.250 + 1.690 + 2.900 + 2.520 + 2.800 + 2.400 + 6.000 + 1.980 = 22.540,00 (8 funcionários).
+     Render: render_cenas.cjs <cap> <capNN.json> saida.mp4 --html .../pdf.html --anexo $TUT_HOME/t19/edit/out/comprovantes
+             --larg 1422 --dsf 1.35 --de <s> --ate <s>.  Auditoria: auditar.cjs --aula planejamento/ecoflix/T19 --larg 1422
+     Ícones lucide usados (o nome tem de estar literal nesta página): 'file-text' 'file-spreadsheet' -->
+</head><body>
+<script type="module">
+import { pr, eo, W, vis, titulo, posTitulo, GL, mancha, piso, U, camera, plano, cena, estilo, enquadraRet, htmlChip, ic }
+  from '../../../../perfis/ecoflix/cenas_v3/motor.js';
+import { ceuClaro } from '../../../../perfis/ecoflix/cenas_v3/fundo.js';
+
+const NUNCA = 1e9;
+// O papel é desenhado MAIOR que no quadro (K px por pt) para o Chromium não ampliar a camada. FOLHA: A4 em pé.
+const FOLHA = { wpt: 595, hpt: 842, K: 2.4, E: .008 / 2.4 };
+
+// marcas: [x0, y0, x1, y1] em pontos; marca-texto que cresce da esquerda
+function papel(src, o) {
+  const K = o.K, WP = Math.round(o.wpt * K), HPX = Math.round(o.hpt * K), m = K * o.E, r = 4.2 * K;
+  estilo('folha19', `
+.folha{position:relative;background:#fff}
+.folha img{display:block;width:100%;height:100%;border-radius:inherit}
+.folha .mk{position:absolute;background:rgba(80,208,136,.46);mix-blend-mode:multiply;transform-origin:0 50%;transform:scaleX(0)}`);
+  const mk = Object.entries(o.marcas).map(([id, [x0, y0, x1, y1]]) =>
+    `<i class="mk" data-m="${id}" style="left:${(x0 * K).toFixed(1)}px;top:${(y0 * K).toFixed(1)}px;width:${((x1 - x0) * K).toFixed(1)}px;height:${((y1 - y0) * K).toFixed(1)}px;border-radius:${(2.8 * K).toFixed(1)}px"></i>`).join('');
+  const s = 1.45, sombra = `0 ${(22.7 * K * s).toFixed(0)}px ${(40 * K * s).toFixed(0)}px ${(-12 * K * s).toFixed(0)}px rgba(30,80,60,.38),0 ${(5.4 * K * s).toFixed(0)}px ${(10.8 * K * s).toFixed(0)}px ${(-4 * K * s).toFixed(0)}px rgba(30,80,60,.14)`;
+  const yc = HPX * o.E / 2 + .45;
+  return { ...o, m, yc, html: `<div class="folha" style="width:${WP}px;height:${HPX}px;border-radius:${r}px;box-shadow:${sombra}"><img src="${src}" alt="">${mk}</div>` };
+}
+// a marca cresce em a e (se b) some em b
+function marca(e, id, t, a, d = .45, b = NUNCA) { const mk = (e._mk ??= {})[id] ??= e.querySelector(`[data-m="${id}"]`); mk.style.transform = `scaleX(${eo(pr(t, a, d)).toFixed(4)})`; mk.style.opacity = (1 - eo(pr(t, b, .3))).toFixed(3); }
+// trecho do papel (pt, de cima para baixo; por padrão na largura inteira) em metros: para enquadraRet
+const faixa = (P, y0, y1, x0 = 0, x1 = P.wpt) => [(x0 - P.wpt / 2) * P.m, P.yc + (P.hpt / 2 - y1) * P.m, (x1 - P.wpt / 2) * P.m, P.yc + (P.hpt / 2 - y0) * P.m];
+const palco = (r = 24) => { piso({ r, x: 0, z: -2, passo: 1.3 }); U.uNevoa.value.set(.955, .975, .965, .8); ceuClaro({ halo: [.2, 3.6, -12] }); };
+const poe = (P, larg = 5.2) => ({ p: plano(P.html, { pos: [0, P.yc, 0], esc: P.E, sangra: true }), s: mancha(larg, 1.6, [0, 0, .1], { op: 0 }) });
+// a faixa de cima do papel (do alto até y1), com 150 px livres para o título; o título fica durante a janela inteira
+const ALTO = (P, y1, o = {}) => enquadraRet(null, faixa(P, 0, y1, o.x0, o.x1), { topo: 150, margem: 48, el: .02, az: .04, ...o });
+// a janela abre com o título já no alto e o papel chegando
+const abre = (t, a, tit, P, a0 = a - 1.7) => { posTitulo(tit, t, Math.max(a0, a - 1.7), a - 1.3); vis(P.p.e, t, a - .6, NUNCA, { dy: 72 }); };
+const chipEm = (txt, x, y) => plano(htmlChip(txt, 'n'), { pos: [x, y, .05], rot: [-.02, .1, 0], esc: .0098, anc: [0, .5] });
+const xDir = P => (P.wpt / 2) * P.m + .32;   // logo à direita do papel
+const yDe = (P, y) => P.yc + (P.hpt / 2 - y) * P.m;   // altura (m) do ponto y (pt) do papel
+
+// =====================================================================================================================
+// cap06, linha 11 · o recibo do pagamento do Edson (A4 em pé, aba nova)
+function recibo06(d) {
+  const t0 = W(11, 'ai'), tre = W(11, 'recibo'), tim = W(11, 'imprimir'), ted = W(11, 'edson'), tfim = W(11, 'edson', 1, 'e');
+  palco(26);
+  const P = papel(`${d.anexo}/cap06-recibo.png`, { ...FOLHA, marcas: { tit: [205, 130, 391, 160], liq: [444, 438, 534, 467], nome: [484, 204, 542, 223] } }), F = poe(P, 5.2);
+  const tit = titulo('Pagamento', 'O recibo do Edson');
+  const A = ALTO(P, 300, { az: .05 }), B = ALTO(P, 482, { az: .03 });
+  camera([[t0 - 3, A], [tre + .6, { ...A, d: A.d * .985, az: .045 }, 'lin'], [tim - .5, B], [tfim + 2, { ...B, d: B.d * .985, az: .0 }, 'lin']]);
+  return t => {
+    GL.style.opacity = eo(pr(t, t0 - .25, .35)).toFixed(3); abre(t, t0, tit, F);
+    F.s.material.uniforms.uOp.value = .55 * (+F.p.e.style.opacity || 0);
+    marca(F.p.e, 'tit', t, tre - .05, .5, tim - .2); marca(F.p.e, 'liq', t, tim - .05, .5, ted - .2); marca(F.p.e, 'nome', t, ted - .05, .45);
+  };
+}
+
+// =====================================================================================================================
+// cap07, linha 7 · o holerite do Marcos (A4 em pé; a folha ocupa a metade de cima da página)
+function holerite07(d) {
+  const t0 = W(7, 'como'), tho = W(7, 'holerite'), tpr = W(7, 'provento'), tde = W(7, 'desconto'), tma = W(7, 'marcos'), tfim = W(7, 'marcos', 1, 'e');
+  palco(26);
+  const P = papel(`${d.anexo}/cap07-holerite.png`, { ...FOLHA, marcas: { tit: [382, 36, 506, 66], pro: [39.5, 129.5, 539, 156], des: [39.5, 156, 539, 210], nome: [112, 100, 184, 117] } }), F = poe(P, 5.2);
+  const tit = titulo('Pagamento CLT', 'O holerite do Marcos');
+  const A = ALTO(P, 230, { az: .05, margem: 40 });
+  camera([[t0 - 3, A], [tho + .4, { ...A, d: A.d * .985, az: .045 }, 'lin'], [tma + .5, { ...A, d: A.d * .96, az: .02 }, 'lin'], [tfim + 2, { ...A, d: A.d * .955, az: .0 }, 'lin']]);
+  return t => {
+    GL.style.opacity = eo(pr(t, t0 - .25, .35)).toFixed(3); abre(t, t0, tit, F);
+    F.s.material.uniforms.uOp.value = .55 * (+F.p.e.style.opacity || 0);
+    marca(F.p.e, 'tit', t, tho - .05, .5, tpr - .25); marca(F.p.e, 'pro', t, tpr - .05, .5, tde - .25); marca(F.p.e, 'des', t, tde - .05, .5, tma - .25); marca(F.p.e, 'nome', t, tma - .05, .45);
+  };
+}
+
+// =====================================================================================================================
+// cap09, linha 1 · o recibo A4 do Edson, aberto pelo Gerar Recibo do extrato (a escolha A4 ou térmico já está na tela)
+function recibo09(d) {
+  const t0 = W(1, 'gerar'), ta4 = W(1, 'a4'), tre = W(1, 'recibo', 2), ted = W(1, 'edson'), tfim = W(1, 'nova', 1, 'e');
+  palco(26);
+  const P = papel(`${d.anexo}/cap09-recibo-a4.png`, { ...FOLHA, marcas: { tit: [205, 130, 391, 160], nome: [484, 204, 542, 223] } }), F = poe(P, 5.2);
+  const ch = chipEm(`${ic('file-text', 18)}Folha A4`, xDir(P), yDe(P, 150));
+  const tit = titulo('Extrato', 'O recibo em A4');
+  const A = ALTO(P, 498, { az: .05, x0: 0, x1: P.wpt + 150 });
+  camera([[t0 - 3, A], [tre + .3, { ...A, d: A.d * .985, az: .045 }, 'lin'], [tfim + 2, { ...A, d: A.d * .96, az: .02 }, 'lin']]);
+  return t => {
+    GL.style.opacity = eo(pr(t, t0 - .25, .35)).toFixed(3); abre(t, t0, tit, F);
+    F.s.material.uniforms.uOp.value = .55 * (+F.p.e.style.opacity || 0);
+    vis(ch.e, t, ta4 - .1, NUNCA, { dy: 10, sc: .8 });
+    marca(F.p.e, 'tit', t, tre - .05, .5, ted - .2); marca(F.p.e, 'nome', t, ted - .05, .45);
+  };
+}
+
+// =====================================================================================================================
+// cap10, linha 2 · a Relação de pagamento (A4 em pé, página 1: o resumo e o total)
+function relacao10(d) {
+  const t0 = W(2, 'e'), tre = W(2, 'relacao'), tqu = W(2, 'quanto'), tto = W(2, 'total'), tpd = W(2, 'pdf'), tex = W(2, 'excel'), tfim = W(2, 'excel', 1, 'e');
+  palco(26);
+  const P = papel(`${d.anexo}/cap10-relacao.png`, { ...FOLHA, marcas: { tit: [219, 100, 380, 126], col: [488, 177, 566, 332], tot: [38, 351, 272, 372] } }), F = poe(P, 5.2);
+  const cP = chipEm(`${ic('file-text', 18)}PDF`, xDir(P), yDe(P, 190)), cX = chipEm(`${ic('file-spreadsheet', 18)}Excel`, xDir(P), yDe(P, 252));
+  const tit = titulo('Exportar relatório', 'Relação de pagamento');
+  const A = ALTO(P, 380, { az: .05, x0: 0, x1: P.wpt + 150 });
+  camera([[t0 - 3, A], [tre + .4, { ...A, d: A.d * .985, az: .045 }, 'lin'], [tfim + 2, { ...A, d: A.d * .96, az: .015 }, 'lin']]);
+  return t => {
+    GL.style.opacity = eo(pr(t, t0 - .25, .35)).toFixed(3); abre(t, t0, tit, F);
+    F.s.material.uniforms.uOp.value = .55 * (+F.p.e.style.opacity || 0);
+    marca(F.p.e, 'tit', t, tre - .05, .5, tqu - .25); marca(F.p.e, 'col', t, tqu - .05, .7); marca(F.p.e, 'tot', t, tto - .05, .6);
+    vis(cP.e, t, tpd - .1, NUNCA, { dy: 10, sc: .8 }); vis(cX.e, t, tex - .1, NUNCA, { dy: 10, sc: .8 });
+  };
+}
+
+const CAPS = { 6: recibo06, 7: holerite07, 9: recibo09, 10: relacao10 };
+cena(d => CAPS[d.cap](d), { fov: 26 });
+</script></body></html>

@@ -34,3 +34,8 @@ FAKE_PORT=54319 bash rec/run.sh down                                            
 - Falta (o limite de 2 lotes acabou): `PRAZO_MIN=115 bash rec/t19/t19_fila.sh 13:ens,seed 14:ens,seed 15:ens,seed 16:ens,seed 17:ens` (14 entra porque depende do banco pós-13; 15 a 17 dependem da cadeia). `apos-cap13` ainda é cópia de `apos-cap12`.
 - Proposta de fala (cap13, linha 3): "volta sozinho pra tela da câmera, e é só tocar em Buscar manualmente de novo".
 - Instância 54319 derrubada.
+
+## 21/11 · ilustrações v3 (para o fechamento)
+- 5 cenas (`T19/cenas_v3/cena.html`: cap0 L1 caderninho, cap5 L6, cap6 L9, cap8 L5, cap11 L6) + 4 papéis reais (`pdf.html`: cap6 L11 recibo do Edson, cap7 L7 holerite do Marcos, cap9 L1 recibo A4, cap10 L2 Relação, total 22.540,00). O ensaio guardou o HTML da aba nova, não o PDF: os papéis foram impressos pelo Chromium a partir desse HTML (é a página do próprio app); no fechamento, usar a captura da gravação final. 9 tiradas. Auditoria 0.
+- cap9 L1 cita "folha A4 ou térmico" como escolha do diálogo; abre o A4, que é o papel mostrado (o térmico não precisa de papel). cap14 L6 "espelho de ponto em PDF ou a planilha": a tela mostra a escolha do formato.
+- Prévia renderizando em segundo plano (`render_previa.sh`, log `/dev/shm/v3_t19/render.log`); **piscadas ainda não medidas**.
