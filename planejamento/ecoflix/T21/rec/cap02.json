@@ -96,11 +96,8 @@
    "idle": true
   },
   {
-   "do": "click",
-   "target": {
-    "selector": "button[aria-label=\"Abrir o Cato\"]"
-   },
-   "noScroll": true
+   "do": "eval",
+   "js": "(async()=>{for(let k=0;k<5;k++){if(document.body.innerText.includes('Antes da primeira conversa com o Cato'))return 'janela aberta';const b=document.querySelector('button[aria-label^=\\\"Abrir\\\"][aria-label*=\\\"Cato\\\"]');if(b)b.click();for(let i=0;i<16;i++){await new Promise(r=>setTimeout(r,250));if(document.body.innerText.includes('Antes da primeira conversa com o Cato'))return 'janela aberta'}}return 'SEM ALVO: janela de autorização'})()"
   },
   {
    "do": "waitFor",

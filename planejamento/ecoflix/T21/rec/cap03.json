@@ -1,6 +1,6 @@
 {
  "name": "t21-cap03",
- "title": "T21 · Cap. 3 · A memória do Cato (narração ESTIMADA 68,9 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T21 · Cap. 3 · A memória do Cato (narração ESTIMADA 71,4 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t21-cap03",
  "pace": 0.5,
  "cps": 40,
@@ -117,6 +117,11 @@
    "noScroll": true
   },
   {
+   "do": "eval",
+   "label": "garante a janela de memória aberta",
+   "js": "(async()=>{const has=()=>document.body.innerText.includes('Quer que o Cato lembre de você?');await new Promise(r=>setTimeout(r,700));if(has())return 'ok';const b=document.querySelector('button[aria-label^=\"Abrir\"][aria-label*=\"Cato\"]');if(b)b.click();for(let i=0;i<24;i++){await new Promise(r=>setTimeout(r,250));if(has())return 'abriu no segundo toque'}return 'SEM ALVO: janela de memória'})()"
+  },
+  {
    "do": "waitFor",
    "text": "Quer que o Cato lembre de você?",
    "timeout": 8
@@ -175,6 +180,17 @@
   {
    "do": "hover",
    "target": {
+    "selector": "[role=dialog]:has-text(\"Quer que o Cato lembre de você?\") button:has-text(\"Usar memória\")"
+   },
+   "seconds": 0.4,
+   "at": 31.32,
+   "label": "Usar memória (aponta)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
     "selector": "[role=dialog]:has-text(\"Quer que o Cato lembre de você?\") button:has-text(\"Agora não\")"
    },
    "seconds": 0.4,
@@ -188,7 +204,7 @@
    "target": {
     "selector": "[role=dialog]:has-text(\"Quer que o Cato lembre de você?\") button:has-text(\"Usar memória\")"
    },
-   "at": 31.32,
+   "at": 36.12,
    "label": "clique em Usar memória"
   },
   {
@@ -211,6 +227,11 @@
    "noScroll": true
   },
   {
+   "do": "eval",
+   "label": "garante a janela Memória do Cato aberta",
+   "js": "(async()=>{const has=()=>[...document.querySelectorAll('[role=dialog]')].some(e=>/Memória do Cato/.test(e.innerText||''));await new Promise(r=>setTimeout(r,600));if(has())return 'ok';const b=[...document.querySelectorAll('[role=toolbar] button')].find(x=>/Memória/.test(x.innerText));if(!b)return 'SEM ALVO: Memória';b.click();for(let i=0;i<20;i++){await new Promise(r=>setTimeout(r,250));if(has())return 'abriu no segundo toque'}return 'SEM ALVO: Memória do Cato'})()"
+  },
+  {
    "do": "waitFor",
    "text": "Memória do Cato",
    "timeout": 8
@@ -222,7 +243,7 @@
     "exact": true
    },
    "seconds": 0.6,
-   "at": 43.33,
+   "at": 40.97,
    "label": "Memória do Cato, aba Minha memória, chave Lembrar entre conversas",
    "optional": true,
    "timeout": 4
@@ -241,8 +262,8 @@
     "selector": "#cato-memory-note"
    },
    "text": "Prefiro os valores em tabela, do maior para o menor.",
-   "cps": 30,
-   "at": 43.55,
+   "cps": 50,
+   "at": 43.05,
    "label": "digita a nota"
   },
   {
@@ -250,7 +271,7 @@
    "target": {
     "selector": "[role=dialog]:has-text(\"Memória do Cato\") button:has-text(\"Salvar nota\")"
    },
-   "at": 43.94,
+   "at": 46.78,
    "label": "Salvar nota"
   },
   {
@@ -263,8 +284,8 @@
    "target": {
     "selector": "[role=dialog]:has-text(\"Memória do Cato\") button[aria-label=\"Editar memória\"] >> nth=0"
    },
-   "seconds": 0.5,
-   "at": 44.14,
+   "seconds": 0.35,
+   "at": 46.89,
    "label": "lápis (Editar memória)",
    "optional": true,
    "timeout": 4
@@ -274,8 +295,8 @@
    "target": {
     "selector": "[role=dialog]:has-text(\"Memória do Cato\") button[aria-label=\"Apagar memória\"] >> nth=0"
    },
-   "seconds": 0.5,
-   "at": 43.23,
+   "seconds": 0.35,
+   "at": 47.12,
    "label": "lixeira (Apagar memória)",
    "optional": true,
    "timeout": 4
@@ -285,8 +306,8 @@
    "target": {
     "selector": "[role=dialog]:has-text(\"Memória do Cato\") button:has-text(\"Apagar toda a minha memória\")"
    },
-   "seconds": 0.8,
-   "at": 36.98,
+   "seconds": 0.6,
+   "at": 47.65,
    "label": "Apagar toda a minha memória (sem clicar)",
    "optional": true,
    "timeout": 4
@@ -328,7 +349,7 @@
     "within": "[role=dialog]:has-text(\"Memória do Cato\")"
    },
    "seconds": 1.5,
-   "at": 66.12,
+   "at": 66.28,
    "label": "ZOOM A equipe com acesso total pode publicar contexto útil para todos.",
    "optional": true,
    "timeout": 4
@@ -348,7 +369,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 68.92
+   "at": 71.42
   }
  ]
 }

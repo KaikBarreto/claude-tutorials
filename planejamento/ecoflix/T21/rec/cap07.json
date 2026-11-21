@@ -1,6 +1,6 @@
 {
  "name": "t21-cap07",
- "title": "T21 · Cap. 7 · Lançar uma compra pela conversa (narração ESTIMADA 87,4 s; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T21 · Cap. 7 · Lançar uma compra pela conversa (narração ESTIMADA 88,3 s; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t21-cap07",
  "pace": 0.5,
  "cps": 40,
@@ -358,6 +358,12 @@
    "at": 63.24
   },
   {
+   "do": "eval",
+   "js": "(async()=>{const c=document.querySelector(\"[role=dialog][aria-label^=\\\"Cato.ai\\\"] div.h-full.overflow-y-auto\");if(!c)return 'SEM PAINEL';const y0=c.scrollTop,dy=c.scrollHeight-c.clientHeight-y0;c.scrollTop=y0+dy;return 'fim '+Math.round(c.scrollTop)})()",
+   "at": 65.93,
+   "label": "rola a conversa até o cartão (o campo cresceu com o pedido de volta)"
+  },
+  {
    "do": "click",
    "target": {
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:has-text(\"Lançar compra\") >> nth=-1"
@@ -368,7 +374,7 @@
   },
   {
    "do": "waitFor",
-   "text": "lançada",
+   "text": "Aparecida Ramos lançada",
    "timeout": 10
   },
   {
@@ -377,7 +383,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:has-text(\"Abrir comprovante\") >> nth=-1"
    },
    "seconds": 0.8,
-   "at": 69.07,
+   "at": 69.98,
    "label": "Abrir comprovante (sem clicar)",
    "optional": true,
    "timeout": 4,
@@ -386,23 +392,22 @@
   {
    "do": "mark",
    "name": "L8",
-   "at": 70.87
+   "at": 71.78
   },
   {
-   "do": "hover",
+   "do": "click",
    "target": {
-    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] :text(\"Próximos passos\") >> nth=-1"
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:has-text(\"Próximos passos\") >> nth=-1"
    },
-   "seconds": 1.5,
-   "at": 74.21,
-   "label": "Próximos passos do pedido",
+   "at": 75.12,
+   "label": "Próximos passos do pedido (abre)",
    "optional": true,
-   "timeout": 4
+   "noScroll": true
   },
   {
    "do": "mark",
    "name": "L9",
-   "at": 75.85
+   "at": 76.76
   },
   {
    "do": "eval",
@@ -412,7 +417,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 87.37
+   "at": 88.28
   }
  ]
 }

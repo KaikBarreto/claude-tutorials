@@ -152,7 +152,23 @@
   },
   {
    "do": "waitFor",
-   "text": "lançada",
+   "text": "Reciclagem lançada",
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "seconds": 1.2
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:has-text(\"Próximos passos\") >> nth=-1"
+   },
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Sem NF-e vinculada",
    "timeout": 25
   },
   {
@@ -175,21 +191,18 @@
    "at": 0
   },
   {
+   "do": "eval",
+   "js": "(async()=>{const c=document.querySelector(\"[role=dialog][aria-label^=\\\"Cato.ai\\\"] div.h-full.overflow-y-auto\");if(!c)return 'SEM PAINEL';const y0=c.scrollTop,dy=c.scrollHeight-c.clientHeight-y0;c.scrollTop=y0+dy;return 'fim '+Math.round(c.scrollTop)})()",
+   "at": 6.78,
+   "label": "rola a conversa até o botão Preparar NF-e"
+  },
+  {
    "do": "click",
    "target": {
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:has-text(\"Preparar NF-e\") >> nth=-1"
    },
    "at": 6.18,
-   "label": "clique em Preparar NF-e (nos próximos passos do pedido)",
-   "noScroll": true
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "button[aria-label=\"Enviar\"]"
-   },
-   "at": 8.18,
-   "label": "Enviar (o pedido já veio escrito no campo)",
+   "label": "clique em Preparar NF-e (nos próximos passos do pedido; o botão já manda o pedido)",
    "noScroll": true
   },
   {

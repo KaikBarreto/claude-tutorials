@@ -1,7 +1,8 @@
 # T21 · andamento no app 1.60.22
 
-Estado (21/11): **etapas 1 e 2 de 3 FEITAS** (fala e documentos; overlay, sementes e arquivos testados por chamada direta). Etapa 3
-(`gerar.py`, lotes, ensaio, ilustrações) pendente. Nada foi gravado nem ensaiado; nenhuma instância no ar.
+Estado (21/11 22:10): **etapas 1, 2 e 3 FEITAS.** `rec/t21/gerar.py` (18 capítulos + cortes `02b` e `15b`, 1600x900), `t21_corpo.sh`, `t21_lote.sh`,
+`cenas/ilustracoes.json` (20 entradas, `v3: pendente`). Rápido e completo (voz estimada) com 0 falho e 0 "SEM ALVO" em todos; instância 54321 derrubada.
+Falta só refazer as âncoras com a voz real (atrasos abaixo) e gravar.
 
 ## Etapa 1 · feito
 - `narracao/tts_textos.py`: 18 capítulos (00 a 17), 2.630 palavras, 14.065 caracteres de fala (+392 de títulos); `numeros` do
@@ -31,7 +32,7 @@ Estado (21/11): **etapas 1 e 2 de 3 FEITAS** (fala e documentos; overlay, sement
   `plugnotas-emit` (nº 1249) → `plugnotas-status` emitida; prévia em PDF antes e depois do rascunho; A18; A19 (Marcos); `cato_order_journeys` (venda com NF emitida, compra paga por transferência);
   conversas, memória (Rafael `accepted`, Marcos `pending` sem gerenciar), rotinas (preview dos 3 focos, save diário 08:00).
 
-### Falas com número que não bate com o mundo (a fala NÃO foi mudada; arrumar na etapa 3 ou no ensaio)
+### Falas com número que não bate com o mundo (ARRUMADAS na etapa 3: ver "Etapa 3 · feito")
 - cap04, R1, resultado do mês: a fala diz "uns sessenta e sete mil e seiscentos"; o mundo dá **R$ 62.454,55** ("uns sessenta e dois mil e quatrocentos"). Despesas: R$ 37.384,20.
   (O texto-base de R1 tinha 30.249,20 de despesas e 69.589,55 de resultado; o overlay corrige para 37.384,20 e 62.454,55.)
 - cap05, R4, saldo das contas: a fala diz "uns cento e trinta e dois mil"; o total é **R$ 125.313,67** ("cento e vinte e cinco mil"). Conta Secundária 75.380,00; saídas do mês 60.689,10.
@@ -70,3 +71,35 @@ Cadeia de sementes: t14/inicio + t14/apos-cap02,03,04,06,07,08,09,10,11,12,14 + 
 - O Cato real devolve `facts` com valores formatados na confirmação de operação (ex.: "R$ 4.790,00"); o `receipt` do mundo falso mostra o número cru ("4790"). Conferir na tela no ensaio e, se feio, ajustar no overlay.
 - A forma de pagamento "Duplicata a prazo" da NF-e mostra o vencimento em ISO (2026-12-10) no cartão; vale conferir como a tela formata.
 - Conta a pagar vencida/a vencer não existia no mundo base para o 10/11 (só uma parcela da prensa em 30/11): o "Ver sinais agora" ficaria sem contas; `apos-cap06` cria duas.
+
+## Etapa 3 · feito (21/11)
+**Comandos** (de `/home/claude/ecoflix`, com `TUT_USER=rafael@reciclavalemetais.example` no ambiente; a senha é gerada no corpo e nunca vai a arquivo):
+`bash rec/t21/t21_lote.sh 00:c 01:c ... > /dev/shm/t21_lote.log 2>&1` (item `NN:r` rápido, `NN:c` completo com os `at`, `02b`/`15b` os cortes do Marcos).
+Cada item roda por `bash rec/fila.sh --prio 21 -- bash rec/t21/t21_corpo.sh NN M`: reinicia a instância 54321 (o overlay guarda estado em memória), grava SEMPRE em
+`/dev/shm/t21_ens`, move só mp4, actions.json, telemetry.json e contact.jpg para `rec/t21/_ens/`, para abaixo de 450 MB livres. Derrubar:
+`FAKE_MUNDO=/dev/shm/t21_mundo FAKE_PORT=54321 bash rec/run.sh down`.
+
+**Ensaio rápido:** 0 falho em 00 a 17, 02b e 15b. **Completo (voz estimada), última rodada (`maxLate` em s):** 00 0,08; 01 1,38; 02 0,05; 03 2,78; 04 2,42; 05 1,34; 06 1,43; 07 0,50;
+08 1,54; 09 1,70; 10 1,75; 11 1,25; 12 2,41; 13 3,75; 14 1,16; 15 2,78; 16 2,13; 17 0,28; 0 falho em todos. Os atrasos restantes vêm da espera da resposta/cartão
+(o estimado fica 1 a 4 s antes do real) e ficam para as âncoras da voz real.
+
+**Trocas de fala (tts_textos.py, roteiro.md e config_narracao.json juntos; `numeros` já estava certo):**
+- cap04 L6: "sessenta e sete mil e seiscentos" -> "sessenta e dois mil e quinhentos" (resultado R$ 62.454,55); cap05 L4: "cento e trinta e dois mil" -> "cento e vinte e cinco mil" (R$ 125.313,67).
+- cap03 L7: "Só quem tem acesso total escreve ali." -> "Como você tem acesso total, é você quem liga ou desliga essas notas." (o Rafael vê o interruptor, não a frase do Marcos).
+- cap07 L7: "o comprovante abre aqui" -> "o botão Abrir comprovante fica aqui" (o botão abre um PDF em aba nova; o robô só aponta).
+- cap09 L1: acrescentada "O cartão mostra a parcela de quatro mil, setecentos e noventa reais, com a forma e a data." (tempo do cartão) e L2 "Confirmar baixa" -> "Confirmar registro" (rótulo real; o cartão é "Registrar recebimento").
+- cap10 L1: acrescentada "O Cáto pergunta se é cliente ou fornecedor, e eu respondo: fornecedor."; cap11 L1: acrescentada "O cartão mostra o nome e o telefone, eu confiro e salvo, e o cadastro entra na hora."
+- cap12 L1: acrescentada "A foto aparece embaixo do campo, pronta pra enviar. Eu mando só a foto, sem escrever nada."
+- Só `roteiro.md` (coluna Tela): cap01 "edição do Marcos" -> detalhe do Marcos (Permissões concedidas); cap03 frase da aba Da empresa; cap07/08 o cartão vira "Compra #N de Aparecida Ramos lançada" /
+  "Venda #N para Serra Fina ... lançada"; "Próximos passos" abre ao clicar; cap09 "Registrar recebimento"/"Confirmar registro"; cap13 o botão "Preparar NF-e" já envia o pedido (não passa pelo campo); cap14 a compra da Aparecida aparece em "Para acompanhar".
+- Fala final: 18 capítulos, 14.449 caracteres (2.703 palavras); títulos à parte.
+
+**Frases sem tela / só aproximadas:** cap13 L11 (recusa da SEFAZ, só a fala, por desenho); cap07 L7 (Abrir comprovante só apontado, o PDF não é aberto); cap15 L1 "Pagamentos registram a operação..." sai depois da fala (a resposta
+longa termina de digitar ~10 s depois); cap02/cap15 cortes do Marcos (`02b`, `15b`) em vídeo à parte. Ilustrações (20) sem tela por definição.
+
+**Achados do robô para o MELHORIAS:**
+- Bug de foco do app: depois de abrir o painel do Cato, um clique no campo "Pergunte ao Cato" pode devolver o foco a um botão "..." da tabela atrás (trava de foco velha), e a digitação abre o menu da linha. Aconteceu após visitar outra rota no setup (`aquecer`). O robô passou a travar o foco no campo (`window.__guarda`).
+- Cliques reais do robô em "Conversas" e "Memória" (rodapé do painel) às vezes não abrem a janela; um `click()` por script abre. Idem o botão redondo (FAB) no primeiro carregamento.
+- Com mensagens restauradas de sessão (hora à frente do relógio falso), a pesquisa de fim de conversa só aparece depois de 6 min no relógio do navegador (a conta usa a hora da mensagem).
+- "Próximos passos" (cartão do pedido) nasce fechado; "Preparar NF-e" só aparece depois de abrir.
+- O rótulo do FAB muda para "Abrir 1 notificação do Cato" quando há dica; seletores por "Abrir o Cato" falham nesse estado.

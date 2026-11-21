@@ -33,7 +33,7 @@ if [ "$MODO" = r ]; then
   python3 -I rec/t21/ensaio.py "$RAW$SUF" > /dev/null || exit 2
   ROT=rec/t21/_ens/$NOME.json; DIR=rec/t21/_ens; EXTRA="--rapido --preset ultrafast --crf 30"; RES=--ens
 else
-  ROT=rec/t21/$NOME.json; DIR=rec/t21/_ens; EXTRA="--preset ultrafast --crf 30"; RES=""
+  ROT=rec/t21/$NOME.json; DIR=rec/t21/_ens; EXTRA="--preset ultrafast --crf 30"; RES=--ens
 fi
 TMO=$(python3 -I -c "import json,sys;print(int(json.load(open('/home/claude/ecoflix/t21/narracao/cap'+sys.argv[1]+'.json'))['dur']*3+420))" "$NN")
 OUT="$DIR/.t21-$NOME.out"

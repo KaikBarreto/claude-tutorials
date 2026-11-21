@@ -163,10 +163,15 @@
    "timeout": 10
   },
   {
+   "do": "waitFor",
+   "text": "não transferem dinheiro pela sua conta bancária",
+   "timeout": 25
+  },
+  {
    "do": "eval",
-   "js": "(async()=>{const c=document.querySelector(\"[role=dialog][aria-label^=\\\"Cato.ai\\\"] div.h-full.overflow-y-auto\");if(!c)return 'SEM PAINEL';const el=[...document.querySelectorAll(\"[role=dialog][aria-label^=\\\"Cato.ai\\\"] div.h-full.overflow-y-auto div.items-start\")].filter(e=>e.getClientRects().length).pop();if(!el)return 'SEM ALVO';const dy=Math.round(el.getBoundingClientRect().top-150);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});await new Promise(r=>setTimeout(r,60));return Math.round(el.getBoundingClientRect().top)})()",
+   "js": "(async()=>{const el=[...document.querySelectorAll(\"[role=dialog][aria-label^=\\\"Cato.ai\\\"] *\")].find(e=>e.children.length===0&&e.getClientRects().length&&e.textContent.includes(\"Pagamentos registram a operação\"));if(!el)return 'SEM ALVO';let c=el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)break;c=c.parentElement;}if(!c||c===document.body)c=document.scrollingElement;const dy=Math.round(el.getBoundingClientRect().top-260);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});await new Promise(r=>setTimeout(r,60));return Math.round(el.getBoundingClientRect().top)})()",
    "at": 14.81,
-   "label": "sobe ao começo da resposta"
+   "label": "sobe até o aviso sobre pagamentos"
   },
   {
    "do": "hover",
@@ -174,7 +179,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] :text(\"Pagamentos registram a operação\") >> nth=-1"
    },
    "seconds": 1.5,
-   "at": 10.5,
+   "at": 14.81,
    "label": "Pagamentos registram a operação no EcoSistema; não transferem dinheiro pela sua conta bancária.",
    "optional": true,
    "timeout": 4
@@ -213,6 +218,11 @@
    "timeout": 20
   },
   {
+   "do": "eval",
+   "label": "o painel do Cato volta fechado depois de recarregar",
+   "js": "(async()=>{for(let i=0;i<6;i++){const b=document.querySelector('button[aria-label=\"Fechar o Cato\"]');if(!b)return 'painel fechado';b.click();await new Promise(r=>setTimeout(r,400))}return 'painel fechado'})()"
+  },
+  {
    "do": "click",
    "target": {
     "text": "Marcos Antunes",
@@ -220,6 +230,17 @@
    },
    "at": 46.2,
    "label": "escolhe Marcos Antunes na lista"
+  },
+  {
+   "do": "waitFor",
+   "text": "Permissões concedidas",
+   "timeout": 2,
+   "optional": true
+  },
+  {
+   "do": "eval",
+   "label": "garante o detalhe do Marcos aberto",
+   "js": "(async()=>{const has=()=>document.body.innerText.includes('Permissões concedidas');if(has())return 'ok';const e=[...document.querySelectorAll('button,[role=button],div,li')].filter(x=>x.children.length<8&&/Marcos Antunes/.test(x.innerText||'')&&x.innerText.length<80).pop();if(!e)return 'SEM ALVO: linha do Marcos';e.click();for(let i=0;i<24;i++){await new Promise(r=>setTimeout(r,250));if(has())return 'abriu no segundo toque'}return 'SEM ALVO: detalhe do Marcos'})()"
   },
   {
    "do": "click",

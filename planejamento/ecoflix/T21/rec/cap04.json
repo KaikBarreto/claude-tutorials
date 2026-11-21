@@ -139,6 +139,12 @@
    "timeout": 4
   },
   {
+   "do": "eval",
+   "js": "(async()=>{const b=document.querySelector('button[aria-label=\"Próximo em Sugestões para começar\"]');if(!b)return 'SEM ALVO: seta do carrossel';for(let i=0;i<3;i++){if(!b.disabled)b.click();await new Promise(r=>setTimeout(r,420))}return 'quarta pergunta à vista'})()",
+   "at": 4.73,
+   "label": "o carrossel passa até a 4ª pergunta pronta"
+  },
+  {
    "do": "hover",
    "target": {
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] [role=group][aria-label=\"4 de 4\"]"
@@ -227,12 +233,6 @@
    "at": 23.95,
    "label": "abre Conversas",
    "noScroll": true
-  },
-  {
-   "do": "waitFor",
-   "text": "Suas conversas",
-   "timeout": 2,
-   "optional": true
   },
   {
    "do": "eval",

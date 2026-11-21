@@ -509,11 +509,11 @@ PEDIDO_VENDA = 'Lança uma venda de 500 kg de alumínio perfil pra Serra Fina, a
 
 def setup_compra():
     return (pede_setup(PEDIDO_COMPRA, 'Nenhuma compra foi lançada') + pede_setup('Pix, pela Conta Principal', 'Lançar compra')
-            + toca_setup('Lançar compra', 'lançada'))
+            + toca_setup('Lançar compra', 'Aparecida Ramos lançada'))
 
 
 def setup_venda():
-    return pede_setup(PEDIDO_VENDA, 'Lançar venda') + toca_setup('Lançar venda', 'lançada')
+    return pede_setup(PEDIDO_VENDA, 'Lançar venda') + toca_setup('Lançar venda', 'Reciclagem lançada')
 
 
 # PDF que o app abre em aba nova (a gravação filma uma aba só): devolvido em base64 para virar a ilustração da edição (padrão da T08)
@@ -630,7 +630,9 @@ def cap01():
 
 
 SETUP_AUTORIZACAO = S_BASE + [
-    {'do': 'click', 'target': FAB, 'noScroll': True},
+    {'do': 'eval', 'js': "(async()=>{for(let k=0;k<5;k++){if(document.body.innerText.includes('Antes da primeira conversa com o Cato'))return 'janela aberta';"
+                         "const b=document.querySelector('button[aria-label^=\\\"Abrir\\\"][aria-label*=\\\"Cato\\\"]');if(b)b.click();"
+                         "for(let i=0;i<16;i++){await new Promise(r=>setTimeout(r,250));if(document.body.innerText.includes('Antes da primeira conversa com o Cato'))return 'janela aberta'}}return 'SEM ALVO: janela de autorização'})()"},
     {'do': 'waitFor', 'text': 'Antes da primeira conversa com o Cato', 'timeout': 10}, {'do': 'wait', 'seconds': 0.8}]
 
 
@@ -683,6 +685,8 @@ def cap03():
     MEM = '[role=dialog]:has-text("Memória do Cato")'
     c.mark(1)
     c.click(FAB, at=0.25, label='abre o Cato', noScroll=True)
+    c.add({'do': 'eval', 'label': 'garante a janela de memória aberta', 'js': "(async()=>{const has=()=>document.body.innerText.includes('Quer que o Cato lembre de você?');await new Promise(r=>setTimeout(r,700));if(has())return 'ok';"
+           "const b=document.querySelector('button[aria-label^=\"Abrir\"][aria-label*=\"Cato\"]');if(b)b.click();for(let i=0;i<24;i++){await new Promise(r=>setTimeout(r,250));if(has())return 'abriu no segundo toque'}return 'SEM ALVO: janela de memória'})()"})
     c.waitfor(text='Quer que o Cato lembre de você?', timeout=8)
     c.hover(TXT('Quer que o Cato lembre de você?'), seconds=1.0, at=c.A(1, 'pergunta', 0.6), label='janela Quer que o Cato lembre de você?', optional=True)
     c.mark(2)
@@ -690,20 +694,24 @@ def cap03():
     c.mark(3)
     c.hover(TXTP('A memória é pessoal dentro desta empresa', within=DLG), seconds=2.0, at=c.A(3, 'memória', 0.5), label='ZOOM A memória é pessoal dentro desta empresa. Ela não é compartilhada com outros usuários e não guarda senhas, documentos ou autorizações.')
     c.mark(4)
+    c.hover(SEL(f'{DLG} button:has-text("Usar memória")'), seconds=0.4, at=c.A(4, 'Usar', 0.5), label='Usar memória (aponta)')
     c.hover(SEL(f'{DLG} button:has-text("Agora não")'), seconds=0.4, at=c.A(4, 'Agora', 0.6), label='Agora não (sem clicar)')
-    c.click(SEL(f'{DLG} button:has-text("Usar memória")'), at=c.A(4, 'Usar', 0.5), label='clique em Usar memória')
+    c.click(SEL(f'{DLG} button:has-text("Usar memória")'), at=c.A(4, 'depois', 0.4), label='clique em Usar memória')
     c.waitfor(gone=DLG, timeout=8)
     c.mark(5)
     c.click(NO_PAINEL('[role=toolbar] button:has-text("Memória")'), at=c.A(5, 'Memória', 0.8), label='botão Memória (embaixo do painel)', noScroll=True)
+    c.add({'do': 'eval', 'label': 'garante a janela Memória do Cato aberta', 'js': "(async()=>{const has=()=>[...document.querySelectorAll('[role=dialog]')].some(e=>/Memória do Cato/.test(e.innerText||''));await new Promise(r=>setTimeout(r,600));if(has())return 'ok';"
+           "const b=[...document.querySelectorAll('[role=toolbar] button')].find(x=>/Memória/.test(x.innerText));if(!b)return 'SEM ALVO: Memória';"
+           "b.click();for(let i=0;i<20;i++){await new Promise(r=>setTimeout(r,250));if(has())return 'abriu no segundo toque'}return 'SEM ALVO: Memória do Cato'})()"})
     c.waitfor(text='Memória do Cato', timeout=8)
-    c.hover(TXT('Lembrar entre conversas'), seconds=0.6, at=c.A(5, 'nota', 0.6), label='Memória do Cato, aba Minha memória, chave Lembrar entre conversas', optional=True)
+    c.hover(TXT('Lembrar entre conversas'), seconds=0.6, at=c.A(5, 'embaixo', 0.0), label='Memória do Cato, aba Minha memória, chave Lembrar entre conversas', optional=True)
     c.click(SEL(f'{MEM} button:has-text("Adicionar nota")'), at=c.A(5, 'escrever', 0.6), label='Adicionar nota')
-    c.type(SEL('#cato-memory-note'), 'Prefiro os valores em tabela, do maior para o menor.', at=c.A(5, 'escrever', -0.6), label='digita a nota', cps=30)
-    c.click(SEL(f'{MEM} button:has-text("Salvar nota")'), at=c.A(5, 'corrigir', 0.6), label='Salvar nota')
+    c.type(SEL('#cato-memory-note'), 'Prefiro os valores em tabela, do maior para o menor.', at=c.A(5, 'escrever', -0.1), label='digita a nota', cps=50)
+    c.click(SEL(f'{MEM} button:has-text("Salvar nota")'), at=c.A(5, 'por', -0.5), label='Salvar nota')
     c.waitfor(text='Prefiro os valores em tabela', timeout=8)
-    c.hover(SEL(f'{MEM} button[aria-label="Editar memória"] >> nth=0'), seconds=0.5, at=c.A(5, 'corrigir', 0.4), label='lápis (Editar memória)', optional=True)
-    c.hover(SEL(f'{MEM} button[aria-label="Apagar memória"] >> nth=0'), seconds=0.5, at=c.A(5, 'uma', 0.4), label='lixeira (Apagar memória)', optional=True)
-    c.hover(SEL(f'{MEM} button:has-text("Apagar toda a minha memória")'), seconds=0.8, at=c.A(5, 'tudo', 0.5), label='Apagar toda a minha memória (sem clicar)', optional=True)
+    c.hover(SEL(f'{MEM} button[aria-label="Editar memória"] >> nth=0'), seconds=0.35, at=c.A(5, 'ou', 0.0), label='lápis (Editar memória)', optional=True)
+    c.hover(SEL(f'{MEM} button[aria-label="Apagar memória"] >> nth=0'), seconds=0.35, at=c.A(5, 'apagar', 0.0, nth=1), label='lixeira (Apagar memória)', optional=True)
+    c.hover(SEL(f'{MEM} button:has-text("Apagar toda a minha memória")'), seconds=0.6, at=c.A(5, 'tudo', 0.0, nth=1), label='Apagar toda a minha memória (sem clicar)', optional=True)
     c.mark(6)
     c.hover(TXTP('Notas e preferências expiram em 90 dias', within=MEM), seconds=2.0, at=c.A(6, 'valem', 0.5), label='ZOOM Notas e preferências expiram em 90 dias; assuntos recentes, em 30 dias. Pausar não apaga o que foi salvo.')
     c.mark(7)
@@ -723,6 +731,9 @@ def cap04():
     c.waitfor(text='Pergunte o que quiser sobre seu negócio', timeout=8)
     c.ev("JSON.stringify({rota:location.pathname,prontas:[...document.querySelectorAll('%s button')].map(b=>b.innerText.trim()).filter(t=>t.endsWith('?')).slice(0,6)})" % PAINEL.replace('"', '\\"'), label='as perguntas prontas da tela')
     c.hover(PRONTA(0), seconds=0.3, at=c.A(1, 'painel', 0.6), label='as quatro perguntas prontas (1ª)')
+    c.ev("(async()=>{const b=document.querySelector('button[aria-label=\"Próximo em Sugestões para começar\"]');if(!b)return 'SEM ALVO: seta do carrossel';"
+         "for(let i=0;i<3;i++){if(!b.disabled)b.click();await new Promise(r=>setTimeout(r,420))}return 'quarta pergunta à vista'})()",
+         at=c.A(1, 'prontas', 2.2), label='o carrossel passa até a 4ª pergunta pronta')
     c.hover(PRONTA(3), seconds=0.4, at=c.A(1, 'prontas', 0.5), label='as quatro perguntas prontas (4ª)')
     c.mark(2)
     c.hover(CAMPO, seconds=0.6, at=c.A(2, 'escreve', 0.6), label='campo Pergunte ao Cato…', noScroll=True)
@@ -732,7 +743,6 @@ def cap04():
     c.mark(3)
     c.hover(SEL(f'{PAINEL} [role=toolbar] button:has-text("Conversas")'), seconds=0.4, at=c.A(3, 'conversas', 0.6), label='botão Conversas', noScroll=True)
     c.click(SEL(f'{PAINEL} [role=toolbar] button:has-text("Conversas")'), at=c.A(3, 'conversas', 0.0), label='abre Conversas', noScroll=True)
-    c.waitfor(text='Suas conversas', timeout=2, optional=True)
     c.ev("(async()=>{const has=()=>[...document.querySelectorAll('h2,[role=dialog]')].some(e=>/Suas conversas/.test(e.innerText||''));if(has())return 'ok';"
          "const b=[...document.querySelectorAll('[role=toolbar] button')].find(x=>/Conversas/.test(x.innerText));if(!b)return 'SEM ALVO: Conversas';"
          "b.click();for(let i=0;i<20;i++){await new Promise(r=>setTimeout(r,250));if(has())return 'abriu no segundo toque'}return 'SEM ALVO: Suas conversas'})()",
@@ -925,11 +935,12 @@ def cap07():
     c.confere('painel', ['Pergunte ao Cato'], 'painel depois de Corrigir dados')
     c.hover(BT('Agora não'), seconds=0.6, at=c.A(6, 'Agora', 0.6), label='Agora não (sem clicar)', optional=True)
     c.mark(7)
+    c.ev(js_fim_da_conversa(), at=c.A(7, 'Lançar', 0.1), label='rola a conversa até o cartão (o campo cresceu com o pedido de volta)')
     c.click(BT('Lançar compra'), at=c.A(7, 'Lançar', 0.6), label='clique em Lançar compra')
-    c.waitfor(text='lançada', timeout=10)
+    c.waitfor(text='Aparecida Ramos lançada', timeout=10)
     c.hover(BT('Abrir comprovante'), seconds=0.8, at=c.A(7, 'comprovante', 0.6), label='Abrir comprovante (sem clicar)', optional=True)
     c.mark(8)
-    c.hover(T('Próximos passos'), seconds=1.5, at=c.A(8, 'passos', 0.6), label='Próximos passos do pedido', optional=True)
+    c.click(BT('Próximos passos'), at=c.A(8, 'passos', 0.6), label='Próximos passos do pedido (abre)', optional=True)
     c.mark(9)
     c.fim()
     return c
@@ -946,7 +957,8 @@ def cap08():
     c.mark(3)
     c.hover(T('Vencimento'), seconds=0.5, at=c.depois(c.L(3) + 0.1), label='cartão: Forma de pagamento Saldo com cliente e Vencimento')
     c.click(BT('Lançar venda'), at=c.A(3, 'Lançar', 0.6), label='clique em Lançar venda')
-    c.waitfor(text='lançada', timeout=10)
+    c.waitfor(text='Reciclagem lançada', timeout=10)
+    c.click(BT('Próximos passos'), at=c.A(3, 'receber', 0.3), label='Próximos passos do pedido (abre)', optional=True)
     c.hover(T('A receber'), seconds=1.0, at=c.A(3, 'receber', 0.6), label='Próximos passos: A receber R$ 5.200,00', optional=True)
     c.mark(4)
     c.mark(5)
@@ -971,7 +983,7 @@ def cap08():
 
 def cap09():
     """Contas, caixa e banco (painel vazio): baixa (L1, L2), ilustração (L3), abrir caixa (L4), saída (L5), transferência (L6), fechar (L7)."""
-    c = Cap(9, S_PAINEL, pace=0.5, start=(900, 560))
+    c = Cap(9, S_PAINEL, pace=0.5, cps=90, start=(900, 560))
     c.mark(1)
     pede(c, 'Dá baixa na primeira parcela da Fundição Bandeira do Vale, recebi por Pix na Conta Principal', 'A5', c.A(1, 'recebi', 0.0), cedo=c.A(1, 'Fundição', 0.5))
     c.waitfor(text='Confirmar registro', timeout=10)
@@ -1007,7 +1019,7 @@ def cap09():
 
 def cap10():
     """Saldo de parceiro (painel vazio): acerto do Valdir (L1, L2), recebimento da Aços Quiririm (L3), ilustração (L4)."""
-    c = Cap(10, S_PAINEL, pace=0.5, start=(900, 560))
+    c = Cap(10, S_PAINEL, pace=0.5, cps=90, start=(900, 560))
     c.mark(1)
     pede(c, 'Abate 100 reais do saldo do Valdir Pereira, ele entregou uma bateria em troca', 'A10a', c.L(1) + 8.0, cedo=c.A(1, 'Valdir', 0.0))
     c.waitfor(text='O saldo é de um cliente ou de um fornecedor?', timeout=10)
@@ -1030,7 +1042,7 @@ def cap10():
 
 def cap11():
     """Cadastros (painel vazio): fornecedor (L1), material (L2), ilustração (L3, L4)."""
-    c = Cap(11, S_PAINEL, pace=0.5, start=(900, 560))
+    c = Cap(11, S_PAINEL, pace=0.5, cps=90, start=(900, 560))
     c.mark(1)
     pede(c, 'Cadastra o fornecedor Sebastião Lima, telefone (12) 9 0000-0147', 'A12', c.A(1, 'conversa', 0.0), cedo=0.3)
     c.waitfor(text='Salvar cadastro', timeout=10)
@@ -1056,10 +1068,10 @@ CLIPE = SEL(f'{PAINEL} button[aria-label="Anexar foto, arquivo ou planilha"]', n
 def cap12():
     """Fotos, planilhas e PDFs (painel vazio): clipe e foto da pesagem (L1), ticket com "Arquivo usado" (L2), ilustração (L3), print de tabela (L4),
     ilustração dos formatos (L5)."""
-    c = Cap(12, S_PAINEL, pace=0.5, start=(900, 560))
+    c = Cap(12, S_PAINEL, pace=0.5, cps=90, start=(900, 560))
     c.mark(1)
     c.click(CLIPE, at=c.A(1, 'clipe', 0.6), label='clipe (Anexar foto, arquivo ou planilha)')
-    c.hover(T('Tirar foto'), seconds=0.5, at=c.A(1, 'foto', 0.6), label='menu: Escolher foto ou arquivo e Tirar foto', noScroll=True, optional=True)
+    c.hover(SEL('[role=menuitem]:has-text("Tirar foto")'), seconds=0.5, at=c.A(1, 'foto', 0.6), label='menu: Escolher foto ou arquivo e Tirar foto', noScroll=True, optional=True)
     c.add({'do': 'upload', 'target': SEL('[role=menuitem]:has-text("Escolher foto ou arquivo")', noScroll=True), 'file': FOTO, 'at': round(c.A(1, 'pesagem', 0.6), 2),
            'label': 'escolhe pesagem-cooperativa.jpg (foto fictícia de um ticket de balança)'})
     c.waitfor(text='pesagem-cooperativa', timeout=10)
@@ -1089,10 +1101,10 @@ def cap12():
 def cap13():
     """Nota fiscal pelo Cato (o `setup` lança a venda da Serra Fina): Preparar NF-e (L1), forma de pagamento (L2), rascunho (L3), prévia do
     DANFE (L4), Criar rascunho (L5), ilustração (L6), Emitir NF-e (L7), autorizada (L8), ilustração (L9), recusa (L10)."""
-    c = Cap(13, S_PAINEL + setup_venda() + [{'do': 'eval', 'js': POPS}], pace=0.5, start=(900, 560))
+    c = Cap(13, S_PAINEL + setup_venda() + toca_setup('Próximos passos', 'Sem NF-e vinculada') + [{'do': 'eval', 'js': POPS}], pace=0.5, start=(900, 560))
     c.mark(1)
-    c.click(BT('Preparar NF-e'), at=c.A(1, 'Preparar', 0.6), label='clique em Preparar NF-e (nos próximos passos do pedido)')
-    d = c.click(ENVIAR, at=c.A(1, 'Preparar', 0.6) + 2.0, label='Enviar (o pedido já veio escrito no campo)', noScroll=True)
+    c.ev(js_fim_da_conversa(), at=c.A(1, 'Preparar', 0.0), label='rola a conversa até o botão Preparar NF-e')
+    d = c.click(BT('Preparar NF-e'), at=c.A(1, 'Preparar', 0.6), label='clique em Preparar NF-e (nos próximos passos do pedido; o botão já manda o pedido)')
     c.resposta('A17a', d['at'])
     c.mark(2)
     c.waitfor(text='Qual forma de pagamento deve constar na NF-e', timeout=10)
@@ -1166,15 +1178,21 @@ def cap15():
     c.mark(1)
     pede(c, 'O que você consegue fazer?', 'A18', c.A(1, 'lista', 0.0), cedo=c.A(1, 'pergunte', 0.0))
     c.waitfor(text='Ações com sua confirmação', timeout=10)
-    c.ev(js_msgs_rola(achar_ultimo('div.items-start'), 150, 600), at=c.depois(c.A(1, 'lista', 0.3)), label='sobe ao começo da resposta')
-    c.hover(T('Pagamentos registram a operação'), seconds=1.5, at=c.A(1, 'pagamento', 0.6), label='Pagamentos registram a operação no EcoSistema; não transferem dinheiro pela sua conta bancária.', optional=True)
+    c.waitfor(text='não transferem dinheiro pela sua conta bancária', timeout=25)
+    c.ev(js_rola_el(achar_folha(PAINEL, 'Pagamentos registram a operação', contem=True), 260, 700), at=c.depois(c.A(1, 'lista', 0.3)), label='sobe até o aviso sobre pagamentos')
+    c.hover(T('Pagamentos registram a operação'), seconds=1.5, at=c.depois(c.A(1, 'pagamento', 0.6)), label='Pagamentos registram a operação no EcoSistema; não transferem dinheiro pela sua conta bancária.', optional=True)
     c.mark(2)
     c.mark(3)
     c.mark(4)
     c.press('Escape', at=c.L(4) - 1.4, label='fecha o painel', optional=True)
     c.add({'do': 'goto', 'url': '/configuracoes?tab=users', 'at': round(c.L(4) - 0.6, 2), 'label': 'Usuários e Permissões'})
     c.waitfor(text='Marcos Antunes', timeout=20)
+    c.add({'do': 'eval', 'label': 'o painel do Cato volta fechado depois de recarregar', 'js': "(async()=>{for(let i=0;i<6;i++){const b=document.querySelector('button[aria-label=\"Fechar o Cato\"]');if(!b)return 'painel fechado';b.click();await new Promise(r=>setTimeout(r,400))}return 'painel fechado'})()"})
     c.click(TXT('Marcos Antunes'), at=c.A(4, 'quem', 0.8), label='escolhe Marcos Antunes na lista')
+    c.waitfor(text='Permissões concedidas', timeout=2, optional=True)
+    c.add({'do': 'eval', 'label': 'garante o detalhe do Marcos aberto', 'js': "(async()=>{const has=()=>document.body.innerText.includes('Permissões concedidas');if(has())return 'ok';"
+           "const e=[...document.querySelectorAll('button,[role=button],div,li')].filter(x=>x.children.length<8&&/Marcos Antunes/.test(x.innerText||'')&&x.innerText.length<80).pop();if(!e)return 'SEM ALVO: linha do Marcos';"
+           "e.click();for(let i=0;i<24;i++){await new Promise(r=>setTimeout(r,250));if(has())return 'abriu no segundo toque'}return 'SEM ALVO: detalhe do Marcos'})()"})
     c.click(BTN('Editar'), at=c.A(4, 'restrição', 0.8), label='Editar (permissões do Marcos)')
     c.waitfor(text='Perfis rápidos', timeout=10)
     c.ev(js_rola_el(achar_folha('[role=dialog]', 'Ver somente os pedidos que lançar'), 330, 900), at=c.A(4, 'pedidos', 0.9), label='desce até Ver somente os pedidos que lançar')
@@ -1210,13 +1228,13 @@ def cap16():
     c.ev(js_msgs_rola(achar_ultimo('button[aria-label="Resposta útil"]').replace('.pop()', '.at(-1)'), 460, 700), at=c.A(1, 'resposta', 0.5), label='sobe até as ações da última resposta')
     c.hover(SEL(f'{PAINEL} button[aria-label="Resposta útil"] >> nth=-1', noScroll=True), seconds=0.5, at=c.A(1, 'joinha', 0.5), label='joinha (Resposta útil)')
     c.click(SEL(f'{PAINEL} button[aria-label="Resposta útil"] >> nth=-1', noScroll=True), at=c.A(1, 'clicar', 0.6), label='clique no joinha')
-    c.click(SEL(f'{PAINEL} button[aria-label="Resposta não útil"] >> nth=-3', noScroll=True), at=c.A(1, 'baixo', 0.6), label='dedo pra baixo (outra resposta)', optional=True)
+    c.click(SEL(f'{PAINEL} button[aria-label="Resposta não útil"] >> nth=-2'), at=c.A(1, 'baixo', 0.6), label='dedo pra baixo (outra resposta)')
     c.waitfor(text='Faltou detalhe', timeout=5)
     c.hover(SEL(f'{PAINEL} button:text-is("Número errado")', noScroll=True), seconds=0.4, at=c.A(1, 'motivos', 0.5), label='os motivos')
     c.click(SEL(f'{PAINEL} button:text-is("Faltou detalhe")', noScroll=True), at=c.A(1, 'clique', 0.6), label='Faltou detalhe')
     c.mark(2)
-    c.add({'do': 'clock', 'forward': '00:03:10', 'at': round(c.L(2) - 0.4, 2), 'label': 'avança o relógio 3 minutos (a pesquisa de fim de conversa aparece)'})
-    c.waitfor(text='Enviar avaliação', timeout=10, optional=True)
+    c.add({'do': 'clock', 'forward': '00:06:00', 'at': round(c.L(2) - 0.4, 2), 'label': 'avança o relógio 6 minutos (as mensagens restauradas têm hora à frente do relógio) (a pesquisa de fim de conversa aparece)'})
+    c.waitfor(text='Consegui concluir', timeout=10)
     c.hover(T('Consegui concluir'), seconds=0.6, at=c.A(2, 'resolveu', 0.6), label='pesquisa: Sim / Consegui concluir', optional=True)
     c.click(T('Consegui concluir'), at=c.A(2, 'cliques', 0.6), label='clique em Sim / Consegui concluir', optional=True)
     c.mark(3)

@@ -67,7 +67,7 @@ O ticket de pesagem também. Eu dou o bruto e a tara, e ele calcula o líquido: 
 Ticket só registra a pesagem. Estoque e financeiro só mudam quando ele for valorizado, lá na tela do ticket. Dá pra pedir o ticket com valores também, dizendo o preço de cada material.
 E os preços. Peço pra subir cinquenta centavos na compra dos dois cobres, e o cartão mostra o preço de hoje e o novo, lado a lado.
 Sim, atualizar. Vale pra um material, pra vários ou pra tabela inteira, em porcentagem ou em reais.""",
-9: """No financeiro, a mesma lógica. A Fundição pagou a primeira parcela, e eu peço a baixa: recebi por Pix, na Conta Principal.
+9: """No financeiro, a mesma lógica. A Fundição pagou a primeira parcela, e eu peço a baixa: recebi por Pix, na Conta Principal. O cartão mostra a parcela de quatro mil, setecentos e noventa reais, com a forma e a data.
 Confirmar registro, e a conta está baixada.
 Uma dica: o Cáto registra no sistema. Ele não manda Pix nem movimenta a sua conta no banco. O dinheiro você movimenta no banco, e aqui fica o registro.
 Dá pra abrir o caixa por aqui. Ele exige que você diga o valor contado, mesmo que seja zero.
@@ -78,11 +78,11 @@ E fechar o caixa: você diz quanto contou, e ele mostra a diferença pro que o s
 O cartão diz quanto ele te devia e quanto vai dever. E avisa: esse acerto não mexe em caixa nem em banco.
 O segundo é quando entrou dinheiro de verdade. A Aços Quiririm pagou mil reais do que devia. Aí o saldo dela cai e o dinheiro entra na conta.
 Uma dica: acerto muda só o saldo. Pagamento ou recebimento muda o saldo e o dinheiro. Diga qual dos dois você quer.""",
-11: """Fornecedor novo no balcão? Dá pra cadastrar pela conversa, com o nome e o que você souber dele.
+11: """Fornecedor novo no balcão? Dá pra cadastrar pela conversa, com o nome e o que você souber dele. O cartão mostra o nome e o telefone, eu confiro e salvo, e o cadastro entra na hora.
 Material também: nome, unidade e, se quiser, os preços. O cadastro nasce sem estoque.
 Uma dica: ele cria cadastro novo. Editar ou excluir um cadastro que já existe continua na tela de cadastro.
 E, pra quem usa o módulo de produção, ele também prepara uma ordem de produção e a conversão de um material em outro. Isso a gente vê no tutorial da produção.""",
-12: """Em vez de digitar, você pode mandar o arquivo. Aqui no clipe: uma foto da pesagem, por exemplo.
+12: """Em vez de digitar, você pode mandar o arquivo. Aqui no clipe: uma foto da pesagem, por exemplo. A foto aparece embaixo do campo, pronta pra enviar. Eu mando só a foto, sem escrever nada.
 Ele lê a foto e pergunta o que fazer com aquilo. Eu peço o ticket de compra, e o cartão vem preenchido com os pesos da foto, pra eu conferir.
 Uma dica: o arquivo sozinho não lança nada. Se tiver uma ordem escrita dentro dele, o Cáto ignora. Vale a mesma regra: ele prepara, você confere e confirma.
 Com um print de tabela de preços, ele pergunta se você quer só consultar ou atualizar os seus preços, e se são de compra ou de venda.
