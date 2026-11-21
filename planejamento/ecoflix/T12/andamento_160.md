@@ -30,3 +30,19 @@ Falta: bash rec/t12/t12_lote.sh 08 13 16 (em /home/claude/ecoflix, TUT_SENHA no 
 - cap08: completo 0 falhos (atrasos 3, máx. 1,3 s do "Voltar às ordens"). cap13: completo 0 falhos, mas 3 atrasos (máx. 3,7 s); o seletor da ordem 7 agora abre 1,2 s antes da escolha. cap16: rápido e completo 0 falhos, 17 atrasos (máx. 6,5 s): pacing apertado nos caps de checklist (digitação a 75 cps e hovers de 0,4 s já aplicados), ainda precisa afrouxar âncoras.
 - cap09: no rápido o diálogo "Agendar coleta" abria sem data (digitação no campo de data incompleta): passo de conferência/ajuste do `#coleta-data` adicionado em `_caps2.py`. Reensaio caiu por falta de disco (ENOSPC, falhos 99). Falta: `bash rec/t12/t12_cap3.sh 09` (TUT_SENHA no ambiente, com disco livre).
 Instância 54312 derrubada.
+
+## 21/11 · fechamento (gravação final 1.60.22, montagem e prévia)
+- Aula final: `$TUT_HOME/t12/edit/out/T12/aula_final.mp4` (19 min 24 s, 1080p, -16,3 LUFS, pico -3,8 dBTP, 419 legendas); prévia 720p em `$TUT_HOME/entrega_previa/`.
+- Gravação: `rec/t12/t12_final.sh NN ...` (fila prio 12, instância 54312, `FAKE_NOW` 2026-11-10 07:00, quadros em `/dev/shm/t12_rec`); log `rec/t12/final.log`.
+  Regravados (2 rodadas): cap08 (hover do "Voltar às ordens" no topo sem `noScroll`: maxLate 4,4 s), cap10 (Tipo do veículo ficava "Não classificar": a letra
+  da busca se perdia; e o "⋯" de outra linha abria no caminho do cursor e escondia a aba Motoristas: 1 falho), cap11 (Cadastrar o tipo 0,9 s antes; depois
+  "Caçamba 06ç": o "ç" da busca do seletor ia para a Identificação), cap12 (Registrar 1,9 s atrasado: De/Para já vêm marcados, Tipo pelo teclado; depois a
+  semente com "Caçamba 06ç"). Sementes `apos-cap11/12/15` corrigidas para "Caçamba 06" (originais no scratchpad da sessão). Todos: 0 falho, maxLate < 0,8.
+- Respiros (`pausas.py`, antes do fechamento): cap11, 12, 13 e 16. Acelera: cap16 [44,6; 46,8] 2x (navegação até a ordem). Sem destaques.
+- Edição: `t12_specs.py` + `caps/extra.json` (21 zooms manuais, `min_w` 1600, só onde a fala aponta algo pequeno; cap10 CNH e cap12 formulário por causa do
+  `auditar_camera.py`), `specs_ilus.py` (5 ilustrações v3: ilu01, ilu10, ilu11, ilu14, ilu15; nenhuma pendente), `fechar_t12.sh`, `montar_t12.sh` (`MIX_PY=t12_mix.py`).
+  Disco: `out/capNN` e `out/T12` em `/dev/shm` (links) durante a montagem.
+- Pendência: no cap17 (recapitulação, 19:12 a 19:18) o bloco Checklist das Configurações aparece vazio (semente `apos-cap15`, antes do cap16), enquanto a fala diz
+  "montou o checklist com assinatura". Para corrigir: semente `apos-cap16` e regravar só o cap17.
+- Achados do app para o MELHORIAS: na tela da ordem com checklist obrigatório sem resposta, o topo diz "0/1 obrigatórios" mas a barra "Falta para concluir" só
+  lista a assinatura; o menu "⋯" das listas (Frota) abre por hover e fica aberto quando o cursor só passa por ele.

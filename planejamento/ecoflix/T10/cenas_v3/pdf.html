@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- T10 "Estoque" · os PAPÉIS REAIS na tela (kit v3, clima claro: papel é mundo físico). Molde: T09/cenas_v3/pdf.html.
+     Pedido do Kaik (19/11): toda fala de PDF ou comprovante mostra o papel real, sem redesenho; a câmera passeia e o marca-texto
+     verde acompanha a fala. O robô devolveu os três no ensaio ($TUT_HOME/rec/t10/pdfs/); a edição os deixa, fora do git, em
+     $TUT_HOME/t10/edit/out/comprovantes/ :
+       cap07-kardex.png     cap07-kardex.pdf (A4 deitado, 1 página)                       pdftoppm -r 400 -png -singlefile
+       cap13-posicao.png    cap13-posicao-estoque-31-10-pdf.pdf (A4 em pé, 2 páginas)     página 1, -r 350
+       cap13-relatorio.png  cap13-relatorio.html impresso em A4 deitado pelo Chromium (mídia de impressão, @page da página), página 1, -r 400
+     (o .bbox.html de cada um, ao lado, traz as coordenadas em pontos: pdftotext -bbox)
+     Janelas (../cenas/ilustracoes.json), sobre a voz real ($TUT_HOME/t10/narracao/capNN.json):
+       cap07 · linha 5  · pdf07_kardex    "Exportar, e o extrato do ferro pesado sai em PDF."
+       cap13 · linha 2  · pdf13_posicao   "Exportar, e o PDF abre numa aba nova, pronto pra baixar e mandar pro contador."
+       cap13 · linha 4  · pdf13_relatorio "O Relatório exporta pelo Exportar Relatório, com o período e os filtros da tela."  (do 1º "Relatório" ao "tela")
+     O papel do Relatório é a página impressa (sem a barra "Salvar PDF" da aba): é o que sai no PDF. A Posição tem 2 páginas; aparece a 1ª
+     (o Total geral está na 2ª, e a fala desta janela não o cita).
+     Render: render_cenas.cjs <cap> <capNN.json> saida.mp4 --html .../pdf.html --anexo $TUT_HOME/t10/edit/out/comprovantes
+             --larg 1422 --dsf 1.35 --de <s> --ate <s>.  Auditoria: auditar.cjs --aula planejamento/ecoflix/T10 --larg 1422 -->
+</head><body>
+<script type="module">
+import { pr, eo, W, vis, titulo, posTitulo, GL, mancha, piso, U, camera, plano, cena, estilo, enquadraRet }
+  from '../../../../perfis/ecoflix/cenas_v3/motor.js';
+import { ceuClaro } from '../../../../perfis/ecoflix/cenas_v3/fundo.js';
+
+const NUNCA = 1e9;
+// O papel é desenhado MAIOR que no quadro (K px por pt) para o Chromium não ampliar a camada. FOLHA: A4 em pé; DEITADA: A4 deitado, 9 m de largura.
+const FOLHA = { wpt: 595.28, K: 2.4, E: .008 / 2.4 }, DEITADA = { wpt: 841.92, K: 2.4, E: 9 / 841.92 / 2.4 };
+
+// marcas: [x0, y0, x1, y1, tipo]; tipo '' = marca-texto (cresce da esquerda), 'q' = moldura (faixa preta ou coluna, onde o marca-texto não aparece)
+function papel(src, o) {
+  const K = o.K, WP = Math.round(o.wpt * K), HPX = Math.round(o.hpt * K), m = K * o.E, r = 4.2 * K;
+  estilo('folha10', `
+.folha{position:relative;background:#fff}
+.folha img{display:block;width:100%;height:100%;border-radius:inherit}
+.folha .mk{position:absolute;background:rgba(80,208,136,.46);mix-blend-mode:multiply;transform-origin:0 50%;transform:scaleX(0)}
+.folha .mk.q{background:none;mix-blend-mode:normal;border-style:solid;border-color:#50D088;transform:none;opacity:0}`);
+  const mk = Object.entries(o.marcas).map(([id, [x0, y0, x1, y1, tp]]) =>
+    `<i class="mk ${tp ?? ''}" data-m="${id}" style="left:${(x0 * K).toFixed(1)}px;top:${(y0 * K).toFixed(1)}px;width:${((x1 - x0) * K).toFixed(1)}px;height:${((y1 - y0) * K).toFixed(1)}px;border-radius:${(2.8 * K).toFixed(1)}px${
+      tp === 'q' ? `;border-width:${(1.9 * K).toFixed(1)}px;box-shadow:0 0 0 ${(1.9 * K).toFixed(1)}px rgba(80,208,136,.28)` : ''}"></i>`).join('');
+  const s = 1.45, sombra = `0 ${(22.7 * K * s).toFixed(0)}px ${(40 * K * s).toFixed(0)}px ${(-12 * K * s).toFixed(0)}px rgba(30,80,60,.38),0 ${(5.4 * K * s).toFixed(0)}px ${(10.8 * K * s).toFixed(0)}px ${(-4 * K * s).toFixed(0)}px rgba(30,80,60,.14)`;
+  const yc = HPX * o.E / 2 + .45;
+  return { ...o, m, yc, html: `<div class="folha" style="width:${WP}px;height:${HPX}px;border-radius:${r}px;box-shadow:${sombra}"><img src="${src}" alt="">${mk}</div>` };
+}
+function marca(e, id, t, a, d = .45) {
+  const mk = (e._mk ??= {})[id] ??= e.querySelector(`[data-m="${id}"]`), k = eo(pr(t, a, d));
+  if (mk.classList.contains('q')) { mk.style.opacity = k.toFixed(3); mk.style.transform = `scale(${(1.05 - .05 * k).toFixed(4)},${(1.25 - .25 * k).toFixed(4)})`; }
+  else mk.style.transform = `scaleX(${k.toFixed(4)})`;
+}
+// trecho do papel (pt, de cima para baixo; por padrão na largura inteira) em metros: para enquadraRet
+const faixa = (P, y0, y1, x0 = 0, x1 = P.wpt) => [(x0 - P.wpt / 2) * P.m, P.yc + (P.hpt / 2 - y1) * P.m, (x1 - P.wpt / 2) * P.m, P.yc + (P.hpt / 2 - y0) * P.m];
+const palco = (r = 24) => { piso({ r, x: 0, z: -2, passo: 1.3 }); U.uNevoa.value.set(.955, .975, .965, .8); ceuClaro({ halo: [.2, 3.6, -12] }); };
+const poe = (P, larg = 5.2) => ({ p: plano(P.html, { pos: [0, P.yc, 0], esc: P.E, sangra: true }), s: mancha(larg, 1.6, [0, 0, .1], { op: 0 }) });
+const ALTO = (P, y1, o = {}) => enquadraRet(null, faixa(P, 0, y1), { topo: 150, margem: 48, el: .02, az: .04, ...o });
+const PERTO = (P, y0, y1, o = {}) => enquadraRet(null, faixa(P, y0, y1, o.x0, o.x1), { topo: 70, margem: 56, el: .015, az: .02, ...o });
+// a janela abre com o título já no alto e o papel chegando
+const abre = (t, a, tit, sai, P, a0 = a - 1.7) => { posTitulo(tit, t, Math.max(a0, a - 1.7), a - 1.3, sai); vis(P.p.e, t, a - .6, NUNCA, { dy: 72 }); };
+
+// =====================================================================================================================
+// cap07, linha 5 · o Kardex do Ferro pesado em PDF (folha deitada): o título, o material (1 selecionado) e a coluna do material
+function kardex07(d) {
+  const t0 = W(5, 'exportar'), tex = W(5, 'extrato'), tfe = W(5, 'ferro'), tpe = W(5, 'pesado'), tsa = W(5, 'sai'), tfim = W(5, 'pdf', 1, 'e');
+  palco(26);
+  const P = papel(`${d.anexo}/cap07-kardex.png`, { ...DEITADA, hpt: 595.28, marcas: { tit: [38, 119.5, 381.5, 136.5], mat: [38, 169.5, 138.5, 181], col: [238.5, 254, 357, 409, 'q'] } }), F = poe(P, 6.4);
+  const tit = titulo('Exportar', 'O extrato em PDF');
+  const A = ALTO(P, 300, { margem: 56, az: .05 }), B = PERTO(P, 110, 415, { x0: 20, x1: 830, margem: 50, az: .02 });
+  camera([[t0 - 3, A], [tex - .1, { ...A, d: A.d * .985, az: .045 }, 'lin'], [tfe + .05, B], [tfim + 2, { ...B, d: B.d * .985, az: .0 }, 'lin']]);
+  return t => {
+    GL.style.opacity = eo(pr(t, t0 - .25, .35)).toFixed(3); abre(t, t0, tit, tex + .1, F);
+    F.s.material.uniforms.uOp.value = .55 * (+F.p.e.style.opacity || 0);
+    marca(F.p.e, 'tit', t, tex + .05); marca(F.p.e, 'mat', t, tfe + .1, .4); marca(F.p.e, 'col', t, tpe + .1, .5);
+  };
+}
+
+// =====================================================================================================================
+// cap13, linha 2 · a Posição de Estoque de 31/10 em PDF (folha em pé): o título e a data no alto; depois o grupo Ferrosos
+function posicao13(d) {
+  const t0 = W(2, 'exportar'), tpd = W(2, 'pdf'), tab = W(2, 'aba'), tno = W(2, 'nova'), tpr = W(2, 'pronto'), tba = W(2, 'baixar'), tfim = W(2, 'contador', 1, 'e');
+  const P = papel(`${d.anexo}/cap13-posicao.png`, { ...FOLHA, hpt: 841.89, marcas: { tit: [38, 123.5, 193, 141], dat: [38, 149.5, 191.5, 163], fer: [38, 466, 557.5, 587, 'q'] } }), F = poe(P, 5.2);
+  const tit = titulo('Exportar', 'A foto em PDF');
+  const A = ALTO(P, 330, { margem: 56, az: .05 }), B = PERTO(P, 455, 595, { margem: 50, az: .02 });
+  const cam = [[t0 - 3, A], [tno + .1, { ...A, d: A.d * .985, az: .045 }, 'lin'], [tpr + .15, B], [tfim + 2, { ...B, d: B.d * .985, az: .0 }, 'lin']];
+  return { cam, t0, F, r: t => {
+    abre(t, t0, tit, tab - .1, F); marca(F.p.e, 'tit', t, tpd + .1); marca(F.p.e, 'dat', t, tno + .05, .4); marca(F.p.e, 'fer', t, tba - .05, .5);
+  } };
+}
+
+// =====================================================================================================================
+// cap13, linha 4 · o Relatório de Estoque de outubro em PDF (folha deitada): o título e o período
+function relatorio13(d) {
+  const t0 = W(4, 'relatorio'), tex = W(4, 'exporta'), tpe = W(4, 'periodo'), tfi = W(4, 'filtros'), tfim = W(4, 'tela', 1, 'e');
+  const P = papel(`${d.anexo}/cap13-relatorio.png`, { ...DEITADA, hpt: 594.96, marcas: { tit: [359, 84, 483, 107], per: [299, 103, 421.5, 119] } }), F = poe(P, 6.4);
+  const tit = titulo('Exportar Relatório', 'O relatório em PDF');
+  const A = ALTO(P, 190, { margem: 56, az: .05 }), B = PERTO(P, 70, 190, { x0: 20, x1: 822, margem: 50, az: .02 });
+  const cam = [[t0 - 3, A], [tex - .1, { ...A, d: A.d * .985, az: .045 }, 'lin'], [tpe - .2, B], [tfim + 2, { ...B, d: B.d * .985, az: .0 }, 'lin']];
+  return { cam, t0, F, r: t => {
+    abre(t, t0, tit, tpe - .5, F, Math.max(0, t0 - 1.7)); marca(F.p.e, 'tit', t, tex + .05); marca(F.p.e, 'per', t, tpe + .05, .4);
+  } };
+}
+// o cap13 tem duas janelas (linha 2: a Posição; linha 4: o Relatório), no mesmo palco; a câmera troca de papel no intervalo
+function cap13(d) {
+  palco(26);
+  const a = posicao13(d), b = relatorio13(d), MEIO = (W(2, 'contador', 1, 'e') + W(4, 'relatorio')) / 2; camera([...a.cam, ...b.cam]);
+  return t => {
+    const j2 = t > MEIO, F = j2 ? b.F : a.F; a.F.p.op = j2 ? 0 : 1; b.F.p.op = j2 ? 1 : 0;
+    GL.style.opacity = eo(pr(t, (j2 ? b.t0 : a.t0) - .25, .35)).toFixed(3);
+    a.F.s.material.uniforms.uOp.value = j2 ? 0 : .55 * (+a.F.p.e.style.opacity || 0); b.F.s.material.uniforms.uOp.value = j2 ? .55 * (+b.F.p.e.style.opacity || 0) : 0;
+    a.r(t); b.r(t);
+  };
+}
+
+const CAPS = { 7: kardex07, 13: cap13 };
+cena(d => CAPS[d.cap](d), { fov: 26 });
+</script></body></html>
