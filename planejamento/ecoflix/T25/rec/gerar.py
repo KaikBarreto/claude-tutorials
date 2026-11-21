@@ -419,6 +419,14 @@ def setup_agenda(extra=()):
 
 # ---------------------------------------------------------------- alvos novos (1.60.22)
 DIA_NUM = lambda d: SEL(f"main div.grid.grid-cols-7 > div:not(.opacity-40) > span:text-is('{d}')")   # só o número do dia (o centro da célula cai na tarefa)
+def js_btn_tarefa(titulo, qual):
+    """clique por eval no botão do cartão da tarefa na lateral do dia: 'circulo' (rounded-full), 'lapis' ou 'lixeira' (pelo ícone)"""
+    return ("(async()=>{const acha=()=>{const p=[...document.querySelectorAll('main div.group.rounded-lg.border > div.flex-1 > p')].find(x=>x.textContent.trim()===%s);"
+            "return p?p.parentElement.parentElement:null};let c=acha();for(let i=0;i<30&&!c;i++){await new Promise(r=>setTimeout(r,100));c=acha();}"
+            "if(!c)return 'SEM ALVO';const q=%s;const b=q==='circulo'?c.querySelector(':scope > button.rounded-full'):[...c.querySelectorAll('button')].find(x=>x.querySelector(q==='lapis'?\"svg[class*='lucide-pencil']\":\"svg[class*='lucide-trash']\"));"
+            "if(!b)return 'SEM ALVO (botão)';b.click();return 'ok: '+q})()") % (json.dumps(titulo), json.dumps(qual))
+
+
 MINUTOS = lambda m: SEL(f"[role=listbox][aria-label='Minutos'] button[role=option]:text-is('{m}')")
 CARD_TAREFA = lambda t: f"main div.group.rounded-lg.border:has(> div.flex-1 > p:text-is('{t}'))"   # tarefa na lateral do dia (TaskCard)
 CIRCULO = lambda t: SEL(f"{CARD_TAREFA(t)} > button.rounded-full")
@@ -493,8 +501,7 @@ def cap01():
     c.click(STAT('Total Compras'), at=c.A(7, 'Total', 0.8, nth=0), label='Ver detalhes do Total Compras')
     c.waitfor(text='Por forma de pagamento', timeout=10)
     c.hover(SEL(f"{DLG} :text-is('Por forma de pagamento')"), 1.0, at=c.A(7, 'forma', 0.7), label='ZOOM Por forma de pagamento')
-    c.ev(LE_SEC('Por forma de pagamento').replace("document.querySelectorAll('main div.relative.group')", "document.querySelectorAll('[role=dialog]')").replace("x.querySelector(':scope > button.cursor-grab')&&", ''),
-         label='LER a janela do Total Compras (formas de pagamento de outubro)')
+    c.ev("(()=>{const d=[...document.querySelectorAll('[role=dialog]')].pop();return d?('LIDO: '+d.innerText.replace(/[\\n\\r\\t ]+/g,' ').slice(0,600)):'SEM ALVO'})()", label='LER a janela do Total Compras (formas de pagamento de outubro)')
     c.press('Escape', at=round(c.dur - 1.0, 2), label='fecha a janela')
     c.fim()
     return c
@@ -570,6 +577,7 @@ def cap04():
     c.mark(2)
     c.hover(SEL(f"{SEC_CSS}:has-text('Saldos em Aberto') p:text-is('A receber')"), 0.8, at=c.A(2, 'maiores', 0.7), label='coluna A receber')
     c.hover(SEL(f"{SEC_CSS}:has-text('Saldos em Aberto') p:text-is('A pagar')"), 0.8, at=c.A(2, 'valor', 0.7), label='coluna A pagar')
+    c.hover(SEL(f"{SEC_CSS}:has-text('Saldos em Aberto') span:text-is('Fundição Bandeira do Vale')"), 1.0, at=c.A(2, 'Fundição', 0.8), label='ZOOM Fundição Bandeira do Vale, a que mais deve')
     c.mark(3)
     c.hover(SEL(f"{SEC_CSS}:has-text('Saldos em Aberto') span:text-is('Posição líquida')"), 1.2, at=c.A(3, 'Posição', 0.7), label='destaque: Posição líquida')
     c.mark(4)
@@ -580,7 +588,6 @@ def cap04():
     c.mark(5)
     c.click(SEL(f"{SEC_CSS}:has-text('Saldos em Aberto') button:text-is('Ver relatório')"), at=c.A(5, 'Ver', 0.9), label='Ver relatório')
     c.waitfor(text='Relatório de Saldos', timeout=10)
-    c.hover(SEL(f"{DLG} :text-is('Relatório de Saldos')"), 0.6, at=c.A(5, 'lista', 0.6), label='o Relatório de Saldos')
     c.click(SEL(f"{DLG} button:has-text('Exportar Relatório')"), at=c.A(5, 'exportar.', 1.0), label='abre o menu Exportar Relatório (sem escolher)')
     c.waitfor(text='Exportar em Excel', timeout=6)
     c.press('Escape', at=round(c.L(6) - 1.4, 2), label='fecha o menu de exportação')
@@ -667,19 +674,19 @@ def cap07():
     c.waitfor(selector=CARD_TAREFA(CONT), timeout=10)
     c.hover(SEL(CARD_TAREFA(CONT)), 0.8, at=c.A(1, 'contador,', 0.7), label='a tarefa do contador, ainda aberta')
     c.mark(2)
-    c.ev(js_clica(CARD_TAREFA(CONT) + ' > button.rounded-full'), at=c.A(2, 'círculo', 0.5), label='clica no círculo da tarefa')
+    c.ev(js_btn_tarefa(CONT, 'circulo'), at=c.A(2, 'círculo', 0.5), label='clica no círculo da tarefa')
     c.waitfor(text='Tarefa atualizada', timeout=8)
     c.ev(js_riscada(CONT, True), label='confere riscada')
     c.mark(3)
-    c.ev(js_clica(CARD_TAREFA(CONT) + ' > button.rounded-full'), at=c.A(3, 'Um', 0.5), label='clica de novo: volta a pendente')
+    c.ev(js_btn_tarefa(CONT, 'circulo'), at=c.A(3, 'Um', 0.5), label='clica de novo: volta a pendente')
     c.ev(js_riscada(CONT, False), label='confere pendente')
-    c.ev(js_clica(CARD_TAREFA(CONT) + ' > button.rounded-full'), at=c.A(3, 'Concluo', 0.4), label='conclui outra vez')
+    c.ev(js_btn_tarefa(CONT, 'circulo'), at=c.A(3, 'Concluo', 0.4), label='conclui outra vez')
     c.ev(js_riscada(CONT, True), label='confere riscada de novo')
     c.mark(4)
     c.click(DIA_NUM('13'), at=c.A(4, 'Pra', 0.9), label='clica no dia 13')
     c.waitfor(selector=CARD_TAREFA(REV), timeout=10)
     c.hover(SEL(CARD_TAREFA(REV)), 0.8, at=c.A(4, 'mouse', 0.7), label='passa o mouse na revisão: aparecem o lápis e a lixeira')
-    c.ev(js_clica(CARD_TAREFA(REV) + " button:has(svg[class*='lucide-pencil'])"), at=c.A(4, 'lápis.', 0.5), label='clica no lápis')
+    c.ev(js_btn_tarefa(REV, 'lapis'), at=c.A(4, 'lápis.', 0.5), label='clica no lápis')
     c.waitfor(text='Editar Tarefa', timeout=10)
     c.click(SEL(f"{DLG} button:has(svg.lucide-clock)"), at=c.A(4, 'horário', 0.9), label='campo Horário')
     c.click(HORAS('10'), at=c.A(4, 'dez', 0.8), label='hora 10')
@@ -691,7 +698,7 @@ def cap07():
     c.click(DIA_NUM('18'), at=c.A(5, 'E', 0.8), label='clica no dia 18')
     c.waitfor(selector=CARD_TAREFA('Buscar a lona nova do caminhão'), timeout=10)
     c.hover(SEL(CARD_TAREFA('Buscar a lona nova do caminhão')), 0.8, at=c.A(5, 'lixeira', 0.8), label='passa o mouse na lona')
-    c.ev(js_clica(CARD_TAREFA('Buscar a lona nova do caminhão') + " button:has(svg[class*='lucide-trash'])"), at=c.A(5, 'exclui.', 0.4), label='clica na lixeira')
+    c.ev(js_btn_tarefa('Buscar a lona nova do caminhão', 'lixeira'), at=c.A(5, 'exclui.', 0.4), label='clica na lixeira')
     c.waitfor(text='Tem certeza que deseja excluir esta tarefa?', timeout=8)
     c.click(SEL("[role=alertdialog] button:text-is('Excluir Tarefa')"), at=c.A(5, 'sai', 0.9), label='confirma: Excluir Tarefa')
     c.waitfor(text='Tarefa excluída', timeout=8)
@@ -795,7 +802,7 @@ def cap09():
     c.mark(10)
     c.press('Shift+S', at=c.A(10, 'É', 0.3), label='Shift+S abre as Configurações')
     c.waitfor(text='Configurações', timeout=15)
-    c.click(SEL("main [role=tab]:has-text('Atalhos'), main button:text-is('Atalhos')"), at=c.A(10, 'Atalhos.', 0.9, nth=1), label='aba Atalhos')
+    c.click(SEL("nav[aria-label='Navegação da seção'] button:has-text('Atalhos')"), at=c.A(10, 'Atalhos.', 0.9, nth=1), label='aba Atalhos')
     c.waitfor(text='Atalhos estão ativados', timeout=10)
     c.hover(SEL("main :text-is('Atalhos estão ativados')"), 1.2, at=c.A(10, 'Atalhos.', 0.0, nth=1), label='destaque: Atalhos estão ativados')
     c.fim()
@@ -803,17 +810,15 @@ def cap09():
 
 
 def cap10():
-    """A rotina diária (7 linhas): ilustração (L1), "Tarefas para hoje" ao abrir (L2), Histórico do Caixa pelo Ctrl+K (L3), Contas (L4),
+    """A rotina diária (7 linhas): ilustração (L1), a faixa de lembretes do Dashboard (L2; a janela "Tarefas para hoje" não abre na gravação do 1.60.22), Histórico do Caixa pelo Ctrl+K (L3), Contas (L4),
     o painel de Filtros de Contas com "Próximos 7 dias" e "Até o fim do mês" (L5) e a Agenda de amanhã (L6)."""
     c = Cap(10, setup=setup_dash([{'do': 'goto', 'url': '/historico-caixa'}, {'do': 'waitFor', 'text': 'Caixas Fechados', 'timeout': 30}, AGUARDA]), start=(760, 300))
     c.mark(1)
-    c.ev("(()=>{localStorage.removeItem('daily-tasks-reminder-last-shown-%s');return 'marca do dia removida'})()" % RAFAEL, at=0.3, label='tira a marca do lembrete diário')
     c.mark(2)
     c.click(LINK('Dashboard'), at=round(c.L(2) - 0.2, 2), label='abre o Dashboard de manhã')
-    c.waitfor(text='Tarefas para hoje', timeout=15)
-    c.hover(SEL(f"{DLG} :text-is('Cotação do cobre com a Fundição Bandeira do Vale')"), 1.0, at=c.A(2, 'cotação', 0.7), label='ZOOM Tarefas para hoje: a cotação do cobre, 14:00')
+    c.waitfor(text='Olá, Rafael!', timeout=15)
+    c.hover(SEL("main button:has-text('para hoje')"), 1.4, at=c.A(2, 'cotação', 0.8), label='ZOOM a faixa de lembretes: a cotação do cobre, 14:00')
     c.mark(3)
-    c.click(BTN('Fechar', DLG), at=round(c.L(3) - 0.9, 2), label='Fechar')
     c.press('Control+k', at=c.A(3, 'Primeiro,', 0.2), label='Ctrl+K')
     c.waitfor(selector='[role=dialog] input', timeout=10)
     c.type(SEL('[role=dialog] input'), 'histórico', at=c.A(3, 'Histórico', 1.2), label='digita histórico', cps=8, noClick=True)
@@ -838,7 +843,7 @@ def cap10():
     c.press('Shift+A', at=c.A(6, 'Agenda,', 0.2), label='Shift+A abre a Agenda')
     c.waitfor(text='Gerencie suas tarefas e compromissos', timeout=15)
     c.click(DIA_AG('11'), at=c.A(6, 'amanhã:', 0.8), label='clica no dia 11')
-    c.hover(SEL("main div.rounded-xl :text-is('Coleta na Auto Peças Vale Forte')"), 1.2, at=c.A(6, 'coleta', 0.6), label='ZOOM Coleta na Auto Peças Vale Forte, 08:00')
+    c.hover(SEL(CARD_TAREFA('Coleta na Auto Peças Vale Forte')), 1.2, at=c.A(6, 'coleta', 0.6), label='ZOOM Coleta na Auto Peças Vale Forte, 08:00')
     c.mark(7)
     c.fim()
     return c

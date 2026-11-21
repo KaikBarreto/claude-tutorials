@@ -31,10 +31,10 @@ Em Principais Clientes, a Fundição Bandeira do Vale lidera em reais, com o cob
 E em Ver todos os clientes aparece a lista completa do período, por valor ou por quantidade em quilos.
 Clicando no nome de quem está no pódio, você vai direto pro histórico dele.""",
 4: """Mais um cartão que responde pergunta do dia: Saldos em Aberto. De um lado, quem deve pra empresa. Do outro, pra quem a empresa deve.
-Aparecem os maiores de cada lado, com o valor de cada um.
+Aparecem os maiores de cada lado, com o valor de cada um. Quem mais deve pra empresa é a Fundição Bandeira do Vale.
 Embaixo, a Posição líquida faz a conta: o que tem a receber menos o que tem a pagar. Verde, sobra. Vermelho, falta.
 Uma dica: esse cartão não olha o filtro. Ele mostra o saldo de hoje, seja qual for o período.
-Em Ver relatório, abre a lista completa de quem deve e de quem se deve, e dá pra exportar.
+Em Ver relatório, abre a lista completa de quem deve e de quem se deve, com o total de cada lado, e dá pra exportar.
 Ao lado, os Métodos de Pagamento das Compras: quanto saiu em dinheiro, em Pix ou transferência e em saldo, no período do filtro.
 É um bom termômetro de quanto dinheiro vivo o caixa precisa ter pra comprar.
 E, no fim do painel, fica o dê-érri-ê resumido, o mesmo do Relatório Financeiro. Ele tem um tutorial só dele.""",
@@ -51,8 +51,8 @@ Pra esconder os feriados, é em Configurações, Usabilidade, Exibir Feriados.""
 7: """Tarefa feita, tarefa concluída. Ontem o Rafael ligou pro contador, e a tarefa ainda está aberta.
 É só clicar no círculo do lado dela, e ela fica riscada.
 Clicou sem querer? Um clique de novo, e ela volta a ficar pendente. Concluo outra vez.
-Pra mudar uma tarefa, passe o mouse nela e clique no lápis. Troco o horário da revisão pra dez e meia, e salvo.
-E a lixeira exclui. O sistema pede a confirmação, e a tarefa sai do calendário.
+Pra mudar uma tarefa, passe o mouse nela e clique no lápis. Abre a janela Editar Tarefa, igual à de criar. Troco o horário da revisão pra dez e meia, e salvo.
+E a lixeira exclui. O sistema pede a confirmação antes de apagar, e a tarefa sai do calendário.
 Cada tarefa tem uma categoria, com a sua cor. Na categoria Coleta, aparece um campo a mais, pra dizer em qual cliente ou fornecedor é a retirada.
 As cores estão na legenda, embaixo do calendário.
 Em cima, você troca a vista: a semana, um dia só ou o mês. E o botão Hoje traz de volta pro dia de hoje.
@@ -75,7 +75,7 @@ Olha: xífti-xis, e o caixa abre. xífti-dê, e volto pro Dashboard.
 Os atalhos valem fora dos campos de texto. Com o cursor num campo, a letra vai pro campo.
 Quer desligar os atalhos, ou trocar a letra de cada um? É em Configurações, Atalhos.""",
 10: """Bom, números lidos e agenda em uso. Agora, a rotina que mantém o sistema vivo, começando pela diária: uns dez minutos, logo cedo.
-Ao abrir o sistema de manhã, ele já mostra as tarefas de hoje, como a cotação do cobre com a Fundição, às duas da tarde.
+Ao abrir o Dashboard de manhã, as tarefas de hoje já aparecem no alto, como a cotação do cobre com a Fundição, às duas da tarde.
 Primeiro, o caixa. No Histórico do Caixa, você confere se os caixas de ontem fecharam, com o saldo final de cada um. Depois, é só abrir o caixa do dia.
 Depois, as contas. Em Contas a Pagar e Receber, os cartões Vencidas e Vence em sete dias mostram o que pede atenção agora.
 Nos filtros da tela, dá pra ver só o que vence nos próximos sete dias ou até o fim do mês.

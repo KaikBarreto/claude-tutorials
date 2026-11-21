@@ -1,5 +1,5 @@
 {
- "_doc": "T26 · estado do CRM depois do ensaio (apos-cap08), gravado por rec/t26/aux/t26_semente.mjs em 2026-11-12T01:27:27.824Z",
+ "_doc": "T26 · estado do CRM no fim do capítulo (apos-cap08), gerado por rec/t26/aux/t26_cadeia.mjs: apos-cap07 + a automação \"Preparar a proposta\" (Visita técnica: Aplicar checklist e Definir prazo do cartão, 15 dias corridos)",
  "crm_pipelines": [
   {
    "company_id": "38814e47-876a-5977-a5f7-53af364c17bb",
@@ -186,41 +186,7 @@
    "description": "Visitar a indústria, ver o volume e o tipo de sucata e combinar a retirada."
   }
  ],
- "crm_opportunities": [
-  {
-   "company_id": "38814e47-876a-5977-a5f7-53af364c17bb",
-   "pipeline_id": "24018215-39af-4512-991d-3f3a9ea61698",
-   "stage_id": "0ca336f1-354b-4705-bbf9-8049100ff4a7",
-   "title": "Retalho de chapa da Metalúrgica Jequitibá",
-   "contact_name": "Paulo Lacerda",
-   "contact_email": "paulo.lacerda@metalurgicajequitiba.example",
-   "contact_phone": null,
-   "value": 8400,
-   "notes": "Quer retirada a cada quinze dias, com caçamba.",
-   "expected_close_date": "2026-11-30",
-   "assigned_to": null,
-   "customer_id": null,
-   "supplier_id": null,
-   "company_name": "Metalúrgica Jequitibá",
-   "contact_role": "Suprimentos",
-   "material_id": "a56865ab-8af5-53ee-a1d7-00c2536f0463",
-   "material_name": "Chaparia",
-   "estimated_quantity": 12000,
-   "estimated_unit": "Kg",
-   "transport_mode": "Frota própria",
-   "start_date": null,
-   "id": "eb2b37cf-a362-4844-bddb-fe956f61041f",
-   "created_at": "2026-11-10T11:31:16.244Z",
-   "updated_at": "2026-11-10T11:31:16.244Z",
-   "checklists": [],
-   "label_ids": [],
-   "position": 0,
-   "probability": 50,
-   "created_by": "34c36c63-0890-5e89-8963-7c77b7996908",
-   "loss_reason": null,
-   "source": null
-  }
- ],
+ "crm_opportunities": [],
  "crm_automation_rules": [
   {
    "company_id": "38814e47-876a-5977-a5f7-53af364c17bb",
@@ -245,6 +211,38 @@
    "id": "2383e9f9-2e4a-4e7d-b137-3d397cb8f7d8",
    "created_at": "2026-11-10T11:31:35.951Z",
    "updated_at": "2026-11-10T11:31:35.951Z",
+   "created_by": null
+  },
+  {
+   "company_id": "38814e47-876a-5977-a5f7-53af364c17bb",
+   "pipeline_id": "24018215-39af-4512-991d-3f3a9ea61698",
+   "trigger_stage_id": "26537747-fe81-4494-82d4-1fb81c7fd359",
+   "name": "Preparar a proposta",
+   "trigger_type": "stage_enter",
+   "trigger_config": {},
+   "actions": [
+    {
+     "action": "apply_checklist",
+     "config": {
+      "templateId": "566d63f0-59eb-495a-b497-09e57bff7424",
+      "name": "Documentos da {CLIENTE}",
+      "createTask": true,
+      "reentry": "reuse"
+     }
+    },
+    {
+     "action": "set_due",
+     "config": {
+      "dueDays": 15,
+      "dayMode": "calendar"
+     }
+    }
+   ],
+   "enabled": true,
+   "position": 0,
+   "id": "dfab7fdf-8d9d-47d6-b72a-9bfa27b856e2",
+   "created_at": "2026-11-10T11:30:00.254Z",
+   "updated_at": "2026-11-10T11:30:00.254Z",
    "created_by": null
   }
  ],
