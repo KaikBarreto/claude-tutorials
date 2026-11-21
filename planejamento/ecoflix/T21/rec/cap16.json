@@ -141,6 +141,10 @@
    "js": "(async()=>{const c=document.querySelector(\"[role=dialog][aria-label^=\\\"Cato.ai\\\"] div.h-full.overflow-y-auto\");if(!c)return 'SEM PAINEL';const y0=c.scrollTop,dy=c.scrollHeight-c.clientHeight-y0;c.scrollTop=y0+dy;return 'fim '+Math.round(c.scrollTop)})()"
   },
   {
+   "do": "wait",
+   "seconds": 3.0
+  },
+  {
    "do": "eval",
    "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|indispon[ií]vel|SEM RESPOSTA SIMULADA|Deu um problema|N[ãa]o consegui/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
   }
@@ -160,33 +164,33 @@
   {
    "do": "hover",
    "target": {
-    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button[aria-label=\"Resposta útil\"] >> nth=-1",
-    "noScroll": true
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button[aria-label=\"Resposta útil\"] >> nth=-1"
    },
    "seconds": 0.5,
    "at": 1.87,
    "label": "joinha (Resposta útil)",
    "optional": true,
-   "timeout": 4
+   "timeout": 4,
+   "noScroll": true
   },
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button[aria-label=\"Resposta útil\"] >> nth=-1",
-    "noScroll": true
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button[aria-label=\"Resposta útil\"] >> nth=-1"
    },
    "at": 4.96,
-   "label": "clique no joinha"
+   "label": "clique no joinha",
+   "noScroll": true
   },
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button[aria-label=\"Resposta não útil\"] >> nth=-3",
-    "noScroll": true
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button[aria-label=\"Resposta não útil\"] >> nth=-3"
    },
    "at": 3.29,
    "label": "dedo pra baixo (outra resposta)",
-   "optional": true
+   "optional": true,
+   "noScroll": true
   },
   {
    "do": "waitFor",
@@ -196,23 +200,23 @@
   {
    "do": "hover",
    "target": {
-    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:text-is(\"Número errado\")",
-    "noScroll": true
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:text-is(\"Número errado\")"
    },
    "seconds": 0.4,
    "at": 9.62,
    "label": "os motivos",
    "optional": true,
-   "timeout": 4
+   "timeout": 4,
+   "noScroll": true
   },
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:text-is(\"Faltou detalhe\")",
-    "noScroll": true
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:text-is(\"Faltou detalhe\")"
    },
    "at": 10.65,
-   "label": "Faltou detalhe"
+   "label": "Faltou detalhe",
+   "noScroll": true
   },
   {
    "do": "mark",
@@ -259,20 +263,20 @@
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button[aria-label=\"Mais opções do Cato\"]",
-    "noScroll": true
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button[aria-label=\"Mais opções do Cato\"]"
    },
    "at": 26.04,
-   "label": "três pontinhos (Mais opções do Cato)"
+   "label": "três pontinhos (Mais opções do Cato)",
+   "noScroll": true
   },
   {
    "do": "click",
    "target": {
-    "selector": "[role=menuitem]:has-text(\"Falar com atendente\")",
-    "noScroll": true
+    "selector": "[role=menuitem]:has-text(\"Falar com atendente\")"
    },
    "at": 27.32,
-   "label": "clique em Falar com atendente"
+   "label": "clique em Falar com atendente",
+   "noScroll": true
   },
   {
    "do": "waitFor",

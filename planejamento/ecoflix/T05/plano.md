@@ -5,8 +5,8 @@
   ("abrir o caixa e começar o dia").
 - **Objetivo:** instalar o EcoTray no computador do escritório da Recicla Vale Metais, ligar a impressora de cupom (58 mm)
   e a balança do pátio, e saber ler o rodapé e o que fazer quando o EcoTray fecha ou o driver da impressora é o errado.
-- **Duração:** alvo da fonte 13 min; fala ~1.645 palavras (~10,5 min) + 11 vinhetas, cenas de Windows e ilustrações ≈ 12 min.
-- **Base:** `T05/inventario.md` (código 1.59.154 e EcoTray 1.7.22). Computador 1280×800, logado como **Rafael Nogueira**
+- **Duração:** alvo da fonte 13 min; fala ~2.004 palavras (~12,8 min) + 12 vinhetas, cenas de Windows e ilustrações ≈ 15 min (1.60.22).
+- **Base:** `T05/inventario.md` (código 1.60.22 e EcoTray 1.7.26). Computador 1600×900 (cenas de Windows 1280×712), logado como **Rafael Nogueira**
   (MASTER). `FAKE_NOW=2026-11-10T08:30:00-03:00` em todos os capítulos.
 
 ## Capítulos (os da fonte, na ordem)
@@ -15,21 +15,22 @@
 | 0 | (sem vinheta) | Dashboard; ilustração do peso digitado errado (312 → 321) e do PDF; cartões "Antes" e o aviso do plano | 0:35 |
 | 1 | ECOTRAY / O que é o EcoTray | Configurações › "Integrações"; ilustração da ponte (balança → EcoTray → sistema → impressora); selo "EcoTray não detectado nesta estação"; tour | 1:15 |
 | 2 | INSTALAÇÃO / Baixar e instalar | "Baixar Instalador" › "Windows"; cenas de Windows: aviso do navegador ("Manter"), SmartScreen ("Mais informações", "Executar assim mesmo"), instalador, painel e bandeja; Mac falado | 1:50 |
-| 3 | CONEXÃO / O pareamento automático | selo "v1.7.22"; ilustração do pareamento dentro do mesmo computador | 0:50 |
+| 3 | CONEXÃO / O pareamento automático | selo "v1.7.26"; ilustração do pareamento dentro do mesmo computador | 0:50 |
 | 4 | IMPRESSORA / Conectar a impressora | "Integração com Impressora" → "Conectado ao EcoTray"; "POS-58"; "Testar"; cena: "✓  Impresso em POS-58"; ilustração do cupom de teste | 1:05 |
-| 5 | IMPRESSORA / Largura do papel e impressão turbo | "Ajustar Escala" › "58 mm", "Testar impressão", "Salvar"; ilustração do cupom cortado; "Impressão térmica turbo (beta)" | 1:15 |
+| 5 | IMPRESSORA / Largura do papel e impressão turbo | "Ajustar Escala" › "58 mm", "Testar impressão", "Salvar"; "Restaurar padrão"; ilustração do cupom cortado; "Impressão térmica turbo (beta)"; "Imprimir Automaticamente" e a do Ticket de Pesagem (só mostradas, desligadas) | 1:15 |
 | 6 | BALANÇA / Conectar a balança | 🔒 dito; "Integração com Balança Digital"; cenas: painel destrava, "Configurar Balanças" › "Adicionar" ("Balança do pátio", "COM3  ✓ balança", "Automático") › "Gravar"; "Peso atual: 18,600 kg"; unidade, casas, "Leitura contínua" (ilustração) | 2:00 |
-| 7 | BALANÇA / Peso somente pela balança | a chave e a dica; ilustração do peso com cadeado; quando ligar (fica desligada) | 0:50 |
+| 7 | BALANÇA / Peso somente pela balança | a chave, a dica e a exceção por pessoa (falada; a tela é da T2); ilustração do peso com cadeado; quando ligar (fica desligada) | 0:50 |
 | 8 | BALANÇA / O indicador de peso | rodapé: "Balança do pátio · Aguardando peso" → "Balança do pátio · 312 kg"; ilustração computador × celular | 0:55 |
 | 9 | CONEXÃO / Quando o EcoTray cai | cena: bandeja › "Sair"; "Balança desconectada"; ilustração do PDF e do peso digitado; "EcoTray não encontrado"; cena: atalho "EcoTray"; reconexão sozinha | 1:15 |
-| 10 | IMPRESSORA / Driver incompatível | lista com "Generic / Text Only" (triângulo); caixa "Driver incompatível"; ilustração do driver; volta à "POS-58"; a folha em branco sem aviso | 1:05 |
-| 11 | RESUMO / Recapitulando | montagem; cartão "Próximo: Caixa: abrir, fechar e o cofre" | 0:40 |
+| 10 | ECOTRAY / Atualizar e pedir ajuda (NOVO) | cenas de Windows: painel › "Atualizar Versão" ("Verificando..." › "✓ Já atualizado"), aba "Logs" › "Copiar tudo", menu da bandeja › "Reconectar balança" e "Desinstalar" (só mostra) | 0:50 |
+| 11 | IMPRESSORA / Driver incompatível | lista com "Generic / Text Only" (triângulo); caixa "Driver incompatível"; ilustração do driver; volta à "POS-58"; a folha em branco sem aviso | 1:05 |
+| 12 | RESUMO / Recapitulando | montagem; cartão "Próximo: Caixa: abrir, fechar e o cofre" | 0:40 |
 
 Avisos da fonte e onde entram: navegador e SmartScreen (cap. 2, "Uma dica:" e os dois cliques mostrados); cupom cortado é
 largura (cap. 5, "Uma dica:"); chave da balança nasce desligada e a empresa em teste já tem a balança (cap. 6, "Uma
 dica:"); 🔒 dito no cap. 0 e no cap. 6, com o cartão de contratação e o "Pesar automático" só falados; indicador (cap. 8,
 "Uma dica:", ver decisão 1); regra dura do EcoTray fechado (cap. 9, com o caso da trava de peso); checagem de driver só
-pelo nome (cap. 10, "Uma dica:").
+pelo nome (cap. 11, "Uma dica:").
 
 ## Estado de partida (fim do T4)
 Mundo base da Recicla Vale Metais. Sem EcoTray no computador (EcoTray falso desligado). Perfil do Rafael:
@@ -41,9 +42,9 @@ false. Empresa: `scale_weight_lock_enabled` false; módulo `balanca_integration`
 | Item | Valores (fictícios) |
 |---|---|
 | Computador | o do escritório da balança, Windows; relógio da cena = o do app (10/11/2026, 08:3x) |
-| EcoTray | v1.7.22 (`app_config.ecotray_version` = "1.7.22", a mesma: o selo fica "v1.7.22", sem aviso de atualização) |
+| EcoTray | v1.7.26 (`app_config.ecotray_version` = "1.7.26", a mesma: o selo fica "v1.7.26", sem aviso de atualização) |
 | Impressora | **POS-58**, térmica de cupom 58 mm, USB, driver do fabricante (compatível); a única do computador até o cap. 9 |
-| Impressora do cap. 10 | **Generic / Text Only** (driver "Generic / Text Only", incompatível), instalada "depois", só nesse capítulo |
+| Impressora do cap. 11 | **Generic / Text Only** (driver "Generic / Text Only", incompatível), instalada "depois", só nesse capítulo |
 | Porta da balança | **COM3** (cabo USB-serial), 9600, 8 bits, sem paridade, 1 stop; a detecção marca "COM3  ✓ balança" |
 | Balança | **Balança do pátio** (plataforma), cadastrada no cap. 6, protocolo "Automático", padrão |
 | Pesos | saco de latinha da Dona Cida **18,6 kg** (cap. 6); carroça de ferro do Valdir **312 kg** (cap. 7 a 9; o 321 do cap. 0 é o erro de digitação da ilustração) |
@@ -58,7 +59,7 @@ pátio" e a "POS-58" (o T7 e o T8 usam). A trava de peso fica desligada (o T7 di
 - **Banco e RPC:** `app_config` (leitura); `profiles` (leitura e gravação das chaves); `companies.scale_weight_lock_enabled`
   (leitura; a RPC `set_company_scale_weight_lock` não é chamada); módulos da empresa.
 - **EcoTray falso** (o navegador fala com ele; o resto é cena): `ws://127.0.0.1:8054` responde `get_status`
-  (`version` "1.7.22", `printers`, `printers_meta`, `default_printer`, `scales_lock_state`), `list_printers` (`data`,
+  (`version` "1.7.26", `printers`, `printers_meta`, `default_printer`, `scales_lock_state`), `list_printers` (`data`,
   `data_meta`), `print` e `print_image` (`print_result` success; também `print_notification` e `activity` para a cena),
   `unlock_scales` (`unlock_result` unlocked, sem chamar a edge `verify-balanca-module`); `ws://127.0.0.1:8053` manda
   `scale_lock_status`, `scales_list` e `weight`. Estados por capítulo, trocados por bastidor (`/__dev` ou semente):
@@ -100,3 +101,9 @@ pátio" e a "POS-58" (o T7 e o T8 usam). A trava de peso fica desligada (o T7 di
 - H4 A fonte diz "o EcoTray acha o sistema sozinho"; no código é o navegador que procura o EcoTray no próprio computador.
 - H5 A regra dura da fonte ("o peso é digitado à mão") só vale com "Peso somente pela balança" desligado: ligado, o campo
   de peso fica travado mesmo sem o EcoTray (`InputPesoBalanca.tsx:69,262`).
+
+## 1.60.22 (21/11): o que mudou nesta aplicação
+- EcoTray 1.7.26 (hotfix da 1.7.25, sem rótulo novo na tela): `app_config.ecotray_version` e `get_status.version` em "1.7.26".
+- Rodapé do app "EcoSistema v1.60.22". Janela 1600×900 nos capítulos web; cenas de Windows seguem 1280×712.
+- RPC `get_my_scale_weight_lock` (padrão da empresa + exceção por usuário): handler já existe no mundo base (desligado).
+- Capítulo 10 novo (Atualizar e pedir ajuda), só de cenas de Windows; Driver incompatível e Recapitulando viram 11 e 12.

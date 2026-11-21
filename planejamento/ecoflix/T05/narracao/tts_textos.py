@@ -1,7 +1,7 @@
 # Texto enviado ao ElevenLabs (eleven_v4, Kaik Barreto) por capítulo do T5 "Balança e impressora: o EcoTray".
 # Gerado do roteiro.md (coluna Fala): cada linha do texto é uma linha da tabela Tela × Fala.
 # Trocas de pronúncia em relação ao roteiro (a legenda segue a grafia do roteiro, ver config_narracao.json):
-#   Driver -> "Dráiver" | EcoSistema -> "Ecossistema" | EcoTray -> "Ecotrêi" | PDF -> "pê-dê-éfe" | SmartScreen -> "smárti-scrím" | USB -> "u-ésse-bê" | driver -> "dráiver"
+#   Logs -> "Lógs" | Driver -> "Dráiver" | EcoSistema -> "Ecossistema" | EcoTray -> "Ecotrêi" | PDF -> "pê-dê-éfe" | SmartScreen -> "smárti-scrím" | USB -> "u-ésse-bê" | driver -> "dráiver"
 CAPS = {
 0: """Oi! Neste tutorial a gente vai ligar o computador do escritório da Recicla Vale Metais na balança e na impressora do pátio.
 Hoje, o Marcos lê o peso no visor da balança e digita no sistema. A balança marca trezentos e doze quilos, e no sistema entra trezentos e vinte e um.
@@ -43,25 +43,32 @@ Se a impressora não aparecer na lista, confira o cabo e clique em Atualizar."""
 Com o papel mais estreito que o cupom, o lado sai cortado. Uma dica: cupom cortado quase sempre é a largura, e não a impressora.
 Em Ajustar Escala, eu escolho cinquenta e oito milímetros. A prévia já mostra o cupom do tamanho da bobina.
 O sistema manda essa largura pro Ecotrêi, e ele imprime exatamente nela. Então, se o cupom sair cortado, confira aqui primeiro.
-A escala fina diminui o conteúdo dentro do papel, se precisar. Aqui fica em cem por cento.
+A escala fina diminui o conteúdo dentro do papel, se precisar. Aqui fica em cem por cento. Se você mexer demais, o Restaurar padrão volta a escala pra cem.
 Testar impressão manda um cupom de exemplo. Agora ele sai inteiro, então eu salvo.
-E a impressão térmica turbo gera o comprovante mais rápido. Ela ainda está em teste: se algo sair diferente do normal, é só desligar.""",
+E a impressão térmica turbo gera o comprovante mais rápido. Ela ainda está em teste: se algo sair diferente do normal, é só desligar.
+Logo abaixo tem mais uma chave: Imprimir Automaticamente. Com ela ligada, todo pedido finalizado sai direto na impressora, sem você clicar em nada. Na Recicla Vale, por enquanto, ela fica desligada.
+E a de baixo faz o mesmo com o Ticket de Pesagem, que tem um tutorial só dele.""",
 6: """Agora a balança. Essa parte depende do plano contratado. Sem ela no plano, aqui aparece um cartão pra contratar, com o botão Pesar automático.
 Uma dica: essa chave começa desligada, então ligue aqui pro peso começar a chegar. Na empresa em teste, a balança já vem liberada.
 Ligada, o sistema avisa o Ecotrêi, e a balança fica liberada nele. Agora é cadastrar a balança lá.
 Na janela do Ecotrêi, a área das balanças liberou. Clico em Configurar Balanças.
 Ele procura sozinho a porta da balança, que é a entrada do cabo no computador, e marca com um tique.
 Em Adicionar, dou um nome, Balança do pátio, e escolho a porta marcada.
-O protocolo, que é o jeito de cada balança mandar o peso, fica no Automático. O Ecotrêi reconhece o modelo sozinho.
-OK e Gravar. Pronto: a Balança do pátio aparece conectada.
+O protocolo, que é o jeito de cada balança mandar o peso, fica no Automático. O Ecotrêi reconhece o modelo sozinho. Se a sua balança não for reconhecida, a lista tem as marcas mais comuns, como Toledo e Filizola.
+Embaixo fica a correção. Ela serve quando o peso chega no sistema diferente do visor da balança.
+Um exemplo: o visor marca sessenta quilos e no sistema aparecem seiscentos. Aí é só clicar em dividir por dez. Aqui o peso bate, então fica no normal.
+Aplicar e Gravar. Pronto: a Balança do pátio aparece conectada.
 De volta ao sistema, a Balança do pátio já está na lista, e o teste fica verde.
-O Marcos põe na balança o saco de latinha da Dona Cida. Dezoito quilos e seiscentos, ao vivo, aqui no teste.
+O Marcos põe na balança o saco de latinha da Dona Cida. Dezoito quilos e seiscentos, ao vivo, aqui no teste. Esse cartão serve pra conferir a balança a qualquer hora, sem abrir um pedido.
 A unidade fica em quilo. As casas decimais dizem com quantos números depois da vírgula o peso entra no pedido. Aqui, três.
 Com a leitura contínua ligada, depois de capturar, o peso segue mudando até você incluir. Desligada, ele fica fixo. Na Recicla Vale, fica desligada.
+Na lista de balanças, o lápis ao lado do nome troca o nome da balança daqui mesmo, sem abrir o Ecotrêi.
+Com mais de uma balança, você marca aqui qual é a padrão deste computador. Pra trocar a porta ou tirar uma balança, é no Configurar Balanças do Ecotrêi, em Editar e Remover.
 E repara: as chaves da impressora e da balança valem pro seu usuário. Se o Marcos usa esse computador com o login dele, ele liga também.""",
 7: """Logo abaixo da chave da balança fica a opção Peso somente pela balança.
 Imagina a carroça do Valdir na balança: trezentos e doze quilos. Com a opção ligada, ninguém digita outro número por cima. Só uma nova leitura da balança troca o peso.
-E ela é uma regra da empresa: vale pra todos os usuários, em todos os computadores.
+E ela é o padrão da empresa: vale pra todos os usuários, em todos os computadores.
+Dá pra abrir exceção por pessoa. Em Usuários e Permissões, você libera a digitação pra um usuário, ou exige a balança só de quem pesa. Isso a gente viu no tutorial Usuários e permissões.
 Vale a pena ligar quando todo peso da empresa passa pela balança integrada. Aí ninguém troca o peso na mão.
 Com ela ligada, o peso entra só pela balança. Então, pra pesar, o Ecotrêi precisa estar aberto. Na Recicla Vale, por enquanto, ela fica desligada.""",
 8: """Com a balança ligada no sistema, aparece um indicador no rodapé, em todas as telas.
@@ -78,17 +85,22 @@ Aqui em Integrações, a impressora mostra Ecotrêi não encontrado.
 Pra voltar, é só abrir o Ecotrêi. O atalho fica na área de trabalho.
 E o sistema reconecta sozinho, em poucos segundos, sem atualizar a página. Se a impressora demorar, o Tentar conectar chama na hora.
 Como o Ecotrêi abre junto com o Windows, no dia a dia é só ligar o computador.""",
-10: """Por último, um aviso que evita cupom em branco. Imagina que instalaram outra impressora neste computador. Repara no triângulo amarelo do lado dela.
+10: """O Ecotrêi se atualiza sozinho. Mas, se o sistema avisar que ele está desatualizado, ou se você só quiser conferir, clique no ícone dele e em Atualizar Versão, aqui no rodapé da janela.
+Ele mostra Verificando e, em seguida, Já atualizado.
+Na aba Lógs fica o registro de tudo o que o Ecotrêi fez, com uma aba Geral e uma pra cada balança.
+Uma dica: se o suporte pedir, clique em Copiar tudo e cole na conversa. Assim a gente vê na hora o que a balança está mandando.
+No botão direito do ícone, o Reconectar balança chama a balança de novo, depois de trocar um cabo. E o Desinstalar remove o Ecotrêi, se o computador da balança mudar.""",
+11: """Por último, um aviso que evita cupom em branco. Imagina que instalaram outra impressora neste computador. Repara no triângulo amarelo do lado dela.
 Dráiver é o programa que ensina o computador a falar com a impressora. Essa foi instalada com o dráiver genérico do Windows, que só imprime texto. E o cupom do sistema sai como imagem.
 Escolhendo ela, o sistema avisa na hora: Dráiver incompatível. E o Ecotrêi segura a impressão, pra não sair folha em branco.
 A saída é instalar o dráiver do fabricante da impressora. Até lá, use uma com o dráiver certo, como a nossa.
 Volto pra nossa impressora de cupom, e o aviso some.
 Uma dica: a impressora puxa o papel e ele sai em branco, sem nenhum aviso? Quase sempre é o dráiver também.
 O sistema reconhece o dráiver genérico pelo nome. Com outro dráiver errado, a folha sai limpa, e a saída é a mesma: o dráiver do fabricante.""",
-11: """Pronto! Recapitulando: a gente instalou o Ecotrêi, passando pelos avisos do navegador e do Windows, e viu o sistema se conectar com ele sozinho.
+12: """Pronto! Recapitulando: a gente instalou o Ecotrêi, passando pelos avisos do navegador e do Windows, e viu o sistema se conectar com ele sozinho.
 Ligou a impressora, fez o teste e acertou a largura do papel em cinquenta e oito milímetros.
-Ligou a balança, cadastrou a balança do pátio no Ecotrêi e viu o peso chegando ao vivo.
-Conheceu o Peso somente pela balança, o indicador do rodapé, o que acontece quando o Ecotrêi fecha e o aviso de dráiver incompatível.
+Ligou a balança, cadastrou a balança do pátio no Ecotrêi, conheceu a correção do peso e viu o peso chegando ao vivo.
+Conheceu o Peso somente pela balança, o indicador do rodapé, o que acontece quando o Ecotrêi fecha, onde atualizar o Ecotrêi e copiar o registro pro suporte, e o aviso de dráiver incompatível.
 No próximo tutorial, a gente abre o caixa e começa o dia. Até lá!""",
 }
 
@@ -102,8 +114,9 @@ TITULOS = {1: "O que é o Ecotrêi.",
            7: "Peso somente pela balança.",
            8: "O indicador de peso.",
            9: "Quando o Ecotrêi cai.",
-           10: "Dráiver incompatível.",
-           11: "Recapitulando."}
+           10: "Atualizar e pedir ajuda.",
+           11: "Dráiver incompatível.",
+           12: "Recapitulando."}
 # Rótulo de área em cima do título (vinheta).
 KICKERS = {1: "EcoTray",
            2: "Instalação",
@@ -114,8 +127,9 @@ KICKERS = {1: "EcoTray",
            7: "Balança",
            8: "Balança",
            9: "Conexão",
-           10: "Impressora",
-           11: "Resumo"}
+           10: "EcoTray",
+           11: "Impressora",
+           12: "Resumo"}
 
 if __name__ == "__main__":
     tot = 0

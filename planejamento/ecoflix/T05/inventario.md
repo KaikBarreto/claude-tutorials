@@ -1,7 +1,7 @@
 # Inventário · T5 Balança e impressora: o EcoTray
 
-Levantado em 10/11/2026 contra o código gravado (`APP_VERSION = "1.59.154"`, `src/config/version.ts:16`; EcoTray
-`APP_VERSION = "1.7.22"`, `ecotray/version.py:98`), cópia em `/home/claude/ecoflix/app-src-1.59.154/`. Caminhos
+Levantado em 10/11/2026 contra o código gravado (`APP_VERSION = "1.60.22"`, `src/config/version.ts:16`; EcoTray
+`APP_VERSION = "1.7.26"`, `ecotray/version.py:98`), cópia em `/home/claude/ecoflix/app-src-1.59.154/`. Caminhos
 relativos a `src/`, exceto `ecotray/...`. Rótulo entre aspas = texto exato.
 
 ## 1. Configurações › Integrações (`/configuracoes?tab=integrations`)
@@ -13,7 +13,7 @@ relativos a `src/`, exceto `ecotray/...`. Rótulo entre aspas = texto exato.
 - Componente: `components/settings/SettingsIntegrationsContent.tsx`. Cabeçalho "Integrações" ("Configure integrações com
   impressora e balança digital") `:192-197`.
 - **Cartão do EcoTray** `:200-260`: logo; selo da versão DA ESTAÇÃO (consultada uma vez, ao abrir a tela):
-  "EcoTray não detectado nesta estação" | "v1.7.22" | "EcoTray desatualizado (v…, atual é v…). Feche e abra o EcoTray pra
+  "EcoTray não detectado nesta estação" | "v1.7.26" | "EcoTray desatualizado (v…, atual é v…). Feche e abra o EcoTray pra
   atualizar." `:218-236`; "Programa para Windows e macOS que conecta impressora térmica e balança digital ao sistema. Leve
   (~20MB), inicia automaticamente com o computador/notebook e roda em segundo plano." `:238-241`; itens "Impressão direta
   sem abrir PDF no navegador", "Leitura de balança com auto-detecção de porta", "Configurações visuais via bandeja do
@@ -63,7 +63,7 @@ relativos a `src/`, exceto `ecotray/...`. Rótulo entre aspas = texto exato.
     conectada.") `:754-847`: "EcoTray não conectado. Abra o app EcoTray na bandeja do sistema para listar as balanças." |
     "Nenhuma balança configurada no EcoTray. Abra as configurações do EcoTray (ícone na bandeja) para cadastrar." | lista
     com o nome, "Conectada"/"Desconectada" e o lápis de renomear.
-- Modais: **"Baixar Instalador"** (`components/settings/EcoTrayDownloadModal.tsx`): "Instalador v1.7.22", "Selecione o
+- Modais: **"Baixar Instalador"** (`components/settings/EcoTrayDownloadModal.tsx`): "Instalador v1.7.26", "Selecione o
   sistema operacional do seu computador", "Windows" (".exe instalador") e "macOS" (".dmg instalador"); abre numa aba nova
   `bridge-downloads/EcoTray - Instalador.exe` (ou `.dmg`) `:28-34`. **"Como funciona?"**
   (`components/settings/EcoTrayHowItWorksModal.tsx`, passos em `ecoTrayHowItWorksSteps.ts`): "Como configurar sua
@@ -82,7 +82,7 @@ relativos a `src/`, exceto `ecotray/...`. Rótulo entre aspas = texto exato.
 ## 2. Rodapé (todas as telas, só no computador)
 `components/layout/BalancaStatusBar.tsx:54-85`, montado só fora do celular (`components/layout/AppLayout.tsx:512`;
 `hooks/useBalancaHabilitada.ts`: tela ≥ 1024 px + módulo `balanca_integration` + chave "Integração com Balança Digital").
-Ao centro "EcoSistema v1.59.154" (`components/Footer.tsx:44`); à direita: "Balança desconectada" | "Balança do pátio ·
+Ao centro "EcoSistema v1.60.22" (`components/Footer.tsx:44`); à direita: "Balança desconectada" | "Balança do pátio ·
 Aguardando peso" (sem leitura há mais de 4 s) | "Balança do pátio · 312 kg" (ponto verde). **No celular não há
 indicador** (a fonte pedia gravar no celular: vale o código).
 
@@ -98,7 +98,7 @@ indicador** (a fonte pedia gravar no celular: vale o código).
 - **Instalador** `ecotray/installer_win/installer_gui.py` (`EcoTray - Instalador.exe`, `build_installer.bat:47`): janela
   520×420 sem barra de título; cabeçalho com o logo e "Instalador — Balança & Impressora", "✕"; "O EcoTray conecta sua
   balança serial e impressora / diretamente ao sistema web, rodando silenciosamente / na bandeja do Windows."; "Pronto
-  para instalar"; barra 0%; botão "  Instalar  "; "EcoTray v1.7.22" `:143-257`. Passos `:91-97,294-322`: "Verificando
+  para instalar"; barra 0%; botão "  Instalar  "; "EcoTray v1.7.26" `:143-257`. Passos `:91-97,294-322`: "Verificando
   versão mais recente..." ("Verificando servidor de downloads...", 5%; "Pronto para baixar", 15%) → "Baixando EcoTray..."
   ("Baixando EcoTray.exe...", 20%; "9.7 MB / 19.4 MB" até 75%) → "Instalando arquivos..." ("Copiando arquivos...", 78%) →
   "Configurando inicialização automática..." ("Criando atalho de inicialização...", 88%; "Criando atalho na Área de
@@ -108,7 +108,7 @@ indicador** (a fonte pedia gravar no celular: vale o código).
   Windows; abre o EcoTray com o painel (`--show-dashboard`, 2 s depois, `ecotray/ecotray.py:664-665`).
 - **Bandeja** `ecotray/tray_app.py`: ícone do EcoTray (`assets/icon.png`), dica "EcoTray"; bolinha amarela "sem balança"
   (#eab308), vermelha "erro" (#ef4444), sem bolinha com a balança conectada `:50-98`. Clique abre o painel. Menu
-  `:297-321`: **"Abrir EcoTray"** (negrito) · — · "EcoTray v1.7.22" · "Sem balança conectada" | "Balança: COM3@9600" ·
+  `:297-321`: **"Abrir EcoTray"** (negrito) · — · "EcoTray v1.7.26" · "Sem balança conectada" | "Balança: COM3@9600" ·
   "Impressora: POS-58" (cinza, sem clique) · — · "Reconectar balança" · "Configurações" · — · "Atualizar Versão" · — ·
   "Desinstalar" · **"Sair"**.
 - **Painel** `ecotray/dashboard.py` (520×720, sem barra de título, sempre por cima): cabeçalho com o logo, "Ponte Desktop —
@@ -125,7 +125,7 @@ indicador** (a fonte pedia gravar no celular: vale o código).
   - **"Atividade Recente"** `:848-880` (5 linhas, hora + mensagem): "Impressora padrão: POS-58", "Módulo Integração com
     Balança destravado", "[scale:Balança do pátio] conectada", "Impresso em POS-58" (`ecotray/ecotray.py:767,772,1017,
     1076,1260`).
-  - "WebSocket" "balança :8053  •  comandos :8054" `:882-891`. Rodapé "EcoTray  v1.7.22" e "Atualizar Versão" `:360-409`.
+  - "WebSocket" "balança :8053  •  comandos :8054" `:882-891`. Rodapé "EcoTray  v1.7.26" e "Atualizar Versão" `:360-409`.
   - Aviso de impressão `:1190-1202,1317-1319`: faixa verde "✓  Impresso em POS-58" (3 s).
   - **"Configurar Balanças"** (janela 640×500 com barra de título) `:1332-2098`: tabela "Nome", "Porta", "Protocolo",
     "Padrão"; "Adicionar", "Editar", "Remover", "Definir padrão", "Detectar automaticamente"; ao abrir, "Detectando
@@ -140,7 +140,7 @@ indicador** (a fonte pedia gravar no celular: vale o código).
   fica na barra de menus (`ecotray/packaging/build_dmg_mac.sh:92-150`).
 
 ## 5. Backend e integrações
-- `app_config` (`key = ecotray_version` → "1.7.22") `services/ecotrayService.ts:70-77`.
+- `app_config` (`key = ecotray_version` → "1.7.26") `services/ecotrayService.ts:70-77`.
 - `profiles` (do usuário logado): `direct_print_enabled`, `direct_print_printer_name`, `receipt_paper_width_mm`,
   `receipt_scale`, `thermal_print_mode`, `balanca_ativada`, `balanca_url`, `balanca_unidade`, `balanca_decimais`,
   `balanca_continua` (`hooks/usePaymentPreferences.ts:74-145`, gravação silenciosa). As chaves são **por usuário**.
@@ -150,3 +150,13 @@ indicador** (a fonte pedia gravar no celular: vale o código).
   `unlock_scales`, `rename_scale`) e `ws://127.0.0.1:8053` (peso: `scales_list`, `weight`, `scale_status`,
   `scale_lock_status`). O `unlock_scales` leva o token da sessão; quem chama a edge `verify-balanca-module` é o EcoTray.
 - Storage `bridge-downloads` (o link do instalador, numa aba nova).
+
+## Atualização 1.60.22 / EcoTray 1.7.26 (21/11)
+Conferido de novo no código (`/dev/shm/ecoflix-src22`): EcoTray `version.py:122` = "1.7.26" (hotfix do runtime MFC; a 1.7.25 trouxe os botões da
+correção). Web: `SettingsIntegrationsContent.tsx` com "Imprimir Automaticamente" (`:511-547`), "Imprimir comprovante do Ticket de Pesagem"
+(`:549-584`), "Peso somente pela balança" com subtítulo "Padrão da empresa; exceções ficam em Usuários e Permissões" (`:651-665`), lista
+"Balanças" com lápis "Renomear balança" e a escolha da padrão (`:759-838`); cartão de teste (`configuracoes/TesteConexaoBalanca.tsx`) com
+"Desconectar" quando verde e "Testar novamente" só no erro. `ReceiptScaleModal.tsx`: "Restaurar padrão" só volta a escala a 100% (não mexe no papel;
+desligado em 100%). EcoTray: "Nova balança" com "Correção (×)" e os botões "÷10  (0,1×)", "Normal  (1×)", "×10" (`dashboard.py:1645-1657`), botão "Aplicar"
+(`:1874`); rodapé do painel "Atualizar Versão" (`:404`) com "Verificando..." / "✓ Já atualizado" (`:381,399`); aba "Logs" (`:446,894-1150`); menu da bandeja
+"Reconectar balança", "Configurações", "Atualizar Versão", "Desinstalar", "Sair" (`tray_app.py:298-319`).

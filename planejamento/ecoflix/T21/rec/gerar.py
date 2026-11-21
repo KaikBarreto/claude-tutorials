@@ -820,13 +820,11 @@ def cap06():
     """Gráfico, tabela e de onde vêm os números (a conversa R1..R5): R6 três meses em linha (L1, L2), R7 vendas por cliente em outubro em
     barras (L3), ilustração saldo × movimentado (L4, L5), R8 estoque em tabela (L6), ilustração da regra (L7); de onde vêm os números e o
     botão "Abrir posição de estoque" (L8); a Posição de Estoque com o "Total geral" (L9); o painel de novo e o rodapé (L10)."""
-    c = Cap(6, restaura(5, aquecer=('/materiais/posicao-estoque',)), pace=0.5, start=(900, 560))
-    c.ev("(()=>{window.__dbg=[];const o=HTMLElement.prototype.focus;HTMLElement.prototype.focus=function(...a){window.__dbg.push(['focus()',(this.outerHTML||'').slice(0,160),(new Error().stack||'').split('\\n').slice(2,5).join('|').slice(0,300)]);return o.apply(this,a)};document.addEventListener('focusin',e=>{window.__dbg.push(['focusin',(e.target.outerHTML||'').slice(0,160)])},true);return 'dbg'})()", label='DEBUG')
+    c = Cap(6, restaura(5), pace=0.5, start=(900, 560))
     c.mark(1)
     # a pergunta é digitada enquanto a fala a diz; a resposta digita ~3,3 s: o gráfico (que chega inteiro, embaixo do texto) é
     # apontado quando a conversa para, já em "outubro"
     c.pergunta('Compras e vendas dos últimos três meses', c.A(1, 'pergunta', 0.6), c.A(1, 'meses', 0.4), 'R6')
-    c.ev("JSON.stringify(window.__dbg.slice(0,12))", label='DEBUGDUMP')
     c.waitfor(text='Olhando suas compras e vendas dos últimos três meses', timeout=8)
     c.mark(2)
     GRAF = 'div.rounded-2xl:has-text("Compras e vendas por mês")'
