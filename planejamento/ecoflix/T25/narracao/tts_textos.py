@@ -1,9 +1,10 @@
-# Texto enviado ao ElevenLabs (eleven_v4, voz Kaik Barreto) por capítulo do T25 "Dashboard, Agenda e rotina".
+# Texto enviado ao ElevenLabs (eleven_v4, voz Kaik Barreto) por capítulo do T25 "Dashboard, Agenda e rotina" (app 1.60.22, 14 capítulos).
 # Gerado do roteiro.md (coluna Fala): cada linha do texto é uma linha da tabela Tela × Fala.
 # Trocas de pronúncia em relação ao roteiro (a legenda segue a grafia do roteiro, ver config_narracao.json):
 #   EcoSistema -> "Ecossistema" | Cato -> "Cáto" | Ctrl+K -> "contról-cá" | DRE -> "dê-érri-ê" | MTR -> "ême-tê-érre"
 #   CDF -> "cê-dê-éfe" | Vence em 7 dias -> "Vence em sete dias" (o rótulo do cartão; a legenda volta ao 7)
-#   Shift -> "xífti" e Shift+C/V/X/A/D/E -> "xífti-cê" / "xífti-vê" / "xífti-xis" / "xífti-á" / "xífti-dê" / "xífti-é" (novas, testar)
+#   Shift -> "xífti" e Shift+C/V/X/A/D/E/P/S -> "xífti-cê" / "xífti-vê" / "xífti-xis" / "xífti-á" / "xífti-dê" / "xífti-é" / "xífti-pê" / "xífti-ésse"
+#   (as duas últimas são novas na revisão do 1.60.22, testar na voz)
 #   Números e "Contas a Pagar e Receber" já vão como se fala; a legenda volta à grafia da tela pelo "numeros" do config.
 CAPS = {
 0: """Oi! Esta é a última aula da Formação básica. Neste tutorial, a gente lê os números do Dashboard e monta a rotina que mantém o sistema vivo.
@@ -11,10 +12,12 @@ Na Recicla Vale Metais, o Rafael começa o dia com três perguntas: como vai o m
 As respostas ficam em duas telas do menu: o Dashboard, no alto, e a Agenda, no fim.
 Se você ainda não viu o tutorial do Cáto, o assistente, dá uma olhada antes. [pause] Vamos aos números.""",
 1: """Lá em cima ficam três cartões: Total Compras, Total Vendas e a Margem. Eles seguem o filtro de período, que abre em Este mês.
+No filtro, dá pra ver só o dia de hoje, os últimos sete dias, este ano ou, em Personalizado, as datas que você quiser.
 Repara na margem: ela é só vendas menos compras, no período. Em novembro, até hoje, a Recicla Vale vendeu bem mais do que comprou, e ela aparece alta, em verde.
 Uma dica: margem não é lucro. Boa parte dessa venda é o ferro que foi comprado em outubro e ficou no pátio. O lucro de verdade, com custo, imposto e despesa, fica no Relatório Financeiro.
 Agora, outubro inteiro. As vendas passaram as compras por pouco, e a margem ficou em doze mil trezentos e oitenta reais. Foi o mês em que esse ferro entrou.
-Em Ver detalhes, a conta aparece aberta: o total de vendas, menos o total de compras, dá a margem.""",
+Em Ver detalhes, a conta aparece aberta: o total de vendas, menos o total de compras, dá a margem.
+Os outros dois cartões também abrem. Em Total Compras, o Ver detalhes mostra quanto saiu por cada forma de pagamento.""",
 2: """Mais abaixo, os gráficos. Em Compras versus Vendas, cada mês tem duas barras: o que a empresa comprou e o que vendeu.
 Do lado, a Evolução da Margem mostra como a margem andou, mês a mês.
 Uma dica: esses gráficos mostram sempre seis meses, mesmo com o filtro num mês só. O filtro manda nos cartões e nos rankings.
@@ -25,50 +28,72 @@ Passando o mouse, aparece o peso de cada semana. São sempre as mesmas oito sema
 Nos rankings, o filtro volta a valer. Em outubro, o material mais comprado foi o ferro pesado, em reais e em quilos: cinquenta mil quilos.
 Em Principais Fornecedores, o primeiro é o Depósito Irmãos Siqueira, que trouxe a maior parte desse ferro.
 Em Principais Clientes, a Fundição Bandeira do Vale lidera em reais, com o cobre. Em quilos, quem lidera é a Aços Quiririm, com o ferro.
-E em Ver todos os clientes aparece a lista completa do período.""",
-4: """E dá pra deixar o painel do seu jeito. No botão Configurações, ao lado do filtro, ficam todas as partes do Dashboard.
+E em Ver todos os clientes aparece a lista completa do período, por valor ou por quantidade em quilos.
+Clicando no nome de quem está no pódio, você vai direto pro histórico dele.""",
+4: """Mais um cartão que responde pergunta do dia: Saldos em Aberto. De um lado, quem deve pra empresa. Do outro, pra quem a empresa deve.
+Aparecem os maiores de cada lado, com o valor de cada um.
+Embaixo, a Posição líquida faz a conta: o que tem a receber menos o que tem a pagar. Verde, sobra. Vermelho, falta.
+Uma dica: esse cartão não olha o filtro. Ele mostra o saldo de hoje, seja qual for o período.
+Em Ver relatório, abre a lista completa de quem deve e de quem se deve, e dá pra exportar.
+Ao lado, os Métodos de Pagamento das Compras: quanto saiu em dinheiro, em Pix ou transferência e em saldo, no período do filtro.
+É um bom termômetro de quanto dinheiro vivo o caixa precisa ter pra comprar.
+E, no fim do painel, fica o dê-érri-ê resumido, o mesmo do Relatório Financeiro. Ele tem um tutorial só dele.""",
+5: """E dá pra deixar o painel do seu jeito. No botão Configurações, ao lado do filtro, ficam todas as partes do Dashboard.
 Cada parte tem a sua chave. Desligo Métodos de Pagamento, e ele sai do painel.
 Pra mudar a ordem, é só segurar o cantinho do cartão e arrastar. Trago o Volume Semanal pra perto do topo.
 Se quiser desfazer, o Voltar ordem ao normal põe o painel como era. E a arrumação fica salva no seu usuário, neste navegador.""",
-5: """Agora, a Agenda, no fim do menu. Ela abre no mês, com o dia de hoje marcado, e do lado ficam as tarefas do dia.
+6: """Agora, a Agenda, no fim do menu. Ela abre no mês, com o dia de hoje marcado, e do lado ficam as tarefas do dia.
 Pra marcar uma tarefa, é em Nova Tarefa. A revisão do caminhão truck, na quinta, dia doze, às nove da manhã.
 Com Lembrar no dia ligado, ela avisa no dia. Salvo, e ela já está no calendário.
 A oficina só pode na sexta? É só arrastar a tarefa pro dia treze.
 E os feriados aparecem sozinhos, com uma estrela: a Proclamação da República, no dia quinze, e a Consciência Negra, no dia vinte.
 Pra esconder os feriados, é em Configurações, Usabilidade, Exibir Feriados.""",
-6: """Além das tarefas, a Agenda mostra sozinha os avisos do dinheiro: as contas a pagar em vermelho e as a receber em verde, no dia do vencimento.
+7: """Tarefa feita, tarefa concluída. Ontem o Rafael ligou pro contador, e a tarefa ainda está aberta.
+É só clicar no círculo do lado dela, e ela fica riscada.
+Clicou sem querer? Um clique de novo, e ela volta a ficar pendente. Concluo outra vez.
+Pra mudar uma tarefa, passe o mouse nela e clique no lápis. Troco o horário da revisão pra dez e meia, e salvo.
+E a lixeira exclui. O sistema pede a confirmação, e a tarefa sai do calendário.
+Cada tarefa tem uma categoria, com a sua cor. Na categoria Coleta, aparece um campo a mais, pra dizer em qual cliente ou fornecedor é a retirada.
+As cores estão na legenda, embaixo do calendário.
+Em cima, você troca a vista: a semana, um dia só ou o mês. E o botão Hoje traz de volta pro dia de hoje.
+Um atalho: dois cliques num dia já abrem a tarefa nova naquela data.""",
+8: """Além das tarefas, a Agenda mostra sozinha os avisos do dinheiro: as contas a pagar em vermelho e as a receber em verde, no dia do vencimento.
 No dia dezessete, por exemplo, tem quatro mil setecentos e noventa reais a receber: a primeira parcela da Fundição Bandeira do Vale.
 E no dia vinte e três, dois mil trezentos e sessenta reais a pagar: a parcela dos pneus, na Auto Peças Vale Forte.
 O fiado com vencimento entra do mesmo jeito, uma vez só: cada parcela no seu dia.
 Clicando no aviso, você vai direto pra Contas a Pagar e Receber, pra conferir ou dar baixa.
 E o vencimento da assinatura do Ecossistema também entra, em laranja: aqui, no sábado, cinco de dezembro.
 E as tarefas com Lembrar no dia aparecem no alto do Dashboard, no dia certo.""",
-7: """Pra andar mais rápido, o contról-cá abre a busca de tudo: telas, clientes, fornecedores, materiais e funcionários.
+9: """Pra andar mais rápido, o contról-cá abre a busca de tudo: telas, clientes, fornecedores, materiais e funcionários.
 Digito cobre, e os materiais aparecem na hora. No Cobre mel, o painel mostra o estoque e os preços: quarenta e dois e cinquenta na compra e quarenta e sete e noventa na venda.
 Com Enter, você vai direto pra ele.
+Vale pra gente também. Digito Fundição, e o painel já mostra o telefone e o saldo do cliente. Com Enter, abre o histórico dele.
+Sem digitar nada, as Ações Rápidas começam uma compra, uma venda ou abrem o caixa, de qualquer tela.
 E digitando atalho, aparece Ver Atalhos de Teclado, com a lista inteira.
-É sempre xífti mais uma letra: xífti-cê abre a compra, xífti-vê a venda, xífti-xis o caixa e xífti-á a agenda.
+É sempre xífti mais uma letra: xífti-cê abre a compra, xífti-vê a venda, xífti-xis o caixa, xífti-pê os pedidos, xífti-é o estoque, xífti-ésse as configurações e xífti-á a agenda.
 Olha: xífti-xis, e o caixa abre. xífti-dê, e volto pro Dashboard.
-Os atalhos valem fora dos campos de texto. Com o cursor num campo, a letra vai pro campo.""",
-8: """Bom, números lidos e agenda em uso. Agora, a rotina que mantém o sistema vivo, começando pela diária: uns dez minutos, logo cedo.
+Os atalhos valem fora dos campos de texto. Com o cursor num campo, a letra vai pro campo.
+Quer desligar os atalhos, ou trocar a letra de cada um? É em Configurações, Atalhos.""",
+10: """Bom, números lidos e agenda em uso. Agora, a rotina que mantém o sistema vivo, começando pela diária: uns dez minutos, logo cedo.
 Ao abrir o sistema de manhã, ele já mostra as tarefas de hoje, como a cotação do cobre com a Fundição, às duas da tarde.
 Primeiro, o caixa. No Histórico do Caixa, você confere se os caixas de ontem fecharam, com o saldo final de cada um. Depois, é só abrir o caixa do dia.
 Depois, as contas. Em Contas a Pagar e Receber, os cartões Vencidas e Vence em sete dias mostram o que pede atenção agora.
+Nos filtros da tela, dá pra ver só o que vence nos próximos sete dias ou até o fim do mês.
 E, na Agenda, o que tem pra amanhã: a coleta na Auto Peças Vale Forte, às oito da manhã.
 Quem tem o módulo de Coletas confere também as ordens de coleta do dia seguinte. Ele depende do plano contratado.""",
-9: """Uma vez por semana, meia hora pra duas conferências: o estoque e o fiado.
+11: """Uma vez por semana, meia hora pra duas conferências: o estoque e o fiado.
 xífti-é abre o Estoque. Aqui você confere se o saldo bate com o que tem no pátio, pelo menos nos materiais que mais giram, como o cobre e a latinha.
 Pra acertar uma diferença, o caminho está na aula do estoque.
 Depois, o fiado. Em Contas a Pagar e Receber, na aba A Receber, ficam as parcelas e o fiado de cada cliente.
 O que passar da data aparece como Vencida, e é hora de cobrar. Assim, nenhum fiado fica esquecido.""",
-10: """E uma vez por mês, o fechamento: umas duas horas, em quatro passos.
+12: """E uma vez por mês, o fechamento: umas duas horas, em quatro passos.
 Conciliar o extrato do banco com o sistema e conferir o dê-érri-ê do mês, no Relatório Financeiro.
 Mandar o pacote das notas pro contador e ver se ficou algum ême-tê-érre ou cê-dê-éfe pendente. Esses dois dependem do módulo de notas fiscais, do plano contratado.
 Pra não esquecer, a gente marca o fechamento na Agenda, no primeiro dia útil: terça, primeiro de dezembro.
 Nova Tarefa: Fechamento de novembro, com os quatro passos na descrição, às oito da manhã, e Lembrar no dia ligado. No dia, ela aparece logo cedo.""",
-11: """Pronto! Recapitulando: a gente leu o Dashboard sem confundir margem com lucro, com os gráficos de seis meses, o comparativo e os rankings.
+13: """Pronto! Recapitulando: a gente leu o Dashboard sem confundir margem com lucro, com os gráficos de seis meses, o comparativo, os rankings e os saldos em aberto.
 Deixou o painel do seu jeito, escondendo e trocando os cartões de lugar.
-Marcou e mudou uma tarefa de dia na Agenda e viu os avisos que aparecem sozinhos.
+Marcou, mudou de dia e concluiu tarefas na Agenda, e viu os avisos que aparecem sozinhos.
 Usou os atalhos e a busca do contról-cá.
 E montou as três rotinas: a diária, a semanal e a mensal.
 A Formação básica acabou. No próximo tutorial, começam as aulas dos módulos que fazem parte do seu plano. Até lá!""",
@@ -78,26 +103,30 @@ A Formação básica acabou. No próximo tutorial, começam as aulas dos módulo
 TITULOS = {1: "Comprado, vendido e margem.",
            2: "Seis meses e o comparativo.",
            3: "Semanas e rankings.",
-           4: "O painel do seu jeito.",
-           5: "Tarefas no calendário.",
-           6: "Os avisos automáticos.",
-           7: "Atalhos e o contról-cá.",
-           8: "A rotina diária.",
-           9: "A rotina semanal.",
-           10: "A rotina mensal.",
-           11: "Recapitulando."}
+           4: "Quem deve e como você paga.",
+           5: "O painel do seu jeito.",
+           6: "Tarefas no calendário.",
+           7: "Concluir, editar e excluir.",
+           8: "Os avisos automáticos.",
+           9: "Atalhos e o contról-cá.",
+           10: "A rotina diária.",
+           11: "A rotina semanal.",
+           12: "A rotina mensal.",
+           13: "Recapitulando."}
 # Rótulo de área em cima do título (vinheta).
 KICKERS = {1: "Dashboard",
            2: "Dashboard",
            3: "Dashboard",
            4: "Dashboard",
-           5: "Agenda",
+           5: "Dashboard",
            6: "Agenda",
-           7: "Atalhos",
-           8: "Rotina",
-           9: "Rotina",
+           7: "Agenda",
+           8: "Agenda",
+           9: "Atalhos",
            10: "Rotina",
-           11: "Resumo"}
+           11: "Rotina",
+           12: "Rotina",
+           13: "Resumo"}
 
 if __name__ == "__main__":
     tot = 0

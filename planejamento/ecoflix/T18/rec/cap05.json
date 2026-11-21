@@ -88,6 +88,10 @@
   },
   {
    "do": "eval",
+   "js": "(()=>{const o=window.open;window.__pops=[];window.open=function(...a){const w=o.apply(this,a);window.__pops.push(w);return w};const f=window.fetch;window.fetch=function(u,...a){try{const x=String(u&&u.url||u);const m=x.match(/^(https?:\\/\\/[^/]+)\\/(rest|storage|functions|auth)\\/v1\\//);if(m)window.__sbo=m[1]}catch(e){}return f.call(this,u,...a)};return 'ok'})()"
+  },
+  {
+   "do": "eval",
    "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|n[ãa]o encontrad|recusou|rejeitad[ao]!/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA ECOFLIX'))window.__avisos.push('TRILHA ECOFLIX')},300);return 1})()"
   },
   {
@@ -210,7 +214,7 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const o=(performance.getEntriesByType('resource').map(e=>e.name).find(n=>n.includes('/rest/v1/'))||'').split('/rest/v1/')[0];if(!o)return 'SEM ORIGEM';const r=await fetch(o+'/storage/v1/object/public/nfe-danfes/t18/mtr-2611000318.pdf');if(!r.ok)return 'ERRO '+r.status;const u=new Uint8Array(await r.arrayBuffer());let s='';for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'PDF:'+btoa(s)})()",
+   "js": "(async()=>{const o=window.__sbo||(performance.getEntriesByType('resource').map(e=>e.name).find(n=>n.includes('/rest/v1/'))||'').split('/rest/v1/')[0];if(!o)return 'SEM ORIGEM';const r=await fetch(o+'/storage/v1/object/public/nfe-danfes/t18/mtr-2611000318.pdf');if(!r.ok)return 'ERRO '+r.status;const u=new Uint8Array(await r.arrayBuffer());let s='';for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'PDF:'+btoa(s)})()",
    "at": 20.38,
    "label": "PDF do MTR 2611000318 (aba nova, para a ilustração)"
   },

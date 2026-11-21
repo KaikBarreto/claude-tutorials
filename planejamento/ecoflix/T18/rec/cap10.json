@@ -88,7 +88,7 @@
   },
   {
    "do": "eval",
-   "js": "(()=>{const o=window.open;window.__pops=[];window.open=function(...a){const w=o.apply(this,a);window.__pops.push(w);return w};return 'ok'})()"
+   "js": "(()=>{const o=window.open;window.__pops=[];window.open=function(...a){const w=o.apply(this,a);window.__pops.push(w);return w};const f=window.fetch;window.fetch=function(u,...a){try{const x=String(u&&u.url||u);const m=x.match(/^(https?:\\/\\/[^/]+)\\/(rest|storage|functions|auth)\\/v1\\//);if(m)window.__sbo=m[1]}catch(e){}return f.call(this,u,...a)};return 'ok'})()"
   },
   {
    "do": "eval",
@@ -125,7 +125,7 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const o=(performance.getEntriesByType('resource').map(e=>e.name).find(n=>n.includes('/rest/v1/'))||'').split('/rest/v1/')[0];if(!o)return 'SEM ORIGEM';const r=await fetch(o+'/storage/v1/object/public/nfe-danfes/t18/cdf-2611000041.pdf');if(!r.ok)return 'ERRO '+r.status;const u=new Uint8Array(await r.arrayBuffer());let s='';for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'PDF:'+btoa(s)})()",
+   "js": "(async()=>{const o=window.__sbo||(performance.getEntriesByType('resource').map(e=>e.name).find(n=>n.includes('/rest/v1/'))||'').split('/rest/v1/')[0];if(!o)return 'SEM ORIGEM';const r=await fetch(o+'/storage/v1/object/public/nfe-danfes/t18/cdf-2611000041.pdf');if(!r.ok)return 'ERRO '+r.status;const u=new Uint8Array(await r.arrayBuffer());let s='';for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'PDF:'+btoa(s)})()",
    "at": 7.92,
    "label": "PDF do CDF 2611000041 (aba nova, para a ilustração)"
   },

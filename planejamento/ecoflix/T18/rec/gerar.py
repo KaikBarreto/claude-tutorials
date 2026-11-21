@@ -383,9 +383,10 @@ def abre_grupo(c, grupo, filho, at, label):
 
 
 
-POPS = "(()=>{const o=window.open;window.__pops=[];window.open=function(...a){const w=o.apply(this,a);window.__pops.push(w);return w};return 'ok'})()"
+POPS = ("(()=>{const o=window.open;window.__pops=[];window.open=function(...a){const w=o.apply(this,a);window.__pops.push(w);return w};"
+        "const f=window.fetch;window.fetch=function(u,...a){try{const x=String(u&&u.url||u);const m=x.match(/^(https?:\\/\\/[^/]+)\\/(rest|storage|functions|auth)\\/v1\\//);if(m)window.__sbo=m[1]}catch(e){}return f.call(this,u,...a)};return 'ok'})()")
 # o PDF que o app abre na aba nova (a gravação filma uma aba só) devolvido em base64 para virar a ilustração; busca o arquivo simulado no storage falso
-PDF_FETCH = lambda path: ("(async()=>{const o=(performance.getEntriesByType('resource').map(e=>e.name).find(n=>n.includes('/rest/v1/'))||'').split('/rest/v1/')[0];"
+PDF_FETCH = lambda path: ("(async()=>{const o=window.__sbo||(performance.getEntriesByType('resource').map(e=>e.name).find(n=>n.includes('/rest/v1/'))||'').split('/rest/v1/')[0];"
                           "if(!o)return 'SEM ORIGEM';const r=await fetch(o+'/storage/v1/object/public/nfe-danfes/%s');if(!r.ok)return 'ERRO '+r.status;"
                           "const u=new Uint8Array(await r.arrayBuffer());let s='';for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));"
                           "return 'PDF:'+btoa(s)})()") % path
@@ -593,8 +594,8 @@ def cap04():
     c.type(BUSCA_NOTA, 'Bandeira', at=None, label='busca: Bandeira (a nota do cobre)', cps=40, noClick=True)
     c.click(NOTA('1250'), at=c.A(9, 'nota,', 0.6), label='marca também a NF-e do cobre (1250)')
     c.click(BTN('Conferir (2)'), at=c.A(9, 'fora,', 0.9), label='Conferir (2)')
-    c.registra(TXTX('2 notas escolhidas', within=DLG), at=None, label='2 notas escolhidas (zoom)')
-    c.hover(TXTX('ficou de fora', within=DLG), 1.2, at=c.A(9, 'avisa.', 0.9), label='item ficou de fora: material sem resíduo salvo vinculado (zoom)')
+    c.registra(TXTX('2 notas escolhidas'), at=None, label='2 notas escolhidas (zoom)')
+    c.hover(TXTX('ficou de fora'), 1.2, at=c.A(9, 'avisa.', 0.9), label='item ficou de fora: material sem resíduo salvo vinculado (zoom)')
     c.click(VOLTAR_PREVIA, label='Voltar à lista de notas')
     c.click(NOTA('1250'), label='desmarca a NF-e do cobre')
     c.click(BTN('Conferir (1)'), label='Conferir (1) de novo: só a chaparia')
@@ -623,7 +624,7 @@ def cap04():
 @capitulo
 def cap05():
     """Lista com o 2611000318, Ver tentativas, Baixar PDF (aba nova; o robô devolve o PDF) e o ícone Usar como modelo (sem clicar)."""
-    c = Cap(5, start=(900, 470), setup=setup_em(ROTA_MTR))
+    c = Cap(5, start=(900, 470), setup=setup_em(ROTA_MTR, extra=[{'do': 'eval', 'js': POPS}]))
     c.mark(1)
     c.registra(LINHA('2611000318'), at=c.A(1, 'aparece', 0.4), label='linha do 2611000318')
     c.hover(LINHA('2611000318', 'td >> nth=1'), 0.3, at=c.A(1, 'destinador,', 0.6), label='Destinador')

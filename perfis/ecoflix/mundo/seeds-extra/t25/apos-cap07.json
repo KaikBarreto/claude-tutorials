@@ -1,0 +1,32 @@
+{
+ "_doc": "T25 · estado depois do cap07: \"Ligar pro contador\" concluída, \"Revisão do caminhão truck\" às 10:30, \"Buscar a lona nova do caminhão\" excluída. Escrito por rec/t25/t25_sementes.py apos07 (as mudanças que o app faz em hooks/useScheduleTasks.tsx).",
+ "_patch": {
+  "schedule_tasks": [
+   {
+    "match": {
+     "id": "@id:tarefa.contador"
+    },
+    "set": {
+     "status": "concluida",
+     "updated_at": "2026-11-10T11:31:00.000Z"
+    }
+   },
+   {
+    "match": {
+     "id": "0e1be7be-e4fb-4430-8411-9fecf226cf7c"
+    },
+    "set": {
+     "scheduled_time": "10:30",
+     "updated_at": "2026-11-10T11:32:00.000Z"
+    }
+   }
+  ]
+ },
+ "_remove": {
+  "schedule_tasks": [
+   {
+    "id": "@id:tarefa.lona"
+   }
+  ]
+ }
+}

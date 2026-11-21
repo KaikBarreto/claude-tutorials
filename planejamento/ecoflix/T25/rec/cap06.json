@@ -1,6 +1,6 @@
 {
  "name": "t25-cap06",
- "title": "T25 · Cap. 6 · Os avisos automáticos (narração ESTIMADA 62,7 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T25 · Cap. 6 · Tarefas no calendário (narração ESTIMADA 49,2 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t25-cap06",
  "pace": 0.5,
  "cps": 40,
@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
@@ -39,8 +39,7 @@
   "t15/apos-cap10",
   "t21/inicio",
   "t21/apos-cap02",
-  "t25/inicio",
-  "t25/apos-cap05"
+  "t25/inicio"
  ],
  "prewarm": [
   "/login"
@@ -88,23 +87,6 @@
    "idle": true
   },
   {
-   "do": "click",
-   "target": {
-    "role": "link",
-    "name": "Agenda",
-    "exact": true
-   }
-  },
-  {
-   "do": "waitFor",
-   "text": "Gerencie suas tarefas e compromissos",
-   "timeout": 30
-  },
-  {
-   "do": "waitFor",
-   "idle": true
-  },
-  {
    "do": "eval",
    "js": "(()=>{const a=document.getAnimations().filter(x=>x.currentTime<0);a.forEach(x=>x.startTime=document.timeline.currentTime);return a.length})()"
   },
@@ -120,87 +102,14 @@
    "at": 0.4
   },
   {
-   "do": "hover",
-   "target": {
-    "selector": "main div.grid.grid-cols-7 button:has-text('A Pagar')"
-   },
-   "seconds": 0.8,
-   "at": 5.85,
-   "label": "destaque: avisos A Pagar (vermelho)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main div.grid.grid-cols-7 button:has-text('A Receber')"
-   },
-   "seconds": 0.8,
-   "at": 7.75,
-   "label": "destaque: avisos A Receber (verde)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L2",
-   "at": 11.08
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main div.grid.grid-cols-7 button:has-text('A Receber: R$ 4.790,00')"
-   },
-   "seconds": 1.4,
-   "at": 11.82,
-   "label": "ZOOM A Receber: R$ 4.790,00, no dia 17",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L3",
-   "at": 21.99
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main div.grid.grid-cols-7 button:has-text('A Pagar: R$ 2.360,00')"
-   },
-   "seconds": 1.4,
-   "at": 23.48,
-   "label": "ZOOM A Pagar: R$ 2.360,00, no dia 23",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L4",
-   "at": 31.52
-  },
-  {
-   "do": "mark",
-   "name": "L5",
-   "at": 38.4
-  },
-  {
    "do": "click",
    "target": {
-    "selector": "main div.grid.grid-cols-7 button:has-text('A Receber: R$ 4.790,00')"
+    "role": "link",
+    "name": "Agenda",
+    "exact": true
    },
-   "at": 39.41,
-   "label": "clica no aviso do dia 17"
-  },
-  {
-   "do": "waitFor",
-   "text": "Contas a Pagar/Receber",
-   "timeout": 15
-  },
-  {
-   "do": "press",
-   "key": "Shift+A",
-   "at": 45.74,
-   "label": "Shift+A volta à Agenda"
+   "at": 0.4,
+   "label": "menu Agenda"
   },
   {
    "do": "waitFor",
@@ -208,44 +117,156 @@
    "timeout": 15
   },
   {
+   "do": "eval",
+   "js": "(()=>{const a=document.getAnimations().filter(x=>x.currentTime<0);a.forEach(x=>x.startTime=document.timeline.currentTime);return a.length})()"
+  },
+  {
    "do": "mark",
-   "name": "L6",
-   "at": 46.04
+   "name": "L2",
+   "at": 8.96
   },
   {
    "do": "click",
    "target": {
-    "selector": "main .border-b > div > div > button:nth-of-type(2)"
+    "selector": "main button:has-text('Nova Tarefa'):visible"
    },
-   "at": 46.34,
-   "label": "seta do próximo mês: dezembro"
+   "at": 10.43,
+   "label": "Nova Tarefa"
+  },
+  {
+   "do": "waitFor",
+   "text": "Título",
+   "timeout": 10
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Título']"
+   },
+   "text": "Revisão do caminhão truck",
+   "cps": 14,
+   "at": 12.97,
+   "label": "digita o título",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has(svg.lucide-calendar)"
+   },
+   "at": 14.7,
+   "label": "campo Data"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button[name='day']:not(.day-outside):text-is('12')"
+   },
+   "at": 16.06,
+   "label": "dia 12"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has(svg.lucide-clock)"
+   },
+   "at": 15.4,
+   "label": "campo Horário"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=listbox][aria-label='Horas'] button[role=option]:text-is('09')"
+   },
+   "at": 16.6,
+   "label": "hora 09"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Concluir",
+    "exact": true
+   },
+   "at": 17.6,
+   "label": "Concluir o horário"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 18.19
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main div.grid.grid-cols-7 button:has-text('Vencimento - Assinatura EcoSistema')"
+    "selector": "[role=dialog] div:has(> label:text-is('Lembrar no dia'))"
    },
    "seconds": 1.2,
-   "at": 51.12,
-   "label": "ZOOM Vencimento - Assinatura EcoSistema (laranja), dia 5",
+   "at": 18.79,
+   "label": "destaque: Lembrar no dia, ligado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Salvar')"
+   },
+   "at": 21.95,
+   "label": "Salvar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Tarefa criada com sucesso",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 24.99
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": "main div.grid.grid-cols-7 button:has-text('Revisão do caminhão truck')"
+   },
+   "to": {
+    "selector": "main div.grid.grid-cols-7 > div:not(.opacity-40):has(> span:text-is('13'))"
+   },
+   "at": 27.28,
+   "label": "arrasta a tarefa do dia 12 para o dia 13"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 30.35
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.grid.grid-cols-7 div:has-text('Proclamação da República'):not(:has(div:has-text('Proclamação da República')))"
+   },
+   "seconds": 0.9,
+   "at": 34.8,
+   "label": "destaque: Proclamação da República (dia 15)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.grid.grid-cols-7 div:has-text('Consciência Negra'):not(:has(div:has-text('Consciência Negra')))"
+   },
+   "seconds": 0.9,
+   "at": 38.52,
+   "label": "destaque: Consciência Negra (dia 20)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
-   "name": "L7",
-   "at": 55.04
-  },
-  {
-   "do": "press",
-   "key": "Shift+D",
-   "at": 58.88,
-   "label": "Shift+D abre o Dashboard"
-  },
-  {
-   "do": "waitFor",
-   "text": "lembrete",
-   "timeout": 15
+   "name": "L6",
+   "at": 41.32
   },
   {
    "do": "eval",
@@ -255,7 +276,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 62.68
+   "at": 49.2
   }
  ]
 }

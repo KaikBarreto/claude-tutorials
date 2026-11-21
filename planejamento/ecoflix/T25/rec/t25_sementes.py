@@ -45,7 +45,25 @@ def inicio():
             tarefa('coleta_valeforte', 'Coleta na Auto Peças Vale Forte', '2026-11-11', '08:00', 'coleta',
                    supplier_id='@id:fornecedor.valeforte', supplier_name='Auto Peças Vale Forte',
                    description='Retirar a chaparia e as baterias do dia.'),
+            # cap07 (1.60.22): concluir, editar e excluir. A do contador é de ONTEM (não entra em "Tarefas para hoje" nem na faixa do Dashboard).
+            tarefa('contador', 'Ligar pro contador sobre as notas de outubro', '2026-11-09', '16:00'),
+            tarefa('lona', 'Buscar a lona nova do caminhão', '2026-11-18', None),
         ],
+    }
+
+
+def apos07():
+    """estado depois do cap07 (1.60.22): o contador concluído, a revisão do caminhão às 10:30 e a lona excluída (a captura por
+    created_at/updated_at não vê exclusão: este vem escrito à mão, com as mesmas mudanças que o app faz)."""
+    rev = json.load(open(os.path.join(SAIDA, 'apos-cap06.json'), encoding='utf8'))['schedule_tasks'][0]['id']
+    return {
+        '_doc': 'T25 · estado depois do cap07: "Ligar pro contador" concluída, "Revisão do caminhão truck" às 10:30, "Buscar a lona nova do caminhão" excluída. '
+                'Escrito por rec/t25/t25_sementes.py apos07 (as mudanças que o app faz em hooks/useScheduleTasks.tsx).',
+        '_patch': {'schedule_tasks': [
+            {'match': {'id': '@id:tarefa.contador'}, 'set': {'status': 'concluida', 'updated_at': '2026-11-10T11:31:00.000Z'}},
+            {'match': {'id': rev}, 'set': {'scheduled_time': '10:30', 'updated_at': '2026-11-10T11:32:00.000Z'}},
+        ]},
+        '_remove': {'schedule_tasks': [{'id': '@id:tarefa.lona'}]},
     }
 
 
@@ -94,11 +112,11 @@ def _req(porta, metodo, caminho, corpo=None, token=None, extra=None):
 
 
 def api(nn, porta):
-    """apos-capNN SEM navegador (a gravação de cada capítulo confere a tela): parte de CADEIA + t25/inicio (+ apos-cap05) e faz, pela
+    """apos-capNN SEM navegador (a gravação de cada capítulo confere a tela): parte de CADEIA + t25/inicio (+ apos-cap06, apos-cap07) e faz, pela
     API do Supabase falso e logado como o Rafael, as MESMAS chamadas que o app faz (hooks/useScheduleTasks.tsx): o insert da Nova Tarefa
     e, no cap. 5, o update de scheduled_date do arrasto. Depois captura como o `captura`."""
     import secrets
-    cadeia = CADEIA + ['t25/inicio'] + (['t25/apos-cap05'] if nn == 10 else [])
+    cadeia = CADEIA + ['t25/inicio'] + (['t25/apos-cap06', 't25/apos-cap07'] if nn == 12 else [])
     _post(porta, '/__dev/reset', {})
     _post(porta, '/__dev/seed', {'files': cadeia})
     tok = _req(porta, 'POST', '/auth/v1/token?grant_type=password',
@@ -107,17 +125,17 @@ def api(nn, porta):
     rafael = _req(porta, 'GET', '/rest/v1/profiles?select=id&email=eq.rafael@reciclavalemetais.example', None, tok)[0]['id']
     post = lambda corpo: _req(porta, 'POST', '/rest/v1/schedule_tasks?select=*', corpo, tok, {'Prefer': 'return=representation'})
     patch = lambda q, corpo: _req(porta, 'PATCH', f'/rest/v1/schedule_tasks?{q}', corpo, tok, {'Prefer': 'return=representation'})
-    if nn == 5:      # Nova Tarefa (12/11 09:00, Lembrar no dia) e o arrasto para o dia 13
+    if nn == 6:      # Nova Tarefa (12/11 09:00, Lembrar no dia) e o arrasto para o dia 13
         t = post({'title': 'Revisão do caminhão truck', 'category': 'tarefa', 'scheduled_date': '2026-11-12', 'scheduled_time': '09:00',
                   'notify_on_day': True, 'notify_push': False, 'company_id': emp, 'created_by': rafael})
         t = t[0] if isinstance(t, list) else t
         patch(f"id=eq.{t['id']}", {'scheduled_date': '2026-11-13'})
-    elif nn == 10:   # Nova Tarefa: Fechamento de novembro (01/12 08:00, Lembrar no dia)
+    elif nn == 12:   # Nova Tarefa: Fechamento de novembro (01/12 08:00, Lembrar no dia)
         post({'title': 'Fechamento de novembro', 'description': 'Conciliar o banco, conferir o DRE, mandar o pacote ao contador e ver MTR e CDF pendentes',
               'category': 'tarefa', 'scheduled_date': '2026-12-01', 'scheduled_time': '08:00', 'notify_on_day': True, 'notify_push': False,
               'company_id': emp, 'created_by': rafael})
     else:
-        raise SystemExit('api: só os capítulos 5 e 10 gravam')
+        raise SystemExit('api: só os capítulos 6 e 12 gravam')
     return captura(nn, porta)
 
 
@@ -128,6 +146,8 @@ def main():
     os.makedirs(SAIDA, exist_ok=True)
     if a[0] == 'inicio':
         d, nome = inicio(), 'inicio.json'
+    elif a[0] == 'apos07':
+        d, nome = apos07(), 'apos-cap07.json'
     elif a[0] == 'api':
         nn = int(a[1])
         porta = int(a[a.index('--porta') + 1]) if '--porta' in a else 54325

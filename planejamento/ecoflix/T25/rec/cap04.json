@@ -1,6 +1,6 @@
 {
  "name": "t25-cap04",
- "title": "T25 · Cap. 4 · O painel do seu jeito (narração ESTIMADA 35,8 s; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T25 · Cap. 4 · Quem deve e como você paga (narração ESTIMADA 67,8 s; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t25-cap04",
  "pace": 0.5,
  "cps": 40,
@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
@@ -102,121 +102,274 @@
    "at": 0.4
   },
   {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll('main div.relative.group')].filter(e=>e.offsetParent&&e.querySelector(':scope > button.cursor-grab')&&e.innerText.includes(\"Saldos em Aberto\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-130);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 0.6,
+   "label": "desce a tela até Saldos em Aberto"
+  },
+  {
    "do": "hover",
    "target": {
-    "role": "button",
-    "name": "Configurações",
-    "exact": true,
-    "within": "main"
+    "selector": "main div.relative.group:has(> button.cursor-grab):has-text('Saldos em Aberto')"
    },
-   "seconds": 0.6,
-   "at": 3.35,
-   "label": "destaque: Configurações",
+   "seconds": 0.18,
+   "at": 3.27,
+   "label": "o cartão Saldos em Aberto",
    "optional": true,
    "timeout": 4
   },
   {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Configurações",
-    "exact": true,
-    "within": "main"
-   },
-   "at": 6.13,
-   "label": "abre Configurações do Dashboard"
-  },
-  {
-   "do": "waitFor",
-   "text": "Configurações do Dashboard",
-   "timeout": 10
+   "do": "eval",
+   "js": "(()=>{const e=[...document.querySelectorAll('main div.relative.group')].find(x=>x.querySelector(':scope > button.cursor-grab')&&x.innerText.includes(\"Saldos em Aberto\"));return e?('LIDO: '+e.innerText.replace(/[\\n\\r\\t ]+/g,' ').slice(0,700)):'SEM ALVO'})()",
+   "at": 4.4,
+   "label": "LER o cartão Saldos em Aberto"
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 9.11
+   "at": 10.4
   },
   {
-   "do": "click",
+   "do": "hover",
    "target": {
-    "selector": "[role=dialog] div:has(> span:text-is('Métodos de Pagamento')) [role=switch]"
+    "selector": "main div.relative.group:has(> button.cursor-grab):has-text('Saldos em Aberto') p:text-is('A receber')"
    },
-   "at": 11.24,
-   "label": "desliga Métodos de Pagamento"
+   "seconds": 0.8,
+   "at": 11.51,
+   "label": "coluna A receber",
+   "optional": true,
+   "timeout": 4
   },
   {
-   "do": "press",
-   "key": "Escape",
-   "at": 14.42,
-   "label": "fecha a janela: o cartão sai do painel"
+   "do": "hover",
+   "target": {
+    "selector": "main div.relative.group:has(> button.cursor-grab):has-text('Saldos em Aberto') p:text-is('A pagar')"
+   },
+   "seconds": 0.57,
+   "at": 13.79,
+   "label": "coluna A pagar",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 15.61
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll('main div.relative.group')].filter(e=>e.offsetParent&&e.querySelector(':scope > button.cursor-grab')&&e.innerText.includes(\"Compras vs Vendas\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-110);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 17.02,
-   "label": "ajusta a tela para o arrasto"
+   "at": 15.31
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main div.relative.group:has(> button.cursor-grab):has-text('Volume Semanal de Compras')"
+    "selector": "main div.relative.group:has(> button.cursor-grab):has-text('Saldos em Aberto') span:text-is('Posição líquida')"
    },
-   "seconds": 0.15,
-   "at": 18.24,
-   "label": "a alça do cartão Volume Semanal aparece",
+   "seconds": 1.2,
+   "at": 16.49,
+   "label": "destaque: Posição líquida",
    "optional": true,
    "timeout": 4
-  },
-  {
-   "do": "drag",
-   "target": {
-    "selector": "main div.relative.group:has(> button.cursor-grab):has-text('Volume Semanal de Compras') > button.cursor-grab"
-   },
-   "to": {
-    "selector": "main div.relative.group:has(> button.cursor-grab):has-text('Compras vs Vendas')"
-   },
-   "at": 18.24,
-   "label": "arrasta o Volume Semanal para depois dos cartões do topo"
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 24.24
+   "at": 25.07
   },
   {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Configurações",
-    "exact": true,
-    "within": "main"
-   },
-   "at": 24.76,
-   "label": "abre Configurações de novo"
+   "do": "eval",
+   "js": "(async()=>{const c=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,dy=-y0;if(y0<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
+   "at": 26.46,
+   "label": "sobe a tela até o filtro"
   },
   {
    "do": "hover",
    "target": {
-    "role": "button",
-    "name": "Voltar ordem ao normal",
-    "exact": true
+    "role": "combobox",
+    "hasText": "Este mês"
    },
-   "seconds": 1.4,
-   "at": 26.46,
-   "label": "destaque: Voltar ordem ao normal (sem clicar)",
+   "seconds": 0.8,
+   "at": 27.82,
+   "label": "o filtro em Este mês",
    "optional": true,
    "timeout": 4
   },
   {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll('main div.relative.group')].filter(e=>e.offsetParent&&e.querySelector(':scope > button.cursor-grab')&&e.innerText.includes(\"Saldos em Aberto\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-130);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 29.9,
+   "label": "volta ao cartão Saldos em Aberto"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.relative.group:has(> button.cursor-grab):has-text('Saldos em Aberto')"
+   },
+   "seconds": 1.0,
+   "at": 30.91,
+   "label": "o saldo de hoje, seja qual for o período",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 32.86
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div.relative.group:has(> button.cursor-grab):has-text('Saldos em Aberto') button:text-is('Ver relatório')"
+   },
+   "at": 33.08,
+   "label": "Ver relatório"
+  },
+  {
+   "do": "waitFor",
+   "text": "Relatório de Saldos",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-is('Relatório de Saldos')"
+   },
+   "seconds": 0.6,
+   "at": 35.2,
+   "label": "o Relatório de Saldos",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Exportar Relatório')"
+   },
+   "at": 39.21,
+   "label": "abre o menu Exportar Relatório (sem escolher)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Exportar em Excel",
+   "timeout": 6
+  },
+  {
    "do": "press",
    "key": "Escape",
-   "at": 34.56,
-   "label": "fecha a janela"
+   "at": 39.92,
+   "label": "fecha o menu de exportação"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 40.42,
+   "label": "fecha o Relatório de Saldos"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 40.42
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll('main div.relative.group')].filter(e=>e.offsetParent&&e.querySelector(':scope > button.cursor-grab')&&e.innerText.includes(\"M\\u00e9todos de Pagamento das Compras\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-130);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 41.52,
+   "label": "desce a tela até Métodos de Pagamento das Compras"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.relative.group:has(> button.cursor-grab):has-text('Métodos de Pagamento das Compras')"
+   },
+   "seconds": 0.8,
+   "at": 41.68,
+   "label": "o cartão Métodos de Pagamento das Compras",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.relative.group:has(> button.cursor-grab):has-text('Métodos de Pagamento das Compras') span:text-is('Dinheiro')"
+   },
+   "seconds": 0.19,
+   "at": 45.55,
+   "label": "linha Dinheiro",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.relative.group:has(> button.cursor-grab):has-text('Métodos de Pagamento das Compras') span:text-is('Pix/Transferência')"
+   },
+   "seconds": 0.6,
+   "at": 46.69,
+   "label": "linha Pix/Transferência",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.relative.group:has(> button.cursor-grab):has-text('Métodos de Pagamento das Compras') span:text-is('Saldo')"
+   },
+   "seconds": 0.6,
+   "at": 48.66,
+   "label": "linha Saldo",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=[...document.querySelectorAll('main div.relative.group')].find(x=>x.querySelector(':scope > button.cursor-grab')&&x.innerText.includes(\"M\\u00e9todos de Pagamento das Compras\"));return e?('LIDO: '+e.innerText.replace(/[\\n\\r\\t ]+/g,' ').slice(0,700)):'SEM ALVO'})()",
+   "at": 50.32,
+   "label": "LER Métodos de Pagamento das Compras"
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 51.16
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.relative.group:has(> button.cursor-grab):has-text('Métodos de Pagamento das Compras') span:text-is('Dinheiro')"
+   },
+   "seconds": 1.4,
+   "at": 52.05,
+   "label": "ZOOM linha Dinheiro",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 57.36
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll('main div.relative.group')].filter(e=>e.offsetParent&&e.querySelector(':scope > button.cursor-grab')&&e.innerText.includes(\"Demonstrativo Financeiro (DRE)\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-110);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/1000),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 58.36,
+   "label": "desce a tela até o fim do painel: DRE"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.relative.group:has(> button.cursor-grab):has-text('Demonstrativo Financeiro (DRE)')"
+   },
+   "seconds": 1.0,
+   "at": 60.09,
+   "label": "o DRE resumido",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.relative.group:has(> button.cursor-grab):has-text('Demonstrativo Financeiro (DRE)') :text-is('Regime de Caixa')"
+   },
+   "seconds": 1.0,
+   "at": 64.8,
+   "label": "destaque: Regime de Caixa (sem clicar)",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "eval",
@@ -226,7 +379,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 35.76
+   "at": 67.82
   }
  ]
 }

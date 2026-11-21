@@ -1,6 +1,6 @@
 {
  "name": "t25-cap09",
- "title": "T25 · Cap. 9 · A rotina semanal (narração ESTIMADA 41,5 s; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T25 · Cap. 9 · Atalhos e o Ctrl+K (narração ESTIMADA 88,2 s; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t25-cap09",
  "pace": 0.5,
  "cps": 40,
@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
@@ -40,7 +40,8 @@
   "t21/inicio",
   "t21/apos-cap02",
   "t25/inicio",
-  "t25/apos-cap05"
+  "t25/apos-cap06",
+  "t25/apos-cap07"
  ],
  "prewarm": [
   "/login"
@@ -103,104 +104,394 @@
    "at": 0.4
   },
   {
-   "do": "mark",
-   "name": "L2",
-   "at": 5.77
+   "do": "eval",
+   "js": "(()=>{const a=document.activeElement;if(a&&a!==document.body)a.blur();return 'foco fora de campo'})()",
+   "at": 0.4,
+   "label": "foco fora de campo"
   },
   {
    "do": "press",
-   "key": "Shift+E",
-   "at": 6.47,
-   "label": "Shift+E abre o Estoque"
+   "key": "Control+k",
+   "at": 2.25,
+   "label": "Ctrl+K abre a busca"
   },
   {
    "do": "waitFor",
-   "text": "Estoque",
-   "timeout": 15
+   "selector": "[role=dialog] input",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 9.33
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input"
+   },
+   "text": "cobre",
+   "cps": 8,
+   "at": 10.17,
+   "label": "digita cobre",
+   "noClick": true
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text('Cobre mel')"
+    "selector": "[role=dialog] [cmdk-item]:has-text('Cobre mel')"
    },
-   "seconds": 0.15,
-   "at": 16.14,
-   "label": "saldo do Cobre mel",
+   "seconds": 1.0,
+   "at": 13.38,
+   "label": "passa o mouse em Cobre mel",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text('Alumínio latinha')"
+    "selector": "[role=dialog] :text-is('P. Compra')"
    },
-   "seconds": 0.15,
-   "at": 16.9,
-   "label": "saldo do Alumínio latinha",
+   "seconds": 1.2,
+   "at": 17.38,
+   "label": "ZOOM P. Compra e P. Venda do Cobre mel",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"42,50\", \"47,90\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere preços do Cobre mel"
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 17.74
+   "at": 23.5
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div.border-t:has(> kbd)"
+   },
+   "seconds": 0.8,
+   "at": 24.0,
+   "label": "Pressione Enter para abrir",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 22.95
+   "at": 26.74
   },
   {
-   "do": "click",
+   "do": "type",
    "target": {
-    "role": "button",
-    "name": "Financeiro",
-    "exact": true
+    "selector": "[role=dialog] input"
    },
-   "at": 22.95,
-   "label": "menu Financeiro",
-   "unless": {
-    "role": "link",
-    "name": "Contas a Pagar/Receber",
-    "exact": true
-   }
+   "text": "fundi",
+   "cps": 8,
+   "at": 29.31,
+   "label": "digita fundi",
+   "clear": true,
+   "noClick": true
   },
   {
-   "do": "click",
+   "do": "hover",
    "target": {
-    "role": "link",
-    "name": "Contas a Pagar/Receber",
-    "exact": true
+    "selector": "[role=dialog] [cmdk-item]:has-text('Fundição Bandeira do Vale')"
    },
-   "at": 24.91,
-   "label": "Contas a Pagar/Receber"
+   "seconds": 1.0,
+   "at": 30.33,
+   "label": "passa o mouse em Fundição Bandeira do Vale",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-is('Saldo')"
+   },
+   "seconds": 0.15,
+   "at": 32.76,
+   "label": "ZOOM o telefone e o Saldo do cliente",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const d=document.querySelector('[role=dialog]');return d?('LIDO: '+d.innerText.replace(/[\\n\\r\\t ]+/g,' ').slice(0,400)):'SEM ALVO'})()",
+   "at": 33.64,
+   "label": "LER o painel de Fundição"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div.border-t:has(> kbd)"
+   },
+   "seconds": 0.8,
+   "at": 34.53,
+   "label": "Pressione Enter para abrir o histórico",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 37.11
+  },
+  {
+   "do": "press",
+   "key": "Control+a",
+   "at": 37.91,
+   "label": "seleciona a busca"
+  },
+  {
+   "do": "press",
+   "key": "Backspace",
+   "at": 38.21,
+   "label": "apaga a busca"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-is('Ações Rápidas')"
+   },
+   "seconds": 0.8,
+   "at": 39.05,
+   "label": "destaque: Ações Rápidas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] [cmdk-item]:has-text('Nova Compra')"
+   },
+   "seconds": 0.15,
+   "at": 41.13,
+   "label": "Nova Compra",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] [cmdk-item]:has-text('Nova Venda')"
+   },
+   "seconds": 0.34,
+   "at": 42.19,
+   "label": "Nova Venda",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] [cmdk-item]:has-text('Abrir Caixa')"
+   },
+   "seconds": 0.6,
+   "at": 43.48,
+   "label": "Abrir Caixa",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 45.58
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input"
+   },
+   "text": "atalho",
+   "cps": 8,
+   "at": 46.79,
+   "label": "digita atalho",
+   "clear": true,
+   "noClick": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] [cmdk-item]:has-text('Ver Atalhos de Teclado')"
+   },
+   "seconds": 0.8,
+   "at": 47.95,
+   "label": "Ver Atalhos de Teclado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "press",
+   "key": "Enter",
+   "at": 50.68,
+   "label": "Enter abre a lista de atalhos"
   },
   {
    "do": "waitFor",
-   "text": "Vence em 7 dias",
+   "text": "Atalhos Globais",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 51.77
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-is('Compra')"
+   },
+   "seconds": 0.5,
+   "at": 54.58,
+   "label": "destaque: Compra Shift+C",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-is('Venda')"
+   },
+   "seconds": 0.5,
+   "at": 56.55,
+   "label": "destaque: Venda Shift+V",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-is('Caixa')"
+   },
+   "seconds": 0.5,
+   "at": 58.07,
+   "label": "destaque: Caixa Shift+X",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-is('Pedidos')"
+   },
+   "seconds": 0.5,
+   "at": 59.66,
+   "label": "destaque: Pedidos Shift+P",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-is('Ver Estoque')"
+   },
+   "seconds": 0.5,
+   "at": 61.4,
+   "label": "destaque: Ver Estoque Shift+E",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-is('Configurações')"
+   },
+   "seconds": 0.5,
+   "at": 63.0,
+   "label": "destaque: Configurações Shift+S",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-is('Agenda')"
+   },
+   "seconds": 0.46,
+   "at": 65.28,
+   "label": "destaque: Agenda Shift+A",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 66.69
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 67.29,
+   "label": "fecha a lista"
+  },
+  {
+   "do": "press",
+   "key": "Shift+X",
+   "at": 68.0,
+   "label": "Shift+X abre o Caixa"
+  },
+  {
+   "do": "waitFor",
+   "text": "Caixa",
+   "timeout": 15
+  },
+  {
+   "do": "press",
+   "key": "Shift+D",
+   "at": 70.2,
+   "label": "Shift+D volta ao Dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 15
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 72.51
+  },
+  {
+   "do": "mark",
+   "name": "L10",
+   "at": 79.84
+  },
+  {
+   "do": "press",
+   "key": "Shift+S",
+   "at": 84.84,
+   "label": "Shift+S abre as Configurações"
+  },
+  {
+   "do": "waitFor",
+   "text": "Configurações",
    "timeout": 15
   },
   {
    "do": "click",
    "target": {
-    "selector": "main button:text-is('A Receber')"
+    "selector": "main [role=tab]:has-text('Atalhos'), main button:text-is('Atalhos')"
    },
-   "at": 27.17,
-   "label": "aba A Receber"
+   "at": 85.91,
+   "label": "aba Atalhos"
   },
   {
-   "do": "mark",
-   "name": "L5",
-   "at": 32.02
+   "do": "waitFor",
+   "text": "Atalhos estão ativados",
+   "timeout": 10
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main thead th:has-text('Status')"
+    "selector": "main :text-is('Atalhos estão ativados')"
    },
-   "seconds": 1.6,
-   "at": 34.81,
-   "label": "destaque: coluna Status",
+   "seconds": 0.49,
+   "at": 86.81,
+   "label": "destaque: Atalhos estão ativados",
    "optional": true,
    "timeout": 4
   },
@@ -212,7 +503,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 41.49
+   "at": 88.25
   }
  ]
 }

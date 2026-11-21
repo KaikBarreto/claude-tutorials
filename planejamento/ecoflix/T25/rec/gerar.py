@@ -1,16 +1,18 @@
 #!/usr/bin/env python3
 """T25 · gera rec/t25/cap00..cap11.json (roteiros do robô) a partir da voz (t25/narracao/capNN.json).
 
-Dashboard, Agenda e rotina no COMPUTADOR (janela 1280x800), logado como Rafael Nogueira (MASTER, Recicla Vale Metais), EcoSistema 1.59.154.
+Dashboard, Agenda e rotina no COMPUTADOR (janela 1600x900), logado como Rafael Nogueira (MASTER, Recicla Vale Metais), EcoSistema 1.60.22.
+Capítulos (14): 0 Abertura, 1 Comprado/vendido/margem, 2 Seis meses, 3 Semanas e rankings, 4 Quem deve e como você paga (NOVO), 5 Painel do seu jeito,
+6 Tarefas no calendário, 7 Concluir/editar/excluir (NOVO), 8 Avisos automáticos, 9 Atalhos e Ctrl+K, 10 a 12 Rotinas, 13 Recapitulando.
 FAKE_NOW 2026-11-10T08:30:00-03:00 (terça) em todos os capítulos. Instância do Supabase falso na porta 54325.
 Cada passo é preso a uma palavra da fala: `at` = início da palavra - o custo do gesto (A(linha, palavra, folga)), para o cursor CHEGAR na
 palavra (docs/04, "Custo real dos gestos"). Hoje a voz é ESTIMADA (capNN.json do preparar_aula.sh); com a voz real, rode de novo.
 Rodar de qualquer pasta: `python3 -I rec/t25/gerar.py [NN ...]`. Depois: t25_ensaio.sh NN (ensaio rápido), prever.py NN --ens,
 t25_ensaio.sh NN completo.
 
-Cadeia de sementes (rec/mundo/seeds-extra/): o fim da T21 (CADEIA: t14/*, t15/*, t21/*) + `t25/inicio` (a Agenda do plano) nos caps 0 a 5;
-depois `t25/apos-cap05` (a revisão do caminhão no dia 13) nos caps 6 a 10 e `t25/apos-cap10` no cap 11 (t25_sementes.py; a captura sai
-do ensaio rápido do capítulo, com 0 passo falho).
+Cadeia de sementes (rec/mundo/seeds-extra/): o fim da T21 (CADEIA: t14/*, t15/*, t21/*) + `t25/inicio` (a Agenda do plano, com as tarefas do contador e da lona)
+nos caps 0 a 6; `t25/apos-cap06` (a revisão do caminhão no dia 13) no cap 7; `t25/apos-cap07` (contador concluída, revisão 10:30, lona excluída) nos caps 8 a 12 e
+`t25/apos-cap12` (Fechamento de novembro) no cap 13 (t25_sementes.py; apos-cap06 e apos-cap12 saem do ensaio rápido do capítulo com 0 passo falho; apos-cap07 é escrito por `apos07`).
 
 Particularidades (lidas no código da 1.59.154 e conferidas nas explorações rec/t25/_ex/):
  - Cartões do topo: <div role=button> com o rótulo num <p>; o clique abre "Ver detalhes". Cada seção do painel é um
@@ -32,16 +34,17 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 TUT_HOME = os.path.normpath(os.path.join(HERE, '..', '..'))
 NARR = os.path.join(TUT_HOME, 't25', 'narracao')
 FAKE_NOW = '2026-11-10T08:30:00-03:00'
-NOMES = ['Abertura', 'Comprado, vendido e margem', 'Seis meses e o comparativo', 'Semanas e rankings', 'O painel do seu jeito',
-         'Tarefas no calendário', 'Os avisos automáticos', 'Atalhos e o Ctrl+K', 'A rotina diária', 'A rotina semanal', 'A rotina mensal',
-         'Recapitulando']
+NOMES = ['Abertura', 'Comprado, vendido e margem', 'Seis meses e o comparativo', 'Semanas e rankings', 'Quem deve e como você paga', 'O painel do seu jeito',
+         'Tarefas no calendário', 'Concluir, editar e excluir', 'Os avisos automáticos', 'Atalhos e o Ctrl+K', 'A rotina diária', 'A rotina semanal',
+         'A rotina mensal', 'Recapitulando']
 _T13 = ['t13/inicio', 't13/apos-cap11']   # o fim da T13 (pneus em 3 parcelas, baixas): a linha do tempo é T13 → T14 → T15 → T21 → T25
 _T14 = ['t14/inicio'] + [f't14/apos-cap{n:02d}' for n in (2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 14)]
 _T15 = ['t15/inicio', 't15/apos-cap01', 't15/apos-cap02', 't15/apos-cap10']
 CADEIA = _T13 + _T14 + _T15 + ['t21/inicio', 't21/apos-cap02']   # o fim da T21, de onde a T25 parte (MUNDO_LINHA_DO_TEMPO, seção 14)
 _I = CADEIA + ['t25/inicio']
-_5 = _I + ['t25/apos-cap05']
-SEMENTE = {**{n: _I for n in range(0, 6)}, **{n: _5 for n in range(6, 11)}, 11: _5 + ['t25/apos-cap10']}
+_6 = _I + ['t25/apos-cap06']
+_7 = _6 + ['t25/apos-cap07']
+SEMENTE = {**{n: _I for n in range(0, 7)}, 7: _6, **{n: _7 for n in range(8, 13)}, 13: _7 + ['t25/apos-cap12']}
 
 sys.path.insert(0, NARR)
 try:
@@ -294,7 +297,10 @@ def stable_id(chave):
 
 
 RAFAEL = stable_id('user.rafael')
-VERSAO = '1.60.18'
+try:
+    VERSAO = open(os.path.join(TUT_HOME, 'app', 'dist', '.versao-app'), encoding='utf8').read().strip() or '1.60.22'
+except OSError:   # pragma: no cover
+    VERSAO = '1.60.22'
 HOJE = FAKE_NOW[:10]
 STORAGE = {'app_version': VERSAO, 'notification_shown_version': VERSAO, 'pwa-install-dismissed': 'true', 'theme': 'light',
            f'daily-tasks-reminder-last-shown-{RAFAEL}': HOJE, 'initial-preferences-set': 'true'}
@@ -411,6 +417,26 @@ def setup_agenda(extra=()):
                     AGUARDA] + list(extra) + [{'do': 'eval', 'js': ANIM}]
 
 
+# ---------------------------------------------------------------- alvos novos (1.60.22)
+DIA_NUM = lambda d: SEL(f"main div.grid.grid-cols-7 > div:not(.opacity-40) > span:text-is('{d}')")   # só o número do dia (o centro da célula cai na tarefa)
+MINUTOS = lambda m: SEL(f"[role=listbox][aria-label='Minutos'] button[role=option]:text-is('{m}')")
+CARD_TAREFA = lambda t: f"main div.group.rounded-lg.border:has(> div.flex-1 > p:text-is('{t}'))"   # tarefa na lateral do dia (TaskCard)
+CIRCULO = lambda t: SEL(f"{CARD_TAREFA(t)} > button.rounded-full")
+LAPIS = lambda t: SEL(f"{CARD_TAREFA(t)} button:has(svg[class*='lucide-pencil'])")
+LIXEIRA = lambda t: SEL(f"{CARD_TAREFA(t)} button:has(svg[class*='lucide-trash'])")
+ALERTA = "[role=alertdialog]"
+LE_SEC = lambda titulo: ("(()=>{const e=[...document.querySelectorAll('main div.relative.group')].find(x=>x.querySelector(':scope > button.cursor-grab')&&x.innerText.includes(%s));"
+                         "return e?('LIDO: '+e.innerText.replace(/[\\n\\r\\t ]+/g,' ').slice(0,700)):'SEM ALVO'})()") % json.dumps(titulo)
+
+
+def js_riscada(titulo, esperado):
+    """OK/DIFERENTE: o título da tarefa na lateral está (esperado=True) ou não (False) riscado"""
+    return ("(async()=>{for(let i=0;i<20;i++){const p=[...document.querySelectorAll('main div.group.rounded-lg.border > div.flex-1 > p')].find(x=>x.textContent.trim()===%s);"
+            "if(p&&p.className.includes('line-through')===%s)return 'OK: '+%s+(%s?' riscada':' pendente');await new Promise(r=>setTimeout(r,300));}"
+            "return 'DIFERENTE: '+%s+(%s?' não ficou riscada':' continua riscada')})()") % (
+        json.dumps(titulo), 'true' if esperado else 'false', json.dumps(titulo), 'true' if esperado else 'false', json.dumps(titulo), 'true' if esperado else 'false')
+
+
 # ---------------------------------------------------------------- capítulos
 def cap00():
     """Abertura: o Dashboard (cartões e a faixa "1 lembrete para hoje") sob a ilustração das três perguntas (L2) e o cartão Antes: (L4);
@@ -431,8 +457,8 @@ def cap00():
 
 
 def cap01():
-    """Comprado, vendido e margem: os três cartões de novembro (margem verde), a ilustração margem x lucro (L3), outubro no filtro "Mês passado"
-    (os números do T15) e o "Ver detalhes" da margem."""
+    """Comprado, vendido e margem (7 linhas): os três cartões de novembro, o filtro de período aberto (L2), a margem verde (L3), a ilustração
+    margem x lucro (L4), outubro em "Mês passado" (L5), o "Ver detalhes" da margem (L6) e o do Total Compras com "Por forma de pagamento" (L7)."""
     c = Cap(1, setup=setup_dash(), start=(760, 300))
     c.mark(1)
     c.hover(STAT('Total Compras'), 0.4, at=c.A(1, 'Total', 0.6, nth=0), label='destaque: Total Compras')
@@ -440,21 +466,35 @@ def cap01():
     c.hover(STAT(MARGEM), 0.4, at=c.A(1, 'Margem.', 0.6), label='destaque: Margem')
     c.hover(FILTRO('Este mês'), 0.6, at=c.A(1, 'Este', 0.6), label='o filtro de período em Este mês')
     c.mark(2)
-    c.hover(STAT(MARGEM), 1.4, at=c.A(2, 'margem:', 0.6), label='ZOOM cartão Margem de novembro (verde)')
-    c.confere('main', ['99.838,75'], 'margem de novembro na tela')
+    c.click(FILTRO('Este mês'), at=c.A(2, 'filtro,', 0.9), label='abre a lista do filtro de período')
+    c.hover(OPCAO('Hoje'), 0.4, at=c.A(2, 'hoje,', 0.6), label='destaque na lista: Hoje')
+    c.hover(OPCAO('Últimos 7 dias'), 0.4, at=c.A(2, 'últimos', 0.6), label='destaque na lista: Últimos 7 dias')
+    c.hover(OPCAO('Este ano'), 0.4, at=c.A(2, 'este', 0.6), label='destaque na lista: Este ano')
+    c.hover(OPCAO('Personalizado'), 0.6, at=c.A(2, 'Personalizado,', 0.6), label='destaque na lista: Personalizado')
+    c.press('Escape', at=round(c.L(3) - 1.0, 2), label='fecha a lista sem escolher')
     c.mark(3)
+    c.hover(STAT(MARGEM), 1.4, at=c.A(3, 'margem:', 0.6), label='ZOOM cartão Margem de novembro (verde)')
+    c.confere('main', ['99.838,75'], 'margem de novembro na tela')
     c.mark(4)
-    c.click(FILTRO('Este mês'), at=c.A(4, 'Agora,', 0.7), label='abre o filtro de período')
-    c.click(OPCAO('Mês passado'), at=c.A(4, 'outubro', 0.7), label='escolhe Mês passado')
-    c.waitfor(text='256.860,00', timeout=15)
-    c.hover(STAT('Total Compras'), 0.5, at=c.A(4, 'inteiro.', 0.2), label='ZOOM cartões de outubro: Total Compras')
-    c.hover(STAT('Total Vendas'), 0.5, at=c.A(4, 'passaram', 0.6), label='ZOOM cartões de outubro: Total Vendas')
-    c.hover(STAT(MARGEM), 0.8, at=c.A(4, 'margem', 0.6), label='ZOOM cartões de outubro: Margem 12.380,00')
-    c.confere('main', ['256.860,00', '269.240,00', '12.380,00'], 'outubro na tela (T15)')
     c.mark(5)
-    c.click(STAT(MARGEM), at=c.A(5, 'detalhes,', 0.8), label='Ver detalhes da margem')
+    c.click(FILTRO('Este mês'), at=c.A(5, 'Agora,', 0.7), label='abre o filtro de período')
+    c.click(OPCAO('Mês passado'), at=c.A(5, 'outubro', 0.7), label='escolhe Mês passado')
+    c.waitfor(text='256.860,00', timeout=15)
+    c.hover(STAT('Total Compras'), 0.5, at=c.A(5, 'inteiro.', 0.2), label='ZOOM cartões de outubro: Total Compras')
+    c.hover(STAT('Total Vendas'), 0.5, at=c.A(5, 'passaram', 0.6), label='ZOOM cartões de outubro: Total Vendas')
+    c.hover(STAT(MARGEM), 0.8, at=c.A(5, 'margem', 0.6), label='ZOOM cartões de outubro: Margem 12.380,00')
+    c.confere('main', ['256.860,00', '269.240,00', '12.380,00'], 'outubro na tela (T15)')
+    c.mark(6)
+    c.click(STAT(MARGEM), at=c.A(6, 'detalhes,', 0.8), label='Ver detalhes da margem')
     c.waitfor(text='Como é calculado', timeout=10)
-    c.hover(SEL(f"{DLG} :text-is('Como é calculado')"), 0.6, at=c.A(5, 'conta', 0.6), label='o bloco Como é calculado')
+    c.hover(SEL(f"{DLG} :text-is('Como é calculado')"), 0.6, at=c.A(6, 'conta', 0.6), label='o bloco Como é calculado')
+    c.press('Escape', at=round(c.L(7) - 1.0, 2), label='fecha a janela da margem')
+    c.mark(7)
+    c.click(STAT('Total Compras'), at=c.A(7, 'Total', 0.8, nth=0), label='Ver detalhes do Total Compras')
+    c.waitfor(text='Por forma de pagamento', timeout=10)
+    c.hover(SEL(f"{DLG} :text-is('Por forma de pagamento')"), 1.0, at=c.A(7, 'forma', 0.7), label='ZOOM Por forma de pagamento')
+    c.ev(LE_SEC('Por forma de pagamento').replace("document.querySelectorAll('main div.relative.group')", "document.querySelectorAll('[role=dialog]')").replace("x.querySelector(':scope > button.cursor-grab')&&", ''),
+         label='LER a janela do Total Compras (formas de pagamento de outubro)')
     c.press('Escape', at=round(c.dur - 1.0, 2), label='fecha a janela')
     c.fim()
     return c
@@ -481,7 +521,8 @@ def cap02():
 
 
 def cap03():
-    """Semanas e rankings: Volume Semanal (dica Peso), filtro em Mês passado, Materiais (R$ e Kg), Fornecedores, Clientes (R$ e Kg), Ver todos."""
+    """Semanas e rankings (7 linhas): Volume Semanal (dica Peso), filtro em Mês passado, Materiais (R$ e Kg), Fornecedores, Clientes (R$ e Kg),
+    "Todos os clientes" com o seletor Por Valor / Por Quantidade (L6) e o clique no nome do pódio, que abre o histórico do parceiro (L7)."""
     c = Cap(3, setup=setup_dash(), start=(760, 300))
     c.mark(1)
     c.ev(js_rola_sec('Volume Semanal de Compras', 130, 900), at=round(c.L(1) + 0.2, 2), label='desce a tela até o Volume Semanal')
@@ -495,10 +536,10 @@ def cap03():
     c.ev(js_rola_sec('Materiais Mais Comprados', 130, 900), at=c.A(3, 'valer.', 0.5), label='desce a tela até os rankings')
     c.click(SEL(f"{SEC_CSS}:has-text('Materiais Mais Comprados') button:text-is('Kg')"), at=c.A(3, 'quilos:', 1.0), label='ranking de materiais em Kg')
     c.hover(SEC('Materiais Mais Comprados'), 1.2, at=c.A(3, 'cinquenta', 0.7), label='ZOOM Ferro pesado em primeiro, com o peso')
-    c.confere(SEC_CSS + ':has-text("Materiais Mais Comprados")', ['Ferro pesado', '50.000'], 'Ferro pesado, 50.000 kg')
+    c.confere('main', ['Ferro pesado', '50.000'], 'Ferro pesado, 50.000 kg')
     c.mark(4)
     c.hover(SEC('Principais Fornecedores'), 1.4, at=c.A(4, 'primeiro', 0.7), label='Principais Fornecedores: Depósito Irmãos Siqueira em primeiro')
-    c.confere(SEC_CSS + ':has-text("Principais Fornecedores")', ['Depósito Irmãos Siqueira'], 'primeiro fornecedor')
+    c.confere('main', ['Depósito Irmãos Siqueira'], 'primeiro fornecedor')
     c.mark(5)
     c.ev(js_rola_sec('Principais Clientes', 130, 900), at=round(c.L(5) + 0.1, 2), label='desce a tela até Principais Clientes')
     c.hover(SEC('Principais Clientes'), 1.0, at=c.A(5, 'Fundição', 0.7), label='Fundição Bandeira do Vale em primeiro, em reais')
@@ -506,14 +547,64 @@ def cap03():
     c.mark(6)
     c.click(BTN('Ver todos os clientes'), at=c.A(6, 'Ver', 0.8), label='Ver todos os clientes')
     c.waitfor(text='Todos os clientes', timeout=10)
-    c.press('Escape', at=round(c.dur - 1.0, 2), label='fecha a lista')
+    c.click(SEL(f"{DLG} [role=combobox]"), at=c.A(6, 'valor', 1.0), label='abre o seletor Por Valor (R$)')
+    c.click(OPCAO('Por Quantidade (kg)'), at=c.A(6, 'quantidade', 0.7), label='escolhe Por Quantidade (kg)')
+    c.hover(SEL(f"{DLG} :text-is('Todos os clientes')"), 0.6, at=c.A(6, 'quilos.', 0.9), label='a lista por quantidade')
+    c.press('Escape', at=round(c.L(7) - 1.0, 2), label='fecha a lista')
+    c.mark(7)
+    c.click(SEL(f"{SEC_CSS}:has-text('Principais Clientes') :text-is('Aços Quiririm Ltda')"), at=c.A(7, 'nome', 0.9), label='clica no nome no pódio: abre o histórico do parceiro')
+    c.waitfor(idle=True)
     c.fim()
     return c
 
 
 def cap04():
-    """O painel do seu jeito: Configurações, chave de Métodos de Pagamento, arrasto do Volume Semanal (dnd-kit) e Voltar ordem ao normal."""
+    """Quem deve e como você paga (8 linhas, novo): "Saldos em Aberto" (A receber, A pagar, Posição líquida), a dica do filtro, "Ver relatório"
+    (Relatório de Saldos, Exportar Relatório aberto), "Métodos de Pagamento das Compras" (pizza e lista) e o fim do painel (DRE, Regime de Caixa)."""
     c = Cap(4, setup=setup_dash(), start=(760, 300))
+    SALDOS = SEC('Saldos em Aberto')
+    c.mark(1)
+    c.ev(js_rola_sec('Saldos em Aberto', 130, 900), at=round(c.L(1) + 0.2, 2), label='desce a tela até Saldos em Aberto')
+    c.hover(SALDOS, 0.8, at=c.A(1, 'Saldos', 0.7), label='o cartão Saldos em Aberto')
+    c.ev(LE_SEC('Saldos em Aberto'), at=round(c.L(1) + 4.0, 2), label='LER o cartão Saldos em Aberto')
+    c.mark(2)
+    c.hover(SEL(f"{SEC_CSS}:has-text('Saldos em Aberto') p:text-is('A receber')"), 0.8, at=c.A(2, 'maiores', 0.7), label='coluna A receber')
+    c.hover(SEL(f"{SEC_CSS}:has-text('Saldos em Aberto') p:text-is('A pagar')"), 0.8, at=c.A(2, 'valor', 0.7), label='coluna A pagar')
+    c.mark(3)
+    c.hover(SEL(f"{SEC_CSS}:has-text('Saldos em Aberto') span:text-is('Posição líquida')"), 1.2, at=c.A(3, 'Posição', 0.7), label='destaque: Posição líquida')
+    c.mark(4)
+    c.ev(js_topo(800), at=c.A(4, 'cartão', 0.8), label='sobe a tela até o filtro')
+    c.hover(FILTRO('Este mês'), 0.8, at=c.A(4, 'filtro.', 0.8), label='o filtro em Este mês')
+    c.ev(js_rola_sec('Saldos em Aberto', 130, 900), at=c.A(4, 'hoje,', 1.0), label='volta ao cartão Saldos em Aberto')
+    c.hover(SALDOS, 1.0, at=c.A(4, 'seja', 0.6), label='o saldo de hoje, seja qual for o período')
+    c.mark(5)
+    c.click(SEL(f"{SEC_CSS}:has-text('Saldos em Aberto') button:text-is('Ver relatório')"), at=c.A(5, 'Ver', 0.9), label='Ver relatório')
+    c.waitfor(text='Relatório de Saldos', timeout=10)
+    c.hover(SEL(f"{DLG} :text-is('Relatório de Saldos')"), 0.6, at=c.A(5, 'lista', 0.6), label='o Relatório de Saldos')
+    c.click(SEL(f"{DLG} button:has-text('Exportar Relatório')"), at=c.A(5, 'exportar.', 1.0), label='abre o menu Exportar Relatório (sem escolher)')
+    c.waitfor(text='Exportar em Excel', timeout=6)
+    c.press('Escape', at=round(c.L(6) - 1.4, 2), label='fecha o menu de exportação')
+    c.press('Escape', at=round(c.L(6) - 0.9, 2), label='fecha o Relatório de Saldos')
+    c.mark(6)
+    c.ev(js_rola_sec('Métodos de Pagamento das Compras', 130, 900), at=round(c.L(6) + 0.2, 2), label='desce a tela até Métodos de Pagamento das Compras')
+    c.hover(SEC('Métodos de Pagamento das Compras'), 0.8, at=c.A(6, 'Métodos', 0.7), label='o cartão Métodos de Pagamento das Compras')
+    c.hover(SEL(f"{SEC_CSS}:has-text('Métodos de Pagamento das Compras') span:text-is('Dinheiro')"), 0.6, at=c.A(6, 'dinheiro,', 0.7), label='linha Dinheiro')
+    c.hover(SEL(f"{SEC_CSS}:has-text('Métodos de Pagamento das Compras') span:text-is('Pix/Transferência')"), 0.6, at=c.A(6, 'Pix', 0.7), label='linha Pix/Transferência')
+    c.hover(SEL(f"{SEC_CSS}:has-text('Métodos de Pagamento das Compras') span:text-is('Saldo')"), 0.6, at=c.A(6, 'saldo,', 0.7), label='linha Saldo')
+    c.ev(LE_SEC('Métodos de Pagamento das Compras'), at=round(c.L(6) + 9.0, 2), label='LER Métodos de Pagamento das Compras')
+    c.mark(7)
+    c.hover(SEL(f"{SEC_CSS}:has-text('Métodos de Pagamento das Compras') span:text-is('Dinheiro')"), 1.4, at=c.A(7, 'termômetro', 0.7), label='ZOOM linha Dinheiro')
+    c.mark(8)
+    c.ev(js_rola_sec('Demonstrativo Financeiro (DRE)', 110, 1000), at=round(c.L(8) + 0.1, 2), label='desce a tela até o fim do painel: DRE')
+    c.hover(SEC('Demonstrativo Financeiro (DRE)'), 1.0, at=c.A(8, 'DRE', 0.6), label='o DRE resumido')
+    c.hover(SEL(f"{SEC_CSS}:has-text('Demonstrativo Financeiro (DRE)') :text-is('Regime de Caixa')"), 1.0, at=c.A(8, 'tutorial', 0.9), label='destaque: Regime de Caixa (sem clicar)')
+    c.fim()
+    return c
+
+
+def cap05():
+    """O painel do seu jeito: Configurações, chave de Métodos de Pagamento, arrasto do Volume Semanal (dnd-kit) e Voltar ordem ao normal."""
+    c = Cap(5, setup=setup_dash(), start=(760, 300))
     c.mark(1)
     c.hover(CONFIG, 0.6, at=c.A(1, 'Configurações,', 0.7), label='destaque: Configurações')
     c.click(CONFIG, at=c.A(1, 'ficam', 0.8), label='abre Configurações do Dashboard')
@@ -533,9 +624,10 @@ def cap04():
     return c
 
 
-def cap05():
-    """Tarefas no calendário: menu Agenda, Nova Tarefa (revisão do caminhão truck, 12/11 09:00, Lembrar no dia), Salvar, arrasto para o dia 13 e os feriados."""
-    c = Cap(5, setup=setup_dash(), start=(760, 300))
+def cap06():
+    """Tarefas no calendário: menu Agenda, Nova Tarefa (revisão do caminhão truck, 12/11 09:00, Lembrar no dia), Salvar, arrasto para o dia 13 e os feriados.
+    Parte de `inicio` (que agora traz também as tarefas do contador, dia 9, e da lona, dia 18, para o cap07)."""
+    c = Cap(6, setup=setup_dash(), start=(760, 300))
     c.mark(1)
     c.click(LINK('Agenda'), at=c.A(1, 'Agenda,', 0.9), label='menu Agenda')
     c.waitfor(text='Gerencie suas tarefas e compromissos', timeout=15)
@@ -563,9 +655,75 @@ def cap05():
     return c
 
 
-def cap06():
+def cap07():
+    """Concluir, editar e excluir (9 linhas, novo): círculo da tarefa do contador (dia 9: riscada, volta a pendente, conclui de novo), lápis na revisão do
+    dia 13 (Horário 10:30), lixeira na lona do dia 18 (confirmação), a Coleta (Categoria e Cliente / Fornecedor), a Legenda, as vistas Semana, Dia, Mês e
+    Hoje, e o duplo clique no dia 19. Parte de `apos-cap06`; termina em `apos-cap07` (escrito por t25_sementes.py apos07)."""
+    c = Cap(7, setup=setup_agenda(), start=(760, 300))
+    CONT = 'Ligar pro contador sobre as notas de outubro'
+    REV = 'Revisão do caminhão truck'
+    c.mark(1)
+    c.click(DIA_NUM('9'), at=c.A(1, 'Ontem', 0.9), label='clica no dia 9')
+    c.waitfor(selector=CARD_TAREFA(CONT), timeout=10)
+    c.hover(SEL(CARD_TAREFA(CONT)), 0.8, at=c.A(1, 'contador,', 0.7), label='a tarefa do contador, ainda aberta')
+    c.mark(2)
+    c.ev(js_clica(CARD_TAREFA(CONT) + ' > button.rounded-full'), at=c.A(2, 'círculo', 0.5), label='clica no círculo da tarefa')
+    c.waitfor(text='Tarefa atualizada', timeout=8)
+    c.ev(js_riscada(CONT, True), label='confere riscada')
+    c.mark(3)
+    c.ev(js_clica(CARD_TAREFA(CONT) + ' > button.rounded-full'), at=c.A(3, 'Um', 0.5), label='clica de novo: volta a pendente')
+    c.ev(js_riscada(CONT, False), label='confere pendente')
+    c.ev(js_clica(CARD_TAREFA(CONT) + ' > button.rounded-full'), at=c.A(3, 'Concluo', 0.4), label='conclui outra vez')
+    c.ev(js_riscada(CONT, True), label='confere riscada de novo')
+    c.mark(4)
+    c.click(DIA_NUM('13'), at=c.A(4, 'Pra', 0.9), label='clica no dia 13')
+    c.waitfor(selector=CARD_TAREFA(REV), timeout=10)
+    c.hover(SEL(CARD_TAREFA(REV)), 0.8, at=c.A(4, 'mouse', 0.7), label='passa o mouse na revisão: aparecem o lápis e a lixeira')
+    c.ev(js_clica(CARD_TAREFA(REV) + " button:has(svg[class*='lucide-pencil'])"), at=c.A(4, 'lápis.', 0.5), label='clica no lápis')
+    c.waitfor(text='Editar Tarefa', timeout=10)
+    c.click(SEL(f"{DLG} button:has(svg.lucide-clock)"), at=c.A(4, 'horário', 0.9), label='campo Horário')
+    c.click(HORAS('10'), at=c.A(4, 'dez', 0.8), label='hora 10')
+    c.click(MINUTOS('30'), at=c.A(4, 'meia,', 0.8), label='minuto 30')
+    c.click(BTN('Concluir'), at=c.A(4, 'meia,', 0.05), label='Concluir o horário')
+    c.click(SEL(f"{DLG} button:has-text('Salvar')"), at=c.A(4, 'salvo.', 0.6), label='Salvar')
+    c.waitfor(text='Tarefa atualizada', timeout=8)
+    c.mark(5)
+    c.click(DIA_NUM('18'), at=c.A(5, 'E', 0.8), label='clica no dia 18')
+    c.waitfor(selector=CARD_TAREFA('Buscar a lona nova do caminhão'), timeout=10)
+    c.hover(SEL(CARD_TAREFA('Buscar a lona nova do caminhão')), 0.8, at=c.A(5, 'lixeira', 0.8), label='passa o mouse na lona')
+    c.ev(js_clica(CARD_TAREFA('Buscar a lona nova do caminhão') + " button:has(svg[class*='lucide-trash'])"), at=c.A(5, 'exclui.', 0.4), label='clica na lixeira')
+    c.waitfor(text='Tem certeza que deseja excluir esta tarefa?', timeout=8)
+    c.click(SEL("[role=alertdialog] button:text-is('Excluir Tarefa')"), at=c.A(5, 'sai', 0.9), label='confirma: Excluir Tarefa')
+    c.waitfor(text='Tarefa excluída', timeout=8)
+    c.mark(6)
+    c.hover(AG_TAREFA('Coleta na Auto Peças Vale Forte'), 1.0, at=c.A(6, 'Cada', 0.7), label='cartão da tarefa Coleta (categoria e cor)')
+    c.click(AG_TAREFA('Coleta na Auto Peças Vale Forte'), at=c.A(6, 'Na', 1.2), label='abre a tarefa Coleta em Editar Tarefa')
+    c.waitfor(text='Editar Tarefa', timeout=10)
+    c.hover(SEL(f"{DLG} label:text-is('Categoria')"), 0.8, at=c.A(6, 'categoria', 0.7, nth=1), label='destaque: Categoria (Coleta)')
+    c.hover(SEL(f"{DLG} label:has-text('Cliente / Fornecedor')"), 1.0, at=c.A(6, 'campo', 0.7), label='destaque: Cliente / Fornecedor')
+    c.confere('dlg', ['Cliente / Fornecedor', 'Auto Peças Vale Forte'], 'Coleta com Cliente / Fornecedor')
+    c.click(BTN('Cancelar', DLG), at=round(c.L(7) - 0.9, 2), label='Cancelar')
+    c.mark(7)
+    c.ev("(()=>{const e=[...document.querySelectorAll('span')].find(x=>x.textContent.trim()==='Legenda:');if(!e)return 'SEM ALVO';e.scrollIntoView({block:'center',behavior:'smooth'});return 'ok'})()",
+         at=round(c.L(7) + 0.1, 2), label='mostra a Legenda')
+    c.hover(SEL("main span:text-is('Legenda:')"), 1.2, at=c.A(7, 'legenda,', 0.8), label='destaque: Legenda')
+    c.mark(8)
+    c.click(SEL("main button:text-is('Semana')"), at=c.A(8, 'semana,', 0.9), label='vista Semana')
+    c.click(SEL("main button:text-is('Dia')"), at=c.A(8, 'dia', 0.8), label='vista Dia')
+    c.click(SEL("main button:text-is('Mês')"), at=c.A(8, 'mês.', 0.8), label='vista Mês')
+    c.click(SEL("main button:text-is('Hoje')"), at=c.A(8, 'Hoje', 0.8), label='botão Hoje')
+    c.mark(9)
+    c.add({'do': 'dblclick', 'target': DIA_NUM('19'), 'at': c.A(9, 'dois', 0.9), 'label': 'duplo clique no dia 19'})
+    c.waitfor(text='Nova Tarefa', timeout=8)
+    c.confere('dlg', ['19/11/2026'], 'Nova Tarefa já em 19/11/2026')
+    c.click(BTN('Cancelar', DLG), at=round(c.dur - 1.0, 2), label='Cancelar')
+    c.fim()
+    return c
+
+
+def cap08():
     """Os avisos automáticos: A Pagar e A Receber (zoom no 17 e no 23), o clique no aviso (Contas), Shift+A, dezembro e o Shift+D."""
-    c = Cap(6, setup=setup_agenda(), start=(760, 300))
+    c = Cap(8, setup=setup_agenda(), start=(760, 300))
     c.mark(1)
     c.hover(SEL("main div.grid.grid-cols-7 button:has-text('A Pagar')"), 0.8, at=c.A(1, 'pagar', 0.7), label='destaque: avisos A Pagar (vermelho)')
     c.hover(SEL("main div.grid.grid-cols-7 button:has-text('A Receber')"), 0.8, at=c.A(1, 'receber', 0.7), label='destaque: avisos A Receber (verde)')
@@ -589,9 +747,11 @@ def cap06():
     return c
 
 
-def cap07():
-    """Atalhos e o Ctrl+K: a busca, "cobre" -> Cobre mel (preços), Enter, "atalho" -> Atalhos de Teclado, Shift+X (Caixa) e Shift+D."""
-    c = Cap(7, setup=setup_dash(), start=(760, 300))
+def cap09():
+    """Atalhos e o Ctrl+K (10 linhas): a busca, "cobre" -> Cobre mel (preços), Enter (L3), "fundi" -> Fundição (telefone e Saldo, L4), as Ações Rápidas
+    com a busca vazia (L5), "atalho" -> Atalhos de Teclado (L6), a lista com Compra, Venda, Caixa, Pedidos, Ver Estoque, Configurações e Agenda (L7),
+    Shift+X e Shift+D (L8) e Shift+S -> Configurações -> Atalhos (L10)."""
+    c = Cap(9, setup=setup_dash(), start=(760, 300))
     BUSCA = SEL("[role=dialog] input")
     c.mark(1)
     c.ev("(()=>{const a=document.activeElement;if(a&&a!==document.body)a.blur();return 'foco fora de campo'})()", at=0.2, label='foco fora de campo')
@@ -603,31 +763,49 @@ def cap07():
     c.hover(SEL("[role=dialog] :text-is('P. Compra')"), 1.2, at=c.A(2, 'quarenta', 0.9), label='ZOOM P. Compra e P. Venda do Cobre mel')
     c.confere('dlg', ['42,50', '47,90'], 'preços do Cobre mel')
     c.mark(3)
-    c.hover(SEL("[role=dialog] :text-is('Pressione Enter para abrir')"), 0.8, at=c.A(3, 'Enter,', 0.7), label='Pressione Enter para abrir')
+    c.hover(SEL("[role=dialog] div.border-t:has(> kbd)"), 0.8, at=c.A(3, 'Enter,', 0.7), label='Pressione Enter para abrir')
     c.mark(4)
-    c.type(BUSCA, 'atalho', at=c.A(4, 'atalho,', 0.6), label='digita atalho', cps=8, clear=True, noClick=True)
-    c.hover(SEL("[role=dialog] [cmdk-item]:has-text('Ver Atalhos de Teclado')"), 0.8, at=c.A(4, 'Ver', 0.8), label='Ver Atalhos de Teclado')
-    c.press('Enter', at=c.A(4, 'lista', 0.5), label='Enter abre a lista de atalhos')
-    c.waitfor(text='Atalhos Globais', timeout=10)
+    c.type(BUSCA, 'fundi', at=c.A(4, 'Fundição,', 0.6), label='digita fundi', cps=8, clear=True, noClick=True)
+    c.hover(SEL("[role=dialog] [cmdk-item]:has-text('Fundição Bandeira do Vale')"), 1.0, at=c.A(4, 'painel', 0.8), label='passa o mouse em Fundição Bandeira do Vale')
+    c.hover(SEL("[role=dialog] :text-is('Saldo')"), 1.2, at=c.A(4, 'saldo', 0.8), label='ZOOM o telefone e o Saldo do cliente')
+    c.ev("(()=>{const d=document.querySelector('[role=dialog]');return d?('LIDO: '+d.innerText.replace(/[\\n\\r\\t ]+/g,' ').slice(0,400)):'SEM ALVO'})()", at=round(c.L(4) + 6.0, 2), label='LER o painel de Fundição')
+    c.hover(SEL("[role=dialog] div.border-t:has(> kbd)"), 0.8, at=c.A(4, 'Enter,', 0.7), label='Pressione Enter para abrir o histórico')
     c.mark(5)
-    c.hover(SEL(f"{DLG} :text-is('Compra')"), 0.7, at=c.A(5, 'Shift+C', 0.6), label='destaque: Compra Shift+C')
-    c.hover(SEL(f"{DLG} :text-is('Venda')"), 0.7, at=c.A(5, 'Shift+V', 0.6), label='destaque: Venda Shift+V')
-    c.hover(SEL(f"{DLG} :text-is('Caixa')"), 0.7, at=c.A(5, 'Shift+X', 0.6), label='destaque: Caixa Shift+X')
-    c.hover(SEL(f"{DLG} :text-is('Agenda')"), 0.7, at=c.A(5, 'Shift+A', 0.6), label='destaque: Agenda Shift+A')
+    c.press('Control+a', at=round(c.L(5) - 0.1, 2), label='seleciona a busca')
+    c.press('Backspace', at=round(c.L(5) + 0.2, 2), label='apaga a busca')
+    c.hover(SEL("[role=dialog] :text-is('Ações Rápidas')"), 0.8, at=c.A(5, 'Ações', 0.7), label='destaque: Ações Rápidas')
+    c.hover(SEL("[role=dialog] [cmdk-item]:has-text('Nova Compra')"), 0.6, at=c.A(5, 'compra,', 0.6), label='Nova Compra')
+    c.hover(SEL("[role=dialog] [cmdk-item]:has-text('Nova Venda')"), 0.6, at=c.A(5, 'venda', 0.6), label='Nova Venda')
+    c.hover(SEL("[role=dialog] [cmdk-item]:has-text('Abrir Caixa')"), 0.6, at=c.A(5, 'caixa,', 0.6), label='Abrir Caixa')
     c.mark(6)
-    c.press('Escape', at=round(c.L(6) - 0.3, 2), label='fecha a lista')
-    c.press('Shift+X', at=c.A(6, 'Shift+X,', 0.2), label='Shift+X abre o Caixa')
-    c.waitfor(text='Caixa', timeout=15)
-    c.press('Shift+D', at=c.A(6, 'Shift+D,', 0.2), label='Shift+D volta ao Dashboard')
-    c.waitfor(text='Olá, Rafael!', timeout=15)
+    c.type(BUSCA, 'atalho', at=c.A(6, 'atalho,', 0.6), label='digita atalho', cps=8, clear=True, noClick=True)
+    c.hover(SEL("[role=dialog] [cmdk-item]:has-text('Ver Atalhos de Teclado')"), 0.8, at=c.A(6, 'Ver', 0.8), label='Ver Atalhos de Teclado')
+    c.press('Enter', at=c.A(6, 'lista', 0.5), label='Enter abre a lista de atalhos')
+    c.waitfor(text='Atalhos Globais', timeout=10)
     c.mark(7)
+    for rot, tecla in (('Compra', 'Shift+C'), ('Venda', 'Shift+V'), ('Caixa', 'Shift+X'), ('Pedidos', 'Shift+P'), ('Ver Estoque', 'Shift+E'), ('Configurações', 'Shift+S'), ('Agenda', 'Shift+A')):
+        c.hover(SEL(f"{DLG} :text-is('{rot}')"), 0.5, at=c.A(7, tecla, 0.6), label=f'destaque: {rot} {tecla}')
+    c.mark(8)
+    c.press('Escape', at=round(c.L(8) - 0.3, 2), label='fecha a lista')
+    c.press('Shift+X', at=c.A(8, 'Shift+X,', 0.2), label='Shift+X abre o Caixa')
+    c.waitfor(text='Caixa', timeout=15)
+    c.press('Shift+D', at=c.A(8, 'Shift+D,', 0.2), label='Shift+D volta ao Dashboard')
+    c.waitfor(text='Olá, Rafael!', timeout=15)
+    c.mark(9)
+    c.mark(10)
+    c.press('Shift+S', at=c.A(10, 'É', 0.3), label='Shift+S abre as Configurações')
+    c.waitfor(text='Configurações', timeout=15)
+    c.click(SEL("main [role=tab]:has-text('Atalhos'), main button:text-is('Atalhos')"), at=c.A(10, 'Atalhos.', 0.9, nth=1), label='aba Atalhos')
+    c.waitfor(text='Atalhos estão ativados', timeout=10)
+    c.hover(SEL("main :text-is('Atalhos estão ativados')"), 1.2, at=c.A(10, 'Atalhos.', 0.0, nth=1), label='destaque: Atalhos estão ativados')
     c.fim()
     return c
 
 
-def cap08():
-    """A rotina diária: ilustração (L1), "Tarefas para hoje" ao abrir (L2), Histórico do Caixa pelo Ctrl+K (L3), Contas (L4), Agenda de amanhã (L5)."""
-    c = Cap(8, setup=setup_dash([{'do': 'goto', 'url': '/historico-caixa'}, {'do': 'waitFor', 'text': 'Caixas Fechados', 'timeout': 30}, AGUARDA]), start=(760, 300))
+def cap10():
+    """A rotina diária (7 linhas): ilustração (L1), "Tarefas para hoje" ao abrir (L2), Histórico do Caixa pelo Ctrl+K (L3), Contas (L4),
+    o painel de Filtros de Contas com "Próximos 7 dias" e "Até o fim do mês" (L5) e a Agenda de amanhã (L6)."""
+    c = Cap(10, setup=setup_dash([{'do': 'goto', 'url': '/historico-caixa'}, {'do': 'waitFor', 'text': 'Caixas Fechados', 'timeout': 30}, AGUARDA]), start=(760, 300))
     c.mark(1)
     c.ev("(()=>{localStorage.removeItem('daily-tasks-reminder-last-shown-%s');return 'marca do dia removida'})()" % RAFAEL, at=0.3, label='tira a marca do lembrete diário')
     c.mark(2)
@@ -649,18 +827,27 @@ def cap08():
     c.hover(CARTAO('Vencidas'), 0.8, at=c.A(4, 'Vencidas', 0.6), label='cartão Vencidas')
     c.hover(CARTAO('Vence em 7 dias'), 0.8, at=c.A(4, 'Vence', 0.6), label='cartão Vence em 7 dias')
     c.mark(5)
-    c.press('Shift+A', at=c.A(5, 'Agenda,', 0.2), label='Shift+A abre a Agenda')
-    c.waitfor(text='Gerencie suas tarefas e compromissos', timeout=15)
-    c.click(DIA_AG('11'), at=c.A(5, 'amanhã:', 0.8), label='clica no dia 11')
-    c.hover(SEL("main div.rounded-xl :text-is('Coleta na Auto Peças Vale Forte')"), 1.2, at=c.A(5, 'coleta', 0.6), label='ZOOM Coleta na Auto Peças Vale Forte, 08:00')
+    c.click(SEL("main button:has-text('Filtros')"), at=c.A(5, 'filtros', 0.9), label='abre o painel de Filtros')
+    c.waitfor(text='Vencimento (período)', timeout=10)
+    c.ev("(()=>{const b=[...document.querySelectorAll('[role=dialog] button')].find(x=>x.textContent.trim()==='Até o fim do mês');if(!b)return 'SEM ALVO';b.scrollIntoView({block:'center',behavior:'smooth'});return 'ok'})()",
+         at=round(c.L(5) + 0.8, 2), label='rola o painel até Vencimento (período)')
+    c.hover(SEL("[role=dialog] button:text-is('Próximos 7 dias')"), 0.8, at=c.A(5, 'sete', 0.8), label='destaque: Próximos 7 dias')
+    c.hover(SEL("[role=dialog] button:text-is('Até o fim do mês')"), 0.8, at=c.A(5, 'fim', 0.8), label='destaque: Até o fim do mês')
+    c.press('Escape', at=round(c.L(6) - 1.0, 2), label='fecha o painel de Filtros')
     c.mark(6)
+    c.press('Shift+A', at=c.A(6, 'Agenda,', 0.2), label='Shift+A abre a Agenda')
+    c.waitfor(text='Gerencie suas tarefas e compromissos', timeout=15)
+    c.click(DIA_AG('11'), at=c.A(6, 'amanhã:', 0.8), label='clica no dia 11')
+    c.hover(SEL("main div.rounded-xl :text-is('Coleta na Auto Peças Vale Forte')"), 1.2, at=c.A(6, 'coleta', 0.6), label='ZOOM Coleta na Auto Peças Vale Forte, 08:00')
+    c.mark(7)
     c.fim()
     return c
 
 
-def cap09():
-    """A rotina semanal: ilustração (L1), Shift+E (Estoque, cobre e latinha, L2), Contas a Pagar/Receber na aba A Receber e a coluna Status (L4, L5)."""
-    c = Cap(9, setup=setup_dash(), start=(760, 300))
+def cap11():
+    """A rotina semanal: ilustração (L1), Shift+E (Estoque, cobre e latinha, L2), Contas a Pagar/Receber na aba A Receber e a coluna Status (L4, L5).
+    No 1.60.22 a aba A Receber mostra os cartões "Total a Receber" e "Total recebido" (só muda a imagem)."""
+    c = Cap(11, setup=setup_dash(), start=(760, 300))
     c.mark(1)
     c.mark(2)
     c.press('Shift+E', at=c.A(2, 'Shift+E', 0.2), label='Shift+E abre o Estoque')
@@ -679,9 +866,9 @@ def cap09():
     return c
 
 
-def cap10():
+def cap12():
     """A rotina mensal: ilustrações (L1 a L3), Shift+A, dezembro, dia 1 (L4) e a Nova Tarefa "Fechamento de novembro" (L5)."""
-    c = Cap(10, setup=setup_dash(), start=(760, 300))
+    c = Cap(12, setup=setup_dash(), start=(760, 300))
     c.mark(1)
     c.mark(2)
     c.mark(3)
@@ -706,9 +893,9 @@ def cap10():
     return c
 
 
-def cap11():
+def cap13():
     """Recapitulando: a montagem da edição usa trechos dos capítulos; este passeio pelo Dashboard fica de reserva."""
-    c = Cap(11, setup=setup_dash(), start=(760, 300))
+    c = Cap(13, setup=setup_dash(), start=(760, 300))
     for i in range(1, 7):
         c.mark(i)
     c.hover(STAT(MARGEM), 0.6, at=c.A(1, 'Dashboard', 0.6), label='o Dashboard')
@@ -717,7 +904,8 @@ def cap11():
     return c
 
 
-CAPS_ROBO = {n: globals()[f'cap{n:02d}'] for n in range(12) if f'cap{n:02d}' in globals()}
+CAPS_ROBO = {n: globals()[f'cap{n:02d}'] for n in range(14) if f'cap{n:02d}' in globals()}
+
 
 if __name__ == '__main__':
     quais = [int(a) for a in sys.argv[1:]] or sorted(CAPS_ROBO)

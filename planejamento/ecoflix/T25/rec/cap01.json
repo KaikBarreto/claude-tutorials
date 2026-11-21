@@ -1,6 +1,6 @@
 {
  "name": "t25-cap01",
- "title": "T25 · Cap. 1 · Comprado, vendido e margem (narração ESTIMADA 60,9 s; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T25 · Cap. 1 · Comprado, vendido e margem (narração ESTIMADA 80,5 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t25-cap01",
  "pace": 0.5,
  "cps": 40,
@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
@@ -152,12 +152,80 @@
    "at": 9.87
   },
   {
+   "do": "click",
+   "target": {
+    "role": "combobox",
+    "hasText": "Este mês"
+   },
+   "at": 10.1,
+   "label": "abre a lista do filtro de período"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Hoje"
+   },
+   "seconds": 0.15,
+   "at": 12.9,
+   "label": "destaque na lista: Hoje",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Últimos 7 dias"
+   },
+   "seconds": 0.4,
+   "at": 13.74,
+   "label": "destaque na lista: Últimos 7 dias",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Este ano"
+   },
+   "seconds": 0.4,
+   "at": 15.33,
+   "label": "destaque na lista: Este ano",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Personalizado"
+   },
+   "seconds": 0.6,
+   "at": 16.69,
+   "label": "destaque na lista: Personalizado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 19.91,
+   "label": "fecha a lista sem escolher"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 20.01
+  },
+  {
    "do": "hover",
    "target": {
     "selector": "main div[role=button]:has(p:text-is('Margem (Vendas − Compras)'))"
    },
    "seconds": 1.4,
-   "at": 10.93,
+   "at": 21.07,
    "label": "ZOOM cartão Margem de novembro (verde)",
    "optional": true,
    "timeout": 4
@@ -169,13 +237,13 @@
   },
   {
    "do": "mark",
-   "name": "L3",
-   "at": 23.35
+   "name": "L4",
+   "at": 33.48
   },
   {
    "do": "mark",
-   "name": "L4",
-   "at": 38.58
+   "name": "L5",
+   "at": 48.71
   },
   {
    "do": "click",
@@ -183,7 +251,7 @@
     "role": "combobox",
     "hasText": "Este mês"
    },
-   "at": 38.78,
+   "at": 48.91,
    "label": "abre o filtro de período"
   },
   {
@@ -192,7 +260,7 @@
     "role": "option",
     "name": "Mês passado"
    },
-   "at": 39.46,
+   "at": 49.6,
    "label": "escolhe Mês passado"
   },
   {
@@ -206,7 +274,7 @@
     "selector": "main div[role=button]:has(p:text-is('Total Compras'))"
    },
    "seconds": 0.15,
-   "at": 40.56,
+   "at": 50.7,
    "label": "ZOOM cartões de outubro: Total Compras",
    "optional": true,
    "timeout": 4
@@ -217,7 +285,7 @@
     "selector": "main div[role=button]:has(p:text-is('Total Vendas'))"
    },
    "seconds": 0.5,
-   "at": 41.61,
+   "at": 51.75,
    "label": "ZOOM cartões de outubro: Total Vendas",
    "optional": true,
    "timeout": 4
@@ -228,7 +296,7 @@
     "selector": "main div[role=button]:has(p:text-is('Margem (Vendas − Compras)'))"
    },
    "seconds": 0.8,
-   "at": 44.42,
+   "at": 54.55,
    "label": "ZOOM cartões de outubro: Margem 12.380,00",
    "optional": true,
    "timeout": 4
@@ -240,15 +308,15 @@
   },
   {
    "do": "mark",
-   "name": "L5",
-   "at": 51.15
+   "name": "L6",
+   "at": 61.29
   },
   {
    "do": "click",
    "target": {
     "selector": "main div[role=button]:has(p:text-is('Margem (Vendas − Compras)'))"
    },
-   "at": 51.78,
+   "at": 61.92,
    "label": "Ver detalhes da margem"
   },
   {
@@ -262,7 +330,7 @@
     "selector": "[role=dialog] :text-is('Como é calculado')"
    },
    "seconds": 0.6,
-   "at": 53.04,
+   "at": 63.18,
    "label": "o bloco Como é calculado",
    "optional": true,
    "timeout": 4
@@ -270,7 +338,47 @@
   {
    "do": "press",
    "key": "Escape",
-   "at": 59.92,
+   "at": 69.66,
+   "label": "fecha a janela da margem"
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 69.76
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div[role=button]:has(p:text-is('Total Compras'))"
+   },
+   "at": 72.89,
+   "label": "Ver detalhes do Total Compras"
+  },
+  {
+   "do": "waitFor",
+   "text": "Por forma de pagamento",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-is('Por forma de pagamento')"
+   },
+   "seconds": 1.0,
+   "at": 77.55,
+   "label": "ZOOM Por forma de pagamento",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=[...document.querySelectorAll('[role=dialog]')].find(x=>x.innerText.includes(\"Por forma de pagamento\"));return e?('LIDO: '+e.innerText.replace(/[\\n\\r\\t ]+/g,' ').slice(0,700)):'SEM ALVO'})()",
+   "label": "LER a janela do Total Compras (formas de pagamento de outubro)"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 79.52,
    "label": "fecha a janela"
   },
   {
@@ -281,7 +389,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 60.92
+   "at": 80.52
   }
  ]
 }

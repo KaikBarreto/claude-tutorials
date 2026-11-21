@@ -1,6 +1,6 @@
 {
  "name": "t25-cap10",
- "title": "T25 · Cap. 10 · A rotina mensal (narração ESTIMADA 49,0 s; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T25 · Cap. 10 · A rotina diária (narração ESTIMADA 68,4 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t25-cap10",
  "pace": 0.5,
  "cps": 40,
@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
@@ -40,7 +40,8 @@
   "t21/inicio",
   "t21/apos-cap02",
   "t25/inicio",
-  "t25/apos-cap05"
+  "t25/apos-cap06",
+  "t25/apos-cap07"
  ],
  "prewarm": [
   "/login"
@@ -88,6 +89,19 @@
    "idle": true
   },
   {
+   "do": "goto",
+   "url": "/historico-caixa"
+  },
+  {
+   "do": "waitFor",
+   "text": "Caixas Fechados",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
    "do": "eval",
    "js": "(()=>{const a=document.getAnimations().filter(x=>x.currentTime<0);a.forEach(x=>x.startTime=document.timeline.currentTime);return a.length})()"
   },
@@ -103,24 +117,224 @@
    "at": 0.4
   },
   {
+   "do": "eval",
+   "js": "(()=>{localStorage.removeItem('daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908');return 'marca do dia removida'})()",
+   "at": 0.4,
+   "label": "tira a marca do lembrete diário"
+  },
+  {
    "do": "mark",
    "name": "L2",
-   "at": 5.47
+   "at": 10.47
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Dashboard",
+    "exact": true
+   },
+   "at": 11.17,
+   "label": "abre o Dashboard de manhã"
+  },
+  {
+   "do": "waitFor",
+   "text": "Tarefas para hoje",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-is('Cotação do cobre com a Fundição Bandeira do Vale')"
+   },
+   "seconds": 1.0,
+   "at": 16.29,
+   "label": "ZOOM Tarefas para hoje: a cotação do cobre, 14:00",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 13.48
+   "at": 20.46
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Fechar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 20.46,
+   "label": "Fechar"
+  },
+  {
+   "do": "press",
+   "key": "Control+k",
+   "at": 21.16,
+   "label": "Ctrl+K"
+  },
+  {
+   "do": "waitFor",
+   "selector": "[role=dialog] input",
+   "timeout": 10
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input"
+   },
+   "text": "histórico",
+   "cps": 8,
+   "at": 21.98,
+   "label": "digita histórico",
+   "noClick": true
+  },
+  {
+   "do": "press",
+   "key": "Enter",
+   "at": 22.03,
+   "label": "Enter abre o Histórico do Caixa"
+  },
+  {
+   "do": "waitFor",
+   "text": "Caixas Fechados",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th:has-text('Saldo Final')"
+   },
+   "seconds": 1.0,
+   "at": 28.18,
+   "label": "destaque: Saldo Final dos caixas de ontem",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 26.44
+   "at": 32.96
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Financeiro",
+    "exact": true
+   },
+   "at": 33.94,
+   "label": "menu Financeiro",
+   "unless": {
+    "role": "link",
+    "name": "Contas a Pagar/Receber",
+    "exact": true
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Contas a Pagar/Receber",
+    "exact": true
+   },
+   "at": 35.08,
+   "label": "Contas a Pagar/Receber"
+  },
+  {
+   "do": "waitFor",
+   "text": "Vence em 7 dias",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Vencidas",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.15,
+   "at": 38.04,
+   "label": "cartão Vencidas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Vence em 7 dias",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 38.87,
+   "label": "cartão Vence em 7 dias",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 42.95
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button:has-text('Filtros')"
+   },
+   "at": 43.25,
+   "label": "abre o painel de Filtros"
+  },
+  {
+   "do": "waitFor",
+   "text": "Vencimento (período)",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const b=[...document.querySelectorAll('[role=dialog] button')].find(x=>x.textContent.trim()==='Até o fim do mês');if(!b)return 'SEM ALVO';b.scrollIntoView({block:'center',behavior:'smooth'});return 'ok'})()",
+   "at": 44.65,
+   "label": "rola o painel até Vencimento (período)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Próximos 7 dias')"
+   },
+   "seconds": 0.49,
+   "at": 47.76,
+   "label": "destaque: Próximos 7 dias",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Até o fim do mês')"
+   },
+   "seconds": 0.15,
+   "at": 49.2,
+   "label": "destaque: Até o fim do mês",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 50.26,
+   "label": "fecha o painel de Filtros"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 50.36
   },
   {
    "do": "press",
    "key": "Shift+A",
-   "at": 30.84,
+   "at": 51.67,
    "label": "Shift+A abre a Agenda"
   },
   {
@@ -131,111 +345,26 @@
   {
    "do": "click",
    "target": {
-    "selector": "main .border-b > div > div > button:nth-of-type(2)"
+    "selector": "main div.grid.grid-cols-7 > div:not(.opacity-40):has(> span:text-is('11'))"
    },
-   "at": 31.12,
-   "label": "seta do próximo mês: dezembro"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "main div.grid.grid-cols-7 > div:not(.opacity-40):has(> span:text-is('1'))"
-   },
-   "at": 32.91,
-   "label": "clica no dia 1"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "main button:has-text('Nova Tarefa'):visible"
-   },
-   "at": 34.72,
-   "label": "Nova Tarefa"
-  },
-  {
-   "do": "waitFor",
-   "text": "Título",
-   "timeout": 10
-  },
-  {
-   "do": "mark",
-   "name": "L5",
-   "at": 35.52
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "[role=dialog] input[placeholder='Título']"
-   },
-   "text": "Fechamento de novembro",
-   "cps": 14,
-   "at": 37.25,
-   "label": "digita o título",
-   "noClick": true
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] textarea"
-   },
-   "at": 38.66,
-   "label": "descrição com os quatro passos (clique no campo)"
-  },
-  {
-   "do": "eval",
-   "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM ALVO (nada em foco)';document.execCommand('insertText',false,\"Conciliar o banco, conferir o DRE, mandar o pacote ao contador e ver MTR e CDF pendentes\");return e.value})()",
-   "at": 40.39,
-   "label": "descrição com os quatro passos"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] button:has(svg.lucide-clock)"
-   },
-   "at": 41.13,
-   "label": "campo Horário"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=listbox][aria-label='Horas'] button[role=option]:text-is('08')"
-   },
-   "at": 41.66,
-   "label": "hora 08"
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Concluir",
-    "exact": true
-   },
-   "at": 42.77,
-   "label": "Concluir o horário"
+   "at": 52.89,
+   "label": "clica no dia 11"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "[role=dialog] div:has(> label:text-is('Lembrar no dia'))"
+    "selector": "main div.rounded-xl :text-is('Coleta na Auto Peças Vale Forte')"
    },
-   "seconds": 0.79,
-   "at": 43.4,
-   "label": "destaque: Lembrar no dia, ligado",
+   "seconds": 1.2,
+   "at": 54.0,
+   "label": "ZOOM Coleta na Auto Peças Vale Forte, 08:00",
    "optional": true,
    "timeout": 4
   },
   {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] button:has-text('Salvar')"
-   },
-   "at": 45.14,
-   "label": "Salvar"
-  },
-  {
-   "do": "waitFor",
-   "text": "Tarefa criada com sucesso",
-   "timeout": 10
+   "do": "mark",
+   "name": "L7",
+   "at": 58.07
   },
   {
    "do": "eval",
@@ -245,7 +374,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 49.0
+   "at": 68.38
   }
  ]
 }

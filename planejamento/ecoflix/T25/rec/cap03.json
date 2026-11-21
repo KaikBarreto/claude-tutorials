@@ -1,6 +1,6 @@
 {
  "name": "t25-cap03",
- "title": "T25 · Cap. 3 · Semanas e rankings (narração ESTIMADA 55,1 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T25 · Cap. 3 · Semanas e rankings (narração ESTIMADA 64,5 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t25-cap03",
  "pace": 0.5,
  "cps": 40,
@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
@@ -190,7 +190,7 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Ferro pesado\", \"50.000\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main div.relative.group:has(> button.cursor-grab):has-text(\\\"Materiais Mais Comprados\\\")\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Ferro pesado\", \"50.000\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
    "label": "confere Ferro pesado, 50.000 kg"
   },
   {
@@ -211,7 +211,7 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Depósito Irmãos Siqueira\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main div.relative.group:has(> button.cursor-grab):has-text(\\\"Principais Fornecedores\\\")\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Depósito Irmãos Siqueira\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
    "label": "confere primeiro fornecedor"
   },
   {
@@ -265,10 +265,55 @@
    "timeout": 10
   },
   {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] [role=combobox]"
+   },
+   "at": 53.83,
+   "label": "abre o seletor Por Valor (R$)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Por Quantidade (kg)"
+   },
+   "at": 55.12,
+   "label": "escolhe Por Quantidade (kg)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-is('Todos os clientes')"
+   },
+   "seconds": 0.15,
+   "at": 55.98,
+   "label": "a lista por quantidade",
+   "optional": true,
+   "timeout": 4
+  },
+  {
    "do": "press",
    "key": "Escape",
-   "at": 54.13,
+   "at": 56.84,
    "label": "fecha a lista"
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 56.94
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div.relative.group:has(> button.cursor-grab):has-text('Principais Clientes') :text-is('Aços Quiririm Ltda')"
+   },
+   "at": 57.85,
+   "label": "clica no nome no pódio: abre o histórico do parceiro"
+  },
+  {
+   "do": "waitFor",
+   "idle": true
   },
   {
    "do": "eval",
@@ -278,7 +323,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 55.13
+   "at": 64.51
   }
  ]
 }

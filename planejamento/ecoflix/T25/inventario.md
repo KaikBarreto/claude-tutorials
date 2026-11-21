@@ -120,3 +120,15 @@ A cópia não traz `supabase/migrations`: o que as RPCs devolvem vem do contrato
    Teclado"). A aula ensina esse caminho (handoff: montar o hook ou tirar o código morto).
 6. **"Contas a Pagar/Receber" e "Agenda" não estão na "Navegação" do Ctrl+K** (`CommandPalette.tsx:93-123`): a aula chega às duas
    pelo menu e pelo Shift+A.
+
+
+---
+**Nota de 21/11/2026 (app 1.60.22, `/dev/shm/ecoflix-src22/src`):** diff vazio nas telas próprias da aula (`pages/Dashboard.tsx`, `pages/Agenda.tsx`, `components/agenda/*`,
+`components/dashboard/*`, `CommandPalette.tsx`, `hooks/useKeyboardShortcuts.tsx`, `DateRangeFilter.tsx`, `BalancesReportModal.tsx`): as linhas acima continuam valendo.
+Rótulos novos conferidos no código para os capítulos 1, 3, 4, 7, 9 e 10: "Saldos em Aberto", "A receber", "A pagar", "Posição líquida", "Ver relatório", "Ver mais" e "Sem saldos"
+(`pages/Dashboard.tsx`, `i18n/locales/pt-BR/dashboard.json`); "Relatório de Saldos", "Exportar Relatório", "Exportar em PDF", "Exportar em Excel" (`BalancesReportModal.tsx`);
+"Métodos de Pagamento das Compras" (`Dashboard.tsx`); "Total de Compras", "Total no período", "Comparativo mensal", "Por forma de pagamento" (`StatDetailModal.tsx`); "Por Valor ({{symbol}})",
+"Por Quantidade (kg)", "Todos os clientes" (`TopEntitiesDialog.tsx`); "Editar Tarefa", "Excluir Tarefa", "Tem certeza que deseja excluir esta tarefa?", "Legenda:", "Cliente / Fornecedor",
+"Semana", "Dia", "Mês", "Hoje" (`agenda.json`, `TaskCard.tsx`, `TaskFormDialog.tsx`); "Ações Rápidas", "Saldo", "Pressione Enter para abrir" (`CommandPalette.tsx`: o texto é quebrado
+por um <kbd>, então o seletor do robô mira o rodapé `div.border-t:has(> kbd)`); "Próximos 7 dias" e "Até o fim do mês" (`ContasPagarReceber.tsx`, painel "Filtros").
+Continua: a janela "Configurações do Dashboard" ainda diz "Card Lucro" e "Evolução do Lucro" (a tela diz "Margem"); a fala não lê esses nomes.

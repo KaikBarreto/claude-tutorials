@@ -7,24 +7,26 @@
   usando a Agenda (tarefas e avisos automáticos), os atalhos e o Ctrl+K, e montando as rotinas diária, semanal e mensal.
 - **Duração:** alvo da fonte ~13 min; a fala fecha em ~10 min (ver `roteiro.md`). Só computador, um usuário (Rafael Nogueira).
 - **Áreas das vinhetas:** DASHBOARD · AGENDA · ATALHOS · ROTINA · RESUMO.
-- Base: `T25/inventario.md` (código 1.59.154). `FAKE_NOW` 2026-11-10T08:30:00-03:00 (terça).
+- Base: `T25/inventario.md` (código 1.59.154; nota de 21/11 no fim: 1.60.22, telas da aula sem mudança). `FAKE_NOW` 2026-11-10T08:30:00-03:00 (terça).
 
-## Capítulos (os 10 da fonte, na ordem, + abertura e recapitulação)
+## Capítulos (revisão 21/11, app 1.60.22: 14 capítulos; eram 12)
 
 | # | Vinheta (área / título) | O que se mostra | Estado de partida |
 |---|---|---|---|
 | 0 | (sem vinheta) | Dashboard; ilustração do Rafael com as três perguntas do dia; destaque em "Dashboard" e "Agenda" no menu; cartão "Antes: Cato, o assistente". | `inicio` |
-| 1 | DASHBOARD / Comprado, vendido e margem | Cartões em "Este mês" (margem de novembro alta e verde: o ferro de outubro vendido; junção); ilustração margem × lucro; filtro "Mês passado" (outubro, margem R$ 12.380,00); "Ver detalhes" → "Como é calculado". | `inicio` |
-| 2 | DASHBOARD / Seis meses e o comparativo | "Compras vs Vendas (Últimos 6 Meses)" e "Evolução da Margem"; os comparativos "Mês Anterior" × "Mês Atual"; ilustração 31 dias × 10 dias. | `inicio` |
-| 3 | DASHBOARD / Semanas e rankings | "Volume Semanal de Compras" (8 semanas, dica "Peso"); filtro "Mês passado"; "Materiais Mais Comprados" (R$ e Kg); "Principais Fornecedores"; "Principais Clientes" (R$ e Kg); "Ver todos os clientes". | `inicio` |
-| 4 | DASHBOARD / O painel do seu jeito | "Configurações" → "Configurações do Dashboard": desliga "Métodos de Pagamento"; arrasta "Volume Semanal" para logo depois dos cartões; "Voltar ordem ao normal" em destaque. | `inicio` (layout padrão) |
-| 5 | AGENDA / Tarefas no calendário | Menu "Agenda" (mês de novembro); "Nova Tarefa": "Revisão do caminhão FKD2E41", 12/11, 09:00, "Lembrar no dia"; "Salvar"; arrasta para o dia 13; feriados dos dias 15 e 20. | `inicio` → `apos-cap05` |
-| 6 | AGENDA / Os avisos automáticos | "A Receber: R$ 4.790,00" (17/11) e "A Pagar: R$ 2.360,00" (23/11); clique → "Contas a Pagar/Receber"; dezembro: "Vencimento - Assinatura EcoSistema" (05/12); ilustração do fiado em parcelas; Dashboard com "1 lembrete para hoje". | `apos-cap05` |
-| 7 | ATALHOS / Atalhos e o Ctrl+K | Ctrl+K, "cobre" → "Cobre mel" ("P. Compra" R$ 42,50, "P. Venda" R$ 47,90); "atalho" → "Ver Atalhos de Teclado" → "Atalhos de Teclado"; Shift+X (Caixa) e Shift+D (Dashboard). | `apos-cap05` |
-| 8 | ROTINA / A rotina diária | Ilustração "10 min"; "Tarefas para hoje" ao abrir; Ctrl+K → "Histórico do Caixa" ("Caixas Fechados" de 09/11); "Contas a Pagar/Receber" ("Vence em 7 dias"); Agenda: amanhã, "Coleta na Auto Peças Vale Forte" 08:00. 🔒 Coletas citado. | `apos-cap05` sem a marca do lembrete diário |
-| 9 | ROTINA / A rotina semanal | Ilustração "30 min"; Shift+E → "Estoque"; "Contas a Pagar/Receber" → aba "A Receber". | `apos-cap05` |
-| 10 | ROTINA / A rotina mensal | Ilustração "2 h" com as quatro tarefas e as aulas; Agenda → dezembro → dia 1 → "Nova Tarefa" "Fechamento de novembro" com "Lembrar no dia". 🔒 notas fiscais citado. | `apos-cap05` → `apos-cap10` |
-| 11 | RESUMO / Recapitulando | Montagem dos capítulos; cartão "Próximo: os módulos do seu plano"; cartela. | (montagem) |
+| 1 | DASHBOARD / Comprado, vendido e margem | Cartões em "Este mês"; **lista do filtro de período aberta (Hoje, Últimos 7 dias, Este ano, Personalizado)**; margem verde; ilustração margem × lucro; "Mês passado" (outubro, margem R$ 12.380,00); "Ver detalhes" da margem ("Como é calculado") e **"Ver detalhes" do Total Compras ("Por forma de pagamento")**. | `inicio` |
+| 2 | DASHBOARD / Seis meses e o comparativo | (igual ao 1.59) gráficos de 6 meses e comparativos; ilustração 31 dias × 10 dias. | `inicio` |
+| 3 | DASHBOARD / Semanas e rankings | Volume Semanal; "Mês passado"; rankings (R$ e Kg); "Ver todos os clientes" **com "Por Quantidade (kg)"**; **clique no nome do pódio abre o histórico do parceiro**. | `inicio` |
+| 4 | DASHBOARD / Quem deve e como você paga (**novo**) | "Saldos em Aberto" (A receber, A pagar, Posição líquida; não segue o filtro); "Ver relatório" → "Relatório de Saldos" com o menu "Exportar Relatório" aberto; "Métodos de Pagamento das Compras"; fim do painel com o DRE ("Regime de Caixa"). | `inicio` |
+| 5 | DASHBOARD / O painel do seu jeito | (era o 4) "Configurações do Dashboard", chave de "Métodos de Pagamento", arrasto, "Voltar ordem ao normal". | `inicio` |
+| 6 | AGENDA / Tarefas no calendário | (era o 5) menu "Agenda", "Nova Tarefa" (revisão do caminhão truck 12/11 09:00), arrasto para o dia 13, feriados. | `inicio` → `apos-cap06` |
+| 7 | AGENDA / Concluir, editar e excluir (**novo**) | Círculo da tarefa do contador (dia 9); lápis na revisão (10:30); lixeira na lona (dia 18); "Coleta" com "Cliente / Fornecedor"; "Legenda:"; vistas "Semana", "Dia", "Mês", "Hoje"; duplo clique no dia 19. | `apos-cap06` → `apos-cap07` |
+| 8 | AGENDA / Os avisos automáticos | (era o 6) "A Receber: R$ 4.790,00" (17/11) e "A Pagar: R$ 2.360,00" (23/11); clique → Contas; dezembro; Shift+D. | `apos-cap07` |
+| 9 | ATALHOS / Atalhos e o Ctrl+K | (era o 7) Ctrl+K com "cobre" e **"fundi" (telefone e Saldo do cliente)**; **"Ações Rápidas"**; "atalho" → lista (**com Pedidos, Ver Estoque e Configurações**); Shift+X e Shift+D; **Shift+S → Configurações → "Atalhos"**. | `apos-cap07` |
+| 10 | ROTINA / A rotina diária | (era o 8) "Tarefas para hoje"; Histórico do Caixa; Contas ("Vence em 7 dias") **e o painel de Filtros ("Próximos 7 dias", "Até o fim do mês")**; Agenda de amanhã. | `apos-cap07` sem a marca do lembrete diário |
+| 11 | ROTINA / A rotina semanal | (era o 9) Shift+E; Contas → "A Receber" (1.60: cartões "Total a Receber" e "Total recebido", só imagem). | `apos-cap07` |
+| 12 | ROTINA / A rotina mensal | (era o 10) Agenda → dezembro → dia 1 → "Nova Tarefa" "Fechamento de novembro". | `apos-cap07` → `apos-cap12` |
+| 13 | RESUMO / Recapitulando | (era o 11) Montagem dos capítulos (agora com os saldos em aberto e a tarefa concluída); cartão "Próximo: os módulos do seu plano"; cartela. | (montagem) |
 
 Transições faladas: 0→1 "Vamos aos números"; 1→2 "Mais abaixo, os gráficos"; 2→3 "E quantos quilos entram por semana?"; 3→4 "E
 dá pra deixar o painel do seu jeito"; 4→5 "Agora, a Agenda"; 5→6 "Além das tarefas"; 6→7 "Pra andar mais rápido"; 7→8 "Bom,
@@ -44,8 +46,8 @@ números lidos e agenda em uso: agora, a rotina"; 8→9 "Uma vez por semana"; 9�
 
 ## Mundo: o que esta aula precisa (além do `MUNDO_FICTICIO.md`)
 
-**Começa com** o fim do T21 (o mundo depois do T13, T14 e T15). **Sementes:** `inicio`, `apos-cap05` (a revisão do caminhão
-no dia 13), `apos-cap10` (o fechamento de novembro no dia 1º de dezembro = estado final; o T16 parte dele).
+**Começa com** o fim do T21 (o mundo depois do T13, T14 e T15). **Sementes (1.60.22):** `inicio` (agora com a tarefa do contador, 09/11 16:00, e a da lona, 18/11 sem hora), `apos-cap06` (a revisão do caminhão no dia 13),
+`apos-cap07` (contador concluída, revisão 10:30, lona excluída), `apos-cap12` (o fechamento de novembro no dia 1º de dezembro = estado final; era `apos-cap10`).
 
 | Item | Valor |
 |---|---|
@@ -89,3 +91,9 @@ no dia 13), `apos-cap10` (o fechamento de novembro no dia 1º de dezembro = esta
    novembro aparecem na tela e não são falados, porque dependem de tudo o que as aulas anteriores lançam no dia.
 3. **⚠️ da contagem dupla na Agenda fora da fala** (o código corrigiu); a dica positiva fica.
 4. **A rotina mensal vira uma tarefa na Agenda** ("Fechamento de novembro"), para a rotina ficar "definida" no sistema.
+
+## Revisão 21/11 (app 1.60.22): o que o mundo precisa a mais
+- Agenda: duas tarefas a mais em `inicio` (criadas pelo Rafael, categoria Tarefa, pendentes): 09/11 16:00 "Ligar pro contador sobre as notas de outubro" ("Lembrar no dia" ligado; é de ontem, então não entra em "Tarefas para hoje" nem na faixa do Dashboard) e 18/11 sem hora "Buscar a lona nova do caminhão".
+- "Saldos em Aberto" e "Relatório de Saldos" leem `balances` (Fundição, Aços Quiririm, Serra Fina Alumínio do mundo base); valores só falados depois de vistos no ensaio.
+- "Métodos de Pagamento das Compras" e "Por forma de pagamento" leem `get_orders_payment_distribution` (já existe no mundo).
+- Sem Exportar de verdade: o menu "Exportar Relatório" só abre; a fala não cita PDF.

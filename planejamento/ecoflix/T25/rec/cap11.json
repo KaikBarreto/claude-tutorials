@@ -1,6 +1,6 @@
 {
  "name": "t25-cap11",
- "title": "T25 · Cap. 11 · Recapitulando (narração ESTIMADA 42,5 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T25 · Cap. 11 · A rotina semanal (narração ESTIMADA 41,5 s; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t25-cap11",
  "pace": 0.5,
  "cps": 40,
@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
@@ -40,8 +40,8 @@
   "t21/inicio",
   "t21/apos-cap02",
   "t25/inicio",
-  "t25/apos-cap05",
-  "t25/apos-cap10"
+  "t25/apos-cap06",
+  "t25/apos-cap07"
  ],
  "prewarm": [
   "/login"
@@ -104,54 +104,106 @@
    "at": 0.4
   },
   {
+   "do": "mark",
+   "name": "L2",
+   "at": 5.77
+  },
+  {
+   "do": "press",
+   "key": "Shift+E",
+   "at": 6.47,
+   "label": "Shift+E abre o Estoque"
+  },
+  {
+   "do": "waitFor",
+   "text": "Estoque",
+   "timeout": 15
+  },
+  {
    "do": "hover",
    "target": {
-    "selector": "main div[role=button]:has(p:text-is('Margem (Vendas − Compras)'))"
+    "selector": "main tbody tr:has-text('Cobre mel')"
    },
-   "seconds": 0.6,
-   "at": 2.76,
-   "label": "o Dashboard",
+   "seconds": 0.15,
+   "at": 16.14,
+   "label": "saldo do Cobre mel",
    "optional": true,
    "timeout": 4
   },
   {
-   "do": "mark",
-   "name": "L2",
-   "at": 10.86
-  },
-  {
    "do": "hover",
    "target": {
-    "role": "button",
-    "name": "Configurações",
-    "exact": true,
-    "within": "main"
+    "selector": "main tbody tr:has-text('Alumínio latinha')"
    },
-   "seconds": 0.6,
-   "at": 11.84,
-   "label": "Configurações do Dashboard",
+   "seconds": 0.15,
+   "at": 16.9,
+   "label": "saldo do Alumínio latinha",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 16.9
+   "at": 17.74
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 23.48
+   "at": 22.95
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Financeiro",
+    "exact": true
+   },
+   "at": 22.95,
+   "label": "menu Financeiro",
+   "unless": {
+    "role": "link",
+    "name": "Contas a Pagar/Receber",
+    "exact": true
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Contas a Pagar/Receber",
+    "exact": true
+   },
+   "at": 24.91,
+   "label": "Contas a Pagar/Receber"
+  },
+  {
+   "do": "waitFor",
+   "text": "Vence em 7 dias",
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button:text-is('A Receber')"
+   },
+   "at": 27.17,
+   "label": "aba A Receber"
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 26.94
+   "at": 32.02
   },
   {
-   "do": "mark",
-   "name": "L6",
-   "at": 32.0
+   "do": "hover",
+   "target": {
+    "selector": "main thead th:has-text('Status')"
+   },
+   "seconds": 1.6,
+   "at": 34.81,
+   "label": "destaque: coluna Status",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "eval",
@@ -161,7 +213,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 42.46
+   "at": 41.49
   }
  ]
 }

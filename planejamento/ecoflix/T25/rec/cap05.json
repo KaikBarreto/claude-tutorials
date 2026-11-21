@@ -1,6 +1,6 @@
 {
  "name": "t25-cap05",
- "title": "T25 · Cap. 5 · Tarefas no calendário (narração ESTIMADA 49,2 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T25 · Cap. 5 · O painel do seu jeito (narração ESTIMADA 35,8 s; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t25-cap05",
  "pace": 0.5,
  "cps": 40,
@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
@@ -102,171 +102,121 @@
    "at": 0.4
   },
   {
-   "do": "click",
+   "do": "hover",
    "target": {
-    "role": "link",
-    "name": "Agenda",
-    "exact": true
+    "role": "button",
+    "name": "Configurações",
+    "exact": true,
+    "within": "main"
    },
-   "at": 0.4,
-   "label": "menu Agenda"
-  },
-  {
-   "do": "waitFor",
-   "text": "Gerencie suas tarefas e compromissos",
-   "timeout": 15
-  },
-  {
-   "do": "eval",
-   "js": "(()=>{const a=document.getAnimations().filter(x=>x.currentTime<0);a.forEach(x=>x.startTime=document.timeline.currentTime);return a.length})()"
-  },
-  {
-   "do": "mark",
-   "name": "L2",
-   "at": 8.96
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "main button:has-text('Nova Tarefa'):visible"
-   },
-   "at": 10.43,
-   "label": "Nova Tarefa"
-  },
-  {
-   "do": "waitFor",
-   "text": "Título",
-   "timeout": 10
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "[role=dialog] input[placeholder='Título']"
-   },
-   "text": "Revisão do caminhão truck",
-   "cps": 14,
-   "at": 12.97,
-   "label": "digita o título",
-   "noClick": true
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] button:has(svg.lucide-calendar)"
-   },
-   "at": 14.7,
-   "label": "campo Data"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[data-radix-popper-content-wrapper] button[name='day']:not(.day-outside):text-is('12')"
-   },
-   "at": 16.06,
-   "label": "dia 12"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] button:has(svg.lucide-clock)"
-   },
-   "at": 15.4,
-   "label": "campo Horário"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=listbox][aria-label='Horas'] button[role=option]:text-is('09')"
-   },
-   "at": 16.6,
-   "label": "hora 09"
+   "seconds": 0.6,
+   "at": 3.35,
+   "label": "destaque: Configurações",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "click",
    "target": {
     "role": "button",
-    "name": "Concluir",
-    "exact": true
+    "name": "Configurações",
+    "exact": true,
+    "within": "main"
    },
-   "at": 17.6,
-   "label": "Concluir o horário"
-  },
-  {
-   "do": "mark",
-   "name": "L3",
-   "at": 18.19
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "[role=dialog] div:has(> label:text-is('Lembrar no dia'))"
-   },
-   "seconds": 1.2,
-   "at": 18.79,
-   "label": "destaque: Lembrar no dia, ligado",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] button:has-text('Salvar')"
-   },
-   "at": 21.95,
-   "label": "Salvar"
+   "at": 6.13,
+   "label": "abre Configurações do Dashboard"
   },
   {
    "do": "waitFor",
-   "text": "Tarefa criada com sucesso",
+   "text": "Configurações do Dashboard",
    "timeout": 10
   },
   {
    "do": "mark",
-   "name": "L4",
-   "at": 24.99
+   "name": "L2",
+   "at": 9.11
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div:has(> span:text-is('Métodos de Pagamento')) [role=switch]"
+   },
+   "at": 11.24,
+   "label": "desliga Métodos de Pagamento"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 14.42,
+   "label": "fecha a janela: o cartão sai do painel"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 15.61
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll('main div.relative.group')].filter(e=>e.offsetParent&&e.querySelector(':scope > button.cursor-grab')&&e.innerText.includes(\"Compras vs Vendas\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-110);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 17.02,
+   "label": "ajusta a tela para o arrasto"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.relative.group:has(> button.cursor-grab):has-text('Volume Semanal de Compras')"
+   },
+   "seconds": 0.15,
+   "at": 18.24,
+   "label": "a alça do cartão Volume Semanal aparece",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "drag",
    "target": {
-    "selector": "main div.grid.grid-cols-7 button:has-text('Revisão do caminhão truck')"
+    "selector": "main div.relative.group:has(> button.cursor-grab):has-text('Volume Semanal de Compras') > button.cursor-grab"
    },
    "to": {
-    "selector": "main div.grid.grid-cols-7 > div:not(.opacity-40):has(> span:text-is('13'))"
+    "selector": "main div.relative.group:has(> button.cursor-grab):has-text('Compras vs Vendas')"
    },
-   "at": 27.28,
-   "label": "arrasta a tarefa do dia 12 para o dia 13"
+   "at": 18.24,
+   "label": "arrasta o Volume Semanal para depois dos cartões do topo"
   },
   {
    "do": "mark",
-   "name": "L5",
-   "at": 30.35
+   "name": "L4",
+   "at": 24.24
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Configurações",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 24.76,
+   "label": "abre Configurações de novo"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main div.grid.grid-cols-7 div:has-text('Proclamação da República'):not(:has(div:has-text('Proclamação da República')))"
+    "role": "button",
+    "name": "Voltar ordem ao normal",
+    "exact": true
    },
-   "seconds": 0.9,
-   "at": 34.8,
-   "label": "destaque: Proclamação da República (dia 15)",
+   "seconds": 1.4,
+   "at": 26.46,
+   "label": "destaque: Voltar ordem ao normal (sem clicar)",
    "optional": true,
    "timeout": 4
   },
   {
-   "do": "hover",
-   "target": {
-    "selector": "main div.grid.grid-cols-7 div:has-text('Consciência Negra'):not(:has(div:has-text('Consciência Negra')))"
-   },
-   "seconds": 0.9,
-   "at": 38.52,
-   "label": "destaque: Consciência Negra (dia 20)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L6",
-   "at": 41.32
+   "do": "press",
+   "key": "Escape",
+   "at": 34.56,
+   "label": "fecha a janela"
   },
   {
    "do": "eval",
@@ -276,7 +226,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 49.2
+   "at": 35.76
   }
  ]
 }
