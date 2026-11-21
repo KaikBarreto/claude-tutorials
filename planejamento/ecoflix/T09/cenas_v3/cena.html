@@ -2,15 +2,18 @@
 <html lang="pt-BR"><head><meta charset="utf-8">
 <!-- T09 "Pedidos e histórico do caixa" · ilustrações no kit v3 (perfis/ecoflix/cenas_v3/LEIA.md), 16:9 (--larg 1422).
      Uma função por CENA e CAPS[cap] diz o que cada capítulo ilustrado usa. As janelas (de/ate) estão em ../cenas/ilustracoes.json.
-       cap00 · pedidoSumido  (escuro)  ilu00_pedido         "O pedido de três semanas atrás"  linhas 0 e 1: achar, corrigir, imprimir; a Auto Peças liga e o pedido não aparece no nome dela
-       cap01 · duasTelas     (escuro)  ilu01_telas          "Duas telas que andam juntas"     linhas 0 a 2: Pedidos, Histórico do Caixa, e todo pedido nasce dentro de um caixa
-       cap04 · correcoes     (escuro)  ilu04_caixa_fechado  "Pedido de caixa fechado"         linha 6: sem dinheiro, com dinheiro, ou reabrir o caixa, corrigir lá dentro e fechar de novo
-                                       ilu04_soma           "Não soma por cima"               linhas 11 a 13: desfaz o antigo, grava o certo; no fim, só os 18 kg e só a diferença
+       cap00 · pedidoSumido  (escuro)  ilu00_pedido         "O pedido de três semanas atrás"  linhas 0 e 1 (do "achar"): achar, corrigir, imprimir; a Auto Peças liga e o pedido não aparece no nome dela
+       cap01 · duasTelas     (escuro)  ilu01_telas          "O trabalho de cada tela"         linhas 0 a 2: Pedidos, Histórico do Caixa, e todo pedido nasce dentro de um caixa
+       cap04 · caixaFechado  (escuro)  ilu04_caixa_fechado  "Pedido de caixa fechado"         linha 6: sem dinheiro, com dinheiro, ou reabrir o caixa, corrigir lá dentro e fechar de novo
+             · naoSoma       (escuro)  ilu04_soma           "Não soma por cima"               linhas 11 a 13: desfaz o antigo, grava o certo; no fim, só os 18 kg e só a diferença
+             O cap04 tem duas janelas: as duas cenas moram no mesmo mundo escuro, longe uma da outra (molde: cap11 da T03).
        cap06 · popups        (escuro)  ilu06_popups         "Liberar os pop-ups"              linhas 1 e 2: o PDF abre numa aba nova; cadeado, Pop-ups, Permitir
      Os papéis reais (comprovantes e relatórios dos caps 04, 06, 07 e 09) estão em pdf.html.
      Saiu do ilustracoes.json (21/11), porque a tela do app já mostra o assunto na hora da fala:
        ilu05_estornado (cap05, linha 5): a tela está na lista, com o zoom da linha anterior no selo "Estornado em 05/11" da própria
        compra; a frase (7 s) só comenta o que está ali, e a ilustração taparia a linha de que ela fala.
+     Janela da ilu00 a partir do "achar" (21/11): antes dele a cena só teria o título por 3 s; em "Oi! Neste tutorial a gente vai"
+     fica o Dashboard.
      Só textos e números da fala e da tela (R$ 148,80 é o valor da compra de 24 kg na lista; R$ 111,60 é a diferença, do roteiro da
      coordenação; ecosistematecnologia.com.br é o endereço que sai no rodapé do comprovante).
      Âncoras por palavra (W) sobre a voz real ($TUT_HOME/t09/narracao/capNN.json).
@@ -39,10 +42,11 @@ const cartaoP = (icone, rot, sub, cls, cw = 190) => htmlFluxoCartoes({ cartoes: 
 // degrau: cartão baixo de uma linha (selo + nome + legenda opcional)
 const degrau = (icone, rot, sub, o = {}) => `<div class="cartao ${o.cc ?? ''}" style="position:relative;width:${o.w ?? 360}px;height:${o.h ?? 84}px;padding:0 20px;display:flex;align-items:center;gap:13px;white-space:nowrap">
   ${selo(icone, o.cls ?? 'n', o.selo ?? 46)}<div><div class="rot">${rot}</div>${sub ? `<div class="sub"${o.fs ? ` style="font-size:${o.fs}px"` : ''}>${sub}</div>` : ''}</div>${o.res ? '<div class="onda"></div>' : ''}</div>`;
-// um lugar do mundo escuro: posições em px do desenho (y para baixo)
-function escuro() {
+// um lugar do mundo escuro: posições em px do desenho (y para baixo), deslocadas de OY (cada cena do capítulo no seu canto, como na T03)
+function escuro(OY = 0) {
   const EIXO = lugar([0, 0, 0]), E = mundoEscuro(EIXO, 0, EE);
-  return { EIXO, X: (html, x, y, o = {}) => E(html, x * EE, -y * EE, 0, o), ret: (a, b, c, d) => [a * EE, -d * EE, c * EE, -b * EE], fundo: (cx, cy, o) => E.fundo(cx * EE, -cy * EE, o) };
+  return { EIXO, X: (html, x, y, o = {}) => E(html, x * EE, -(y + OY) * EE, 0, o), ret: (a, b, c, d) => [a * EE, -(d + OY) * EE, c * EE, -(b + OY) * EE],
+    fundo: (cx, cy, o) => E.fundo(cx * EE, -(cy + OY) * EE, o), L: E.lista };
 }
 const ponta = (g, d, cor = 'var(--vc)') => { g.insertAdjacentHTML('beforeend', `<path d="${d}" stroke="${cor}" stroke-width="2.8" opacity="0"/>`); return g.lastElementChild; };
 const fileira = (P, xc, vao = 10) => { let x = xc - (P.reduce((s, p) => s + p.w, 0) + vao * (P.length - 1)) / 2; for (const p of P) { p.pos[0] = (x + p.w / 2) * EE; x += p.w + vao; } };   // chips lado a lado, centrados em xc
@@ -56,7 +60,7 @@ const fileira = (P, xc, vao = 10) => { let x = xc - (P.reduce((s, p) => s + p.w,
 // Em cima, o que a aula faz (achar, corrigir, imprimir); a câmera abre para o caso: a ligação, o dia 21 de outubro no
 // calendário e o pedido que não aparece.
 function pedidoSumido() {
-  const t0 = W(0, 'oi'), tac = W(0, 'achar'), ttr = W(0, 'tres'), tcg = W(0, 'corrigir'), tim = W(0, 'imprimir'),
+  const t0 = W(0, 'achar'), tac = W(0, 'achar'), ttr = W(0, 'tres'), tcg = W(0, 'corrigir'), tim = W(0, 'imprimir'),
     tna = W(1, 'na'), trv = W(1, 'recicla'), tau = W(1, 'auto'), tpd = W(1, 'pedindo'), tve = W(1, 'vendeu'), tvi = W(1, 'vinte'), tpe = W(1, 'pedido'), tnao = W(1, 'nao'), tnm = W(1, 'nome'), tfim = W(1, 'dela', 1, 'e');
   cores();
   const { EIXO, X, ret, fundo } = escuro(), Y1 = -205;
@@ -66,6 +70,7 @@ function pedidoSumido() {
   const chR = X(htmlChip(`${ic('map-pin', 18)}Recicla Vale Metais`, 'n'), 0, YT - 14, { anc: [.5, 1], z: 40 });
   const bal = X(htmlBalao({ lado: 'e', icone: 'phone', nome: 'Auto Peças Vale Forte', texto: 'Cadê o comprovante da bateria?', w: 214 }), -XC, YM, { anc: [1, .5] });
   const cP = X(cartaoP('receipt', 'O pedido', 'da bateria', 'n', 226), XC, YM - 28, { anc: [0, .5] }), chN = X(htmlChip(`${ic('search-x', 18)}não aparece no nome dela`, 'am'), XC, YM - 28 + cP.h / 2 + 14, { anc: [0, 0], z: 40 });
+  chT.e.style.transformOrigin = chN.e.style.transformOrigin = '0 50%';   // chips presos pela esquerda crescem da esquerda: a borda fica alinhada com o cartão durante a entrada
   fundo(0, 0);
   const tit = titulo('Pedidos e histórico do caixa', 'O pedido de três semanas atrás', 'escuro');
   const XL = Math.min(-fx.w / 2, -XC - bal.w), XR = Math.max(fx.w / 2, XC + chN.w, XC + cP.w);
@@ -143,8 +148,8 @@ function caixaFechado() {
   const t0 = W(6, 'uma'), tse = W(6, 'se'), tdi = W(6, 'dinheiro'), tpr = W(6, 'precisa'), tre = W(6, 'reabra'), tco = W(6, 'corrija'), tfe = W(6, 'feche'), tno = W(6, 'novo'), tfi = W(6, 'fim'),
     tva = W(6, 'vale'), tvd = W(6, 'venda'), tfim = W(6, 'venda', 1, 'e');
   cores();
-  const { EIXO, X, ret, fundo } = escuro(), YA = -196, YB = -100, YC = 96;
-  const fC = X(htmlFluxoCartoes({ cartoes: [['lock-open', 'Reabrir o caixa', 'daquele dia', 'n'], ['pencil', 'Corrigir', 'lá dentro', 'n'], ['lock', 'Fechar de novo', 'sem estorno', 'res']], cw: 214 }), 0, YC);
+  const { EIXO, X, ret, fundo, L } = escuro(), YA = -196, YB = -100, YC = 96;
+  const fC = X(htmlFluxoCartoes({ cartoes: [['lock-open', 'Reabrir o caixa', 'daquele dia', 'n'], ['pencil', 'Corrigir', 'lá dentro', 'n'], ['lock', 'Fechar', 'de novo', 'res']], cw: 214 }), 0, YC);   // só as palavras da dica
   const cw = Math.max(300, (fC.w - 74) / 2), par = (a, b, y) => X(htmlFluxoCartoes({ cartoes: [a, b], cw }), 0, y);
   const fA = par(['ban', 'Sem dinheiro', 'no pedido', 'n'], ['archive', 'Mantém o caixa original', 'sem mexer no fechamento', 'n'], YA);
   const fB = par(['banknote', 'Com dinheiro', 'no pedido', 'a'], ['wallet', 'Vai pra um caixa aberto', 'o pedido antigo fica estornado', 'n'], YB);
@@ -152,18 +157,19 @@ function caixaFechado() {
   const chD = X(htmlChip(`${ic('banknote', 18)}em dinheiro, no caixa daquele dia`, 'am'), -LW / 2, YCH, { anc: [0, 1], z: 40 });
   const chF = X(htmlChip('no fim do tutorial', 'n'), LW / 2, YCH, { anc: [1, 1], z: 40 });
   const chV = X(htmlChip(`${ic('receipt', 18)}vale igual pra venda`), 0, YC + fC.h / 2 + 16, { anc: [.5, 0], z: 40 });
+  chD.e.style.transformOrigin = '0 50%'; chF.e.style.transformOrigin = '100% 50%';   // chips presos pela borda crescem a partir dela
   fundo(0, -40);
   const tit = titulo('Correções', 'Pedido de caixa fechado', 'escuro');
   const TOPO = YA - fA.h / 2, S1 = enquadraRet(EIXO, ret(-LW / 2, TOPO, LW / 2, YB + fB.h / 2), { az: -.03, max: 1.4 / EE }), S2 = enquadraRet(EIXO, ret(-LW / 2, TOPO, LW / 2, YC + fC.h / 2 + 54), { az: .0, max: 1.4 / EE });
-  camera([[t0 - 3, S1], [tpr - .7, { ...S1, az: -.018, d: S1.d * .988 }, 'lin'], [tpr + .45, S2], [tfim + 2.5, { ...S2, az: .03, d: S2.d * .98 }, 'lin']]);
-  return t => {
-    clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, t0 - .45);
+  const cam = [[t0 - 3, S1], [tpr - .7, { ...S1, az: -.018, d: S1.d * .988 }, 'lin'], [tpr + .45, S2], [tfim + 2.5, { ...S2, az: .03, d: S2.d * .98 }, 'lin']];
+  return { cam, L, r: t => {
+    posTitulo(tit, t, t0 - .9, t0 - .45, tfim + 1.6);
     fluxoCartoes(fA.e, t, t0 - .2, NUNCA, { tempos: [t0 - .1, t0 + .25] }); fluxoCartoes(fB.e, t, tse - .5, NUNCA, { tempos: [tse - .3, tse + .1] });
     pulso(parte(fB.e, 0), t, tdi, .045, .8);
     vis(chD.e, t, tpr - .1, NUNCA, { dy: 10, sc: .8 });
     fluxoCartoes(fC.e, t, tre - .4, NUNCA, { tempos: [tre - .15, tco - .15, tfe - .15] }); pulso(parte(fC.e, 2), t, tno, .04, .8);
     vis(chF.e, t, tfi - .1, NUNCA, { dy: 10, sc: .8 }); vis(chV.e, t, tva - .1, NUNCA, { dy: -10, sc: .8 }); pulso(chV.e, t, tvd, .05, .8);
-  };
+  } };
 }
 
 // =====================================================================================================================
@@ -182,7 +188,7 @@ function naoSoma() {
     tdp = W(12, 'depois'), tgr = W(12, 'grava'), tce = W(12, 'certo'), tqu = W(12, 'quarenta'), tdu = W(12, 'duzentos'), tsd = W(12, 'saindo'),
     tnf = W(13, 'no'), tes = W(13, 'estoque'), tdz = W(13, 'dezoito'), tcx = W(13, 'caixa'), tdif = W(13, 'diferenca'), tap = W(13, 'aparecida'), tnd = W(13, 'nada'), tdup = W(13, 'duplica'), tfim = W(13, 'duplica', 1, 'e');
   cores();
-  const { EIXO, X, ret, fundo } = escuro(), WL = 176, WC = 258, HC = 94, XLb = -478, X1 = -232, X2 = 54, XO = 225, X3 = 396, YH = -112, YE = 0, YK = 110;
+  const { EIXO, X, ret, fundo, L } = escuro(1500), WL = 176, WC = 258, HC = 94, XLb = -478, X1 = -232, X2 = 54, XO = 225, X3 = 396, YH = -112, YE = 0, YK = 110;
   const casa = (sub, num, x, y, res) => X(`<div class="cartao t09c ${res ? 'res' : ''}" style="position:relative;width:${WC}px;height:${HC}px;padding:13px 20px"><div class="sub">${sub}</div><div class="num">${num}</div>${res ? '<div class="onda"></div>' : ''}</div>`, x, y);
   const hA = X(degrau('undo-2', 'Pedido antigo', '24 kg · R$ 148,80', { w: WC, cls: 'a' }), X1, YH), hB = X(degrau('save', 'Pedido certo', '42 kg · R$ 260,40', { w: WC, cls: '' }), X2, YH);
   const hF = X(degrau('equal', 'No fim', 'nada duplica', { w: WC, cls: '', cc: 'res', res: true }), X3, YH), sF = hF.e.querySelector('.sub');
@@ -198,10 +204,10 @@ function naoSoma() {
   const tit = titulo('Correções', 'Não soma por cima', 'escuro');
   const TOPO = YS - 38 - 12 - 38, D1 = X2 + WC / 2, BASE = YK + HC / 2, o = { max: 1.42 / EE };
   const S1 = enquadraRet(EIXO, ret(X1 - WC / 2, TOPO, D1, YH + 42), { az: -.03, ...o }), S2 = enquadraRet(EIXO, ret(XLb - WL / 2, TOPO, D1, BASE), { az: -.012, ...o }),
-    S3 = enquadraRet(EIXO, ret(XLb - WL / 2, TOPO, X3 + WC / 2, BASE + 54), { az: .012, ...o });
-  camera([[t0 - 3, S1], [tpr - .55, { ...S1, az: -.018, d: S1.d * .985 }, 'lin'], [tpr + .6, S2], [tnf - .5, { ...S2, az: .0, d: S2.d * .985 }, 'lin'], [tnf + .75, S3], [tfim + 2.5, { ...S3, az: .04, d: S3.d * .978 }, 'lin']]);
-  return t => {
-    clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, t0 - .45);
+    S3 = enquadraRet(EIXO, ret(XLb - WL / 2, TOPO, X3 + Math.max(WC, chAp.w) / 2, BASE + 54), { az: .012, ...o });   // o chip da Aparecida é mais largo que a coluna
+  const cam = [[t0 - 3, S1], [tpr - .55, { ...S1, az: -.018, d: S1.d * .985 }, 'lin'], [tpr + .6, S2], [tnf - .5, { ...S2, az: .0, d: S2.d * .985 }, 'lin'], [tnf + .75, S3], [tfim + 2.5, { ...S3, az: .04, d: S3.d * .978 }, 'lin']];
+  return { cam, L, r: t => {
+    posTitulo(tit, t, t0 - .9, t0 - .45);
     vis(hA.e, t, tsi - .15, NUNCA, { dy: 20 }); vis(hB.e, t, tsa - .15, NUNCA, { dy: 20 }); vis(chNS.e, t, tna - .1, NUNCA, { dy: 10, sc: .8 });
     // 1: desfaz o antigo inteiro
     vis(ch1.e, t, tdf - .1, NUNCA, { dy: 10, sc: .8 }); pulso(hA.e, t, tan, .035, .8);
@@ -216,7 +222,14 @@ function naoSoma() {
     vis(oK.e, t, tcx - .1, NUNCA, { sc: .6, dy: 0 }); vis(k3.e, t, tdif - .15, NUNCA, { dy: 18, sc: .94 }); ondaEm(k3.e.querySelector('.onda'), t, tdif + .35);
     vis(chAp.e, t, tap - .1, NUNCA, { dy: -10, sc: .8 });
     pulso(hF.e, t, tdup, .04, .9); ondaEm(hF.e.querySelector('.onda'), t, tdup);
-  };
+  } };
+}
+// o cap04 tem duas janelas (linha 6 e linhas 11 a 13): as duas cenas moram no mesmo mundo escuro, longe uma da outra
+// (escuro(1500)), e a câmera troca de lugar entre elas no intervalo em que nenhuma janela está no ar (molde: cap11 da T03)
+function cap04() {
+  const a = caixaFechado(), b = naoSoma(), MEIO = (W(6, 'venda', 1, 'e') + W(11, 'agora')) / 2; camera([...a.cam, ...b.cam]);
+  // fora da sua janela, a outra cena sai de cena inteira (o anel do fundo de uma não vaza no quadro da outra)
+  return t => { clima(1); GL.style.visibility = 'hidden'; const j2 = t > MEIO; for (const p of a.L) p.op = j2 ? 0 : 1; for (const p of b.L) p.op = j2 ? 1 : 0; a.r(t); b.r(t); };
 }
 
 // =====================================================================================================================
@@ -229,12 +242,13 @@ function popups() {
     tdi = W(2, 'uma'), tli = W(2, 'liberar'), tca = W(2, 'cadeado'), ten = W(2, 'endereco'), tpo = W(2, 'pop-ups'), tpe = W(2, 'permitir'), tvz = W(2, 'vez'), tfim = W(2, 'so', 1, 'e');
   cores();
   const { EIXO, X, ret, fundo } = escuro(), Y1 = -190, YB = -34, YF = 82;
-  const fP = X(htmlFluxoCartoes({ cartoes: [['file-text', 'PDF do sistema', 'comprovante, relatório', 'n'], ['square-arrow-out-up-right', 'Aba nova', 'abre nela', 'n']], cw: 250, vao: 110 }), 0, Y1);
+  const fP = X(htmlFluxoCartoes({ cartoes: [['file-text', 'Todo PDF', 'do sistema', 'n'], ['square-arrow-out-up-right', 'Aba nova', 'abre nela', 'n']], cw: 250, vao: 110 }), 0, Y1);
   const chB = X(htmlChip(`${ic('ban', 18)}bloqueado na primeira vez`, 'am'), fP.w / 2, Y1 - fP.h / 2 - 14, { anc: [1, 1], z: 40 });
   const fL = X(htmlFluxoCartoes({ cartoes: [['lock', 'Cadeado', 'ao lado do endereço', 'n'], ['app-window', 'Pop-ups', 'procure', 'n'], ['check', 'Permitir', 'marque', 'res']], cw: 216 }), 0, YF);
   const bar = X(`<div class="cartao" style="position:relative;width:${fL.w}px;height:62px;padding:0 14px;border-radius:999px;display:flex;align-items:center;gap:12px;white-space:nowrap">${selo('lock', 'n', 38)}<div class="rot" style="font-size:18px;font-weight:700">ecosistematecnologia.com.br</div></div>`, 0, YB);
   const sl = bar.e.querySelector('.selo');
   const chV = X(htmlChip('é uma vez só'), fL.w / 2, YF + fL.h / 2 + 16, { anc: [1, 0], z: 40 });
+  chB.e.style.transformOrigin = chV.e.style.transformOrigin = '100% 50%';   // presos pela direita
   fundo(0, -40);
   const tit = titulo('Comprovantes', 'Liberar os pop-ups', 'escuro');
   const TOPO = Y1 - fP.h / 2 - 14 - 38, LW = Math.max(fP.w, fL.w);
@@ -251,10 +265,6 @@ function popups() {
 }
 
 // =====================================================================================================================
-// o cap04 tem duas janelas (linha 6 e linhas 11 a 13): a cena é escolhida pelo trecho pedido ao render (d.de) ou, na falta dele, pelo tempo
-const CAPS = { 0: pedidoSumido, 1: duasTelas, 6: popups };
-cena(d => {
-  if (d.cap !== 4) return CAPS[d.cap](d);
-  return null;
-}, { fov: 26 });
+const CAPS = { 0: pedidoSumido, 1: duasTelas, 4: cap04, 6: popups };
+cena(d => CAPS[d.cap](d), { fov: 26 });
 </script></body></html>

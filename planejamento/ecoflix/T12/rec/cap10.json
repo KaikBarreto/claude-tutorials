@@ -357,8 +357,8 @@
   },
   {
    "do": "eval",
-   "js": "(()=>{const t=[...document.querySelectorAll(\"#veiculo-categoria\")][0];if(!t)return 'SEM ALVO';t.focus();return 'foco'})()",
-   "at": 44.58,
+   "js": "(()=>{const t=document.querySelector('#veiculo-categoria');if(!t)return 'SEM ALVO';t.focus();return 'foco'})()",
+   "at": 44.78,
    "label": "Tipo: Veículo único (foco)"
   },
   {
@@ -372,11 +372,15 @@
    "timeout": 5
   },
   {
+   "do": "pause",
+   "seconds": 0.3
+  },
+  {
    "do": "type",
    "target": {
     "selector": "[role=listbox]"
    },
-   "text": "V",
+   "text": "Ve",
    "cps": 40,
    "label": "Tipo: Veículo único (procura)",
    "noClick": true
@@ -532,6 +536,17 @@
    "timeout": 10
   },
   {
+   "do": "scroll",
+   "point": {
+    "x": 560,
+    "y": 790
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "label": "cursor sai do diálogo (longe dos três pontinhos)"
+  },
+  {
    "do": "hover",
    "target": {
     "selector": "main button:has-text('FVL8A52')"
@@ -541,6 +556,11 @@
    "label": "FVL8A52 na frota",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha menu de linha que tenha aberto"
   },
   {
    "do": "mark",

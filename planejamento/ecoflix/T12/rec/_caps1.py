@@ -315,7 +315,7 @@ def cap08():
     c.hover(TXTX('Equipamentos', exact=True), 1.5, at=c.A(2, 'entregue', FH), label='Equipamentos do relatório')
     c.mark(3)
     rola_ate(c, 'Relatório de Coleta 8', c.L(3) - 3.4, 'sobe ao topo do relatório', y=140, dur_ms=800, escopo='body')   # a rolagem de volta ao topo dentro do clique custava ~5 s
-    c.hover(LINK('Voltar às ordens'), 0.2, at=c.L(3) - 2.5, label='Voltar às ordens')
+    c.hover(LINK('Voltar às ordens'), 0.2, at=c.L(3) - 2.5, label='Voltar às ordens', noScroll=True)   # no topo: sem noScroll o ensureVisible gastava ~5 s (final 21/11)
     c.ev('history.back()', at=c.L(3) - 1.6, label='volta ao quadro (sem recarregar o app)')   # voltar recarrega o app: ~5 s até o quadro aparecer   # a página foi rolada até Equipamentos: sem noScroll, o robô rola de volta ao topo
     c.waitfor(text=PAGINAS['/coletas/ordens'], timeout=15)
     c.click(CARD_TXT(8, 'Depósito Irmãos Siqueira'), label='abre a ficha da ordem 8')

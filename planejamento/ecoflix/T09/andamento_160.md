@@ -25,3 +25,7 @@ Completos (BRIEF_ROBO item 3) NÃO rodados: `bash rec/t09/t09_ciclo3.sh NN`.
 - Completos e ajuste de tempos dos caps com atraso: `cd /home/claude/ecoflix; TUT_USER=rafael@reciclavalemetais.example TUT_SENHA=<8+ caracteres> bash rec/t09/t09_ciclo3.sh NN`.
 - Instância (derrubada ao fim): `FAKE_NOW=2026-11-11T08:30:00-03:00 FAKE_PORT=54309 bash rec/run.sh fake`.
 - PDFs/HTML em `rec/t09/pdfs/` conferidos; `mostra` das cenas de PDF atualizado.
+
+## 21/11 · ilustrações v3 prontas (para o fechamento)
+- 11 cenas: `T09/cenas_v3/cena.html` (escuro: cap00 L0-1, cap01 L0-2, cap04 L6 e L11-13, cap06 L1-2) e `pdf.html` (papel real: cap04 L4, cap06 L3 e L6, cap07 L3, cap09 L0-1 e L2-3). Tirada ilu05_estornado (a tela mostra o selo e a cena taparia a linha). Auditoria 0.
+- **Pendente no fechamento**: `piscadas.py` acusa 7 na ilu01 e 1 na ilu04_soma (texto e borda de cartão escuro tremem 1 px na deriva lenta da câmera). Corrigir antes de encaixar (como a T04 fez ajustando a animação), meta 0.

@@ -143,18 +143,62 @@
    "timeout": 10
   },
   {
-   "do": "click",
+   "do": "eval",
+   "js": "(()=>{const t=[...document.querySelectorAll('[role=dialog] button[role=combobox]')].find(b=>b.textContent.includes('Tipo de equipamento'));if(!t)return 'SEM ALVO';t.focus();return 'foco'})()",
+   "label": "Tipo de equipamento (foco)"
+  },
+  {
+   "do": "press",
+   "key": "Enter",
+   "label": "Tipo de equipamento (abre)"
+  },
+  {
+   "do": "waitFor",
+   "selector": "[role=listbox]",
+   "timeout": 5
+  },
+  {
+   "do": "pause",
+   "seconds": 0.3
+  },
+  {
+   "do": "type",
    "target": {
-    "selector": "[role=dialog] button[aria-pressed]:has-text('Minha base') >> nth=0"
+    "selector": "[role=listbox]"
    },
-   "label": "De: Minha base"
+   "text": "Ba",
+   "cps": 40,
+   "label": "Tipo: Bag 1 m³ (procura)",
+   "noClick": true
+  },
+  {
+   "do": "press",
+   "key": "Enter",
+   "label": "Tipo: Bag 1 m³"
   },
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] button[aria-pressed]:has-text('Parceiro') >> nth=1"
+    "placeholder": "Quantidade"
    },
-   "label": "Para: Parceiro"
+   "at": 5.44,
+   "label": "Quantidade (campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Quantidade"
+   },
+   "text": "10",
+   "cps": 40,
+   "label": "Quantidade: 10",
+   "noClick": true,
+   "clear": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const t=[...document.querySelectorAll('[role=dialog] button[role=combobox]')].map(b=>b.textContent.trim());return t.join(' | ')})()",
+   "label": "confere Tipo: Bag 1 m³"
   },
   {
    "do": "click",
@@ -162,6 +206,7 @@
     "role": "button",
     "name": "Selecionar parceiro"
    },
+   "at": 7.04,
    "label": "Selecionar parceiro…"
   },
   {
@@ -189,40 +234,6 @@
     "within": "[role=dialog] >> nth=-1"
    },
    "label": "escolhe Cooperativa Recomeço"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] button[role=combobox]:has-text('Tipo de equipamento')"
-   },
-   "label": "Tipo de equipamento"
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "option",
-    "name": "Bag 1 m³",
-    "exact": true
-   },
-   "label": "Tipo: Bag 1 m³"
-  },
-  {
-   "do": "click",
-   "target": {
-    "placeholder": "Quantidade"
-   },
-   "label": "Quantidade (campo)"
-  },
-  {
-   "do": "type",
-   "target": {
-    "placeholder": "Quantidade"
-   },
-   "text": "10",
-   "cps": 40,
-   "label": "Quantidade: 10",
-   "noClick": true,
-   "clear": true
   },
   {
    "do": "click",
@@ -323,8 +334,8 @@
     "text": "Motivo (opcional)",
     "within": "[role=alertdialog]"
    },
-   "seconds": 0.7,
-   "at": 25.77,
+   "seconds": 0.5,
+   "at": 25.37,
    "label": "Excluir movimentação?: Motivo (opcional)",
    "optional": true,
    "timeout": 4

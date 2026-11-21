@@ -15,10 +15,11 @@
        cap04 · linha 4 · pdf04_comprovante_valeforte  "O comprovante já sai certo, no nome da Auto Peças, com a data de vinte e um de outubro. É esse que a gente manda pra ela."
        cap06 · linha 3 · pdf06_comprovante_aparecida  "Pronto: o comprovante abre na aba nova, com o peso certo. Daqui você imprime ou manda pra ela."
        cap06 · linha 6 · pdf06_comprovante_valdir     "E o comprovante sai só com o material e o peso. O pedido continua com o valor no sistema; só o papel sai sem."
-       cap07 · linha 3 · pdf07_relatorio_pedidos      "... o relatório abre numa aba nova, pronto pra imprimir ou mandar pro contador."
-       cap09 · linhas 0 e 1 · pdf09_fechamento        "... abre o relatório de fechamento daquele dia ... com quanto abriu, o que entrou e saiu em cada forma de pagamento, e com quanto fechou."
-       cap09 · linhas 2 e 3 · pdf09_estoque_caixa     "... mostra, material por material, o que esse caixa comprou e vendeu, com o preço médio. Olha a bateria aqui ..."
-     Em todas: o papel entra de cima (com o título no alto), o título sai e a câmera mergulha até o trecho que a fala cita.
+       cap07 · linha 3 · pdf07_relatorio_pedidos      "... o relatório abre numa aba nova, pronto pra imprimir ou mandar pro contador."   (do "relatório" ao "contador")
+       cap09 · linhas 0 e 1 · pdf09_fechamento        "... abre o relatório de fechamento daquele dia ... com quanto abriu, o que entrou e saiu em cada forma de pagamento, e com quanto fechou."   (do "abre")
+       cap09 · linhas 2 e 3 · pdf09_estoque_caixa     "... mostra, material por material, o que esse caixa comprou e vendeu, com o preço médio. Olha a bateria aqui ... o dia de um operador."   (do "mostra")
+     Em todas: a janela começa na palavra em que o papel abre (antes dela, a tela mostra o clique); o papel entra de cima (com o
+     título no alto), o título sai e a câmera mergulha até o trecho que a fala cita.
      Coordenadas das marcas: pontos do PDF (pdftotext -bbox, os .bbox.html ao lado dos PNG).
      Render: render_cenas.cjs <cap> <capNN.json> saida.mp4 --html .../pdf.html --anexo $TUT_HOME/t09/edit/out/comprovantes
              --larg 1422 --dsf 1.35 --de <s> --ate <s>.  Auditoria: auditar.cjs --aula planejamento/ecoflix/T09 --larg 1422 -->
@@ -66,14 +67,16 @@ const poe = (P, larg = 5.2) => ({ p: plano(P.html, { pos: [0, P.yc, 0], esc: P.E
 const ALTO = (P, y1, o = {}) => enquadraRet(null, faixa(P, 0, y1), { topo: 150, margem: 48, el: .02, az: .04, ...o });
 const PERTO = (P, y0, y1, o = {}) => enquadraRet(null, faixa(P, y0, y1, o.x0, o.x1), { topo: 70, margem: 56, max: P.cupom ? LEITURA : 1e9, el: .015, az: .02, ...o });
 // a janela abre com o título já no alto e o papel chegando
-const abre = (t, a, tit, sai, P) => { posTitulo(tit, t, a - 1.7, a - 1.3, sai); vis(P.p.e, t, a - .6, NUNCA, { dy: 72 }); };
+const abre = (t, a, tit, sai, P, a0 = a - 1.7) => { posTitulo(tit, t, Math.max(a0, a - 1.7), a - 1.3, sai); vis(P.p.e, t, a - .6, NUNCA, { dy: 72 }); };
+// marca que sai (moldura que a câmera de perto cortaria na borda)
+const apaga = (e, id, t, a, d = .35) => { const mk = e._mk[id]; mk.style.opacity = ((+mk.style.opacity || 0) * (1 - eo(pr(t, a, d)))).toFixed(3); };
 
 // =====================================================================================================================
 // cap04, linha 4 · o comprovante da bateria corrigida: Fornecedor: Auto Peças Vale Forte e a data de 21/10/2026
 function cupom04(d) {
   const t0 = W(4, 'comprovante'), tno = W(4, 'nome'), tda = W(4, 'data'), tfim = W(4, 'ela', 1, 'e');
   palco();
-  const P = papel(`${d.anexo}/cap04.png`, { ...CUPOM, hpt: 416.69, marcas: { forn: [19, 156.2, 209, 169.6], data: [139, 203.5, 213.5, 214.8] } }), F = poe(P);
+  const P = papel(`${d.anexo}/cap04.png`, { ...CUPOM, hpt: 416.69, marcas: { forn: [19, 156.2, 209, 169.6], data: [140.4, 203.5, 211.8, 214.8] } }), F = poe(P);
   const tit = titulo('Comprovante', 'No nome da Auto Peças');
   const A = ALTO(P, 236), B = PERTO(P, 124, 226);
   camera([[t0 - 3, A], [tno - .6, { ...A, d: A.d * .985, az: .03 }, 'lin'], [tno + .45, B], [tfim + 2, { ...B, d: B.d * .975, az: -.012 }, 'lin']]);
@@ -96,7 +99,7 @@ function cupom06(d) {
   const P2 = papel(`${d.anexo}/cap06-valdir.png`, { ...CUPOM, hpt: 340.16, marcas: { mat: [17, 246.2, 68, 257.8], kg: [157, 248.4, 189, 260], tb: [12.5, 220.5, 214.3, 262.5, 'q'] } });
   const F1 = poe(P1), F2 = { p: plano(P2.html, { pos: [0, P2.yc, 0], esc: P2.E, sangra: true }), s: F1.s };
   const tit1 = titulo('Comprovante', 'Com o peso certo'), tit2 = titulo('Comprovante', 'Cupom sem valor');
-  const A1 = ALTO(P1, 236), B1 = PERTO(P1, 228, 350), A2 = ALTO(P2, 236, { az: -.04 }), B2 = PERTO(P2, 126, 284, { az: -.02 });
+  const A1 = ALTO(P1, 236), B1 = PERTO(P1, 228, 350), A2 = ALTO(P2, 236, { az: -.04 }), B2 = PERTO(P2, 126, 302, { az: -.02 });
   camera([[t0 - 3, A1], [tco - .5, { ...A1, d: A1.d * .985, az: .03 }, 'lin'], [tpe + .1, B1], [tf1 + 2, { ...B1, d: B1.d * .975, az: -.012 }, 'lin'],
     [u0 - 3, A2], [uso - .45, { ...A2, d: A2.d * .985, az: -.03 }, 'lin'], [uma - .05, B2], [uf + 2, { ...B2, d: B2.d * .975, az: .012 }, 'lin']]);
   return t => {
@@ -117,9 +120,9 @@ function relatorio07(d) {
   const P = papel(`${d.anexo}/cap07-relatorio.png`, { ...FOLHA, hpt: 841.92, marcas: { tit: [70, 126.6, 188.5, 144.4], per: [70, 143, 195, 155.6], mat: [109.5, 197.5, 518.5, 230.5, 'q'] } }), F = poe(P, 6.4);
   const tit = titulo('Exportar', 'A lista em PDF');
   const A = ALTO(P, 352, { margem: 56, az: .05 }), B = enquadraRet(null, faixa(P, 108, 438), { topo: 60, margem: 50, el: .015, az: .02 });
-  camera([[t0 - 3, A], [tab - .05, { ...A, d: A.d * .985, az: .045 }, 'lin'], [tno + .35, B], [tfim + 2, { ...B, d: B.d * .985, az: .0 }, 'lin']]);
+  camera([[t0 - 3, A], [tno - .3, { ...A, d: A.d * .985, az: .045 }, 'lin'], [tno + .55, B], [tfim + 2, { ...B, d: B.d * .985, az: .0 }, 'lin']]);
   return t => {
-    GL.style.opacity = eo(pr(t, t0 - .25, .35)).toFixed(3); abre(t, t0, tit, tab - .15, F);
+    GL.style.opacity = eo(pr(t, t0 - .25, .35)).toFixed(3); abre(t, t0, tit, tno - .35, F);
     F.s.material.uniforms.uOp.value = .55 * (+F.p.e.style.opacity || 0);
     marca(F.p.e, 'tit', t, tab + .1); marca(F.p.e, 'per', t, tno + .1, .4); marca(F.p.e, 'mat', t, tpr, .45);
   };
@@ -143,20 +146,24 @@ function caixa09(d) {
   const tit1 = titulo('Histórico do Caixa', 'O relatório de fechamento'), tit2 = titulo('Histórico do Caixa', 'O relatório de estoque');
   const A1 = ALTO(P1, 228), B1 = PERTO(P1, 126, 226), C1 = PERTO(P1, 234, 494, { margem: 50, az: -.015 }), D1 = PERTO(P1, 562, 652, { az: .02 });
   const A2 = ALTO(P2, 310, { az: -.03 }), B2 = PERTO(P2, 160, 252, { x0: 12, x1: 548, margem: 50, az: -.015 }), C2 = PERTO(P2, 160, 252, { x0: 12, x1: 412, margem: 50, az: .012 });
+  // as janelas quase se encostam (a 1 termina em 14,4 s; a 2 começa em 15,4 s): a câmera troca de papel no intervalo, fora do
+  // ar, com folga da inércia de operador (.34 s) dos dois lados
+  const fim1 = tf1 + .6 + .36, ini2 = u0 - .3 - .36;
   camera([[t0 - 3, A1], [tel - .25, { ...A1, d: A1.d * .98, az: .03 }, 'lin'], [tab - .15, B1], [ten - .45, { ...B1, d: B1.d * .99, az: .01 }, 'lin'], [ten + .5, C1],
-    [tpg + .5, { ...C1, d: C1.d * .985, az: -.025 }, 'lin'], [tco + .45, D1], [tf1 + 2, { ...D1, d: D1.d * .98, az: .0 }, 'lin'],
-    [u0 - 3, A2], [uma - .55, { ...A2, d: A2.d * .985, az: -.025 }, 'lin'], [uma + .55, B2], [uol - .3, { ...B2, d: B2.d * .988, az: -.005 }, 'lin'], [uol + .65, C2],
+    [tpg + .5, { ...C1, d: C1.d * .985, az: -.025 }, 'lin'], [tco + .45, D1], [fim1, { ...D1, d: D1.d * .985, az: .0 }, 'lin'],
+    [ini2, A2], [uma - .1, { ...A2, d: A2.d * .985, az: -.025 }, 'lin'], [uma + 1, B2], [uol - .3, { ...B2, d: B2.d * .988, az: -.005 }, 'lin'], [uol + .65, C2],
     [uf + 2, { ...C2, d: C2.d * .975, az: .03 }, 'lin']]);
   return t => {
     const j2 = t > MEIO, a0 = j2 ? u0 : t0; F1.p.op = j2 ? 0 : 1; F2.p.op = j2 ? 1 : 0;
     GL.style.opacity = eo(pr(t, a0 - .25, .35)).toFixed(3);
-    abre(t, t0, tit1, tel - .35, F1); abre(t, u0, tit2, uma - .65, F2);
+    abre(t, t0, tit1, tel - .35, F1); abre(t, u0, tit2, uma - .2, F2, MEIO + .05);   // o título da 2 só entra depois da janela 1 (que vai até 14,4 s)
     F1.s.material.uniforms.uOp.value = j2 ? 0 : .55 * (+F1.p.e.style.opacity || 0); F2.s.material.uniforms.uOp.value = j2 ? .55 * (+F2.p.e.style.opacity || 0) : 0;
     marca(F1.p.e, 'bar', t, tfe - .1, .5); marca(F1.p.e, 'abr', t, tab + .05);
     marca(F1.p.e, 'ent', t, ten + .3, .4); marca(F1.p.e, 'sai', t, tsa + .1, .4);
     marca(F1.p.e, 'cd', t, tfo); marca(F1.p.e, 'cp', t, tfo + .22); marca(F1.p.e, 'vd', t, tpg); marca(F1.p.e, 'vp', t, tpg + .22);
     marca(F1.p.e, 'fec', t, tfc - .05, .5);
-    marca(F2.p.e, 'cm', t, uma + .5, .5); marca(F2.p.e, 'cc', t, uco, .4); marca(F2.p.e, 'cv', t, uve, .4); marca(F2.p.e, 'pm', t, upm, .4);
+    marca(F2.p.e, 'cm', t, uma + .75, .5); marca(F2.p.e, 'cc', t, uco, .4); marca(F2.p.e, 'cv', t, uve, .4); marca(F2.p.e, 'pm', t, upm, .4);
+    apaga(F2.p.e, 'cv', t, uol - .3);   // o perto da bateria corta a coluna das vendas: a moldura sai antes
     marca(F2.p.e, 'bat', t, uba + .05); marca(F2.p.e, 'kg', t, udu + .05); marca(F2.p.e, 'val', t, use + .05);
   };
 }
