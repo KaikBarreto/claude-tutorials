@@ -1,7 +1,7 @@
 # T21 · andamento no app 1.60.22
 
-Estado (21/11): **etapa 1 de 3 FEITA** (fala e documentos). Etapas 2 (overlay e sementes) e 3 (`gerar.py`, lotes, ensaio,
-ilustrações) pendentes. Nada foi gravado nem ensaiado; nenhuma instância no ar.
+Estado (21/11): **etapas 1 e 2 de 3 FEITAS** (fala e documentos; overlay, sementes e arquivos testados por chamada direta). Etapa 3
+(`gerar.py`, lotes, ensaio, ilustrações) pendente. Nada foi gravado nem ensaiado; nenhuma instância no ar.
 
 ## Etapa 1 · feito
 - `narracao/tts_textos.py`: 18 capítulos (00 a 17), 2.630 palavras, 14.065 caracteres de fala (+392 de títulos); `numeros` do
@@ -10,20 +10,34 @@ ilustrações) pendentes. Nada foi gravado nem ensaiado; nenhuma instância no a
 - `bash planejamento/ecoflix/preparar_aula.sh T21` rodado: 18 `capNN.json` estimados em `/home/claude/ecoflix/t21/narracao`.
 - Cópias do que foi substituído: `/tmp/claude-0/-home-claude/5ab7153e-b0bb-5f91-8e7e-f0df5c647505/scratchpad/t21_*_antigo.*` (somem no reboot).
 
-## Etapa 2 · lista exata (overlay em `/home/claude/ecoflix/rec/t21/overlay`, mundo em `rec/t21/t21_mundo.py`)
-1. `lib/cato_t21.mjs`: respostas R1 a R8 (as do `plano.md`; já existem em `rec/mundo/lib/cato_respostas.json`, R9 sai) e **A1a a A19** do
-   `plano.md` → "O que o Cato responde" (texto pelo pedido exato do `roteiro.md`; as marcadas "(código)" são verbatim; `expira_em` = agora + 10 min).
-   Respostas por usuário: A19 só para o Marcos (sem permissão de preço).
-2. Edges: `cato-background` (jobId), `cato-assist` (`followups`), `plugnotas-emit` (rascunho → processando → autorizada ao "Consultar situação", ~4 s;
-   nota nº 1249) com `preview_danfe` (PDF fictício).
-3. RPCs: `cato_confirm_{purchase,sale,weighing_ticket,price,partner_balance,operation}_action` (gravam de verdade; compra e venda por `criarPedido`
-   de `rec/mundo/lib/eco.mjs`; baixa, caixa, banco, transferência, cadastros e `invoices` em rascunho), `cato_order_journeys`, `cato_memory_manage`
-   (`status`, `accept_personal_consent`, `list`, `save`, `set_enabled`), `cato_routines_manage` (`status`, `preview`, `save`),
-   `cato_corrections_manage` (vazia), `get_my_cato_conversations(_messages)`, `submit_cato_resolution_feedback`, `set_cato_feedback`.
-4. Sementes `rec/mundo/seeds-extra/t21/`: `inicio` (memória `pending`; sem a chave `cato_adoption_nudge_*`; Marcos sem editar material),
-   `apos-cap02`, **novo `apos-cap06`** (conversa dos caps. 4 a 6 pronta; cap. 7 começa em "Nova"). Arquivos fictícios: `pesagem-cooperativa.jpg`
-   (Cooperativa Recomeço, Plástico PET, bruto 1.480, tara 60) e `tabela-fundicao.png` (4 materiais do mundo).
-5. Conferir no mundo: o que o `plano.md` → "A conferir no ensaio" lista (cofre no abrir caixa, A17a, saldo do Valdir, número do pedido).
+## Etapa 2 · FEITA (overlay em `/home/claude/ecoflix/rec/t21/overlay`, mundo montado por `python3 -I rec/t21/t21_mundo.py`)
+- `lib/`: `cato_t21.mjs` (A1a a A19 + R1 a R8 com `CORRECOES` dos números, ver abaixo), `cato_confirma.mjs`, `cato_pedido.mjs`.
+- Edges (`handlers/functions`): `cato-background`, `cato-assist` (`followups` só R1 a R8), `plugnotas-emit` (`preview_danfe` por `previewInvoiceId`
+  ou `previewActionId` devolve PDF de 1.302 bytes; o resto vai ao handler base, nota nº 1249, "emitida" ao `plugnotas-status` após ≥ 3,5 s).
+- RPCs (`handlers/rpc`): `cato_confirm_{purchase,sale,weighing_ticket,price,partner_balance,operation}_action`, `cato_order_journeys`,
+  `cato_memory_manage` (todas as ações), `cato_routines_manage` (`status`, `preview`, `save`, `pause`, `resume`, `delete`; estado em memória do
+  processo), `cato_corrections_manage`, `get_my_cato_conversations(_messages)`, `submit_cato_resolution_feedback`, `set_cato_feedback`. Faltando: nada.
+- Sementes (`rec/mundo/seeds-extra/t21/`): `inicio` (agora também com `codigo_ibge` 3132305 na Serra Fina e CSTs de saída na configuração fiscal,
+  sem os quais o Cato recusa a NF-e), `apos-cap02` (+ 1 conversa antiga do Rafael, para "Conversas" mostrar 1), **novo `apos-cap03`** (memória aceita e ligada,
+  nota "Prefiro os valores em tabela, do maior para o menor."), **novo `apos-cap06`** (conversa dos caps. 4 a 6 com R1 a R8 gravadas em `cato_events`;
+  2 contas a pagar: internet vencida 8/11 e aluguel do pátio 15/11, para "Ver sinais agora" mostrar vencida e a vencer).
+  Cadeia: `...t15/apos-cap10, t21/inicio, t21/apos-cap02` (caps. 3), `+ t21/apos-cap03` (caps. 4 a 6), `+ t21/apos-cap06` (caps. 7 a 14; 15 em diante seguem o estado que o cap. 14 deixa).
+- Arquivos (`rec/t21/arquivos/`, o `upload` do gravador resolve a partir de `rec/t21/`): `pesagem-cooperativa.jpg` (900x1200; motorista Jair Lopes, placa GHT7B19, os mesmos do cartão),
+  `tabela-fundicao.png` (Alumínio latinha 6,50; perfil 9,20; Cobre mel 43,00; Cobre misto 37,00).
+- Testado (chamada direta, instância na 54321, `FAKE_NOW` 10/11 08:30): A1 compra #1759 total 744; A2 venda #1760 total 5.200 e conta "Fatura venda #1760" 5.200 (vence 10/12);
+  A3 ticket #58, líquido 1.420; A4 cobre mel 42,50→43,00 e misto 36,00→36,50; A5 baixa 4.790; A6 abre caixa #85 com 1.500 (saldo inicial é o valor dito, sem cofre);
+  A7 saída 85 (esperado 1.415); A8 transferência 2.000 (Secundária 75.380→73.380; Principal 48.979,67→50.979,67); A9 esperado 1.415, contado 1.415, **diferença 0,00**;
+  A10 Valdir "te deve" 300→200; A11 Quiririm 2.870→1.870; A12, A13 (Chumbo, código 16); A15a/b (ticket da foto, anexo no cartão); A16a/b; A17a/b → rascunho →
+  `plugnotas-emit` (nº 1249) → `plugnotas-status` emitida; prévia em PDF antes e depois do rascunho; A18; A19 (Marcos); `cato_order_journeys` (venda com NF emitida, compra paga por transferência);
+  conversas, memória (Rafael `accepted`, Marcos `pending` sem gerenciar), rotinas (preview dos 3 focos, save diário 08:00).
+
+### Falas com número que não bate com o mundo (a fala NÃO foi mudada; arrumar na etapa 3 ou no ensaio)
+- cap04, R1, resultado do mês: a fala diz "uns sessenta e sete mil e seiscentos"; o mundo dá **R$ 62.454,55** ("uns sessenta e dois mil e quatrocentos"). Despesas: R$ 37.384,20.
+  (O texto-base de R1 tinha 30.249,20 de despesas e 69.589,55 de resultado; o overlay corrige para 37.384,20 e 62.454,55.)
+- cap05, R4, saldo das contas: a fala diz "uns cento e trinta e dois mil"; o total é **R$ 125.313,67** ("cento e vinte e cinco mil"). Conta Secundária 75.380,00; saídas do mês 60.689,10.
+- cap11/cap14: os cartões reais têm rótulos diferentes dos do roteiro (ex.: baixa = "Registrar recebimento"; caixa = "Saída do caixa"; saldo = "Receber saldo do parceiro"); o `roteiro.md` descreve, o código manda.
+- cap14, "Outros pedidos (a compra da Aparecida)": na lista a compra cai em "Para acompanhar", não em "Outros pedidos".
+- cap03, aba "Da empresa": a frase "Apenas usuários com acesso total podem publicar…" não aparece para o Rafael (ele é acesso total e pode gerenciar); só a veria o Marcos.
 
 ## Etapa 3 · lista exata
 1. `gerar.py` em 1600×900: 18 capítulos pelo `roteiro.md`; `VERSAO` de `app/dist/.versao-app`; `__mostrarCato:'1'` no cap01 (balão de dica); PDF da prévia do
@@ -32,14 +46,17 @@ ilustrações) pendentes. Nada foi gravado nem ensaiado; nenhuma instância no a
 3. Ensaio em lote (rápido, MP4 `--preset ultrafast --crf 30`, `resumo.py --ens`, `prever.py`); no máximo 3 lotes.
 4. `cenas/ilustracoes.json`: entradas novas com `cap`, `id`, `de`, `ate`, `resumo`, `mostra`, `"clima"` e `"v3": "pendente"` (as ilustrações do `roteiro.md`
    por capítulo; a do cap. 13 do PDF com `"tipo": "comprovante"`, `"cena": "pdf"`).
-5. Só depois do ensaio: conferir os valores calculados na fala (744, 5.200, 1.420, 300 → 200) com o que a tela mostrou.
+5. Setup dos capítulos: cada capítulo parte da semente da cadeia acima; as conversas dos caps. 4 a 6 e 7 a 14 são sessões do painel guardadas em
+   `sessionStorage` (`cato-conversation-v3:<empresa>:<usuário>`): o setup de cap. 15 em diante restaura a conversa do cap. 14 ou aceita o painel vazio.
+   O `upload` usa `arquivos/pesagem-cooperativa.jpg` e `arquivos/tabela-fundicao.png` (caminho relativo a `rec/t21/`).
+6. Só depois do ensaio: conferir os valores calculados na fala (744, 5.200, 1.420, 300 → 200) com o que a tela mostrou.
 
 ## Parâmetros (da pesquisa anterior)
 
 Porta 54321; FAKE_NOW `2026-11-10T08:30:00-03:00`; usuário `rafael@reciclavalemetais.example`; TUT_SENHA só no ambiente.
 Subir: `cd /home/claude/ecoflix; python3 rec/t21/t21_mundo.py; FAKE_MUNDO=/dev/shm/t21_mundo FAKE_NOW=2026-11-10T08:30:00-03:00 FAKE_PORT=54321 bash rec/run.sh fake`
 Derrubar: `FAKE_MUNDO=/dev/shm/t21_mundo FAKE_PORT=54321 bash rec/run.sh down`
-Cadeia de sementes: t14/inicio + t14/apos-cap02,03,04,06,07,08,09,10,11,12,14 + t15/inicio, apos-cap01, apos-cap02, apos-cap10 + t21/inicio + t21/apos-cap02.
+Cadeia de sementes: t14/inicio + t14/apos-cap02,03,04,06,07,08,09,10,11,12,14 + t15/inicio, apos-cap01, apos-cap02, apos-cap10 + t21/inicio + t21/apos-cap02 (+ t21/apos-cap03 nos caps. 4 a 6; + t21/apos-cap06 nos caps. 7 a 14).
 
 ## Achados para o MELHORIAS
 - "Ver itens e tributos" (CatoFiscalDetails) não é renderizado em lugar nenhum no 1.60.22 (componente órfão): não entra na fala.
@@ -49,3 +66,7 @@ Cadeia de sementes: t14/inicio + t14/apos-cap02,03,04,06,07,08,09,10,11,12,14 + 
 - A permissão de ver só os próprios pedidos/cadastros/tíquetes/contas deixa a pessoa sem o Cato (`config/routes.ts:343-364`); a descrição da permissão "Usar o Cato" avisa que ele responde sobre dados gerais mesmo de telas que a pessoa não abre (`:309`).
 - Rótulo "Preparar NF-e" do botão de próximos passos manda o texto "Prepare a NF-e da venda #N. Use o pedido existente; não crie outro pedido." ao campo (`CatoOrderJourney.tsx:36`).
 - Venda no saldo não tem forma fiscal mapeada: o Cato pergunta "Qual forma de pagamento deve constar na NF-e…" (`invoiceFiscalAdapter.ts:56-58`); vale conferir se isso é o desejado para o cliente que vende sempre no saldo.
+- Os textos de R1 e R4 em `rec/mundo/lib/cato_respostas.json` têm números que não fecham com o mundo (despesas 30.249,20 e resultado 69.589,55; total 132.448,67): vale corrigir na fonte em vez de só no overlay (`CORRECOES`).
+- O Cato real devolve `facts` com valores formatados na confirmação de operação (ex.: "R$ 4.790,00"); o `receipt` do mundo falso mostra o número cru ("4790"). Conferir na tela no ensaio e, se feio, ajustar no overlay.
+- A forma de pagamento "Duplicata a prazo" da NF-e mostra o vencimento em ISO (2026-12-10) no cartão; vale conferir como a tela formata.
+- Conta a pagar vencida/a vencer não existia no mundo base para o 10/11 (só uma parcela da prensa em 30/11): o "Ver sinais agora" ficaria sem contas; `apos-cap06` cria duas.

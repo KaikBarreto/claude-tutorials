@@ -32,12 +32,12 @@ Aqui embaixo você escreve do jeito que fala. O clipe anexa foto ou arquivo, e o
 Debaixo do campo ficam as suas conversas antigas, o botão pra começar uma nova e a memória.
 E nos três pontinhos ficam o som, a leitura das respostas em voz alta, os pedidos, as rotinas e o atendente. A gente volta neles já já.
 Vou clicar na primeira pergunta: como tá indo meu negócio esse mês.
-Em poucos segundos ele responde: até hoje, dia dez, a empresa vendeu uns cento e dezoito mil e seiscentos reais, e o resultado do mês está em uns sessenta e sete mil e seiscentos.
+Em poucos segundos ele responde: até hoje, dia dez, a empresa vendeu uns cento e dezoito mil e seiscentos reais, e o resultado do mês está em uns sessenta e dois mil e quinhentos.
 Embaixo, ele já sugere as próximas perguntas. É só clicar, se quiser seguir por ali.""",
 5: """Agora, as perguntas do dia a dia. Primeiro: quem tá me devendo.
 São três parceiros, que somam dezessete mil, quinhentos e quarenta reais. A Fundição Bandeira do Vale é a maior: catorze mil, trezentos e setenta.
 No estoque, ele traz o peso, o valor pelo custo médio, uns noventa e seis mil reais, e os materiais que mais pesam no valor, com o alumínio perfil na frente.
-No banco, ele separa o saldo de agora, uns cento e trinta e dois mil reais nas três contas, do que entrou e saiu no mês.
+No banco, ele separa o saldo de agora, uns cento e vinte e cinco mil reais nas três contas, do que entrou e saiu no mês.
 E o caixa: hoje ainda não tem nenhum aberto, e ele conta como fecharam os de ontem.
 Uma dica: pro Cáto, caixa é o caixa de hoje. Pra saber do mês, pergunte pelo mês.""",
 6: """Pro mês, a pergunta é do mês: compras e vendas dos últimos três meses. Aqui a resposta vem com uma linha, mês a mês.

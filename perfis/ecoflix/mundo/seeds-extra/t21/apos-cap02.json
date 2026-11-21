@@ -1,8 +1,43 @@
 {
- "_doc": "T21 · depois do cap. 2 (caps. 3 a 8): o Rafael clicou em 'Entendi e autorizo' (RPC accept_ai_terms, versão 2.0 dos termos). Vem por cima de t21/inicio.",
+ "_doc": "T21 · depois do cap. 2 (caps. 3 a 8): o Rafael clicou em 'Entendi e autorizo' (RPC accept_ai_terms, versão 2.0 dos termos). Vem por cima de t21/inicio. Traz também uma conversa antiga do Rafael (5/11, uma pergunta sobre o estoque de alumínio), para a lista 'Conversas' do cap. 4 mostrar 1 conversa.",
  "_patch": {
   "companies": [
-   {"match": {"id": "@id:company.reciclavale"}, "set": {"ai_consent_at": "2026-11-10T11:31:05.000Z", "ai_consent_version": "2.0", "ai_consent_by": "@id:user.rafael"}}
+   {
+    "match": {
+     "id": "@id:company.reciclavale"
+    },
+    "set": {
+     "ai_consent_at": "2026-11-10T11:31:05.000Z",
+     "ai_consent_version": "2.0",
+     "ai_consent_by": "@id:user.rafael"
+    }
+   }
   ]
- }
+ },
+ "cato_events": [
+  {
+   "id": "@id:t21.ev.antigo1",
+   "company_id": "@id:company.reciclavale",
+   "user_id": "@id:user.rafael",
+   "session_id": "@id:t21.sessao.antiga",
+   "created_at": "2026-11-05T14:12:00.000Z",
+   "message": "Quanto tenho de alumínio perfil em estoque?",
+   "answer": "Você tem 3.385 kg de Alumínio perfil em estoque agora.",
+   "answer_empty": false,
+   "had_chart": false,
+   "had_image": false,
+   "cache_hit": false,
+   "tools_used": [
+    "get_stock_balance"
+   ],
+   "response_payload": {
+    "answer": "Você tem 3.385 kg de Alumínio perfil em estoque agora.",
+    "interactionId": "@id:t21.ev.antigo1",
+    "toolsUsed": [
+     "get_stock_balance"
+    ],
+    "context": null
+   }
+  }
+ ]
 }
