@@ -1,6 +1,6 @@
 {
  "name": "t06-cap04",
- "title": "T6 · Cap. 4 · O cofre da empresa (narração ESTIMADA 63,5 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:41:50-03:00; logado como Rafael Nogueira)",
+ "title": "T6 · Cap. 4 · O cofre da empresa (narração 49,8 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:41:50-03:00; logado como Rafael Nogueira)",
  "seed": "t06-cap04",
  "pace": 0.5,
  "cps": 40,
@@ -139,14 +139,14 @@
  ],
  "steps": [
   {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
    "do": "eval",
    "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Disponível no cofre agora: R$ 17.000,00\", \"de R$ 18.500,00 total\", \"R$ 1.500,00 está dentro de caixas abertos\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
    "label": "confere cofre: 17.000 de 18.500, 1.500 em caixas abertos"
-  },
-  {
-   "do": "mark",
-   "name": "L1",
-   "at": 0.4
   },
   {
    "do": "hover",
@@ -156,7 +156,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.6,
-   "at": 2.86,
+   "at": 1.62,
    "label": "ZOOM Disponível no cofre agora R$ 17.000,00 (L1)",
    "optional": true,
    "timeout": 4
@@ -164,27 +164,27 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 12.91
+   "at": 9.94
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 23.2
+   "at": 18.66
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 34.11
+   "at": 26.45
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 43.57
+   "at": 34.29
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 56.37
+   "at": 44.69
   },
   {
    "do": "hover",
@@ -192,7 +192,7 @@
     "selector": "#openingBalance"
    },
    "seconds": 0.6,
-   "at": 58.21,
+   "at": 46.29,
    "label": "campo Saldo de Abertura",
    "optional": true,
    "timeout": 4
@@ -205,7 +205,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 63.49
+   "at": 49.84
   }
  ]
 }

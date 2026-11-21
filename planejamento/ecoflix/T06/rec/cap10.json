@@ -1,6 +1,6 @@
 {
  "name": "t06-cap10",
- "title": "T6 · Cap. 10 · Saque e sangria (narração ESTIMADA 132,7 s; marcas L1..L16 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:45:00-03:00; logado como Rafael Nogueira)",
+ "title": "T6 · Cap. 10 · Saque e sangria (narração 105,1 s; marcas L1..L16 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:45:00-03:00; logado como Rafael Nogueira)",
  "seed": "t06-cap10",
  "pace": 0.5,
  "cps": 40,
@@ -108,27 +108,27 @@
   {
    "do": "mark",
    "name": "L1",
-   "at": 0.4
+   "at": 0
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 7.22
+   "at": 5.3
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 17.67
+   "at": 13.54
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 25.38
+   "at": 19.38
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 35.98
+   "at": 28.02
   },
   {
    "do": "click",
@@ -137,7 +137,7 @@
     "name": "Saque / Sangria",
     "within": "main"
    },
-   "at": 36.51,
+   "at": 28.56,
    "label": "Saque / Sangria"
   },
   {
@@ -154,7 +154,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.6,
-   "at": 39.95,
+   "at": 31.38,
    "label": "opção Saque marcada",
    "optional": true,
    "timeout": 4
@@ -162,7 +162,7 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 41.04
+   "at": 32.26
   },
   {
    "do": "hover",
@@ -171,7 +171,7 @@
     "nth": 0
    },
    "seconds": 0.6,
-   "at": 41.59,
+   "at": 32.82,
    "label": "Conta de origem: Conta Principal",
    "optional": true,
    "timeout": 4
@@ -182,7 +182,7 @@
     "selector": "[role=dialog] button[role=combobox]",
     "nth": 1
    },
-   "at": 44.75,
+   "at": 35.44,
    "label": "Destino do saque"
   },
   {
@@ -191,20 +191,20 @@
     "role": "option",
     "name": "Caixa de Marcos Antunes"
    },
-   "at": 47.36,
+   "at": 37.46,
    "label": "Caixa de Marcos Antunes"
   },
   {
    "do": "mark",
    "name": "L7",
-   "at": 47.92
+   "at": 37.78
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] #amount"
    },
-   "at": 48.22,
+   "at": 38.08,
    "label": "Valor do Saque"
   },
   {
@@ -213,19 +213,19 @@
     "selector": "[role=dialog] #amount"
    },
    "text": "3.000,00",
-   "at": 50.13,
+   "at": 39.62,
    "label": "ZOOM digita R$ 3.000,00 (L7)",
    "noClick": true
   },
   {
    "do": "mark",
    "name": "L8",
-   "at": 52.82
+   "at": 41.54
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.children.length===0&&e.textContent.trim()===\"Tem tarifa no saque?\")[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;const dy=Math.round(el.getBoundingClientRect().top-330);if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 52.82,
+   "at": 41.54,
    "label": "desce a janela até a tarifa"
   },
   {
@@ -234,7 +234,7 @@
     "selector": "[role=dialog] button[role=combobox]",
     "nth": 2
    },
-   "at": 54.26,
+   "at": 42.72,
    "label": "Tem tarifa no saque?"
   },
   {
@@ -244,7 +244,7 @@
     "name": "Sim",
     "exact": true
    },
-   "at": 55.37,
+   "at": 43.72,
    "label": "Sim"
   },
   {
@@ -263,19 +263,19 @@
     "selector": "[role=dialog] #fee"
    },
    "text": "6,50",
-   "at": 56.55,
+   "at": 44.77,
    "label": "ZOOM digita R$ 6,50 (L8)",
    "noClick": true
   },
   {
    "do": "mark",
    "name": "L9",
-   "at": 57.87
+   "at": 45.76
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.children.length===0&&e.textContent.trim()===\"Efeitos desta transa\\u00e7\\u00e3o:\")[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 57.87,
+   "at": 45.76,
    "label": "desce a janela até os efeitos"
   },
   {
@@ -291,7 +291,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.6,
-   "at": 60.32,
+   "at": 48.08,
    "label": "ZOOM Efeitos desta transação (L9 e L10)",
    "optional": true,
    "timeout": 4
@@ -304,7 +304,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.6,
-   "at": 61.46,
+   "at": 48.88,
    "label": "Diminuirá em R$ 3006,50",
    "optional": true,
    "timeout": 4
@@ -317,7 +317,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.6,
-   "at": 66.39,
+   "at": 52.72,
    "label": "Aumentará em R$ 3.000,00",
    "optional": true,
    "timeout": 4
@@ -325,12 +325,12 @@
   {
    "do": "mark",
    "name": "L10",
-   "at": 67.71
+   "at": 53.6
   },
   {
    "do": "mark",
    "name": "L11",
-   "at": 81.2
+   "at": 64.48
   },
   {
    "do": "click",
@@ -340,7 +340,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 81.5,
+   "at": 64.78,
    "label": "Confirmar Saque"
   },
   {
@@ -351,7 +351,7 @@
   {
    "do": "mark",
    "name": "L12",
-   "at": 86.13
+   "at": 68.56
   },
   {
    "do": "click",
@@ -360,7 +360,7 @@
     "name": "Saque / Sangria",
     "within": "main"
    },
-   "at": 86.13,
+   "at": 68.56,
    "label": "Saque / Sangria (de novo)"
   },
   {
@@ -374,7 +374,7 @@
     "selector": "[role=dialog] button[role=combobox]",
     "nth": 1
    },
-   "at": 88.22,
+   "at": 70.48,
    "label": "Destino do saque"
   },
   {
@@ -385,7 +385,7 @@
     "exact": false
    },
    "seconds": 0.6,
-   "at": 89.39,
+   "at": 71.3,
    "label": "Cofre (Conta DINHEIRO) (sem escolher)",
    "optional": true,
    "timeout": 4
@@ -393,12 +393,12 @@
   {
    "do": "mark",
    "name": "L13",
-   "at": 98.68
+   "at": 77.86
   },
   {
    "do": "press",
    "key": "Escape",
-   "at": 98.68,
+   "at": 77.86,
    "label": "fecha a lista sem escolher"
   },
   {
@@ -407,7 +407,7 @@
     "selector": "[role=dialog] label[for=transactionDate], [role=dialog] :text(\"Data/hora do lançamento\")"
    },
    "seconds": 0.6,
-   "at": 105.83,
+   "at": 83.38,
    "label": "ZOOM Data/hora do lançamento (L13)",
    "optional": true,
    "timeout": 4
@@ -420,7 +420,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 109.02,
+   "at": 84.69,
    "label": "Cancelar"
   },
   {
@@ -433,7 +433,7 @@
   {
    "do": "mark",
    "name": "L14",
-   "at": 110.41
+   "at": 86.8
   },
   {
    "do": "click",
@@ -442,7 +442,7 @@
     "name": "Nova Movimentação Bancária",
     "within": "main"
    },
-   "at": 111.09,
+   "at": 87.66,
    "label": "Nova Movimentação Bancária"
   },
   {
@@ -456,7 +456,7 @@
     "selector": "[role=dialog] button[role=combobox]",
     "nth": 0
    },
-   "at": 118.08,
+   "at": 93.18,
    "label": "Conta bancária"
   },
   {
@@ -465,13 +465,13 @@
     "role": "option",
     "name": "Conta Secundária"
    },
-   "at": 119.37,
+   "at": 93.98,
    "label": "Conta Secundária"
   },
   {
    "do": "mark",
    "name": "L15",
-   "at": 121.24
+   "at": 95.52
   },
   {
    "do": "click",
@@ -481,7 +481,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 121.54,
+   "at": 95.82,
    "label": "Tipo Saída"
   },
   {
@@ -489,7 +489,7 @@
    "target": {
     "selector": "[role=dialog] #description"
    },
-   "at": 122.38,
+   "at": 96.7,
    "label": "Descrição"
   },
   {
@@ -502,7 +502,7 @@
    "target": {
     "selector": "[role=dialog] #amount"
    },
-   "at": 123.36,
+   "at": 97.65,
    "label": "Valor"
   },
   {
@@ -511,7 +511,7 @@
     "selector": "[role=dialog] #amount"
    },
    "text": "39,90",
-   "at": 124.59,
+   "at": 98.66,
    "label": "digita R$ 39,90",
    "noClick": true
   },
@@ -521,7 +521,7 @@
     "selector": "[role=dialog] button[role=combobox]",
     "nth": 1
    },
-   "at": 125.41,
+   "at": 98.96,
    "label": "Categoria"
   },
   {
@@ -531,13 +531,13 @@
     "name": "Tarifas",
     "exact": true
    },
-   "at": 126.47,
+   "at": 99.98,
    "label": "categoria Tarifas"
   },
   {
    "do": "mark",
    "name": "L16",
-   "at": 127.21
+   "at": 100.72
   },
   {
    "do": "eval",
@@ -552,7 +552,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 127.51,
+   "at": 101.02,
    "label": "Salvar"
   },
   {
@@ -568,7 +568,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 132.65
+   "at": 105.12
   }
  ]
 }

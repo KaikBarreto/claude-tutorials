@@ -1,6 +1,6 @@
 {
  "name": "t06-cap13",
- "title": "T6 · Cap. 13 · Fechar o caixa (narração ESTIMADA 206,3 s; marcas L1..L20 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T17:40:00-03:00; logado como Rafael Nogueira)",
+ "title": "T6 · Cap. 13 · Fechar o caixa (narração 161,8 s; marcas L1..L20 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T17:40:00-03:00; logado como Rafael Nogueira)",
  "seed": "t06-cap13",
  "pace": 0.5,
  "cps": 40,
@@ -115,14 +115,14 @@
  ],
  "steps": [
   {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
    "do": "eval",
    "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"R$ 957,10\", \"Aços Quiririm Ltda\", \"Aparecida Ramos\", \"Valdir Pereira\", \"Gás da empilhadeira\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
    "label": "confere movimento do dia no #85 (957,10)"
-  },
-  {
-   "do": "mark",
-   "name": "L1",
-   "at": 0.4
   },
   {
    "do": "hover",
@@ -140,7 +140,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.children.length===0&&e.textContent.trim()===\"Hist\\u00f3rico de Transa\\u00e7\\u00f5es\")[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;const dy=Math.round(el.getBoundingClientRect().top-120);if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/1000),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 1.78,
+   "at": 1.08,
    "label": "desce ao Histórico de Transações"
   },
   {
@@ -149,7 +149,7 @@
     "selector": "main tbody tr:has-text('Aços Quiririm Ltda')"
    },
    "seconds": 0.6,
-   "at": 3.24,
+   "at": 2.18,
    "label": "venda Aços Quiririm (Pix/Transferência)",
    "optional": true,
    "timeout": 4
@@ -160,7 +160,7 @@
     "selector": "main tbody tr:has-text('Aparecida Ramos')"
    },
    "seconds": 0.6,
-   "at": 9.92,
+   "at": 7.3,
    "label": "compra da Aparecida (Dinheiro)",
    "optional": true,
    "timeout": 4
@@ -171,7 +171,7 @@
     "selector": "main tbody tr:has-text('Valdir Pereira')"
    },
    "seconds": 0.3,
-   "at": 12.12,
+   "at": 8.98,
    "label": "compra do Valdir (Dinheiro)",
    "optional": true,
    "timeout": 4
@@ -182,7 +182,7 @@
     "selector": "main tbody tr:has-text('Gás da empilhadeira')"
    },
    "seconds": 0.3,
-   "at": 13.41,
+   "at": 10.1,
    "label": "despesa gás da empilhadeira (Dinheiro)",
    "optional": true,
    "timeout": 4
@@ -190,12 +190,12 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 16.48
+   "at": 11.94
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const c=rolagem(null);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;if(y0<3)return 'ok';const dy=-y0;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
-   "at": 16.48,
+   "at": 11.94,
    "label": "volta ao topo"
   },
   {
@@ -207,7 +207,7 @@
     "within": "main"
    },
    "seconds": 0.6,
-   "at": 18.32,
+   "at": 13.38,
    "label": "Fechar Caixa (sem cadeado)",
    "optional": true,
    "timeout": 4
@@ -215,22 +215,22 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 24.65
+   "at": 18.02
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 32.06
+   "at": 24.27
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 41.21
+   "at": 30.91
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 54.24
+   "at": 41.79
   },
   {
    "do": "click",
@@ -240,7 +240,7 @@
     "exact": true,
     "within": "main"
    },
-   "at": 55.22,
+   "at": 42.73,
    "label": "Fechar Caixa"
   },
   {
@@ -261,7 +261,7 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 58.54
+   "at": 45.52
   },
   {
    "do": "hover",
@@ -271,7 +271,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.6,
-   "at": 58.94,
+   "at": 45.92,
    "label": "ZOOM cartões do fechamento (L7 e L8)",
    "optional": true,
    "timeout": 4
@@ -284,7 +284,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.6,
-   "at": 65.17,
+   "at": 50.64,
    "label": "Compras R$ 492,90 (Dinheiro)",
    "optional": true,
    "timeout": 4
@@ -297,7 +297,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.6,
-   "at": 67.37,
+   "at": 52.4,
    "label": "Despesas R$ 50,00 (Dinheiro)",
    "optional": true,
    "timeout": 4
@@ -305,7 +305,7 @@
   {
    "do": "mark",
    "name": "L8",
-   "at": 75.13
+   "at": 58.4
   },
   {
    "do": "hover",
@@ -315,7 +315,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.6,
-   "at": 75.53,
+   "at": 58.8,
    "label": "Restante em Caixa R$ 957,10",
    "optional": true,
    "timeout": 4
@@ -323,7 +323,7 @@
   {
    "do": "mark",
    "name": "L9",
-   "at": 84.22
+   "at": 65.52
   },
   {
    "do": "hover",
@@ -333,7 +333,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.6,
-   "at": 85.0,
+   "at": 66.32,
    "label": "cartões Saídas e Entradas: Dinheiro e PIX/Transf. (L9)",
    "optional": true,
    "timeout": 4
@@ -346,7 +346,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.6,
-   "at": 88.87,
+   "at": 69.04,
    "label": "Receitas: PIX/Transf. R$ 120,00",
    "optional": true,
    "timeout": 4
@@ -354,7 +354,7 @@
   {
    "do": "mark",
    "name": "L10",
-   "at": 96.41
+   "at": 75.04
   },
   {
    "do": "click",
@@ -363,28 +363,43 @@
     "exact": false,
     "within": "[role=dialog]"
    },
-   "at": 97.47,
+   "at": 75.9,
    "label": "Projeção de Lucro (abre a tabela por material)"
   },
   {
    "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Alumínio latinha\", \"Comprado: R$ 260,40\", \"Ferro misto\", \"Comprado: R$ 232,50\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Projeção de Lucro por material (1.60.22: lista)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Relatório de Pedidos do Caixa",
+    "exact": false,
+    "within": "[role=dialog]"
+   },
+   "at": 78.22,
+   "label": "Relatório de Pedidos do Caixa (tabela comprado e vendido por material)"
+  },
+  {
+   "do": "eval",
    "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Comprado (kg)\", \"Valor Compra\", \"Vendido (kg)\", \"Valor Venda\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere tabela da Projeção de Lucro por material"
+   "label": "confere tabela do Relatório de Pedidos do Caixa por material"
   },
   {
    "do": "mark",
    "name": "L11",
-   "at": 105.72
+   "at": 82.24
   },
   {
    "do": "mark",
    "name": "L12",
-   "at": 113.89
+   "at": 88.53
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.children.length===0&&e.textContent.trim()===\"Valor de Fechamento\")[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;const dy=Math.round(el.getBoundingClientRect().top-380);if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 121.97,
+   "at": 94.99,
    "label": "desce a janela até o Valor de Fechamento"
   },
   {
@@ -395,7 +410,7 @@
   {
    "do": "mark",
    "name": "L13",
-   "at": 123.27
+   "at": 96.29
   },
   {
    "do": "hover",
@@ -403,7 +418,7 @@
     "selector": "[role=dialog] #closingBalance"
    },
    "seconds": 0.6,
-   "at": 123.83,
+   "at": 96.85,
    "label": "Valor de Fechamento (já com o esperado)",
    "optional": true,
    "timeout": 4
@@ -411,14 +426,14 @@
   {
    "do": "mark",
    "name": "L14",
-   "at": 131.06
+   "at": 102.45
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] #closingBalance"
    },
-   "at": 131.36,
+   "at": 102.75,
    "label": "campo Valor de Fechamento"
   },
   {
@@ -427,14 +442,14 @@
     "selector": "[role=dialog] #closingBalance"
    },
    "text": "950,00",
-   "at": 134.42,
+   "at": 105.14,
    "label": "digita 950,00",
    "noClick": true,
    "clear": true
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Diferença detectada\", \"R$ 7,10\", \"Registrar diferença no DRE\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Diferença detectada\", \"R$ -7,10\", \"Registrar diferença no DRE\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
    "label": "confere diferença de 7,10 a menos (950,00 contra 957,10)"
   },
   {
@@ -445,7 +460,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.6,
-   "at": 137.39,
+   "at": 107.09,
    "label": "ZOOM Diferença detectada -R$ 7,10 e a chave (L14 e L15)",
    "optional": true,
    "timeout": 4
@@ -453,7 +468,7 @@
   {
    "do": "mark",
    "name": "L15",
-   "at": 140.98
+   "at": 110.0
   },
   {
    "do": "hover",
@@ -463,7 +478,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.6,
-   "at": 141.53,
+   "at": 110.56,
    "label": "chave Registrar diferença no DRE",
    "optional": true,
    "timeout": 4
@@ -471,14 +486,14 @@
   {
    "do": "mark",
    "name": "L16",
-   "at": 155.3
+   "at": 122.08
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] #closingBalance"
    },
-   "at": 155.6,
+   "at": 122.38,
    "label": "campo Valor de Fechamento"
   },
   {
@@ -487,7 +502,7 @@
     "selector": "[role=dialog] #closingBalance"
    },
    "text": "957,10",
-   "at": 159.64,
+   "at": 125.39,
    "label": "ZOOM digita 957,10 e o valor esperado (L16)",
    "noClick": true,
    "clear": true
@@ -500,7 +515,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.6,
-   "at": 162.0,
+   "at": 127.76,
    "label": "Valor esperado pelo sistema: R$ 957,10",
    "optional": true,
    "timeout": 4
@@ -508,12 +523,12 @@
   {
    "do": "mark",
    "name": "L17",
-   "at": 164.84
+   "at": 129.94
   },
   {
    "do": "mark",
    "name": "L18",
-   "at": 178.4
+   "at": 140.66
   },
   {
    "do": "hover",
@@ -523,7 +538,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.6,
-   "at": 181.07,
+   "at": 142.74,
    "label": "ZOOM Data/hora do fechamento (L18)",
    "optional": true,
    "timeout": 4
@@ -531,7 +546,7 @@
   {
    "do": "mark",
    "name": "L19",
-   "at": 187.17
+   "at": 147.22
   },
   {
    "do": "click",
@@ -541,7 +556,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 187.47,
+   "at": 147.52,
    "label": "Confirmar Fechamento",
    "noScroll": true
   },
@@ -553,7 +568,7 @@
   {
    "do": "mark",
    "name": "L20",
-   "at": 196.33
+   "at": 154.0
   },
   {
    "do": "click",
@@ -562,7 +577,7 @@
     "name": "Não, obrigado",
     "exact": true
    },
-   "at": 197.62,
+   "at": 155.42,
    "label": "Não, obrigado"
   },
   {
@@ -578,7 +593,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 206.26
+   "at": 161.76
   }
  ]
 }

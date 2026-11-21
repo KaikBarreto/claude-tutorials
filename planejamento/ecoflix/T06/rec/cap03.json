@@ -1,6 +1,6 @@
 {
  "name": "t06-cap03",
- "title": "T6 · Cap. 3 · Abrir com zero (narração ESTIMADA 103,4 s; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:41:50-03:00; logado como Rafael Nogueira)",
+ "title": "T6 · Cap. 3 · Abrir com zero (narração 80,5 s; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:41:50-03:00; logado como Rafael Nogueira)",
  "seed": "t06-cap03",
  "pace": 0.5,
  "cps": 40,
@@ -94,12 +94,12 @@
   {
    "do": "mark",
    "name": "L1",
-   "at": 0.4
+   "at": 0
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.children.length===0&&e.textContent.trim()===\"Abertura do Caixa #85\")[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;const dy=Math.round(el.getBoundingClientRect().top-560);if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/1100),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 0.4,
+   "at": 0.2,
    "label": "rola até o Histórico de Transações"
   },
   {
@@ -108,7 +108,7 @@
     "selector": "main tbody tr:has-text('Abertura do Caixa #85')"
    },
    "seconds": 0.6,
-   "at": 5.29,
+   "at": 3.7,
    "label": "ZOOM linha Abertura do Caixa #85 R$ 1.500,00 (L1)",
    "optional": true,
    "timeout": 4
@@ -116,7 +116,7 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 13.14
+   "at": 9.14
   },
   {
    "do": "hover",
@@ -124,7 +124,7 @@
     "selector": "main tbody tr:has-text('Abertura do Caixa #85') button[aria-label='Abrir ações da movimentação']"
    },
    "seconds": 0.8,
-   "at": 20.35,
+   "at": 14.96,
    "label": "três pontinhos da linha Abertura (o menu abre ao passar o mouse)",
    "optional": true,
    "timeout": 4
@@ -132,7 +132,7 @@
   {
    "do": "eval",
    "js": "(async()=>{for(let i=0;i<40;i++){const e=[...document.querySelectorAll('[role=menuitem]')].find(e=>/editar saldo de abertura/i.test(e.textContent||''));if(e){e.click();return 'ok'}await new Promise(r=>setTimeout(r,250))}return 'SEM ALVO: '+[...document.querySelectorAll('[role=menuitem]')].map(e=>e.textContent.trim()).join('|')})()",
-   "at": 22.87,
+   "at": 16.88,
    "label": "Editar saldo de abertura"
   },
   {
@@ -148,7 +148,7 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 24.5
+   "at": 17.89
   },
   {
    "do": "hover",
@@ -158,7 +158,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.6,
-   "at": 24.9,
+   "at": 18.29,
    "label": "ZOOM Atenção: alterar o saldo de abertura (L3)",
    "optional": true,
    "timeout": 4
@@ -171,7 +171,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 35.05,
+   "at": 26.11,
    "label": "Cancelar"
   },
   {
@@ -184,7 +184,7 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 35.78
+   "at": 26.61
   },
   {
    "do": "hover",
@@ -192,7 +192,7 @@
     "selector": "main input[placeholder='Buscar transação...']"
    },
    "seconds": 0.6,
-   "at": 37.93,
+   "at": 27.61,
    "label": "Buscar transação...",
    "optional": true,
    "timeout": 4
@@ -205,7 +205,7 @@
     "within": "main"
    },
    "seconds": 0.6,
-   "at": 38.68,
+   "at": 28.87,
    "label": "Filtros",
    "optional": true,
    "timeout": 4
@@ -219,7 +219,7 @@
     "within": "main"
    },
    "seconds": 0.4,
-   "at": 39.44,
+   "at": 30.07,
    "label": "abas Todas, Dinheiro e Pix/Transferência",
    "optional": true,
    "timeout": 4
@@ -227,23 +227,23 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 46.3
+   "at": 35.25
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const c=rolagem(null);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;if(y0<3)return 'ok';const dy=-y0;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
-   "at": 48.2,
+   "at": 37.15,
    "label": "volta ao topo (sob a ilustração)"
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 58.5
+   "at": 44.94
   },
   {
    "do": "mark",
    "name": "L7",
-   "at": 65.08
+   "at": 50.62
   },
   {
    "do": "click",
@@ -253,7 +253,7 @@
     "exact": true,
     "within": "main"
    },
-   "at": 68.94,
+   "at": 53.96,
    "label": "aba Início"
   },
   {
@@ -264,7 +264,7 @@
     "exact": true,
     "within": "main"
    },
-   "at": 70.92,
+   "at": 55.32,
    "label": "Abrir Caixa (para outro usuário)"
   },
   {
@@ -278,7 +278,7 @@
    "target": {
     "selector": "[role=dialog] button[role=combobox]"
    },
-   "at": 73.0,
+   "at": 56.98,
    "label": "Abrir para o usuário (vem a Juliana)"
   },
   {
@@ -287,13 +287,13 @@
     "role": "option",
     "name": "Marcos Antunes"
    },
-   "at": 76.18,
+   "at": 59.42,
    "label": "escolhe Marcos Antunes"
   },
   {
    "do": "mark",
    "name": "L8",
-   "at": 76.74
+   "at": 59.74
   },
   {
    "do": "hover",
@@ -303,7 +303,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.6,
-   "at": 77.89,
+   "at": 60.78,
    "label": "ZOOM aviso amarelo do zero (L8)",
    "optional": true,
    "timeout": 4
@@ -311,7 +311,7 @@
   {
    "do": "mark",
    "name": "L9",
-   "at": 91.74
+   "at": 71.66
   },
   {
    "do": "hover",
@@ -319,7 +319,7 @@
     "selector": "#openingBalance"
    },
    "seconds": 0.6,
-   "at": 97.15,
+   "at": 75.9,
    "label": "campo Saldo de Abertura vazio",
    "optional": true,
    "timeout": 4
@@ -332,7 +332,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 103.41
+   "at": 80.48
   }
  ]
 }

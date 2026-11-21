@@ -214,7 +214,7 @@ Roteiro para a voz e a gravação no app 1.60.18, tela 1600x900, menu lateral ab
 | (segue a tela da linha anterior; ver `gerar.py`) | Repara no aviso: ao pagar, a cobrança de cada unidade é cancelada e vira uma fatura única, na matriz. |
 | (segue a tela da linha anterior; ver `gerar.py`) | Uma dica importante: se a filial tinha um boleto ou um Pix da assinatura dela em aberto, ela não deve mais pagar aquele documento. Quem paga agora é a matriz, nessa fatura. |
 | (segue a tela da linha anterior; ver `gerar.py`) | Repara na Cobrança recorrente, que já vem ligada: o total do grupo é cobrado sozinho todo mês. Se quiser pagar só este mês, desligue antes de escolher a forma de pagamento. |
-| (segue a tela da linha anterior; ver `gerar.py`) | Escolho o Pix, e o QR Code do grupo aparece. Também dá pra pagar no cartão ou no boleto. |
+| (segue a tela da linha anterior; ver `gerar.py`) | As formas são cartão, sempre recorrente, Pix ou boleto. Escolho o Pix, e o QR Code do grupo aparece. |
 | (segue a tela da linha anterior; ver `gerar.py`) | Pagou, e pronto: as cobranças das unidades passam a vir nessa fatura da matriz. |
 | (segue a tela da linha anterior; ver `gerar.py`) | Uma dica: pra pagar junto, todas as unidades precisam estar no mesmo ciclo, mensal ou anual. Se uma for anual e a outra mensal, o sistema avisa e não gera a fatura. Acerte o ciclo no Gerenciar e tente de novo. |
 
