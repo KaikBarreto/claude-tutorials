@@ -194,7 +194,7 @@ function conciliar() {
   const tit = titulo('Conciliação', 'O que é conciliar', 'escuro');
   const XE = 210 + 14 + chF.w;
   const S1 = enquadraRet(EIXO, ret(-RW - 75 - 8, YH - 30, Math.max(RW + 75, XE) + 8, YD + 70), { az: -.03, max: 1.4 / EE });
-  camera([[t0 - 3, S1], [tfim + 2.5, { ...S1, az: .03, d: S1.d * .985 }, 'lin']]);
+  camera([[t0 - 3, S1], [tfim + 2.5, { ...S1, az: -.012, d: S1.d * .997 }, 'lin']]);
   return t => {
     STAND(t, tit, .4);
     fi.e.style.opacity = eo(pr(t, tlc, .3)).toFixed(3);
@@ -204,7 +204,7 @@ function conciliar() {
     // com todas pareadas, a diferença é zero
     vis(dif.e, t, tdf - .1, NUNCA, { dy: 18 }); chega(dif, vD, t, tze - .05); ondaEm(onD, t, tze + .05); pulso(dif.e, t, tze + .05, .04, .8);
     // a linha que sobra
-    vis(rT.e, t, tso - .1, NUNCA, { dy: 18 }); vis(chS.e, t, tse - .05, NUNCA, { dy: 10, sc: .8 }); pulso(rT.e, t, tni, .04, .8);
+    vis(rT.e, t, tso - .1, NUNCA, { dy: 18 }); vis(chS.e, t, tse - .05, NUNCA, { dy: 10, sc: .8 }); pulso(chS.e, t, tni, .05, .8);
     dif.e.style.opacity = ((+dif.e.style.opacity || 0) * lerp(1, .5, eo(pr(t, tso, .4)))).toFixed(4);
     vis(chF.e, t, tfe - .1, NUNCA, { dy: 10, sc: .8 }); pulso(chF.e, t, tce, .05, .8); void tli;
   };
