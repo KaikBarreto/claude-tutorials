@@ -590,6 +590,12 @@
    "at": 85.65
   },
   {
+   "do": "eval",
+   "js": "(async()=>{const c=[...document.querySelectorAll('main div.overflow-x-auto')].find(e=>e.querySelector('section header h2'));if(!c)return 'SEM ALVO';const x0=c.scrollLeft,dx=420-x0,t0=performance.now();if(Math.abs(dx)<3)return 'ok';await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollLeft=x0+dx*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(c.scrollLeft)})()",
+   "at": 90.04,
+   "label": "o quadro rola para mostrar Ganho e Perdido"
+  },
+  {
    "do": "drag",
    "target": {
     "selector": "main section div.rounded-lg:has(> div p:text-is('Baterias da frota da Transportadora Caminho Firme')) button[aria-label='Mover oportunidade']"

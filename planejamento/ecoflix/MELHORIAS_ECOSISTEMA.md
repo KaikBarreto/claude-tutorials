@@ -144,3 +144,4 @@ as gravações). Cada item diz a aula em que apareceu. **No fim da produção, v
 - **T18 (21/11)**: o `useCdf` checa a permissão de um jeito que barra o admin no CDF (a aula fala só de "quem não tem permissão").
 - **T25 (21/11)**: a janela "Tarefas para hoje" não abre (1.60.18 e 1.60.22). O texto "Pressione Enter para abrir" sai quebrado por um `kbd` no meio. O "?" não abre a lista de atalhos. Na configuração do Dashboard ainda aparecem "Card Lucro" e "Evolução do Lucro".
 - **T27 (21/11)**: com o White Label ligado e o logo removido, o cartão segue dizendo "Seu logo está sendo exibido". O campo "Nome Exibido" não é usado em lugar nenhum. Cor digitada sem "#" é salva com a mensagem de sucesso e nada muda.
+- **T21 (21/11)**: "Ver itens e tributos" do Cato (`CatoFiscalDetails`) não é renderizado em lugar nenhum no 1.60.22 (componente órfão).
