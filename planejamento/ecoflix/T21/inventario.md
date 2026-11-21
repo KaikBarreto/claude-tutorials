@@ -104,3 +104,32 @@ Código lido (só leitura): `/home/claude/ecoflix/app-src-1.59.154/`. Caminhos r
   que vale é "caixa = o caixa de hoje". A fala usa isso.
 - "Mexer em cadastro segue com você": vale para criar/editar/excluir cadastro; o reajuste de preço pode ser proposto
   pelo Cato e confirmado pela pessoa. A fala diz "emitir nota, pagar conta e cadastrar seguem com você".
+
+## Revisão 1.60.22 (21/11): o que mudou desde este inventário
+
+Código lido em `/dev/shm/ecoflix-src22/src` (caminhos relativos a `src/`; edge em `supabase/functions/`). O restante deste arquivo
+(1.59.154) vale para autorização, painel de perguntas e atendente, com as trocas abaixo. A auditoria completa está em
+`cobertura_160.md`, e a fonte de cada resposta nova está em `plano.md` → "O que o Cato responde".
+
+- **Botão:** rótulo "Abrir 1 notificação do Cato" quando há aviso (`components/cato/CatoFab.tsx:332`); balão de dica com "Abrir Cato" e
+  "Fechar dica do Cato" (`:295-305`).
+- **Memória:** janela "Quer que o Cato lembre de você?" com "Agora não" e "Usar memória", uma vez por sessão com a decisão `pending`
+  (`CatoMemoryConsentDialog.tsx:33-72`, `CatoFab.tsx:185-190`); botão "Memória": abas "Minha memória" e "Da empresa", "Lembrar entre
+  conversas", "Adicionar nota", "Apagar toda a minha memória", expiração de 90 e 30 dias (`CatoMemoryDialog.tsx:48-85`); só quem tem
+  acesso total publica notas da empresa (`:63`).
+- **Painel:** o sino saiu; "Mais opções do Cato" (`CatoChatPanel.tsx:1099-1139`) tem "Notificações", "Ler respostas automaticamente",
+  "Acompanhar pedidos", "Suas rotinas", "Respostas revisadas", "Falar com atendente" e "Sobre o Cato". "Conversas", "Nova" e "Memória" ficam
+  embaixo do campo (`:1710-1712`). "Sugestões para começar" (`:1196`). Clipe "Anexar foto, arquivo ou planilha" com "Escolher foto ou arquivo" e
+  "Tirar foto" (`:1608-1617`); "Nova resposta" (`:1527`).
+- **A tese "só consulta" caiu.** 18 tipos de ação com cartão (`_shared/cato/capabilityAnswer.ts:1-19`): compra, venda, ticket de compra e de
+  venda, reajuste de preço, ajuste de saldo, baixa, saldo de parceiro, caixa, banco, transferência, cadastros, produção, conversão, NF-e,
+  abrir e fechar caixa. Cartões: `CatoActionCard.tsx` (compra, venda, ticket, preço), `CatoBalanceActionCard.tsx`, `CatoOperationActionCard.tsx`
+  (faixas em `:76-87`), `CatoInvoiceResult.tsx` (NF-e), `CatoDanfePreviewButton.tsx` ("Visualizar prévia do DANFE", "PDF para revisão. Não
+  transmite a nota."). "Ver itens e tributos" (`CatoFiscalDetails.tsx`) não é renderizado em lugar nenhum.
+- **Depois do lançamento:** "Próximos passos" (`CatoOrderJourney.tsx:29-36`), "Acompanhar pedidos" (`:72-76`), "Suas rotinas"
+  (`CatoRoutinesPanel.tsx`), "Respostas revisadas" (`CatoCorrectionsPanel.tsx:56`), pesquisa de fim de conversa (`CatoResolutionSurvey.tsx`).
+- **Anexos:** até 3 arquivos, foto JPG/PNG/WebP, PDF, XLSX e CSV (`lib/cato/attachments.ts:4-6`, `CATO_ATTACHMENT_ACCEPT`); o texto do
+  documento é tratado como dado não confiável (`_shared/cato/attachments.ts:361`).
+- **Permissão e acesso:** cada ação confere a permissão da tela; quem tem restrição de ver só os próprios cadastros, pedidos, tíquetes
+  ou contas fica sem o Cato (`config/routes.ts:309,343-364`).
+- **Fala:** a regra "o Cato consulta e você executa" foi retirada; vale "o Cato prepara, você confere e confirma no cartão".

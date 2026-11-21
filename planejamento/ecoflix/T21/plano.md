@@ -1,42 +1,107 @@
-# Plano · T21 · Cato, o assistente
+# Plano · T21 · Cato, o assistente (app 1.60.22)
 
-- **Título:** Cato, o assistente (o da fonte). **Antes:** T15 "Relatório Financeiro e DRE". **Próximo:** T25 "Dashboard,
+- **Título:** Cato, o assistente (o catálogo não muda). **Antes:** T15 "Relatório Financeiro e DRE". **Próximo:** T25 "Dashboard,
   Agenda e rotina".
-- **Objetivo:** tirar dúvida simples perguntando em português: autorizar o Cato (administrador), usar as perguntas
-  prontas, perguntar resultado do mês, quem está devendo, estoque e banco, entender gráfico × tabela, conferir o número
-  na tela de origem, saber os limites e chegar ao atendente.
-- **Áreas das vinhetas:** CATO · AUTORIZAÇÃO · PERGUNTAS · RESPOSTAS · LIMITES · AJUDA · RESUMO.
-- **Alvo da fonte:** ~8 min. Desktop (janela 1280×800), logado como **Rafael Nogueira** (MASTER); um corte como **Marcos
-  Antunes** (não administrador) no cap. 2. `FAKE_NOW=2026-11-10T08:30:00-03:00`. Todas as respostas do Cato são
-  **simuladas** no backend falso (abaixo), com os números do mundo.
-- Base: `T21/inventario.md` (código 1.59.154). O painel abre na tela "Estoque" (`/materiais`): ali as quatro perguntas
-  prontas saem sem sorteio.
+- **Objetivo:** do "só consulta" ao "prepara e você confirma": autorizar e ligar a memória; perguntar (resultado, saldos,
+  estoque, banco, caixa); gráfico × tabela e conferir na tela de origem; pedir compra, venda, ticket e reajuste de preço;
+  baixa de conta, caixa, transferência, saldo de parceiro; cadastros; anexos; NF-e de um pedido; acompanhar pedidos e
+  rotinas; limites e permissões; avaliar e chegar ao atendente.
+- **Áreas das vinhetas:** CATO · AUTORIZAÇÃO · MEMÓRIA · PERGUNTAS ×2 · RESPOSTAS · AÇÕES ×3 · FINANCEIRO ×2 · ARQUIVOS · FISCAL · ROTINA · LIMITES · AJUDA · RESUMO.
+- **Alvo:** ~24 min de vídeo (2.630 palavras, 14.065 caracteres de fala). Desktop **1600×900**, Rafael Nogueira (MASTER), cortes
+  como **Marcos Antunes** (cap. 2 e cap. 15). `FAKE_NOW=2026-11-10T08:30:00-03:00`. Todas as respostas e cartões do Cato são
+  **simulados** no backend falso, no formato real, com os números do mundo.
+- Base: `T21/inventario.md` (1.59.154) + a seção "Revisão 1.60.22" dele + `cobertura_160.md`. Código 1.60.22 em
+  `/dev/shm/ecoflix-src22/src` (edge e migrations em `supabase/`). O painel abre na tela "Estoque" (`/materiais`): ali as quatro
+  perguntas prontas saem sem sorteio (as duas últimas são sorteadas nas outras telas).
 
-## Capítulos (os da fonte, na ordem)
+## Capítulos
 
 | # | Vinheta (área / título) | O que se mostra | Ilustração | Estado de partida |
 |---|---|---|---|---|
-| 0 | (sem vinheta) | Abertura: tirar dúvida sem abrir relatório; o botão do Cato; cartão "Antes" | o problema | `inicio` |
-| 1 | CATO / Onde o Cato fica | o botão redondo no canto inferior direito; no celular, à esquerda; o clique abre a autorização | computador × celular | `inicio` |
-| 2 | AUTORIZAÇÃO / Autorizar o Cato | "Antes da primeira conversa com o Cato": os pontos; corte do Marcos ("Só o administrador..."); "Entendi e autorizo" → "Cato autorizado" | o caminho da pergunta | `inicio` → `apos-cap02` |
-| 3 | PERGUNTAS / As perguntas prontas | "Oi, Rafael 👋", as quatro perguntas; R1 "Como tá indo meu negócio esse mês?"; as pílulas de sugestão | (só tela) | `apos-cap02` |
-| 4 | PERGUNTAS / O que ele responde bem | R2 "Quem tá me devendo?" (barras), R3 estoque, R4 banco, R5 caixa; ⚠️ "caixa" = o de hoje | caixa do dia × mês | conversa do cap. 3 |
-| 5 | RESPOSTAS / Gráfico ou tabela | R6 três meses (linha), R7 vendas por cliente em outubro (barras); ⚠️ saldo × valor movimentado; R8 estoque em tabela; a regra | saldo × movimentado; a regra dos gráficos | conversa do cap. 4 |
-| 6 | RESPOSTAS / De onde vêm os números | "Consultei seu estoque", período e "Atualizado às"; "Abrir posição de estoque" → "Total geral" igual ao da resposta; "O Cato.ai pode cometer erros..." | o mesmo dado na tela e no Cato | conversa do cap. 5 |
-| 7 | LIMITES / Os limites do Cato | R9 "Emite a nota da venda pra Fundição Bandeira do Vale" → orientação; ele consulta, você executa; ⚠️ limites de uso | consulta × executa; limites | conversa do cap. 6 |
-| 8 | AJUDA / Avaliar e falar com o suporte | 👍 em R8; 👎 em R9 → "Faltou detalhe"; "Falar com atendente" → "Falar com o suporte" (sem enviar) | (só tela) | conversa do cap. 7 |
-| 9 | RESUMO / Recapitulando | montagem; cartão "Próximo: Dashboard, Agenda e rotina" | | |
+| 0 | (sem vinheta) | Abertura: pergunta e ação; cartão "Antes" | dois balões (pergunta e cartão) | `inicio` |
+| 1 | CATO / Onde o Cato fica | botão redondo, balão de dica, permissão em "Usuários e Permissões", clique abre a autorização | computador × celular | `inicio` |
+| 2 | AUTORIZAÇÃO / Autorizar o Cato | os pontos; corte do Marcos; "Entendi e autorizo" | o caminho da pergunta | `inicio` → `apos-cap02` |
+| 3 | MEMÓRIA / A memória do Cato | "Quer que o Cato lembre de você?"; "Usar memória"; botão "Memória" (nota, lápis, lixeira, expiração); aba "Da empresa" | (só tela) | `apos-cap02` |
+| 4 | PERGUNTAS / Conhecendo o painel | sugestões, clipe e microfone, "Conversas", "Mais opções do Cato", R1 e as pílulas | (só tela) | `apos-cap02` |
+| 5 | PERGUNTAS / O que ele responde bem | R2 a R5; ⚠️ caixa = o de hoje | caixa do dia × mês | conversa do cap. 4 |
+| 6 | RESPOSTAS / Gráfico, tabela e de onde vêm os números | R6, R7, R8; ⚠️ saldo × valor movimentado; "Abrir posição de estoque" → "Total geral" | saldo × movimentado; a regra dos gráficos | conversa do cap. 5 |
+| 7 | AÇÕES / Lançar uma compra pela conversa | pergunta de pagamento, cartão de compra, "Corrigir dados", "Lançar compra", "Próximos passos"; ⚠️ "sim" não confirma, cartão vale 10 min | regra do cartão; relógio de 10 min | "Nova" (semente `apos-cap06`) |
+| 8 | AÇÕES / Venda, ticket e preços | venda, ticket, reajuste de preço | estoque insuficiente | conversa do cap. 7 |
+| 9 | FINANCEIRO / Contas, caixa e banco | baixa, abrir caixa, saída no caixa, transferência, fechar caixa; ⚠️ registra, não movimenta o banco | sistema × banco | conversa do cap. 8 |
+| 10 | FINANCEIRO / Saldo de cliente e fornecedor | acerto (só saldo) × recebimento (saldo e dinheiro) | acerto × pagamento | conversa do cap. 9 |
+| 11 | AÇÕES / Cadastros | parceiro e material novos; produção só citada | cria × altera | conversa do cap. 10 |
+| 12 | ARQUIVOS / Fotos, planilhas e PDFs | foto de pesagem → ticket; print de tabela → pergunta | arquivo não manda; formatos | conversa do cap. 11 |
+| 13 | FISCAL / Nota fiscal pelo Cato | "Preparar NF-e", forma de pagamento, prévia do DANFE, "Criar rascunho", "Emitir NF-e", autorizada, "Abrir DANFE" | os três tempos; Cato × tela de Notas | conversa do cap. 12 |
+| 14 | ROTINA / Pedidos, rotinas e revisões | "Acompanhar pedidos", "Suas rotinas", "Respostas revisadas" | (só tela) | conversa do cap. 13 |
+| 15 | LIMITES / Limites e permissões | "O que você consegue fazer?", corte do Marcos, restrições, o que não faz, limites de uso | permissão nas duas portas; o que fica nas telas; limites de uso | conversa do cap. 14 |
+| 16 | AJUDA / Avaliar e falar com o suporte | 👍 e 👎, pesquisa de fim de conversa, "Falar com atendente" | (só tela) | conversa do cap. 15 |
+| 17 | RESUMO / Recapitulando | montagem; cartão "Próximo: Dashboard, Agenda e rotina" | | |
 
-Transições faladas: 1 "Com o Cato liberado na conta da empresa"; 2 "Essa janela explica"; 3 "Com o Cato autorizado";
-4 "Agora, as perguntas do dia a dia"; 5 "Pro mês, a pergunta é do mês"; 6 "Repara no que vem em cima de cada resposta";
-7 "E o que ele não faz?"; 8 "Em cada resposta, tem o joinha".
+**Cuidados (⚠️) com "Uma dica:"**: só o administrador autoriza (cap. 2); a memória é pessoal e não guarda número (cap. 3);
+"caixa" é o caixa de hoje (cap. 5); saldo × valor movimentado (cap. 6); "sim" no chat não confirma e o cartão vale 10 minutos
+(cap. 7); o Cato registra, não movimenta o banco (cap. 9); acerto × pagamento de saldo (cap. 10); arquivo sozinho não lança
+nada (cap. 12); rascunho, envio e autorização são três momentos (cap. 13); permissão conferida duas vezes e limites de uso
+(cap. 15). O limite de uso não é encenado.
 
-**Cuidados (⚠️) com "Uma dica:"**: só o administrador autoriza (cap. 2, com a mensagem do Marcos na tela, que é o ponto,
-e a saída logo depois); "caixa" é o caixa de hoje, mês se pergunta pelo mês (cap. 4); saldo × valor movimentado (cap. 5,
-Fundição: deve R$ 14.370,00, comprou R$ 112.800,00 em outubro); limites de uso por minuto e por dia, a espera resolve
-(cap. 7, ilustração; a mensagem de limite não é encenada).
+## O que o Cato responde (e a fonte no código 1.60.22)
 
-## Mundo: o que esta aula precisa
+Regras comuns, em todos os cartões: o Cato pergunta uma informação por vez (`_shared/cato/operations.ts:230` descrições e
+`systemPrompt.ts:27`); chamar a ação só propõe, "sim" escrito não executa (`capabilityAnswer.ts:33`, `systemPrompt.ts:78`);
+a prévia vale 10 minutos (`CatoActionCard.tsx:329`); a permissão é conferida de novo no clique (`systemPrompt.ts:75`).
+
+| Id | Pedido (cap.) | O que o Cato responde | Fonte (código 1.60.22) |
+|---|---|---|---|
+| A1a | compra sem forma de pagamento (7) | "Como esta compra será paga: dinheiro, Pix/transferência ou saldo com o fornecedor?" + "Nenhuma compra foi lançada." | `_shared/cato/purchaseIntent.ts:119-121,129` |
+| A1b | "Pix, pela Conta Principal" (7) | cartão "Entrada de material": Fornecedor, item, "Preços informados nesta conversa", "Total da compra", "Forma de pagamento", "Conta", "Estoque entra e o financeiro registra R$ …", "Corrigir dados", "Agora não", "Lançar compra" | `components/cato/CatoActionCard.tsx:470-545` |
+| A1c | clique (7) | "Compra lançada." + "Abrir comprovante" | `CatoActionCard.tsx:456-460,547-556` |
+| (7) | "Próximos passos" | "Pedido registrado", pagamento, "Preparar NF-e" | `CatoOrderJourney.tsx:29-36`; permissão `cato_order_journeys` em `migrations/20261115143000_cato_order_journeys.sql:12,22` |
+| A2 | venda completa no saldo (8) | cartão "Saída de material", "Total da venda", "Vencimento", "Estoque sai e o financeiro registra R$ …", "Lançar venda"; depois "Venda lançada." e "A receber: R$ …" | `CatoActionCard.tsx:476-545`; `CatoOrderJourney.tsx:30` |
+| (8) | venda sem estoque (só ilustração) | "Não há estoque suficiente de … Use a tela de Venda para escolher uma transferência ou ajuste a quantidade." | `purchaseIntent.ts:166` |
+| A3 | ticket de compra sem valores (8) | cartão "Ticket de compra", "Somente pesagem, sem valores", peso líquido, "Ao confirmar, o ticket recebe número. Estoque e financeiro não mudam até a valorização.", "Finalizar ticket" | `CatoActionCard.tsx:634-719` (649, 696, 705) |
+| A4 | reajuste dos dois cobres (8) | cartão "Tabela de preços", "Reajuste em N materiais", de → para, "Confirme em até 10 minutos.", "Sim, atualizar"; depois "Reajuste aplicado." | `CatoActionCard.tsx:270-352,138-141` |
+| A5 | baixa da parcela 1/3 (9) | faixa "Pagamento e recebimento", "Baixar conta", descrição, valor, "Forma", "Data", "Confirmar baixa"; depois "Conta baixada." | `CatoOperationActionCard.tsx:76`; `migrations/20261114161000_cato_money_operations.sql:21,47` |
+| A6 | abrir caixa com 1.500 (9) | "Abertura de caixa", "Confirmar abertura"; depois "Caixa aberto." (saldo inicial dito explicitamente, "inclusive zero") | `CatoOperationActionCard.tsx:86`; `operations.ts:169-171`; `migrations/20261114161500_cato_money_complete.sql:82,131` |
+| A7 | saída de 85 no caixa (9) | "Movimento de caixa", "Confirmar lançamento"; depois "Lançamento no caixa registrado." | `CatoOperationActionCard.tsx:78`; `20261114161000_...sql:27,50`; `20261114161500_...sql:115` |
+| A8 | transferência 2.000 (9) | "Transferência entre contas", saldos antes → depois, "Confirmar transferência"; depois "Transferência registrada." | `CatoOperationActionCard.tsx:80,371-384`; `20261114161500_...sql:99,158` |
+| A9 | fechar caixa contei 1.415 (9) | "Fechamento de caixa", diferença para o esperado, "Confirmar fechamento" (não confirmar) | `CatoOperationActionCard.tsx:87`; `operations.ts:178-181`; `20261114161500_...sql:89` |
+| A10a | abate 100 do Valdir (10) | pergunta se o saldo é de cliente ou fornecedor (simulada: a regra manda perguntar) | `systemPrompt.ts:30` |
+| A10b | "fornecedor" (10) | cartão "Movimentação no saldo", "Hoje: …", "Ele ficará te devendo R$ …", "Não movimenta caixa nem banco.", "Confirmar", "Cancelar", "Corrigir" | `components/cato/CatoBalanceActionCard.tsx:56-68` |
+| A11 | recebimento de 1.000 da Aços Quiririm (10) | faixa "Saldo do parceiro", fatos "Origem", "Destino", "Forma", "Data", "Vínculo" | `CatoOperationActionCard.tsx:77,300` |
+| A12 | cadastrar fornecedor (11) | "Novo parceiro", "Salvar cadastro"; depois "Cadastro de fornecedor salvo: …" (não altera parceiro existente) | `CatoOperationActionCard.tsx:81`; `operations.ts:102-112`; `migrations/20261114171000_cato_nonfiscal_qa_fixes.sql:59` |
+| A13 | cadastrar material (11) | "Novo material", "Salvar cadastro" (nasce sem estoque) | `CatoOperationActionCard.tsx:82`; `operations.ts:114-124` |
+| A15a | foto de pesagem (12) | "Li os dados da pesagem. O que você quer fazer com eles? Você pode pedir um ticket de compra ou de venda." | `_shared/cato/attachments.ts:68-69` |
+| A15b | "Ticket de compra" (12) | cartão do ticket (A3) com "Arquivo usado" embaixo | `CatoChatPanel.tsx:1334` |
+| A16a/b | print de tabela (12) | "Li a tabela do anexo. Você quer consultar os preços ou preparar uma atualização?"; "Esses valores são preços de compra ou de venda?" | `attachments.ts:65-66,144` |
+| (12) | arquivo ilegível (só ilustração) | "Não consegui ler o arquivo com segurança. Pode enviar uma foto mais nítida ou um recorte menor?" | `functions/cato-assist/index.ts:655` |
+| (12) | ordem escrita no arquivo (só fala) | o conteúdo é dado não confiável; o Cato não segue instruções do documento | `attachments.ts:361` |
+| A17a | "Preparar NF-e" da venda no saldo (13) | "Qual forma de pagamento deve constar na NF-e: dinheiro, PIX, transferência, boleto ou duplicata a prazo?" (a forma "saldo" não é aceita) | `_shared/cato/invoiceFiscalAdapter.ts:56-58`; botão: `CatoOrderJourney.tsx:36` |
+| A17b | "Duplicata a prazo" (13) | faixa "Nota fiscal eletrônica", "Rascunho de NF-e", "N item(ns) para <destinatário>", valor, fatos, "Visualizar prévia do DANFE" + "PDF para revisão. Não transmite a nota.", "Criar rascunho" | `CatoOperationActionCard.tsx:85,371-394`; `invoiceFiscalAdapter.ts:143`; `CatoDanfePreviewButton.tsx:26-30` |
+| A17c | "Criar rascunho" (13) | "Rascunho preparado", "Emitir NF-e", "Consultar situação" | `CatoInvoiceResult.tsx:166-198` |
+| A17d | "Emitir NF-e" (13) | "NF-e enviada para processamento na SEFAZ.", "Aguardando confirmação da SEFAZ" | `CatoOperationActionCard.tsx:261`; `CatoInvoiceResult.tsx:92,167` |
+| A17e | "Consultar situação" (13) | "NF-e autorizada", "A nota nº N foi aprovada pela SEFAZ.", "O DANFE já está pronto para abrir.", "Abrir DANFE" | `CatoInvoiceResult.tsx:131-140,143` |
+| (13) | recusa (só fala) | o `error_message` aparece no cartão; "Emitir novamente" | `CatoInvoiceResult.tsx:174-175,187` |
+| (14) | "Acompanhar pedidos" | "Pedidos lançados por você no Cato. Até 20 registros dos últimos 30 dias.", "Para acompanhar", "Outros pedidos" | `CatoOrderJourney.tsx:72-76` |
+| (14) | "Suas rotinas" | "Ver sinais agora", "Estoque sem saída há pelo menos 30 dias", "O que acompanhar", "Frequência", "Receber este resumo", "Salvar agendamento", "Agendamento salvo" | `CatoRoutinesPanel.tsx:25,68,88-105`; rótulos em `lib/cato/routines.ts:3-7` |
+| (14) | "Respostas revisadas" | "Nenhuma resposta revisada" | `CatoCorrectionsPanel.tsx:56` |
+| A18 | "O que você consegue fazer?" (15) | "O que consigo fazer no seu acesso agora", "1. Ações com sua confirmação" (lista dos 18 rótulos), "2. Consultas", "3. Limites" | `_shared/cato/capabilityAnswer.ts:1-37` |
+| A19 | Marcos pede preço (15) | "Seu usuário não tem permissão para alterar preços. Peça ao administrador da empresa para conferir seu acesso. Nenhum preço foi alterado." | `_shared/cato/priceIntent.ts:67` |
+| (15) | restrições | "…o Cato fica indisponível para evitar exposição indireta." | `config/routes.ts:343,350,357,364` |
+| (15) | o que não faz | cadastro existente, estoque, cancelar nota, reabrir caixa: "Ainda não consigo … pelo chat." | `_shared/cato/capabilities.ts:14-37,54` |
+| (16) | pesquisa de fim de conversa | "Sim / Consegui concluir", "Em parte / Ajudou, mas faltou algo", "Não / Ainda preciso resolver", "Enviar avaliação"; só depois de 2 perguntas e 3 min parado | `CatoResolutionSurvey.tsx:20-39,298`; `CatoChatPanel.tsx:120,811-822` |
+
+Menu e painel (cap. 4): "Mais opções do Cato" `CatoChatPanel.tsx:1099-1139`; "Sugestões para começar" `:1196`; clipe `:1608-1617`;
+"Conversas", "Nova", "Memória" `:1710-1712`; "Suas conversas" `CatoHistoryDialog.tsx:119-121`. Memória (cap. 3): janela
+`CatoMemoryConsentDialog.tsx:33-72` (aparece uma vez por sessão com a decisão `pending`, `CatoFab.tsx:185-190`); botão "Memória"
+`CatoMemoryDialog.tsx:48-85`. Balão de dica (cap. 1): `CatoFab.tsx:295-305`. Permissão (cap. 1 e 15): `config/routes.ts:309`.
+
+**O que saiu da fala por não dar para confirmar:** a ordem de produção e a conversão não são mostradas (sem ficha técnica
+"Fardo de alumínio" confirmada na cadeia; uma frase fala delas, sustentada pelos rótulos "Preparar produção" e "Preparar
+conversão de materiais" da lista de A18, `capabilityAnswer.ts:15-16`); "Ver itens e tributos" (componente `CatoFiscalDetails`
+não é renderizado em lugar nenhum); "valorizar ticket" como limite (não há regra que o negue, só a tela do ticket); o ambiente
+(Homologação/Produção) do cartão da nota (não anunciar); o formulário por pedido; "Respostas revisadas" só como tela vazia;
+o cartão "Quer guardar esse combinado…" da memória (depende de a conversa gerar a sugestão); números de limite de uso.
+
+## Mundo: o que esta aula precisa (do T21 antigo; o que muda está na seção seguinte)
 Além do `MUNDO_FICTICIO.md`, com os números da junção (`MUNDO_LINHA_DO_TEMPO.md`): ferro misto 6.420 kg e ferro pesado 2.180 kg
 (T10), cobre mel 42 kg e latão 214 kg (T7), o lote de alumínio que sai pra Minas na T17 e a chaparia da carga da T18 ainda no
 pátio às 08:30; preço médio = preço de compra da tabela. A T21 herda a T13, a T14 e a T15 (as ações delas ficam antes das 08:30).
@@ -56,26 +121,37 @@ Só o estoque é conferido na tela nesta aula (cap. 6); os demais números apare
 do tempo da junção (`MUNDO_LINHA_DO_TEMPO.md`), que o gerador do mundo confere. Se a semente der outros valores, trocar nas
 respostas e nas falas dos caps. 3 a 6.
 
-## Gravação
-- **Rotas:** `/materiais` (o painel abre aqui), `/materiais/posicao-estoque` (pelo botão "Abrir posição de estoque").
-- **Simular no backend falso:**
-  - edge `cato-background` (POST da pergunta) → `{ "jobId": "<uuid>" }`; a resposta é escolhida pelo texto exato da
-    pergunta (R1 a R9 abaixo);
-  - tabela `cato_jobs`: o job nasce `pending` e vira `completed` ~3 s depois, com o `response_payload` (a tela consulta a
-    cada 1 s e mostra "Pensando…", "Buscando seus dados…");
-  - edge `cato-assist` com `mode: "followups"` → `{ "suggestions": [...] }` (as 3 de cada resposta);
-  - RPCs `accept_ai_terms(p_version)` (grava `companies.ai_consent_at` e `ai_consent_version` '2.0'),
-    `set_cato_feedback`, `cato_memory_manage('status')` → `{ "enabled": false, "epoch": 0, "sharedEnabled": false,
-    "sharedEpoch": 0, "canManage": true, "preferenceRetentionDays": 90, "topicRetentionDays": 30 }`;
-  - `updatedAt` de cada `context` = a hora do relógio falso no momento da resposta (a fala não cita a hora).
-- **Sequência:** caps. 3 a 8 são uma conversa só. Gravar em sequência no mesmo navegador; para regravar um capítulo, o
-  `setup` restaura a conversa pelo `sessionStorage` (`cato-conversation-v3:<empresa>:<usuário>`) com as respostas
-  anteriores. Cap. 2 tem um corte com outro usuário (Marcos), antes do aceite.
-- **Não clicar:** "Falar no WhatsApp" (abre o WhatsApp do suporte com dados da empresa), "Ouvir resposta", o
-  microfone, "Memória" e "Conversas". O convite do beta não aparece (semente).
-- **Ilustrações** (desenho no estilo da marca, nunca tela do app): caps. 0, 1, 2, 4, 5 (duas), 6 e 7 (duas).
 
-### Respostas simuladas (formato do `response_payload`, `hooks/useCato.tsx:32-46`)
+### O que muda no mundo para o 1.60.22 (somar ao quadro acima)
+- **Sementes:** a cadeia é a do `andamento_160.md` (t14 e t15 até `apos-cap10`, mais `t21/inicio` e `t21/apos-cap02`). Em `t21/inicio`:
+  `cato_memory_manage('status')` com `personalDecision: "pending"` (cap. 3); chave `cato_adoption_nudge_<empresa>_<usuário>` **ausente** no
+  armazenamento local do Rafael (cap. 1, balão); Marcos sem `cato_memory` pendente e sem editar material (cap. 2, 15). Em `t21/apos-cap06`
+  (novo, criado na etapa 2): tudo igual a `apos-cap02`, com a conversa do cap. 6 já feita (o cap. 7 começa em "Nova").
+- **Dados do mundo que os cartões citam** (conferidos nas sementes base): fornecedores Aparecida Ramos, Cooperativa Recomeço e Valdir Pereira;
+  clientes Serra Fina Alumínio Reciclagem, Fundição Bandeira do Vale e Aços Quiririm Ltda; motoristas Jair Lopes e veículo GHT7B19;
+  tabela "Principal": alumínio latinha compra 6,20, alumínio perfil venda 10,40, cobre mel compra 42,50 e cobre misto compra 36,00;
+  parcelas "Fatura venda #1731 (parcela 1/3 a 3/3)" de R$ 4.790,00 (1/3 vence em 17/11); contas "Conta Principal" e "Conta Secundária";
+  próximo ticket 58; última nota 1248 (a da aula sai nº 1249). **Sem caixa aberto às 08:30:** o cap. 9 abre um e fecha com a diferença.
+- **A conferir no ensaio (o código não fechou só pela leitura):** o saldo inicial do "Abrir caixa" (cofre ou não); se a venda no saldo
+  pergunta a forma de pagamento da NF-e (A17a); o "Total" da venda e o líquido do ticket (aritmética do pedido: 120 × 6,20 = 744,00;
+  500 × 10,40 = 5.200,00; 1.480 − 60 = 1.420); o saldo do Valdir (R$ 300,00 → R$ 200,00); a diferença do fechamento; o selo de variação do
+  cartão de preço; o número do pedido seguinte; o título e o rótulo do cartão "Saldo do parceiro".
+
+### Gravação
+- **Rotas:** `/materiais` (o painel abre aqui), `/materiais/posicao-estoque` (cap. 6), `/usuarios` (permissão, cap. 1 e 15; conferir a rota no ensaio). Tela 1600×900.
+- **Não clicar:** "Falar no WhatsApp", "Ouvir resposta", "Apagar toda a minha memória", "Agora não" do cartão, "Confirmar fechamento".
+- **Conversas:** caps. 4 a 6 numa conversa; "Nova" no cap. 7 e os caps. 7 a 16 em outra; o `setup` restaura pelo `sessionStorage` (`cato-conversation-v3:<empresa>:<usuário>`).
+- **PDF na tela:** a prévia do DANFE (cap. 13) abre em aba nova; o robô devolve o PDF (padrão `POPS` + `PDF_JS` do `rec/t08/gerar.py`) e `cenas/ilustracoes.json` ganha a entrada `"tipo": "comprovante"`, `"cena": "pdf"` (etapa 3).
+
+### Handlers novos para a etapa 2 (overlay `rec/t21/overlay`, ver `andamento_160.md`)
+Edge: `cato-background`, `cato-assist` (`followups`), `plugnotas-emit` (+ `preview_danfe`). RPCs: `cato_confirm_{purchase,sale,weighing_ticket,
+price,partner_balance,operation}_action` (gravam de verdade; a compra e a venda por `criarPedido` de `rec/mundo/lib/eco.mjs`),
+`cato_order_journeys`, `cato_memory_manage`, `cato_routines_manage`, `cato_corrections_manage`, `get_my_cato_conversations(_messages)`,
+`submit_cato_resolution_feedback`. Tabelas: `cato_jobs`, `cato_attachments`, `cato_pending_actions`, bucket `cato-attachments`.
+Cada resposta A-série tem `expira_em` = agora + 10 min e o `action` no formato de `lib/cato/messages.ts` (`CatoPurchaseAction`,
+`CatoSaleAction`, `CatoWeighingTicketAction`, `CatoPriceAction`, `CatoBalanceAction`, `CatoOperationAction`).
+
+### Respostas simuladas R1 a R8 (as do T21 anterior, sem mudança; R9 saiu; formato do `response_payload`, `hooks/useCato.tsx:32-46`)
 Todas com `interactionId` (uuid novo), `cacheHit: false`, sem `images`, `action` nem `budgetNotice`. `context.period`
 em AAAA-MM-DD. O texto usa só o markdown que o painel desenha (negrito, listas). O campo `followups` abaixo **não** vai
 no `response_payload`: é o que a edge `cato-assist` (`mode: "followups"`) devolve em `suggestions` depois da resposta.
@@ -132,21 +208,13 @@ R8 · "Lista meu estoque em tabela"
  "table":{"title":"Estoque em 10/11/2026","columns":["Material","Quantidade (kg)","Valor em estoque"],"rows":[["Alumínio perfil",3385,30126.5],["Alumínio bloco",2830,20093],["Bateria automotiva",3960,12276],["Metal amarelo (latão)",214,5885],["Cobre misto",148,5328],["Ferro misto",6420,4815],["Alumínio latinha",640,3968],["Chaparia",3750,2625],["Ferro pesado",2180,2071],["Cobre mel",42,1785],["Plástico PET",920,1748],["Fio de cobre encapado",96,1728],["Inox",260,1508],["Bronze",38,1102],["Papelão",1850,1017.5]]},
  "followups":["Quanto vale meu estoque pela tabela de venda?","Me mostra num gráfico","O que está parado há mais tempo?"]}
 ```
-R9 · "Emite a nota da venda pra Fundição Bandeira do Vale" (pedido fora do que ele faz: vira orientação; caminho
-conferido no código: menu "Fiscal & Ambiental" › "Notas Fiscais (NF-e)", aba "Saída", botão "Nova Nota")
-```json
-{"toolsUsed":["consultar_ajuda"],"context":null,
- "answer":"Emitir nota fica com você: eu consulto e explico, mas não emito. O caminho é este:\n\n1. Abra **Fiscal & Ambiental › Notas Fiscais (NF-e)**.\n2. Na aba **Saída**, clique em **Nova Nota**.\n3. Monte a nota da venda pra Fundição Bandeira do Vale, confira e emita.\n\nA tributação da nota quem define é o seu contador.",
- "followups":["Onde vejo as notas emitidas?","Como cancelar uma nota?","Como emitir nota de entrada?"]}
-```
 
 ## Riscos e decisões para o Kaik
-1. **Respostas simuladas:** texto e números escritos aqui, no formato real do painel; o Cato real responderia com outras
-   palavras. Proposta: deixar assim (nada de IA de verdade na gravação).
-2. **Reajuste de preço:** a 1.59.154 deixa o Cato propor reajuste de preço da tabela padrão num cartão que a pessoa
-   confirma. A fonte diz que ele só consulta; a fala diz "emitir nota, pagar conta e cadastrar seguem com você" e não
-   mostra o reajuste. Mostrar?
-3. **Liberação:** o Cato só aparece com a liberação da empresa e a permissão de uso; a fala diz "com o Cato liberado na
-   conta da empresa".
-4. **Limites:** a fala não diz números (no código: 20 por minuto por usuário, 40 por minuto por empresa, 300 por dia por
-   empresa e 40 por dia por usuário, ajustáveis no servidor).
+1. **Duração:** ~24 min numa aula só (o Kaik pediu "nenhuma aula se divide"). A cobertura sugeria duas; ficou uma.
+2. **Rotinas (cap. 14):** os resumos agendados são recentes; confirmar se já estão liberados para todos os clientes antes da voz.
+3. **Balão de dica (cap. 1):** sorteia a frase e depende da chave local; se não der para encenar, a linha sai sem prejuízo.
+4. **Títulos:** o painel diz "Agente de IA da EcoSistema"; o catálogo segue "Cato, o assistente".
+5. **Ambiente da nota** não é anunciado; o modelo novo do DANFE só vale em produção a partir de 01/12/2026 (não citar).
+6. **Limites de uso:** a fala não diz números (no código: 20 por minuto por usuário, 40 por minuto por empresa, 300 por dia por empresa
+   e 40 por dia por usuário, ajustáveis no servidor, `cato-assist/index.ts:101-118`); há também o aviso por conversa "Esta conversa já
+   fez análises mais pesadas…" (`:649,807`), não encenado.
