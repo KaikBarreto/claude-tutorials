@@ -99,11 +99,8 @@
    "idle": true
   },
   {
-   "do": "click",
-   "target": {
-    "selector": "button[aria-label=\"Abrir o Cato\"]"
-   },
-   "noScroll": true
+   "do": "eval",
+   "js": "(async()=>{if(!window.__guarda){window.__guarda=1;let ts=0;document.addEventListener('focusin',e=>{const t=document.querySelector('textarea[aria-label=\\\"Mensagem para o Cato\\\"]');if(!t)return;if(e.target===t){ts=Date.now();return}if(Date.now()-ts<1500&&!e.target.closest('[role=dialog]'))t.focus()},true)}for(let k=0;k<5;k++){if(document.querySelector('[role=dialog][aria-label^=\"Cato.ai\"]'))return 'painel aberto';const b=document.querySelector('button[aria-label^=\"Abrir\"][aria-label*=\"Cato\"]');if(b)b.click();for(let i=0;i<16;i++){await new Promise(r=>setTimeout(r,250));if(document.querySelector('[role=dialog][aria-label^=\"Cato.ai\"]'))return 'painel aberto'}}return 'SEM ALVO: painel do Cato'})()"
   },
   {
    "do": "waitFor",

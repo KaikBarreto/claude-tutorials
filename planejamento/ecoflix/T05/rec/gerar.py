@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""T05 · Balança e impressora: o EcoTray. Gera rec/t05/cap00..cap11.json (roteiros do robô) a partir da voz (t05/narracao/capNN.json),
+"""T05 · Balança e impressora: o EcoTray. Gera rec/t05/cap00..cap12.json (roteiros do robô) a partir da voz (t05/narracao/capNN.json),
 mais cap02w, cap04w, cap06w e cap09w (os trechos com "device": "windows", 1280x712, para as cenas de Windows).
 
-EcoSistema 1.59.154 no Supabase falso (mundo da Recicla Vale Metais), computador 1280x800, logado como Rafael Nogueira (MASTER),
+EcoSistema 1.60.22 no Supabase falso (mundo da Recicla Vale Metais), computador 1600x900 (as cenas "w" seguem 1280x712), logado como Rafael Nogueira (MASTER),
 FAKE_NOW 2026-11-10T08:30:00-03:00 em todos os capítulos. O EcoTray (programa de Windows) é o EcoTray falso do robô
 (rec/recorder/ecotray-falso.mjs, ws 8053 e 8054): desligado nos caps. 0 a 2, ligado sem balança nos caps. 3 a 6 (a "Balança do pátio" entra no
-"Gravar" da cena, cap. 6), com a balança nos caps. 7 a 10; o resto (instalador, painel, bandeja) é cena de Windows montada por outro agente.
+"Gravar" da cena, cap. 6), com a balança nos caps. 7 a 12 (EcoTray 1.7.26: `versao` nos dicionários ECO); o resto (instalador, painel, bandeja) é cena de Windows montada por outro agente.
 Cada passo é preso a uma palavra da fala: `at` = início da palavra - folga (o custo do gesto, docs/04 "Custo real dos gestos"), e a marca
 Ln entra no início de cada linha. Quando a voz chegar, rodar de novo com o capNN.json da voz (nada a reescrever).
 Rodar de qualquer pasta: `python3 -I rec/t05/gerar.py [NN ...]`.
@@ -22,7 +22,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 TUT = os.path.normpath(os.path.join(HERE, '..', '..'))
 NARR = os.path.join(TUT, 't05', 'narracao')
 FN = '2026-11-10T08:30:00-03:00'
-FAKE_NOW = {n: FN for n in range(12)}
+FAKE_NOW = {n: FN for n in range(13)}
 # cap04: a ilustração e a cena de Windows mostram o cupom de teste às 08:41:07; o relógio do mundo parte de FAKE_NOW quando o navegador
 # abre (o setup, fora do vídeo, também gasta relógio): FAKE_NOW do cap04 = 08:41:07 - SETUP_S - instante do clique em "Testar" (no capNN.json).
 # SETUP_S: calibrar com o `eval` "hora do cupom" do ensaio (hora do navegador no clique) e o `tAct` do "Testar" no actions.json.
@@ -30,9 +30,9 @@ HORA_CUPOM = (8, 41, 7)
 SETUP_S = 10.0   # medido (04/11 ensaio): o relógio do app já marca 08:30:10 no 1º quadro
 NOMES = ['Abertura', 'O que é o EcoTray', 'Baixar e instalar', 'O pareamento automático', 'Conectar a impressora',
          'Largura do papel e impressão turbo', 'Conectar a balança', 'Peso somente pela balança', 'O indicador de peso',
-         'Quando o EcoTray cai', 'Driver incompatível', 'Recapitulando']
+         'Quando o EcoTray cai', 'Atualizar e pedir ajuda', 'Driver incompatível', 'Recapitulando']
 SEMENTE = {0: 'inicio', 1: 'inicio', 2: 'inicio', 3: 'apos-cap02', 4: 'apos-cap02', 5: 'apos-cap04', 6: 'apos-cap05', 7: 'apos-cap06',
-           8: 'apos-cap06', 9: 'apos-cap06', 10: 'apos-cap06', 11: 'apos-cap06'}
+           8: 'apos-cap06', 9: 'apos-cap06', 10: 'apos-cap06', 11: 'apos-cap06', 12: 'apos-cap06'}
 
 
 def stable_id(chave):
@@ -47,9 +47,9 @@ def stable_id(chave):
 
 RAFAEL = stable_id('user.rafael')
 try:
-    VERSAO = open(os.path.join(TUT, 'app', 'dist', '.versao-app'), encoding='utf8').read().strip() or '1.60.18'
+    VERSAO = open(os.path.join(TUT, 'app', 'dist', '.versao-app'), encoding='utf8').read().strip() or '1.60.22'
 except OSError:
-    VERSAO = '1.60.18'
+    VERSAO = '1.60.22'
 HOJE = '2026-11-10'
 STORAGE = {
     'app_version': VERSAO, 'notification_shown_version': VERSAO, f'dominex:daily-tasks-shown:{RAFAEL}': HOJE,
@@ -58,14 +58,15 @@ STORAGE = {
 
 # EcoTray falso por capítulo (rec/recorder/ecotray-falso.mjs): False = EcoTray fechado
 BAL = {'id': 'bal-patio', 'name': 'Balança do pátio', 'connected': True, 'porta': 'COM3'}
-ECO_SEM_BAL = {'balancas': [], 'casas': 3}                                    # caps. 3 a 6: ligado, sem balança cadastrada
-ECO_PATIO = {'balancas': [BAL], 'padrao': 'bal-patio', 'casas': 3}            # caps. 7 a 11: com a "Balança do pátio"
+VERSAO_ECOTRAY = '1.7.26'   # EcoTray das capturas (ecotray/version.py do 1.60.22); o app_config das sementes t05 também diz 1.7.26
+ECO_SEM_BAL = {'balancas': [], 'casas': 3, 'versao': VERSAO_ECOTRAY}                                    # caps. 3 a 6: ligado, sem balança cadastrada
+ECO_PATIO = {'balancas': [BAL], 'padrao': 'bal-patio', 'casas': 3, 'versao': VERSAO_ECOTRAY}            # caps. 7 a 12: com a "Balança do pátio"
 GENERIC = {'name': 'Generic / Text Only', 'driver': 'Generic / Text Only', 'is_compatible': False, 'incompatible_reason': (
     'Driver "Generic / Text Only" só imprime texto puro — não suporta o cupom térmico (que é gerado como imagem). '
     'Troque pelo driver térmico real da sua impressora (ex: POS-58, GP-58, Elgin i9, Bematech, ou o driver oficial do fabricante).')}
 ECO = {0: False, 1: False, 2: False, 3: ECO_SEM_BAL, 4: ECO_SEM_BAL, 5: ECO_SEM_BAL, 6: ECO_SEM_BAL,
-       7: ECO_PATIO, 8: {**ECO_PATIO, 'mudo': True}, 9: {**ECO_PATIO, 'pesoInicial': 312}, 10: {**ECO_PATIO, 'impressoras': ['POS-58', GENERIC]},
-       11: ECO_PATIO}
+       7: ECO_PATIO, 8: {**ECO_PATIO, 'mudo': True}, 9: {**ECO_PATIO, 'pesoInicial': 312}, 10: ECO_PATIO,
+       11: {**ECO_PATIO, 'impressoras': ['POS-58', GENERIC]}, 12: ECO_PATIO}
 
 
 def sementes(n):
@@ -331,8 +332,9 @@ def AJUDA(rotulo):
 
 SW_IMP, SW_BAL = CHAVE('Integração com Impressora'), CHAVE('Integração com Balança Digital')
 SW_PESO, SW_CONT = CHAVE('Peso somente pela balança'), CHAVE('Leitura contínua')
+SW_AUTO, SW_TICKET = CHAVE('Imprimir Automaticamente'), CHAVE('Imprimir comprovante do Ticket de Pesagem')
 SELO_NAO = TXT('EcoTray não detectado nesta estação')
-SELO_V = TXT('v1.7.22')
+SELO_V = TXT('v' + VERSAO_ECOTRAY)
 COMBO = {'role': 'combobox'}
 COMO = lambda n: BTNX('Como funciona?', nth=n)
 ESCALA_BTN = BTN('Ajustar Escala')
@@ -374,7 +376,7 @@ def cap01():
     c.mark(1)
     c.click(BTNX('Configurações'), at=c.A(1, 'Configurações', 0.9), label='engrenagem Configurações (rodapé do menu)', noScroll=True)
     c.waitfor(text='Configurações do Sistema', timeout=15)
-    c.click({'role': 'tab', 'name': 'Integrações'}, at=c.A(1, 'Integrações', 0.9), label='aba Integrações')
+    c.click(SEL('#tab-btn-integrations'), at=c.A(1, 'Integrações', 0.9), label='aba Integrações')   # 1.60.22: a aba é <button id=tab-btn-integrations>, sem role=tab
     c.waitfor(text=INTEG_OK, timeout=15)
     c.mark(2)
     c.cursor(NEUTRO, at=c.L(2) + 0.3, label='cursor sai da aba')
@@ -418,12 +420,12 @@ def cap02():
 
 @capitulo
 def cap03():
-    """O pareamento automático: o selo mostra "v1.7.22" (EcoTray falso ligado desde o início); ilustrações cobrem L3 e L4."""
-    c = Cap(3, start=NEUTRO, setup=integ_setup(extra=[{'do': 'waitFor', 'text': 'v1.7.22', 'timeout': 20}]), eco=ECO[3])
+    """O pareamento automático: o selo mostra "v1.7.26" (EcoTray falso ligado desde o início); ilustrações cobrem L3 e L4."""
+    c = Cap(3, start=NEUTRO, setup=integ_setup(extra=[{'do': 'waitFor', 'text': 'v' + VERSAO_ECOTRAY, 'timeout': 20}]), eco=ECO[3])
     c.mark(1)
     c.cursor(NEUTRO, at=0.3, label='cursor descansa')
     c.mark(2)
-    c.registra(SELO_V, at=c.A(2, 'selo', 0.2), label='selo "v1.7.22"')
+    c.registra(SELO_V, at=c.A(2, 'selo', 0.2), label='selo "v1.7.26"')
     c.mark(3)
     c.mark(4)
     c.mark(5)
@@ -435,7 +437,7 @@ def cap03():
 @capitulo
 def cap04():
     """Conectar a impressora: liga a Integração com Impressora, escolhe a POS-58 e Testar (a cena de Windows 4 mostra o painel do EcoTray)."""
-    c = Cap(4, start=NEUTRO, setup=integ_setup(extra=[{'do': 'waitFor', 'text': 'v1.7.22', 'timeout': 20}]), eco=ECO[4])
+    c = Cap(4, start=NEUTRO, setup=integ_setup(extra=[{'do': 'waitFor', 'text': 'v' + VERSAO_ECOTRAY, 'timeout': 20}]), eco=ECO[4])
     c.mark(1)
     c.ev(js_h3('Impressora', 120, 900), at=c.A(1, 'Agora', 0.0) + 0.3, label='mostra a seção Impressora')
     c.mark(2)
@@ -474,8 +476,11 @@ def cap05():
     c.registra(TXTX('O comprovante será gerado no tamanho exato do papel selecionado', within=DLG), at=c.A(4, 'sistema', 0.2), label='nota: tamanho exato do papel')
     c.mark(5)
     c.registra(TXT('Escala fina', within=DLG), at=c.A(5, 'escala', 0.2), label='Escala fina (100%)')
+    c.hover(BTN('Restaurar padrão', within=DLG), 0.6, at=c.A(5, 'Restaurar', 0.9), label='Restaurar padrão (desligado em 100%), sem clicar')
     c.mark(6)
-    c.click(BTN('Testar impressão'), at=c.A(6, 'Testar', 0.9), label='Testar impressão')
+    # o app manda {"action":"ping"} ao EcoTray a cada 30 s (keepalive) e o EcoTray falso responde "Ação desconhecida: ping", o que derruba uma impressão em curso:
+    # no ensaio de 21/11 o ping caiu em ~56 s do capítulo (26 + 30k s). O clique espera a palavra "um" (~1,7 s depois de "Testar"); com a voz real, conferir de novo (26 + 30k s).
+    c.click(BTN('Testar impressão'), at=c.A(6, 'um', 0.2), label='Testar impressão')
     c.waitfor(text='Comprovante de teste enviado para a impressora!', timeout=10)
     c.click(BTN('Salvar'), at=c.A(6, 'salvo', 1.0), label='Salvar')
     c.waitfor(text='Papel 58mm · Escala 100%', timeout=10)
@@ -483,14 +488,23 @@ def cap05():
     c.ev(js_rotulo('Impressão térmica turbo (beta)', 300, 900), at=c.L(7) - 0.3, label='mostra a impressão térmica turbo')
     c.registra(TURBO_LABEL, at=c.A(7, 'turbo', 0.2), label='Impressão térmica turbo (beta)')
     c.hover(AJUDA('Impressão térmica turbo (beta)'), 0.8, at=c.A(7, 'teste:', 0.9), label='? do turbo')
+    c.mark(8)
+    c.ev(js_rotulo('Imprimir Automaticamente', 240, 900), at=c.L(8) - 0.2, label='mostra Imprimir Automaticamente')
+    c.registra(SW_AUTO, at=c.A(8, 'Imprimir', 0.2), label='chave Imprimir Automaticamente (desligada, não liga)')
+    c.hover(AJUDA('Imprimir Automaticamente'), 0.8, at=c.A(8, 'sem', 0.9), label='? do Imprimir Automaticamente')
+    c.mark(9)
+    c.cursor(NEUTRO, at=c.L(9) - 0.1, label='cursor sai do "?"')
+    c.ev(js_rotulo('Imprimir comprovante do Ticket de Pesagem', 240, 700), at=c.L(9) + 0.2, label='mostra Imprimir comprovante do Ticket de Pesagem')
+    c.registra(SW_TICKET, at=c.A(9, 'Ticket', 0.2), label='chave Imprimir comprovante do Ticket de Pesagem (desligada)')
     c.fim()
     return c
 
 
 @capitulo
 def cap06():
-    """Conectar a balança: liga a chave (L3); as cenas de Windows 5 e 6 cobrem L4 a L8 (no "Gravar" a Balança do pátio entra no EcoTray);
-    de volta ao sistema o peso sobe a 18,6 kg (L10); unidade, casas, leitura contínua; sobe às chaves."""
+    """Conectar a balança: liga a chave (L3); as cenas de Windows 5 e 6 cobrem L4 a L10 (no "Gravar" a Balança do pátio entra no EcoTray; a
+    correção do peso, L8 e L9, é só da cena 6); de volta ao sistema o peso sobe a 18,6 kg (L12); unidade, casas, leitura contínua (L13, L14);
+    desce ao lápis de renomear e à balança padrão (L15, L16); sobe às chaves (L17)."""
     c = Cap(6, start=NEUTRO, setup=integ_setup(extra=[{'do': 'waitFor', 'text': 'Conectado ao EcoTray', 'timeout': 20}]), eco=ECO[6])
     c.mark(1)
     c.ev(js_h3('Integração com Balança Digital', 120, 1000), at=0.4, label='desce até Integração com Balança Digital')
@@ -500,22 +514,30 @@ def cap06():
     c.click(SW_BAL, at=c.A(3, 'Ligada', 0.9), label='liga a chave Integração com Balança Digital')
     c.waitfor(text='Nenhuma balança configurada no EcoTray', timeout=15)
     c.cursor(NEUTRO, label='cursor descansa durante as cenas de Windows')
-    for i in range(4, 9):
+    for i in range(4, 10):
         c.mark(i)
-    c.ecotray(at=c.A(8, 'Gravar', -0.3), label='Gravar: a Balança do pátio passa a existir no EcoTray', balancas=[BAL], padrao='bal-patio')
-    c.mark(9)
-    c.registra(SEL('main label:has-text("Balança do pátio")'), at=c.A(9, 'Balança', 0.2), label='Balança do pátio na lista (Conectada, padrão)')
     c.mark(10)
-    c.registra(TXTX('Peso atual:'), label='Peso atual (ao vivo)')
-    c.peso(18.6, at=c.A(10, 'põe', 0.3), label='saco de latinha na balança: 18,6 kg', subir=0.8, oscilar=0.8)
+    c.ecotray(at=c.A(10, 'Gravar', -0.3), label='Gravar: a Balança do pátio passa a existir no EcoTray', balancas=[BAL], padrao='bal-patio')
     c.mark(11)
-    c.registra(SEL('main div:has(> label:text-is("Unidade de medida padrão"))'), at=c.A(11, 'unidade', 0.2), label='Unidade de medida padrão')
-    c.registra(SEL('main div:has(> label:text-is("Casas decimais no peso"))'), at=c.A(11, 'casas', 0.2), label='Casas decimais no peso')
+    c.registra(SEL('main label:has-text("Balança do pátio")'), at=c.A(11, 'Balança', 0.2), label='Balança do pátio na lista (Conectada, padrão)')
     c.mark(12)
-    c.registra(SW_CONT, at=c.A(12, 'leitura', 0.2), label='Leitura contínua (desligada)')
-    c.hover(AJUDA('Leitura contínua'), 0.8, at=c.A(12, 'fixo.', 1.6), label='? da leitura contínua')
+    c.registra(TXTX('Peso atual:'), label='Peso atual (ao vivo)')
+    c.peso(18.6, at=c.A(12, 'põe', 0.3), label='saco de latinha na balança: 18,6 kg', subir=0.8, oscilar=0.8)
     c.mark(13)
-    c.ev(js_rotulo('Integração com Impressora', 200, 1100), at=c.A(13, 'repara', 0.4), label='sobe até as chaves da impressora e da balança')
+    c.registra(SEL('main div:has(> label:text-is("Unidade de medida padrão"))'), at=c.A(13, 'unidade', 0.2), label='Unidade de medida padrão')
+    c.registra(SEL('main div:has(> label:text-is("Casas decimais no peso"))'), at=c.A(13, 'casas', 0.2), label='Casas decimais no peso')
+    c.mark(14)
+    c.registra(SW_CONT, at=c.A(14, 'leitura', 0.2), label='Leitura contínua (desligada)')
+    c.hover(AJUDA('Leitura contínua'), 0.8, at=c.A(14, 'fixo.', 1.6), label='? da leitura contínua')
+    c.mark(15)
+    c.cursor(NEUTRO, at=c.L(15) - 1.0, label='cursor sai do "?"')
+    c.ev(js_rotulo('Balanças', 300, 1000), at=c.L(15) - 0.2, label='desce até a lista Balanças')
+    c.hover(SEL('main button[aria-label="Renomear balança"]'), 0.8, at=c.A(15, 'lápis', 0.7), label='lápis Renomear balança (sem clicar)')
+    c.mark(16)
+    c.registra(TXTX('Escolha a balança padrão desta máquina'), at=c.A(16, 'marca', 0.2), label='texto: escolha a balança padrão desta máquina')
+    c.hover(SEL('main button[role=radio]'), 0.6, at=c.A(16, 'padrão', 0.9), label='bolinha da balança padrão (sem clicar)')
+    c.mark(17)
+    c.ev(js_rotulo('Integração com Impressora', 200, 1100), at=c.A(17, 'repara', 0.4), label='sobe até as chaves da impressora e da balança')
     c.cursor(NEUTRO, label='cursor sai do "?"')
     c.fim()
     return c
@@ -530,10 +552,12 @@ def cap07():
     c.registra(SW_PESO, at=c.A(1, 'Peso', 0.2), label='chave Peso somente pela balança (desligada)')
     c.mark(2)
     c.mark(3)
-    c.hover(AJUDA('Peso somente pela balança'), 1.0, at=c.A(3, 'regra', 1.1), label='? do Peso somente pela balança')
+    c.hover(AJUDA('Peso somente pela balança'), 1.0, at=c.A(3, 'padrão', 1.1), label='? do Peso somente pela balança')
     c.mark(4)
     c.cursor(NEUTRO, at=c.L(4) - 0.1, label='cursor sai do "?"')
+    c.registra(TXT('Padrão da empresa; exceções ficam em Usuários e Permissões'), at=c.A(4, 'exceção', 0.2), label='subtítulo: Padrão da empresa; exceções ficam em Usuários e Permissões')
     c.mark(5)
+    c.mark(6)
     c.fim()
     return c
 
@@ -558,7 +582,7 @@ def cap08():
 @capitulo
 def cap09():
     """Quando o EcoTray cai: a cena 7 fecha o EcoTray (L1); o sistema avisa e o rodapé muda (L2); L5 mostra "EcoTray não encontrado" em Integrações;
-    a cena 8 reabre (L6); a balança volta sozinha e o "Tentar conectar" conecta a impressora (L7)."""
+    a cena 8 reabre (L6); a balança volta sozinha e o mouse para no "Tentar conectar", sem clicar (L7); a impressora reconecta sozinha."""
     c = Cap(9, start=NEUTRO, setup=integ_setup(espera=3.0, extra=[{'do': 'waitFor', 'text': 'Conectado ao EcoTray', 'timeout': 20},
                                                                   {'do': 'waitFor', 'text': 'Peso atual', 'timeout': 20}]), eco=ECO[9])
     c.mark(1)
@@ -574,9 +598,12 @@ def cap09():
     c.mark(6)
     c.ecotray(at=c.A(6, 'atalho', 0.3), label='EcoTray aberto de novo: só o peso volta; os comandos (impressora) demoram', ligado=True, comandos=False)
     c.mark(7)
-    c.ecotray(at=c.A(7, 'Tentar', 1.3), label='os comandos do EcoTray voltam', comandos=True)
-    c.click(BTN('Tentar conectar'), at=c.A(7, 'Tentar', 0.7), label='Tentar conectar')
-    c.waitfor(text='Conectado ao EcoTray!', timeout=10)
+    # 1.60.22: o clique em "Tentar conectar" não é confiável. O app tenta reconectar sozinho a cada ~6 s (useDirectPrint, "Conectando ao EcoTray...")
+    # e segura 3 s depois de cada falha (FAILED_THROTTLE_MS do ecotrayService): o link some durante a tentativa e, logo depois dela, o clique
+    # cai no aviso de erro. O mouse só PARA no link (a impressora segue sem comandos); os comandos voltam no fim da linha 7.
+    c.registra(RODAPE_BAL, at=c.A(7, 'sozinho', 0.2), label='rodapé: Balança do pátio · 312 kg (voltou sozinho)')
+    c.hover(BTN('Tentar conectar'), 0.8, at=c.A(7, 'Tentar', 0.9), label='Tentar conectar (sem clicar)', timeout=10)
+    c.ecotray(at=c.L(8) - 0.3, label='os comandos do EcoTray voltam (a impressora reconecta sozinha)', comandos=True)
     c.mark(8)
     c.ev(js_topo(900), at=c.L(8) - 0.2, label='volta ao topo')
     c.registra(TXTX('Programa para Windows e macOS que conecta impressora térmica'), at=c.A(8, 'abre', 0.2), label='texto do cartão: inicia automaticamente com o computador')
@@ -586,8 +613,20 @@ def cap09():
 
 @capitulo
 def cap10():
-    """Driver incompatível: a lista com o triângulo, escolhe a "Generic / Text Only" (caixa âmbar), volta à POS-58."""
+    """Atualizar e pedir ajuda: só cenas de Windows (painel, aba Logs, menu da bandeja; etapa 2). A tela web descansa em Integrações com o selo da versão."""
     c = Cap(10, start=NEUTRO, setup=integ_setup(extra=[{'do': 'waitFor', 'text': 'Conectado ao EcoTray', 'timeout': 20}]), eco=ECO[10])
+    c.mark(1)
+    c.cursor(NEUTRO, at=0.3, label='cursor descansa (as cenas de Windows 9 e 10 cobrem)')
+    c.registra(SELO_V, at=c.A(1, 'desatualizado', 0.2), label='selo da versão do EcoTray')
+    marcas_ate_o_fim(c)
+    c.fim()
+    return c
+
+
+@capitulo
+def cap11():
+    """Driver incompatível: a lista com o triângulo, escolhe a "Generic / Text Only" (caixa âmbar), volta à POS-58."""
+    c = Cap(11, start=NEUTRO, setup=integ_setup(extra=[{'do': 'waitFor', 'text': 'Conectado ao EcoTray', 'timeout': 20}]), eco=ECO[11])
     c.mark(1)
     c.ev(js_h3('Impressora', 120, 900), at=0.3, label='mostra a seção Impressora')
     c.click(COMBO, at=c.A(1, 'Imagina', 0.9), label='abre Selecione a impressora')
@@ -610,9 +649,9 @@ def cap10():
 
 
 @capitulo
-def cap11():
+def cap12():
     """Recapitulando: a montagem é da edição; o robô só deixa o Dashboard parado com as marcas."""
-    c = Cap(11, start=TOPO_DASH, setup=dash_setup(), eco=ECO[11])
+    c = Cap(12, start=TOPO_DASH, setup=dash_setup(), eco=ECO[12])
     c.mark(1)
     c.cursor(TOPO_DASH, at=0.3, label='cursor descansa')
     marcas_ate_o_fim(c)
@@ -623,7 +662,7 @@ def cap11():
 # ---------------------------------------------------------------- trechos com "device": "windows" (1280x712) para as cenas de Windows
 # o navegador aparece dentro da área de trabalho simulada: grava-se o mesmo roteiro até onde a cena cobre (a telemetria e as ações do robô
 # entram na cena deslocadas no tempo, docs/10-cena-windows.md). cap -> linha do fim (o último passo é o anterior à marca dela)
-TRECHOS_WINDOWS = {2: 12, 4: 7, 6: 10, 9: 9}
+TRECHOS_WINDOWS = {2: 12, 4: 7, 6: 12, 9: 9}
 
 
 def trecho_windows(n, d):

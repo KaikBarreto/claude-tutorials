@@ -410,6 +410,9 @@ LI = lambda trecho: NO_PAINEL(f'li:has-text("{trecho}")')
 FORTE = lambda trecho: NO_PAINEL(f'strong:has-text("{trecho}")')
 PONTO = lambda trecho: SEL(f'{DLG_AUT} li:has-text("{trecho}")')
 AGUARDA = {'do': 'waitFor', 'idle': True}
+ABRE = {'do': 'eval', 'js': "(async()=>{if(!window.__guarda){window.__guarda=1;let ts=0;document.addEventListener('focusin',e=>{const t=document.querySelector('textarea[aria-label=\\\"Mensagem para o Cato\\\"]');if(!t)return;if(e.target===t){ts=Date.now();return}if(Date.now()-ts<1500&&!e.target.closest('[role=dialog]'))t.focus()},true)}for(let k=0;k<5;k++){if(document.querySelector('[role=dialog][aria-label^=\"Cato.ai\"]'))return 'painel aberto';"
+        "const b=document.querySelector('button[aria-label^=\"Abrir\"][aria-label*=\"Cato\"]');if(b)b.click();"
+        "for(let i=0;i<16;i++){await new Promise(r=>setTimeout(r,250));if(document.querySelector('[role=dialog][aria-label^=\"Cato.ai\"]'))return 'painel aberto'}}return 'SEM ALVO: painel do Cato'})()"}
 PRONTA = lambda k: NO_PAINEL(f'[role=group][aria-label="{k + 1} de 4"]')   # as perguntas prontas do painel vazio, pela posição (1ª = 0)
 
 
@@ -472,7 +475,7 @@ def restaura(ate, aquecer=()):
     if aquecer:
         passos += IR_ESTOQUE
     return passos + [
-        {'do': 'click', 'target': FAB, 'noScroll': True},
+        ABRE,
         {'do': 'waitFor', 'selector': PAINEL, 'timeout': 10},
         {'do': 'eval', 'js': js_espera_resposta(fim_da_resposta(ate))},
         {'do': 'wait', 'seconds': 0.8},
@@ -483,7 +486,7 @@ def restaura(ate, aquecer=()):
 
 # ---------------------------------------------------------------- setups do que o capítulo pede dos anteriores (fora do vídeo)
 S_BASE = login() + IR_ESTOQUE
-S_PAINEL = S_BASE + [{'do': 'click', 'target': FAB, 'noScroll': True}, {'do': 'waitFor', 'selector': PAINEL, 'timeout': 10}, {'do': 'wait', 'seconds': 0.8}]
+S_PAINEL = S_BASE + [ABRE, {'do': 'waitFor', 'selector': PAINEL, 'timeout': 10}, {'do': 'wait', 'seconds': 0.8}]
 
 
 def pede_setup(texto, espera, cps=140):
@@ -618,8 +621,8 @@ def cap01():
     c.hover(SEL('main p:text-is("Usar o Cato (assistente de IA)")'), seconds=3.0, at=c.A(4, 'Uma', 0.0) + 0.2, label='ZOOM descrição de Usar o Cato (assistente de IA): o Cato responde sobre dados gerais da empresa, mesmo de telas que este usuário não pode abrir')
     c.mark(5)
     c.add({'do': 'goto', 'url': '/materiais', 'at': round(c.L(5) - 0.2, 2), 'label': 'volta à tela Estoque'})
-    c.waitfor(selector='button[aria-label="Abrir o Cato"]', timeout=30)
-    c.click(FAB, at=c.A(5, 'clicar', 0.8), label='clique no botão do Cato', noScroll=True)
+    c.waitfor(selector='button[aria-label^="Abrir"][aria-label*="Cato"]', timeout=30)
+    c.click(SEL('button[aria-label^="Abrir"][aria-label*="Cato"]'), at=c.A(5, 'clicar', 0.8), label='clique no botão do Cato', noScroll=True)
     c.waitfor(text='Antes da primeira conversa com o Cato', timeout=8)
     c.hover(TXT('Antes da primeira conversa com o Cato'), seconds=1.2, at=c.A(5, 'autorização', 0.7), label='janela Antes da primeira conversa com o Cato')
     c.fim()
@@ -944,7 +947,7 @@ def cap08():
     c.hover(T('Vencimento'), seconds=0.5, at=c.depois(c.L(3) + 0.1), label='cartão: Forma de pagamento Saldo com cliente e Vencimento')
     c.click(BT('Lançar venda'), at=c.A(3, 'Lançar', 0.6), label='clique em Lançar venda')
     c.waitfor(text='lançada', timeout=10)
-    c.hover(T('A receber:'), seconds=1.0, at=c.A(3, 'receber', 0.6), label='Próximos passos: A receber R$ 5.200,00', optional=True)
+    c.hover(T('A receber'), seconds=1.0, at=c.A(3, 'receber', 0.6), label='Próximos passos: A receber R$ 5.200,00', optional=True)
     c.mark(4)
     c.mark(5)
     pede(c, 'Faz um ticket de compra da Cooperativa Recomeço: plástico PET, bruto 1.480, tara 60, motorista Jair Lopes, placa GHT7B19', 'A3',
@@ -961,7 +964,7 @@ def cap08():
     c.hover(T('Cobre mel'), seconds=1.0, at=c.depois(c.A(7, 'hoje', 0.5)), label='cartão de preços: Cobre mel R$ 42,50 → R$ 43,00')
     c.mark(8)
     c.click(BT('Sim, atualizar'), at=c.A(8, 'Sim', 0.6), label='clique em Sim, atualizar')
-    c.waitfor(text='Reajuste aplicado', timeout=10)
+    c.waitfor(text='Reajuste na tabela padrão', timeout=10)
     c.fim()
     return c
 
@@ -1190,7 +1193,7 @@ def cap15():
 
 def cap15b():
     """Corte do cap15, linha 2: o Marcos pede o preço do cobre mel e o Cato recusa."""
-    c = Cap(15, login(EMAIL_MARCOS) + IR_ESTOQUE + [{'do': 'click', 'target': FAB, 'noScroll': True}, {'do': 'waitFor', 'selector': PAINEL, 'timeout': 10}],
+    c = Cap(15, login(EMAIL_MARCOS) + IR_ESTOQUE + [ABRE, {'do': 'waitFor', 'selector': PAINEL, 'timeout': 10}],
             pace=0.5, start=(900, 520), sub='b', voz_de=(2, 2), user='marcos')
     c.mark(1)
     pede(c, 'Atualiza o preço de compra do cobre mel pra 43 reais', 'A19', c.A(1, 'responde', 0.0), cedo=c.A(1, 'Marcos', 0.2))

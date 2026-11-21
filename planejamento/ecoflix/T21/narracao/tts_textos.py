@@ -26,7 +26,7 @@ A memória é só sua, dentro da empresa. Outro usuário não vê, e ela não gu
 O Rafael clica em Usar memória. Se preferir, é só clicar em Agora não e ligar depois.
 Tudo que ele guardou fica no botão Memória, embaixo do painel. Dá pra escrever uma nota, corrigir, apagar uma por uma ou apagar tudo.
 As notas valem por noventa dias, e os assuntos recentes, por trinta. Desligar a chave só pausa: o que já estava salvo continua lá.
-E tem a aba Da empresa, com as notas que valem pra todo mundo que usa o Cáto. Só quem tem acesso total escreve ali.""",
+E tem a aba Da empresa, com as notas que valem pra todo mundo que usa o Cáto. Como você tem acesso total, é você quem liga ou desliga essas notas.""",
 4: """Com a memória resolvida, o painel do Cáto abre aqui do lado, com quatro perguntas prontas pra quebrar o gelo.
 Aqui embaixo você escreve do jeito que fala. O clipe anexa foto ou arquivo, e o microfone escreve o que você disser, pra você conferir antes de enviar.
 Debaixo do campo ficam as suas conversas antigas, o botão pra começar uma nova e a memória.
@@ -56,7 +56,7 @@ Com tudo na mão, ele monta este cartão. Fornecedor, material, quantidade, pre�
 Repara nesta linha: até aqui, nada mudou. O estoque só entra e o financeiro só registra quando você confirma.
 Uma dica: escrever sim na conversa não confirma nada. Quem lança é o botão do cartão, e é você quem clica.
 Errou alguma coisa? Corrigir dados devolve o pedido pro campo, pra você mudar só o que precisa. E Agora não desiste, sem lançar.
-Conferi, está certo: Lançar compra. Pronto, a compra entrou, e o comprovante abre aqui.
+Conferi, está certo: Lançar compra. Pronto, a compra entrou, e o botão Abrir comprovante fica aqui.
 Embaixo, ele ainda mostra os próximos passos desse pedido.
 Uma dica: o cartão vale por dez minutos. Passou disso, ou mudou algum cadastro no meio, ele expira, e é só pedir de novo.""",
 8: """A venda é igual. Desta vez eu já digo tudo de uma vez: cliente, material, quantidade, preço e pagamento. Quinhentos quilos de alumínio perfil pra Serra Fina, a dez reais e quarenta centavos, no saldo, com vencimento dia dez de dezembro.
@@ -68,13 +68,13 @@ Ticket só registra a pesagem. Estoque e financeiro só mudam quando ele for val
 E os preços. Peço pra subir cinquenta centavos na compra dos dois cobres, e o cartão mostra o preço de hoje e o novo, lado a lado.
 Sim, atualizar. Vale pra um material, pra vários ou pra tabela inteira, em porcentagem ou em reais.""",
 9: """No financeiro, a mesma lógica. A Fundição pagou a primeira parcela, e eu peço a baixa: recebi por Pix, na Conta Principal.
-Confirmar baixa, e a conta está baixada.
+Confirmar registro, e a conta está baixada.
 Uma dica: o Cáto registra no sistema. Ele não manda Pix nem movimenta a sua conta no banco. O dinheiro você movimenta no banco, e aqui fica o registro.
 Dá pra abrir o caixa por aqui. Ele exige que você diga o valor contado, mesmo que seja zero.
 Lançar uma saída, ou uma entrada, com o motivo e a categoria. Aqui, oitenta e cinco reais de gás da empilhadeira. Vale pro caixa, e vale pra conta do banco.
 Transferir entre contas, ou do banco pro caixa. O cartão mostra o saldo de cada conta antes e depois.
 E fechar o caixa: você diz quanto contou, e ele mostra a diferença pro que o sistema esperava, antes de você confirmar.""",
-10: """Com saldo de parceiro, tem dois pedidos diferentes. O primeiro é o acerto: o Valdir abateu cem reais do vale dele, em troca de uma bateria.
+10: """Com saldo de parceiro, tem dois pedidos diferentes. O primeiro é o acerto: o Valdir abateu cem reais do vale dele, em troca de uma bateria. O Cáto pergunta se é cliente ou fornecedor, e eu respondo: fornecedor.
 O cartão diz quanto ele te devia e quanto vai dever. E avisa: esse acerto não mexe em caixa nem em banco.
 O segundo é quando entrou dinheiro de verdade. A Aços Quiririm pagou mil reais do que devia. Aí o saldo dela cai e o dinheiro entra na conta.
 Uma dica: acerto muda só o saldo. Pagamento ou recebimento muda o saldo e o dinheiro. Diga qual dos dois você quer.""",

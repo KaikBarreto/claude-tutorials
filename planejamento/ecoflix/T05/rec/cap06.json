@@ -1,6 +1,6 @@
 {
  "name": "t05-cap06",
- "title": "T05 · Cap. 6 · Conectar a balança (narração 115,7 s ESTIMADA; marcas L1..L13 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T05 · Cap. 6 · Conectar a balança (narração 172,3 s ESTIMADA; marcas L1..L17 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "seed": "t05-cap06",
  "pace": 0.5,
  "cps": 9,
@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
   "pwa-install-dismissed": "true",
   "theme": "light",
@@ -185,11 +185,21 @@
   {
    "do": "mark",
    "name": "L8",
-   "at": 61.33
+   "at": 69.0
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 76.72
+  },
+  {
+   "do": "mark",
+   "name": "L10",
+   "at": 88.83
   },
   {
    "do": "ecotray",
-   "at": 62.21,
+   "at": 90.09,
    "label": "Gravar: a Balança do pátio passa a existir no EcoTray",
    "balancas": [
     {
@@ -203,8 +213,8 @@
   },
   {
    "do": "mark",
-   "name": "L9",
-   "at": 66.31
+   "name": "L11",
+   "at": 94.19
   },
   {
    "do": "type",
@@ -215,7 +225,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 68.21,
+   "at": 96.09,
    "label": "Balança do pátio na lista (Conectada, padrão)"
   },
   {
@@ -231,21 +241,21 @@
   },
   {
    "do": "mark",
-   "name": "L10",
-   "at": 73.04
+   "name": "L12",
+   "at": 100.92
   },
   {
    "do": "balanca",
    "peso": 18.6,
    "subir": 0.8,
    "oscilar": 0.8,
-   "at": 73.62,
+   "at": 101.5,
    "label": "saco de latinha na balança: 18,6 kg"
   },
   {
    "do": "mark",
-   "name": "L11",
-   "at": 81.97
+   "name": "L13",
+   "at": 116.0
   },
   {
    "do": "type",
@@ -256,7 +266,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 82.12,
+   "at": 116.15,
    "label": "Unidade de medida padrão"
   },
   {
@@ -268,13 +278,13 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 84.09,
+   "at": 118.12,
    "label": "Casas decimais no peso"
   },
   {
    "do": "mark",
-   "name": "L12",
-   "at": 91.81
+   "name": "L14",
+   "at": 125.84
   },
   {
    "do": "type",
@@ -285,7 +295,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 92.26,
+   "at": 126.3,
    "label": "Leitura contínua (desligada)"
   },
   {
@@ -294,20 +304,82 @@
     "selector": "main label:text-is(\"Leitura contínua\") ~ svg"
    },
    "seconds": 0.8,
-   "at": 99.21,
+   "at": 133.24,
    "label": "? da leitura contínua",
    "optional": true,
    "timeout": 4
   },
   {
+   "do": "scroll",
+   "point": {
+    "x": 1000,
+    "y": 560
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 137.31,
+   "label": "cursor sai do \"?\""
+  },
+  {
    "do": "mark",
-   "name": "L13",
-   "at": 104.07
+   "name": "L15",
+   "at": 138.11
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll('main label')].find(e=>e.textContent.trim()===\"Balanças\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/1000),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 138.11,
+   "label": "desce até a lista Balanças"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button[aria-label=\"Renomear balança\"]"
+   },
+   "seconds": 0.8,
+   "at": 139.58,
+   "label": "lápis Renomear balança (sem clicar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L16",
+   "at": 146.65
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "Escolha a balança padrão desta máquina"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 149.08,
+   "label": "texto: escolha a balança padrão desta máquina"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button[role=radio]"
+   },
+   "seconds": 0.6,
+   "at": 149.9,
+   "label": "bolinha da balança padrão (sem clicar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L17",
+   "at": 160.67
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll('main label')].find(e=>e.textContent.trim()===\"Integração com Impressora\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-200);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/1100),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 104.07,
+   "at": 160.67,
    "label": "sobe até as chaves da impressora e da balança"
   },
   {
@@ -329,11 +401,12 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 115.73
+   "at": 172.32
   }
  ],
  "ecotray": {
   "balancas": [],
-  "casas": 3
+  "casas": 3,
+  "versao": "1.7.26"
  }
 }

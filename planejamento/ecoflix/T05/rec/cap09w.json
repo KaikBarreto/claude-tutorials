@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
   "pwa-install-dismissed": "true",
   "theme": "light",
@@ -201,25 +201,35 @@
    "at": 47.02
   },
   {
-   "do": "ecotray",
-   "at": 54.12,
-   "label": "os comandos do EcoTray voltam",
-   "comandos": true
+   "do": "type",
+   "target": {
+    "selector": "footer span.tabular-nums"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 48.69,
+   "label": "rodapé: Balança do pátio · 312 kg (voltou sozinho)"
   },
   {
-   "do": "click",
+   "do": "hover",
    "target": {
     "role": "button",
     "name": "Tentar conectar",
     "exact": true
    },
-   "at": 54.72,
-   "label": "Tentar conectar"
+   "seconds": 0.8,
+   "at": 54.52,
+   "label": "Tentar conectar (sem clicar)",
+   "timeout": 10,
+   "optional": true
   },
   {
-   "do": "waitFor",
-   "text": "Conectado ao EcoTray!",
-   "timeout": 10
+   "do": "ecotray",
+   "at": 57.82,
+   "label": "os comandos do EcoTray voltam (a impressora reconecta sozinha)",
+   "comandos": true
   },
   {
    "do": "mark",
@@ -271,6 +281,7 @@
   ],
   "padrao": "bal-patio",
   "casas": 3,
+  "versao": "1.7.26",
   "pesoInicial": 312
  },
  "device": "windows"
