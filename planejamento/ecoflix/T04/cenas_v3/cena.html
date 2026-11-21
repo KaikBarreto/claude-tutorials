@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- T04 "Clientes e fornecedores" · ilustrações no kit v3 (perfis/ecoflix/cenas_v3/LEIA.md), 16:9 (--larg 1422).
+     Uma função por CENA e CAPS[cap] diz o que cada capítulo ilustrado usa. As janelas (de/ate) estão em ../cenas/ilustracoes.json.
+       cap00 · quemEntraSai       (claro)   ilu00_patio               "Quem entra e sai do pátio"   quem traz sucata, quem leva, e o saldo entre os dois
+       cap01 · clienteFornecedor  (escuro)  ilu01_cliente_fornecedor  "Cliente e fornecedor"        cliente: sai material, entra dinheiro; fornecedor: o contrário
+       cap07 · saldoUnico         (escuro)  ilu07_saldo_unico         "Um saldo só"                 compra R$ 2.100,00 − venda R$ 1.260,00 = a Recicla deve R$ 840,00
+       cap08 · qualPreco          (escuro)  ilu08_qual_preco          "Qual preço vale na compra"   preço especial do parceiro; se não tiver, a tabela dele; por último, o do material
+       cap12 · lerSaldo           (escuro)  ilu12_ler_saldo           "Como ler o saldo"            verde = pra receber, vermelho = pra pagar; no fornecedor o sinal é ao contrário
+       cap14 · fungivel           (claro)   ilu14_fungivel            "Sucata é fungível"           a latinha de todo mundo no mesmo fardo; por isso a margem usa a venda média
+     O PDF do cap16 (papel real) está em pdf.html.
+     Só textos e números da fala e da tela. Âncoras por palavra (W) sobre a voz real ($TUT_HOME/t04/narracao/capNN.json).
+     Vermelho (.vm/.dv) só aqui: é a cor que a tela do app usa para "a pagar", e a fala a nomeia.
+     Acabamento: node perfis/ecoflix/cenas_v3/auditar.cjs --aula planejamento/ecoflix/T04 --larg 1422
+     Render de uma janela: node ferramentas/edit/cenas/render_cenas.cjs <cap> <capNN.json> saida.mp4 \
+               --html planejamento/ecoflix/T04/cenas_v3/cena.html --larg 1422 --dsf 1.35 --de <s> --ate <s>
+     Ícones lucide usados (o nome tem de estar literal nesta página): 'map-pin' 'truck' 'factory' 'scale' 'warehouse' 'user-round'
+     'package' 'banknote' 'shopping-cart' 'receipt' 'building-2' 'table' 'circle-help' 'arrow-down-left' 'arrow-up-right'
+     'trending-up' 'badge-check' 'arrow-left-right' 'hand-coins' 'users' 'file-text' 'shuffle' -->
+</head><body>
+<script type="module">
+import { PI, cl, lerp, pr, eo, eio, eo5, eis, passa, golpe, W, el, ic, vis, foco, pulso, ondaEm, conta, titulo, posTitulo, selo,
+  htmlChip, htmlCartao, htmlOp, htmlFluxo, fluxo, CENA, GL, mundo, mancha, piso, anel, destaque, U, camera, lugar, plano, clima, cena,
+  estilo, enquadraRet, grupo }
+  from '../../../../perfis/ecoflix/cenas_v3/motor.js';
+import { ceuClaro, mundoEscuro } from '../../../../perfis/ecoflix/cenas_v3/fundo.js';
+import { galpao } from '../../../../perfis/ecoflix/cenas_v3/objetos/galpao.js';
+import { fundicao } from '../../../../perfis/ecoflix/cenas_v3/objetos/fundicao.js';
+import { caminhao, dirige, bascula } from '../../../../perfis/ecoflix/cenas_v3/objetos/caminhao.js';
+import { carroca } from '../../../../perfis/ecoflix/cenas_v3/objetos/carroca.js';
+import { pessoa } from '../../../../perfis/ecoflix/cenas_v3/objetos/pessoa.js';
+import { tambor } from '../../../../perfis/ecoflix/cenas_v3/objetos/tambor.js';
+import { pecas } from '../../../../perfis/ecoflix/cenas_v3/objetos/monte.js';
+import { bigBag } from '../../../../perfis/ecoflix/cenas_v3/objetos/bigBag.js';
+import { saco } from '../../../../perfis/ecoflix/cenas_v3/objetos/saco.js';
+import { fardo } from '../../../../perfis/ecoflix/cenas_v3/objetos/fardo.js';
+import { htmlFluxoCartoes, fluxoCartoes, parte } from '../../../../perfis/ecoflix/cenas_v3/dados/fluxoCartoes.js';
+import { reais } from '../../../../perfis/ecoflix/cenas_v3/dados/base.js';
+
+// =====================================================================================================================
+// comuns
+const NUNCA = 1e9, EE = .0112, AMB = '#F2B63D', ROTC = [-.2, .08, 0];
+const arco = (a, b, p, alt) => [lerp(a[0], b[0], p), lerp(a[1], b[1], p) + alt * 4 * p * (1 - p), lerp(a[2], b[2], p)];
+const cores = () => estilo('t04-cor', `.chip.am{background:linear-gradient(150deg,#F7CB68,#E59A22);color:#3A2A06;border-color:rgba(255,255,255,.4);box-shadow:0 12px 22px -8px rgba(229,154,34,.6)}
+.selo.vm{background:linear-gradient(150deg,#FF9A88,#DE4B3E);box-shadow:0 10px 18px -6px rgba(222,75,62,.6),inset 0 1px 0 rgba(255,255,255,.4)}
+.pl.escuro .cartao.dv{border-color:rgba(255,140,124,.5)}.pl.escuro .cartao.dv .num{color:#FF9C8C}`);
+const cartaoP = (icone, rot, sub, cls, cw = 190) => htmlFluxoCartoes({ cartoes: [[icone, rot, sub, cls]], cw });   // cartão pequeno (selo + rótulo + legenda)
+// o lugar do número até a fala dizer o valor (tracejado), como na T08, na T06 e na T03
+const vaga = (c, w = 236, cor = 'rgba(190,245,218,.34)') => el(`<div class="ab" style="left:22px;bottom:20px;width:${w}px;height:44px;border-radius:12px;border:2px dashed ${cor}"></div>`, c.e);
+const chega = (c, v, t, a) => { const k = eo(pr(t, a, .3)); c.e.querySelector('.num').style.opacity = k.toFixed(3); v.style.opacity = (1 - k).toFixed(3); };
+const some = (o, k, s = 1) => { o.visible = k > .002; if (o.visible) o.scale.setScalar(k * s); };   // objeto 3D que entra crescendo (k passa de 1 e volta)
+// degrau: cartão baixo de uma linha (selo + nome + legenda opcional), todos da mesma altura
+const degrau = (icone, rot, sub, o = {}) => `<div class="cartao ${o.cc ?? ''}" style="position:relative;width:${o.w ?? 360}px;height:${o.h ?? 84}px;padding:0 20px;display:flex;align-items:center;gap:13px;white-space:nowrap">
+  ${selo(icone, o.cls ?? 'n', 46)}<div><div class="rot">${rot}</div>${sub ? `<div class="sub"${o.fs ? ` style="font-size:${o.fs}px"` : ''}>${sub}</div>` : ''}</div></div>`;
+// um lugar do mundo escuro: posições em px do desenho (y para baixo)
+function escuro() {
+  const EIXO = lugar([0, 0, 0]), E = mundoEscuro(EIXO, 0, EE);
+  return { EIXO, X: (html, x, y, o = {}) => E(html, x * EE, -y * EE, 0, o), ret: (a, b, c, d) => [a * EE, -d * EE, c * EE, -b * EE], fundo: (cx, cy, o) => E.fundo(cx * EE, -cy * EE, o) };
+}
+const seta = (g, d, cor = 'var(--vc)') => { g.insertAdjacentHTML('beforeend', `<path d="${d}" stroke="${cor}" stroke-width="2.8" opacity="0"/>`); return g.lastElementChild; };
+const ambar = g => { g.querySelector('.ft').setAttribute('stroke', AMB); g.querySelector('.fh').setAttribute('fill', AMB); };
+
+// =====================================================================================================================
+// CENA "quemEntraSai" · cap00, linhas 0 a 2 · clima claro (o pátio visto de longe)
+// 0 "Oi! Neste tutorial a gente vai montar a base de quem entra e sai do pátio da Recicla Vale Metais."
+// 1 "De um lado, quem traz sucata: o carroceiro, a cooperativa, a oficina. Do outro, quem leva: a siderúrgica, a fundição."
+// 2 "E entre os dois fica o saldo: quem está te devendo, e quem tem crédito com você. É isso que a gente vai aprender a ler."
+// O galpão da Recicla Vale; a câmera abre para a esquerda e chegam o carroceiro, o caminhão da cooperativa e a oficina;
+// abre para tudo e, à direita, a siderúrgica e a fundição recebem a carga; na frente, entre os dois lados, o saldo.
+function quemEntraSai() {
+  const t0 = W(0, 'oi'), trv = W(0, 'recicla'), tum = W(1, 'de'), ttr = W(1, 'quem'), tca = W(1, 'carroceiro'), tco = W(1, 'cooperativa'), tof = W(1, 'oficina'),
+    tou = W(1, 'do'), tle = W(1, 'quem', 2), tsi = W(1, 'siderurgica'), tfu = W(1, 'fundicao'), ten = W(2, 'entre'), tsa = W(2, 'saldo'), tdv = W(2, 'quem'), tcr = W(2, 'quem', 2),
+    tler = W(2, 'ler'), tfim = W(2, 'ler', 1, 'e');
+  piso({ r: 40, x: 0, z: -1, passo: 1.6 }); U.uNevoa.value.set(.955, .975, .965, .8); ceuClaro({ halo: [0, 4.4, -22] });
+  const GP = galpao(CENA, [0, 0, -3]); GP.scale.setScalar(.5);
+  // quem traz: o carroceiro (anda até parar, a passada fecha inteira), o caminhão da cooperativa e a oficina
+  const ZC = 2.4, XS = -10.9, PASSO = PI / 5.2, X0 = XS - 14 * PASSO, CAR = carroca(CENA, [X0, 0, ZC], { carga: 'misto', n: 30 }), CAT = pessoa(CENA, [X0 + 1.95, 0, ZC], { camisa: '#C8664A', bone: '#3E4A59' });
+  const KC = .55, PC = grupo(CENA, [0, 0, -.5]); PC.scale.setScalar(KC); const TC = caminhao(PC, { tipo: 'tres4', bau: 'grade', carga: 70, cor: '#5B8FD6' }), sC = mancha(7.4, 3.3, [0, 0, .15], { op: .8, pai: PC });
+  const XC0 = -19 / KC, XC1 = -6.3 / KC;
+  const OF = grupo(CENA, [-3.5, 0, 2.6]); pessoa(OF, [.45, 0, 0], { camisa: '#4F86B0', colete: '#F2B63D' }); tambor(OF, [-.5, 0, -.1]); tambor(OF, [-.95, 0, .55], { cor: '#C8553D', corE: '#9E3F2C' });
+  // quem leva: a siderúrgica e a fundição; o caminhão da Recicla sai do galpão com a carga
+  const SD = fundicao(CENA, [6.7, 0, -3.4]), FD = fundicao(CENA, [10.2, 0, 1.7]);
+  const KT = .5, PT = grupo(CENA, [0, 0, 1.3]); PT.scale.setScalar(KT); const TR = caminhao(PT, { carga: 120 }), sT = mancha(8.6, 3.5, [0, 0, .15], { op: .8, pai: PT });
+  const XT0 = .9 / KT, XT1 = 4.5 / KT;   // parado na porta do galpão desde o começo; sai com a carga no "quem leva"
+  const EC = .0185, CH = (html, pos, o = {}) => plano(html, { pos, rot: ROTC, esc: EC, anc: [.5, 1], ...o });
+  const chRV = CH(htmlChip(`${ic('map-pin', 18)}Recicla Vale Metais`), [0, 3.75, -3]);
+  const chTr = CH(htmlChip(`${ic('package', 18)}quem traz sucata`), [-7.2, 5.5, 0]), chLe = CH(htmlChip(`${ic('truck', 18)}quem leva`), [7.3, 5.5, 0]);
+  const chCa = CH(htmlChip('Carroceiro', 'n'), [XS + 1.1, 2.55, ZC]), chCo = CH(htmlChip('Cooperativa', 'n'), [-6.3, 3.65, -.5]), chOf = CH(htmlChip('Oficina', 'n'), [-3.5, 2.75, 2.6]);
+  const chSi = CH(htmlChip(`${ic('factory', 18)}Siderúrgica`, 'n'), [6.7, 4.1, -3.4]), chFu = CH(htmlChip(`${ic('factory', 18)}Fundição`, 'n'), [10.2, 3.0, 1.7]);
+  // entre os dois lados, na frente: o saldo
+  const ZS = 9.6, YS = .8, ES = .019;
+  const cS = plano(cartaoP('scale', 'Saldo', 'entre os dois', 'res', 190), { pos: [0, YS, ZS], rot: ROTC, esc: ES }), sS = mancha(5.2, 1.6, [0, 0, ZS - .1], { op: 0 });
+  const chDv = plano(htmlChip(`${ic('arrow-down-left', 18)}quem está te devendo`), { pos: [-cS.w / 2 * ES - .45, YS, ZS], rot: ROTC, esc: ES, anc: [1, .5] });
+  const chCr = plano(htmlChip(`${ic('hand-coins', 18)}quem tem crédito com você`, 'n'), { pos: [cS.w / 2 * ES + .45, YS, ZS], rot: ROTC, esc: ES, anc: [0, .5] });
+  const tit = titulo('Clientes e fornecedores', 'Quem entra e sai do pátio');
+  const C0 = { x: 0, y: 2.25, z: -1.5, d: 18.5, az: .12, el: .16 }, C1 = { x: -4.9, y: 2.75, z: 0, d: 25, az: .06, el: .17 }, C2 = { x: 0, y: 2.5, z: 0, d: 34, az: .02, el: .2 }, C3 = { x: 0, y: 1.5, z: 2.2, d: 34.6, az: .0, el: .22 };
+  camera([[t0 - 3, C0], [tum - .8, { ...C0, d: 18.1, az: .1 }, 'lin'], [tum + .6, C1], [tou - .5, { ...C1, d: 24.6, az: .045 }, 'lin'], [tou + .9, C2], [ten - .5, { ...C2, d: 33.6, az: .01 }, 'lin'], [ten + .9, C3],
+    [tfim + 2.5, { ...C3, d: 34.1, az: -.02 }, 'lin']]);
+  const tw1 = tca + .35, tw0 = tw1 - 2.6, tc1 = tco + .3, tc0 = tc1 - 2.4, tl0 = tle + .1, tl1 = tsi + .5;
+  return t => {
+    GL.style.opacity = eo(pr(t, t0 + .08, .5)).toFixed(3); posTitulo(tit, t, t0 - .9, t0 - .45);
+    vis(chRV.e, t, trv - .1, NUNCA, { dy: 10 });
+    // quem traz
+    vis(chTr.e, t, ttr - .1, NUNCA, { dy: 10, sc: .8 });
+    const x = lerp(X0, XS, 1 - Math.pow(1 - pr(t, tw0, tw1 - tw0), 2.2)); CAR.position.x = x; for (const r of CAR.userData.rodas) r.rotation.z = -x / CAR.userData.R; CAT.position.x = x + 1.95; CAT.userData.anda((x - X0) * 5.2, -.42);
+    vis(chCa.e, t, tca - .1, NUNCA, { dy: 10, sc: .8 });
+    const pc = pr(t, tc0, tc1 - tc0), xc = lerp(XC0, XC1, 1 - Math.pow(1 - pc, 2.4)); dirige(TC, xc, () => 0, { arfa: -.008 * golpe(pr(t, tc1 - .2, .7), 1.3) }); sC.position.x = xc + .1;
+    vis(chCo.e, t, tco - .1, NUNCA, { dy: 10, sc: .8 });
+    some(OF, passa(pr(t, tof - .25, .6), 1.3), 1.15); vis(chOf.e, t, tof - .1, NUNCA, { dy: 10, sc: .8 });
+    // quem leva
+    vis(chLe.e, t, tle - .1, NUNCA, { dy: 10, sc: .8 });
+    some(SD, passa(pr(t, tsi - .3, .6), 1.25), .46); vis(chSi.e, t, tsi - .1, NUNCA, { dy: 10, sc: .8 });
+    some(FD, passa(pr(t, tfu - .3, .6), 1.25), .32); vis(chFu.e, t, tfu - .1, NUNCA, { dy: 10, sc: .8 });
+    const xt = lerp(XT0, XT1, eio(pr(t, tl0, tl1 - tl0))); dirige(TR, xt, () => 0, { arfa: -.008 * golpe(pr(t, tl1 - .15, .7), 1.3) }); bascula(TR, 0); sT.position.x = xt + .1;
+    // o saldo
+    vis(cS.e, t, tsa - .15, NUNCA, { dy: 20, sc: .94 }); sS.material.uniforms.uOp.value = .55 * Math.min(1, +cS.e.style.opacity || 0); pulso(cS.e, t, tsa + .25, .05, .8); pulso(cS.e, t, tler, .05, .8);
+    vis(chDv.e, t, tdv - .1, NUNCA, { dx: 10, dy: 0, sc: .8 }); vis(chCr.e, t, tcr - .1, NUNCA, { dx: -10, dy: 0, sc: .8 });
+  };
+}
+
+// =====================================================================================================================
+// CENA "clienteFornecedor" · cap01, linha 1 · clima escuro (o sentido do material e do dinheiro)
+// 1 "Cliente é pra quem a Recicla Vale vende: sai material, entra dinheiro. Fornecedor é de quem ela compra: entra
+//    material, sai dinheiro."
+// A Recicla Vale no meio; à direita o Cliente (o material vai, o dinheiro vem); a câmera abre e, à esquerda, o Fornecedor
+// (o material vem, o dinheiro vai). Material em verde, dinheiro em âmbar.
+function clienteFornecedor() {
+  const t0 = W(1, 'cliente'), trv = W(1, 'recicla'), tve = W(1, 'vende'), tsm = W(1, 'sai'), ted = W(1, 'entra'), tfo = W(1, 'fornecedor'), tcp = W(1, 'compra'), tem = W(1, 'entra', 2),
+    tsd = W(1, 'sai', 2), tfim = W(1, 'dinheiro', 2, 'e');
+  cores();
+  const { EIXO, X, ret, fundo } = escuro(), VAO = 270;
+  const cR = X(cartaoP('warehouse', 'Recicla Vale', 'vende e compra', 'n', 236), 0, 0), CW = cR.w, XI = CW / 2, DX = CW + VAO;
+  const cC = X(cartaoP('user-round', 'Cliente', 'pra quem ela vende', 'res', CW), DX, 0), cF = X(cartaoP('truck', 'Fornecedor', 'de quem ela compra', 'a', CW), -DX, 0);
+  // os fios: em cima o material, embaixo o dinheiro (10 px de respiro nas duas pontas)
+  const x1 = VAO - 10, par = () => htmlFluxo(VAO, 120, [`M10 38H${x1}`, `M${x1} 82H10`]);
+  const fD = X(par(), XI, -60, { anc: [0, 0], z: -40 }), fE = X(par(), -XI - VAO, -60, { anc: [0, 0], z: -40 });
+  const pts = f => { const G = [...f.e.children]; ambar(G[1]); return [G, seta(G[0], `M${x1 - 9} 30L${x1} 38L${x1 - 9} 46`), seta(G[1], `M19 74L10 82L19 90`, AMB)]; };
+  const [GD, pD0, pD1] = pts(fD), [GE, pE0, pE1] = pts(fE);
+  const XM = XI + VAO / 2, chip = (txt, cls, x, s) => X(htmlChip(txt, cls), x, s * 38, { anc: [.5, s < 0 ? 1 : 0], z: 40 });
+  const chSM = chip(`${ic('package', 18)}sai material`, '', XM, -1), chED = chip(`${ic('banknote', 18)}entra dinheiro`, 'am', XM, 1);
+  const chEM = chip(`${ic('package', 18)}entra material`, '', -XM, -1), chSD = chip(`${ic('banknote', 18)}sai dinheiro`, 'am', -XM, 1);
+  fundo(0, 0, { aneis: false });
+  const tit = titulo('Clientes e fornecedores', 'Cliente e fornecedor', 'escuro');
+  const S1 = enquadraRet(EIXO, ret(-XI, -80, DX + XI, 80), { az: -.03, max: 1.4 / EE }), S2 = enquadraRet(EIXO, ret(-DX - XI, -80, DX + XI, 80), { az: .0, max: 1.4 / EE });
+  camera([[t0 - 3, S1], [tfo - .55, { ...S1, az: -.012, d: S1.d * .985 }, 'lin'], [tfo + .6, S2], [tfim + 2.5, { ...S2, az: .03, d: S2.d * .98 }, 'lin']]);
+  const lado = (t, f, G, p0, p1, a, b, c0, c1) => {
+    f.e.style.opacity = eo(pr(t, a - .15, .3)).toFixed(3); G[1].style.opacity = eo(pr(t, b - .15, .3)).toFixed(3);
+    fluxo(f.e, 0, t, a - .1, .6, { luz: [a, .8], fica: .75 }); p0.setAttribute('opacity', eo(pr(t, a + .4, .2)).toFixed(3)); vis(c0.e, t, a - .05, NUNCA, { dy: 10, sc: .8 });
+    fluxo(f.e, 1, t, b - .1, .6, { luz: [b, .8], fica: .75 }); p1.setAttribute('opacity', eo(pr(t, b + .4, .2)).toFixed(3)); vis(c1.e, t, b - .05, NUNCA, { dy: -10, sc: .8 });
+  };
+  return t => {
+    clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, t0 - .45);
+    vis(cC.e, t, t0 - .1, NUNCA, { dy: 20 }); vis(cR.e, t, trv - .15, NUNCA, { dy: 20 }); pulso(cC.e, t, tve, .04, .8);
+    lado(t, fD, GD, pD0, pD1, tsm, ted, chSM, chED);
+    vis(cF.e, t, tfo - .1, NUNCA, { dy: 20 }); pulso(cF.e, t, tcp, .04, .8); pulso(cR.e, t, tcp - .15, .03, .8);
+    lado(t, fE, GE, pE0, pE1, tem, tsd, chEM, chSD);
+  };
+}
+
+// =====================================================================================================================
+// CENA "saldoUnico" · cap07, linhas 5 e 6 · clima escuro (a conta do saldo)
+// 5 "Na semana passada, a Recicla comprou dois mil e cem reais de sucata dele, sem pagar na hora. E vendeu pra ele mil
+//    duzentos e sessenta reais de papelão e PET, também pra acertar depois."
+// 6 "Em vez de dois saldos, fica um só, com a conta das duas coisas: a Recicla deve oitocentos e quarenta reais pro depósito."
+// A compra; a câmera abre para a venda; abre de novo e as duas viram um saldo só (em vermelho, como na tela: a pagar).
+function saldoUnico() {
+  const t0 = W(5, 'na'), tcp = W(5, 'comprou'), t21 = W(5, 'dois'), tsp = W(5, 'sem'), tvd = W(5, 'vendeu'), t12 = W(5, 'mil', 2), tac = W(5, 'pra', 2),
+    tem = W(6, 'em'), tds = W(6, 'dois'), tum = W(6, 'um'), tct = W(6, 'conta'), tdv = W(6, 'deve'), t84 = W(6, 'oitocentos'), tdp = W(6, 'deposito'), tfim = W(6, 'deposito', 1, 'e');
+  cores();
+  const { EIXO, X, ret, fundo } = escuro(), CW = 300, DX = 396, XL = -DX - CW / 2;
+  const cA = X(htmlCartao('shopping-cart', 'Compra', 'de sucata', reais(2100), { w: CW }), -DX, 0), vA = vaga(cA, 220);
+  const cB = X(htmlCartao('receipt', 'Venda', 'de papelão e PET', reais(1260), { w: CW }), 0, 0), vB = vaga(cB, 220);
+  const cS = X(htmlCartao('scale', 'Saldo único', 'a Recicla deve', reais(840), { w: CW, cls: 'vm' }), DX, 0), vS = vaga(cS, 200, 'rgba(255,150,134,.5)'); cS.e.classList.add('dv');
+  const oM = X(htmlOp('−'), -DX / 2, 0, { z: 40 }), oI = X(htmlOp('='), DX / 2, 0, { z: 40 });
+  const chD = X(htmlChip(`${ic('building-2', 18)}Depósito Irmãos Siqueira`), XL, -66 - 16, { anc: [0, 1], z: 40 }), chT = X(htmlChip('cliente e fornecedor', 'n'), XL + chD.w + 10, -66 - 16, { anc: [0, 1], z: 40 });
+  const chS = X(htmlChip('sem pagar na hora', 'n'), -DX, 66 + 16, { anc: [.5, 0], z: 40 }), chA = X(htmlChip('pra acertar depois', 'n'), 0, 66 + 16, { anc: [.5, 0], z: 40 });
+  fundo(0, 0, { aneis: false });
+  const tit = titulo('Cliente e fornecedor', 'Um saldo só', 'escuro');
+  const XD = Math.max(XL + chD.w + 10 + chT.w, -DX + CW / 2), o = { max: 1.42 / EE };
+  const S1 = enquadraRet(EIXO, ret(XL, -122, XD, 122), { az: -.03, ...o }), S2 = enquadraRet(EIXO, ret(XL, -122, CW / 2, 122), { az: -.01, ...o }), S3 = enquadraRet(EIXO, ret(XL, -122, DX + CW / 2, 122), { az: .015, ...o });
+  camera([[t0 - 3, S1], [tvd - .6, { ...S1, az: -.015, d: S1.d * .985 }, 'lin'], [tvd + .5, S2], [tem - .3, { ...S2, az: .005, d: S2.d * .985 }, 'lin'], [tem + .9, S3], [tfim + 2.5, { ...S3, az: .04, d: S3.d * .98 }, 'lin']]);
+  return t => {
+    clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, t0 - .45);
+    vis(chD.e, t, t0 - .1, NUNCA, { dy: 10, sc: .8 }); vis(chT.e, t, t0 + .15, NUNCA, { dy: 10, sc: .8 });
+    vis(cA.e, t, tcp - .15, NUNCA, { dy: 22 }); chega(cA, vA, t, t21 - .1); vis(chS.e, t, tsp - .1, NUNCA, { dy: -10, sc: .8 });
+    vis(cB.e, t, tvd - .15, NUNCA, { dy: 22 }); chega(cB, vB, t, t12 - .1); vis(chA.e, t, tac - .1, NUNCA, { dy: -10, sc: .8 });
+    // em vez de dois saldos, um só: a conta das duas coisas
+    pulso(cA.e, t, tds, .035, .8); pulso(cB.e, t, tds + .12, .035, .8);
+    vis(cS.e, t, tum - .15, NUNCA, { dy: 22, sc: .94 }); vis(oM.e, t, tct - .1, NUNCA, { sc: .6, dy: 0 }); vis(oI.e, t, tct + .15, NUNCA, { sc: .6, dy: 0 });
+    chega(cS, vS, t, t84 - .1); pulso(cS.e, t, tdv, .035, .8); pulso(cS.e, t, t84 + .5, .045, .8); pulso(chD.e, t, tdp, .06, .8);
+  };
+}
+
+// =====================================================================================================================
+// CENA "qualPreco" · cap08, linha 4 · clima escuro (a regra de qual preço vale na compra)
+// 4 "E se tiver preço especial? Na compra, vale primeiro o preço especial do parceiro. Se não tiver, a tabela dele. E por
+//    último, o preço do material."
+// A pergunta; depois a cascata de cima para baixo, um degrau por frase (a mesma forma da T03, cap. 12).
+function qualPreco() {
+  const t0 = W(4, 'e'), tpe = W(4, 'preco'), tva = W(4, 'vale'), tpri = W(4, 'primeiro'), tp2 = W(4, 'preco', 2), tse = W(4, 'se', 2), ttab = W(4, 'tabela'), tult = W(4, 'por'), tp3 = W(4, 'preco', 3), tfim = W(4, 'material', 1, 'e');
+  cores();
+  const { EIXO, X, ret, fundo } = escuro();
+  const fx = X(htmlFluxoCartoes({ cartoes: [['user-round', 'Preço especial do parceiro', 'vale primeiro', 'res'], ['table', 'A tabela dele', 'Tabela Depósitos', 'n'], ['package', 'Preço do material', 'por último', 'n']],
+    vertical: true, cw: 360, vao: 78 }), 0, 0);
+  const C = [0, 1, 2].map(i => parte(fx.e, i)), yc = i => -fx.h / 2 + C[i].offsetTop + C[i].offsetHeight / 2, ym = i => (yc(i) + yc(i + 1)) / 2, XL = -fx.w / 2, XR = fx.w / 2;
+  const num = [0, 1, 2].map(i => X(htmlOp(String(i + 1)), XL - 16 - 24, yc(i), { z: 40 }));
+  const chQ = X(htmlChip(`${ic('circle-help', 18)}e se tiver preço especial?`, 'am'), XR + 16, yc(0), { anc: [0, .5], z: 40 });
+  const chS = X(htmlChip('se não tiver', 'n'), 34, ym(0), { anc: [0, .5], z: 40 }), chU = X(htmlChip('por último', 'n'), 34, ym(1), { anc: [0, .5], z: 40 });
+  fundo(0, 0);
+  const tit = titulo('Preços', 'Qual preço vale na compra', 'escuro');
+  const S = enquadraRet(EIXO, ret(XL - 64, -fx.h / 2, XR + 16 + chQ.w, fx.h / 2), { az: -.035, max: 1.4 / EE });
+  camera([[t0 - 3, S], [tfim + 2.5, { ...S, az: .04, d: S.d * .97 }, 'lin']]);
+  const T = [tpe - .25, ttab - .15, tp3 - .15];
+  return t => {
+    clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, t0 - .45);
+    fluxoCartoes(fx.e, t, T[0] - .1, NUNCA, { tempos: T });
+    vis(chQ.e, t, tpe - .05, NUNCA, { dx: -10, dy: 0, sc: .8 }); foco(chQ.e, t, -9, tva, { min: .6 });
+    vis(num[0].e, t, tpri - .1, NUNCA, { sc: .6, dy: 0 }); pulso(C[0], t, tp2, .035, .8);
+    vis(chS.e, t, tse - .1, NUNCA, { dx: -10, dy: 0, sc: .8 }); vis(num[1].e, t, T[1] + .05, NUNCA, { sc: .6, dy: 0 }); pulso(C[1], t, ttab + .25, .035, .8);
+    vis(chU.e, t, tult - .1, NUNCA, { dx: -10, dy: 0, sc: .8 }); vis(num[2].e, t, T[2] + .05, NUNCA, { sc: .6, dy: 0 }); pulso(C[2], t, tp3 + .3, .035, .8);
+  };
+}
+
+// =====================================================================================================================
+// CENA "lerSaldo" · cap12, linhas 2 a 4 · clima escuro (a regra das cores do saldo)
+// 2 "Uma dica: pra ler qualquer saldo, pensa sempre do lado da Recicla Vale. Verde é dinheiro pra receber. Vermelho é
+//    dinheiro pra pagar."
+// 3 "No cliente, saldo positivo é verde: ele te deve. Saldo negativo é vermelho: ele adiantou dinheiro, e você deve a ele."
+// 4 "No fornecedor é ao contrário. Positivo é vermelho: você deve a ele, como aqui. Negativo é verde: você adiantou, e
+//    ele te deve."
+// Em cima, a regra (verde e vermelho, do lado da Recicla Vale); a câmera abre para a tabela: a linha do cliente e, depois,
+// a do fornecedor, com as cores trocadas. Cada casa ganha a cor e a frase na palavra que a diz.
+function lerSaldo() {
+  const t0 = W(2, 'pra'), tpe = W(2, 'pensa'), tvd = W(2, 'verde'), tvm = W(2, 'vermelho'),
+    tcl = W(3, 'cliente'), tp3 = W(3, 'positivo'), tv3 = W(3, 'verde'), td3 = W(3, 'ele'), tn3 = W(3, 'negativo'), tm3 = W(3, 'vermelho'), ta3 = W(3, 'ele', 2), te3 = W(3, 'voce'),
+    tfo = W(4, 'fornecedor'), tct = W(4, 'ao'), tp4 = W(4, 'positivo'), tm4 = W(4, 'vermelho'), td4 = W(4, 'voce'), taq = W(4, 'como'), tn4 = W(4, 'negativo'), tv4 = W(4, 'verde'), ta4 = W(4, 'voce', 2),
+    te4 = W(4, 'ele', 2), tfim = W(4, 'deve', 2, 'e');
+  cores();
+  estilo('t04-vg', `.t04vg{position:absolute;inset:0;border-radius:var(--r3);border:1.5px solid rgba(190,245,218,.3);background:rgba(255,255,255,.035);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:30px;color:rgba(255,255,255,.4)}
+.t04sb span{opacity:0}`);
+  const { EIXO, X, ret, fundo } = escuro(), WL = 190, WC = 340, XLb = -352, XP = -63, XN = 297, Y1 = 0, Y2 = 108, YH = -84, YG = -178, YR = -264, XF = 467;
+  // a regra
+  const chL = X(htmlChip(`${ic('warehouse', 18)}do lado da Recicla Vale`), 0, YR, { z: 40 });
+  const lgV = X(degrau('arrow-down-left', 'Verde', 'dinheiro pra receber', { w: 320, cls: '', cc: 'res', fs: 14.5 }), -172, YG), lgM = X(degrau('arrow-up-right', 'Vermelho', 'dinheiro pra pagar', { w: 320, cls: 'vm', cc: 'dv', fs: 14.5 }), 172, YG);
+  // a tabela: linhas = cliente e fornecedor; colunas = saldo positivo e saldo negativo
+  const hP = X(htmlChip('saldo positivo <b style="margin-left:2px">+</b>', 'n'), XP, YH, { z: 40 }), hN = X(htmlChip('saldo negativo <b style="margin-left:2px">−</b>', 'n'), XN, YH, { z: 40 });
+  const rC = X(degrau('user-round', 'Cliente', '', { w: WL }), XLb, Y1), rF = X(degrau('truck', 'Fornecedor', '', { w: WL }), XLb, Y2);
+  const casa = (x, y, verde, sinal, partes) => { const p = X(`<div style="position:relative;width:${WC}px;height:84px">${degrau(verde ? 'arrow-down-left' : 'arrow-up-right', verde ? 'Verde' : 'Vermelho',
+    `<span class="t04sb">${partes.map(s => `<span>${s}</span>`).join('')}</span>`, { w: WC, cls: verde ? '' : 'vm', cc: verde ? 'res' : 'dv', fs: 14.5 })}<div class="t04vg">${sinal}</div></div>`, x, y);
+    p.c = p.e.firstElementChild; p.v = p.e.lastElementChild; p.s = [...p.c.querySelectorAll('.t04sb span')]; return p; };
+  const CP = casa(XP, Y1, true, '+', ['ele te deve']), CN = casa(XN, Y1, false, '−', ['ele adiantou: ', 'você deve a ele']);
+  const FP = casa(XP, Y2, false, '+', ['você deve a ele']), FN = casa(XN, Y2, true, '−', ['você adiantou: ', 'ele te deve']);
+  const cor = (p, t, a) => { const k = eo(pr(t, a, .35)); p.c.style.opacity = k.toFixed(3); p.v.style.opacity = (1 - k).toFixed(3); p.c.style.transform = `translateY(${((1 - eo5(pr(t, a, .6))) * 10).toFixed(2)}px)`; };
+  const diz = (p, t, ...a) => p.s.forEach((s, i) => { s.style.opacity = eo(pr(t, a[i], .3)).toFixed(3); });
+  const YB = Y2 + 42 + 16, chC = X(htmlChip(`${ic('arrow-left-right', 18)}ao contrário`, 'am'), XLb, YB, { anc: [.5, 0], z: 40 }), chA = X(htmlChip(`${ic('map-pin', 18)}como aqui: Cooperativa Recomeço`, 'n'), XP, YB, { anc: [.5, 0], z: 40 });
+  fundo(0, -40, { aneis: false });
+  const tit = titulo('Conta-corrente', 'Como ler o saldo', 'escuro');
+  const TOPO = YR - 19, S1 = enquadraRet(EIXO, ret(-332, TOPO, 332, YG + 42), { az: -.03, max: 1.45 / EE }), S2 = enquadraRet(EIXO, ret(-XF, TOPO, XF, Y1 + 42), { az: -.01, max: 1.4 / EE }),
+    S3 = enquadraRet(EIXO, ret(-XF, TOPO, XF, YB + 38), { az: .01, max: 1.4 / EE });
+  camera([[t0 - 3, S1], [tcl - .7, { ...S1, az: -.012, d: S1.d * .985 }, 'lin'], [tcl + .6, S2], [tfo - .7, { ...S2, az: .01, d: S2.d * .985 }, 'lin'], [tfo + .5, S3], [tfim + 2.5, { ...S3, az: .035, d: S3.d * .98 }, 'lin']]);
+  return t => {
+    clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, t0 - .45);
+    vis(chL.e, t, tpe - .1, NUNCA, { dy: 10, sc: .8 });
+    vis(lgV.e, t, tvd - .1, NUNCA, { dy: 20 }); vis(lgM.e, t, tvm - .1, NUNCA, { dy: 20 });
+    // no cliente
+    vis(rC.e, t, tcl - .1, NUNCA, { dy: 18 });
+    vis(hP.e, t, tp3 - .1, NUNCA, { dy: 10, sc: .8 }); vis(CP.e, t, tp3 - .05, NUNCA, { dy: 18 }); cor(CP, t, tv3 - .1); diz(CP, t, td3 - .1); pulso(lgV.e, t, tv3, .035, .8);
+    vis(hN.e, t, tn3 - .1, NUNCA, { dy: 10, sc: .8 }); vis(CN.e, t, tn3 - .05, NUNCA, { dy: 18 }); cor(CN, t, tm3 - .1); diz(CN, t, ta3 - .1, te3 - .1); pulso(lgM.e, t, tm3, .035, .8);
+    // no fornecedor é ao contrário
+    vis(rF.e, t, tfo - .1, NUNCA, { dy: 18 }); vis(chC.e, t, tct - .1, NUNCA, { dy: -10, sc: .8 });
+    pulso(hP.e, t, tp4, .07, .8); vis(FP.e, t, tp4 - .05, NUNCA, { dy: 18 }); cor(FP, t, tm4 - .1); diz(FP, t, td4 - .1); pulso(lgM.e, t, tm4, .035, .8);
+    vis(chA.e, t, taq - .1, NUNCA, { dy: -10, sc: .8 });
+    pulso(hN.e, t, tn4, .07, .8); vis(FN.e, t, tn4 - .05, NUNCA, { dy: 18 }); cor(FN, t, tv4 - .1); diz(FN, t, ta4 - .1, te4 - .1); pulso(lgV.e, t, tv4, .035, .8);
+  };
+}
+
+// =====================================================================================================================
+// CENA "fungivel" · cap14, linhas 5 e 6 · clima claro (o pátio: a latinha de todo mundo no mesmo fardo)
+// 5 "Fungível quer dizer que se mistura. A latinha da cooperativa vai pro mesmo fardo da latinha da Dona Cida e de todo
+//    mundo. Na venda, ninguém separa de quem era cada lata."
+// 6 "Por isso a margem usa o preço médio de venda do material no mês. Ela não vai bater com o extrato, e tudo bem: ela
+//    mostra quanto cada material desse fornecedor rende."
+// O big bag da cooperativa, o saco da Dona Cida e a carroça de todo mundo; as latas de cada um voam para o mesmo fardo.
+// A câmera desce para a conta, na frente: venda média do mês menos a compra da cooperativa = a margem estimada (os
+// números são os da linha 1 do capítulo e da tela: R$ 7,40, R$ 6,20 e R$ 1,20 o quilo).
+function fungivel() {
+  const t0 = W(5, 'fungivel'), tmi = W(5, 'se'), tla = W(5, 'a'), tco = W(5, 'cooperativa'), tvai = W(5, 'vai'), tme = W(5, 'mesmo'), tfa = W(5, 'fardo'), tl2 = W(5, 'latinha', 2), tdc = W(5, 'dona'),
+    ttm = W(5, 'todo'), tni = W(5, 'ninguem'), tse = W(5, 'separa'),
+    tpi = W(6, 'por'), tmg = W(6, 'margem'), tpm = W(6, 'preco'), tmat = W(6, 'material'), tmes = W(6, 'mes'), tnb = W(6, 'nao'), tex = W(6, 'extrato'), tre = W(6, 'rende'), tfim = W(6, 'rende', 1, 'e');
+  cores(); piso({ r: 30, x: 0, z: 0, passo: 1.3 }); U.uNevoa.value.set(.955, .975, .965, .8); ceuClaro({ halo: [.2, 3.6, -14] });
+  const PB = [-3.5, 0, .3], PS = [3.1, 0, .6], PCR = [6.0, 0, -1.0];
+  const BB = bigBag(CENA, PB, { estado: 'aberto', carga: 'latinha', w: 1.35, h: 1.4, n: 34 });
+  const SC = saco(CENA, PS, { aberto: true, carga: 'latinha', s: 1.55 });
+  const CR = carroca(CENA, PCR, { carga: 'latinha', n: 34 }); CR.rotation.y = .3;
+  const FD = fardo(CENA, [0, 0, 0], { tipo: 'latinha', w: 1.9, h: 1.35, d: 1.4 }), TOPO = [0, 1.45, 0], an = anel(2.0, [0, 0, .2]);
+  // as latas de cada um: um punhado que sobe da origem e cai no fardo
+  const PTS = [[-.3, 0, .05], [.28, .04, -.1], [0, .14, .2], [-.1, .28, -.16], [.22, .3, .12], [-.26, .4, .08], [.05, .5, -.04]];
+  const voo = (de, a) => { const g = grupo(CENA, de); pecas(g, 'latinha', PTS, { s: .9 }); g.visible = false; return { g, de, a }; };
+  const V = [voo([PB[0], 1.9, PB[2]], tvai - .15), voo([PS[0], 1.7, PS[2]], tdc + .25), voo([PCR[0], 1.6, PCR[2]], ttm + .25)];
+  const CH = (html, pos, o = {}) => plano(html, { pos, rot: [-.12, .06, 0], esc: .0118, anc: [.5, 1], ...o });
+  const chMi = CH(htmlChip(`${ic('shuffle', 18)}se mistura`), [0, 2.9, 0]);
+  const chCo = CH(htmlChip('Cooperativa Recomeço', 'n'), [PB[0], 2.75, PB[2]]), chDc = CH(htmlChip('Dona Cida', 'n'), [PS[0], 2.3, PS[2]]), chTm = CH(htmlChip(`${ic('users', 18)}todo mundo`, 'n'), [PCR[0] + .2, 2.45, PCR[2]]);
+  const chFa = CH(htmlChip(`${ic('package', 18)}o mesmo fardo`), [0, 2.15, 0]), chNi = CH(htmlChip('ninguém separa', 'am'), [0, 2.9, 0]);
+  // a conta, na frente
+  const FX = [-2.2, .9, 4.0], FY = .56, FZ = 6.0, EC = .0066, CWD = 322, cart = (i, ...a) => plano(htmlCartao(...a), { pos: [FX[i], FY, FZ], rot: ROTC, esc: EC });
+  const c1 = cart(0, 'trending-up', 'Venda média', 'do mês', reais(7.4), { w: CWD }), c2 = cart(1, 'shopping-cart', 'Compra', 'da cooperativa', reais(6.2), { w: CWD, cls: 'a' }),
+    c3 = cart(2, 'badge-check', 'Margem estimada', 'o quilo', reais(1.2), { w: CWD, res: true });
+  const oM = plano(htmlOp('−'), { pos: [(FX[0] + FX[1]) / 2, FY, FZ + .03], rot: ROTC, esc: EC }), oI = plano(htmlOp('='), { pos: [(FX[1] + FX[2]) / 2, FY, FZ + .03], rot: ROTC, esc: EC });
+  const v3 = vaga(c3, 200, 'rgba(47,178,113,.5)'), n3 = c3.e.querySelector('.num'), on3 = c3.e.querySelector('.onda');
+  const sC = FX.map(x => mancha(2.7, .9, [x, 0, FZ - .1], { op: 0 }));
+  const chEx = plano(htmlChip(`${ic('file-text', 18)}não vai bater com o extrato`, 'am'), { pos: [FX[2] + CWD / 2 * EC, FY - 66 * EC - .16, FZ], rot: ROTC, esc: EC * 1.25, anc: [1, 0] });   // embaixo da conta: em cima ele cobriria o saco
+  const tit = titulo('Lucro estimado', 'Sucata é fungível');
+  const P1 = { x: -.2, y: 1.9, z: 0, d: 13.2, az: .1, el: .14 }, P2 = { x: 1.3, y: 1.85, z: -.2, d: 16.2, az: .06, el: .15 }, P3 = { x: 1.0, y: 1.5, z: 2.4, d: 17.4, az: .04, el: .2 };
+  camera([[t0 - 3, P1], [ttm - .7, { ...P1, d: 12.95, az: .085 }, 'lin'], [ttm + .5, P2], [tpi - .3, { ...P2, d: 15.9, az: .045 }, 'lin'], [tpi + 1.0, P3], [tfim + 2.5, { ...P3, d: 17.05, az: .015 }, 'lin']]);
+  return t => {
+    GL.style.opacity = eo(pr(t, t0 + .08, .5)).toFixed(3); posTitulo(tit, t, t0 - .9, t0 - .45);
+    vis(chMi.e, t, tmi - .1, tni - .35, { dy: 10, sc: .8 });
+    some(BB, passa(pr(t, tla - .3, .6), 1.25)); vis(chCo.e, t, tco - .1, NUNCA, { dy: 10, sc: .8 });
+    some(SC, passa(pr(t, tl2 - .25, .6), 1.25)); vis(chDc.e, t, tdc - .1, NUNCA, { dy: 10, sc: .8 });
+    some(CR, passa(pr(t, ttm - .45, .6), 1.25)); vis(chTm.e, t, ttm - .1, NUNCA, { dy: 10, sc: .8 });
+    // o mesmo fardo: cresce quando a fala o nomeia e leva um tranco a cada punhado que chega
+    let tr = 0; for (const v of V) { const p = pr(t, v.a, .95), on = p > 0 && p < 1; v.g.visible = on; tr += golpe(pr(t, v.a + .9, .6), 1.2);
+      if (on) { const q = arco(v.de, TOPO, eio(p), .7); v.g.position.set(q[0], q[1], q[2]); v.g.rotation.y = p * 2.2; v.g.scale.setScalar(Math.min(1, 5 * p, 4 * (1 - p))); } }
+    some(FD, passa(pr(t, tme - .2, .6), 1.25), 1 + .05 * tr); vis(chFa.e, t, tme - .05, NUNCA, { dy: 10, sc: .8 }); pulso(chFa.e, t, tfa + .1, .05, .8);
+    vis(chNi.e, t, tni - .1, NUNCA, { dy: 10, sc: .8 }); destaque(an, t, tse - .1);
+    // por isso a margem usa a venda média do mês
+    vis(c3.e, t, tmg - .15, NUNCA, { dy: 22, sc: .94 }); vis(c1.e, t, tpm - .15, NUNCA, { dy: 22 }); vis(oM.e, t, tmat - .1, NUNCA, { sc: .6, dy: 0 }); vis(c2.e, t, tmat - .15, NUNCA, { dy: 22 });
+    vis(oI.e, t, tmes - .1, NUNCA, { sc: .6, dy: 0 }); chega(c3, v3, t, tmes + .15); conta(n3, t, tmes + .15, .6, 0, 1.2, reais);
+    vis(chEx.e, t, tnb - .1, NUNCA, { dy: -10, sc: .8 }); pulso(chEx.e, t, tex, .05, .8);
+    pulso(c3.e, t, tre, .045, .8); ondaEm(on3, t, tre);
+    [c1, c2, c3].forEach((c, i) => { sC[i].material.uniforms.uOp.value = .55 * Math.min(1, +c.e.style.opacity || 0); });
+  };
+}
+
+// =====================================================================================================================
+const CAPS = { 0: quemEntraSai, 1: clienteFornecedor, 7: saldoUnico, 8: qualPreco, 12: lerSaldo, 14: fungivel };
+cena(d => CAPS[d.cap](d), { fov: 26 });
+</script></body></html>

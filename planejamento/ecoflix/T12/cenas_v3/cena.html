@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- T12 "Coletas e Logística" · ilustrações no kit v3 (perfis/ecoflix/cenas_v3/LEIA.md), 16:9 (--larg 1422).
+     Uma função por CENA e CAPS[cap] diz o que cada capítulo ilustrado usa. As janelas (de/ate) estão em ../cenas/ilustracoes.json.
+       cap01 · caminho   (escuro)  ilu01_caminho  "O caminho da coleta"    linhas 1 a 3: as etapas da ordem; quem mexe no estoque e no caixa é a compra
+       cap10 · tara      (claro)   ilu10_tara     "A tara do caminhão"     linha 2: vazio na balança (6.380 kg), carregado (9.460 kg), a diferença (3.080 kg)
+       cap11 · cacamba   (claro)   ilu11_cacamba  "O caminho da caçamba"   linha 8: Entreguei e Recolhi valem na ordem concluída; fora da coleta, o Movimentar
+       cap14 · taxa      (escuro)  ilu14_taxa     "Taxa de conclusão"      linha 2: a cancelada sai da conta; 5 de 5 = 100%
+       cap15 · regras    (escuro)  ilu15_regras   "Regras só no portal"    linha 6: as regras valem para o pedido do portal; aqui dentro, qualquer dia
+     Saíram (a tela do app já mostra, ou a ideia está na cena vizinha):
+       ilu00_improviso   a mesma ideia ("cada coleta vira uma ordem") abre a cena do cap01, 20 s depois; duas cenas seguidas para um conceito só
+       ilu09_portal      o próprio capítulo mostra o portal do parceiro e, em seguida, o pedido na coluna Solicitada
+       ilu12_saldo       a tela mostra a movimentação sendo lançada (10 bags, Minha base → Cooperativa Recomeço) e o saldo do parceiro
+       ilu13_gps         o mapa da tela já tem o ponto do motorista e o círculo do raio de incerteza
+       ilu16_assinatura  a linha seguinte mostra, na tela da ordem, o que falta para concluir
+     Nenhuma fala da aula cita PDF nem comprovante (o relatório da coleta do cap08 é uma página, e o "Imprimir" é só um botão citado):
+     não há cena de papel real nesta aula.
+     Só textos e números da fala e da tela (tara de 6.380 kg na ficha do FKD2E41; 9.460 e 3.080 kg são os do mundo fictício).
+     Âncoras por palavra (W) sobre a voz real ($TUT_HOME/t12/narracao/capNN.json).
+     Acabamento: node perfis/ecoflix/cenas_v3/auditar.cjs --aula planejamento/ecoflix/T12 --larg 1422
+     Render de uma janela: node ferramentas/edit/cenas/render_cenas.cjs <cap> <capNN.json> saida.mp4 \
+               --html planejamento/ecoflix/T12/cenas_v3/cena.html --larg 1422 --dsf 1.35 --de <s> --ate <s>
+     Ícones lucide usados (o nome tem de estar literal nesta página): 'clipboard-list' 'message-circle' 'calendar-days' 'users'
+     'truck' 'circle-check' 'package' 'wallet' 'shopping-cart' 'scale' 'warehouse' 'building-2' 'pencil' 'ban' 'user-round'
+     'shield-check' 'calendar-check' 'circle-x' -->
+</head><body>
+<script type="module">
+import { THREE, PI, cl, lerp, pr, eo, eio, eo5, eis, passa, golpe, W, el, ic, vis, foco, ondaEm, kg, conta, pesa, titulo, posTitulo, selo,
+  htmlChip, htmlCartao, htmlOp, htmlVisor, ligaVisor, htmlFluxo, fluxo, CENA, GL, mat, caixa, malha, mancha, piso, anel, destaque, U, camera, posCam,
+  lugar, lugarDeFrente, plano, clima, cena, estilo, enquadraRet }
+  from '../../../../perfis/ecoflix/cenas_v3/motor.js';
+import { ceuClaro, mundoEscuro } from '../../../../perfis/ecoflix/cenas_v3/fundo.js';
+import { caminhao, dirige, bascula } from '../../../../perfis/ecoflix/cenas_v3/objetos/caminhao.js';
+import { balanca } from '../../../../perfis/ecoflix/cenas_v3/objetos/balanca.js';
+import { cacambaEstacionaria } from '../../../../perfis/ecoflix/cenas_v3/objetos/cacambaEstacionaria.js';
+import { pecas, pontosMonte } from '../../../../perfis/ecoflix/cenas_v3/objetos/monte.js';
+import { htmlFluxoCartoes, fluxoCartoes, parte, seta } from '../../../../perfis/ecoflix/cenas_v3/dados/fluxoCartoes.js';
+
+// =====================================================================================================================
+// comuns
+const NUNCA = 1e9, EE = .0112;
+const arco = (a, b, p, alt) => [lerp(a[0], b[0], p), lerp(a[1], b[1], p) + alt * 4 * p * (1 - p), lerp(a[2], b[2], p)];
+const chipAmbar = () => estilo('t12-am', `.chip.am{background:linear-gradient(150deg,#F7CB68,#E59A22);color:#3A2A06;border-color:rgba(255,255,255,.4);box-shadow:0 12px 22px -8px rgba(229,154,34,.6)}`);
+// o lugar do número até a fala dizer o valor (contorno liso: tracejado cintila com a câmera em deriva)
+const vaga = (c, w = 236, cor = 'rgba(190,245,218,.4)') => el(`<div class="ab" style="left:22px;bottom:20px;width:${w}px;height:44px;border-radius:12px;border:1.5px solid ${cor};background:rgba(255,255,255,.04)"></div>`, c.e);
+const chega = (c, v, t, a) => { const k = eo(pr(t, a, .3)); c.e.querySelector('.num').style.opacity = k.toFixed(3); v.style.opacity = (1 - k).toFixed(3); };
+const some = (o, k) => { o.visible = k > .002; if (o.visible) o.scale.setScalar(k); };   // objeto 3D que entra crescendo
+// vários pulsos no mesmo elemento (o pulso() do motor zera a escala fora da janela dele: um por elemento)
+const pulsos = (e, t, L) => { let s = ''; for (const [a, amp = .045, dur = .8] of L) { const p = pr(t, a, dur); if (p > 0 && p < 1) s = (1 + amp * 1.25 * golpe(p, 1.1, 3.4)).toFixed(4); } e.style.scale = s; };
+const cartaoP = (icone, rot, sub, cls, cw = 190) => htmlFluxoCartoes({ cartoes: [[icone, rot, sub, cls]], cw });   // cartão pequeno (selo + rótulo + legenda)
+// um lugar do mundo escuro: posições em px do desenho (y para baixo)
+function escuro() {
+  const EIXO = lugar([0, 0, 0]), E = mundoEscuro(EIXO, 0, EE);
+  return { EIXO, X: (html, x, y, o = {}) => E(html, x * EE, -y * EE, 0, o), ret: (a, b, c, d) => [a * EE, -d * EE, c * EE, -b * EE], fundo: (cx, cy, o) => E.fundo(cx * EE, -cy * EE, o) };
+}
+
+// =====================================================================================================================
+// CENA "caminho" · cap01, linhas 1 a 3 · clima escuro (o fluxo do sistema)
+// 1 "Cada coleta vira uma ordem, que passa por etapas: alguém pede, a gente agenda o dia e o período, escala o motorista
+//    e o caminhão, ele sai, e a coleta é concluída."
+// 2 "Uma coisa importante: a ordem de coleta organiza o serviço. Quem mexe no estoque e no caixa é a compra."
+// 3 "Quando o caminhão volta, você registra a compra do material como sempre, ou faz um Ticket de Pesagem. Concluir a
+//    coleta fecha o serviço, e a compra entra por lá."
+// Estação 1: o trilho da ordem, uma etapa por palavra. Estação 2: a câmera abre para o trilho de baixo, à parte: o Estoque
+// e o Caixa apagados (quem mexe?) e a Compra, que os acende. Na linha 3, cada frase bate no seu trilho.
+function caminho() {
+  const t0 = W(1, 'cada'), tor = W(1, 'ordem'), tet = W(1, 'etapas'), tal = W(1, 'alguem'), tag = W(1, 'agenda'), tes = W(1, 'escala'), tel = W(1, 'ele'), tcc = W(1, 'concluida'),
+    to2 = W(2, 'ordem'), tog = W(2, 'organiza'), tq = W(2, 'quem'), tsq = W(2, 'estoque'), tcx = W(2, 'caixa'), tcp = W(2, 'compra'),
+    tvo = W(3, 'volta'), tc3 = W(3, 'compra'), ttk = W(3, 'ticket'), tcl = W(3, 'concluir'), tfe = W(3, 'fecha'), tc4 = W(3, 'compra', 2), tfim = W(3, 'la', 1, 'e');
+  const { EIXO, X, ret, fundo } = escuro(), YA = -150, YB = 150, GF = 56, CD = 200;
+  const rA = X(htmlFluxoCartoes({ cartoes: [['message-circle', 'Pedido', 'alguém pede', 'n'], ['calendar-days', 'Agenda', 'dia e período', 'n'], ['users', 'Escala', 'motorista e caminhão', 'n'],
+    ['truck', 'A caminho', 'ele sai', 'n'], ['circle-check', 'Concluída', 'a coleta', 'res']], cw: 190, vao: 48 }), 0, YA, { anc: [0, .5] });
+  const HC = rA.h, XT = rA.w, DY = HC / 2 + 10, YC = YA - HC / 2 - 12;
+  const chO = X(htmlChip(`${ic('clipboard-list', 18)}Ordem de coleta`), 0, YC, { anc: [0, 1], z: 40 });
+  const chE = X(htmlChip('passa por etapas', 'n'), chO.w + 10, YC, { anc: [0, 1], z: 40 }), chS = X(htmlChip('organiza o serviço', 'n'), chO.w + 10, YC, { anc: [0, 1], z: 40 });
+  const chF = X(htmlChip('fecha o serviço'), XT, YA + HC / 2 + 12, { anc: [1, 0], z: 40 });
+  // o trilho de baixo: a Compra e o garfo para o Estoque e o Caixa (apagados até a fala dizer quem mexe neles)
+  const es0 = X(cartaoP('package', 'Estoque', 'quem mexe?', 'n', CD), XT, YB - DY, { anc: [1, .5] }), cx0 = X(cartaoP('wallet', 'Caixa', 'quem mexe?', 'n', CD), XT, YB + DY, { anc: [1, .5] });
+  const es1 = X(cartaoP('package', 'Estoque', 'é a compra', 'res', CD), XT, YB - DY, { anc: [1, .5] }), cx1 = X(cartaoP('wallet', 'Caixa', 'é a compra', 'res', CD), XT, YB + DY, { anc: [1, .5] });
+  const XD = XT - es0.w, XG = XD - GF;
+  const garfo = X(htmlFluxo(GF, 2 * DY + 28, [`M0 ${DY + 14}H16Q28 ${DY + 14} 28 ${DY + 2}V26Q28 14 40 14H${GF}`, `M0 ${DY + 14}H16Q28 ${DY + 14} 28 ${DY + 26}V${2 * DY + 2}Q28 ${2 * DY + 14} 40 ${2 * DY + 14}H${GF}`]), XG, YB - DY - 14, { anc: [0, 0] });
+  const cP = X(cartaoP('shopping-cart', 'Compra', 'do material', 'res', 300), XG, YB, { anc: [1, .5] });
+  const XC = XG - cP.w, chV = X(htmlChip(`${ic('truck', 18)}quando o caminhão volta`, 'n'), XC, YB - HC / 2 - 14, { anc: [0, 1], z: 40 });
+  const chT = X(htmlChip(`${ic('scale', 18)}ou Ticket de Pesagem`, 'n'), XC, YB + HC / 2 + 14, { anc: [0, 0], z: 40 });
+  fundo(XT / 2, 0, { aneis: false });
+  const tit = titulo('Coletas', 'O caminho da coleta', 'escuro');
+  const TOPO = YC - 38, S1 = enquadraRet(EIXO, ret(0, TOPO, XT, YA + HC / 2 + 60), { az: -.03 }), S2 = enquadraRet(EIXO, ret(0, TOPO, XT, YB + DY + HC / 2), { az: .02, margem: 70 });
+  camera([[t0 - 3, S1], [tq - .45, { ...S1, az: -.005, d: S1.d * .985 }, 'lin'], [tq + .75, S2], [tfim + 2.5, { ...S2, az: .04, d: S2.d * .98 }, 'lin']]);
+  const T = [tal - .1, tag - .1, tes - .1, tel - .1, tcc - .15], acende = tcp - .15;
+  return t => {
+    clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, t0 - .45);
+    // o trilho da ordem
+    vis(chO.e, t, tor - .15, NUNCA, { dy: 10, sc: .8 }); pulsos(chO.e, t, [[to2, .06]]);
+    vis(chE.e, t, tet - .35, tog - .4, { dx: -10, dy: 0, sc: .8 }); vis(chS.e, t, tog - .1, NUNCA, { dx: -10, dy: 0, sc: .8 });
+    fluxoCartoes(rA.e, t, T[0] - .1, NUNCA, { tempos: T }); pulsos(parte(rA.e, 4), t, [[tcl + .1, .05]]);
+    vis(chF.e, t, tfe - .1, NUNCA, { dy: -10, sc: .8 });
+    // o trilho da compra
+    vis(es0.e, t, tsq - .1, NUNCA, { dy: 16 }); vis(cx0.e, t, tcx - .1, NUNCA, { dy: 16 }); foco(es0.e, t, NUNCA, NUNCA, { min: .62 }); foco(cx0.e, t, NUNCA, NUNCA, { min: .62 });
+    vis(cP.e, t, acende, NUNCA, { dy: 18 }); pulsos(cP.e, t, [[tc3, .05], [tc4, .06]]);
+    garfo.e.style.opacity = eo(pr(t, tsq - .3, .5)).toFixed(3);
+    for (const i of [0, 1]) fluxo(garfo.e, i, t, acende + .2 + i * .15, .45, { fica: .9, luz: t < tc4 - .3 ? [acende + .2 + i * .15, .45] : [tc4 + .05 + i * .12, .6] });
+    const a1 = eo(pr(t, acende + .55, .35)), a2 = eo(pr(t, acende + .7, .35));
+    es0.op = 1 - a1; cx0.op = 1 - a2; es1.op = a1; cx1.op = a2; pulsos(es1.e, t, [[acende + .55, .06], [tc4 + .55, .05]]); pulsos(cx1.e, t, [[acende + .7, .06], [tc4 + .65, .05]]);
+    vis(chV.e, t, tvo - .35, NUNCA, { dy: 10, sc: 1 }); vis(chT.e, t, ttk - .35, NUNCA, { dy: -10, sc: 1 });
+  };
+}
+
+// =====================================================================================================================
+// CENA "tara" · cap10, linha 2 · clima claro (o pátio: o caminhão na balança)
+// 2 "A tara é o peso do caminhão vazio. Carregado, ele pesa mais na balança, e essa diferença é o peso do material."
+// O truck da ficha (FKD2E41) sobe vazio na balança: o visor marca a Tara, 6.380 kg. A carga cai na caçamba e o visor sobe
+// para 9.460 kg. Na frente, a conta: Carregado − Tara = Peso do material, 3.080 kg.
+// Aqui, no cadastro de veículo das Coletas, a tara É o caminhão vazio (é o nome do campo na tela: "Tara (kg)").
+function tara() {
+  const TARA = 6380, CHEIO = 9460, BR = CHEIO - TARA;
+  const t0 = W(2, 'a'), tta = W(2, 'tara'), tca = W(2, 'caminhao'), tva = W(2, 'vazio'), tcg = W(2, 'carregado'), tpe = W(2, 'pesa'), tba = W(2, 'balanca'), tdi = W(2, 'diferenca'),
+    tp2 = W(2, 'peso', 2), tma = W(2, 'material'), tfim = W(2, 'material', 1, 'e');
+  const SX = 2, X0 = SX - 15.5, ta = t0 + .1, tch = tca - .1;   // entra em "A tara é o peso" e para na balança em "caminhão"
+  piso({ r: 30, x: 1, z: -2, passo: 1.3 }); U.uNevoa.value.set(.955, .975, .965, .8); ceuClaro();
+  const B = balanca(CENA, [SX, 0, 0], { c: 7.7, l: 3.1, hp: 3.25 }), h = B.userData.altura;
+  const T = caminhao(CENA, { carga: 250, placa: 'FKD2E41' }), sT = mancha(8.6, 3.5, [X0, 0, .15], { op: .8 });
+  // a carga: as latinhas do baú caem uma depois da outra, da traseira para a frente
+  const im = T.userData.carga, LOC = T.userData.locais, n = LOC.length, rk = []; LOC.map((_, i) => i).sort((i, j) => LOC[i][0] - LOC[j][0]).forEach((i, k) => { rk[i] = k; });
+  const _M = new THREE.Matrix4(), _Q = new THREE.Quaternion(), _E = new THREE.Euler(), _P = new THREE.Vector3(), _S = new THREE.Vector3();
+  const P = { x: .95, y: 1.15, z: .6, d: 20.5, az: .078, el: .225, oy: 6 };
+  const VP = [B.userData.poste[0], B.userData.poste[1] + .78, B.userData.poste[2]], EIXO = lugarDeFrente(VP, posCam(P));
+  const visor = plano(htmlVisor(['Tara', 'Carregado']), { em: EIXO, pos: [0, 0, 0], esc: .012, anc: [.5, .5] }); ligaVisor(visor.e);
+  const CHR = [-.2, .1, 0], chVz = plano(htmlChip(`${ic('truck', 18)}vazio`, 'n'), { pos: [X0, 3.5, 0], rot: CHR, esc: .0135, anc: [.5, 1] }),
+    chCg = plano(htmlChip(`${ic('package', 18)}carregado`), { pos: [X0, 3.5, 0], rot: CHR, esc: .0135, anc: [.5, 1] });
+  // a conta, de pé na frente da balança
+  const FY = .95, FZ = 8, ROT = [-.2, .1, 0], EC = .0084, FX = 1.4, FD = 3.2;
+  const cart = (x, ...a) => plano(htmlCartao(...a), { pos: [x, FY, FZ], rot: ROT, esc: EC });
+  const c1 = cart(FX - FD, 'truck', 'Carregado', 'na balança', kg(CHEIO)), c2 = cart(FX, 'truck', 'Tara', 'caminhão vazio', kg(TARA)), c3 = cart(FX + FD, 'package', 'Peso do material', 'a diferença', kg(BR), { res: true });
+  const oM = plano(htmlOp('−'), { pos: [FX - FD / 2, FY, FZ + .05], rot: ROT, esc: EC }), oI = plano(htmlOp('='), { pos: [FX + FD / 2, FY, FZ + .05], rot: ROT, esc: EC });
+  const sC = [FX - FD, FX, FX + FD].map(x => mancha(3.2, 1.25, [x, 0, FZ - .1], { op: 0 })), CS = [c1, c2, c3];
+  const n3 = c3.e.querySelector('.num'), on3 = c3.e.querySelector('.onda'), v3 = vaga(c3, 190, 'rgba(47,178,113,.55)');
+  const tit = titulo('Frota', 'A tara do caminhão');
+  camera([[t0 - 3, { ...P, d: 21.7, az: .1 }], [tfim + 2.5, { ...P, d: 20.3, az: .07 }, 'lin']]);
+  const tc2 = tva + .3, tc1 = tba + .15, tc3 = tdi + .15;
+  return t => {
+    GL.style.opacity = eo(pr(t, t0 + .08, .5)).toFixed(3); posTitulo(tit, t, t0 - .9, t0 - .45);
+    const p = pr(t, ta, tch - ta), x = lerp(X0, SX, 1 - Math.pow(1 - p, 2.3)), cheio = eo(pr(t, tcg + .1, 1.3));
+    dirige(T, x, h, { arfa: -.008 * golpe(pr(t, tch - .12, .7), 1.3), sobe: .05 * (1 - cheio) }); bascula(T, 0);
+    sT.position.x = x + .1; sT.position.y = h(x) + .012;
+    for (let i = 0; i < n; i++) { const q = eo(pr(t, tcg + .05 + rk[i] * .0036, .5)), a = LOC[i];
+      _E.set(a[3], a[4], a[5]); _Q.setFromEuler(_E); _M.compose(_P.set(a[0], a[1] + 1.5 * (1 - q), a[2]), _Q, _S.setScalar(Math.max(q, 1e-4))); im.setMatrixAt(i, _M); }
+    im.instanceMatrix.needsUpdate = true;
+    vis(visor.e, t, t0 + .35, NUNCA, { dy: 10 });
+    if (t < tcg + .2) pesa(visor.e, t, tch - .35, 1.15, 0, TARA); else pesa(visor.e, t, tpe - .15, 1.15, TARA, CHEIO);
+    visor.e.troca(t, tcg + .12, 1); pulsos(visor.e, t, [[tch + .7, .04, .7], [tpe + 1.0, .04, .7]]);
+    chVz.pos[0] = chCg.pos[0] = x + .65; vis(chVz.e, t, tva - .1, tcg - .05, { dy: 10, sc: .8 }); vis(chCg.e, t, tcg + .25, NUNCA, { dy: 10, sc: .8 });
+    // a conta
+    vis(c2.e, t, tc2, NUNCA, { dy: 22 }); vis(c1.e, t, tc1, NUNCA, { dy: 22 }); vis(oM.e, t, tc1 + .25, NUNCA, { dy: 0, sc: .6 });
+    vis(oI.e, t, tdi - .1, NUNCA, { dy: 0, sc: .6 }); vis(c3.e, t, tc3, NUNCA, { dy: 22, sc: .94 });
+    chega(c3, v3, t, tp2 - .05); conta(n3, t, tp2, .5, 0, BR); pulsos(c3.e, t, [[tma, .045]]); ondaEm(on3, t, tma);
+    CS.forEach((c, i) => { sC[i].material.uniforms.uOp.value = .55 * Math.min(1, +c.e.style.opacity || 0); });
+  };
+}
+
+// =====================================================================================================================
+// CENA "cacamba" · cap11, linha 8 · clima claro (o pátio visto de cima: a base, o parceiro e o que vem de fora)
+// 8 "Uma dica: a caçamba só muda de lugar quando alguém registra. Na coleta, é o Entreguei e o Recolhi da ordem, que
+//    valem quando ela é concluída. Fora da coleta, é o Movimentar, aqui."
+// A Caçamba 05 na base e a 03 (cheia de ferro) no parceiro, paradas. O Entreguei e o Recolhi marcam cada uma, e só quando a
+// ordem é concluída as duas trocam de lugar. A câmera abre: a Caçamba 06 vem de Externo para a base pelo Movimentar.
+function cacamba() {
+  const t0 = W(8, 'uma'), tcc = W(8, 'cacamba'), tlu = W(8, 'lugar'), trg = W(8, 'registra'), ten = W(8, 'entreguei'), trc = W(8, 'recolhi'), tco = W(8, 'concluida'),
+    tfo = W(8, 'fora'), tmv = W(8, 'movimentar'), taq = W(8, 'aqui'), tfim = W(8, 'aqui', 1, 'e');
+  const XB = -6.2, XP = 6.2, LZ = 3.4, ZE = 8.5, EL = .56, AZ = .03, ESC = .021, ROT = [-EL, AZ, 0];
+  piso({ r: 36, x: 0, z: 1, passo: 1.3 }); U.uNevoa.value.set(.955, .975, .965, .8); ceuClaro({ halo: [0, 2, -18] });
+  const laje = (x, z, w, d, cor) => malha(caixa(w, .06, d, .03), mat(cor, { alt: .5, bri: .1 }), [x, .03, z], CENA);
+  const zB = laje(XB, 0, 6.6, 11.4, '#CDEEDB'), zP = laje(XP, 0, 6.6, 11.4, '#F8E6BC'), zE = laje(0, ZE, 5.4, 3.4, '#DCE2E8');
+  const A05 = [XB, .06, LZ], B05 = [XP, .06, LZ], A03 = [XP, .06, -3.2], B03 = [XB, .06, -3.2], A06 = [0, .06, ZE];
+  const K05 = cacambaEstacionaria(CENA, A05), K03 = cacambaEstacionaria(CENA, A03), K06 = cacambaEstacionaria(CENA, A06);
+  pecas(K03, 'ferro', pontosMonte(34, 1.15, .55, .42, .78));   // a 03 está cheia de ferro
+  const CH = (html, pos, o = {}) => plano(html, { pos, rot: ROT, esc: ESC, anc: [.5, 1], ...o });
+  const cBase = CH(htmlChip(`${ic('warehouse', 18)}Minha base`, 'n'), [XB - .9, .12, 6.45], { anc: [.5, .5], rot: [-1.05, AZ, 0] }), cPar = CH(htmlChip(`${ic('building-2', 18)}Parceiro`, 'n'), [XP + .9, .12, 6.45], { anc: [.5, .5], rot: [-1.05, AZ, 0] });
+  const cExt = CH(htmlChip(`${ic('package', 18)}Externo`, 'n'), [-3.0, .5, ZE], { anc: [1, .5] });
+  const cReg = CH(htmlChip(`${ic('pencil', 18)}alguém registra`), [-.12, .8, -9.3], { anc: [1, .5] }), cCon = CH(htmlChip(`${ic('circle-check', 18)}ordem concluída`), [.12, .8, -9.3], { anc: [0, .5] });
+  // a fileira de cada caçamba (nome + o registro que a move): anda com ela
+  const fila = (K, nome, acao) => { const nn = CH(htmlChip(nome, 'n'), [0, 0, 0], { anc: [1, 1] }), a = CH(htmlChip(acao), [0, 0, 0], { anc: [0, 1] }); return { K, n: nn, a, wn: nn.w * ESC, wa: a.w * ESC }; };
+  const F05 = fila(K05, 'Caçamba 05', 'Entreguei'), F03 = fila(K03, 'Caçamba 03', 'Recolhi'), F06 = fila(K06, 'Caçamba 06', 'Movimentar');
+  const poeFila = (f, t, tn, ta) => { const k = eo(pr(t, ta - .15, .45)), p = f.K.position, y = p.y + 1.4, g = .22, xr = lerp(p.x + f.wn / 2, p.x - (f.wn + g + f.wa) / 2 + f.wn, k);
+    f.n.pos[0] = xr; f.n.pos[1] = y; f.n.pos[2] = p.z; f.a.pos[0] = xr + g; f.a.pos[1] = y; f.a.pos[2] = p.z;
+    vis(f.n.e, t, tn, NUNCA, { dy: 10, sc: .8 }); vis(f.a.e, t, ta - .1, NUNCA, { dx: -10, dy: 0, sc: .8 }); };
+  const an = anel(2.3, [XB, 0, LZ]);
+  const tit = titulo('Equipamentos', 'O caminho da caçamba');
+  const P1 = { x: 0, y: 0, z: -.9, d: 32.4, az: AZ, el: EL }, P2 = { x: 0, y: 0, z: .3, d: 34.6, az: AZ - .01, el: EL };
+  camera([[t0 - 3, P1], [tfo - .35, { ...P1, d: 32.0, az: AZ + .012 }, 'lin'], [tfo + .85, P2], [tfim + 2.5, { ...P2, d: 34.2, az: AZ - .022 }, 'lin']]);
+  const tgo = tco - .1, dgo = 1.45, tm6 = tmv + .15, dm6 = 1.25;
+  return t => {
+    GL.style.opacity = eo(pr(t, t0 + .08, .5)).toFixed(3); posTitulo(tit, t, t0 - .9, t0 - .45);
+    vis(cBase.e, t, tcc - .25, NUNCA, { dy: 10 }); vis(cPar.e, t, tcc - .1, NUNCA, { dy: 10 });
+    zB.scale.setScalar(Math.max(.001, eo(pr(t, t0 + .1, .5)))); zP.scale.setScalar(Math.max(.001, eo(pr(t, t0 + .2, .5))));
+    // as duas da coleta: paradas até a ordem ser concluída
+    const g = eio(pr(t, tgo, dgo)), q5 = arco(A05, B05, g, .3), q3 = arco(A03, B03, g, .3);
+    K05.position.set(q5[0], q5[1], q5[2]); K03.position.set(q3[0], q3[1], q3[2]);
+    const s5 = passa(pr(t, tcc - .1, .5), 1.2), s3 = passa(pr(t, tcc + .05, .5), 1.2); some(K05, s5); some(K03, s3);
+    poeFila(F05, t, tcc + .15, ten); poeFila(F03, t, tcc + .3, trc);
+    pulsos(F05.n.e, t, [[tlu, .05]]); pulsos(F03.n.e, t, [[tlu + .12, .05]]); pulsos(F05.a.e, t, [[tgo, .07]]); pulsos(F03.a.e, t, [[tgo + .08, .07]]);
+    vis(cReg.e, t, trg - .35, NUNCA, { dy: 10, sc: .8 }); vis(cCon.e, t, tco - .35, NUNCA, { dx: -10, dy: 0, sc: .8 }); pulsos(cCon.e, t, [[tco + .1, .06]]);
+    // fora da coleta: a 06 vem de Externo pelo Movimentar
+    const e6 = eo(pr(t, tfo - .05, .5)); zE.scale.setScalar(Math.max(.001, e6)); zE.visible = e6 > .002; some(K06, passa(pr(t, tfo + .1, .5), 1.2));
+    const m = eio(pr(t, tm6, dm6)), q6 = arco(A06, A05, m, .9); K06.position.set(q6[0], q6[1], q6[2]);
+    vis(cExt.e, t, tfo - .05, NUNCA, { dx: 10, dy: 0, sc: .8 }); poeFila(F06, t, tfo + .3, tmv);
+    destaque(an, t, tm6 + dm6 - .15); pulsos(F06.n.e, t, [[taq, .06]]);
+  };
+}
+
+// =====================================================================================================================
+// CENA "taxa" · cap14, linha 2 · clima escuro (a conta do relatório)
+// 2 "Uma dica: a coleta cancelada sai da conta. Das cinco que ficaram, as cinco foram concluídas."
+// As seis coletas de outubro (cinco concluídas e uma cancelada, como a tela acabou de mostrar). A cancelada se afasta
+// e apaga: fora da conta. A câmera abre, as cinco que ficaram descem para a conta e a taxa fecha: 5 de 5, 100%.
+function taxa() {
+  const t0 = W(2, 'uma'), tco = W(2, 'coleta'), tca = W(2, 'cancelada'), tsa = W(2, 'sai'), tct = W(2, 'conta'), tda = W(2, 'das'), tc1 = W(2, 'cinco'), tfi = W(2, 'ficaram'),
+    tc2 = W(2, 'cinco', 2), tcn = W(2, 'concluidas'), tfim = W(2, 'concluidas', 1, 'e');
+  chipAmbar();
+  const { EIXO, X, ret, fundo } = escuro(), CW = 136, CH = 112, VAO = 16, PASSO = CW + VAO, YR = -105, SAI = 34, N = 6;
+  const mini = (icone, cls, txt) => `<div class="cartao" style="position:relative;width:${CW}px;height:${CH}px;padding:16px 0 0;display:flex;flex-direction:column;align-items:center;gap:9px">${selo(icone, cls, 46)}<div class="rot" style="font-size:16.5px">${txt}</div></div>`;
+  const C = Array.from({ length: N }, (_, i) => X(i < 5 ? mini('circle-check', '', 'Concluída') : mini('circle-x', 'a', 'Cancelada'), i * PASSO + CW / 2, YR));
+  const xc = i => i * PASSO + CW / 2, XM = xc(2), X5 = xc(4) + CW / 2, X6 = xc(5) + SAI;
+  const chFo = X(htmlChip(`${ic('ban', 18)}fora da conta`, 'am'), X6, YR + CH / 2 + 14, { anc: [.5, 0], z: 40 });
+  // as cinco que ficaram descem para a conta (fios de 10 px de respiro nas duas pontas)
+  const FY0 = YR + CH / 2 + 10, FH = 78, r = 14, ym = 40;
+  const desce = i => { const x = xc(i), s = Math.sign(XM - x); return s ? `M${x} 0V${ym - r}Q${x} ${ym} ${x + s * r} ${ym}H${XM - s * r}Q${XM} ${ym} ${XM} ${ym + r}V${FH}` : `M${x} 0V${FH}`; };
+  const fios = X(htmlFluxo(X5, FH, [0, 1, 2, 3, 4].map(desce)), 0, FY0, { anc: [0, 0], z: -40 });
+  const RW = 340, RH = 138, YT = FY0 + FH + 10 + RH / 2;
+  const cR = X(htmlCartao('circle-check', 'Taxa de conclusão', '5 de 5 concluídas', '100%', { res: true, w: RW, h: RH }), XM, YT), vR = vaga(cR, 150, 'rgba(108,240,168,.5)'), onR = cR.e.querySelector('.onda');
+  fundo(XM, 0);
+  const tit = titulo('Relatório', 'Taxa de conclusão', 'escuro');
+  const S1 = enquadraRet(EIXO, ret(0, YR - CH / 2 - 20, X6 + CW / 2 + 30, YR + CH / 2 + 70), { az: -.03, max: 1.25 / EE }),
+    S2 = enquadraRet(EIXO, ret(0, YR - CH / 2, X6 + CW / 2 + 30, YT + RH / 2), { az: .015, max: 1.25 / EE });
+  camera([[t0 - 3, S1], [tda - .5, { ...S1, az: -.01, d: S1.d * .985 }, 'lin'], [tda + .6, S2], [tfim + 2.5, { ...S2, az: .04, d: S2.d * .98 }, 'lin']]);
+  return t => {
+    clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, t0 - .45);
+    C.forEach((c, i) => { vis(c.e, t, t0 + .05 + i * .07, NUNCA, { dy: 18 }); });
+    // a cancelada sai da conta
+    const s = eio(pr(t, tsa - .1, .7)); C[5].pos[0] = (xc(5) + SAI * s) * EE; pulsos(C[5].e, t, [[tca, .07]]); foco(C[5].e, t, -9, tsa + .1, { min: .5 });
+    vis(chFo.e, t, tct - .2, NUNCA, { dy: -10, sc: .8 });
+    // das cinco que ficaram, as cinco foram concluídas
+    for (let i = 0; i < 5; i++) pulsos(C[i].e, t, [[tc1 - .05 + i * .07, .06, .7], [tc2 + i * .06, .05, .7]]);
+    fios.e.style.opacity = eo(pr(t, tc1 - .1, .3)).toFixed(3);
+    for (let i = 0; i < 5; i++) fluxo(fios.e, i, t, tfi - .1 + i * .05, .6, { fica: .75, luz: [tc2 - .1 + i * .05, .65] });
+    vis(cR.e, t, tfi + .3, NUNCA, { dy: 20 }); chega(cR, vR, t, tcn - .05); pulsos(cR.e, t, [[tcn + .1, .05]]); ondaEm(onR, t, tcn + .1);
+  };
+}
+
+// =====================================================================================================================
+// CENA "regras" · cap15, linha 6 · clima escuro (os dois jeitos de uma coleta entrar na agenda)
+// 6 "Uma dica: essas regras valem só pro que o parceiro pede pelo portal. Se ele pedir fora da regra, o portal explica o
+//    motivo e pede outra data. Aqui dentro, a Recicla Vale agenda pra qualquer dia, até pra hoje."
+// Em cima, o caminho do portal: o Parceiro passa pelas Regras (24 h, seg a sáb, as que acabaram de ser configuradas);
+// fora da regra, o portal pede outra data. A câmera abre para o caminho de baixo: aqui dentro, sem regra no meio.
+function regras() {
+  const t0 = W(6, 'uma'), tre = W(6, 'regras'), tso = W(6, 'so'), tpa = W(6, 'parceiro'), tpo = W(6, 'portal'), tfo = W(6, 'fora'), tex = W(6, 'explica'), tou = W(6, 'outra'),
+    taq = W(6, 'aqui'), trv = W(6, 'recicla'), tag = W(6, 'agenda'), tqd = W(6, 'qualquer'), tat = W(6, 'ate'), tfim = W(6, 'hoje', 1, 'e');
+  chipAmbar();
+  const { EIXO, X, ret, fundo } = escuro(), YA = -110, YB = 110, CW = 292, VAO = 78;
+  const rA = X(htmlFluxoCartoes({ cartoes: [['user-round', 'Parceiro', 'pede pelo portal', 'n'], ['shield-check', 'Regras', 'antecedência 24 h · seg a sáb', 'a']], cw: CW, vao: VAO }), 0, YA, { anc: [0, .5] });
+  const rB = X(htmlFluxoCartoes({ cartoes: [['building-2', 'Recicla Vale', 'aqui dentro', 'n'], ['calendar-check', 'Agenda', 'pra qualquer dia', 'res']], cw: CW, vao: VAO }), 0, YB, { anc: [0, .5] });
+  const HC = rA.h, XR = Math.max(rA.w, rB.w) + 16;
+  const chF = X(htmlChip(`${ic('ban', 18)}fora da regra`, 'am'), XR, YA, { anc: [0, .5], z: 40 }), chD = X(htmlChip(`${ic('calendar-days', 18)}pede outra data`, 'n'), XR + chF.w + 10, YA, { anc: [0, .5], z: 40 });
+  const chH = X(htmlChip('até pra hoje'), XR, YB, { anc: [0, .5], z: 40 });
+  const XT = XR + chF.w + 10 + chD.w;
+  fundo(XT / 2, 0);
+  const tit = titulo('Configurações', 'Regras só no portal', 'escuro');
+  const S1 = enquadraRet(EIXO, ret(0, YA - HC / 2 - 40, XT, YA + HC / 2 + 40), { az: -.03, max: 1.3 / EE }), S2 = enquadraRet(EIXO, ret(0, YA - HC / 2, XT, YB + HC / 2), { az: .015, max: 1.3 / EE });
+  camera([[t0 - 3, S1], [taq - .5, { ...S1, az: -.008, d: S1.d * .985 }, 'lin'], [taq + .6, S2], [tfim + 2.5, { ...S2, az: .04, d: S2.d * .98 }, 'lin']]);
+  const A = [0, 1].map(i => parte(rA.e, i));
+  return t => {
+    clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, t0 - .45);
+    // o caminho do portal
+    fluxoCartoes(rA.e, t, tre - .25, NUNCA, { tempos: [tpa - .1, tre - .15] }); pulsos(A[1], t, [[tso, .05], [tfo + .1, .05]]); pulsos(A[0], t, [[tpo, .04]]);
+    vis(chF.e, t, tfo - .1, NUNCA, { dx: -10, dy: 0, sc: .8 }); vis(chD.e, t, tou - .3, NUNCA, { dx: -10, dy: 0, sc: .8 }); pulsos(chF.e, t, [[tex, .05]]);
+    // aqui dentro: o de cima recua e o de baixo passa direto
+    fluxoCartoes(rB.e, t, taq + .15, NUNCA, { tempos: [taq + .25, tqd - .2] }); vis(chH.e, t, tat - .1, NUNCA, { dx: -10, dy: 0, sc: .8 });
+    const rec = lerp(1, .62, eo(pr(t, taq + .2, .5))); rA.op = rec; chF.op = rec; chD.op = rec;
+  };
+}
+
+// =====================================================================================================================
+const CAPS = { 1: caminho, 10: tara, 11: cacamba, 14: taxa, 15: regras };
+cena(d => CAPS[d.cap](d), { fov: 26 });
+</script></body></html>
