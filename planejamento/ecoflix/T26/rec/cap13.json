@@ -1,7 +1,7 @@
 {
  "name": "t26-cap13",
- "title": "T26 · Cap. 13 · Recapitulando (narração 53,0 s, ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T17:30:00-03:00)",
- "fakeNow": "2026-11-10T17:30:00-03:00",
+ "title": "T26 · Cap. 13 · Probabilidade, origem e tarefas (narração 123,2 s, ESTIMADA; marcas L1..L11 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "fakeNow": "2026-11-10T08:30:00-03:00",
  "seed": "t26-cap13",
  "pace": 0.5,
  "cps": 22,
@@ -12,8 +12,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
@@ -21,7 +21,7 @@
   "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10"
  },
  "seedExtra": [
-  "t26/apos-cap11-dia"
+  "t26/apos-cap12"
  ],
  "prewarm": [
   "/login"
@@ -95,34 +95,6 @@
    "timeout": 15
   },
   {
-   "do": "goto",
-   "url": "/agenda"
-  },
-  {
-   "do": "waitFor",
-   "text": "Agenda",
-   "timeout": 30
-  },
-  {
-   "do": "waitFor",
-   "idle": true,
-   "timeout": 15
-  },
-  {
-   "do": "goto",
-   "url": "/crm"
-  },
-  {
-   "do": "waitFor",
-   "text": "Gerencie oportunidades e acompanhe seu processo comercial.",
-   "timeout": 30
-  },
-  {
-   "do": "waitFor",
-   "idle": true,
-   "timeout": 15
-  },
-  {
    "do": "eval",
    "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Something went wrong/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);return 1})()"
   }
@@ -134,224 +106,128 @@
    "at": 0
   },
   {
-   "do": "hover",
+   "do": "click",
    "target": {
-    "selector": "main button:has-text('Funil de vendas')"
+    "selector": "main section button:has(> p:text-is('Retalho de chapa da Metalúrgica Jequitibá'))"
    },
-   "seconds": 0.8,
-   "at": 4.05,
-   "label": "Funil de vendas (montado sozinho)",
-   "optional": true,
-   "timeout": 4
+   "at": 0.0,
+   "label": "clique no cartão (abre a ficha)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Comentários e atividades",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const d=[...document.querySelectorAll(\"[role=dialog]:has(textarea[placeholder^=\\\"Escreva um coment\\\"])\")].pop();if(!d)return 'SEM JANELA';const el=[...d.querySelectorAll('label, p, h3, span, button')].filter(e=>e.textContent.trim().startsWith(\"Probabilidade\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';let c=el.parentElement;while(c&&c!==d.parentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)break;c=c.parentElement;}if(!c||c===d.parentElement)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-200);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 1.54,
+   "label": "a ficha desce até Probabilidade e Origem"
   },
   {
    "do": "hover",
    "target": {
-    "role": "button",
-    "name": "Funil",
-    "exact": true
+    "text": "Probabilidade",
+    "exact": true,
+    "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
    },
-   "seconds": 0.1,
-   "at": 7.16,
-   "label": "abas Funil e Tarefas",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main div.rounded-lg:has(> div > p:text-is('Total de oportunidades'))"
-   },
-   "seconds": 0.27,
-   "at": 7.92,
-   "label": "os quatro cartões",
+   "seconds": 1.6,
+   "at": 3.44,
+   "label": "Probabilidade 50% (zoom)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 9.19
+   "at": 9.49
   },
   {
    "do": "click",
    "target": {
-    "role": "button",
-    "name": "Configurações do CRM/Kanban",
-    "exact": true
+    "selector": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"]) input[type=number]"
    },
-   "at": 9.19,
-   "label": "Configurações do CRM/Kanban"
+   "at": 11.69,
+   "label": "Probabilidade"
   },
   {
-   "do": "waitFor",
-   "text": "Organize os funis comerciais e as etapas de cada Kanban.",
-   "timeout": 12
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"]) input[type=number]"
+   },
+   "text": "80",
+   "cps": 8,
+   "at": 12.88,
+   "label": "Probabilidade: 80",
+   "noClick": true,
+   "clear": true
+  },
+  {
+   "do": "press",
+   "key": "Enter",
+   "label": "confirma (Enter)"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 13.41
   },
   {
    "do": "hover",
    "target": {
-    "text": "Padrão",
-    "exact": true,
-    "within": "[role=dialog]:has(#tab-btn-funis) div[draggable=true]:has(span.truncate:text-is('Sucata industrial'))"
+    "selector": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"]) input[placeholder='Ex.: WhatsApp']"
    },
-   "seconds": 0.1,
-   "at": 12.68,
-   "label": "Sucata industrial, Padrão",
+   "seconds": 1.2,
+   "at": 14.02,
+   "label": "Origem: texto livre, exemplo WhatsApp (zoom)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "click",
    "target": {
-    "role": "button",
-    "name": "Expandir Sucata industrial",
-    "exact": true
+    "selector": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"]) input[placeholder='Ex.: WhatsApp']"
    },
-   "at": 13.23,
-   "label": "abre o Sucata industrial"
+   "at": 20.78,
+   "label": "Origem"
   },
   {
-   "do": "waitFor",
-   "text": "Estágios deste funil",
-   "timeout": 8
-  },
-  {
-   "do": "click",
+   "do": "type",
    "target": {
-    "role": "button",
-    "name": "Editar estágio Visita técnica",
-    "exact": true
+    "selector": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"]) input[placeholder='Ex.: WhatsApp']"
    },
-   "at": 15.97,
-   "label": "Configurar Visita técnica (cor e orientação)"
-  },
-  {
-   "do": "waitFor",
-   "text": "Configurar Visita técnica",
-   "timeout": 8
-  },
-  {
-   "do": "mark",
-   "name": "L3",
-   "at": 18.19
+   "text": "Telefone",
+   "cps": 10,
+   "at": 21.38,
+   "label": "Origem: Telefone",
+   "noClick": true
   },
   {
    "do": "press",
-   "key": "Escape",
-   "at": 18.69,
-   "label": "fecha a Visita técnica"
-  },
-  {
-   "do": "wait",
-   "seconds": 0.4
-  },
-  {
-   "do": "eval",
-   "js": "(()=>{const d=[...document.querySelectorAll(\"[role=dialog]:has([role=tab][id$='-trigger-rules'])\")].pop();if(!d)return 'ja fechada';const b=[...d.querySelectorAll('button')].find(x=>[x.textContent,x.getAttribute('aria-label')].some(v=>/^\\s*fechar\\s*$/i.test(v||'')));if(!b)return 'sem botao Fechar';b.click();return 'fechada pelo botao'})()",
-   "label": "fecha a Visita técnica (plano B)"
-  },
-  {
-   "do": "waitFor",
-   "gone": {
-    "selector": "[role=dialog]:has([role=tab][id$='-trigger-rules'])"
-   },
-   "timeout": 8
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Editar estágio Em contato",
-    "exact": true
-   },
-   "label": "Configurar Em contato"
-  },
-  {
-   "do": "waitFor",
-   "text": "Configurar Em contato",
-   "timeout": 8
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "tab",
-    "name": "Regras"
-   },
-   "at": 19.73,
-   "label": "aba Regras (Tarefas e Responsável ligadas)"
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "tab",
-    "name": "Automações"
-   },
-   "at": 22.7,
-   "label": "aba Automações (Agendar a visita, Ativa)"
-  },
-  {
-   "do": "press",
-   "key": "Escape",
-   "at": 25.5,
-   "label": "fecha o Em contato"
-  },
-  {
-   "do": "wait",
-   "seconds": 0.4
-  },
-  {
-   "do": "eval",
-   "js": "(()=>{const d=[...document.querySelectorAll(\"[role=dialog]:has([role=tab][id$='-trigger-rules'])\")].pop();if(!d)return 'ja fechada';const b=[...d.querySelectorAll('button')].find(x=>[x.textContent,x.getAttribute('aria-label')].some(v=>/^\\s*fechar\\s*$/i.test(v||'')));if(!b)return 'sem botao Fechar';b.click();return 'fechada pelo botao'})()",
-   "label": "fecha o Em contato (plano B)"
-  },
-  {
-   "do": "waitFor",
-   "gone": {
-    "selector": "[role=dialog]:has([role=tab][id$='-trigger-rules'])"
-   },
-   "timeout": 8
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "#tab-btn-checklists"
-   },
-   "at": 25.81,
-   "label": "Checklists"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "#tab-btn-etiquetas"
-   },
-   "at": 26.95,
-   "label": "Etiquetas"
+   "key": "Enter",
+   "label": "confirma (Enter)"
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 27.96
+   "at": 21.89
   },
   {
-   "do": "press",
-   "key": "Escape",
-   "at": 28.26,
-   "label": "fecha as Configurações"
-  },
-  {
-   "do": "wait",
-   "seconds": 0.4
-  },
-  {
-   "do": "eval",
-   "js": "(()=>{const d=[...document.querySelectorAll(\"[role=dialog]:has(#tab-btn-funis)\")].pop();if(!d)return 'ja fechada';const b=[...d.querySelectorAll('button')].find(x=>[x.textContent,x.getAttribute('aria-label')].some(v=>/^\\s*fechar\\s*$/i.test(v||'')));if(!b)return 'sem botao Fechar';b.click();return 'fechada pelo botao'})()",
-   "label": "fecha as Configurações (plano B)"
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Fechar",
+    "exact": true,
+    "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
+   },
+   "at": 22.19,
+   "label": "fecha a ficha",
+   "noScroll": true
   },
   {
    "do": "waitFor",
    "gone": {
-    "selector": "[role=dialog]:has(#tab-btn-funis)"
+    "selector": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
    },
    "timeout": 8
   },
@@ -360,9 +236,312 @@
    "target": {
     "selector": "main section div.rounded-lg:has(> div p:text-is('Retalho de chapa da Metalúrgica Jequitibá'))"
    },
+   "seconds": 5.0,
+   "at": 25.07,
+   "label": "o cartão: barra de probabilidade verde, 80% (zoom)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 35.98
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main section button:has(> p:text-is('Retalho de chapa da Metalúrgica Jequitibá'))"
+   },
+   "at": 36.08,
+   "label": "clique no cartão (abre a ficha)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Comentários e atividades",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"]) textarea[placeholder^='Escreva um coment']"
+   },
+   "seconds": 0.1,
+   "at": 38.17,
+   "label": "comentários (lado direito)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"]) textarea[placeholder^='Escreva um coment']"
+   },
+   "at": 39.19,
+   "label": "caixa de comentário"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"]) textarea[placeholder^='Escreva um coment']"
+   },
+   "text": "Paulo pediu a proposta até sexta.",
+   "cps": 24,
+   "at": 41.89,
+   "label": "comentário: Paulo pediu a proposta até sexta.",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Comentar",
+    "exact": true,
+    "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
+   },
+   "at": 43.97,
+   "label": "Comentar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Paulo pediu a proposta até sexta.",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Paulo pediu a proposta até sexta.",
+    "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
+   },
+   "seconds": 2.2,
+   "at": 46.07,
+   "label": "comentário com nome e hora (zoom)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 49.92
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar Tarefa",
+    "exact": true,
+    "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
+   },
+   "at": 51.53,
+   "label": "Criar Tarefa (pela ficha)"
+  },
+  {
+   "do": "waitFor",
+   "selector": "[role=dialog]:has(#crm-task-form-dialog)",
+   "timeout": 8
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Descreva a tarefa..."
+   },
+   "text": "Ligar pro Paulo",
+   "cps": 30,
+   "at": 55.94,
+   "label": "Título: Ligar pro Paulo"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog]:has(#crm-task-form-dialog) button:has-text('/2026')"
+   },
+   "at": 57.28,
+   "label": "Data * (abre o calendário)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button[name=day]:text-is('13')"
+   },
+   "at": 57.98,
+   "label": "dia 13",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true,
+    "within": "[role=dialog]:has(#crm-task-form-dialog)"
+   },
+   "at": 58.21,
+   "label": "Salvar (Nova tarefa)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Tarefa criada",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 59.07
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Tarefas"
+   },
+   "at": 59.4,
+   "label": "aba Tarefas"
+  },
+  {
+   "do": "waitFor",
+   "text": "Ligar pro Paulo",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"]) div.rounded-lg:has(button > p:text-is('Ligar pro Paulo')) button[aria-label='Mais ações da tarefa']"
+   },
+   "at": 61.14,
+   "label": "os três pontinhos da tarefa"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Editar"
+   },
+   "seconds": 0.2,
+   "at": 63.54,
+   "label": "Editar",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Marcar em andamento"
+   },
+   "seconds": 0.1,
+   "at": 65.06,
+   "label": "Marcar em andamento",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Concluir"
+   },
+   "seconds": 0.1,
+   "at": 66.05,
+   "label": "Concluir",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Cancelar tarefa"
+   },
+   "seconds": 0.1,
+   "at": 66.96,
+   "label": "Cancelar tarefa",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Excluir"
+   },
+   "seconds": 0.38,
+   "at": 67.87,
+   "label": "Excluir",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 69.25,
+   "label": "fecha o menu"
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 74.14
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Detalhes"
+   },
+   "at": 74.64,
+   "label": "aba Detalhes"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const d=[...document.querySelectorAll(\"[role=dialog]:has(textarea[placeholder^=\\\"Escreva um coment\\\"])\")].pop();if(!d)return 'SEM JANELA';const el=[...d.querySelectorAll('label, p, h3, span, button')].filter(e=>e.textContent.trim().startsWith(\"Detalhes\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';let c=el.parentElement;while(c&&c!==d.parentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)break;c=c.parentElement;}if(!c||c===d.parentElement)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-140);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "label": "a ficha sobe até as abas"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"]) [role=combobox]",
+    "hasText": "Visita técnica"
+   },
    "seconds": 1.2,
-   "at": 30.38,
-   "label": "o cartão da Jequitibá em Visita técnica",
+   "at": 76.95,
+   "label": "Estágio (muda sem arrastar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"]) [role=combobox]",
+    "hasText": "Sucata industrial"
+   },
+   "seconds": 1.6,
+   "at": 82.87,
+   "label": "Funil (trocar manda pra primeira etapa do outro)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 87.63
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const d=[...document.querySelectorAll(\"[role=dialog]:has(textarea[placeholder^=\\\"Escreva um coment\\\"])\")].pop();if(!d)return 'SEM JANELA';const el=[...d.querySelectorAll('label, p, h3, span, button')].filter(e=>e.textContent.trim().startsWith(\"Contato do\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';let c=el.parentElement;while(c&&c!==d.parentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)break;c=c.parentElement;}if(!c||c===d.parentElement)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-200);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 88.13,
+   "label": "a ficha desce até o contato"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"]) a:has-text('WhatsApp')"
+   },
+   "seconds": 2.0,
+   "at": 92.03,
+   "label": "botão WhatsApp do contato (zoom, sem clicar)",
    "optional": true,
    "timeout": 4
   },
@@ -370,48 +549,158 @@
    "do": "click",
    "target": {
     "role": "button",
-    "name": "Tarefas",
-    "exact": true
+    "name": "Editar",
+    "exact": true,
+    "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
    },
-   "at": 37.75,
-   "label": "aba Tarefas"
+   "at": 95.85,
+   "label": "Editar (abre o cadastro completo)"
   },
   {
    "do": "waitFor",
-   "text": "Tarefas vinculadas às oportunidades do funil",
-   "timeout": 10
+   "selector": "[role=dialog]:has(#crm-title)",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const d=[...document.querySelectorAll('[role=dialog]:has(#crm-title)')].pop();const sc=[...d.querySelectorAll('*')].find(e=>e.scrollHeight>e.clientHeight+10&&/(auto|scroll)/.test(getComputedStyle(e).overflowY));if(sc)sc.scrollTop=sc.scrollHeight;return sc?'fim':'sem rolagem'})()",
+   "at": 102.25,
+   "label": "o cadastro desce até as Tarefas (no fim)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Tarefas",
+    "exact": true,
+    "within": "[role=dialog]:has(#crm-title)"
+   },
+   "seconds": 1.4,
+   "label": "Tarefas no fim do cadastro",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "click",
    "target": {
-    "selector": "a[href='/agenda']"
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true,
+    "within": "[role=dialog]:has(#crm-title)"
    },
-   "at": 38.74,
-   "label": "Agenda",
+   "at": 103.62,
+   "label": "Cancelar"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "selector": "[role=dialog]:has(#crm-title)"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L10",
+   "at": 103.92
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Excluir oportunidade",
+    "exact": true,
+    "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
+   },
+   "seconds": 0.1,
+   "at": 104.52,
+   "label": "lixeira Excluir oportunidade",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Excluir oportunidade",
+    "exact": true,
+    "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
+   },
+   "at": 105.33,
+   "label": "lixeira (abre a confirmação)"
+  },
+  {
+   "do": "waitFor",
+   "selector": "[role=alertdialog]",
+   "timeout": 6
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=alertdialog]"
+   },
+   "seconds": 3.18,
+   "at": 107.58,
+   "label": "confirmação: Excluir esta oportunidade? (zoom)",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true,
+    "within": "[role=alertdialog]"
+   },
+   "at": 111.76,
+   "label": "Cancelar (a oportunidade fica)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "selector": "[role=alertdialog]"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "mark",
+   "name": "L11",
+   "at": 116.72
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Fechar",
+    "exact": true,
+    "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
+   },
+   "at": 116.82,
+   "label": "fecha a ficha",
    "noScroll": true
   },
   {
    "do": "waitFor",
+   "gone": {
+    "selector": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Retalho de chapa da Metalúrgica Jequitibá\", \"80%\", \"Telefone\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere o cartão com 80% e a origem"
+  },
+  {
+   "do": "hover",
    "target": {
-    "selector": "main button:has-text('Enviar proposta')"
+    "selector": "main section div.rounded-lg:has(> div p:text-is('Retalho de chapa da Metalúrgica Jequitibá'))"
    },
-   "timeout": 15
-  },
-  {
-   "do": "scroll",
-   "point": {
-    "x": 900,
-    "y": 300
-   },
-   "by": 0,
-   "duration": 0.2,
-   "after": 0,
-   "label": "cursor sai do menu"
-  },
-  {
-   "do": "mark",
-   "name": "L5",
-   "at": 42.28
+   "seconds": 3.0,
+   "at": 118.08,
+   "label": "o cartão: 80% e Telefone (zoom)",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "eval",
@@ -421,7 +710,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 53.04
+   "at": 123.23
   }
  ]
 }

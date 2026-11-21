@@ -1,5 +1,12 @@
 # Inventário · T26 · CRM/Kanban
 
+> **Aplicação 21/11 (1.60.22):** rótulos novos conferidos no código e no ensaio: "Orientação para o time: etapa <nome>" (ícone de informação no cabeçalho da coluna), "Editar/Excluir funil|estágio|checklist|etiqueta <nome>",
+> "Remover checklist <nome>" (ficha), "Criar tarefa vinculada" ("Concluir a tarefa marca o checklist e vice-versa."), "Adicionar ação", "Mover/Copiar cartão", "Mover ação para cima/baixo", "Remover ação",
+> "Pausar automação", "Excluir automação", "Voltar para lista", aviso "Dê um nome para a automação.", ficha: "Probabilidade" (campo número, % ao lado), "Origem" (texto livre, exemplo WhatsApp), "Criar Tarefa",
+> botão "WhatsApp" (só com telefone), "Editar", "Excluir oportunidade" ("Excluir esta oportunidade?"), menu da tarefa ("Editar", "Marcar em andamento", "Concluir", "Cancelar tarefa", "Excluir"),
+> histórico "Automação <nome> executada". Mudou do 1.60.18: o cartão travado volta à origem sozinho, o selo de tarefas, as atividades e o histórico atualizam logo depois de mover.
+
+
 Código 1.59.154 (`/home/claude/ecoflix/app-src-1.59.154/`), leitura estática. Caminhos relativos a `src/`. As regras do banco
 (trava de etapa, automações, histórico) vêm das migrations do commit de release `f37573ea0` no repositório do EcoSistema
 (`git show f37573ea0:supabase/migrations/...`, só leitura), que a cópia `app-src` não traz.

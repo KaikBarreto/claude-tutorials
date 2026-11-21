@@ -1,6 +1,6 @@
 {
  "name": "t26-cap06",
- "title": "T26 · Cap. 6 · Automações (narração 95,9 s, ESTIMADA; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T26 · Cap. 6 · Automações (narração 107,7 s, ESTIMADA; marcas L1..L11 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "fakeNow": "2026-11-10T08:30:00-03:00",
  "seed": "t26-cap06",
  "pace": 0.5,
@@ -12,8 +12,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
@@ -486,7 +486,7 @@
     "hasText": "Dias corridos"
    },
    "option": "Dias úteis",
-   "at": 59.33,
+   "at": 60.4,
    "label": "Contagem: Dias úteis"
   },
   {
@@ -580,16 +580,44 @@
    "at": 82.28
   },
   {
-   "do": "scroll",
-   "point": {
-    "x": 640,
-    "y": 300
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Salvar etapa",
+    "exact": true
    },
-   "by": 0,
-   "duration": 0.2,
-   "after": 0,
-   "at": 82.98,
-   "label": "cursor descansa (ilustração)"
+   "seconds": 0.97,
+   "at": 88.96,
+   "label": "Salvar etapa (zoom)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog]:has([role=tab][id$='-trigger-rules']) button[aria-label='Fechar']"
+   },
+   "seconds": 2.0,
+   "at": 90.93,
+   "label": "Fechar (zoom, sem clicar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L11",
+   "at": 94.02
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog]:has([role=tab][id$='-trigger-rules']) div.rounded-xl:has(p:text-is('Agendar a visita'))"
+   },
+   "seconds": 4.0,
+   "at": 95.43,
+   "label": "Ao entrar nesta etapa · 1 ação (zoom)",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "eval",
@@ -599,7 +627,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 95.92
+   "at": 107.66
   }
  ]
 }

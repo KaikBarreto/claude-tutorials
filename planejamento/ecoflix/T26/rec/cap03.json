@@ -1,6 +1,6 @@
 {
  "name": "t26-cap03",
- "title": "T26 · Cap. 3 · Funis e estágios (narração 69,8 s, ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T26 · Cap. 3 · Funis e estágios (narração 91,7 s, ESTIMADA; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "fakeNow": "2026-11-10T08:30:00-03:00",
  "seed": "t26-cap03",
  "pace": 0.5,
@@ -12,8 +12,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
@@ -303,11 +303,74 @@
    "at": 36.51
   },
   {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Editar funil Sucata industrial",
+    "exact": true
+   },
+   "seconds": 1.2,
+   "at": 37.03,
+   "label": "lápis Editar funil (zoom)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Excluir funil Sucata industrial",
+    "exact": true
+   },
+   "at": 41.08,
+   "label": "lixeira Excluir funil (abre a confirmação)"
+  },
+  {
+   "do": "waitFor",
+   "selector": "[role=alertdialog]",
+   "timeout": 6
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=alertdialog]"
+   },
+   "seconds": 4.0,
+   "at": 43.3,
+   "label": "confirmação: Excluir este funil? (zoom)",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true,
+    "within": "[role=alertdialog]"
+   },
+   "at": 48.78,
+   "label": "Cancelar (o funil fica)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "selector": "[role=alertdialog]"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 49.08
+  },
+  {
    "do": "click",
    "target": {
     "selector": "[role=dialog]:has(#tab-btn-funis) div[draggable=true]:has(span.truncate:text-is('Sucata industrial')) button:has(span.truncate)"
    },
-   "at": 36.61,
+   "at": 49.18,
    "label": "abre o funil Sucata industrial"
   },
   {
@@ -322,7 +385,7 @@
     "within": "[role=dialog]:has(#tab-btn-funis)"
    },
    "seconds": 0.36,
-   "at": 39.16,
+   "at": 51.73,
    "label": "Estágios deste funil",
    "optional": true,
    "timeout": 4
@@ -333,7 +396,7 @@
     "selector": "[role=dialog]:has(#tab-btn-funis) div[draggable=true]:has(> span.flex-1:text-is('Em contato'))"
    },
    "seconds": 0.1,
-   "at": 40.52,
+   "at": 53.09,
    "label": "estágio Em contato",
    "optional": true,
    "timeout": 4
@@ -344,7 +407,7 @@
     "selector": "[role=dialog]:has(#tab-btn-funis) div[draggable=true]:has(> span.flex-1:text-is('Proposta'))"
    },
    "seconds": 0.5,
-   "at": 41.44,
+   "at": 54.01,
    "label": "estágio Proposta",
    "optional": true,
    "timeout": 4
@@ -356,7 +419,7 @@
     "name": "Novo estágio",
     "exact": true
    },
-   "at": 45.72,
+   "at": 58.29,
    "label": "Novo estágio"
   },
   {
@@ -376,7 +439,7 @@
    },
    "text": "Visita técnica",
    "cps": 30,
-   "at": 47.43,
+   "at": 60.0,
    "label": "Nome: Visita técnica",
    "noClick": true
   },
@@ -387,7 +450,7 @@
     "name": "Salvar etapa",
     "exact": true
    },
-   "at": 48.35,
+   "at": 60.92,
    "label": "Salvar etapa (Novo estágio)"
   },
   {
@@ -397,8 +460,8 @@
   },
   {
    "do": "mark",
-   "name": "L6",
-   "at": 49.76
+   "name": "L7",
+   "at": 62.33
   },
   {
    "do": "hover",
@@ -406,7 +469,7 @@
     "selector": "[role=dialog]:has(#tab-btn-funis) div[draggable=true]:has(> span.flex-1:text-is('Visita técnica'))"
    },
    "seconds": 0.1,
-   "at": 51.88,
+   "at": 64.45,
    "label": "Visita técnica entra no fim da lista",
    "optional": true,
    "timeout": 4
@@ -419,7 +482,7 @@
    "to": {
     "selector": "[role=dialog]:has(#tab-btn-funis) div[draggable=true]:has(> span.flex-1:text-is('Proposta'))"
    },
-   "at": 52.69,
+   "at": 65.26,
    "label": "arrasta Visita técnica para depois de Em contato",
    "hold": 0.45
   },
@@ -430,8 +493,8 @@
   },
   {
    "do": "mark",
-   "name": "L7",
-   "at": 55.43
+   "name": "L8",
+   "at": 68.0
   },
   {
    "do": "hover",
@@ -441,7 +504,7 @@
     "within": "[role=dialog]:has(#tab-btn-funis) div[draggable=true]:has(> span.flex-1:text-is('Ganho'))"
    },
    "seconds": 0.1,
-   "at": 61.19,
+   "at": 73.76,
    "label": "selo Ganho",
    "optional": true,
    "timeout": 4
@@ -454,10 +517,77 @@
     "within": "[role=dialog]:has(#tab-btn-funis) div[draggable=true]:has(> span.flex-1:text-is('Perdido'))"
    },
    "seconds": 0.8,
-   "at": 61.95,
+   "at": 74.52,
    "label": "selo Perdido",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 81.1
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 81.33,
+   "label": "fecha as Configurações"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.4
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const d=[...document.querySelectorAll(\"[role=dialog]:has(#tab-btn-funis)\")].pop();if(!d)return 'ja fechada';const b=[...d.querySelectorAll('button')].find(x=>[x.textContent,x.getAttribute('aria-label')].some(v=>/^\\s*fechar\\s*$/i.test(v||'')));if(!b)return 'sem botao Fechar';b.click();return 'fechada pelo botao'})()",
+   "label": "fecha as Configurações (plano B)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "selector": "[role=dialog]:has(#tab-btn-funis)"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button:has-text('Funil de vendas')"
+   },
+   "at": 83.56,
+   "label": "troca para o Funil de vendas (barra)"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main section > header:has(h2:text-is('Perdido'))"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main section > header:has(h2:text-is('Em contato'))"
+   },
+   "seconds": 0.8,
+   "label": "o quadro do Funil de vendas (sem a Visita técnica)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button:has-text('Sucata industrial')"
+   },
+   "at": 86.21,
+   "label": "volta ao Sucata industrial"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main section > header:has(h2:text-is('Visita técnica'))"
+   },
+   "timeout": 10
   },
   {
    "do": "eval",
@@ -467,7 +597,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 69.83
+   "at": 91.71
   }
  ]
 }

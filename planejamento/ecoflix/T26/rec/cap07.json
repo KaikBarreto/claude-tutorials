@@ -1,6 +1,6 @@
 {
  "name": "t26-cap07",
- "title": "T26 · Cap. 7 · Checklists e etiquetas (narração 64,2 s, ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T26 · Cap. 7 · Checklists e etiquetas (narração 88,5 s, ESTIMADA; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "fakeNow": "2026-11-10T08:30:00-03:00",
  "seed": "t26-cap07",
  "pace": 0.5,
@@ -12,8 +12,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
@@ -272,7 +272,7 @@
     "text": "Documentos do fornecedor",
     "within": "[role=dialog]:has(#tab-btn-funis)"
    },
-   "seconds": 0.6,
+   "seconds": 2.0,
    "at": 19.1,
    "label": "o modelo Documentos do fornecedor na lista",
    "optional": true,
@@ -286,9 +286,114 @@
   {
    "do": "click",
    "target": {
-    "selector": "#tab-btn-etiquetas"
+    "role": "button",
+    "name": "Editar checklist Documentos do fornecedor",
+    "exact": true
    },
    "at": 29.12,
+   "label": "lápis Editar checklist"
+  },
+  {
+   "do": "waitFor",
+   "selector": "[role=dialog]:has(#crm-checklist-name)",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog]:has(#crm-checklist-name) button[aria-label='Mover item para baixo']",
+    "nth": 0
+   },
+   "seconds": 0.37,
+   "at": 32.81,
+   "label": "setas: trocar a ordem dos itens",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog]:has(#crm-checklist-name) button[aria-label='Remover item']",
+    "nth": 0
+   },
+   "seconds": 0.1,
+   "at": 34.18,
+   "label": "lixeira do item: tirar item",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog]:has(#crm-checklist-name) button",
+    "hasText": "Cancelar"
+   },
+   "at": 34.27,
+   "label": "Cancelar (o modelo fica como está)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "selector": "[role=dialog]:has(#crm-checklist-name)"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Excluir checklist Documentos do fornecedor",
+    "exact": true
+   },
+   "at": 35.37,
+   "label": "lixeira Excluir checklist"
+  },
+  {
+   "do": "waitFor",
+   "selector": "[role=alertdialog]",
+   "timeout": 6
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=alertdialog]"
+   },
+   "seconds": 3.0,
+   "at": 36.8,
+   "label": "confirmação: Excluir este modelo de checklist? (zoom)",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true,
+    "within": "[role=alertdialog]"
+   },
+   "at": 41.75,
+   "label": "Cancelar (o modelo fica)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "selector": "[role=alertdialog]"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 42.05
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#tab-btn-etiquetas"
+   },
+   "at": 42.37,
    "label": "menu Etiquetas"
   },
   {
@@ -303,7 +408,7 @@
     "name": "Nova etiqueta",
     "exact": true
    },
-   "at": 31.14,
+   "at": 44.93,
    "label": "Nova etiqueta"
   },
   {
@@ -318,7 +423,7 @@
    },
    "text": "Indústria",
    "cps": 30,
-   "at": 32.73,
+   "at": 46.52,
    "label": "Nome: Indústria",
    "noClick": true
   },
@@ -328,7 +433,7 @@
     "selector": "#crm-label-color"
    },
    "seconds": 0.1,
-   "at": 33.62,
+   "at": 47.4,
    "label": "Cor (o seletor de cor)",
    "optional": true,
    "timeout": 4
@@ -346,7 +451,7 @@
     "exact": true,
     "within": "[role=dialog]:has(#crm-label-name)"
    },
-   "at": 34.41,
+   "at": 48.19,
    "label": "Salvar (Nova etiqueta)"
   },
   {
@@ -355,19 +460,13 @@
    "timeout": 10
   },
   {
-   "do": "mark",
-   "name": "L5",
-   "at": 35.36
-  },
-  {
    "do": "hover",
    "target": {
     "text": "Indústria",
     "exact": true,
     "within": "[role=dialog]:has(#tab-btn-funis)"
    },
-   "seconds": 2.0,
-   "at": 36.42,
+   "seconds": 1.0,
    "label": "a etiqueta Indústria na lista",
    "optional": true,
    "timeout": 4
@@ -375,7 +474,98 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 46.34
+   "at": 49.15
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Editar etiqueta Indústria",
+    "exact": true
+   },
+   "at": 51.75,
+   "label": "lápis Editar etiqueta"
+  },
+  {
+   "do": "waitFor",
+   "selector": "[role=dialog]:has(#crm-label-name)",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#crm-label-color"
+   },
+   "seconds": 1.2,
+   "label": "nome e cor da etiqueta (zoom)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog]:has(#crm-label-name) button",
+    "hasText": "Cancelar"
+   },
+   "at": 52.69,
+   "label": "Cancelar (a etiqueta fica como está)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "selector": "[role=dialog]:has(#crm-label-name)"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Excluir etiqueta Indústria",
+    "exact": true
+   },
+   "at": 54.03,
+   "label": "lixeira Excluir etiqueta"
+  },
+  {
+   "do": "waitFor",
+   "selector": "[role=alertdialog]",
+   "timeout": 6
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=alertdialog]"
+   },
+   "seconds": 2.81,
+   "at": 55.56,
+   "label": "confirmação: Excluir esta etiqueta? (zoom)",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true,
+    "within": "[role=alertdialog]"
+   },
+   "at": 59.37,
+   "label": "Cancelar (a etiqueta fica)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "selector": "[role=alertdialog]"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 59.67
   },
   {
    "do": "scroll",
@@ -386,8 +576,13 @@
    "by": 0,
    "duration": 0.2,
    "after": 0,
-   "at": 47.04,
+   "at": 60.37,
    "label": "cursor sai (plano geral da janela)"
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 70.65
   },
   {
    "do": "eval",
@@ -397,7 +592,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 64.24
+   "at": 88.54
   }
  ]
 }

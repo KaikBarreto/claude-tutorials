@@ -1,5 +1,16 @@
 # Plano · T26 · CRM/Kanban
 
+
+> **Aplicação 21/11 (app 1.60.22, tela 1600x900):** a aula passou de 14 para **17 capítulos** (0 a 16). Novos: **8** Automação com várias ações (Aplicar checklist
+> com tarefa vinculada, Definir prazo, Mover/Copiar, setas, aviso de nome, gatilhos), **12** Checklist na oportunidade (marcar itens, tarefa vinculada, Aplicar modelo e
+> lixeira), **13** Probabilidade, origem e tarefas (probabilidade, origem, comentário, Criar Tarefa pela ficha, menu da tarefa, estágio/funil, WhatsApp, Editar, lixeira).
+> Renumerados: Nova oportunidade 8→9, Arrastar o cartão 9→10, A ficha 10→11, Tarefas e Agenda 11→14, Filtros 12→15, Recapitulando 13→16.
+> Capítulos que mudaram por dentro: 3 (lápis/lixeira do funil, troca de funil), 4 (ícone de informação da orientação no quadro), 5 (uma por linha), 6 (Salvar etapa x Fechar),
+> 7 (editar/excluir modelo e etiqueta), 9 (telefone, empresa avulsa, mais de cada coluna), 10 (a trava devolve o cartão sozinha: sem corte nem espera), 11 (histórico com a automação),
+> 14 (arrastar a tarefa, edição, filtrar, ordenar, mês/semana/dia), 15 (Perdidos e o motivo, ordem na coluna, arrastar para Ganho). Sementes: `inicio`, `apos-cap01/03/04/05/06/07`
+> (do ensaio) e `apos-cap08..apos-cap14` e `apos-cap14-dia` (sem navegador, `rec/t26/aux/t26_cadeia.mjs` e `t26_dia.py`). FAKE_NOW 08:30 nos caps 0 a 14 e 17:30 nos caps 15 e 16.
+> Resultado do ensaio e comandos: `andamento_160.md`.
+
 - **Título:** CRM/Kanban (o da fonte). 🔒 módulo `crm_kanban`. **Aula nova.**
 - **Objetivo (uma frase):** montar o funil de captação de sucata industrial da Recicla Vale Metais, com etapa própria, regras de
   saída e uma automação ativa, e levar uma oportunidade pelo funil até a tarefa aparecer na Agenda.

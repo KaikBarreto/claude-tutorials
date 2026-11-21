@@ -1,6 +1,6 @@
 {
  "name": "t26-cap11",
- "title": "T26 · Cap. 11 · Tarefas e Agenda (narração 69,9 s, ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T26 · Cap. 11 · A ficha da oportunidade (narração 70,0 s, ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "fakeNow": "2026-11-10T08:30:00-03:00",
  "seed": "t26-cap11",
  "pace": 0.5,
@@ -12,8 +12,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
@@ -95,34 +95,6 @@
    "timeout": 15
   },
   {
-   "do": "goto",
-   "url": "/agenda"
-  },
-  {
-   "do": "waitFor",
-   "text": "Agenda",
-   "timeout": 30
-  },
-  {
-   "do": "waitFor",
-   "idle": true,
-   "timeout": 15
-  },
-  {
-   "do": "goto",
-   "url": "/crm"
-  },
-  {
-   "do": "waitFor",
-   "text": "Gerencie oportunidades e acompanhe seu processo comercial.",
-   "timeout": 30
-  },
-  {
-   "do": "waitFor",
-   "idle": true,
-   "timeout": 15
-  },
-  {
    "do": "eval",
    "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Something went wrong/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);return 1})()"
   }
@@ -136,355 +108,289 @@
   {
    "do": "click",
    "target": {
-    "role": "button",
-    "name": "Tarefas",
-    "exact": true
+    "selector": "main section button:has(> p:text-is('Retalho de chapa da Metalúrgica Jequitibá'))"
    },
-   "at": 0.74,
-   "label": "aba Tarefas"
+   "at": 0.0,
+   "label": "clique no cartão (abre a ficha)"
   },
   {
    "do": "waitFor",
-   "text": "Tarefas vinculadas às oportunidades do funil",
+   "text": "Comentários e atividades",
    "timeout": 10
   },
   {
    "do": "hover",
    "target": {
-    "text": "Tarefas vinculadas às oportunidades do funil",
-    "exact": true
-   },
-   "seconds": 1.0,
-   "at": 1.92,
-   "label": "Tarefas vinculadas às oportunidades do funil",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main div:has(> h3:text-is('Pendente'))"
-   },
-   "seconds": 0.14,
-   "at": 8.53,
-   "label": "coluna Pendente",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main div:has(> h3:text-is('Em andamento'))"
+    "role": "tab",
+    "name": "Detalhes"
    },
    "seconds": 0.1,
-   "at": 9.67,
-   "label": "coluna Em andamento",
+   "at": 5.19,
+   "label": "aba Detalhes",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main div:has(> h3:text-is('Concluída'))"
+    "role": "tab",
+    "name": "Tarefas"
    },
    "seconds": 0.1,
-   "at": 10.65,
-   "label": "coluna Concluída (a tarefa da visita)",
+   "at": 6.1,
+   "label": "aba Tarefas (1)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main div:has(> h3:text-is('Cancelada'))"
+    "role": "tab",
+    "name": "Histórico"
    },
    "seconds": 0.1,
-   "at": 11.56,
-   "label": "coluna Cancelada",
+   "at": 6.86,
+   "label": "aba Histórico",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 12.45
+   "at": 7.74
   },
   {
-   "do": "click",
+   "do": "hover",
    "target": {
-    "role": "button",
-    "name": "Nova tarefa",
-    "exact": true
+    "selector": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"]) [role=combobox]",
+    "hasText": "Sucata industrial"
    },
-   "at": 15.18,
-   "label": "Nova tarefa"
+   "seconds": 0.1,
+   "at": 9.56,
+   "label": "Funil: Sucata industrial",
+   "optional": true,
+   "timeout": 4
   },
   {
-   "do": "waitFor",
-   "selector": "[role=dialog]:has(#crm-task-form-dialog)",
-   "timeout": 8
-  },
-  {
-   "do": "type",
+   "do": "hover",
    "target": {
-    "placeholder": "Descreva a tarefa..."
+    "selector": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"]) [role=combobox]",
+    "hasText": "Em contato"
    },
-   "text": "Enviar proposta",
-   "cps": 30,
-   "at": 16.42,
-   "label": "Título: Enviar proposta"
+   "seconds": 0.1,
+   "at": 10.39,
+   "label": "Estágio: Em contato",
+   "optional": true,
+   "timeout": 4
   },
   {
-   "do": "click",
+   "do": "hover",
    "target": {
-    "selector": "[role=dialog]:has(#crm-task-form-dialog) button[role=combobox]",
-    "hasText": "Selecionar..."
-   },
-   "at": 17.86,
-   "label": "Oportunidade * (abre a busca)"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=option]:has-text('Retalho de chapa da Metalúrgica Jequitibá')"
-   },
-   "at": 19.96,
-   "label": "Retalho de chapa da Metalúrgica Jequitibá",
-   "noScroll": true
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog]:has(#crm-task-form-dialog) button[role=combobox]",
+    "selector": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"]) [role=combobox]",
     "hasText": "Sem responsável"
    },
-   "at": 20.74,
-   "label": "Responsável (abre a busca)"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=option]:has-text('Rafael Nogueira')"
-   },
-   "at": 21.5,
-   "label": "Rafael Nogueira",
-   "noScroll": true
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog]:has(#crm-task-form-dialog) button:has-text('/2026')"
-   },
-   "at": 22.26,
-   "label": "Data * (abre o calendário)"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[data-radix-popper-content-wrapper] button[name=day]:text-is('12')"
-   },
-   "at": 23.52,
-   "label": "dia 12",
-   "noScroll": true
+   "seconds": 0.3,
+   "at": 11.3,
+   "label": "Responsável: Sem responsável",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "select",
    "target": {
-    "selector": "[role=dialog]:has(#crm-task-form-dialog) button[role=combobox]",
-    "hasText": "Média"
+    "selector": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"]) [role=combobox]",
+    "hasText": "Sem responsável"
    },
-   "option": "Alta",
-   "at": 23.83,
-   "label": "Prioridade: Alta"
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Enviar proposta\", \"Retalho de chapa da Metalúrgica Jequitibá\", \"Rafael Nogueira\", \"12/11/2026\", \"Alta\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]:has(#crm-task-form-dialog)\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere Nova tarefa preenchida"
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Salvar",
-    "exact": true,
-    "within": "[role=dialog]:has(#crm-task-form-dialog)"
-   },
-   "at": 25.22,
-   "label": "Salvar (Nova tarefa)"
+   "option": "Rafael Nogueira",
+   "at": 12.98,
+   "label": "Responsável: Rafael Nogueira"
   },
   {
    "do": "waitFor",
-   "text": "Tarefa criada",
-   "timeout": 10
+   "target": {
+    "selector": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"]) [role=combobox]",
+    "hasText": "Rafael Nogueira"
+   },
+   "timeout": 8
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 26.08
+   "at": 18.49
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const d=[...document.querySelectorAll(\"[role=dialog]:has(textarea[placeholder^=\\\"Escreva um coment\\\"])\")].pop();if(!d)return 'SEM JANELA';const el=[...d.querySelectorAll('label, p, h3, span, button')].filter(e=>e.textContent.trim().startsWith(\"Valor Estimado\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';let c=el.parentElement;while(c&&c!==d.parentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)break;c=c.parentElement;}if(!c||c===d.parentElement)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-160);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 18.89,
+   "label": "a ficha desce até os valores"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main div.rounded-xl:has(> div > h3:text-is('Pendente')) p:text-is('Enviar proposta')"
+    "text": "Valor Estimado",
+    "exact": true,
+    "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
    },
    "seconds": 0.1,
-   "at": 27.36,
-   "label": "Enviar proposta em Pendente",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[aria-label='Lista']"
-   },
-   "at": 28.15,
-   "label": "visão Lista"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main th:has-text('Oportunidade')"
-   },
-   "seconds": 0.37,
-   "at": 32.37,
-   "label": "coluna Oportunidade",
+   "at": 19.78,
+   "label": "Valor Estimado R$ 8.400,00",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main th:has-text('Responsável')"
-   },
-   "seconds": 0.29,
-   "at": 33.74,
-   "label": "coluna Responsável",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main th:has-text('Data')"
+    "text": "Previsão Fechamento",
+    "exact": true,
+    "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
    },
    "seconds": 0.1,
-   "at": 35.03,
-   "label": "coluna Data",
+   "at": 20.61,
+   "label": "Previsão Fechamento 30/11/2026",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main th:has-text('Prioridade')"
+    "text": "Material",
+    "exact": true,
+    "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
    },
    "seconds": 0.1,
-   "at": 35.71,
-   "label": "coluna Prioridade",
+   "at": 21.67,
+   "label": "Material: Chaparia",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Empresa",
+    "exact": true,
+    "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
+   },
+   "seconds": 0.1,
+   "at": 22.66,
+   "label": "Empresa: Metalúrgica Jequitibá",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const d=[...document.querySelectorAll(\"[role=dialog]:has(textarea[placeholder^=\\\"Escreva um coment\\\"])\")].pop();if(!d)return 'SEM JANELA';const el=[...d.querySelectorAll('label, p, h3, span, button')].filter(e=>e.textContent.trim().startsWith(\"Observa\\u00e7\\u00f5es\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';let c=el.parentElement;while(c&&c!==d.parentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)break;c=c.parentElement;}if(!c||c===d.parentElement)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 23.42,
+   "label": "a ficha desce até as Observações"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#opportunity-notes"
+   },
+   "seconds": 3.0,
+   "at": 25.16,
+   "label": "Observações (salvam sozinhas; o motivo da perda vai aqui)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 36.67
+   "at": 31.36
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const d=[...document.querySelectorAll(\"[role=dialog]:has(textarea[placeholder^=\\\"Escreva um coment\\\"])\")].pop();if(!d)return 'SEM JANELA';const el=[...d.querySelectorAll('label, p, h3, span, button')].filter(e=>e.textContent.trim().startsWith(\"Etiquetas\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';let c=el.parentElement;while(c&&c!==d.parentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)break;c=c.parentElement;}if(!c||c===d.parentElement)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-380);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 31.99,
+   "label": "a ficha desce até Etiquetas e Checklists"
   },
   {
    "do": "click",
    "target": {
-    "selector": "[aria-label='Calendário']"
+    "role": "button",
+    "name": "Gerenciar",
+    "exact": true,
+    "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
    },
-   "at": 37.15,
-   "label": "visão Calendário"
+   "at": 32.9,
+   "label": "Etiquetas: Gerenciar"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button:has-text('Indústria')"
+   },
+   "at": 33.79,
+   "label": "marca Indústria",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"]) span:text-is('Indústria')"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha a lista das etiquetas"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.4
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main button[title^='Enviar proposta']"
+    "role": "button",
+    "name": "Aplicar modelo",
+    "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
    },
-   "seconds": 0.5,
-   "at": 38.79,
-   "label": "Enviar proposta no dia 12 (calendário)",
+   "seconds": 1.6,
+   "at": 38.72,
+   "label": "Checklists: Aplicar modelo (sem clicar)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 40.29
+   "at": 42.11
   },
   {
-   "do": "click",
-   "target": {
-    "selector": "a[href='/agenda']"
-   },
+   "do": "eval",
+   "js": "(async()=>{const d=[...document.querySelectorAll(\"[role=dialog]:has(textarea[placeholder^=\\\"Escreva um coment\\\"])\")].pop();if(!d)return 'SEM JANELA';const el=[...d.querySelectorAll('label, p, h3, span, button')].filter(e=>e.textContent.trim().startsWith(\"Detalhes\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';let c=el.parentElement;while(c&&c!==d.parentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)break;c=c.parentElement;}if(!c||c===d.parentElement)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-140);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
    "at": 42.41,
-   "label": "Agenda (menu lateral)",
-   "noScroll": true
-  },
-  {
-   "do": "waitFor",
-   "target": {
-    "selector": "main button:has-text('Enviar proposta')"
-   },
-   "timeout": 15
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main button:has-text('Enviar proposta')"
-   },
-   "seconds": 2.4,
-   "at": 43.92,
-   "label": "Enviar proposta no dia 12, selo CRM (zoom)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L6",
-   "at": 48.15
-  },
-  {
-   "do": "scroll",
-   "point": {
-    "x": 900,
-    "y": 160
-   },
-   "by": 0,
-   "duration": 0.2,
-   "after": 0,
-   "at": 48.85,
-   "label": "cursor descansa (ilustração)"
-  },
-  {
-   "do": "mark",
-   "name": "L7",
-   "at": 54.65
+   "label": "a ficha sobe até as abas"
   },
   {
    "do": "click",
    "target": {
-    "selector": "main button:has-text('Enviar proposta')"
+    "role": "tab",
+    "name": "Tarefas"
    },
-   "at": 54.75,
-   "label": "clique na tarefa (leva ao CRM)"
+   "at": 42.74,
+   "label": "aba Tarefas"
   },
   {
    "do": "waitFor",
-   "text": "Editar oportunidade",
-   "timeout": 15
+   "text": "Agendar visita na Metalúrgica Jequitibá",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Agendar visita na Metalúrgica Jequitibá\", \"11/11\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]:has(textarea[placeholder^=\\\"Escreva um coment\\\"])\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a tarefa da automação, 11/11"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "#crm-title"
+    "selector": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"]) p:text-is('Agendar visita na Metalúrgica Jequitibá')"
    },
-   "seconds": 1.4,
-   "at": 58.14,
-   "label": "Editar oportunidade da Jequitibá",
+   "seconds": 1.2,
+   "at": 46.51,
+   "label": "tarefa da automação: Agendar visita na Metalúrgica Jequitibá (11/11)",
    "optional": true,
    "timeout": 4
   },
@@ -492,19 +398,114 @@
    "do": "click",
    "target": {
     "role": "button",
-    "name": "Cancelar",
+    "name": "Concluir tarefa",
     "exact": true,
-    "within": "[role=dialog]:has(#crm-title)"
+    "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
    },
-   "at": 67.75,
-   "label": "Cancelar"
+   "at": 52.16,
+   "label": "Concluir tarefa"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "button",
+    "name": "Reabrir tarefa",
+    "exact": true,
+    "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 53.09
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Histórico"
+   },
+   "at": 53.5,
+   "label": "aba Histórico"
+  },
+  {
+   "do": "waitFor",
+   "text": "Etapa alterada de \"Novo\" para \"Em contato\".",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Etapa alterada de \"Novo\" para \"Em contato\".",
+    "exact": true,
+    "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
+   },
+   "seconds": 1.6,
+   "at": 55.37,
+   "label": "Histórico: Etapa alterada de \"Novo\" para \"Em contato\". (quem e quando)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Automação Agendar a visita executada",
+    "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
+   },
+   "seconds": 2.4,
+   "at": 58.78,
+   "label": "Histórico: Automação Agendar a visita executada",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 63.16
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Fechar",
+    "exact": true,
+    "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
+   },
+   "at": 63.26,
+   "label": "fecha a ficha",
+   "noScroll": true
   },
   {
    "do": "waitFor",
    "gone": {
-    "selector": "[role=dialog]:has(#crm-title)"
+    "selector": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
    },
    "timeout": 8
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": "main section div.rounded-lg:has(> div p:text-is('Retalho de chapa da Metalúrgica Jequitibá')) button[aria-label='Mover oportunidade']"
+   },
+   "to": {
+    "selector": "main section:has(> header h2:text-is('Visita técnica'))"
+   },
+   "at": 65.4,
+   "label": "arrasta o cartão para Visita técnica (agora passa)",
+   "hold": 0.5
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main section:has(> header h2:text-is('Visita técnica')) p:text-is('Retalho de chapa da Metalúrgica Jequitibá')"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Visita técnica\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere o cartão em Visita técnica"
   },
   {
    "do": "eval",
@@ -514,7 +515,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 69.89
+   "at": 69.97
   }
  ]
 }

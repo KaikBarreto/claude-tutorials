@@ -1,6 +1,6 @@
 {
  "name": "t26-cap04",
- "title": "T26 · Cap. 4 · Nome, cor e orientação (narração 48,2 s, ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T26 · Cap. 4 · Nome, cor e orientação (narração 58,3 s, ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "fakeNow": "2026-11-10T08:30:00-03:00",
  "seed": "t26-cap04",
  "pace": 0.5,
@@ -12,8 +12,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
@@ -239,7 +239,7 @@
    },
    "text": "Visitar a indústria, ver o volume e o tipo de sucata e combinar a retirada.",
    "cps": 40,
-   "at": 22.2,
+   "at": 23.87,
    "label": "Orientação: Visitar a indústria, ver o volume e o tipo de sucata e combinar a retirada.",
    "noClick": true
   },
@@ -282,7 +282,7 @@
     "name": "Editar estágio Visita técnica",
     "exact": true
    },
-   "at": 31.92,
+   "at": 32.61,
    "label": "lápis de novo: o texto fica na configuração da etapa"
   },
   {
@@ -295,8 +295,8 @@
    "target": {
     "selector": "#crm-stage-description"
    },
-   "seconds": 0.65,
-   "at": 35.23,
+   "seconds": 0.8,
+   "at": 33.64,
    "label": "Orientação para o time salva (zoom)",
    "optional": true,
    "timeout": 4
@@ -304,12 +304,12 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 36.88
+   "at": 35.44
   },
   {
    "do": "press",
    "key": "Escape",
-   "at": 37.48,
+   "at": 36.04,
    "label": "fecha a configuração (Esc)"
   },
   {
@@ -329,29 +329,117 @@
    "timeout": 8
   },
   {
-   "do": "hover",
+   "do": "click",
    "target": {
     "role": "button",
     "name": "Excluir estágio Visita técnica",
     "exact": true
    },
-   "seconds": 2.4,
-   "at": 38.39,
-   "label": "lixeira Excluir estágio Visita técnica (zoom, sem clicar)",
+   "at": 36.75,
+   "label": "lixeira Excluir estágio Visita técnica"
+  },
+  {
+   "do": "waitFor",
+   "selector": "[role=alertdialog]",
+   "timeout": 6
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=alertdialog]"
+   },
+   "seconds": 3.0,
+   "at": 40.39,
+   "label": "confirmação: Excluir este estágio? (zoom)",
+   "noScroll": true,
    "optional": true,
    "timeout": 4
   },
   {
-   "do": "scroll",
-   "point": {
-    "x": 780,
-    "y": 600
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true,
+    "within": "[role=alertdialog]"
    },
-   "by": 0,
-   "duration": 0.2,
-   "after": 0,
-   "at": 44.18,
-   "label": "cursor sai da lixeira"
+   "at": 45.13,
+   "label": "Cancelar (o estágio fica)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "selector": "[role=alertdialog]"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 45.43
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 46.03,
+   "label": "fecha as Configurações"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.4
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const d=[...document.querySelectorAll(\"[role=dialog]:has(#tab-btn-funis)\")].pop();if(!d)return 'ja fechada';const b=[...d.querySelectorAll('button')].find(x=>[x.textContent,x.getAttribute('aria-label')].some(v=>/^\\s*fechar\\s*$/i.test(v||'')));if(!b)return 'sem botao Fechar';b.click();return 'fechada pelo botao'})()",
+   "label": "fecha as Configurações (plano B)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "selector": "[role=dialog]:has(#tab-btn-funis)"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Orientação para o time: etapa Visita técnica",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 49.37,
+   "label": "ícone de informação na coluna Visita técnica (zoom)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Orientação para o time: etapa Visita técnica",
+    "exact": true
+   },
+   "at": 50.77,
+   "label": "clica no ícone: a orientação aparece ali mesmo"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper]"
+   },
+   "seconds": 1.07,
+   "at": 55.09,
+   "label": "orientação da Visita técnica (zoom)",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 57.16,
+   "label": "fecha a orientação"
   },
   {
    "do": "eval",
@@ -361,7 +449,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 48.17
+   "at": 58.31
   }
  ]
 }

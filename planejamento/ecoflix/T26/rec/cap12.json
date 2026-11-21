@@ -1,7 +1,7 @@
 {
  "name": "t26-cap12",
- "title": "T26 · Cap. 12 · Filtros e busca (narração 62,0 s, ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T17:30:00-03:00)",
- "fakeNow": "2026-11-10T17:30:00-03:00",
+ "title": "T26 · Cap. 12 · Checklist na oportunidade (narração 55,8 s, ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "fakeNow": "2026-11-10T08:30:00-03:00",
  "seed": "t26-cap12",
  "pace": 0.5,
  "cps": 22,
@@ -12,8 +12,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
@@ -21,7 +21,7 @@
   "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10"
  },
  "seedExtra": [
-  "t26/apos-cap11-dia"
+  "t26/apos-cap11"
  ],
  "prewarm": [
   "/login"
@@ -107,311 +107,271 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Total de oportunidades\", \"6\", \"R$ 62.300,00\", \"R$ 19.000,00\", \"R$ 41.650,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere seis oportunidades, R$ 62.300,00"
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Retalho de chapa da Metalúrgica Jequitibá\", \"25/11/2026\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere o cartão em Visita técnica com a previsão 25/11/2026"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main div.rounded-lg:has(> div > p:text-is('Total de oportunidades'))"
+    "selector": "main section div.rounded-lg:has(> div p:text-is('Retalho de chapa da Metalúrgica Jequitibá'))"
    },
-   "seconds": 1.2,
-   "at": 6.02,
-   "label": "Total de oportunidades 6 (zoom)",
+   "seconds": 3.0,
+   "at": 0.0,
+   "label": "o cartão em Visita técnica (zoom)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main div.rounded-lg:has(> div > p:text-is('Valor total'))"
+    "selector": "main section div.rounded-lg:has(> div p:text-is('Retalho de chapa da Metalúrgica Jequitibá'))"
    },
-   "seconds": 2.4,
-   "at": 8.38,
-   "label": "Valor total R$ 62.300,00 (zoom)",
+   "seconds": 2.08,
+   "at": 8.84,
+   "label": "previsão 25/11/2026 (zoom)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 12.07
+   "at": 11.92
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main section button:has(> p:text-is('Retalho de chapa da Metalúrgica Jequitibá'))"
+   },
+   "at": 12.02,
+   "label": "clique no cartão (abre a ficha)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Comentários e atividades",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const d=[...document.querySelectorAll(\"[role=dialog]:has(textarea[placeholder^=\\\"Escreva um coment\\\"])\")].pop();if(!d)return 'SEM JANELA';const el=[...d.querySelectorAll('label, p, h3, span, button')].filter(e=>e.textContent.trim().startsWith(\"Checklists\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';let c=el.parentElement;while(c&&c!==d.parentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)break;c=c.parentElement;}if(!c||c===d.parentElement)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-160);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 13.29,
+   "label": "a ficha desce até os Checklists"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main div.rounded-lg:has(> div > p:text-is('Ganhos'))"
+    "text": "Documentos da Metalúrgica Jequitibá",
+    "exact": true,
+    "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
    },
-   "seconds": 2.6,
-   "at": 12.9,
-   "label": "Ganhos R$ 19.000,00 (zoom)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main div.rounded-lg:has(> div > p:text-is('Em negociação'))"
-   },
-   "seconds": 3.0,
-   "at": 17.3,
-   "label": "Em negociação R$ 41.650,00 (zoom)",
+   "seconds": 1.86,
+   "at": 16.32,
+   "label": "checklist Documentos da Metalúrgica Jequitibá",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 22.06
+   "at": 19.18
   },
   {
    "do": "click",
    "target": {
-    "selector": "main input[placeholder^='Buscar por título']"
+    "selector": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"]) label:has-text('CNPJ conferido') button[role=checkbox]"
    },
-   "at": 22.39,
-   "label": "Busca"
+   "at": 22.11,
+   "label": "marca: CNPJ conferido"
   },
   {
-   "do": "type",
+   "do": "click",
    "target": {
-    "selector": "main input[placeholder^='Buscar por título']"
+    "selector": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"]) label:has-text('Local de retirada combinado') button[role=checkbox]"
    },
-   "text": "alumínio",
-   "cps": 14,
-   "at": 29.47,
-   "label": "busca: alumínio",
-   "noClick": true
+   "at": 23.48,
+   "label": "marca: Local de retirada combinado"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"]) label:has-text('Frequência da coleta combinada') button[role=checkbox]"
+   },
+   "at": 25.07,
+   "label": "marca: Frequência da coleta combinada"
   },
   {
    "do": "waitFor",
-   "gone": {
-    "selector": "main p:text-is('Ferro de demolição da Construtora Pilar')"
-   },
-   "timeout": 8
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Perfis de alumínio da Esquadrias Horizonte\", \"Total de oportunidades (filtrado)\", \"R$ 17.800,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere sobra a Esquadrias Horizonte (filtrado)"
+   "text": "3/3",
+   "timeout": 6
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main section div.rounded-lg:has(> div p:text-is('Perfis de alumínio da Esquadrias Horizonte'))"
+    "selector": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"]) label:has-text('CNPJ conferido')"
    },
-   "seconds": 1.0,
-   "at": 32.0,
-   "label": "o cartão da Esquadrias Horizonte",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main div.rounded-lg:has(> div > p:has-text('Total de oportunidades (filtrado)'))"
-   },
-   "seconds": 1.33,
-   "at": 34.89,
-   "label": "cartões de cima dizem filtrado",
+   "seconds": 0.1,
+   "at": 27.22,
+   "label": "3/3 (zoom)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 37.22
+   "at": 28.56
   },
   {
-   "do": "type",
-   "target": {
-    "selector": "main input[placeholder^='Buscar por título']"
-   },
-   "text": "",
-   "at": 37.32,
-   "label": "apaga a busca",
-   "clear": true
+   "do": "eval",
+   "js": "(async()=>{const d=[...document.querySelectorAll(\"[role=dialog]:has(textarea[placeholder^=\\\"Escreva um coment\\\"])\")].pop();if(!d)return 'SEM JANELA';const el=[...d.querySelectorAll('label, p, h3, span, button')].filter(e=>e.textContent.trim().startsWith(\"Detalhes\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';let c=el.parentElement;while(c&&c!==d.parentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)break;c=c.parentElement;}if(!c||c===d.parentElement)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-140);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 28.77,
+   "label": "a ficha sobe até as abas"
   },
   {
    "do": "click",
    "target": {
-    "role": "button",
-    "name": "Filtros"
+    "role": "tab",
+    "name": "Tarefas"
    },
-   "at": 37.62,
-   "label": "Filtros"
+   "at": 29.4,
+   "label": "aba Tarefas"
   },
   {
    "do": "waitFor",
-   "selector": "[role=dialog]:has(#crm-min-value)",
+   "text": "Documentos da Metalúrgica Jequitibá",
    "timeout": 8
   },
   {
    "do": "hover",
    "target": {
-    "selector": "[role=dialog]:has(#crm-min-value) button[role=combobox]",
-    "nth": 0
+    "selector": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"]) div.rounded-lg:has(button > p:text-is('Documentos da Metalúrgica Jequitibá'))"
    },
-   "seconds": 0.21,
-   "at": 40.1,
-   "label": "Status",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "#crm-min-value"
-   },
-   "seconds": 0.2,
-   "at": 41.31,
-   "label": "Valor mínimo / Valor máximo",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "[role=dialog]:has(#crm-min-value) button[role=combobox]",
-    "nth": 1
-   },
-   "seconds": 0.3,
-   "at": 42.98,
-   "label": "Responsável",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "[role=dialog]:has(#crm-min-value) button[role=combobox]",
-    "nth": 2
-   },
-   "seconds": 0.2,
-   "at": 44.42,
-   "label": "Material",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "[role=dialog]:has(#crm-min-value) button[role=combobox]",
-    "nth": 3
-   },
-   "seconds": 0.1,
-   "at": 46.17,
-   "label": "Meio de transporte",
+   "seconds": 3.0,
+   "at": 30.91,
+   "label": "tarefa vinculada: Concluída",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 47.13
+   "at": 35.37
   },
   {
-   "do": "select",
+   "do": "click",
    "target": {
-    "selector": "[role=dialog]:has(#crm-min-value) button[role=combobox]",
-    "nth": 1
+    "role": "tab",
+    "name": "Detalhes"
    },
-   "option": "Rafael Nogueira",
-   "at": 49.18,
-   "label": "Responsável: Rafael Nogueira"
+   "at": 35.47,
+   "label": "aba Detalhes"
   },
   {
-   "do": "select",
-   "target": {
-    "selector": "[role=dialog]:has(#crm-min-value) button[role=combobox]",
-    "nth": 0
-   },
-   "option": "Em negociação",
-   "at": 50.55,
-   "label": "Status: Em negociação"
+   "do": "eval",
+   "js": "(async()=>{const d=[...document.querySelectorAll(\"[role=dialog]:has(textarea[placeholder^=\\\"Escreva um coment\\\"])\")].pop();if(!d)return 'SEM JANELA';const el=[...d.querySelectorAll('label, p, h3, span, button')].filter(e=>e.textContent.trim().startsWith(\"Checklists\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';let c=el.parentElement;while(c&&c!==d.parentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)break;c=c.parentElement;}if(!c||c===d.parentElement)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-160);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "label": "a ficha desce até os Checklists"
   },
   {
    "do": "click",
    "target": {
     "role": "button",
-    "name": "Aplicar",
-    "exact": true
+    "name": "Aplicar modelo",
+    "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
    },
-   "at": 51.56,
-   "label": "Aplicar"
+   "at": 37.82,
+   "label": "Aplicar modelo"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button:has-text('Documentos do fornecedor')"
+   },
+   "at": 39.38,
+   "label": "escolhe o modelo Documentos do fornecedor",
+   "noScroll": true
   },
   {
    "do": "waitFor",
-   "gone": {
-    "selector": "[role=dialog]:has(#crm-min-value)"
+   "target": {
+    "role": "button",
+    "name": "Remover checklist Documentos do fornecedor",
+    "exact": true,
+    "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
    },
    "timeout": 8
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Valor total (filtrado)\", \"R$ 26.200,00\", \"Retalho de chapa da Metalúrgica Jequitibá\", \"Perfis de alumínio da Esquadrias Horizonte\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere ficam dois cartões: R$ 26.200,00"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main div.rounded-lg:has(> div > p:has-text('Valor total (filtrado)'))"
-   },
-   "seconds": 1.71,
-   "at": 54.41,
-   "label": "Valor total (filtrado) R$ 26.200,00 (zoom)",
-   "optional": true,
-   "timeout": 4
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 57.12
+   "at": 43.0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Remover checklist Documentos do fornecedor",
+    "exact": true,
+    "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
+   },
+   "seconds": 1.0,
+   "at": 44.67,
+   "label": "lixeira: Remover checklist",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "click",
    "target": {
     "role": "button",
-    "name": "Filtros"
+    "name": "Remover checklist Documentos do fornecedor",
+    "exact": true,
+    "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
    },
-   "at": 57.52,
-   "label": "Filtros (2)"
-  },
-  {
-   "do": "waitFor",
-   "selector": "[role=dialog]:has(#crm-min-value)",
-   "timeout": 8
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Limpar filtros",
-    "exact": true
-   },
-   "at": 59.19,
-   "label": "Limpar filtros"
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Aplicar",
-    "exact": true
-   },
-   "label": "Aplicar (voltam os seis)"
+   "at": 47.96,
+   "label": "remove o checklist a mais (sem pergunta)"
   },
   {
    "do": "waitFor",
    "gone": {
-    "selector": "[role=dialog]:has(#crm-min-value)"
+    "role": "button",
+    "name": "Remover checklist Documentos do fornecedor",
+    "exact": true,
+    "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 50.41
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Fechar",
+    "exact": true,
+    "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
+   },
+   "at": 50.91,
+   "label": "fecha a ficha",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "selector": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
    },
    "timeout": 8
   },
   {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Total de oportunidades\", \"6\", \"R$ 62.300,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere voltam os seis"
+   "do": "hover",
+   "target": {
+    "selector": "main section div.rounded-lg:has(> div p:text-is('Retalho de chapa da Metalúrgica Jequitibá'))"
+   },
+   "seconds": 4.0,
+   "at": 51.02,
+   "label": "o cartão mostra o contador de itens (zoom)",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "eval",
@@ -421,7 +381,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 61.96
+   "at": 55.79
   }
  ]
 }
