@@ -201,7 +201,7 @@ são os do código do 1.60.22, conferidos no ensaio; `rec/t26/gerar.py` é a fon
 | aba Tarefas › os três pontinhos da tarefa › Editar › Marcar em andamento › Concluir › Cancelar tarefa › Excluir › ... | Na aba Tarefas, os três pontinhos trazem as ações: editar, marcar em andamento, concluir, cancelar ou excluir. Uma dica: pra regra da etapa, tarefa cancelada conta como encerrada. |
 | aba Detalhes › a ficha sobe até as abas › Estágio (muda sem arrastar) › Funil (trocar manda pra primeira etapa do outro) | Pela ficha também dá pra mudar o estágio, sem arrastar, e a regra da etapa vale do mesmo jeito. E trocar o funil manda a oportunidade pra primeira etapa do outro funil. |
 | a ficha desce até o contato › botão WhatsApp do contato (zoom, sem clicar) › Editar (abre o cadastro completo) › o cadastro desce até as Tarefas (no fim) › Tarefas no fim do cadastro › Cancelar | Como o cadastro tem telefone, a ficha ganha o botão WhatsApp, que abre a conversa fora do sistema. E o Editar abre o cadastro completo, pra corrigir valor, contato ou material, com as tarefas no fim. |
-| lixeira Excluir oportunidade › lixeira (abre a confirmação) › confirmação: Excluir esta oportunidade? (zoom) › Cancelar (a oportunidade fica) | E a lixeira exclui a oportunidade. Uma dica: vão junto as tarefas e o histórico, e não tem volta. Negócio que não deu certo vai pro Perdido, não pra lixeira. |
+| clique no cartão (reabre a ficha) › lixeira Excluir oportunidade › lixeira (abre a confirmação) › confirmação: Excluir esta oportunidade? (zoom) › Cancelar (a oportunidade fica) | Reabrindo a ficha, a lixeira exclui a oportunidade. Uma dica: vão junto as tarefas e o histórico, e não tem volta. Negócio que não deu certo vai pro Perdido, não pra lixeira. |
 | fecha a ficha › o cartão: 80% e Telefone (zoom) | Fechando, o cartão já mostra os oitenta por cento e a origem. |
 
 ### cap14 · Tarefas e Agenda (vinheta: TAREFAS)
@@ -231,9 +231,9 @@ são os do código do 1.60.22, conferidos no ensaio; `rec/t26/gerar.py` é a fon
 | apaga a busca › Filtros › Status › Valor mínimo / Valor máximo › Responsável › Material › Meio de transporte | Nos Filtros, dá pra separar por situação, por faixa de valor, por responsável, por material e por meio de transporte. |
 | Responsável: Rafael Nogueira › Status: Em negociação › Aplicar › Valor total (filtrado) R$ 26.200,00 (zoom) | Quero ver o que está com o Rafael e ainda em negociação. O quadro se ajusta a cada escolha, e o Aplicar só fecha a janela. Ficam dois cartões: vinte e seis mil e duzentos reais. |
 | Filtros (2) › Limpar filtros › Aplicar (voltam os seis) | Pra ver tudo de novo, é Limpar filtros. |
-| Filtros (3) › Status: Perdidos › Aplicar › abre o cartão do Papelão (Perdido) › a ficha desce até as Observações › Observações: o motivo da perda (zoom) › fecha a ficha › ... | Outro uso: em Status, Perdidos, pra rever o que não fechou. O motivo está nas observações do cartão. |
 | arrasta o cartão da Elétrica Ponto Certo para cima do outro, em Em contato › a ordem se mantém: o mais urgente no topo | O cartão fica onde eu soltar. Levo o da Elétrica Ponto Certo pra Em contato, em cima do outro, e a ordem se mantém. Assim, o mais urgente fica no topo. |
 | arrasta Caminho Firme para Ganho › Ganhos R$ 23.650,00 (zoom) › Em negociação R$ 37.000,00 (zoom) | E quando fecha? A Transportadora Caminho Firme aceitou a proposta. Arrasto pra Ganho, e os cartões de cima acompanham: vinte e três mil seiscentos e cinquenta reais ganhos, trinta e sete mil reais em negociação. |
+| Filtros (3) › Status: Perdidos › Aplicar › abre o cartão do Papelão (Perdido) › a ficha desce até as Observações › Observações: o motivo da perda (zoom) | Outro uso: em Status, Perdidos, pra rever o que não fechou. O motivo está nas observações do cartão. |
 
 ### cap16 · Recapitulando (vinheta: RESUMO)
 

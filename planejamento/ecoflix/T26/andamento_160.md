@@ -9,10 +9,11 @@ alteradas/renumeradas `ilu03`, `ilu06_avanca`, `ilu10_regra`, `ilu14_tarefa`, to
 Sem corte, recarga nem espera de 31 s no cap10: o 1.60.22 devolve o cartão travado sozinho e atualiza selo/atividades na hora.
 
 **Ensaios (2 lotes, fila `--prio 26`, voz ESTIMADA: atraso é só referência):** lote 1 = rápido tolerante nos 17 caps; lote 2 = rápido estrito 6, 13 a 16 + completo 3 a 16 (+ religada do 14 com a correção do arrasto da tarefa).
-Completo, falhos 0 e maxLate (s): 3 (0,89), 4 (0,78), 5 (0,28), 6 (1,45), 7 (1,71), 8 (3,35), 9 (1,32), 10 (0,06), 11 (0,31), 12 (1,22), 13 (16,49: L9 e L10 apertadas, Editar > Cancelar fecha a ficha e ela é reaberta), 15 (7,46), 16 (0,58); 14 (0,0 falho, 1,52 após a correção do arrasto). Caps 0 a 2: rápido, 0 falho (só cursor/zoom).
-Conferências tela x fala: 0 DIFERENTE (inclui R$ 23.650,00 / R$ 37.000,00, 25/11/2026, 80% e Telefone).
-
-**Falta:** voz real e novo `gerar.py` com ela (refazer âncoras, sobretudo cap13 L9 a L11, cap15, cap08); completo dos caps 0 a 2;
+Ajuste de tempo (21/11, voz ainda ESTIMADA): completo, falhos 0 e maxLate (s): 0 (0,10), 1 (0,07), 2 (0,11), 13 (1,40), 15 (1,41); os demais caps seguem como no lote 2 (3 a 12, 14 e 16; o 8 com 3,35 e o 7 com 1,71 e o 14 com 1,52 ainda acima da meta e não mexidos nesta rodada). Conferências tela x fala: 0 DIFERENTE.
+Causa do cap13 (16,49): `Editar` e a lixeira ficam no cabeçalho da ficha (fora da faixa 96..altura-70) e o robô rolava ~7 s à toa em cada gesto: `noScroll` neles. Mais: Origem digitada antes (`Esse`), Telefone/comentário/Título da tarefa adiantados, sem o hover em Tarefas, Cancelar com folga de 2 s (o cursor leva ~2 s até o rodapé).
+Cap15 (7,46): o Perdidos passou a ser o ÚLTIMO trecho (some a religada dos Filtros), e a ordem das linhas mudou: Limpar, ordem na coluna, Ganho, Perdidos.
+Falas trocadas: cap13 L10 "E a lixeira exclui a oportunidade." > "Reabrindo a ficha, a lixeira exclui a oportunidade." (a ficha reabre depois do Cancelar); cap15: a linha "Outro uso: em Status, Perdidos, pra rever o que não fechou. O motivo está nas observações do cartão." foi da posição 7 para a 9 (última), sem mudar o texto. Fala: 16.476 caracteres (antes 16.459). `config_narracao.json` sem mudança (nenhum número novo).
+**Falta:** voz real e novo `gerar.py` com ela (refazer âncoras, sobretudo cap13 L9 a L11, cap15, cap08, cap07, cap14);
 
 **Comandos:** instância 54326 (derrubada no fim: `FAKE_PORT=54326 bash rec/run.sh down`; subir: `FAKE_NOW=2026-11-10T08:30:00-03:00 FAKE_PORT=54326 bash rec/run.sh fake`; `rec/t26/fake_now.json` guarda o FAKE_NOW por capítulo, 17:30 nos 15 e 16).
 Lote (fundo, `TUT_SENHA` aleatória no ambiente): `bash rec/t26/t26_lote.sh 14:c 15:s ...` (r tolerante, s estrito, c completo; MP4 e folha em /dev/shm/t26rec). Refazer as sementes: `FAKE_URL=http://127.0.0.1:54326 TUT_SENHA=<8+ caracteres> node rec/t26/aux/t26_cadeia.mjs` e `python3 -I rec/t26/aux/t26_dia.py`.

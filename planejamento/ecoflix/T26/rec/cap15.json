@@ -419,145 +419,6 @@
    "at": 64.83
   },
   {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Filtros"
-   },
-   "at": 65.59,
-   "label": "Filtros (3)"
-  },
-  {
-   "do": "waitFor",
-   "selector": "[role=dialog]:has(#crm-min-value)",
-   "timeout": 8
-  },
-  {
-   "do": "select",
-   "target": {
-    "selector": "[role=dialog]:has(#crm-min-value) button[role=combobox]",
-    "nth": 0
-   },
-   "option": "Perdidos",
-   "at": 66.81,
-   "label": "Status: Perdidos"
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Aplicar",
-    "exact": true
-   },
-   "at": 68.12,
-   "label": "Aplicar"
-  },
-  {
-   "do": "waitFor",
-   "gone": {
-    "selector": "[role=dialog]:has(#crm-min-value)"
-   },
-   "timeout": 8
-  },
-  {
-   "do": "waitFor",
-   "target": {
-    "selector": "main section div.rounded-lg:has(> div p:text-is('Papelão do Mercado Bom Preço'))"
-   },
-   "timeout": 8
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "main section button:has(> p:text-is('Papelão do Mercado Bom Preço'))"
-   },
-   "at": 70.09,
-   "label": "abre o cartão do Papelão (Perdido)"
-  },
-  {
-   "do": "waitFor",
-   "text": "Comentários e atividades",
-   "timeout": 10
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const d=[...document.querySelectorAll(\"[role=dialog]:has(textarea[placeholder^=\\\"Escreva um coment\\\"])\")].pop();if(!d)return 'SEM JANELA';const el=[...d.querySelectorAll('label, p, h3, span, button')].filter(e=>e.textContent.trim().startsWith(\"Observa\\u00e7\\u00f5es\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';let c=el.parentElement;while(c&&c!==d.parentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)break;c=c.parentElement;}if(!c||c===d.parentElement)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "label": "a ficha desce até as Observações"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "#opportunity-notes"
-   },
-   "seconds": 0.5,
-   "at": 71.51,
-   "label": "Observações: o motivo da perda (zoom)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Fechar",
-    "exact": true,
-    "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
-   },
-   "at": 73.01,
-   "label": "fecha a ficha",
-   "noScroll": true
-  },
-  {
-   "do": "waitFor",
-   "gone": {
-    "selector": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
-   },
-   "timeout": 8
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Filtros"
-   },
-   "label": "Filtros (4)"
-  },
-  {
-   "do": "waitFor",
-   "selector": "[role=dialog]:has(#crm-min-value)",
-   "timeout": 8
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Limpar filtros",
-    "exact": true
-   },
-   "label": "Limpar filtros"
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Aplicar",
-    "exact": true
-   },
-   "label": "Aplicar (voltam os seis)"
-  },
-  {
-   "do": "waitFor",
-   "gone": {
-    "selector": "[role=dialog]:has(#crm-min-value)"
-   },
-   "timeout": 8
-  },
-  {
-   "do": "mark",
-   "name": "L8",
-   "at": 73.31
-  },
-  {
    "do": "drag",
    "target": {
     "selector": "main section div.rounded-lg:has(> div p:text-is('Cobre de manutenção da Elétrica Ponto Certo')) button[aria-label='Mover oportunidade']"
@@ -565,7 +426,7 @@
    "to": {
     "selector": "main section p:text-is('Perfis de alumínio da Esquadrias Horizonte')"
    },
-   "at": 76.08,
+   "at": 67.61,
    "label": "arrasta o cartão da Elétrica Ponto Certo para cima do outro, em Em contato",
    "hold": 0.5
   },
@@ -579,20 +440,20 @@
     "selector": "main section:has(> header h2:text-is('Em contato'))"
    },
    "seconds": 3.0,
-   "at": 81.43,
+   "at": 72.95,
    "label": "a ordem se mantém: o mais urgente no topo",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
-   "name": "L9",
-   "at": 85.65
+   "name": "L8",
+   "at": 77.18
   },
   {
    "do": "eval",
    "js": "(async()=>{const c=[...document.querySelectorAll('main div.overflow-x-auto')].find(e=>e.querySelector('section header h2'));if(!c)return 'SEM ALVO';const x0=c.scrollLeft,dx=420-x0,t0=performance.now();if(Math.abs(dx)<3)return 'ok';await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollLeft=x0+dx*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(c.scrollLeft)})()",
-   "at": 90.04,
+   "at": 81.57,
    "label": "o quadro rola para mostrar Ganho e Perdido"
   },
   {
@@ -603,7 +464,7 @@
    "to": {
     "selector": "main section:has(> header h2:text-is('Ganho'))"
    },
-   "at": 91.24,
+   "at": 82.77,
    "label": "arrasta Caminho Firme para Ganho",
    "hold": 0.5
   },
@@ -625,7 +486,7 @@
     "selector": "main div.rounded-lg:has(> div > p:text-is('Ganhos'))"
    },
    "seconds": 2.4,
-   "at": 95.29,
+   "at": 86.82,
    "label": "Ganhos R$ 23.650,00 (zoom)",
    "optional": true,
    "timeout": 4
@@ -635,9 +496,91 @@
    "target": {
     "selector": "main div.rounded-lg:has(> div > p:text-is('Em negociação'))"
    },
-   "seconds": 2.4,
-   "at": 99.54,
+   "seconds": 2.01,
+   "at": 91.07,
    "label": "Em negociação R$ 37.000,00 (zoom)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 94.08
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Filtros"
+   },
+   "at": 94.18,
+   "label": "Filtros (3)"
+  },
+  {
+   "do": "waitFor",
+   "selector": "[role=dialog]:has(#crm-min-value)",
+   "timeout": 8
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "[role=dialog]:has(#crm-min-value) button[role=combobox]",
+    "nth": 0
+   },
+   "option": "Perdidos",
+   "at": 95.29,
+   "label": "Status: Perdidos"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Aplicar",
+    "exact": true
+   },
+   "at": 97.37,
+   "label": "Aplicar"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "selector": "[role=dialog]:has(#crm-min-value)"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main section div.rounded-lg:has(> div p:text-is('Papelão do Mercado Bom Preço'))"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main section button:has(> p:text-is('Papelão do Mercado Bom Preço'))"
+   },
+   "at": 99.34,
+   "label": "abre o cartão do Papelão (Perdido)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Comentários e atividades",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const d=[...document.querySelectorAll(\"[role=dialog]:has(textarea[placeholder^=\\\"Escreva um coment\\\"])\")].pop();if(!d)return 'SEM JANELA';const el=[...d.querySelectorAll('label, p, h3, span, button')].filter(e=>e.textContent.trim().startsWith(\"Observa\\u00e7\\u00f5es\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';let c=el.parentElement;while(c&&c!==d.parentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)break;c=c.parentElement;}if(!c||c===d.parentElement)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "label": "a ficha desce até as Observações"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#opportunity-notes"
+   },
+   "seconds": 3.0,
+   "at": 100.76,
+   "label": "Observações: o motivo da perda (zoom)",
    "optional": true,
    "timeout": 4
   },

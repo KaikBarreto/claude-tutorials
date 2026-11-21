@@ -244,6 +244,10 @@ class Cap:
             s.pending.append((round(t, 2), i))
 
     def _p(s, d, at, label, kw):
+        if isinstance(d.get('target'), dict) and 'noScroll' in d['target']:   # BT/SEL(..., noScroll=True): a opção é do passo, não do alvo
+            d['target'] = dict(d['target'])
+            if d['target'].pop('noScroll'):
+                kw = dict(kw, noScroll=True)
         if at is not None:
             d['at'] = round(at, 2)
         if label:
@@ -337,6 +341,8 @@ class Cap:
             if at_campo + 0.25 < mt <= at_campo + 0.45:
                 at_campo = mt
         d0 = s.click(CAMPO, at=at_campo, label=f'campo Pergunte ao Cato ({label})', noScroll=True)
+        s.ev("(()=>{const t=document.querySelector('textarea[aria-label=\"Mensagem para o Cato\"]');if(!t)return 'SEM ALVO: campo';t.focus();return document.activeElement===t?'foco no campo':'SEM FOCO'})()",
+             at=round(d0['at'] + 0.4, 2), label='foco no campo (a digitação nunca vai para a página)')
         t, resto, pedaco = round(d0['at'] + 0.75, 2), texto, 0
         for mt, mi in sorted(s.pending):
             if not (t < mt < t + 0.3 + len(resto) * por_letra - 0.3):
@@ -404,7 +410,7 @@ LI = lambda trecho: NO_PAINEL(f'li:has-text("{trecho}")')
 FORTE = lambda trecho: NO_PAINEL(f'strong:has-text("{trecho}")')
 PONTO = lambda trecho: SEL(f'{DLG_AUT} li:has-text("{trecho}")')
 AGUARDA = {'do': 'waitFor', 'idle': True}
-PRONTA = lambda k: NO_PAINEL(f'div.max-w-sm button >> nth={k}')   # as perguntas prontas do painel vazio, pela posição (1ª = 0)
+PRONTA = lambda k: NO_PAINEL(f'[role=group][aria-label="{k + 1} de 4"]')   # as perguntas prontas do painel vazio, pela posição (1ª = 0)
 
 
 def login(email='$TUT_USER'):
@@ -471,6 +477,7 @@ def restaura(ate, aquecer=()):
         {'do': 'eval', 'js': js_espera_resposta(fim_da_resposta(ate))},
         {'do': 'wait', 'seconds': 0.8},
         {'do': 'eval', 'js': js_fim_da_conversa()},
+        {'do': 'wait', 'seconds': 3.0},
     ]
 
 
@@ -680,8 +687,8 @@ def cap03():
     c.mark(3)
     c.hover(TXTP('A memória é pessoal dentro desta empresa', within=DLG), seconds=2.0, at=c.A(3, 'memória', 0.5), label='ZOOM A memória é pessoal dentro desta empresa. Ela não é compartilhada com outros usuários e não guarda senhas, documentos ou autorizações.')
     c.mark(4)
-    c.hover(BTN('Agora não', within=DLG), seconds=0.4, at=c.A(4, 'Agora', 0.6), label='Agora não (sem clicar)')
-    c.click(BTN('Usar memória', within=DLG), at=c.A(4, 'Usar', 0.5), label='clique em Usar memória')
+    c.hover(SEL(f'{DLG} button:has-text("Agora não")'), seconds=0.4, at=c.A(4, 'Agora', 0.6), label='Agora não (sem clicar)')
+    c.click(SEL(f'{DLG} button:has-text("Usar memória")'), at=c.A(4, 'Usar', 0.5), label='clique em Usar memória')
     c.waitfor(gone=DLG, timeout=8)
     c.mark(5)
     c.click(NO_PAINEL('[role=toolbar] button:has-text("Memória")'), at=c.A(5, 'Memória', 0.8), label='botão Memória (embaixo do painel)', noScroll=True)
@@ -722,7 +729,11 @@ def cap04():
     c.mark(3)
     c.hover(SEL(f'{PAINEL} [role=toolbar] button:has-text("Conversas")'), seconds=0.4, at=c.A(3, 'conversas', 0.6), label='botão Conversas', noScroll=True)
     c.click(SEL(f'{PAINEL} [role=toolbar] button:has-text("Conversas")'), at=c.A(3, 'conversas', 0.0), label='abre Conversas', noScroll=True)
-    c.waitfor(text='Suas conversas', timeout=8)
+    c.waitfor(text='Suas conversas', timeout=2, optional=True)
+    c.ev("(async()=>{const has=()=>[...document.querySelectorAll('h2,[role=dialog]')].some(e=>/Suas conversas/.test(e.innerText||''));if(has())return 'ok';"
+         "const b=[...document.querySelectorAll('[role=toolbar] button')].find(x=>/Conversas/.test(x.innerText));if(!b)return 'SEM ALVO: Conversas';"
+         "b.click();for(let i=0;i<20;i++){await new Promise(r=>setTimeout(r,250));if(has())return 'abriu no segundo toque'}return 'SEM ALVO: Suas conversas'})()",
+         label='garante Suas conversas aberta')
     c.hover(TXT('Retome uma análise de onde parou.'), seconds=0.8, at=c.A(3, 'nova', 0.6), label='Suas conversas (Retome uma análise de onde parou)', optional=True)
     c.press('Escape', at=c.A(3, 'nova', 0.0), label='fecha Suas conversas', optional=True)
     c.hover(SEL(f'{PAINEL} [role=toolbar] button[aria-label="Nova conversa"]'), seconds=0.5, at=c.A(3, 'nova', 0.4), label='botão Nova (nova conversa)', noScroll=True)
@@ -810,11 +821,13 @@ def cap06():
     barras (L3), ilustração saldo × movimentado (L4, L5), R8 estoque em tabela (L6), ilustração da regra (L7); de onde vêm os números e o
     botão "Abrir posição de estoque" (L8); a Posição de Estoque com o "Total geral" (L9); o painel de novo e o rodapé (L10)."""
     c = Cap(6, restaura(5, aquecer=('/materiais/posicao-estoque',)), pace=0.5, start=(900, 560))
+    c.ev("(()=>{window.__dbg=[];const o=HTMLElement.prototype.focus;HTMLElement.prototype.focus=function(...a){window.__dbg.push(['focus()',(this.outerHTML||'').slice(0,160),(new Error().stack||'').split('\\n').slice(2,5).join('|').slice(0,300)]);return o.apply(this,a)};document.addEventListener('focusin',e=>{window.__dbg.push(['focusin',(e.target.outerHTML||'').slice(0,160)])},true);return 'dbg'})()", label='DEBUG')
     c.mark(1)
     # a pergunta é digitada enquanto a fala a diz; a resposta digita ~3,3 s: o gráfico (que chega inteiro, embaixo do texto) é
     # apontado quando a conversa para, já em "outubro"
     c.pergunta('Compras e vendas dos últimos três meses', c.A(1, 'pergunta', 0.6), c.A(1, 'meses', 0.4), 'R6')
-    c.waitfor(text='Consultei suas compras e vendas', timeout=8)
+    c.ev("JSON.stringify(window.__dbg.slice(0,12))", label='DEBUGDUMP')
+    c.waitfor(text='Olhando suas compras e vendas dos últimos três meses', timeout=8)
     c.mark(2)
     GRAF = 'div.rounded-2xl:has-text("Compras e vendas por mês")'
     c.hover(NO_PAINEL(f'{GRAF} circle.recharts-dot >> nth=1'), seconds=1.5, at=c.depois(c.A(2, 'outubro', 0.6), 'outubro no gráfico'),

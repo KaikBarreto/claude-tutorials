@@ -109,7 +109,7 @@ Pra não esquecer, Criar Tarefa, aqui mesmo. A oportunidade já vem ligada. Liga
 Na aba Tarefas, os três pontinhos trazem as ações: editar, marcar em andamento, concluir, cancelar ou excluir. Uma dica: pra regra da etapa, tarefa cancelada conta como encerrada.
 Pela ficha também dá pra mudar o estágio, sem arrastar, e a regra da etapa vale do mesmo jeito. E trocar o funil manda a oportunidade pra primeira etapa do outro funil.
 Como o cadastro tem telefone, a ficha ganha o botão WhatsApp, que abre a conversa fora do sistema. E o Editar abre o cadastro completo, pra corrigir valor, contato ou material, com as tarefas no fim.
-E a lixeira exclui a oportunidade. Uma dica: vão junto as tarefas e o histórico, e não tem volta. Negócio que não deu certo vai pro Perdido, não pra lixeira.
+Reabrindo a ficha, a lixeira exclui a oportunidade. Uma dica: vão junto as tarefas e o histórico, e não tem volta. Negócio que não deu certo vai pro Perdido, não pra lixeira.
 Fechando, o cartão já mostra os oitenta por cento e a origem.""",
 14: """Agora, a aba Tarefas. Ela junta as tarefas de todas as oportunidades. No canban, cada coluna é uma situação: pendente, em andamento, concluída e cancelada.
 Depois da visita, vem a proposta. Nova tarefa: Enviar proposta, ligada à oportunidade da Jequitibá, com o Rafael, pra quinta, dia doze, prioridade alta. Salvar.
@@ -127,9 +127,9 @@ Na busca, dá pra achar pelo título, pelo contato, pela empresa ou pelo materia
 Nos Filtros, dá pra separar por situação, por faixa de valor, por responsável, por material e por meio de transporte.
 Quero ver o que está com o Rafael e ainda em negociação. O quadro se ajusta a cada escolha, e o Aplicar só fecha a janela. Ficam dois cartões: vinte e seis mil e duzentos reais.
 Pra ver tudo de novo, é Limpar filtros.
-Outro uso: em Status, Perdidos, pra rever o que não fechou. O motivo está nas observações do cartão.
 O cartão fica onde eu soltar. Levo o da Elétrica Ponto Certo pra Em contato, em cima do outro, e a ordem se mantém. Assim, o mais urgente fica no topo.
-E quando fecha? A Transportadora Caminho Firme aceitou a proposta. Arrasto pra Ganho, e os cartões de cima acompanham: vinte e três mil seiscentos e cinquenta reais ganhos, trinta e sete mil reais em negociação.""",
+E quando fecha? A Transportadora Caminho Firme aceitou a proposta. Arrasto pra Ganho, e os cartões de cima acompanham: vinte e três mil seiscentos e cinquenta reais ganhos, trinta e sete mil reais em negociação.
+Outro uso: em Status, Perdidos, pra rever o que não fechou. O motivo está nas observações do cartão.""",
 16: """Pronto! Recapitulando: o cê-érre-ême montou sozinho o Funil de vendas, e a gente conheceu as abas e os quatro cartões.
 Criou o funil Sucata industrial, tornou padrão, pôs a Visita técnica no lugar e deu cor e orientação pra ela.
 Ligou as regras de saída do Em contato e criou e ativou duas automações, uma que agenda a visita e outra que prepara a proposta, além do checklist e da etiqueta.

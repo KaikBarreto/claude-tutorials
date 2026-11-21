@@ -130,7 +130,7 @@
   {
    "do": "hover",
    "target": {
-    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] div.max-w-sm button >> nth=0"
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] [role=group][aria-label=\"1 de 4\"]"
    },
    "seconds": 0.3,
    "at": 2.0,
@@ -141,7 +141,7 @@
   {
    "do": "hover",
    "target": {
-    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] div.max-w-sm button >> nth=3"
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] [role=group][aria-label=\"4 de 4\"]"
    },
    "seconds": 0.4,
    "at": 6.43,
@@ -231,7 +231,13 @@
   {
    "do": "waitFor",
    "text": "Suas conversas",
-   "timeout": 8
+   "timeout": 2,
+   "optional": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const has=()=>[...document.querySelectorAll('h2,[role=dialog]')].some(e=>/Suas conversas/.test(e.innerText||''));if(has())return 'ok';const b=[...document.querySelectorAll('[role=toolbar] button')].find(x=>/Conversas/.test(x.innerText));if(!b)return 'SEM ALVO: Conversas';b.click();for(let i=0;i<20;i++){await new Promise(r=>setTimeout(r,250));if(has())return 'abriu no segundo toque'}return 'SEM ALVO: Suas conversas'})()",
+   "label": "garante Suas conversas aberta"
   },
   {
    "do": "hover",

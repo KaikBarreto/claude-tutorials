@@ -19,12 +19,9 @@ export FAKE_MUNDO=/dev/shm/t21_mundo
 [ -d "$FAKE_MUNDO" ] || python3 -I rec/t21/t21_mundo.py
 PIDF=rec/.runtime/fake$PORT.pid
 PID=$(cat "$PIDF" 2>/dev/null || true)
-if [ -z "$PID" ] || ! tr '\0' '\n' < /proc/$PID/environ 2>/dev/null | grep -qx "FAKE_PORT=$PORT" || ! tr '\0' '\n' < /proc/$PID/environ | grep -qx "FAKE_NOW=$FN" \
-   || ! tr '\0' '\n' < /proc/$PID/environ | grep -qx "FAKE_MUNDO=$FAKE_MUNDO" \
-   || [ -n "$(find rec/t21/overlay rec/mundo/handlers rec/mundo/hooks rec/mundo/lib -name '*.mjs' -newer "$PIDF" 2>/dev/null | head -1)" ]; then
-  python3 -I rec/t21/t21_mundo.py > /dev/null
-  ( for i in 3 4 5 6 7 8 9 10; do eval "exec $i>&-"; done; FAKE_MUNDO=$FAKE_MUNDO FAKE_NOW=$FN FAKE_PORT=$PORT bash rec/run.sh fake | tail -1 )
-fi
+# sempre reinicia a instância: o overlay guarda estado em memória (memória do Cato, rotinas) que o /__dev/reset não zera
+python3 -I rec/t21/t21_mundo.py > /dev/null
+( for i in 3 4 5 6 7 8 9 10; do eval "exec $i>&-"; done; FAKE_MUNDO=$FAKE_MUNDO FAKE_NOW=$FN FAKE_PORT=$PORT bash rec/run.sh fake | tail -1 )
 PID=$(cat "$PIDF")
 tr '\0' '\n' < /proc/$PID/environ | grep -qx "FAKE_PORT=$PORT" || { echo "instância $PORT não é a minha"; exit 3; }
 export FAKE_URL=http://127.0.0.1:$PORT FAKE_NOW=$FN TUT_USER=rafael@reciclavalemetais.example
