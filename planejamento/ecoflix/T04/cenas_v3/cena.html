@@ -219,7 +219,7 @@ function qualPreco() {
     clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, t0 - .45);
     fluxoCartoes(fx.e, t, T[0] - .1, NUNCA, { tempos: T });
     vis(chQ.e, t, tpe - .05, NUNCA, { dx: -10, dy: 0, sc: .8 }); foco(chQ.e, t, -9, tva, { min: .6 });
-    vis(num[0].e, t, tpri - .1, NUNCA, { sc: .6, dy: 0 }); pulso(C[0], t, tp2, .035, .8);
+    vis(num[0].e, t, tpri - .1, NUNCA, { sc: .6, dy: 0 }); pulso(C[0], t, tp2, .03, 1.15);   // pulso mais lento: o de .8 s volta em 10 quadros e o piscadas.py acusa
     vis(chS.e, t, tse - .1, NUNCA, { dx: -10, dy: 0, sc: .8 }); vis(num[1].e, t, T[1] + .05, NUNCA, { sc: .6, dy: 0 }); pulso(C[1], t, ttab + .25, .035, .8);
     vis(chU.e, t, tult - .1, NUNCA, { dx: -10, dy: 0, sc: .8 }); vis(num[2].e, t, T[2] + .05, NUNCA, { sc: .6, dy: 0 }); pulso(C[2], t, tp3 + .3, .035, .8);
   };
@@ -296,7 +296,7 @@ function fungivel() {
   const BB = bigBag(CENA, PB, { estado: 'aberto', carga: 'latinha', w: 1.35, h: 1.4, n: 34 });
   const SC = saco(CENA, PS, { aberto: true, carga: 'latinha', s: 1.55 });
   const CR = carroca(CENA, PCR, { carga: 'latinha', n: 34 }); CR.rotation.y = .3;
-  const FD = fardo(CENA, [0, 0, 0], { tipo: 'latinha', w: 1.9, h: 1.35, d: 1.4 }), TOPO = [0, 1.45, 0], an = anel(2.0, [0, 0, .2]);
+  const FD = fardo(CENA, [0, 0, 0], { tipo: 'latinha', w: 1.9, h: 1.35, d: 1.4 }), TOPO = [0, .75, 0], an = anel(2.0, [0, 0, .2]);   // o punhado acaba DENTRO do fardo (some atrás das faces, sem estalo)
   // as latas de cada um: um punhado que sobe da origem e cai no fardo
   const PTS = [[-.3, 0, .05], [.28, .04, -.1], [0, .14, .2], [-.1, .28, -.16], [.22, .3, .12], [-.26, .4, .08], [.05, .5, -.04]];
   const voo = (de, a) => { const g = grupo(CENA, de); pecas(g, 'latinha', PTS, { s: .9 }); g.visible = false; return { g, de, a }; };
@@ -324,7 +324,7 @@ function fungivel() {
     some(CR, passa(pr(t, ttm - .45, .6), 1.25)); vis(chTm.e, t, ttm - .1, NUNCA, { dy: 10, sc: .8 });
     // o mesmo fardo: cresce quando a fala o nomeia e leva um tranco a cada punhado que chega
     let tr = 0; for (const v of V) { const p = pr(t, v.a, .95), on = p > 0 && p < 1; v.g.visible = on; tr += golpe(pr(t, v.a + .9, .6), 1.2);
-      if (on) { const q = arco(v.de, TOPO, eio(p), .7); v.g.position.set(q[0], q[1], q[2]); v.g.rotation.y = p * 2.2; v.g.scale.setScalar(Math.min(1, 5 * p, 4 * (1 - p))); } }
+      if (on) { const q = arco(v.de, TOPO, eio(p), .95); v.g.position.set(q[0], q[1], q[2]); v.g.rotation.y = p * 2.2; v.g.scale.setScalar(Math.min(1, 5 * p, 4 * (1 - p))); } }
     some(FD, passa(pr(t, tme - .2, .6), 1.25), 1 + .05 * tr); vis(chFa.e, t, tme - .05, NUNCA, { dy: 10, sc: .8 }); pulso(chFa.e, t, tfa + .1, .05, .8);
     vis(chNi.e, t, tni - .1, NUNCA, { dy: 10, sc: .8 }); destaque(an, t, tse - .1);
     // por isso a margem usa a venda média do mês
