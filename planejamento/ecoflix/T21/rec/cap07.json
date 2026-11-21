@@ -1,6 +1,6 @@
 {
  "name": "t21-cap07",
- "title": "T21 · Cap. 7 · Lançar uma compra pela conversa (narração ESTIMADA 88,3 s; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T21 · Cap. 7 · Lançar uma compra pela conversa (narração ESTIMADA 91,8 s; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t21-cap07",
  "pace": 0.5,
  "cps": 40,
@@ -140,6 +140,10 @@
   {
    "do": "wait",
    "seconds": 3.0
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const o=window.open;window.__pops=[];window.open=function(...a){const w=o.apply(this,a);window.__pops.push(w);return w};return 'ok'})()"
   },
   {
    "do": "eval",
@@ -378,28 +382,32 @@
    "timeout": 10
   },
   {
-   "do": "hover",
+   "do": "click",
    "target": {
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:has-text(\"Abrir comprovante\") >> nth=-1"
    },
-   "seconds": 0.8,
    "at": 69.98,
-   "label": "Abrir comprovante (sem clicar)",
+   "label": "clique em Abrir comprovante (o PDF abre em aba nova)",
    "optional": true,
-   "timeout": 4,
    "noScroll": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const w=(window.__pops||[]).slice(-1)[0];if(!w)return 'SEM JANELA';for(let i=0;i<40;i++){let f=null;try{f=w.document&&w.document.querySelector('#pdf-frame')}catch(e){return 'ERRO '+e}if(f&&f.src){const b=await (await fetch(f.src.split('#')[0])).blob();const u=new Uint8Array(await b.arrayBuffer());let s='';for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'PDF:'+btoa(s)}await new Promise(r=>setTimeout(r,250))}return 'SEM PDF'})()",
+   "at": 74.94,
+   "label": "PDF do comprovante da compra (aba nova, para a ilustração)"
   },
   {
    "do": "mark",
    "name": "L8",
-   "at": 71.78
+   "at": 75.27
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:has-text(\"Próximos passos\") >> nth=-1"
    },
-   "at": 75.12,
+   "at": 78.61,
    "label": "Próximos passos do pedido (abre)",
    "optional": true,
    "noScroll": true
@@ -407,7 +415,7 @@
   {
    "do": "mark",
    "name": "L9",
-   "at": 76.76
+   "at": 80.25
   },
   {
    "do": "eval",
@@ -417,7 +425,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 88.28
+   "at": 91.77
   }
  ]
 }

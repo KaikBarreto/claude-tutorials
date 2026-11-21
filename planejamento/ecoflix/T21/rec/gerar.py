@@ -913,7 +913,7 @@ def pede(c, texto, chave, assenta_em, cedo=0.0, cps=None):
 def cap07():
     """Lançar uma compra: "Nova" e o pedido (L1), pergunta de pagamento (L2), cartão (L3, L4), ilustração (L5), Corrigir dados e Agora não (L6),
     "Lançar compra" (L7), próximos passos (L8), ilustração dos 10 minutos (L9)."""
-    c = Cap(7, restaura(8), pace=0.5, start=(900, 560))
+    c = Cap(7, restaura(8) + [{'do': 'eval', 'js': POPS}], pace=0.5, start=(900, 560))
     c.mark(1)
     c.click(NOVA, at=c.A(1, 'parte', 0.6), label='Nova (conversa limpa)')
     c.waitfor(text='Pergunte o que quiser sobre seu negócio', timeout=8)
@@ -938,7 +938,8 @@ def cap07():
     c.ev(js_fim_da_conversa(), at=c.A(7, 'Lançar', 0.1), label='rola a conversa até o cartão (o campo cresceu com o pedido de volta)')
     c.click(BT('Lançar compra'), at=c.A(7, 'Lançar', 0.6), label='clique em Lançar compra')
     c.waitfor(text='Aparecida Ramos lançada', timeout=10)
-    c.hover(BT('Abrir comprovante'), seconds=0.8, at=c.A(7, 'comprovante', 0.6), label='Abrir comprovante (sem clicar)', optional=True)
+    c.click(BT('Abrir comprovante'), at=c.A(7, 'comprovante', 0.6), label='clique em Abrir comprovante (o PDF abre em aba nova)', optional=True)
+    c.ev(PDF_JS, at=c.A(7, 'guardar', 0.2), label='PDF do comprovante da compra (aba nova, para a ilustração)')
     c.mark(8)
     c.click(BT('Próximos passos'), at=c.A(8, 'passos', 0.6), label='Próximos passos do pedido (abre)', optional=True)
     c.mark(9)
@@ -1100,7 +1101,7 @@ def cap12():
 
 def cap13():
     """Nota fiscal pelo Cato (o `setup` lança a venda da Serra Fina): Preparar NF-e (L1), forma de pagamento (L2), rascunho (L3), prévia do
-    DANFE (L4), Criar rascunho (L5), ilustração (L6), Emitir NF-e (L7), autorizada (L8), ilustração (L9), recusa (L10)."""
+    DANFE (L4), Criar rascunho (L5), ilustração (L6), Emitir NF-e (L7), autorizada (L8), ilustração (L9)."""
     c = Cap(13, S_PAINEL + setup_venda() + toca_setup('Próximos passos', 'Sem NF-e vinculada') + [{'do': 'eval', 'js': POPS}], pace=0.5, start=(900, 560))
     c.mark(1)
     c.ev(js_fim_da_conversa(), at=c.A(1, 'Preparar', 0.0), label='rola a conversa até o botão Preparar NF-e')
@@ -1132,7 +1133,6 @@ def cap13():
     c.waitfor(text='NF-e autorizada', timeout=15)
     c.hover(BT('Abrir DANFE'), seconds=1.5, at=c.A(8, 'botão', 0.6), label='ZOOM botão Abrir DANFE (sem clicar)', optional=True)
     c.mark(9)
-    c.mark(10)
     c.fim()
     return c
 

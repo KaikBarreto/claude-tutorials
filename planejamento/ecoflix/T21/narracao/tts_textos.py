@@ -56,7 +56,7 @@ Com tudo na mão, ele monta este cartão. Fornecedor, material, quantidade, pre�
 Repara nesta linha: até aqui, nada mudou. O estoque só entra e o financeiro só registra quando você confirma.
 Uma dica: escrever sim na conversa não confirma nada. Quem lança é o botão do cartão, e é você quem clica.
 Errou alguma coisa? Corrigir dados devolve o pedido pro campo, pra você mudar só o que precisa. E Agora não desiste, sem lançar.
-Conferi, está certo: Lançar compra. Pronto, a compra entrou, e o botão Abrir comprovante fica aqui.
+Conferi, está certo: Lançar compra. Pronto, a compra entrou, e o botão Abrir comprovante abre o comprovante dela, em PDF, pronto pra guardar.
 Embaixo, ele ainda mostra os próximos passos desse pedido.
 Uma dica: o cartão vale por dez minutos. Passou disso, ou mudou algum cadastro no meio, ele expira, e é só pedir de novo.""",
 8: """A venda é igual. Desta vez eu já digo tudo de uma vez: cliente, material, quantidade, preço e pagamento. Quinhentos quilos de alumínio perfil pra Serra Fina, a dez reais e quarenta centavos, no saldo, com vencimento dia dez de dezembro.
@@ -95,13 +95,12 @@ Conferi a prévia: Criar rascunho. Repara que são duas confirmações. A primei
 Uma dica: rascunho, envio e autorização são três momentos. Nota autorizada é só depois da resposta da sefás.
 Emitir /ˈẽniˈɛfiˈe/. Ele envia e fica acompanhando a resposta.
 Autorizada. Aparece o número da nota e o botão Abrir dânfi.
-Uma dica: pelo Cáto sai a nota de um pedido que já existe. Nota avulsa, cancelamento e carta de correção continuam na tela de Notas Fiscais. E a tributação quem define é o seu contador.
-Se a sefás recusar, o motivo aparece no cartão. Você corrige o cadastro ou a configuração e usa Emitir novamente.""",
+Uma dica: pelo Cáto sai a nota de um pedido que já existe. Nota avulsa, cancelamento e carta de correção continuam na tela de Notas Fiscais. E a tributação quem define é o seu contador.""",
 14: """Lembra dos três pontinhos? Em Acompanhar pedidos ficam os pedidos que você lançou pelo Cáto, com o que falta em cada um: receber, pagar ou emitir a nota.
 Em Suas rotinas, o botão Ver sinais agora mostra o que merece atenção: material parado no pátio, conta vencida e conta pra vencer.
 E dá pra programar: todo dia, às oito, ele deixa um resumo das contas. O aviso chega aqui dentro do sistema, só pra você.
 Se uma resposta antiga do Cáto for corrigida depois, a correção aparece em Respostas revisadas.""",
-15: """Na dúvida do que dá pra pedir, pergunte pra ele: o que você consegue fazer? A lista que ele mostra é a do seu usuário, e ele avisa que pagamento registra a operação no sistema, não transfere dinheiro pelo banco.
+15: """Na dúvida do que dá pra pedir, pergunte pra ele: o que você consegue fazer? A lista que ele mostra é a do seu usuário, com as ações que ele prepara, as consultas e os limites. No meio dela, ele avisa que pagamento registra a operação no sistema, não transfere dinheiro pelo banco.
 Agora, um corte: é o Marcos. Ele pede pra atualizar o preço do cobre mel, e o Cáto responde que o usuário dele não tem permissão pra alterar preços. Nenhum preço foi alterado.
 O Cáto não dá poder a mais pra ninguém. Cada ação pede a mesma permissão da tela: registrar compra, dar baixa em conta, emitir nota. E ela é conferida de novo no clique do cartão.
 Uma dica: quem tem restrição de ver só os próprios cadastros, pedidos ou tíquetes, ou só algumas contas do banco, fica sem o Cáto. É pra ele não mostrar o que a pessoa não pode ver.
