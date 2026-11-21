@@ -103,3 +103,6 @@ longa termina de digitar ~10 s depois); cap02/cap15 cortes do Marcos (`02b`, `15
 - Com mensagens restauradas de sessão (hora à frente do relógio falso), a pesquisa de fim de conversa só aparece depois de 6 min no relógio do navegador (a conta usa a hora da mensagem).
 - "Próximos passos" (cartão do pedido) nasce fechado; "Preparar NF-e" só aparece depois de abrir.
 - O rótulo do FAB muda para "Abrir 1 notificação do Cato" quando há dica; seletores por "Abrir o Cato" falham nesse estado.
+
+## 21/11 22:23 · reensaio da coordenação (depois das 3 frases)
+- cap07: 0 falho, maxLate 0,50, PDF do comprovante capturado (`t21-cap07.actions.json`). cap13 (sem a frase da recusa da SEFAZ): 0 falho, 3,76 (resposta do Cato). cap15: 0 falho, 0,94. Instância 54321 derrubada. **T21 pronta para a voz** (14.446 + títulos); atrasos da resposta do Cato ficam para as âncoras da voz real.

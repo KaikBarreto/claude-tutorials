@@ -1,6 +1,6 @@
 {
  "name": "t21-cap15",
- "title": "T21 · Cap. 15 · Limites e permissões (narração ESTIMADA 95,6 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T21 · Cap. 15 · Limites e permissões (narração ESTIMADA 101,1 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t21-cap15",
  "pace": 0.5,
  "cps": 40,
@@ -179,7 +179,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] :text(\"Pagamentos registram a operação\") >> nth=-1"
    },
    "seconds": 1.5,
-   "at": 14.81,
+   "at": 16.04,
    "label": "Pagamentos registram a operação no EcoSistema; não transferem dinheiro pela sua conta bancária.",
    "optional": true,
    "timeout": 4
@@ -187,29 +187,29 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 16.55
+   "at": 22.09
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 30.72
+   "at": 36.26
   },
   {
    "do": "press",
    "key": "Escape",
-   "at": 44.69,
+   "at": 50.23,
    "label": "fecha o painel",
    "optional": true
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 45.19
+   "at": 50.73
   },
   {
    "do": "goto",
    "url": "/configuracoes?tab=users",
-   "at": 45.49,
+   "at": 51.03,
    "label": "Usuários e Permissões"
   },
   {
@@ -228,7 +228,7 @@
     "text": "Marcos Antunes",
     "exact": true
    },
-   "at": 46.2,
+   "at": 51.74,
    "label": "escolhe Marcos Antunes na lista"
   },
   {
@@ -249,7 +249,7 @@
     "name": "Editar",
     "exact": true
    },
-   "at": 46.88,
+   "at": 52.42,
    "label": "Editar (permissões do Marcos)"
   },
   {
@@ -260,7 +260,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const el=[...document.querySelectorAll(\"[role=dialog] *\")].find(e=>e.children.length===0&&e.getClientRects().length&&e.textContent.trim()===\"Ver somente os pedidos que lançar\");if(!el)return 'SEM ALVO';let c=el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)break;c=c.parentElement;}if(!c||c===document.body)c=document.scrollingElement;const dy=Math.round(el.getBoundingClientRect().top-330);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});await new Promise(r=>setTimeout(r,60));return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 50.2,
+   "at": 55.74,
    "label": "desce até Ver somente os pedidos que lançar"
   },
   {
@@ -270,7 +270,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 3.0,
-   "at": 55.43,
+   "at": 60.97,
    "label": "ZOOM o Cato fica indisponível para evitar exposição indireta",
    "optional": true,
    "timeout": 4
@@ -278,24 +278,24 @@
   {
    "do": "press",
    "key": "Escape",
-   "at": 58.29,
+   "at": 63.83,
    "label": "fecha a janela de edição",
    "optional": true
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 59.96
+   "at": 65.5
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 72.15
+   "at": 77.69
   },
   {
    "do": "goto",
    "url": "/materiais",
-   "at": 84.56,
+   "at": 90.1,
    "label": "volta à tela Estoque"
   },
   {
@@ -306,14 +306,14 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 87.16
+   "at": 92.7
   },
   {
    "do": "click",
    "target": {
     "selector": "button[aria-label=\"Abrir o Cato\"]"
    },
-   "at": 87.16,
+   "at": 92.7,
    "label": "abre o Cato",
    "noScroll": true
   },
@@ -323,7 +323,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] p:has-text(\"O Cato.ai pode cometer erros\")"
    },
    "seconds": 1.5,
-   "at": 89.51,
+   "at": 95.05,
    "label": "rodapé O Cato.ai pode cometer erros",
    "noScroll": true,
    "optional": true,
@@ -337,7 +337,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 95.56
+   "at": 101.1
   }
  ]
 }
