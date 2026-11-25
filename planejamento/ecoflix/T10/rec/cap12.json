@@ -1,6 +1,6 @@
 {
  "name": "t10-cap12",
- "title": "T10 · Cap. 12 · A foto do estoque numa data (narração 88,9 s; marcas L1..L11 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário rafael)",
+ "title": "T10 · Cap. 12 · A foto do estoque numa data (narração 90,3 s; marcas L1..L11 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário rafael)",
  "seed": "t10-cap12",
  "pace": 0.5,
  "cps": 14,
@@ -420,18 +420,18 @@
    "target": {
     "selector": "main [aria-label='Ver por material']"
    },
-   "at": 71.46,
+   "at": 71.26,
    "label": "Por material"
   },
   {
    "do": "mark",
    "name": "L10",
-   "at": 72.16
+   "at": 73.56
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.offsetParent!==null&&e.textContent.trim()===\"Total geral\").sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-470);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 72.46,
+   "at": 73.86,
    "label": "desce até o Total geral"
   },
   {
@@ -441,7 +441,7 @@
     "exact": true
    },
    "seconds": 0.3,
-   "at": 73.47,
+   "at": 74.87,
    "label": "[ZOOM] linha Total geral",
    "optional": true,
    "timeout": 4
@@ -449,7 +449,7 @@
   {
    "do": "mark",
    "name": "L11",
-   "at": 74.32
+   "at": 75.72
   },
   {
    "do": "hover",
@@ -458,7 +458,7 @@
     "exact": true
    },
    "seconds": 0.5,
-   "at": 74.32,
+   "at": 75.72,
    "label": "[ZOOM] linha Total geral (continua)",
    "optional": true,
    "timeout": 4
@@ -475,7 +475,7 @@
     "nth": 0
    },
    "seconds": 3.0,
-   "at": 76.75,
+   "at": 78.15,
    "label": "[ZOOM] a nota do rodapé inteira",
    "optional": true,
    "timeout": 4
@@ -493,7 +493,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 88.9
+   "at": 90.3
   }
  ]
 }

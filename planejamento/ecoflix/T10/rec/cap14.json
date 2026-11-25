@@ -1,6 +1,6 @@
 {
  "name": "t10-cap14",
- "title": "T10 · Cap. 14 · Recapitulando (narração 47,1 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário rafael)",
+ "title": "T10 · Cap. 14 · Recapitulando (narração 48,0 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário rafael)",
  "seed": "t10-cap14",
  "pace": 0.5,
  "cps": 14,
@@ -239,6 +239,13 @@
    "label": "Mês passado"
   },
   {
+   "do": "waitFor",
+   "target": {
+    "selector": "main tbody tr:has-text('Cobre mel') > td:nth-child(10)"
+   },
+   "timeout": 10
+  },
+  {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.offsetParent!==null&&e.textContent.trim()===\"Cobre mel\").sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-420);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
    "at": 24.1,
@@ -286,7 +293,7 @@
     "name": "Clientes",
     "exact": true
    },
-   "seconds": 0.6,
+   "seconds": 0.25,
    "at": 30.53,
    "label": "filtro Clientes",
    "optional": true,
@@ -299,7 +306,7 @@
     "name": "Usuários",
     "exact": true
    },
-   "seconds": 0.6,
+   "seconds": 0.25,
    "at": 31.25,
    "label": "filtro Usuários",
    "optional": true,
@@ -312,29 +319,29 @@
     "name": "Grupos",
     "exact": true
    },
-   "seconds": 0.6,
+   "seconds": 0.25,
    "at": 31.97,
    "label": "filtro Grupos",
    "optional": true,
    "timeout": 4
   },
   {
-   "do": "mark",
-   "name": "L6",
-   "at": 34.68
-  },
-  {
    "do": "goto",
    "url": "/materiais/posicao-estoque",
-   "at": 34.68,
+   "at": 33.58,
    "label": "Posição de Estoque"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 35.58
   },
   {
    "do": "click",
    "target": {
     "selector": "main button:has(svg.lucide-calendar):has-text('10/11/2026')"
    },
-   "at": 35.44,
+   "at": 35.58,
    "label": "data"
   },
   {
@@ -342,7 +349,7 @@
    "target": {
     "selector": "[data-radix-popper-content-wrapper] button[name='previous-month']"
    },
-   "at": 35.92,
+   "at": 36.22,
    "label": "outubro"
   },
   {
@@ -350,7 +357,7 @@
    "target": {
     "selector": "[data-radix-popper-content-wrapper] button[name='day']:text-is('31')"
    },
-   "at": 36.8,
+   "at": 37.1,
    "label": "dia 31"
   },
   {
@@ -360,7 +367,7 @@
     "name": "Ver posição",
     "exact": true
    },
-   "at": 37.36,
+   "at": 38.26,
    "label": "Ver posição"
   },
   {
@@ -376,7 +383,7 @@
     "exact": true
    },
    "seconds": 0.62,
-   "at": 38.87,
+   "at": 39.77,
    "label": "Exportar (PDF e Excel)",
    "optional": true,
    "timeout": 4
@@ -384,7 +391,7 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 40.04
+   "at": 40.94
   },
   {
    "do": "hover",
@@ -394,7 +401,7 @@
     "exact": true
    },
    "seconds": 0.2,
-   "at": 40.04,
+   "at": 40.94,
    "label": "Exportar (PDF e Excel) (continua)",
    "optional": true,
    "timeout": 4
@@ -407,7 +414,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 47.14
+   "at": 48.04
   }
  ]
 }

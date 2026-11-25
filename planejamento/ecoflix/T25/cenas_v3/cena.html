@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- T25 "Dashboard, Agenda e a rotina" · ilustrações no kit v3 (perfis/ecoflix/cenas_v3/LEIA.md), 16:9 (--larg 1422).
+     Uma função por CENA e CAPS[cap] diz qual cena cada capítulo ilustrado usa. As janelas (de/ate) estão em ../cenas/ilustracoes.json.
+     Âncoras por palavra (W) sobre a voz real 1.60.22 ($TUT_HOME/t25/narracao/capNN.json, cópia em ../cenas/tempos). Tudo escuro (mundo dos dados).
+       cap01 · margem      (escuro)  ilu01_margem_lucro   "Margem e lucro"          linha 3: margem não é lucro; parte da venda é o ferro comprado em outubro; o lucro de verdade (custo, imposto, despesa) está no Relatório Financeiro
+       cap02 · comparativo (escuro)  ilu02_mes_inteiro    "O comparativo do mês"    linhas 3 e 4: outubro inteiro contra novembro até hoje; dez dias contra trinta e um; a queda; no fim do mês a comparação fica justa
+       cap12 · mensal      (escuro)  ilu12_rotina_mensal  "O fechamento do mês"     linhas 0 a 2: uma vez por mês, duas horas, quatro passos; MTR e CDF são do Fiscal e Ambiental, que depende do plano
+       cap13 · rotinas     (escuro)  ilu13_tres_rotinas   "As três rotinas"         linha 4: a diária, a semanal e a mensal
+     Saíram do ilustracoes.json (ver o relatório): ilu00_tres_perguntas, ilu08_parcelas, ilu10_rotina_diaria, ilu11_rotina_semanal.
+     Nenhum comprovante/PDF na fala desta aula. Só textos e números da fala e da tela; cada palavra do rótulo entra na palavra da voz.
+     Acabamento: node perfis/ecoflix/cenas_v3/auditar.cjs --aula planejamento/ecoflix/T25 --larg 1422
+     Render de uma janela: node ferramentas/edit/cenas/render_cenas.cjs <cap> <capNN.json> saida.mp4 --html planejamento/ecoflix/T25/cenas_v3/cena.html \
+               --larg 1422 --dsf 1.35 --de <s> --ate <s>
+     Ícones lucide usados (o nome tem de estar literal nesta página): 'scale' 'equal-not' 'hand-coins' 'package' 'warehouse' 'receipt-text' 'landmark' 'wallet' 'chart-no-axes-column'
+     'calendar' 'calendar-days' 'calendar-check' 'calendar-range' 'sun' 'clock' 'list-checks' 'package-check' 'file-warning' 'shield-check' 'lock' 'trending-down' 'circle-check' 'repeat' -->
+</head><body>
+<script type="module">
+import { PI, cl, lerp, pr, eo, eio, eo5, W, el, ic, vis, foco, pulso, titulo, posTitulo, selo, htmlChip, GL,
+  camera, plano, clima, cena, estilo, enquadraRet, uneRet, lugar }
+  from '../../../../perfis/ecoflix/cenas_v3/motor.js';
+import { mundoEscuro } from '../../../../perfis/ecoflix/cenas_v3/fundo.js';
+import { base, pt } from '../../../../perfis/ecoflix/cenas_v3/dados/base.js';
+import { htmlFluxoCartoes, fluxoCartoes, parte } from '../../../../perfis/ecoflix/cenas_v3/dados/fluxoCartoes.js';
+import { htmlCalendario, calendario } from '../../../../perfis/ecoflix/cenas_v3/dados/calendario.js';
+
+// =====================================================================================================================
+// comuns
+const NUNCA = 1e9, EE = .0112;
+const cores = () => base();
+function escuro() {   // um lugar do mundo escuro: posições em px do desenho (y para baixo)
+  const EIXO = lugar([0, 0, 0]), E = mundoEscuro(EIXO, 0, EE);
+  return { EIXO, X: (html, x, y, o = {}) => E(html, x * EE, -y * EE, 0, o), fundo: (cx, cy, o) => E.fundo(cx * EE, -cy * EE, o) };
+}
+const STAND2 = (t, tit, t0) => { clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, -9); };   // título já no alto desde o primeiro quadro
+// texto que entra palavra por palavra, cada uma na palavra da voz: ws([[texto, instante], ...]) devolve o html e os instantes
+const ws = ps => ps.map(([w]) => `<span class="pw">${w}</span>`).join(' ');
+const tp = ps => ps.map(p => p[1]);
+const rev = (e, t, ts) => pt(e, '.pw').forEach((s, i) => { s.style.opacity = eo(pr(t, ts[i] - .05, .28)).toFixed(3); });
+const chipP = (icone, cls, ps) => htmlChip(`${ic(icone, 18)}<span style="white-space:pre">${ws(ps)}</span>`, cls);
+// o chip inteiro entra no primeiro instante; as palavras, uma a uma
+const falaChip = (p, t, ps, b = NUNCA) => { const ts = tp(ps); vis(p.e, t, ts[0] - .12, b, { dy: 12, sc: .9 }); rev(p.e, t, ts); };
+estilo('t25', `.pw{display:inline-block;white-space:pre}`);
+
+// =====================================================================================================================
+// CENA "margem" · cap01, linha 3 · clima escuro
+// 3 "Uma dica: margem não é lucro. Boa parte dessa venda é o ferro que foi comprado em outubro e ficou no pátio. O lucro de verdade, com custo, imposto e despesa, fica no Relatório Financeiro."
+// À esquerda a Margem (vendas − compras) e o que a engana: a venda, o ferro comprado em outubro que ficou no pátio. À direita o Lucro, com custo, imposto e despesa, e o Relatório Financeiro.
+function margem() {
+  const t0 = W(3, 'uma'), tMa = W(3, 'margem'), tNao = W(3, 'nao'), tLu = W(3, 'lucro'), tVen = W(3, 'venda'), tFe = W(3, 'ferro'), tCo = W(3, 'comprado'), tEm = W(3, 'em'),
+    tFi = W(3, 'ficou'), tNo = W(3, 'no'), tLu2 = W(3, 'lucro', 2), tDe = W(3, 'verdade'), tCu = W(3, 'custo'), tIm = W(3, 'imposto'), tDs = W(3, 'despesa'),
+    tRe = W(3, 'relatorio'), tFn = W(3, 'financeiro'), tFim = W(3, 'financeiro', 1, 'e');
+  cores();
+  const { EIXO, X, fundo } = escuro();
+  const XL = -285, XR = 285, YC = -95;
+  const cM = X(htmlFluxoCartoes({ cartoes: [['scale', 'Margem', 'vendas − compras']], cw: 290 }), XL, YC);
+  const cL = X(htmlFluxoCartoes({ cartoes: [['chart-no-axes-column', 'Lucro', '<span class="pw">de verdade</span>', 'res']], cw: 290 }), XR, YC);
+  const ne = X(`<div style="position:relative;display:flex">${selo('equal-not', 'n', 56)}</div>`, 0, YC);
+  const y0 = YC + cM.h / 2 + 30, P = 50, top = (i) => y0 + i * P;
+  const pV = [['Venda', tVen]], pF = [['Ferro', tFe], ['comprado', tCo], ['em outubro', tEm]], pP = [['ficou', tFi], ['no pátio', tNo]];
+  const pC = [['custo', tCu]], pI = [['imposto', tIm]], pD = [['despesa', tDs]], pR = [['Relatório', tRe], ['Financeiro', tFn]];
+  const mk = (xx, i, ic1, cls, ps) => X(chipP(ic1, cls, ps), xx, top(i), { anc: [.5, 0] });
+  const a1 = mk(XL, 0, 'hand-coins', 'n', pV), a2 = mk(XL, 1, 'package', 'n', pF), a3 = mk(XL, 2, 'warehouse', 'a', pP);
+  const b1 = mk(XR, 0, 'receipt-text', 'n', pC), b2 = mk(XR, 1, 'landmark', 'n', pI), b3 = mk(XR, 2, 'wallet', 'n', pD), b4 = mk(XR, 3, 'chart-no-axes-column', '', pR);
+  fundo(0, 10, { aneis: false });
+  const tit = titulo('Dashboard', 'Margem e lucro', 'escuro');
+  const R = uneRet(cM.ret(), cL.ret(), a1.ret(), a3.ret(), b1.ret(), b4.ret());
+  const S1 = enquadraRet(EIXO, R, { az: -.03, max: 1.4 / EE });
+  camera([[t0 - 3, S1], [tFim + 2.5, { ...S1, az: .035, d: S1.d * .985 }, 'lin']]);
+  return t => {
+    STAND2(t, tit, t0);
+    fluxoCartoes(cM.e, t, tMa - .35, NUNCA, { tempos: [tMa] }); pulso(parte(cM.e, 0), t, tMa + .3, .04, .7);
+    vis(ne.e, t, tNao - .12, NUNCA, { dy: 8, sc: .55 }); pulso(ne.e, t, tNao + .2, .08, .8);
+    fluxoCartoes(cL.e, t, tLu - .35, NUNCA, { tempos: [tLu] });
+    rev(cL.e, t, [tDe]); pulso(parte(cL.e, 0), t, tDe + .25, .045, .8);
+    falaChip(a1, t, pV); falaChip(a2, t, pF); falaChip(a3, t, pP); pulso(a3.e, t, tNo + .3, .05, .7);
+    falaChip(b1, t, pC); falaChip(b2, t, pI); falaChip(b3, t, pD); falaChip(b4, t, pR); pulso(b4.e, t, tFn + .25, .05, .8);
+    // o assunto passa da margem para o lucro de verdade: a margem recua, o lucro acende
+    for (const x of [cM, a1, a2, a3]) foco(x.e, t, -9, tLu2 - .1, { min: .6 });
+    for (const x of [cL, b1, b2, b3, b4]) foco(x.e, t, tLu2 - .1, NUNCA, { min: .62 });
+    foco(ne.e, t, -9, tLu2 - .1, { min: .6 });
+  };
+}
+
+// =====================================================================================================================
+// CENA "comparativo" · cap02, linhas 3 e 4 · clima escuro
+// 3 "Embaixo, o Comparativo Mensal põe o mês passado inteiro contra o mês atual, até hoje."
+// 4 "Uma dica: como hoje é dia dez, a queda aparece grande. É normal no começo do mês: são dez dias contra trinta e um. Até o fim do mês, a comparação vai ficando justa."
+// Outubro inteiro (a faixa corre pelos 31 dias) contra novembro só até hoje (10 dias); a queda; no fim do mês a faixa de novembro cresce e a comparação fica justa.
+function comparativo() {
+  const t0 = W(3, 'poe'), tMp = W(3, 'passado'), tIn = W(3, 'inteiro'), tAt = W(3, 'atual'), tHo = W(3, 'hoje'),
+    tDez = W(4, 'dez'), tQu = W(4, 'queda'), tDez2 = W(4, 'dez', 2), tDias = W(4, 'dias'), tTr = W(4, 'trinta'), tUm = W(4, 'um'), tAte = W(4, 'ate'), tFmes = W(4, 'mes', 2),
+    tCmp = W(4, 'comparacao'), tJu = W(4, 'justa'), tFim = W(4, 'justa', 1, 'e');
+  cores();
+  const { EIXO, X, fundo } = escuro();
+  const CX = 235, YC = -20;
+  const oct = X(htmlCalendario({ mes: 'Outubro', ano: 2026, inicio: 4, dias: 31, faixa: [1, 31], icone: 'calendar', cor: 'n', w: 364 }), -CX, YC);
+  const nov = X(htmlCalendario({ mes: 'Novembro', ano: 2026, inicio: 0, dias: 30, faixa: [1, 30], marcas: [[10, '']], icone: 'calendar-check', w: 364 }), CX, YC);
+  const yd = YC + Math.max(oct.h, nov.h) / 2 + 28;
+  const dOct = X(chipP('calendar-days', 'n', [['31', tTr], ['dias', tUm]]), -CX, yd, { anc: [.5, 0] });
+  const dNov = X(chipP('calendar-days', 'a', [['10', tDez2], ['dias', tDias]]), CX, yd, { anc: [.5, 0] });
+  const yq = yd + 38 + 24;
+  const qd = X(chipP('trending-down', 'a', [['queda', tQu]]), 0, yq, { anc: [.5, 0] });
+  const jt = X(chipP('circle-check', '', [['comparação', tCmp], ['justa', tJu]]), 0, yq, { anc: [.5, 0] });
+  fundo(0, 10, { aneis: false });
+  const tit = titulo('Dashboard', 'O comparativo do mês', 'escuro');
+  const R = uneRet(oct.ret(), nov.ret(), dOct.ret(), dNov.ret(), qd.ret(), jt.ret());
+  const S1 = enquadraRet(EIXO, R, { az: -.03, max: 1.4 / EE });
+  camera([[t0 - 3, S1], [tFim + 2.5, { ...S1, az: .035, d: S1.d * .985 }, 'lin']]);
+  const fxO = pt(oct.e, '.di.fx'), fxN = pt(nov.e, '.di.fx');
+  // a faixa de cada mês corre dia a dia, na palavra que a nomeia (a célula é desligada por estilo até chegar a vez dela)
+  const faixa = (cel, t, quando) => cel.forEach((x, i) => { x.style.background = t >= quando(i) ? '' : 'transparent'; });
+  return t => {
+    STAND2(t, tit, t0);
+    calendario(oct.e, t, tMp - .3, NUNCA, { tempos: [] });
+    calendario(nov.e, t, tAt - .3, NUNCA, { tempos: [tDez] });
+    faixa(fxO, t, i => tIn - .05 + i * .03);
+    faixa(fxN, t, i => i < 10 ? tHo - .05 + i * .06 : tFmes - .05 + (i - 10) * .05);
+    falaChip(dOct, t, [['31', tTr], ['dias', tUm]]); falaChip(dNov, t, [['10', tDez2], ['dias', tDias]]);
+    falaChip(qd, t, [['queda', tQu]], tAte - .05); falaChip(jt, t, [['comparação', tCmp], ['justa', tJu]]);
+    pulso(dNov.e, t, tDias + .1, .05, .7); pulso(jt.e, t, tJu + .25, .06, .8);
+  };
+}
+
+// =====================================================================================================================
+// CENA "mensal" · cap12, linhas 0 a 2 · clima escuro
+// 0 "E uma vez por mês, o fechamento: umas duas horas, em quatro passos."
+// 1 "Conciliar o extrato do banco com o sistema e conferir o DRE do mês, no Relatório Financeiro."
+// 2 "Mandar o pacote das notas pro contador e ver se ficou algum MTR ou CDF pendente. Esses dois ficam no Fiscal e Ambiental, que depende do plano contratado."
+// Três chips (mês, duas horas, quatro passos) e os quatro passos em fila; o último leva a marca do plano.
+function mensal() {
+  const t0 = W(0, 'e'), tUma = W(0, 'uma'), tVez = W(0, 'vez'), tPor = W(0, 'por'), tMes = W(0, 'mes'), tUm = W(0, 'umas'), tDu = W(0, 'duas'), tHo = W(0, 'horas'), tQu = W(0, 'quatro'), tPa = W(0, 'passos'),
+    tCon = W(1, 'conciliar'), tFim = W(2, 'contratado', 1, 'e');
+  cores();
+  const { EIXO, X, fundo } = escuro();
+  const h1 = [['Uma', tUma], ['vez', tVez], ['por', tPor], ['mês', tMes]], h2 = [['umas', tUm], ['duas', tDu], ['horas', tHo]], h3 = [['quatro', tQu], ['passos', tPa]];
+  const YH = -150, GAP = 30;
+  const ch = [X(chipP('calendar', 'n', h1), 0, YH), X(chipP('clock', 'n', h2), 0, YH), X(chipP('list-checks', 'n', h3), 0, YH)];
+  const tot = ch.reduce((s, c) => s + c.w, 0) + GAP * 2; let xx = -tot / 2;
+  ch.forEach(c => { c.pos[0] = (xx + c.w / 2) * EE; xx += c.w + GAP; });
+  // os quatro passos; cada palavra do cartão entra na palavra da voz
+  const c1 = [['Conciliar', W(1, 'conciliar')], ['o', W(1, 'o')], ['extrato', W(1, 'extrato')]], s1 = [['do', W(1, 'do')], ['banco', W(1, 'banco')], ['com o sistema', W(1, 'com')]];
+  const c2 = [['Conferir', W(1, 'conferir')], ['o', W(1, 'o', 3)], ['DRE', W(1, 'dre')], ['do', W(1, 'do', 2)], ['mês', W(1, 'mes')]], s2 = [['no', W(1, 'no')], ['Relatório', W(1, 'relatorio')], ['Financeiro', W(1, 'financeiro')]];
+  const c3 = [['Mandar', W(2, 'mandar')], ['o', W(2, 'o')], ['pacote', W(2, 'pacote')]], s3 = [['das', W(2, 'das')], ['notas', W(2, 'notas')], ['pro', W(2, 'pro')], ['contador', W(2, 'contador')]];
+  const c4 = [['MTR', W(2, 'mtr')], ['ou', W(2, 'ou')], ['CDF', W(2, 'cdf')]], s4 = [['pendente', W(2, 'pendente')]];
+  const YR = 20;
+  const row = X(htmlFluxoCartoes({ cartoes: [['landmark', ws(c1), ws(s1)], ['chart-no-axes-column', ws(c2), ws(s2)], ['package-check', ws(c3), ws(s3)], ['file-warning', ws(c4), ws(s4), 'a']], cw: 250, vao: 56 }), 0, YR);
+  const cards = [[c1, s1], [c2, s2], [c3, s3], [c4, s4]];
+  const tCard = [c1[0][1], c2[0][1], c3[0][1], c4[0][1]];
+  const cx4 = parte(row.e, 3).offsetLeft + parte(row.e, 3).offsetWidth / 2 - row.w / 2, w4 = parte(row.e, 3).offsetWidth;
+  const yb = YR + row.h / 2 + 24, xr = cx4 + w4 / 2;
+  const pF = [['Fiscal', W(2, 'fiscal')], ['e', W(2, 'e', 2)], ['Ambiental', W(2, 'ambiental')]], pD = [['depende', W(2, 'depende')], ['do', W(2, 'do')], ['plano', W(2, 'plano')], ['contratado', W(2, 'contratado')]];
+  const fa = X(chipP('shield-check', 'n', pF), xr, yb, { anc: [1, 0] }), dp = X(chipP('lock', 'a', pD), xr, yb + 50, { anc: [1, 0] });
+  fundo(0, 10, { aneis: false });
+  const tit = titulo('Rotina', 'O fechamento do mês', 'escuro');
+  const R = uneRet(ch[0].ret(), ch[2].ret(), row.ret(), fa.ret(), dp.ret());
+  const S1 = enquadraRet(EIXO, R, { az: -.03, margem: 84, max: 1.4 / EE });
+  camera([[t0 - 3, S1], [tFim + 2.5, { ...S1, az: .035, d: S1.d * .985 }, 'lin']]);
+  return t => {
+    STAND2(t, tit, t0);
+    falaChip(ch[0], t, h1); falaChip(ch[1], t, h2); falaChip(ch[2], t, h3); pulso(ch[2].e, t, tPa + .2, .05, .7);
+    fluxoCartoes(row.e, t, tCon - .35, NUNCA, { tempos: tCard });
+    cards.forEach(([a, b], i) => { rev(parte(row.e, i), t, [...tp(a), ...tp(b)]); });
+    pulso(parte(row.e, 3), t, W(2, 'pendente') + .3, .04, .7);
+    falaChip(fa, t, pF); falaChip(dp, t, pD); pulso(dp.e, t, W(2, 'contratado') + .15, .05, .8);
+  };
+}
+
+// =====================================================================================================================
+// CENA "rotinas" · cap13, linha 4 · clima escuro
+// 4 "E montou as três rotinas: a diária, a semanal e a mensal."
+// Três cartões em sequência, cada um na palavra que o nomeia; a mensal fecha em verde.
+function rotinas() {
+  const t0 = W(4, 'e'), tTr = W(4, 'tres'), tRo = W(4, 'rotinas'), tDi = W(4, 'diaria'), tSe = W(4, 'semanal'), tMe = W(4, 'mensal'), tFim = W(4, 'mensal', 1, 'e');
+  cores();
+  const { EIXO, X, fundo } = escuro();
+  const YR = 25;
+  const row = X(htmlFluxoCartoes({ cartoes: [['sun', 'Diária', ''], ['calendar-range', 'Semanal', ''], ['calendar-check', 'Mensal', '', 'res']], cw: 300, vao: 90 }), 0, YR);
+  const pT = [['três', tTr], ['rotinas', tRo]];
+  const ch = X(chipP('repeat', 'n', pT), 0, YR - row.h / 2 - 40, { anc: [.5, 1] });
+  fundo(0, 10, { aneis: false });
+  const tit = titulo('Resumo', 'As três rotinas', 'escuro');
+  const R = uneRet(row.ret(), ch.ret());
+  const S1 = enquadraRet(EIXO, R, { az: -.03, max: 1.25 / EE });
+  camera([[t0 - 3, S1], [tFim + 2.5, { ...S1, az: .035, d: S1.d * .985 }, 'lin']]);
+  return t => {
+    STAND2(t, tit, t0);
+    falaChip(ch, t, pT); pulso(ch.e, t, tRo + .2, .05, .7);
+    fluxoCartoes(row.e, t, tDi - .35, NUNCA, { tempos: [tDi, tSe, tMe] });
+    pulso(parte(row.e, 0), t, tDi + .3, .04, .7); pulso(parte(row.e, 1), t, tSe + .3, .04, .7); pulso(parte(row.e, 2), t, tMe + .3, .05, .8);
+  };
+}
+
+const CAPS = { 1: margem, 2: comparativo, 12: mensal, 13: rotinas };
+cena(d => CAPS[d.cap](d), { fov: 26 });
+</script></body></html>

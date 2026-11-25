@@ -1,6 +1,6 @@
 {
  "name": "t10-cap06",
- "title": "T10 · Cap. 6 · O pedido por trás da linha (narração 34,6 s; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário rafael)",
+ "title": "T10 · Cap. 6 · O pedido por trás da linha (narração 35,6 s; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário rafael)",
  "seed": "t10-cap06",
  "pace": 0.5,
  "cps": 14,
@@ -234,25 +234,9 @@
    "target": {
     "selector": "main table table tbody tr:has-text('Ferro pesado') > td:nth-child(4)"
    },
-   "seconds": 0.5,
+   "seconds": 1.2,
    "at": 12.25,
    "label": "Total R$ 817,00",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L3",
-   "at": 13.3
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main table table tbody tr:has-text('Ferro pesado') > td:nth-child(4)"
-   },
-   "seconds": 0.5,
-   "at": 13.3,
-   "label": "Total R$ 817,00 (continua)",
    "optional": true,
    "timeout": 4
   },
@@ -262,9 +246,14 @@
    "label": "confere item 860 Kg a R$ 0,95 = R$ 817,00"
   },
   {
+   "do": "mark",
+   "name": "L3",
+   "at": 14.3
+  },
+  {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.offsetParent!==null&&e.textContent.trim()===\"Fornecedor:\").sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 13.9,
+   "at": 14.9,
    "label": "desce até o Fornecedor"
   },
   {
@@ -273,7 +262,7 @@
     "selector": "main table table div:has(> span:text-is('Fornecedor:'))"
    },
    "seconds": 1.8,
-   "at": 14.53,
+   "at": 15.53,
    "label": "[ZOOM] Fornecedor: Depósito Irmãos Siqueira",
    "optional": true,
    "timeout": 4
@@ -284,7 +273,7 @@
     "selector": "main table table div:text-is('Formas de Pagamento')"
    },
    "seconds": 1.2,
-   "at": 18.05,
+   "at": 19.05,
    "label": "Formas de Pagamento: Pix/Transferência R$ 817,00",
    "optional": true,
    "timeout": 4
@@ -295,7 +284,7 @@
     "selector": "main table table td:text-is('Total do Pedido:')"
    },
    "seconds": 1.2,
-   "at": 19.57,
+   "at": 20.57,
    "label": "[ZOOM] Total do Pedido: R$ 817,00",
    "optional": true,
    "timeout": 4
@@ -308,7 +297,7 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 21.44
+   "at": 22.44
   },
   {
    "do": "hover",
@@ -318,7 +307,7 @@
     "exact": true
    },
    "seconds": 1.0,
-   "at": 22.19,
+   "at": 23.19,
    "label": "Fotos anexadas (duas miniaturas)",
    "optional": true,
    "timeout": 4
@@ -328,7 +317,7 @@
    "target": {
     "selector": "main button:has(img[alt='compra-0911-1.jpg'])"
    },
-   "at": 24.0,
+   "at": 25.0,
    "label": "a primeira foto (amplia)"
   },
   {
@@ -341,12 +330,12 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 25.88
+   "at": 26.88
   },
   {
    "do": "press",
    "key": "Escape",
-   "at": 26.73,
+   "at": 27.73,
    "label": "fecha a foto"
   },
   {
@@ -365,7 +354,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 30.33,
+   "at": 31.33,
    "label": "o pedido, o pagamento e as fotos na mesma linha"
   },
   {
@@ -376,7 +365,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 34.62
+   "at": 35.62
   }
  ]
 }
