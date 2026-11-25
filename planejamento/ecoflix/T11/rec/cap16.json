@@ -1,6 +1,6 @@
 {
  "name": "t11-cap16",
- "title": "T11 · Cap. 16 · Perda padrão: a sobra já sai calculada (narração 91,2 s ESTIMADA; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T17:30:00-03:00)",
+ "title": "T11 · Cap. 16 · Perda padrão: a sobra já sai calculada (narração 69,4 s; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T17:30:00-03:00)",
  "seed": "t11-cap16",
  "pace": 0.5,
  "cps": 9,
@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
   "pwa-install-dismissed": "true",
   "theme": "light",
@@ -128,7 +128,7 @@
    "target": {
     "selector": "aside[aria-label='Lista de fichas técnicas'] button:has-text('Cobre mel')"
    },
-   "at": 3.12,
+   "at": 2.22,
    "label": "a ficha do Cobre mel"
   },
   {
@@ -143,7 +143,7 @@
    "target": {
     "selector": "main div.group:has(p:text-is('Fio de cobre encapado')) button:has-text('Perda padrão')"
    },
-   "at": 9.8,
+   "at": 7.34,
    "label": "Perda padrão (abre o cartão)"
   },
   {
@@ -152,17 +152,17 @@
    "timeout": 8
   },
   {
+   "do": "mark",
+   "name": "L2",
+   "at": 10.88
+  },
+  {
    "do": "click",
    "target": {
     "selector": "main input[id^='loss-pct-']"
    },
-   "at": 14.25,
+   "at": 10.88,
    "label": "[ZOOM] Quanto se perde deste insumo"
-  },
-  {
-   "do": "mark",
-   "name": "L2",
-   "at": 14.52
   },
   {
    "do": "type",
@@ -171,7 +171,7 @@
    },
    "text": "37,5",
    "cps": 20,
-   "at": 17.32,
+   "at": 12.79,
    "label": "37,5",
    "noClick": true
   },
@@ -188,7 +188,7 @@
     "within": "main"
    },
    "seconds": 0.8,
-   "at": 20.42,
+   "at": 14.69,
    "label": "Vazio = esta ficha não tem perda padrão.",
    "optional": true,
    "timeout": 4
@@ -196,7 +196,7 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 24.89
+   "at": 18.48
   },
   {
    "do": "hover",
@@ -205,7 +205,7 @@
     "within": "main"
    },
    "seconds": 0.6,
-   "at": 26.61,
+   "at": 19.77,
    "label": "Nada, é perda pura (some, não volta pro estoque)",
    "optional": true,
    "timeout": 4
@@ -216,7 +216,7 @@
     "text": "Vira outro material",
     "within": "main"
    },
-   "at": 30.54,
+   "at": 23.19,
    "label": "Vira outro material (entra no estoque como sobra)"
   },
   {
@@ -224,7 +224,7 @@
    "target": {
     "placeholder": "Escolher material da sobra"
    },
-   "at": 32.23,
+   "at": 24.59,
    "label": "Escolher material da sobra"
   },
   {
@@ -234,7 +234,7 @@
    },
    "text": "capa",
    "cps": 40,
-   "at": 33.08,
+   "at": 25.44,
    "label": "digita capa",
    "noClick": true
   },
@@ -244,7 +244,7 @@
     "role": "option",
     "name": "Capa de fio"
    },
-   "at": 33.14,
+   "at": 25.45,
    "label": "Capa de fio"
   },
   {
@@ -259,7 +259,7 @@
     "within": "main"
    },
    "seconds": 1.6,
-   "at": 36.1,
+   "at": 27.93,
    "label": "[ZOOM] a prévia: de 100 Kg de fio, 37,5 Kg viram Capa de fio",
    "optional": true,
    "timeout": 4
@@ -267,12 +267,12 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 40.95
+   "at": 31.53
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim().startsWith(\"Outros resultados da produ\\u00e7\\u00e3o\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 40.95,
+   "at": 31.53,
    "label": "desce a Outros resultados da produção"
   },
   {
@@ -287,7 +287,7 @@
     "within": "main"
    },
    "seconds": 1.4,
-   "at": 44.95,
+   "at": 34.65,
    "label": "[ZOOM] selo Vem da perda",
    "optional": true,
    "timeout": 4
@@ -299,7 +299,7 @@
     "name": "Salvar ficha",
     "exact": true
    },
-   "at": 46.29,
+   "at": 36.07,
    "label": "Salvar ficha"
   },
   {
@@ -310,14 +310,14 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 48.21
+   "at": 37.85
   },
   {
    "do": "click",
    "target": {
     "selector": "#tab-btn-orders"
    },
-   "at": 48.21,
+   "at": 37.85,
    "label": "aba Ordens de Produção"
   },
   {
@@ -327,7 +327,7 @@
     "name": "Nova produção",
     "exact": true
    },
-   "at": 48.52,
+   "at": 38.03,
    "label": "Nova produção"
   },
   {
@@ -340,7 +340,7 @@
    "target": {
     "placeholder": "Escreva o nome ou código do produto"
    },
-   "at": 49.85,
+   "at": 38.87,
    "label": "Ficha técnica *"
   },
   {
@@ -350,7 +350,7 @@
    },
    "text": "cobre",
    "cps": 40,
-   "at": 50.54,
+   "at": 39.43,
    "label": "digita cobre",
    "noClick": true
   },
@@ -360,7 +360,7 @@
     "role": "option",
     "name": "Cobre mel"
    },
-   "at": 51.32,
+   "at": 40.09,
    "label": "a ficha do Cobre mel"
   },
   {
@@ -368,7 +368,7 @@
    "target": {
     "selector": "#prod-planned"
    },
-   "at": 51.8,
+   "at": 40.21,
    "label": "Quantidade planejada *"
   },
   {
@@ -378,14 +378,14 @@
    },
    "text": "40",
    "cps": 20,
-   "at": 52.5,
+   "at": 40.91,
    "label": "40",
    "noClick": true
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim().startsWith(\"Equipe (quem vai produzir)\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 52.56,
+   "at": 40.61,
    "label": "desce até a equipe"
   },
   {
@@ -393,7 +393,7 @@
    "target": {
     "selector": "#prod-team"
    },
-   "at": 53.45,
+   "at": 41.31,
    "label": "Equipe (quem vai produzir)"
   },
   {
@@ -402,7 +402,7 @@
     "text": "Diego Morais",
     "within": "[data-radix-popper-content-wrapper]"
    },
-   "at": 54.0,
+   "at": 41.65,
    "label": "Diego Morais"
   },
   {
@@ -446,11 +446,16 @@
    "label": "confere cartão #4 em A fazer"
   },
   {
+   "do": "mark",
+   "name": "L6",
+   "at": 42.32
+  },
+  {
    "do": "click",
    "target": {
     "selector": "main div.group:has(span:text-is('#4')) p.font-medium"
    },
-   "at": 54.71,
+   "at": 42.32,
    "label": "o cartão #4"
   },
   {
@@ -459,18 +464,13 @@
    "timeout": 10
   },
   {
-   "do": "mark",
-   "name": "L6",
-   "at": 55.09
-  },
-  {
    "do": "click",
    "target": {
     "role": "button",
     "name": "Lançar produção do dia",
     "exact": true
    },
-   "at": 56.56,
+   "at": 43.26,
    "label": "Lançar produção do dia"
   },
   {
@@ -483,7 +483,7 @@
    "target": {
     "selector": "[role=dialog]:has(#entry-date) div.flex.items-center:has(> span:text-is('Diego Morais')) input"
    },
-   "at": 57.02,
+   "at": 43.66,
    "label": "Diego Morais"
   },
   {
@@ -493,7 +493,7 @@
    },
    "text": "40",
    "cps": 20,
-   "at": 58.42,
+   "at": 45.11,
    "label": "40",
    "noClick": true
   },
@@ -516,7 +516,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 59.87,
+   "at": 46.08,
    "label": "[ZOOM] Subprodutos: Capa de fio 24 Kg, selo Da ficha"
   },
   {
@@ -525,7 +525,7 @@
     "selector": "[role=dialog]:has(#entry-date) div.w-28 input"
    },
    "seconds": 1.0,
-   "at": 62.66,
+   "at": 48.01,
    "label": "Capa de fio 24 Kg (sugerido pela ficha)",
    "optional": true,
    "timeout": 4
@@ -533,12 +533,12 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 72.21
+   "at": 55.28
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog]:has(#entry-date) *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Mat\\u00e9ria-prima usada\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 72.21,
+   "at": 55.28,
    "label": "desce até Matéria-prima usada"
   },
   {
@@ -553,10 +553,15 @@
     "within": "[role=dialog]:has(#entry-date)"
    },
    "seconds": 1.6,
-   "at": 75.08,
+   "at": 56.96,
    "label": "[ZOOM] A ficha já conta 37,5% de perda deste insumo",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 62.48
   },
   {
    "do": "click",
@@ -565,7 +570,7 @@
     "name": "Salvar lançamento",
     "exact": true
    },
-   "at": 81.86,
+   "at": 62.48,
    "label": "Salvar lançamento",
    "noScroll": true
   },
@@ -587,11 +592,6 @@
    "label": "confere a ordem #4 em andamento"
   },
   {
-   "do": "mark",
-   "name": "L8",
-   "at": 82.36
-  },
-  {
    "do": "eval",
    "js": "JSON.stringify(window.__avisos || \"sem observador\")",
    "label": "avisos de erro na tela"
@@ -599,7 +599,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 91.2
+   "at": 69.44
   }
  ]
 }

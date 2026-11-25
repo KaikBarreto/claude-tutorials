@@ -1,6 +1,6 @@
 {
  "name": "t11-cap04",
- "title": "T11 · Cap. 4 · Coprodutos (narração 51,0 s ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T11 · Cap. 4 · Coprodutos (narração 40,8 s; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "seed": "t11-cap04",
  "pace": 0.5,
  "cps": 9,
@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
   "pwa-install-dismissed": "true",
   "theme": "light",
@@ -134,18 +134,18 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Use quando a produ\\u00e7\\u00e3o gera mais de um material (ex.: sobra reaproveit\\u00e1vel).\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-330);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 6.08,
+   "at": 4.96,
    "label": "desce a Outros resultados da produção"
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 10.65
+   "at": 8.48
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 24.05
+   "at": 19.2
   },
   {
    "do": "click",
@@ -153,7 +153,7 @@
     "role": "button",
     "name": "Adicionar coproduto"
    },
-   "at": 25.15,
+   "at": 20.14,
    "label": "Adicionar coproduto"
   },
   {
@@ -161,7 +161,7 @@
    "target": {
     "placeholder": "Escolher material"
    },
-   "at": 26.59,
+   "at": 21.26,
    "label": "Escolher material (coproduto)"
   },
   {
@@ -171,7 +171,7 @@
    },
    "text": "chap",
    "cps": 40,
-   "at": 28.15,
+   "at": 22.82,
    "label": "digita chap",
    "noClick": true
   },
@@ -181,7 +181,7 @@
     "role": "option",
     "name": "Chaparia"
    },
-   "at": 28.44,
+   "at": 23.07,
    "label": "Chaparia"
   },
   {
@@ -196,10 +196,15 @@
     "exact": true
    },
    "seconds": 1.6,
-   "at": 30.41,
+   "at": 24.51,
    "label": "[ZOOM] cartão Chaparia: Quantidade digitada no lançamento do dia",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 28.51
   },
   {
    "do": "click",
@@ -208,7 +213,7 @@
     "name": "Salvar ficha",
     "exact": true
    },
-   "at": 34.84,
+   "at": 28.51,
    "label": "Salvar ficha"
   },
   {
@@ -217,17 +222,12 @@
    "timeout": 10
   },
   {
-   "do": "mark",
-   "name": "L4",
-   "at": 35.34
-  },
-  {
    "do": "hover",
    "target": {
     "selector": "main div.group:has(p:text-is('Chaparia'))"
    },
    "seconds": 0.8,
-   "at": 37.82,
+   "at": 30.75,
    "label": "a receita completa",
    "optional": true,
    "timeout": 4
@@ -235,12 +235,12 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 39.33
+   "at": 31.87
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const raiz=document.querySelector(\"main\");let c=null;for(const e of [raiz,...(raiz?raiz.querySelectorAll('*'):[])]){if(!e)continue;const s=getComputedStyle(e);if(/(auto|scroll)/.test(s.overflowY)&&e.scrollHeight>e.clientHeight+4&&e.scrollTop>2){c=e;break}}if(!c){const se=document.scrollingElement;if(se&&se.scrollTop>2)c=se}if(!c)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0*(1-e),behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
-   "at": 39.33,
+   "at": 31.87,
    "label": "sobe ao alto da ficha"
   },
   {
@@ -249,7 +249,7 @@
     "selector": "main button[aria-label='Excluir ficha']"
    },
    "seconds": 1.6,
-   "at": 40.55,
+   "at": 33.09,
    "label": "[ZOOM] botão Excluir ficha, no alto à direita, sem clicar",
    "optional": true,
    "timeout": 4
@@ -262,7 +262,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 50.99
+   "at": 40.8
   }
  ]
 }

@@ -1,6 +1,6 @@
 {
  "name": "t11-cap17",
- "title": "T11 · Cap. 17 · Máquinas (narração 32,2 s ESTIMADA; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T17:30:00-03:00)",
+ "title": "T11 · Cap. 17 · Máquinas (narração 28,6 s; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T17:30:00-03:00)",
  "seed": "t11-cap17",
  "pace": 0.5,
  "cps": 9,
@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
   "pwa-install-dismissed": "true",
   "theme": "light",
@@ -113,7 +113,7 @@
    "target": {
     "selector": "#tab-btn-machines"
    },
-   "at": 2.96,
+   "at": 1.74,
    "label": "aba Máquinas"
   },
   {
@@ -128,7 +128,7 @@
     "name": "Nova máquina",
     "exact": true
    },
-   "at": 4.71,
+   "at": 3.34,
    "label": "Nova máquina"
   },
   {
@@ -136,7 +136,7 @@
    "target": {
     "placeholder": "Ex.: Prensa 02"
    },
-   "at": 6.08,
+   "at": 4.54,
    "label": "Nome ou número da máquina"
   },
   {
@@ -146,14 +146,14 @@
    },
    "text": "Prensa 01",
    "cps": 20,
-   "at": 8.24,
+   "at": 6.55,
    "label": "Prensa 01",
    "noClick": true
   },
   {
    "do": "press",
    "key": "Enter",
-   "at": 9.1,
+   "at": 7.46,
    "label": "confirma"
   },
   {
@@ -169,14 +169,14 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 9.66
+   "at": 7.84
   },
   {
    "do": "click",
    "target": {
     "selector": "#tab-btn-orders"
    },
-   "at": 9.84,
+   "at": 7.84,
    "label": "aba Ordens de Produção"
   },
   {
@@ -186,7 +186,7 @@
     "name": "Nova produção",
     "exact": true
    },
-   "at": 10.52,
+   "at": 8.46,
    "label": "Nova produção"
   },
   {
@@ -197,7 +197,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"M\\u00e1quina\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-330);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 12.5,
+   "at": 9.9,
    "label": "desce ao campo Máquina"
   },
   {
@@ -205,7 +205,7 @@
    "target": {
     "selector": "#prod-machine"
    },
-   "at": 13.1,
+   "at": 10.5,
    "label": "[ZOOM] campo Máquina (Nenhuma, Prensa 01)"
   },
   {
@@ -215,7 +215,7 @@
     "name": "Prensa 01"
    },
    "seconds": 0.8,
-   "at": 13.25,
+   "at": 10.6,
    "label": "Prensa 01 na lista",
    "optional": true,
    "timeout": 4
@@ -235,7 +235,7 @@
   {
    "do": "press",
    "key": "Escape",
-   "at": 14.09,
+   "at": 13.82,
    "label": "fecha a janela"
   },
   {
@@ -252,14 +252,14 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 14.49
+   "at": 14.22
   },
   {
    "do": "click",
    "target": {
     "selector": "#tab-btn-report"
    },
-   "at": 14.49,
+   "at": 14.22,
    "label": "aba Relatório"
   },
   {
@@ -274,8 +274,8 @@
     "exact": true,
     "within": "main"
    },
-   "seconds": 1.2,
-   "at": 16.67,
+   "seconds": 0.6,
+   "at": 15.74,
    "label": "[ZOOM] o filtro MÁQUINA (Todas as máquinas)",
    "optional": true,
    "timeout": 4
@@ -283,7 +283,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Lan\\u00e7amentos\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-250);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 18.14,
+   "at": 16.74,
    "label": "desce às abas do detalhe"
   },
   {
@@ -291,7 +291,7 @@
    "target": {
     "selector": "main div.border-b > button:text-is('Lançamentos')"
    },
-   "at": 20.52,
+   "at": 18.44,
    "label": "aba Lançamentos"
   },
   {
@@ -300,11 +300,16 @@
    "label": "confere o Ranking de máquinas"
   },
   {
+   "do": "mark",
+   "name": "L4",
+   "at": 20.06
+  },
+  {
    "do": "click",
    "target": {
     "selector": "#tab-btn-machines"
    },
-   "at": 22.05,
+   "at": 20.06,
    "label": "de volta a Máquinas"
   },
   {
@@ -313,17 +318,12 @@
    "timeout": 8
   },
   {
-   "do": "mark",
-   "name": "L4",
-   "at": 22.35
-  },
-  {
    "do": "hover",
    "target": {
     "selector": "main div:has(> span:text-is('Prensa 01')) > button:nth-of-type(1)"
    },
    "seconds": 0.6,
-   "at": 24.84,
+   "at": 22.3,
    "label": "lápis de renomear",
    "optional": true,
    "timeout": 4
@@ -334,7 +334,7 @@
     "selector": "main div:has(> span:text-is('Prensa 01')) > button:nth-of-type(2)"
    },
    "seconds": 1.2,
-   "at": 26.35,
+   "at": 23.74,
    "label": "[ZOOM] botão Desativar (sem clicar)",
    "optional": true,
    "timeout": 4
@@ -347,7 +347,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 32.19
+   "at": 28.62
   }
  ]
 }

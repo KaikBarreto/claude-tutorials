@@ -1,6 +1,6 @@
 {
  "name": "t11-cap05",
- "title": "T11 · Cap. 5 · Criar a ordem de produção (narração 94,6 s ESTIMADA; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T11 · Cap. 5 · Criar a ordem de produção (narração 79,5 s; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "seed": "t11-cap05",
  "pace": 0.5,
  "cps": 9,
@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
   "pwa-install-dismissed": "true",
   "theme": "light",
@@ -111,18 +111,18 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 2.07,
+   "at": 1.66,
    "label": "o quadro de ordens"
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 3.97
+   "at": 3.2
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 12.14
+   "at": 10.64
   },
   {
    "do": "click",
@@ -131,7 +131,7 @@
     "name": "Nova produção",
     "exact": true
    },
-   "at": 12.22,
+   "at": 10.84,
    "label": "Nova produção"
   },
   {
@@ -149,7 +149,7 @@
    "target": {
     "placeholder": "Escreva o nome ou código do produto"
    },
-   "at": 15.43,
+   "at": 13.74,
    "label": "Ficha técnica *"
   },
   {
@@ -159,7 +159,7 @@
    },
    "text": "fardo",
    "cps": 40,
-   "at": 17.14,
+   "at": 15.11,
    "label": "digita fardo",
    "noClick": true
   },
@@ -169,21 +169,21 @@
     "role": "option",
     "name": "Fardo de alumínio"
    },
-   "at": 17.58,
+   "at": 15.36,
    "label": "a ficha do Fardo de alumínio"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 17.04
   },
   {
    "do": "click",
    "target": {
     "selector": "#prod-planned"
    },
-   "at": 19.5,
+   "at": 17.04,
    "label": "[ZOOM] Quantidade planejada *"
-  },
-  {
-   "do": "mark",
-   "name": "L4",
-   "at": 19.77
   },
   {
    "do": "type",
@@ -192,7 +192,7 @@
    },
    "text": "500",
    "cps": 20,
-   "at": 21.97,
+   "at": 18.56,
    "label": "500",
    "noClick": true
   },
@@ -204,7 +204,7 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 27.03
+   "at": 22.28
   },
   {
    "do": "hover",
@@ -212,7 +212,7 @@
     "selector": "#prod-date"
    },
    "seconds": 0.8,
-   "at": 27.03,
+   "at": 22.28,
    "label": "Data da produção (hoje)",
    "optional": true,
    "timeout": 4
@@ -222,7 +222,7 @@
    "target": {
     "selector": "#prod-responsible"
    },
-   "at": 28.58,
+   "at": 24.02,
    "label": "Responsável"
   },
   {
@@ -231,21 +231,21 @@
     "role": "option",
     "name": "Marcos Antunes"
    },
-   "at": 29.97,
+   "at": 25.16,
    "label": "Marcos Antunes"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 27.56
   },
   {
    "do": "click",
    "target": {
     "selector": "#prod-team"
    },
-   "at": 32.88,
+   "at": 27.56,
    "label": "Equipe (quem vai produzir)"
-  },
-  {
-   "do": "mark",
-   "name": "L6",
-   "at": 33.15
   },
   {
    "do": "click",
@@ -253,7 +253,7 @@
     "text": "Cláudio Ferraz",
     "within": "[data-radix-popper-content-wrapper]"
    },
-   "at": 35.4,
+   "at": 29.24,
    "label": "Cláudio Ferraz"
   },
   {
@@ -262,13 +262,13 @@
     "text": "Diego Morais",
     "within": "[data-radix-popper-content-wrapper]"
    },
-   "at": 36.32,
+   "at": 30.04,
    "label": "Diego Morais"
   },
   {
    "do": "press",
    "key": "Escape",
-   "at": 37.88,
+   "at": 31.82,
    "label": "fecha a lista da equipe"
   },
   {
@@ -290,7 +290,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 1.0,
-   "at": 39.05,
+   "at": 32.44,
    "label": "a ajuda da equipe",
    "optional": true,
    "timeout": 4
@@ -298,12 +298,12 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 42.23
+   "at": 35.08
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Custo estimado por pe\\u00e7a\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-560);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 42.23,
+   "at": 35.08,
    "label": "desce ao consumo teórico estimado"
   },
   {
@@ -320,7 +320,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 43.29,
+   "at": 36.04,
    "label": "[ZOOM] bloco Consumo teórico estimado"
   },
   {
@@ -331,7 +331,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.8,
-   "at": 45.02,
+   "at": 37.18,
    "label": "Qtd teórica 500",
    "optional": true,
    "timeout": 4
@@ -344,7 +344,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 1.2,
-   "at": 48.96,
+   "at": 40.68,
    "label": "Custo estimado por peça R$ 6,20",
    "optional": true,
    "timeout": 4
@@ -352,7 +352,7 @@
   {
    "do": "mark",
    "name": "L8",
-   "at": 56.24
+   "at": 45.63
   },
   {
    "do": "hover",
@@ -362,10 +362,15 @@
     "within": "[role=dialog]"
    },
    "seconds": 1.2,
-   "at": 59.26,
+   "at": 48.03,
    "label": "\"por peça\" (vale quilo)",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 50.19
   },
   {
    "do": "click",
@@ -374,7 +379,7 @@
     "name": "Criar ordem",
     "exact": true
    },
-   "at": 61.03,
+   "at": 50.19,
    "label": "Criar ordem"
   },
   {
@@ -397,17 +402,12 @@
    "label": "confere cartão #3 em A fazer"
   },
   {
-   "do": "mark",
-   "name": "L9",
-   "at": 61.53
-  },
-  {
    "do": "hover",
    "target": {
     "selector": "main div.group:has(span:text-is('#3'))"
    },
    "seconds": 0.9,
-   "at": 63.48,
+   "at": 52.27,
    "label": "o cartão #3 em A fazer",
    "optional": true,
    "timeout": 4
@@ -420,7 +420,7 @@
     "within": "main"
    },
    "seconds": 0.8,
-   "at": 66.14,
+   "at": 54.27,
    "label": "selo Rascunho",
    "optional": true,
    "timeout": 4
@@ -428,7 +428,7 @@
   {
    "do": "mark",
    "name": "L10",
-   "at": 67.64
+   "at": 55.63
   },
   {
    "do": "type",
@@ -439,7 +439,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 67.95,
+   "at": 55.95,
    "label": "o cartão (dica das permissões)"
   },
   {
@@ -451,7 +451,7 @@
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 68.75,
+   "at": 56.75,
    "label": "cursor sai do cartão"
   },
   {
@@ -462,7 +462,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 94.63
+   "at": 79.52
   }
  ]
 }

@@ -1,6 +1,6 @@
 {
  "name": "t11-cap03",
- "title": "T11 · Cap. 3 · Quanto entra por unidade (narração 71,7 s ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T11 · Cap. 3 · Quanto entra por unidade (narração 62,1 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "seed": "t11-cap03",
  "pace": 0.5,
  "cps": 9,
@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
   "pwa-install-dismissed": "true",
   "theme": "light",
@@ -183,7 +183,7 @@
    "target": {
     "selector": "#recipe-unit"
    },
-   "at": 2.43,
+   "at": 1.82,
    "label": "Unidade produzida"
   },
   {
@@ -192,7 +192,7 @@
     "role": "option",
     "name": "Kg — Quilograma"
    },
-   "at": 8.98,
+   "at": 7.52,
    "label": "Kg — Quilograma"
   },
   {
@@ -203,14 +203,14 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 10.26
+   "at": 8.64
   },
   {
    "do": "click",
    "target": {
     "placeholder": "Qtd"
    },
-   "at": 11.51,
+   "at": 9.5,
    "label": "[ZOOM] campo Qtd do Alumínio latinha"
   },
   {
@@ -220,7 +220,7 @@
    },
    "text": "1",
    "cps": 20,
-   "at": 22.18,
+   "at": 19.11,
    "label": "Qtd 1",
    "noClick": true
   },
@@ -232,7 +232,7 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 22.68
+   "at": 19.52
   },
   {
    "do": "hover",
@@ -240,7 +240,7 @@
     "selector": "main .recipe-workbench-output div.border-dashed"
    },
    "seconds": 1.2,
-   "at": 22.97,
+   "at": 19.6,
    "label": "o cartão Produto final (Rendimento e Consumo previsto)",
    "optional": true,
    "timeout": 4
@@ -248,7 +248,7 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 27.97
+   "at": 23.85
   },
   {
    "do": "hover",
@@ -256,10 +256,15 @@
     "selector": "#recipe-pack"
    },
    "seconds": 2.0,
-   "at": 27.97,
+   "at": 23.85,
    "label": "Peças por jogo (vazio)",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 32.81
   },
   {
    "do": "click",
@@ -268,7 +273,7 @@
     "name": "Salvar ficha",
     "exact": true
    },
-   "at": 38.07,
+   "at": 32.81,
    "label": "Salvar ficha"
   },
   {
@@ -277,14 +282,9 @@
    "timeout": 10
   },
   {
-   "do": "mark",
-   "name": "L5",
-   "at": 38.57
-  },
-  {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const raiz=document.querySelector(\"main\");let c=null;for(const e of [raiz,...(raiz?raiz.querySelectorAll('*'):[])]){if(!e)continue;const s=getComputedStyle(e);if(/(auto|scroll)/.test(s.overflowY)&&e.scrollHeight>e.clientHeight+4&&e.scrollTop>2){c=e;break}}if(!c){const se=document.scrollingElement;if(se&&se.scrollTop>2)c=se}if(!c)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0*(1-e),behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
-   "at": 39.63,
+   "at": 35.51,
    "label": "sobe à lista"
   },
   {
@@ -298,7 +298,7 @@
     "selector": "aside[aria-label='Lista de fichas técnicas'] button:has-text('Fardo de alumínio')"
    },
    "seconds": 0.9,
-   "at": 42.12,
+   "at": 37.43,
    "label": "Fardo de alumínio na lista",
    "optional": true,
    "timeout": 4
@@ -306,14 +306,14 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 43.4
+   "at": 39.39
   },
   {
    "do": "click",
    "target": {
     "selector": "aside[aria-label='Lista de fichas técnicas'] button:has-text('Cobre mel')"
    },
-   "at": 44.34,
+   "at": 39.93,
    "label": "a ficha do Cobre mel"
   },
   {
@@ -339,7 +339,7 @@
     "selector": "main div.group:has(p:text-is('Fio de cobre encapado'))"
    },
    "seconds": 1.6,
-   "at": 51.65,
+   "at": 46.16,
    "label": "[ZOOM] cartão Fio de cobre encapado com 1,6",
    "optional": true,
    "timeout": 4
@@ -347,7 +347,7 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 55.67
+   "at": 49.23
   },
   {
    "do": "eval",
@@ -357,7 +357,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 71.73
+   "at": 62.1
   }
  ]
 }

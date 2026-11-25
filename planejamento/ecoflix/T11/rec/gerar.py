@@ -147,7 +147,7 @@ class Cap:
 
     def add(s, d):
         if d.get('at') is not None:
-            lim = 0.8 if d.get('do') == 'hover' else 0.25
+            lim = 0.8 if d.get('do') in ('hover', 'click') else 0.25
             for mt, mi in s.pending:
                 if d['at'] < mt <= d['at'] + lim:
                     d['at'] = round(mt, 2)
@@ -974,8 +974,8 @@ def cap14():
     c.mark(1)
     c.confere('main', ['#3', '#2', '#1', 'Cobre mel', 'R$ 1.440,00', 'R$ 28,80/Kg', '03/11/2026'], 'as ordens 1 e 2 do Cobre mel')
     c.registra(SEL("main div.rounded-xl:has(span:text-is('#2'))"), at=c.A(1, 'Repara', 0.2), label='[ZOOM] os cartões #2 e #1 do Cobre mel')
-    c.hover(CARTAO_OP(1), 0.5, at=c.A(1, 'um', 0.6, nth=1), label='a ordem #1')
-    c.hover(PEGA_OP(2), 0.8, at=c.A(1, 'dois', 0.6), label='a ordem #2')
+    c.hover(CARTAO_OP(1), 0.5, at=c.A(1, 'ordens', 0.9), label='a ordem #1')
+    c.hover(PEGA_OP(2), 0.8, at=c.A(1, 'são', 0.4), label='a ordem #2')
     c.mark(2)
     c.hover(PEGA_OP(2), 0.6, at=c.A(2, 'excluir.', 0.6), label='o mouse no cartão #2 (aparece a lixeira)')
     c.click(LIXEIRA_OP(2), at=c.A(2, 'lixeira', 0.6), label='lixeira Excluir ordem da #2')
@@ -993,8 +993,8 @@ def cap14():
     c.click({'role': 'link', 'name': 'Histórico (Kardex)', 'exact': True, 'within': MENU}, at=c.A(4, 'material,', 0.6), label='menu Histórico (Kardex)')
     c.waitfor(target=PH('Buscar código ou material'), timeout=12)
     c.cursor((700, 450), at=None, label='cursor sai do menu (ele recolhe)')
-    c.click(PH('Buscar código ou material'), at=c.A(4, 'Kardex,', 0.6), label='Buscar código ou material')
-    c.type(PH('Buscar código ou material'), 'fio', at=c.A(4, 'dá', 0.05), noClick=True, cps=20, label='digita fio')
+    c.click(PH('Buscar código ou material'), at=c.A(4, 'dá', 0.6), label='Buscar código ou material')
+    c.type(PH('Buscar código ou material'), 'fio', at=c.A(4, 'ver', 0.05), noClick=True, cps=20, label='digita fio')
     c.click(SEL("main [role=list] button:has-text('Fio de cobre encapado')"), at=c.A(4, 'tudo.', 0.6), label='Fio de cobre encapado')
     c.waitfor(text='Fio de cobre encapado', timeout=10)
     c.confere('main', ['KARDEX', 'Fio de cobre encapado', 'Produção'], 'Kardex do fio')
@@ -1097,9 +1097,9 @@ def cap10():
     c.waitfor(text='Excluir ordem de produção?', timeout=8)
     c.confere(ALERTA, ['Excluir ordem de produção?', 'Atenção: esta ordem tem lançamentos.', 'estornados de uma vez'], 'aviso de excluir ordem com lançamento')
     c.hover(TXTX('todos os dias são estornados de uma vez', within=ALERTA), 1.4, at=c.A(8, 'estorna', 0.6), label='[ZOOM] todos os dias são estornados de uma vez')
-    c.click(BTN('Cancelar', within=ALERTA), at=c.A(8, 'antes.', -0.1), label='Cancelar')
+    c.click(BTN('Cancelar', within=ALERTA), at=c.A(8, 'antes.', 1.4), label='Cancelar')
     c.waitfor(gone={'selector': ALERTA}, timeout=8)
-    c.click(SEL("button[aria-label='Kanban']"), at=c.A(8, 'antes.', -0.9), label='volta ao Kanban (o app guarda a última visão)')
+    c.click(SEL("button[aria-label='Kanban']"), at=c.A(8, 'antes.', 0.4), label='volta ao Kanban (o app guarda a última visão)')
     c.waitfor(target=PEGA_OP(3), timeout=10)
     c.fim()
     return c
@@ -1253,7 +1253,7 @@ def cap17():
     c.mark(3)
     c.click(ABA('report'), at=c.A(3, 'relatório', 0.7), label='aba Relatório')
     c.waitfor(text='Relatório de produção', timeout=12)
-    c.hover(TXT('MÁQUINA', within='main'), 1.2, at=c.A(3, 'máquina', 0.6), label='[ZOOM] o filtro MÁQUINA (Todas as máquinas)')
+    c.hover(TXT('MÁQUINA', within='main'), 0.6, at=c.A(3, 'máquina', 0.6), label='[ZOOM] o filtro MÁQUINA (Todas as máquinas)')
     rola_ate(c, 'Lançamentos', at=c.A(3, 'ranking', 0.8), label='desce às abas do detalhe', y=250)
     c.click(ABA_DETALHE('Lançamentos'), at=c.A(3, 'Lançamentos.', 0.7), label='aba Lançamentos')
     c.confere('main', ['Ranking de máquinas', 'Detalhamento por lançamento'], 'o Ranking de máquinas')

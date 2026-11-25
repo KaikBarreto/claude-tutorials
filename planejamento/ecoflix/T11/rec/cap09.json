@@ -1,6 +1,6 @@
 {
  "name": "t11-cap09",
- "title": "T11 · Cap. 9 · Perda acima da tolerância (narração 84,2 s ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T17:30:00-03:00)",
+ "title": "T11 · Cap. 9 · Perda acima da tolerância (narração 70,2 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T17:30:00-03:00)",
  "seed": "t11-cap09",
  "pace": 0.5,
  "cps": 9,
@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
   "pwa-install-dismissed": "true",
   "theme": "light",
@@ -243,7 +243,7 @@
     "within": "[role=dialog]:has(#entry-date)"
    },
    "seconds": 0.8,
-   "at": 2.53,
+   "at": 1.68,
    "label": "Motivo da perda *",
    "optional": true,
    "timeout": 4
@@ -256,7 +256,7 @@
     "exact": true
    },
    "seconds": 1.0,
-   "at": 4.73,
+   "at": 3.68,
    "label": "Salvar lançamento apagado",
    "noScroll": true,
    "optional": true,
@@ -270,7 +270,7 @@
     "within": "[role=dialog]:has(#entry-date)"
    },
    "seconds": 1.0,
-   "at": 8.53,
+   "at": 7.2,
    "label": "Informe o motivo da diferença",
    "optional": true,
    "timeout": 4
@@ -278,25 +278,25 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 11.1
+   "at": 9.12
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 24.51
+   "at": 20.16
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 32.88
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog]:has(#entry-date) div.space-y-1:has(> label:has-text('Motivo da perda')) button[role=combobox]"
    },
-   "at": 39.17,
+   "at": 32.88,
    "label": "Motivo (abre a lista)"
-  },
-  {
-   "do": "mark",
-   "name": "L4",
-   "at": 39.67
   },
   {
    "do": "click",
@@ -304,7 +304,7 @@
     "role": "option",
     "name": "Material reaproveitável"
    },
-   "at": 45.26,
+   "at": 38.0,
    "label": "Material reaproveitável",
    "noScroll": true
   },
@@ -321,7 +321,7 @@
     "exact": true
    },
    "seconds": 1.0,
-   "at": 50.96,
+   "at": 42.8,
    "label": "Salvar lançamento aceso",
    "noScroll": true,
    "optional": true,
@@ -330,7 +330,7 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 52.32
+   "at": 43.95
   },
   {
    "do": "type",
@@ -343,7 +343,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 52.62,
+   "at": 44.35,
    "label": "o botão Salvar lançamento"
   },
   {
@@ -352,7 +352,7 @@
     "selector": "[role=dialog]:has(#entry-date) div.space-y-1:has(> label:has-text('Motivo da perda')) button[role=combobox]"
    },
    "seconds": 1.0,
-   "at": 58.82,
+   "at": 49.47,
    "label": "é lá que o motivo fica esperando",
    "optional": true,
    "timeout": 4
@@ -360,12 +360,12 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 62.0
+   "at": 51.95
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog]:has(#entry-date) *\")].filter(e=>e.textContent.trim().startsWith(\"Observa\\u00e7\\u00e3o\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-420);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 62.13,
+   "at": 52.01,
    "label": "desce até a Observação (opcional)"
   },
   {
@@ -373,7 +373,7 @@
    "target": {
     "selector": "#entry-note"
    },
-   "at": 63.78,
+   "at": 53.29,
    "label": "[ZOOM] campo Observação (opcional)"
   },
   {
@@ -383,7 +383,7 @@
    },
    "text": "Turno da tarde, prensa sem parada.",
    "cps": 30,
-   "at": 67.55,
+   "at": 56.21,
    "label": "digita o recado do dia",
    "noClick": true
   },
@@ -393,13 +393,18 @@
    "label": "confere a observação digitada"
   },
   {
+   "do": "mark",
+   "name": "L7",
+   "at": 59.79
+  },
+  {
    "do": "click",
    "target": {
     "role": "button",
     "name": "Salvar lançamento",
     "exact": true
    },
-   "at": 71.65,
+   "at": 59.79,
    "label": "Salvar lançamento",
    "noScroll": true
   },
@@ -421,18 +426,13 @@
    "label": "confere o dia na ordem"
   },
   {
-   "do": "mark",
-   "name": "L7",
-   "at": 72.15
-  },
-  {
    "do": "hover",
    "target": {
     "text": "Cláudio Ferraz e Diego Morais",
     "within": "[role=dialog]"
    },
    "seconds": 1.0,
-   "at": 79.57,
+   "at": 66.8,
    "label": "o dia lançado na ordem",
    "optional": true,
    "timeout": 4
@@ -445,7 +445,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.8,
-   "at": 82.07,
+   "at": 68.88,
    "label": "Produzido até agora 480 Kg",
    "optional": true,
    "timeout": 4
@@ -458,7 +458,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 84.18
+   "at": 70.16
   }
  ]
 }

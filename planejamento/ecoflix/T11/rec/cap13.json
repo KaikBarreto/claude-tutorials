@@ -1,6 +1,6 @@
 {
  "name": "t11-cap13",
- "title": "T11 · Cap. 13 · Os ajustes da Produção (narração 139,9 s ESTIMADA; marcas L1..L12 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T17:30:00-03:00)",
+ "title": "T11 · Cap. 13 · Os ajustes da Produção (narração 113,2 s; marcas L1..L12 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T17:30:00-03:00)",
  "seed": "t11-cap13",
  "pace": 0.5,
  "cps": 9,
@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
   "pwa-install-dismissed": "true",
   "theme": "light",
@@ -111,7 +111,7 @@
    "target": {
     "selector": "#tab-btn-settings"
    },
-   "at": 0.38,
+   "at": 0.0,
    "label": "aba Configurações"
   },
   {
@@ -122,7 +122,7 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 6.85
+   "at": 5.2
   },
   {
    "do": "type",
@@ -133,7 +133,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 7.0,
+   "at": 5.36,
    "label": "[ZOOM] Custo de produção em cadeia (multinível), desligado"
   },
   {
@@ -144,7 +144,7 @@
     "within": "main"
    },
    "seconds": 1.0,
-   "at": 9.11,
+   "at": 6.96,
    "label": "multinível",
    "optional": true,
    "timeout": 4
@@ -155,7 +155,7 @@
     "selector": "main div.rounded-lg:has(p:text-is('Custo de produção em cadeia (multinível)')) button[role=switch]"
    },
    "seconds": 1.0,
-   "at": 16.09,
+   "at": 12.56,
    "label": "a chave do multinível (desligada)",
    "optional": true,
    "timeout": 4
@@ -163,7 +163,7 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 22.16
+   "at": 17.2
   },
   {
    "do": "type",
@@ -174,7 +174,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 22.16,
+   "at": 17.2,
    "label": "[ZOOM] Descontar o valor das sobras do custo de produção, desligado"
   },
   {
@@ -183,7 +183,7 @@
     "selector": "main div.rounded-lg:has(p:text-is('Descontar o valor das sobras do custo de produção')) button[role=switch]"
    },
    "seconds": 1.0,
-   "at": 25.63,
+   "at": 20.17,
    "label": "a chave das sobras (desligada)",
    "optional": true,
    "timeout": 4
@@ -191,13 +191,13 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Qual pre\\u00e7o de compra vira o custo do produto\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 41.31,
+   "at": 33.37,
    "label": "desce até a régua do custo"
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 41.71
+   "at": 33.77
   },
   {
    "do": "type",
@@ -208,7 +208,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 41.81,
+   "at": 33.87,
    "label": "[ZOOM] Qual preço de compra vira o custo do produto"
   },
   {
@@ -216,7 +216,7 @@
    "target": {
     "selector": "#prod-cost-basis"
    },
-   "at": 45.01,
+   "at": 36.47,
    "label": "Como calcular (abre a lista)"
   },
   {
@@ -226,7 +226,7 @@
     "name": "Média de um período"
    },
    "seconds": 0.6,
-   "at": 49.74,
+   "at": 40.09,
    "label": "Média de um período",
    "optional": true,
    "timeout": 4
@@ -238,7 +238,7 @@
     "name": "Preço da última compra"
    },
    "seconds": 0.6,
-   "at": 53.99,
+   "at": 43.53,
    "label": "Preço da última compra",
    "optional": true,
    "timeout": 4
@@ -246,7 +246,7 @@
   {
    "do": "press",
    "key": "Escape",
-   "at": 55.43,
+   "at": 44.95,
    "label": "fecha a lista sem trocar"
   },
   {
@@ -259,13 +259,13 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Exigir funcion\\u00e1rio na ordem\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 61.98,
+   "at": 50.07,
    "label": "desce até Exigir funcionário na ordem"
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 62.48
+   "at": 50.57
   },
   {
    "do": "type",
@@ -276,19 +276,19 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 62.48,
+   "at": 50.57,
    "label": "[ZOOM] Exigir funcionário na ordem, desligado"
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Como voc\\u00ea chama o agrupamento de pe\\u00e7as\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-280);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 68.43,
+   "at": 55.13,
    "label": "desce até o nome do agrupamento"
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 68.83
+   "at": 55.53
   },
   {
    "do": "type",
@@ -299,7 +299,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 68.93,
+   "at": 55.63,
    "label": "[ZOOM] Como você chama o agrupamento de peças (jogo)"
   },
   {
@@ -308,7 +308,7 @@
     "selector": "#prod-pack-label"
    },
    "seconds": 1.0,
-   "at": 74.43,
+   "at": 60.01,
    "label": "Nome (singular): jogo",
    "optional": true,
    "timeout": 4
@@ -322,18 +322,18 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 76.71,
+   "at": 62.72,
    "label": "[ZOOM] Lançar produção em jogos"
   },
   {
    "do": "mark",
    "name": "L7",
-   "at": 85.27
+   "at": 69.6
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Quando dar baixa no estoque\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-200);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 85.27,
+   "at": 69.7,
    "label": "desce até Quando dar baixa no estoque"
   },
   {
@@ -349,7 +349,7 @@
     "within": "main"
    },
    "seconds": 1.4,
-   "at": 89.05,
+   "at": 72.64,
    "label": "Agora: baixa a cada lançamento do dia.",
    "optional": true,
    "timeout": 4
@@ -357,12 +357,12 @@
   {
    "do": "mark",
    "name": "L8",
-   "at": 93.37
+   "at": 76.4
   },
   {
    "do": "mark",
    "name": "L9",
-   "at": 100.63
+   "at": 82.16
   },
   {
    "do": "hover",
@@ -372,7 +372,7 @@
     "within": "main"
    },
    "seconds": 0.8,
-   "at": 100.63,
+   "at": 82.16,
    "label": "Bloquear finalização quando faltar matéria-prima em estoque",
    "optional": true,
    "timeout": 4
@@ -382,7 +382,7 @@
    "target": {
     "selector": "main div.rounded-lg:has(p:text-is('Bloquear finalização quando faltar matéria-prima em estoque')) button[role=switch]"
    },
-   "at": 106.05,
+   "at": 86.47,
    "label": "liga o bloqueio"
   },
   {
@@ -393,12 +393,12 @@
   {
    "do": "mark",
    "name": "L10",
-   "at": 114.26
+   "at": 93.29
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Toler\\u00e2ncia de perda (%)\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-330);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 114.26,
+   "at": 93.29,
    "label": "desce até a tolerância e a meta"
   },
   {
@@ -415,7 +415,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 115.21,
+   "at": 94.25,
    "label": "[ZOOM 1/2] cartão Tolerância de perda (%) (o zoom pega os dois cartões, nesta frase e na seguinte)"
   },
   {
@@ -435,7 +435,7 @@
     "selector": "#prod-tolerance"
    },
    "seconds": 1.2,
-   "at": 116.52,
+   "at": 95.21,
    "label": "Tolerância de perda 2",
    "optional": true,
    "timeout": 4
@@ -447,7 +447,7 @@
     "within": "main"
    },
    "seconds": 1.0,
-   "at": 118.04,
+   "at": 96.41,
    "label": "0 = sempre pedir",
    "optional": true,
    "timeout": 4
@@ -455,7 +455,7 @@
   {
    "do": "mark",
    "name": "L11",
-   "at": 123.04
+   "at": 100.33
   },
   {
    "do": "hover",
@@ -463,7 +463,7 @@
     "selector": "#prod-daily-goal"
    },
    "seconds": 1.4,
-   "at": 128.03,
+   "at": 103.94,
    "label": "Meta de produção por dia 250",
    "optional": true,
    "timeout": 4
@@ -471,12 +471,12 @@
   {
    "do": "mark",
    "name": "L12",
-   "at": 130.98
+   "at": 106.41
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Padr\\u00f5es de ficha e ordem\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 130.98,
+   "at": 106.41,
    "label": "desce até Padrões de ficha e ordem"
   },
   {
@@ -488,7 +488,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 131.94,
+   "at": 107.27,
    "label": "[ZOOM] Padrões de ficha e ordem"
   },
   {
@@ -497,7 +497,7 @@
     "selector": "#prod-default-unit"
    },
    "seconds": 0.8,
-   "at": 132.62,
+   "at": 107.95,
    "label": "Unidade padrão de novas fichas",
    "optional": true,
    "timeout": 4
@@ -508,7 +508,7 @@
     "selector": "#prod-order-prefix"
    },
    "seconds": 1.0,
-   "at": 135.97,
+   "at": 110.43,
    "label": "Prefixo da numeração da OP",
    "optional": true,
    "timeout": 4
@@ -521,7 +521,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 139.9
+   "at": 113.2
   }
  ]
 }
