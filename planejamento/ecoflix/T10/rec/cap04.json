@@ -1,6 +1,6 @@
 {
  "name": "t10-cap04",
- "title": "T10 · Cap. 4 · O Kardex, linha a linha (narração 85,8 s ESTIMADA; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário rafael)",
+ "title": "T10 · Cap. 4 · O Kardex, linha a linha (narração 73,5 s; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário rafael)",
  "seed": "t10-cap04",
  "pace": 0.5,
  "cps": 14,
@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
@@ -154,7 +154,7 @@
     "exact": true,
     "within": "[data-sidebar=sidebar]"
    },
-   "at": 3.5,
+   "at": 2.94,
    "label": "Histórico (Kardex)",
    "noScroll": true
   },
@@ -171,7 +171,7 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 5.17
+   "at": 4.34
   },
   {
    "do": "scroll",
@@ -182,20 +182,20 @@
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 5.17,
+   "at": 4.44,
    "label": "o cursor sai do menu (ele recolhe)"
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 15.76
+   "at": 14.18
   },
   {
    "do": "click",
    "target": {
     "selector": "main [role=list] button:has-text('Ferro pesado')"
    },
-   "at": 16.72,
+   "at": 15.02,
    "label": "Ferro pesado na coluna Materiais"
   },
   {
@@ -212,7 +212,7 @@
     "nth": 0
    },
    "seconds": 1.6,
-   "at": 21.13,
+   "at": 18.77,
    "label": "a Transferência de hoje, em cima",
    "optional": true,
    "timeout": 4
@@ -225,7 +225,7 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 24.7
+   "at": 21.14
   },
   {
    "do": "type",
@@ -236,7 +236,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 26.46,
+   "at": 22.87,
    "label": "[ZOOM] linha Transferência: Estoque Inicial, Movimentação e Estoque Final"
   },
   {
@@ -245,7 +245,7 @@
     "selector": "main tbody tr:has-text('Transferência') > td:nth-child(7)"
    },
    "seconds": 1.4,
-   "at": 27.78,
+   "at": 23.69,
    "label": "Estoque Inicial 2.180 Kg",
    "optional": true,
    "timeout": 4
@@ -256,7 +256,7 @@
     "selector": "main tbody tr:has-text('Transferência') > td:nth-child(8)"
    },
    "seconds": 1.2,
-   "at": 30.89,
+   "at": 26.17,
    "label": "Movimentação +320 Kg",
    "optional": true,
    "timeout": 4
@@ -266,8 +266,8 @@
    "target": {
     "selector": "main tbody tr:has-text('Transferência') > td:nth-child(9)"
    },
-   "seconds": 1.4,
-   "at": 33.17,
+   "seconds": 1.1,
+   "at": 28.09,
    "label": "Estoque Final 2.500 Kg",
    "optional": true,
    "timeout": 4
@@ -275,7 +275,18 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 35.67
+   "at": 29.74
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Transferência') > td:nth-child(9)"
+   },
+   "seconds": 0.2,
+   "at": 29.74,
+   "label": "Estoque Final 2.500 Kg (continua)",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "hover",
@@ -283,7 +294,7 @@
     "selector": "main tbody tr:has-text('+860 Kg') > td:nth-child(8)"
    },
    "seconds": 1.4,
-   "at": 38.68,
+   "at": 32.33,
    "label": "a Compra de ontem: +860 Kg",
    "optional": true,
    "timeout": 4
@@ -299,7 +310,7 @@
     "selector": "main tbody tr:has-text('+860 Kg') > td:nth-child(9)"
    },
    "seconds": 1.4,
-   "at": 43.39,
+   "at": 36.09,
    "label": "[ZOOM] Estoque Final da compra 2.180 Kg",
    "optional": true,
    "timeout": 4
@@ -309,8 +320,8 @@
    "target": {
     "selector": "main tbody tr:has-text('Transferência') > td:nth-child(7)"
    },
-   "seconds": 1.2,
-   "at": 46.88,
+   "seconds": 0.78,
+   "at": 38.65,
    "label": "Estoque Inicial da transferência 2.180 Kg",
    "optional": true,
    "timeout": 4
@@ -318,12 +329,23 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 48.85
+   "at": 39.98
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Transferência') > td:nth-child(7)"
+   },
+   "seconds": 0.22,
+   "at": 39.98,
+   "label": "Estoque Inicial da transferência 2.180 Kg (continua)",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "mark",
    "name": "L7",
-   "at": 57.48
+   "at": 47.38
   },
   {
    "do": "hover",
@@ -331,35 +353,24 @@
     "selector": "main tbody tr:has-text('+860 Kg') > td:nth-child(2)"
    },
    "seconds": 1.0,
-   "at": 59.73,
+   "at": 49.33,
    "label": "[ZOOM] coluna Usuário da Compra de 09/11",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('+860 Kg') > td:nth-child(5)"
-   },
-   "seconds": 0.44,
-   "at": 63.29,
-   "label": "[ZOOM] coluna Pedido da Compra de 09/11 (o número do pedido)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L8",
-   "at": 64.28
+   "at": 52.98
   },
   {
    "do": "hover",
    "target": {
     "selector": "main tbody tr:has-text('+860 Kg') > td:nth-child(5)"
    },
-   "seconds": 0.56,
-   "at": 64.28,
-   "label": "[ZOOM] coluna Pedido da Compra de 09/11 (o número do pedido) (continua)",
+   "seconds": 1.2,
+   "at": 52.98,
+   "label": "[ZOOM] coluna Pedido da Compra de 09/11 (o número do pedido)",
    "optional": true,
    "timeout": 4
   },
@@ -374,15 +385,10 @@
     "selector": "main button:has(> svg.lucide-list-filter)"
    },
    "seconds": 1.0,
-   "at": 67.06,
+   "at": 56.05,
    "label": "Filtros (sem contador): o Histórico abre em Este mês",
    "optional": true,
    "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L9",
-   "at": 71.23
   },
   {
    "do": "hover",
@@ -390,17 +396,22 @@
     "selector": "main thead th:has-text('Data')"
    },
    "seconds": 0.6,
-   "at": 71.23,
+   "at": 59.65,
    "label": "coluna Data: só novembro",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 61.46
   },
   {
    "do": "click",
    "target": {
     "selector": "main button:has(> svg.lucide-list-filter)"
    },
-   "at": 71.74,
+   "at": 61.9,
    "label": "Filtros"
   },
   {
@@ -414,7 +425,7 @@
     "selector": "[role=dialog] button[role=combobox]",
     "hasText": "Este mês"
    },
-   "at": 73.11,
+   "at": 62.9,
    "label": "Período (abre a lista)"
   },
   {
@@ -424,7 +435,7 @@
     "name": "Este ano"
    },
    "seconds": 0.3,
-   "at": 74.77,
+   "at": 64.45,
    "label": "Este ano",
    "optional": true,
    "timeout": 4
@@ -436,7 +447,7 @@
     "name": "Todos os tempos"
    },
    "seconds": 0.5,
-   "at": 75.68,
+   "at": 65.57,
    "label": "Todos os tempos",
    "optional": true,
    "timeout": 4
@@ -447,7 +458,7 @@
     "role": "option",
     "name": "Este ano"
    },
-   "at": 76.82,
+   "at": 66.86,
    "label": "escolhe Este ano"
   },
   {
@@ -457,7 +468,7 @@
     "name": "Aplicar filtros",
     "exact": true
    },
-   "at": 77.88,
+   "at": 67.66,
    "label": "Aplicar filtros",
    "noScroll": true
   },
@@ -473,8 +484,8 @@
    "target": {
     "selector": "main button:has(> svg.lucide-list-filter)"
    },
-   "seconds": 1.2,
-   "at": 81.0,
+   "seconds": 0.6,
+   "at": 69.78,
    "label": "[ZOOM] Filtros com 1",
    "optional": true,
    "timeout": 4
@@ -482,7 +493,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.offsetParent!==null&&e.textContent.trim()===\"Edição Manual\").sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-420);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 82.31,
+   "at": 71.63,
    "label": "desce: entram as linhas de outubro"
   },
   {
@@ -498,7 +509,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 85.79
+   "at": 73.52
   }
  ]
 }

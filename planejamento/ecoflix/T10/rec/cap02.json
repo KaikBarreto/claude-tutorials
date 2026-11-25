@@ -1,6 +1,6 @@
 {
  "name": "t10-cap02",
- "title": "T10 · Cap. 2 · O saldo de cada material (narração 76,5 s ESTIMADA; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário rafael)",
+ "title": "T10 · Cap. 2 · O saldo de cada material (narração 61,6 s; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário rafael)",
  "seed": "t10-cap02",
  "pace": 0.5,
  "cps": 14,
@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
@@ -121,7 +121,7 @@
     "exact": true
    },
    "seconds": 1.4,
-   "at": 2.28,
+   "at": 1.89,
    "label": "os três cartões de cima",
    "optional": true,
    "timeout": 4
@@ -129,7 +129,7 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 5.24
+   "at": 4.34
   },
   {
    "do": "hover",
@@ -139,7 +139,7 @@
     "exact": true
    },
    "seconds": 2.4,
-   "at": 5.74,
+   "at": 4.85,
    "label": "[ZOOM] Peso Total em Estoque",
    "optional": true,
    "timeout": 4
@@ -147,7 +147,7 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 10.53
+   "at": 8.9
   },
   {
    "do": "hover",
@@ -157,7 +157,7 @@
     "exact": true
    },
    "seconds": 1.8,
-   "at": 11.03,
+   "at": 9.49,
    "label": "Total Pago",
    "optional": true,
    "timeout": 4
@@ -170,7 +170,7 @@
     "exact": true
    },
    "seconds": 2.2,
-   "at": 17.11,
+   "at": 14.53,
    "label": "Projeção de Vendas",
    "optional": true,
    "timeout": 4
@@ -178,12 +178,12 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 21.59
+   "at": 17.94
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.offsetParent!==null&&e.textContent.trim()===\"Lista de Materiais\").sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-110);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 21.59,
+   "at": 17.94,
    "label": "desce até a Lista de Materiais"
   },
   {
@@ -192,7 +192,7 @@
     "selector": "main tbody tr:has-text('Cobre mel') td:nth-child(3)"
    },
    "seconds": 0.5,
-   "at": 22.47,
+   "at": 18.69,
    "label": "linha Cobre mel",
    "optional": true,
    "timeout": 4
@@ -203,7 +203,7 @@
     "selector": "main tbody tr:has-text('Cobre mel') td:nth-child(4)"
    },
    "seconds": 1.4,
-   "at": 24.67,
+   "at": 20.37,
    "label": "[ZOOM] Estoque Atual do Cobre mel (42 Kg)",
    "optional": true,
    "timeout": 4
@@ -218,8 +218,8 @@
    "target": {
     "selector": "main tbody tr:has-text('Cobre mel') td:nth-child(6)"
    },
-   "seconds": 2.87,
-   "at": 27.4,
+   "seconds": 1.82,
+   "at": 22.53,
    "label": "[ZOOM] Preço médio pago do Cobre mel (R$ 42,50) e a explicação",
    "optional": true,
    "timeout": 4
@@ -227,15 +227,15 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 30.82
+   "at": 24.9
   },
   {
    "do": "hover",
    "target": {
     "selector": "main tbody tr:has-text('Cobre mel') td:nth-child(6)"
    },
-   "seconds": 3.53,
-   "at": 30.82,
+   "seconds": 4.58,
+   "at": 24.9,
    "label": "[ZOOM] Preço médio pago do Cobre mel (R$ 42,50) e a explicação (continua)",
    "optional": true,
    "timeout": 4
@@ -243,7 +243,7 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 37.37
+   "at": 29.91
   },
   {
    "do": "type",
@@ -254,24 +254,24 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 37.37,
+   "at": 29.91,
    "label": "[ZOOM] selo estimativa"
   },
   {
    "do": "eval",
    "js": "(()=>{const t=document.querySelector('main')?.innerText||'';return /Sem histórico de compra/i.test(t)?'AVISO amarelo presente na lista':'sem aviso amarelo na lista (a dica fica só falada)'})()",
-   "at": 39.28,
+   "at": 31.48,
    "label": "confere se algum material mostra o triângulo \"Sem histórico de compra\""
   },
   {
    "do": "mark",
    "name": "L7",
-   "at": 52.09
+   "at": 41.62
   },
   {
    "do": "mark",
    "name": "L8",
-   "at": 63.9
+   "at": 52.03
   },
   {
    "do": "hover",
@@ -279,7 +279,7 @@
     "selector": "main tbody tr:has-text('Ferro misto') td:nth-child(4)"
    },
    "seconds": 3.0,
-   "at": 69.34,
+   "at": 56.62,
    "label": "[ZOOM] Estoque Atual do Ferro misto (6.420 Kg)",
    "optional": true,
    "timeout": 4
@@ -297,7 +297,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 76.48
+   "at": 61.6
   }
  ]
 }

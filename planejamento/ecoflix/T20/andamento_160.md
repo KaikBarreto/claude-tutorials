@@ -7,3 +7,7 @@
 **Comando** (em `$TUT_HOME`, `TUT_SENHA` e `PORTAL_SENHA` no ambiente, 8+ caracteres; regravar antes `python3 -I rec/t20/t20_sementes.py`): `bash rec/t20/t20_fila.sh --rapido 3 4 10`
 **Disco:** `/` a 98% (ENOSPC derrubou o gravador do T12 cap09 às 21:51).
 **Instância 54320 derrubada:** `FAKE_PORT=54320 bash rec/run.sh down`.
+
+## 25/11 · ilustrações v3 com a voz real 1.60.22
+- Feitas 6 (`cenas_v3/cena.html`): ilu01_portal, ilu03_duplo, ilu10_precos_pdf (papel A4 real da tabela), ilu12_comprovante_pdf (papel real do #1749), ilu13_balao_zap (texto real do wa.me), ilu10_links. Tiradas 7 (a tela mostra). Auditoria 0, piscadas 0. Prévia `$TUT_HOME/previa_ilustracoes/T20_v3.mp4`. Papéis em `$TUT_HOME/t20/edit/out/comprovantes/`.
+- **Para o fechamento**: `ilu09_relatorio_pdf` pendente: o "Baixar pê-dê-éfe" do Relatório do portal abre HTML em aba nova (sem PDF no actions). Fazer como a T04 no cap12 (gancho que captura o HTML escrito na aba e cena `cenas_v3/pdf12.html` da T04 como molde). O PDF da tabela de preços é a tabela geral (sem os blocos "Seus materiais"/"Outros materiais", que são da aba na tela): a fala do cap10 cita os blocos na tela, então está certa.
