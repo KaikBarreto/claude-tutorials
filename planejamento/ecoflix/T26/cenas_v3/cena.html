@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- T26 "CRM/Kanban" · ilustrações no kit v3 (perfis/ecoflix/cenas_v3/LEIA.md), 16:9 (--larg 1422).
+     Uma função por CENA e CAPS[cap] diz qual cena cada capítulo ilustrado usa. As janelas (de/ate) estão em ../cenas/ilustracoes.json.
+     Âncoras por palavra (W) sobre a voz real 1.60.22 ($TUT_HOME/t26/narracao/capNN.json, cópia em ../cenas/tempos). Tudo escuro (mundo dos dados).
+       cap00 · cartao     (escuro)  ilu00_cartao      "Do contato ao cartão"      linhas 1 e 2: a conversa do WhatsApp esfria; no CRM cada contato vira um cartão com dono, valor e próximo passo
+       cap01 · funil      (escuro)  ilu01_funil       "O funil de vendas"         linhas 2 e 3: o funil (muitos, proposta, fecha, resto no Perdido) e ele deitado vira as colunas; o cartão anda pra direita
+       cap06 · avanca     (escuro)  ilu06_avanca      "Quando a automação roda"   linha 10: Ao entrar nesta etapa roda se o cartão avança, muda de funil ou já nasce nela; voltando de uma coluna da frente, não
+       cap08 · reentrada  (escuro)  ilu08_reentrada   "Entrar de novo na etapa"   linha 10: o cartão volta e entra de novo; a automação não cria tudo em dobro, aproveita a tarefa e o checklist
+       cap10 · regra      (escuro)  ilu10_regra       "A regra de quem sai"       linha 4: a regra da etapa de onde o cartão sai vale pra avançar, voltar uma coluna ou mandar pro Perdido
+     Saíram do ilustracoes.json (ver o relatório): ilu02_somas, ilu03_negociacao, ilu05_porta, ilu06_gatilho, ilu07_modelo, ilu13_barra, ilu14_tarefa.
+     Nenhum comprovante/PDF na fala desta aula. Só textos e números da fala e do ensaio; cada palavra do rótulo entra na palavra da voz.
+     Acabamento: node perfis/ecoflix/cenas_v3/auditar.cjs --aula planejamento/ecoflix/T26 --larg 1422
+     Render de uma janela: node ferramentas/edit/cenas/render_cenas.cjs <cap> <capNN.json> saida.mp4 --html planejamento/ecoflix/T26/cenas_v3/cena.html \
+               --larg 1422 --dsf 1.35 --de <s> --ate <s>
+     Ícones lucide usados (o nome tem de estar literal nesta página): 'factory' 'message-circle' 'phone-off' 'snowflake' 'kanban' 'user-round' 'circle-dollar-sign' 'circle-arrow-right'
+     'users' 'file-text' 'circle-check' 'circle-x' 'id-card' 'zap' 'log-in' 'undo-2' 'ban' 'recycle' 'lock' 'log-out' 'arrow-right' 'corner-up-left' 'arrow-left-right' 'list-checks' 'square-check-big' 'funnel' -->
+</head><body>
+<script type="module">
+import { PI, cl, lerp, pr, eo, eio, eo5, W, el, ic, vis, foco, pulso, titulo, posTitulo, selo, htmlChip, GL,
+  camera, plano, clima, cena, estilo, enquadraRet, uneRet, lugar, htmlFluxo, fluxo }
+  from '../../../../perfis/ecoflix/cenas_v3/motor.js';
+import { mundoEscuro } from '../../../../perfis/ecoflix/cenas_v3/fundo.js';
+import { base, pt } from '../../../../perfis/ecoflix/cenas_v3/dados/base.js';
+import { htmlFluxoCartoes, fluxoCartoes, parte } from '../../../../perfis/ecoflix/cenas_v3/dados/fluxoCartoes.js';
+
+// =====================================================================================================================
+// comuns
+const NUNCA = 1e9, EE = .0112;
+const cores = () => base();
+function escuro() {   // um lugar do mundo escuro: posições em px do desenho (y para baixo)
+  const EIXO = lugar([0, 0, 0]), E = mundoEscuro(EIXO, 0, EE);
+  return { EIXO, X: (html, x, y, o = {}) => E(html, x * EE, -y * EE, 0, o), fundo: (cx, cy, o) => E.fundo(cx * EE, -cy * EE, o) };
+}
+const STAND2 = (t, tit, t0) => { clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, -9); };   // título já no alto desde o primeiro quadro
+// texto que entra palavra por palavra, cada uma na palavra da voz: ws([[texto, instante], ...]) devolve o html e os instantes
+const ws = ps => ps.map(([w]) => `<span class="pw">${w}</span>`).join(' ');
+const tp = ps => ps.map(p => p[1]);
+const rev = (e, t, ts) => pt(e, '.pw').forEach((s, i) => { s.style.opacity = eo(pr(t, ts[i] - .05, .28)).toFixed(3); });
+const chipP = (icone, cls, ps) => htmlChip(`${ic(icone, 18)}<span style="white-space:pre">${ws(ps)}</span>`, cls);
+// o chip inteiro entra no primeiro instante; as palavras, uma a uma
+const falaChip = (p, t, ps, b = NUNCA) => { const ts = tp(ps); vis(p.e, t, ts[0] - .12, b, { dy: 12, sc: .9 }); rev(p.e, t, ts); };
+// no lugar (x, y em px do desenho) com um deslocamento que some: o chip que chega andando
+const lugarDe = (p, x, y, dx = 0, dy = 0) => { p.pos[0] = (x + dx) * EE; p.pos[1] = -(y + dy) * EE; };
+estilo('t26', `.pw{display:inline-block;white-space:pre}`);
+
+// =====================================================================================================================
+// CENA "cartao" · cap00, linhas 1 e 2 · clima escuro
+// 1 "Sabe aquela indústria que avisou que tem sucata toda semana? A conversa fica no WhatsApp, ninguém retorna, e o negócio esfria."
+// 2 "No CRM, cada contato vira um cartão, com dono, valor e o próximo passo."
+// Em cima, o caminho da conversa que se perde (indústria, WhatsApp, ninguém retorna, esfria); embaixo, o cartão do CRM com dono, valor e próximo passo.
+function cartao() {
+  const t0 = W(1, 'sabe'), tInd = W(1, 'industria'), tSu = W(1, 'sucata'), tTo = W(1, 'toda'), tSe = W(1, 'semana'), tWa = W(1, 'whatsapp'), tNi = W(1, 'ninguem'), tRe = W(1, 'retorna'),
+    tNe = W(1, 'negocio'), tEs = W(1, 'esfria'), tCrm = W(2, 'crm'), tCa = W(2, 'cartao'), tDo = W(2, 'dono'), tVa = W(2, 'valor'), tPr = W(2, 'proximo'), tPa = W(2, 'passo'), tFim = W(2, 'passo', 1, 'e');
+  cores();
+  const { EIXO, X, fundo } = escuro();
+  const sSu = [['sucata', tSu], ['toda', tTo], ['semana', tSe]], tNg = [['Ninguém', tNi], ['retorna', tRe]], tNeg = [['O', tNe], ['negócio', tNe], ['esfria', tEs]];
+  const Y1 = -100, Y2 = 85, Y3 = 175;
+  const row = X(htmlFluxoCartoes({ cartoes: [['factory', 'Indústria', ws(sSu)], ['message-circle', 'WhatsApp', ''], ['phone-off', ws(tNg), ''], ['snowflake', ws(tNeg), '', 'a']], cw: 210, vao: 58 }), 0, Y1);
+  const crm = X(htmlFluxoCartoes({ cartoes: [['kanban', ws([['Cartão', tCa]]), ws([['no', tCrm], ['CRM', tCrm]])]], cw: 250 }), 0, Y2);
+  const pD = [['dono', tDo]], pV = [['valor', tVa]], pP = [['próximo', tPr], ['passo', tPa]];
+  const cD = X(chipP('user-round', 'n', pD), 0, Y3), cV = X(chipP('circle-dollar-sign', 'n', pV), 0, Y3), cP = X(chipP('circle-arrow-right', 'n', pP), 0, Y3);
+  const GAP = 34, tot = cD.w + cV.w + cP.w + GAP * 2; let xx = -tot / 2;
+  for (const c of [cD, cV, cP]) { lugarDe(c, xx + c.w / 2, Y3); xx += c.w + GAP; }
+  fundo(0, 10, { aneis: false });
+  const tit = titulo('CRM', 'Do contato ao cartão', 'escuro');
+  const R = uneRet(row.ret(), crm.ret(), cD.ret(), cP.ret());
+  const S1 = enquadraRet(EIXO, R, { az: -.03, max: 1.4 / EE });
+  camera([[t0 - 3, S1], [tFim + 2.5, { ...S1, az: .035, d: S1.d * .985 }, 'lin']]);
+  return t => {
+    STAND2(t, tit, t0);
+    fluxoCartoes(row.e, t, tInd - .35, NUNCA, { tempos: [tInd, tWa, tNi, tNe] });
+    pt(row.e, '.cartao').forEach((c, i) => { rev(c, t, i === 2 ? tp(tNg) : i === 3 ? tp(tNeg) : i === 0 ? tp(sSu) : []); });
+    pulso(parte(row.e, 3), t, tEs + .3, .045, .8);
+    fluxoCartoes(crm.e, t, tCrm - .35, NUNCA, { tempos: [tCrm] }); rev(parte(crm.e, 0), t, [tCa, tCrm, tCrm]); pulso(parte(crm.e, 0), t, tCa + .25, .04, .8);
+    falaChip(cD, t, pD); falaChip(cV, t, pV); falaChip(cP, t, pP); pulso(cP.e, t, tPa + .2, .05, .7);
+    foco(row.e, t, -9, tCrm - .1, { min: .55 });   // a conversa que esfria recua quando o assunto passa para o cartão
+  };
+}
+
+// =====================================================================================================================
+// CENA "funil" · cap01, linhas 2 e 3 · clima escuro
+// 2 "Funil é isso: entram muitos contatos em cima, alguns viram proposta, e uma parte fecha. O resto fica pelo caminho, no Perdido."
+// 3 "No sistema, o funil fica deitado. Cada etapa é uma coluna, e o cartão anda pra direita conforme o negócio avança."
+// Estação 1: o funil de pé, os pontos (contatos) descem; os que não fecham saem de lado para o Perdido. Estação 2: ele deita e vira as colunas, e o cartão anda pra direita.
+function funil() {
+  const t0 = W(2, 'funil'), tMu = W(2, 'muitos'), tPro = W(2, 'proposta'), tFe = W(2, 'fecha'), tResto = W(2, 'resto'), tPer = W(2, 'perdido'),
+    tDe = W(3, 'deitado'), tEt = W(3, 'etapa'), tCol = W(3, 'coluna'), tCart = W(3, 'cartao'), tAnda = W(3, 'anda'), tDir = W(3, 'direita'), tNeg = W(3, 'negocio'), tAv = W(3, 'avanca'), tFim = W(3, 'avanca', 1, 'e');
+  cores();
+  const { EIXO, X, fundo } = escuro();
+  const FW = 320, FH = 270, BW = 100, YF = 0, XF = 0;
+  const wy = y => FW - (FW - BW) * y / FH;
+  const poly = (y0, y1) => `${(FW - wy(y0)) / 2},${y0} ${(FW + wy(y0)) / 2},${y0} ${(FW + wy(y1)) / 2},${y1} ${(FW - wy(y1)) / 2},${y1}`;
+  // os 12 pontos (contatos): o lugar de partida no topo, o de chegada na faixa 2 (7 passam) e na 3 (3 fecham)
+  const topo = [], c0 = [-75, -25, 25, 75];
+  for (let r = 0; r < 3; r++) for (let c = 0; c < 4; c++) topo.push([FW / 2 + c0[c] * (r === 1 ? .8 : 1), 24 + r * 24]);
+  const passa2 = [1, 2, 4, 5, 6, 9, 10], fecha3 = [2, 5, 9];
+  const alvo2 = { 1: [128, 122], 2: [160, 122], 4: [192, 122], 5: [112, 150], 6: [144, 150], 9: [176, 150], 10: [208, 150] };
+  const alvo3 = { 2: [146, 214], 5: [174, 214], 9: [160, 240] };
+  const dots = topo.map(([x, y], i) => `<i class="pt" style="left:${x - 7}px;top:${y - 7}px"></i>`).join('');
+  estilo('t26f', `.fun{position:relative;width:${FW}px;height:${FH}px}.fun svg{position:absolute;left:0;top:0;overflow:visible}.fun .pt{position:absolute;width:14px;height:14px;border-radius:50%;background:#6CF0A8;box-shadow:0 0 12px rgba(108,240,168,.7);opacity:0}`);
+  const fun = X(`<div class="fun"><svg width="${FW}" height="${FH}" viewBox="0 0 ${FW} ${FH}" stroke-linejoin="round">
+    <polygon points="${poly(0, 90)}" fill="rgba(80,208,136,.10)"/><polygon points="${poly(90, 180)}" fill="rgba(80,208,136,.18)"/><polygon points="${poly(180, 270)}" fill="rgba(80,208,136,.30)"/>
+    <polygon points="${poly(0, 270)}" fill="none" stroke="rgba(255,255,255,.30)" stroke-width="2.4"/></svg>${dots}</div>`, XF, YF - 20);
+  const pM = [['muitos', tMu], ['contatos', W(2, 'contatos')]], pPr = [['proposta', tPro]], pFe = [['fecha', tFe]], pPe = [['Perdido', tPer]];
+  const cM = X(chipP('users', 'n', pM), 190, -110, { anc: [0, .5] }), cPr = X(chipP('file-text', 'n', pPr), 155, -20, { anc: [0, .5] }), cFe = X(chipP('circle-check', '', pFe), 118, 70, { anc: [0, .5] });
+  const cPe = X(chipP('circle-x', 'a', pPe), -150, -20, { anc: [1, .5] });
+  // estação 2: as cinco colunas
+  const nomes = ['Novo', 'Em contato', 'Proposta', 'Ganho'];
+  const YR = -20, VAO = 58;
+  const row = X(htmlFluxoCartoes({ cartoes: [['funnel', 'Novo', ''], ['funnel', 'Em contato', ''], ['funnel', 'Proposta', ''], ['funnel', 'Ganho', '', 'res']], cw: 190, vao: VAO }), 0, YR);
+  const per = X(htmlFluxoCartoes({ cartoes: [['funnel', 'Perdido', '', 'a']], cw: 190 }), 0, YR);
+  const GP = 72, totW = row.w + GP + per.w, x0 = -totW / 2;
+  lugarDe(row, x0 + row.w / 2, YR); lugarDe(per, x0 + row.w + GP + per.w / 2, YR);
+  const cardX = i => { const c = parte(row.e, i); return x0 + c.offsetLeft + c.offsetWidth / 2; };
+  const YC = YR + row.h / 2 + 46;
+  const pCt = [['cartão', tCart]];
+  const cCt = X(chipP('id-card', '', pCt), cardX(0), YC);
+  fundo(0, 10, { aneis: false });
+  const tit = titulo('CRM', 'O funil de vendas', 'escuro');
+  const S1 = enquadraRet(EIXO, uneRet(fun.ret(), cM.ret(), cPe.ret(), cFe.ret()), { az: -.03, max: 1.6 / EE });
+  const S2 = enquadraRet(EIXO, uneRet(row.ret(), per.ret(), cCt.ret()), { az: .03, max: 1.4 / EE });
+  const tVira = tDe - .25;
+  camera([[t0 - 3, S1], [tVira, { ...S1, az: .03, d: S1.d * .985 }, 'lin'], [tDe + 1.5, S2]]);
+  const pts = pt(fun.e, '.pt');
+  return t => {
+    STAND2(t, tit, t0);
+    // o funil de pé: aparece em "funil", deita em "deitado" (gira 90 graus à esquerda: a boca larga fica à esquerda) e sai
+    const g = eio(pr(t, tDe - .1, 1.1));
+    vis(fun.e, t, t0 - .1, tDe + .75, { dy: 14, sc: .94 });
+    fun.e.style.transform += ` rotate(${(-90 * g).toFixed(2)}deg)`;
+    // os pontos: entram em "muitos", descem em "proposta" e "fecha"; o resto vira âmbar e sai de lado, para o Perdido
+    pts.forEach((d, i) => {
+      const [x, y] = topo[i], q2 = passa2.includes(i), q3 = fecha3.includes(i);
+      let px = x, py = y, op = eo(pr(t, tMu - .05 + (i % 4) * .07 + Math.floor(i / 4) * .1, .3));
+      if (q2) { const p = eio(pr(t, tPro - .05, .8)); px = lerp(x, alvo2[i][0], p); py = lerp(y, alvo2[i][1], p); }
+      if (q3) { const p = eio(pr(t, tFe - .05, .8)); px = lerp(alvo2[i][0], alvo3[i][0], p); py = lerp(alvo2[i][1], alvo3[i][1], p); }
+      const perdido = !q3, sai = perdido ? eio(pr(t, tPer + .1, .9)) : 0;
+      if (perdido) { px = lerp(px, -60 - (i % 3) * 22, sai); py = lerp(py, 135, sai); op *= 1 - eo(pr(t, tPer + .7, .45)); }
+      d.style.opacity = (op * (1 - g)).toFixed(3);
+      d.style.transform = `translate(${(px - x).toFixed(1)}px,${(py - y).toFixed(1)}px)`;
+      const am = perdido ? eo(pr(t, tResto, .35)) : 0;
+      d.style.background = am > .02 ? `rgb(${Math.round(lerp(108, 247, am))},${Math.round(lerp(240, 197, am))},${Math.round(lerp(168, 90, am))})` : '';
+    });
+    falaChip(cM, t, pM, tDe - .15); falaChip(cPr, t, pPr, tDe - .15); falaChip(cFe, t, pFe, tDe - .15); falaChip(cPe, t, pPe, tDe - .15);
+    pulso(cFe.e, t, tFe + .3, .06, .8); pulso(cPe.e, t, tPer + .25, .06, .8);
+    // as colunas: a cascata entra em "coluna"; o cartão anda de uma para a próxima
+    fluxoCartoes(row.e, t, tEt - .1, NUNCA, { tempos: [tEt + .35, tEt + .7, tEt + 1.05, tEt + 1.4] });
+    fluxoCartoes(per.e, t, tEt + 1.7, NUNCA, { tempos: [tEt + 1.8] });
+    const k = (a, b) => eio(pr(t, a, b));
+    const xa = lerp(lerp(lerp(cardX(0), cardX(1), k(tAnda, .55)), cardX(2), k(tDir + .3, .55)), cardX(3), k(tNeg + .25, .6));
+    lugarDe(cCt, xa, YC); falaChip(cCt, t, pCt); pulso(cCt.e, t, tAv + .45, .06, .8);
+  };
+}
+
+// =====================================================================================================================
+// CENA "avanca" · cap06, linha 10 · clima escuro
+// 10 "Uma dica: Ao entrar nesta etapa só roda quando o cartão avança pra ela, muda de funil ou já nasce nela. Voltando de uma coluna da frente, ela não roda."
+// A etapa Em contato (onde mora a automação Agendar a visita) e o gatilho; três cartões chegam e a automação roda; o que volta de uma coluna da frente, não.
+function avanca() {
+  const t0 = W(10, 'uma'), tAo = W(10, 'ao'), tEn = W(10, 'entrar'), tNe = W(10, 'nesta'), tEt = W(10, 'etapa'), tRo1 = W(10, 'roda', 1), tAv = W(10, 'avanca'), tPra = W(10, 'pra'), tEla = W(10, 'ela'),
+    tMu = W(10, 'muda'), tDe = W(10, 'de'), tFu = W(10, 'funil'), tJa = W(10, 'ja'), tNa = W(10, 'nasce'), tNel = W(10, 'nela'),
+    tVo = W(10, 'voltando'), tDe2 = W(10, 'de', 2), tUm = W(10, 'uma'), tCo = W(10, 'coluna'), tDa = W(10, 'da'), tFr = W(10, 'frente'), tEla2 = W(10, 'ela', 2), tNao = W(10, 'nao'), tRo2 = W(10, 'roda', 2), tFim = W(10, 'roda', 2, 'e');
+  cores();
+  const { EIXO, X, fundo } = escuro();
+  const YR = -118;
+  const eta = (nome, x) => X(htmlFluxoCartoes({ cartoes: [['kanban', nome, '']], cw: 230 }), x, YR);
+  const cNo = eta('Novo', -300), cEm = eta('Em contato', 0), cVi = eta('Visita técnica', 300);
+  const row = cEm, cx = i => [-300, 0, 300][i];
+  const pG = [['Ao', tAo], ['entrar', tEn], ['nesta', tNe], ['etapa', tEt]];
+  const gat = X(chipP('zap', 'a', pG), 0, YR - cEm.h / 2 - 28, { anc: [.5, 1] });
+  // as quatro linhas: o cartão (anda até o seu lugar) e o resultado
+  const casos = [
+    { ps: [['avança', tAv], ['pra', tPra], ['ela', tEla]], ic: 'id-card', de: [-250, 0], r: [['roda', tEla + .1]] },
+    { ps: [['muda', tMu], ['de', tDe], ['funil', tFu]], ic: 'id-card', de: [-380, 0], r: [['roda', tFu + .35]] },
+    { ps: [['já', tJa], ['nasce', tNa], ['nela', tNel]], ic: 'id-card', de: [0, 0], r: [['roda', tNel + .3]] },
+    { ps: [['voltando', tVo], ['de uma', tDe2], ['coluna', tCo], ['da', tDa], ['frente', tFr]], ic: 'corner-up-left', de: [262, 0], r: [["não", tNao], ['roda', tRo2]], ruim: true }];
+  const Y0 = YR + row.h / 2 + 52, P = 50, XR = 40, XL = 56;
+  for (const [i, c] of casos.entries()) {
+    c.y = Y0 + i * P; c.c = X(chipP(c.ic, c.ruim ? 'a' : 'n', c.ps), 0, c.y, { anc: [1, .5] }); c.rr = X(chipP(c.ruim ? 'ban' : 'circle-check', c.ruim ? 'a' : '', c.r), 0, c.y, { anc: [0, .5] });
+    lugarDe(c.c, XR, c.y); lugarDe(c.rr, XL + 4, c.y);
+  }
+  fundo(0, 10, { aneis: false });
+  const tit = titulo('Automações', 'Quando a automação roda', 'escuro');
+  const R = uneRet(cNo.ret(), cVi.ret(), gat.ret(), casos[0].c.ret(), casos[3].c.ret(), casos[3].rr.ret(), casos[1].rr.ret());
+  const S1 = enquadraRet(EIXO, R, { az: -.03, max: 1.4 / EE });
+  camera([[t0 - 3, S1], [tFim + 2.5, { ...S1, az: .035, d: S1.d * .985 }, 'lin']]);
+  return t => {
+    STAND2(t, tit, t0);
+    fluxoCartoes(cEm.e, t, tEt - .35, NUNCA, { tempos: [tEt] }); fluxoCartoes(cNo.e, t, tAv - .45, NUNCA, { tempos: [tAv - .3] }); fluxoCartoes(cVi.e, t, tCo - .4, NUNCA, { tempos: [tCo - .3] });
+    falaChip(gat, t, pG); pulso(parte(cEm.e, 0), t, tEt + .3, .045, .8);
+    casos.forEach((c, i) => {
+      const [dx, dy] = c.de, a = i === 3 ? tEla2 - .1 : c.ps[0][1], p = 1 - eo5(pr(t, a - .05, .75));
+      lugarDe(c.c, XR, c.y, dx * p, dy * p); falaChip(c.c, t, c.ps);
+      falaChip(c.rr, t, c.r); if (!c.ruim) pulso(parte(cEm.e, 0), t, c.r[0][1] + .05, .05, .7); else pulso(c.rr.e, t, tRo2 + .2, .05, .8);
+    });
+    pulso(casos[2].c.e, t, tNel + .15, .05, .7);
+    // o assunto passa de "roda" para "não roda": as três primeiras recuam
+    for (const c of casos.slice(0, 3)) { foco(c.c.e, t, -9, tVo - .1, { min: .6 }); foco(c.rr.e, t, -9, tVo - .1, { min: .6 }); }
+  };
+}
+
+// =====================================================================================================================
+// CENA "reentrada" · cap08, linha 10 · clima escuro
+// 10 "Uma dica: se o cartão voltar e entrar de novo na etapa, a automação não cria tudo em dobro. Ela aproveita a tarefa e o checklist que já tinha criado."
+// O cartão volta e entra de novo na Visita técnica (Preparar a proposta); a automação não cria em dobro: reaproveita o checklist Documentos da Metalúrgica Jequitibá e a tarefa que ele já tinha.
+function reentrada() {
+  const t0 = W(10, 'uma'), tVol = W(10, 'voltar'), tEnt = W(10, 'entrar'), tNov = W(10, 'novo'), tEta = W(10, 'etapa'), tAut = W(10, 'automacao'), tNao = W(10, 'nao'), tCria = W(10, 'cria'), tTudo = W(10, 'tudo'),
+    tEm = W(10, 'em'), tDob = W(10, 'dobro'), tEla = W(10, 'ela'), tApr = W(10, 'aproveita'), tTar = W(10, 'tarefa'), tChe = W(10, 'checklist'), tJa = W(10, 'ja'), tTin = W(10, 'tinha'), tCri = W(10, 'criado'), tFim = W(10, 'criado', 1, 'e');
+  cores();
+  const { EIXO, X, fundo } = escuro();
+  const YR = -105, DOC = 'Documentos da Metalúrgica Jequitibá';
+  const pV = [['O', tVol], ['cartão', W(10, 'cartao')], ['volta', tVol]], pE = [['Entra', tEnt], ['de novo', tNov]];
+  const row = X(htmlFluxoCartoes({ cartoes: [['undo-2', ws(pV), ''], ['log-in', ws(pE), ''], ['kanban', ws([['Visita técnica', tEta]]), ws([['Preparar a proposta', tAut]])]], cw: 215, vao: 60 }), 0, YR);
+  const cx3 = (() => { const c = parte(row.e, 2); return c.offsetLeft + c.offsetWidth / 2 - row.w / 2; })();
+  const pT = [['Tarefa', tTar]], pC = [['Checklist', tChe]];
+  const YT = YR + row.h / 2 + 62;
+  const tar = X(htmlFluxoCartoes({ cartoes: [['square-check-big', ws(pT), DOC, 'res']], cw: 330 }), cx3, YT);
+  const che = X(htmlFluxoCartoes({ cartoes: [['list-checks', ws(pC), DOC, 'res']], cw: 330 }), cx3, YT + tar.h + 22);
+  const pNao = [['não', tNao], ['cria', tCria], ['tudo', tTudo], ['em', tEm], ['dobro', tDob]], pAp = [['aproveita', tApr]];
+  const YN = YT + (tar.h + 22) / 2;
+  const nao = X(chipP('ban', 'a', pNao), -160, YN, { anc: [.5, .5] }), apr = X(chipP('recycle', '', pAp), -160, YN, { anc: [.5, .5] });
+  fundo(0, 10, { aneis: false });
+  const tit = titulo('Automações', 'Entrar de novo na etapa', 'escuro');
+  const R = uneRet(row.ret(), tar.ret(), che.ret(), nao.ret());
+  const S1 = enquadraRet(EIXO, R, { az: -.03, max: 1.4 / EE });
+  camera([[t0 - 3, S1], [tFim + 2.5, { ...S1, az: .035, d: S1.d * .985 }, 'lin']]);
+  return t => {
+    STAND2(t, tit, t0);
+    fluxoCartoes(row.e, t, tVol - .35, NUNCA, { tempos: [tVol, tEnt, tEta] });
+    pt(row.e, '.cartao').forEach((c, i) => rev(c, t, i === 0 ? tp(pV) : i === 1 ? tp(pE) : [tEta, tAut]));
+    pulso(parte(row.e, 2), t, tEta + .3, .045, .8);
+    falaChip(nao, t, pNao, tEla - .1); falaChip(apr, t, pAp);
+    fluxoCartoes(tar.e, t, tTar - .35, NUNCA, { tempos: [tTar] }); rev(parte(tar.e, 0), t, [tTar]); pulso(parte(tar.e, 0), t, tTar + .3, .045, .8);
+    fluxoCartoes(che.e, t, tChe - .35, NUNCA, { tempos: [tChe] }); rev(parte(che.e, 0), t, [tChe]); pulso(parte(che.e, 0), t, tChe + .3, .045, .8);
+  };
+}
+
+// =====================================================================================================================
+// CENA "regra" · cap10, linha 4 · clima escuro
+// 4 "Uma dica: quem manda é a regra da etapa de onde o cartão sai. E ela vale pra qualquer troca: avançar, voltar uma coluna ou mandar pro Perdido."
+// A regra da etapa de onde o cartão sai, e as três saídas (avançar, voltar uma coluna, mandar pro Perdido) que passam todas por ela.
+function regra() {
+  const t0 = W(4, 'uma'), tQu = W(4, 'quem'), tMa = W(4, 'manda'), tRe = W(4, 'regra'), tDa = W(4, 'da'), tEt = W(4, 'etapa'), tDe = W(4, 'de'), tOn = W(4, 'onde'), tCa = W(4, 'cartao'), tSai = W(4, 'sai'),
+    tVale = W(4, 'vale'), tQual = W(4, 'qualquer'), tTr = W(4, 'troca'), tAv = W(4, 'avancar'), tVo = W(4, 'voltar'), tUma = W(4, 'uma', 2), tCol = W(4, 'coluna'), tMan = W(4, 'mandar'), tPro = W(4, 'pro'), tPer = W(4, 'perdido'), tFim = W(4, 'perdido', 1, 'e');
+  cores();
+  const { EIXO, X, fundo } = escuro();
+  const YC = 0;
+  const pT = [['Regra', tRe], ['da', tDa], ['etapa', tEt]], sT = [['de', tDe], ['onde', tOn], ['o', W(4, 'o')], ['cartão', tCa], ['sai', tSai]];
+  const reg = X(htmlFluxoCartoes({ cartoes: [['lock', ws(pT), ws(sT), 'a']], cw: 280 }), -250, YC);
+  const pA = [['avançar', tAv]], pB = [['voltar', tVo], ['uma', tUma], ['coluna', tCol]], pP = [['mandar', tMan], ['pro', tPro], ['Perdido', tPer]], pQ = [['qualquer', tQual], ['troca', tTr]];
+  const XE = 170, DY = 62;
+  const ex = [['arrow-right', '', pA, tAv], ['corner-up-left', 'n', pB, tVo], ['circle-x', 'a', pP, tMan]].map(([i, cl_, ps, a], k) => ({ p: X(chipP(i, cl_, ps), XE, YC + (k - 1) * DY, { anc: [0, .5] }), ps, a, y: YC + (k - 1) * DY }));
+  const qual = X(chipP('arrow-left-right', 'n', pQ), XE, YC - 2 * DY, { anc: [0, .5] });
+  // os fios saem da borda direita da regra e chegam a 10 px de cada saída
+  const xs = -250 + reg.w / 2 + 10, xe = XE - 10, y0 = YC - 1.5 * DY, H = 3 * DY;
+  const fio = X(htmlFluxo(xe - xs, H, ex.map(e => `M0 ${YC - y0}C${(xe - xs) * .5} ${YC - y0} ${(xe - xs) * .5} ${e.y - y0} ${xe - xs} ${e.y - y0}`)), xs, y0, { anc: [0, 0] });
+  fundo(0, 10, { aneis: false });
+  const tit = titulo('Kanban', 'A regra de quem sai', 'escuro');
+  const R = uneRet(reg.ret(), ex[0].p.ret(), ex[2].p.ret(), qual.ret(), fio.ret());
+  const S1 = enquadraRet(EIXO, R, { az: -.03, max: 1.45 / EE });
+  camera([[t0 - 3, S1], [tFim + 2.5, { ...S1, az: .035, d: S1.d * .985 }, 'lin']]);
+  return t => {
+    STAND2(t, tit, t0);
+    fluxoCartoes(reg.e, t, tRe - .35, NUNCA, { tempos: [tRe] });
+    rev(parte(reg.e, 0), t, [...tp(pT), ...tp(sT)]); pulso(parte(reg.e, 0), t, tSai + .25, .04, .8);
+    falaChip(qual, t, pQ);
+    ex.forEach(e => { falaChip(e.p, t, e.ps); const k = ex.indexOf(e); fio.e.children[k].style.opacity = eo(pr(t, e.a - .3, .25)).toFixed(3); fluxo(fio.e, k, t, e.a - .3, .6, { luz: [e.a - .1, .8], fica: .6 }); });
+    pulso(ex[2].p.e, t, tPer + .2, .06, .8);
+  };
+}
+
+const CAPS = { 0: cartao, 1: funil, 6: avanca, 8: reentrada, 10: regra };
+cena(d => CAPS[d.cap](d), { fov: 26 });
+</script></body></html>
