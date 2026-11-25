@@ -87,7 +87,7 @@ Roteiro para a voz e a gravação no app 1.60.22, tela 1600x900, menu lateral ab
 | --- | --- |
 | Lista com o 2611000318, Ver tentativas, Baixar PDF (aba nova; o robô devolve o PDF) e o ícone Usar como modelo (sem clicar). [ILUSTRAÇÃO onde a tela não mostra: ver `cenas/ilustracoes.json`] | Com o MTR emitido, ele aparece na lista com o destinador, o resíduo, a data e o status: emitido. |
 | (segue a tela da linha anterior; ver `gerar.py`) | Em Ver tentativas fica cada envio ao órgão, com a resposta dele. Aqui, um só, autorizado. |
-| (segue a tela da linha anterior; ver `gerar.py`) | Baixar PDF. O PDF do MTR abre pronto, e vai com o motorista, junto com a carga. |
+| (segue a tela da linha anterior; ver `gerar.py`) | Baixar PDF. Ele baixa o manifesto que o órgão devolveu, pra ir com o motorista, junto com a carga. |
 | (segue a tela da linha anterior; ver `gerar.py`) | A lista guarda o histórico de todos os manifestos, cada um com o PDF dele. E pra próxima carga parecida, repara no ícone de Usar como modelo. |
 
 ### cap06 · O próximo manifesto mais rápido (vinheta: MTR)
@@ -141,7 +141,7 @@ Roteiro para a voz e a gravação no app 1.60.22, tela 1600x900, menu lateral ab
 
 | Tela | Fala |
 | --- | --- |
-| Ações > Baixar PDF na linha do CDF 2611000041 (aba nova; o robô devolve o PDF para a ilustração); resto é ilustração. [ILUSTRAÇÃO onde a tela não mostra: ver `cenas/ilustracoes.json`] | Com o certificado emitido, o PDF sai pelo menu de ações: Baixar PDF. O certificado abre pronto, pra salvar. |
+| Ações > Baixar PDF na linha do CDF 2611000041 (aba nova; o PDF é do órgão e não aparece no vídeo) | Com o certificado emitido, o PDF sai pelo menu de ações: Baixar PDF, pra salvar fora do sistema. |
 | (segue a tela da linha anterior; ver `gerar.py`) | Uma dica: o CDF é documento de fiscalização. Guarde o PDF fora do sistema, na pasta da licença, e deixe os MTR do mesmo período por perto. |
 | (segue a tela da linha anterior; ver `gerar.py`) | Na fiscalização, os dois costumam ser pedidos juntos. |
 

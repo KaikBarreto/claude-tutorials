@@ -30,7 +30,7 @@ E tem a aba Da empresa, com as notas que valem pra todo mundo que usa o Cáto. C
 4: """Com a memória resolvida, o painel do Cáto abre aqui do lado, com quatro perguntas prontas pra quebrar o gelo.
 Aqui embaixo você escreve do jeito que fala. O clipe anexa foto ou arquivo, e o microfone escreve o que você disser, pra você conferir antes de enviar.
 Debaixo do campo ficam as suas conversas antigas, o botão pra começar uma nova e a memória.
-E nos três pontinhos ficam o som, a leitura das respostas em voz alta, os pedidos, as rotinas e o atendente. A gente volta neles já já.
+E nos três pontinhos ficam o som, a leitura das respostas em voz alta, os pedidos e o atendente. A gente volta neles já já.
 Vou clicar na primeira pergunta: como tá indo meu negócio esse mês.
 Em poucos segundos ele responde: até hoje, dia dez, a empresa vendeu uns cento e dezoito mil e seiscentos reais, e o resultado do mês está em uns sessenta e dois mil e quinhentos.
 Embaixo, ele já sugere as próximas perguntas. É só clicar, se quiser seguir por ali.""",
@@ -97,8 +97,6 @@ Emitir /ˈẽniˈɛfiˈe/. Ele envia e fica acompanhando a resposta.
 Autorizada. Aparece o número da nota e o botão Abrir dânfi.
 Uma dica: pelo Cáto sai a nota de um pedido que já existe. Nota avulsa, cancelamento e carta de correção continuam na tela de Notas Fiscais. E a tributação quem define é o seu contador.""",
 14: """Lembra dos três pontinhos? Em Acompanhar pedidos ficam os pedidos que você lançou pelo Cáto, com o que falta em cada um: receber, pagar ou emitir a nota.
-Em Suas rotinas, o botão Ver sinais agora mostra o que merece atenção: material parado no pátio, conta vencida e conta pra vencer.
-E dá pra programar: todo dia, às oito, ele deixa um resumo das contas. O aviso chega aqui dentro do sistema, só pra você.
 Se uma resposta antiga do Cáto for corrigida depois, a correção aparece em Respostas revisadas.""",
 15: """Na dúvida do que dá pra pedir, pergunte pra ele: o que você consegue fazer? A lista que ele mostra é a do seu usuário, com as ações que ele prepara, as consultas e os limites. No meio dela, ele avisa que pagamento registra a operação no sistema, não transfere dinheiro pelo banco.
 Agora, um corte: é o Marcos. Ele pede pra atualizar o preço do cobre mel, e o Cáto responde que o usuário dele não tem permissão pra alterar preços. Nenhum preço foi alterado.
@@ -133,7 +131,7 @@ TITULOS = {1: "Onde o Cáto fica.",
            11: "Cadastros.",
            12: "Fotos, planilhas e PDFs.",
            13: "Nota fiscal pelo Cáto.",
-           14: "Pedidos, rotinas e revisões.",
+           14: "Pedidos e revisões.",
            15: "Limites e permissões.",
            16: "Avaliar e falar com o suporte.",
            17: "Recapitulando."}
@@ -151,7 +149,7 @@ KICKERS = {1: "Cato",
            11: "Ações",
            12: "Arquivos",
            13: "Fiscal",
-           14: "Rotina",
+           14: "Pedidos",
            15: "Limites",
            16: "Ajuda",
            17: "Resumo"}

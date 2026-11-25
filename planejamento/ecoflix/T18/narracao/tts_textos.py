@@ -50,7 +50,7 @@ Tudo pronto. Emitir ême-tê-érre. Pronto: o ême-tê-érre foi emitido no Sig�
 Uma dica: o ême-tê-érre e o cê-dê-éfe contam na mesma cota mensal das notas fiscais. Passando o mouse aqui no selo, aparece o seu nível, quantos documentos o mês permite e quantos você já emitiu. Perto do fim do mês, confira antes de emitir.""",
 5: """Com o ême-tê-érre emitido, ele aparece na lista com o destinador, o resíduo, a data e o status: emitido.
 Em Ver tentativas fica cada envio ao órgão, com a resposta dele. Aqui, um só, autorizado.
-Baixar pê-dê-éfe. O pê-dê-éfe do ême-tê-érre abre pronto, e vai com o motorista, junto com a carga.
+Baixar pê-dê-éfe. Ele baixa o manifesto que o órgão devolveu, pra ir com o motorista, junto com a carga.
 A lista guarda o histórico de todos os manifestos, cada um com o pê-dê-éfe dele. E pra próxima carga parecida, repara no ícone de Usar como modelo.""",
 6: """À tarde sai outra carga pra Aços Quiririm, agora de ferro misto. Em vez de começar do zero, eu clico em Usar como modelo. Transportador, destinador, motorista e placa já vêm preenchidos, e a data é a de hoje.
 Avançar. Nos resíduos, vem a mesma sucata de ferro. Eu só troco a quantidade: três vírgula dois toneladas.
@@ -79,7 +79,7 @@ Repara no aviso: o cê-dê-éfe só junta ême-tê-érre que já foi recebido. S
 E a emissão do cê-dê-éfe é definitiva. O resumo aqui embaixo ajuda a conferir tudo antes.
 Emitir cê-dê-éfe. Pronto, o certificado foi emitido, com o número dele.
 Na lista, cada cê-dê-éfe mostra o período, o CNPJ do gerador e o status. O menu de ações tem o que dá pra fazer com cada certificado.""",
-10: """Com o certificado emitido, o pê-dê-éfe sai pelo menu de ações: Baixar pê-dê-éfe. O certificado abre pronto, pra salvar.
+10: """Com o certificado emitido, o pê-dê-éfe sai pelo menu de ações: Baixar pê-dê-éfe, pra salvar fora do sistema.
 Uma dica: o cê-dê-éfe é documento de fiscalização. Guarde o pê-dê-éfe fora do sistema, na pasta da licença, e deixe os ême-tê-érre do mesmo período por perto.
 Na fiscalização, os dois costumam ser pedidos juntos.""",
 11: """O cê-dê-éfe também pode parar no caminho. Aqui tem um com erro, um rascunho e um emitido que ficou sem o pê-dê-éfe.

@@ -16,3 +16,6 @@ Lote (fundo, `TUT_SENHA` aleatória no ambiente): `bash rec/t18/t18_lote.sh 04:s
 
 ## 21/11 · decisão da coordenação sobre os PDFs do órgão
 - O PDF do MTR (cap05 L2) e o do CDF (cap10 L0) vêm do órgão ambiental, não do EcoSistema; o do mundo falso (`t18_pdfs.py`) é um papel inventado. **Não mostrar o papel simulado no vídeo** (seria inventar resultado). As cenas `ilu05_pdf_mtr` e `ilu10_pdf_cdf` ficam paradas até o Kaik mandar um MTR e um CDF de exemplo (com dados trocados) para servir de molde; sem isso, no fechamento, trocar a frase para não prometer a tela do PDF (ex.: "Baixar pê-dê-éfe abre o manifesto que o órgão devolveu") e mostrar só o botão.
+
+## 25/11 · PDFs do órgão resolvidos sem papel
+- Sem exemplo do MTR/CDF, a fala só cita o botão: cap05 L2 "Baixar pê-dê-éfe. Ele baixa o manifesto que o órgão devolveu, pra ir com o motorista, junto com a carga."; cap10 L0 "...Baixar pê-dê-éfe, pra salvar fora do sistema.". `ilu05_pdf_mtr` e `ilu10_pdf_cdf` tiradas. O robô segue clicando no Baixar (a aba nova não aparece). **T18 pronta para a voz.**
