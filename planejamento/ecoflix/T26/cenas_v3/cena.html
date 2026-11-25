@@ -65,8 +65,8 @@ function cartao() {
   fundo(0, 10, { aneis: false });
   const tit = titulo('CRM', 'Do contato ao cartão', 'escuro');
   const R = uneRet(row.ret(), crm.ret(), cD.ret(), cP.ret());
-  const S1 = enquadraRet(EIXO, R, { az: -.03, max: 1.4 / EE });
-  camera([[t0 - 3, S1], [tFim + 2.5, { ...S1, az: .035, d: S1.d * .985 }, 'lin']]);
+  const S1 = enquadraRet(EIXO, R, { az: -.012, margem: 110, max: 1.4 / EE });
+  camera([[t0 - 3, S1], [tFim + 2.5, { ...S1, az: .012, d: S1.d * .985 }, 'lin']]);
   return t => {
     STAND2(t, tit, t0);
     fluxoCartoes(row.e, t, tInd - .35, NUNCA, { tempos: [tInd, tWa, tNi, tNe] });
@@ -118,10 +118,10 @@ function funil() {
   const cCt = X(chipP('id-card', '', pCt), cardX(0), YC);
   fundo(0, 10, { aneis: false });
   const tit = titulo('CRM', 'O funil de vendas', 'escuro');
-  const S1 = enquadraRet(EIXO, uneRet(fun.ret(), cM.ret(), cPe.ret(), cFe.ret()), { az: -.03, max: 1.6 / EE });
-  const S2 = enquadraRet(EIXO, uneRet(row.ret(), per.ret(), cCt.ret()), { az: .03, max: 1.4 / EE });
+  const S1 = enquadraRet(EIXO, uneRet(fun.ret(), cM.ret(), cPe.ret(), cFe.ret()), { az: -.012, max: 1.6 / EE });
+  const S2 = enquadraRet(EIXO, uneRet(row.ret(), per.ret(), cCt.ret()), { az: .012, max: 1.4 / EE });
   const tVira = tDe - .25;
-  camera([[t0 - 3, S1], [tVira, { ...S1, az: .03, d: S1.d * .985 }, 'lin'], [tDe + 1.5, S2]]);
+  camera([[t0 - 3, S1], [tVira, { ...S1, az: .012, d: S1.d * .985 }, 'lin'], [tDe + 1.5, S2]]);
   const pts = pt(fun.e, '.pt');
   return t => {
     STAND2(t, tit, t0);
@@ -136,7 +136,7 @@ function funil() {
       if (q2) { const p = eio(pr(t, tPro - .05, .8)); px = lerp(x, alvo2[i][0], p); py = lerp(y, alvo2[i][1], p); }
       if (q3) { const p = eio(pr(t, tFe - .05, .8)); px = lerp(alvo2[i][0], alvo3[i][0], p); py = lerp(alvo2[i][1], alvo3[i][1], p); }
       const perdido = !q3, sai = perdido ? eio(pr(t, tPer + .1, .9)) : 0;
-      if (perdido) { px = lerp(px, -60 - (i % 3) * 22, sai); py = lerp(py, 135, sai); op *= 1 - eo(pr(t, tPer + .7, .45)); }
+      if (perdido) { px = lerp(px, 36 + (i % 3) * 12, sai); py = lerp(py, 135 + ((i % 5) - 2) * 9, sai); op *= 1 - eo(pr(t, tPer + 1.0, .45)); }
       d.style.opacity = (op * (1 - g)).toFixed(3);
       d.style.transform = `translate(${(px - x).toFixed(1)}px,${(py - y).toFixed(1)}px)`;
       const am = perdido ? eo(pr(t, tResto, .35)) : 0;
@@ -183,8 +183,8 @@ function avanca() {
   fundo(0, 10, { aneis: false });
   const tit = titulo('Automações', 'Quando a automação roda', 'escuro');
   const R = uneRet(cNo.ret(), cVi.ret(), gat.ret(), casos[0].c.ret(), casos[3].c.ret(), casos[3].rr.ret(), casos[1].rr.ret());
-  const S1 = enquadraRet(EIXO, R, { az: -.03, max: 1.4 / EE });
-  camera([[t0 - 3, S1], [tFim + 2.5, { ...S1, az: .035, d: S1.d * .985 }, 'lin']]);
+  const S1 = enquadraRet(EIXO, R, { az: -.012, max: 1.4 / EE });
+  camera([[t0 - 3, S1], [tFim + 2.5, { ...S1, az: .012, d: S1.d * .985 }, 'lin']]);
   return t => {
     STAND2(t, tit, t0);
     fluxoCartoes(cEm.e, t, tEt - .35, NUNCA, { tempos: [tEt] }); fluxoCartoes(cNo.e, t, tAv - .45, NUNCA, { tempos: [tAv - .3] }); fluxoCartoes(cVi.e, t, tCo - .4, NUNCA, { tempos: [tCo - .3] });
@@ -223,8 +223,8 @@ function reentrada() {
   fundo(0, 10, { aneis: false });
   const tit = titulo('Automações', 'Entrar de novo na etapa', 'escuro');
   const R = uneRet(row.ret(), tar.ret(), che.ret(), nao.ret());
-  const S1 = enquadraRet(EIXO, R, { az: -.03, max: 1.4 / EE });
-  camera([[t0 - 3, S1], [tFim + 2.5, { ...S1, az: .035, d: S1.d * .985 }, 'lin']]);
+  const S1 = enquadraRet(EIXO, R, { az: -.012, max: 1.4 / EE });
+  camera([[t0 - 3, S1], [tFim + 2.5, { ...S1, az: .012, d: S1.d * .985 }, 'lin']]);
   return t => {
     STAND2(t, tit, t0);
     fluxoCartoes(row.e, t, tVol - .35, NUNCA, { tempos: [tVol, tEnt, tEta] });
@@ -258,8 +258,8 @@ function regra() {
   fundo(0, 10, { aneis: false });
   const tit = titulo('Kanban', 'A regra de quem sai', 'escuro');
   const R = uneRet(reg.ret(), ex[0].p.ret(), ex[2].p.ret(), qual.ret(), fio.ret());
-  const S1 = enquadraRet(EIXO, R, { az: -.03, max: 1.45 / EE });
-  camera([[t0 - 3, S1], [tFim + 2.5, { ...S1, az: .035, d: S1.d * .985 }, 'lin']]);
+  const S1 = enquadraRet(EIXO, R, { az: -.012, max: 1.45 / EE });
+  camera([[t0 - 3, S1], [tFim + 2.5, { ...S1, az: .012, d: S1.d * .985 }, 'lin']]);
   return t => {
     STAND2(t, tit, t0);
     fluxoCartoes(reg.e, t, tRe - .35, NUNCA, { tempos: [tRe] });
