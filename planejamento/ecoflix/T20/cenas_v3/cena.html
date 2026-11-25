@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- T20 "Portal do Cliente e Fornecedor" · ilustrações no kit v3 (perfis/ecoflix/cenas_v3/LEIA.md), 16:9 (--larg 1422).
+     Uma função por CENA e CAPS[cap] diz qual cena cada capítulo ilustrado usa. As janelas (de/ate) estão em ../cenas/ilustracoes.json.
+     Âncoras por palavra (W) sobre a voz real 1.60.22 ($TUT_HOME/t20/narracao/capNN.json, cópia em ../cenas/tempos).
+       cap01 · portal    (escuro)  ilu01_portal   "Celular e acesso"      linhas 4 a 6: as abas viram uma lista no celular; o portal é só pra ver, o pedido de coleta volta, quem marca é você
+       cap03 · duplo     (escuro)  ilu03_duplo    "Cliente e fornecedor"  linhas 8 e 9: dois cadastros, o mesmo portal; desligar uma aba desliga nos dois links; vale o que esconde mais
+       cap10 · precos    (claro)   ilu10_precos_pdf "A tabela de preços"  linha 4: o PAPEL REAL (A4) da tabela de preços que o Baixar em PDF leva
+       cap12 · comprovante (claro) ilu12_comprovante_pdf "Comprovante em A4" linhas 1 e 2: o PAPEL REAL (A4) do pedido #1749, com materiais, pesos, valores e o QR das fotos
+       cap13 · zap       (escuro)  ilu13_balao_zap "A mensagem pronta"    linha 1: o texto real da mensagem (pedido #1761, 10/11/2026, R$ 18.714,08, link com ?pedido=)
+       cap14 · links     (escuro)  ilu10_links    "Dois links"            linhas 5 e 6: o link de fotos (só um pedido), o do portal (histórico inteiro) e o QR do caixa
+     Os dois papéis vêm do robô ($TUT_HOME/t20/edit/out/comprovantes/cap10-1.png e cap12-1.png, pdftoppm -r 432 do PDF do actions.json do ensaio);
+     coordenadas do marca-texto em pontos do PDF (pdftotext -bbox), 1,5 px por pt.
+     Saíram do ilustracoes.json (ver o relatório): ilu00_print, ilu02_chave, ilu04_tres, ilu05_secao, ilu06_saldo, ilu08_coleta, ilu10_fotos; pendente: ilu09_relatorio_pdf.
+     Só textos e números da fala e da tela. Acabamento: node perfis/ecoflix/cenas_v3/auditar.cjs --aula planejamento/ecoflix/T20 --larg 1422
+     Render de uma janela: node ferramentas/edit/cenas/render_cenas.cjs <cap> <capNN.json> saida.mp4 --html planejamento/ecoflix/T20/cenas_v3/cena.html \
+               [--anexo $TUT_HOME/t20/edit/out/comprovantes] --larg 1422 --dsf 1.35 --de <s> --ate <s>
+     Ícones lucide usados (o nome tem de estar literal nesta página): 'smartphone' 'history' 'bell' 'monitor' 'handshake' 'eye' 'pencil-off' 'package' 'user-check' 'calendar' 'clock' 'user' 'truck'
+     'arrow-up-right' 'arrow-down-left' 'layout-dashboard' 'building-2' 'eye-off' 'shield-alert' 'shopping-cart' 'hand-coins' 'message-square' 'images' 'link' 'qr-code' 'lock' 'house' 'file-text' 'chart-no-axes-column' 'receipt-text' 'folder-open' 'package-check' -->
+</head><body>
+<script type="module">
+import { PI, cl, lerp, pr, eo, eio, eo5, W, el, ic, vis, foco, pulso, titulo, posTitulo, selo, htmlChip, CENA, GL, piso, mancha, U,
+  camera, plano, clima, cena, estilo, enquadraRet, uneRet, lugar }
+  from '../../../../perfis/ecoflix/cenas_v3/motor.js';
+import { ceuClaro, mundoEscuro } from '../../../../perfis/ecoflix/cenas_v3/fundo.js';
+import { base, pt, entra } from '../../../../perfis/ecoflix/cenas_v3/dados/base.js';
+import { htmlFluxoCartoes, fluxoCartoes, parte, seta } from '../../../../perfis/ecoflix/cenas_v3/dados/fluxoCartoes.js';
+
+// =====================================================================================================================
+// comuns
+const NUNCA = 1e9, EE = .0112;
+const cores = () => base();
+const subDe = (p, t, a, sel = '.d-s') => { const s = p.e.querySelector(sel); if (s) s.style.opacity = eo(pr(t, a, .3)).toFixed(3); };   // a legenda entra na palavra que a diz
+function escuro() {   // um lugar do mundo escuro: posições em px do desenho (y para baixo)
+  const EIXO = lugar([0, 0, 0]), E = mundoEscuro(EIXO, 0, EE);
+  return { EIXO, X: (html, x, y, o = {}) => E(html, x * EE, -y * EE, 0, o), ret: (a, b, c, d) => [a * EE, -d * EE, c * EE, -b * EE], fundo: (cx, cy, o) => E.fundo(cx * EE, -cy * EE, o) };
+}
+const STAND2 = (t, tit, t0) => { clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, -9); };   // título já no alto desde o primeiro quadro
+// seta que chega ao cartão i + 1, desenhada em a (a mesma do fluxoCartoes, para quando dois cartões chegam juntos)
+function setaEm(e, i, t, a) {
+  const s = seta(e, i), vao = +e.dataset.vao, r0 = +(e.dataset.r ?? 8), t0 = a - .42, p = eio(pr(t, t0, .4)), q = pr(t, t0, .45), l = s.querySelector('.sl');
+  s.style.opacity = eo(pr(t, t0 - .18, .3)).toFixed(3); s.querySelector('.st').setAttribute('stroke-dashoffset', (1 - p).toFixed(4)); s.querySelector('.sp').setAttribute('opacity', eo(pr(t, t0 + .3, .15)).toFixed(3));
+  l.setAttribute('cx', (r0 + (vao - 2 * r0) * eio(q)).toFixed(1)); l.setAttribute('opacity', (q > 0 && q < 1 ? Math.sin(PI * q) ** .5 : 0).toFixed(3));
+}
+
+// =====================================================================================================================
+// CENA "portal" · cap01, linhas 4 a 6 · clima escuro
+// 4 "No celular, que é onde quase todo parceiro abre o link, as abas viram uma lista no alto da página."
+// 5 "E até onde vai o acesso dele? O portal é só pra ver. O parceiro não muda nada no seu sistema."
+// 6 "A única coisa que ele manda é um pedido de coleta. E quem marca o dia, o horário, o motorista e o caminhão é você."
+// Estação 1: o celular e a lista de abas. Estação 2 (a câmera atravessa o mundo): Portal (só pra ver) → Pedido de coleta → quem marca (você), com os quatro itens que o parceiro não marca.
+function portal() {
+  const t0 = W(4, 'no'), tCe = W(4, 'celular'), tVi = W(4, 'viram'), tLi = W(4, 'lista'), tFim4 = W(4, 'pagina', 1, 'e'),
+    tPo = W(5, 'portal'), tVe = W(5, 'ver'), tMu = W(5, 'muda'), tPe = W(6, 'pedido'), tQu = W(6, 'quem'), tDi = W(6, 'dia'), tHo = W(6, 'horario'), tMo = W(6, 'motorista'), tCa = W(6, 'caminhao'), tVo = W(6, 'voce'), tFim = W(6, 'voce', 1, 'e');
+  cores();
+  estilo('fone', `
+.fone{position:relative;width:310px;box-sizing:border-box;padding:20px 22px 24px;border-radius:42px;background:var(--cart);border:var(--cb);box-shadow:var(--cs)}
+.fone .nt{width:88px;height:9px;border-radius:5px;background:var(--tr);margin:0 auto 18px}
+.fone .lg{height:26px;width:62%;border-radius:9px;background:var(--fx2);margin-bottom:16px}
+.fone .it{display:flex;align-items:center;gap:12px;height:44px;border-top:1px solid var(--ln);font-weight:800;font-size:16px;color:var(--tx);white-space:nowrap}
+.fone .it i{width:9px;height:9px;border-radius:50%;background:var(--ac);flex:none}
+.fone .bl{height:46px;border-radius:13px;background:var(--fx);margin-top:12px}`);
+  const { EIXO, X, ret, fundo } = escuro();
+  const ABAS = ['Histórico', 'Saldo', 'Notas Fiscais', 'Relatório', 'Coletas'];
+  const fone = X(`<div class="fone" data-caixa><div class="nt"></div><div class="lg"></div>${ABAS.map(a => `<div class="it"><i></i>${a}</div>`).join('')}<div class="bl"></div><div class="bl" style="width:72%"></div></div>`, 0, 20);
+  const chCe = X(htmlChip(`${ic('smartphone', 18)}No celular`, 'n'), 0, 20 - fone.h / 2 - 20, { anc: [.5, 1], z: 40 });
+  const XB = 1250;   // a estação 2 fica à direita
+  const row = X(htmlFluxoCartoes({ cartoes: [['layout-dashboard', 'Portal', 'só pra ver'], ['package', 'Pedido de coleta', 'a única coisa que ele manda'], ['user-check', 'Quem marca', 'é você', 'res']], cw: 270, vao: 84 }), XB, -70);
+  const cx = i => XB + parte(row.e, i).offsetLeft + parte(row.e, i).offsetWidth / 2 - row.w / 2;   // centro do cartão i, em px do desenho
+  const YB = -70 + row.h / 2 + 30;
+  const cNada = X(htmlChip(`${ic('pencil-off', 18)}Não muda nada no seu sistema`, 'n'), cx(0), YB, { anc: [.5, 0] });
+  const GX = 170, GY = 46;   // grade 2 x 2 dos itens que o parceiro não marca
+  const itens = [['calendar', 'dia', tDi, -1, 0], ['clock', 'horário', tHo, 1, 0], ['user', 'motorista', tMo, -1, 1], ['truck', 'caminhão', tCa, 1, 1]]
+    .map(([i, r, t, gx, gy]) => ({ t, p: X(htmlChip(`${ic(i, 18)}${r}`, 'n'), cx(2) + gx * GX / 2, YB + gy * GY, { anc: [.5, 0] }) }));
+  fundo(XB / 2, 20, { aneis: false });
+  const tit = titulo('Portal', 'Celular e acesso', 'escuro');
+  const R1 = uneRet(fone.ret(), chCe.ret()), R2 = uneRet(row.ret(), cNada.ret(), ...itens.map(x => x.p.ret()));
+  const S1 = enquadraRet(EIXO, R1, { az: -.03, max: 1.15 / EE }), S2 = enquadraRet(EIXO, R2, { az: .02, max: 1.4 / EE });
+  const tMove = tFim4 + .35, tChega = tMove + 1.5;   // a travessia acontece na virada da linha 4 para a 5
+  camera([[t0 - 3, S1], [tMove - .1, { ...S1, az: -.012, d: S1.d * .985 }, 'lin'], [tChega, S2], [tFim + 2.5, { ...S2, az: .035, d: S2.d * .985 }, 'lin']]);
+  return t => {
+    STAND2(t, tit, t0);
+    vis(fone.e, t, tCe - .05, tMove, { dy: 18, sc: .96 }); vis(chCe.e, t, tCe - .05, tMove, { dy: 10, sc: .9 });
+    pt(fone.e, '.it').forEach((x, i) => entra(x, t, tVi + .08 + i * .13, { dy: 8, d: .4 }));
+    pulso(fone.e, t, tLi + .05, .02, .8);
+    fluxoCartoes(row.e, t, tPo - .35, NUNCA, { tempos: [tPo, tPe, tQu] });
+    subDe({ e: parte(row.e, 0) }, t, tVe - .05); subDe({ e: parte(row.e, 1) }, t, W(6, 'unica') - .05); subDe({ e: parte(row.e, 2) }, t, tVo - .05);
+    pulso(parte(row.e, 0), t, tVe + .25, .04, .7); pulso(parte(row.e, 2), t, tVo + .3, .05, .8);
+    vis(cNada.e, t, tMu - .15, NUNCA, { dy: 12, sc: .9 });
+    itens.forEach(x => vis(x.p.e, t, x.t - .12, NUNCA, { dy: 12, sc: .9 }));
+  };
+}
+
+// =====================================================================================================================
+// CENA "duplo" · cap03, linhas 8 e 9 · clima escuro
+// 8 "Uma dica: tem parceiro que é cliente e fornecedor ao mesmo tempo, como o Depósito Irmãos Siqueira. Os dois cadastros mostram o mesmo portal, com as compras e as vendas juntas."
+// 9 "Então, desligar uma aba num cadastro desliga nos dois links. Vale sempre o que esconde mais."
+// Cliente → Portal ← Fornecedor; a aba desligada num cadastro aparece nos dois; a regra no fim.
+function duplo() {
+  const t0 = W(8, 'uma'), tCl = W(8, 'cliente'), tFo = W(8, 'fornecedor'), tDe = W(8, 'deposito'), tPo = W(8, 'portal'), tCm = W(8, 'compras'), tVe = W(8, 'vendas'), tFim8 = W(8, 'juntas', 1, 'e'),
+    tDs = W(9, 'desligar'), tAb = W(9, 'aba'), tDl = W(9, 'desliga'), tDo = W(9, 'dois'), tVa = W(9, 'vale'), tFim = W(9, 'mais', 1, 'e');
+  cores();
+  const { EIXO, X, ret, fundo } = escuro();
+  const row = X(htmlFluxoCartoes({ cartoes: [['arrow-up-right', 'Cliente', 'cadastro'], ['layout-dashboard', 'Portal', 'o mesmo portal', 'res'], ['arrow-down-left', 'Fornecedor', 'cadastro']], cw: 270, vao: 92 }), 0, -15);
+  seta(row.e, 1).style.transform = 'scaleX(-1)';   // o segundo cadastro também chega no portal: a seta aponta da direita para o centro
+  const cx = i => parte(row.e, i).offsetLeft + parte(row.e, i).offsetWidth / 2 - row.w / 2;
+  const Y1 = -15 + row.h / 2 + 30;
+  const hd = X(htmlChip(`${ic('building-2', 18)}Depósito Irmãos Siqueira`, 'n'), 0, -15 - row.h / 2 - 24, { anc: [.5, 1], z: 40 });
+  const cC = X(htmlChip(`${ic('shopping-cart', 18)}Compras`, 'n'), cx(1) - 84, Y1, { anc: [.5, 0] }), cV = X(htmlChip(`${ic('hand-coins', 18)}Vendas`, 'n'), cx(1) + 84, Y1, { anc: [.5, 0] });
+  const aA = X(htmlChip(`${ic('eye-off', 18)}Aba desligada`, 'a'), cx(0), Y1, { anc: [.5, 0] }), aB = X(htmlChip(`${ic('eye-off', 18)}Aba desligada`, 'a'), cx(2), Y1, { anc: [.5, 0] });
+  const rg = X(htmlChip(`${ic('shield-alert', 18)}Vale o que esconde mais`, 'a'), 0, Y1 + 38 + 38, { anc: [.5, 0] });
+  fundo(0, 20, { aneis: false });
+  const tit = titulo('Portal', 'Cliente e fornecedor', 'escuro');
+  const R1 = uneRet(row.ret(), hd.ret(), cC.ret(), cV.ret()), R2 = uneRet(R1, aA.ret(), aB.ret(), rg.ret());
+  const S1 = enquadraRet(EIXO, R1, { az: -.03, max: 1.4 / EE }), S2 = enquadraRet(EIXO, R2, { az: .02, max: 1.4 / EE });
+  camera([[t0 - 3, S1], [tDs - .6, { ...S1, az: -.012, d: S1.d * .985 }, 'lin'], [tDs + .6, S2], [tFim + 2.5, { ...S2, az: .035, d: S2.d * .985 }, 'lin']]);
+  return t => {
+    STAND2(t, tit, t0);
+    fluxoCartoes(row.e, t, tCl - .35, NUNCA, { tempos: [tCl, tPo, tFo] });
+    setaEm(row.e, 0, t, tPo); setaEm(row.e, 1, t, tPo);   // as duas setas chegam juntas, no "portal"
+    subDe({ e: parte(row.e, 0) }, t, tCl + .35); subDe({ e: parte(row.e, 2) }, t, tFo + .35); subDe({ e: parte(row.e, 1) }, t, tPo + .35);
+    pulso(parte(row.e, 1), t, tPo + .5, .04, .8);
+    vis(hd.e, t, tDe - .1, NUNCA, { dy: 10, sc: .9 });
+    vis(cC.e, t, tCm - .1, NUNCA, { dy: 12, sc: .9 }); vis(cV.e, t, tVe - .1, NUNCA, { dy: 12, sc: .9 });
+    vis(aA.e, t, tAb - .1, NUNCA, { dy: 12, sc: .9 }); vis(aB.e, t, tDl - .05, NUNCA, { dy: 12, sc: .9 }); pulso(aB.e, t, tDo + .1, .05, .7);
+    vis(rg.e, t, tVa - .1, NUNCA, { dy: 12, sc: .9 }); pulso(rg.e, t, tVa + .45, .05, .8);
+  };
+}
+
+// =====================================================================================================================
+// o PAPEL REAL (PDF do app, sem redesenho): imagem do PDF, a câmera passeia e o marca-texto acompanha a fala
+const K = 1.5, E = .01;   // px por pt e metros por px
+const LEITURA = 2.87 / E;
+const LP = 595.28, HP = 841.89, WP = Math.round(LP * K), HH = Math.round(HP * K), YC = HH * E / 2 + 1.4;   // A4 em pt; centro do papel (m): a base fica 1,4 m do chão
+function papel(src, marcas) {
+  estilo('papelA4', `
+.cupom{position:relative;width:${WP}px;height:${HH}px;background:#fff;border-radius:7px 7px 0 0;box-shadow:0 34px 60px -18px rgba(30,80,60,.38),0 8px 16px -6px rgba(30,80,60,.14)}
+.cupom img{display:block;width:${WP}px;height:${HH}px;border-radius:7px 7px 0 0}
+.cupom .z{position:absolute;left:0;bottom:-8px;display:block}
+.cupom .mk{position:absolute;border-radius:4px;background:rgba(80,208,136,.46);mix-blend-mode:multiply;transform-origin:0 50%;transform:scaleX(0)}
+.cupom .mk.o{mix-blend-mode:normal;background:rgba(80,208,136,.10);border:3px solid rgba(47,178,113,.95);box-shadow:0 0 14px rgba(80,208,136,.45)}`);
+  const n = Math.round(WP / 14), z = Array.from({ length: n + 1 }, (_, i) => `${(i * WP / n).toFixed(1)},${i % 2 ? 8 : 0}`).join(' ');
+  const mk = Object.entries(marcas).map(([id, [x0, y0, x1, y1, c]]) =>
+    `<i class="mk ${c ?? ''}" data-m="${id}" style="left:${(x0 * K).toFixed(1)}px;top:${(y0 * K).toFixed(1)}px;width:${((x1 - x0) * K).toFixed(1)}px;height:${((y1 - y0) * K).toFixed(1)}px"></i>`).join('');
+  return `<div class="cupom"><img src="${src}" alt="">${mk}<svg class="z" width="${WP}" height="8"><polygon points="0,0 ${z} ${WP},0" fill="#fff"/></svg></div>`;
+}
+const marca = (e, id, t, a) => { const m = (e._mk ??= {})[id] ??= e.querySelector(`[data-m="${id}"]`); m.style.transform = `scaleX(${eo(pr(t, a, .45)).toFixed(4)})`; };
+// retângulo do papel (pt: x0, y0, x1, y1, de cima para baixo) em metros, para enquadraRet
+const faixa = (x0, y0, x1, y1) => [(x0 - LP / 2) * K * E, YC + (HP / 2 - y1) * K * E, (x1 - LP / 2) * K * E, YC + (HP / 2 - y0) * K * E];
+const palco = () => { piso({ r: 24, x: 0, z: -2, passo: 1.3 }); U.uNevoa.value.set(.955, .975, .965, .8); ceuClaro({ halo: [.2, 3.4, -12] }); };
+
+// =====================================================================================================================
+// cap10, linha 4 · "No Baixar em PDF, ela leva a tabela pronta." Janela curta: a página A4 sobe inteira com o título, a câmera mergulha
+// na faixa TABELA DE PREÇOS e a tabela ganha o contorno no "pronta".
+function precos(d) {
+  const t0 = W(4, 'no'), tBa = W(4, 'baixar'), tLe = W(4, 'leva'), tTa = W(4, 'tabela'), tPr = W(4, 'pronta'), tFim = W(4, 'pronta', 1, 'e');
+  palco();
+  const pp = plano(papel(`${d.anexo}/cap10-1.png`, { tit: [28.8, 128, 568.5, 156, 'o'], tab: [27, 184, 569, 487, 'o'] }), { pos: [0, YC, 0], esc: E, sangra: true }), sp = mancha(9.4, 2.4, [0, 0, .1], { op: 0 });
+  const tt = titulo('Preços', 'A tabela em PDF');
+  const TUDO = enquadraRet(null, faixa(0, 0, LP, HP), { topo: 150, margem: 40, el: .02, az: .05 });
+  const F = enquadraRet(null, faixa(20, 122, 575, 492), { topo: 64, margem: 56, max: LEITURA, el: .015, az: .03 });
+  camera([[t0 - 3, TUDO], [tLe - .35, { ...TUDO, d: TUDO.d * .985, az: .045 }, 'lin'], [tTa + .35, F], [tFim + 2, { ...F, d: F.d * .985, az: .012 }, 'lin']]);
+  return t => {
+    GL.style.opacity = eo(pr(t, t0 + .08, .5)).toFixed(3); posTitulo(tt, t, t0 - .9, t0 - .45, tLe - .5);   // sai antes do mergulho
+    vis(pp.e, t, t0 - .15, 1e9, { dy: 30 }); sp.material.uniforms.uOp.value = .55 * (+pp.e.style.opacity || 0);
+    marca(pp.e, 'tit', t, tTa - .1); marca(pp.e, 'tab', t, tPr - .1);
+  };
+}
+
+// =====================================================================================================================
+// cap12, linhas 1 e 2 · "Abre o comprovante em A4, como a gente escolheu na aba Portal, com os materiais, os pesos e os valores da entrega. E como esse pedido tem fotos, o comprovante sai com um QR Code: Escaneie para ver fotos."
+// A página sobe inteira; a câmera desce à tabela (cada coluna ganha o marca-texto na palavra) e, no QR Code, ao fim da página.
+function comprovante(d) {
+  const t0 = W(1, 'abre'), tA4 = W(1, 'a4'), tMa = W(1, 'materiais'), tPe = W(1, 'pesos'), tVa = W(1, 'valores'), tEn = W(1, 'entrega'), tQr = W(2, 'qr'), tEs = W(2, 'escaneie'), tFim = W(2, 'fotos', 2, 'e');
+  palco();
+  const pp = plano(papel(`${d.anexo}/cap12-1.png`, { mat: [126, 309, 234, 415], pes: [316, 309, 384, 415], val: [474, 309, 543, 415], qr: [255, 574, 340, 659, 'o'], esc: [242, 556.5, 354, 570.5] }), { pos: [0, YC, 0], esc: E, sangra: true }), sp = mancha(9.4, 2.4, [0, 0, .1], { op: 0 });
+  const tt = titulo('Comprovante', 'Em A4, com QR das fotos');
+  const o = { topo: 70, margem: 56, max: LEITURA, el: .015 };
+  const TUDO = enquadraRet(null, faixa(0, 0, LP, HP), { topo: 150, margem: 40, el: .02, az: .05 });
+  const F1 = enquadraRet(null, faixa(20, 255, 575, 435), { ...o, margem: 90, az: .03 }), F2 = enquadraRet(null, faixa(195, 550, 400, 666), { ...o, max: 3.3 / E, az: -.025 });
+  camera([[t0 - 3, TUDO], [tMa - .75, { ...TUDO, d: TUDO.d * .98, az: .045 }, 'lin'], [tMa + .15, F1], [tEn + .1, { ...F1, d: F1.d * .985, az: .015 }, 'lin'], [tQr - .1, F2], [tFim + 2, { ...F2, d: F2.d * .98, az: -.035 }, 'lin']]);
+  return t => {
+    GL.style.opacity = eo(pr(t, t0 + .08, .5)).toFixed(3); posTitulo(tt, t, t0 - .9, t0 - .45, tMa - .6);   // sai antes do mergulho
+    vis(pp.e, t, t0 - .15, 1e9, { dy: 30 }); sp.material.uniforms.uOp.value = .55 * (+pp.e.style.opacity || 0);
+    marca(pp.e, 'mat', t, tMa - .1); marca(pp.e, 'pes', t, tPe - .1); marca(pp.e, 'val', t, tVa - .1);
+    marca(pp.e, 'qr', t, tQr - .05); marca(pp.e, 'esc', t, tEs - .1);
+  };
+}
+
+// =====================================================================================================================
+// CENA "zap" · cap13, linha 1 · clima escuro
+// 1 "O WhatsApp abre com a mensagem pronta, no telefone do cadastro: o número do pedido, a data, o valor e o link."
+// O balão da mensagem (texto real lido do endereço do ensaio): cada parte entra na palavra que a diz, com o destaque verde.
+function zap() {
+  const t0 = W(1, 'o'), tAb = W(1, 'abre'), tMe = W(1, 'mensagem'), tTe = W(1, 'telefone'), tNu = W(1, 'numero'), tPd = W(1, 'pedido'), tDa = W(1, 'data'), tVl = W(1, 'valor'), tAnd = W(1, 'e'), tLk = W(1, 'link'), tFim = W(1, 'link', 1, 'e');
+  cores();
+  estilo('zap', `
+.zb{position:relative;width:710px;box-sizing:border-box;padding:24px 30px 26px;border-radius:30px 30px 9px 30px;background:linear-gradient(150deg,#63D99B,#2FB271);border:1px solid rgba(255,255,255,.35);
+  box-shadow:0 18px 36px -10px rgba(47,178,113,.55),inset 0 1px 0 rgba(255,255,255,.4);color:#fff;font-weight:600;font-size:20.5px;line-height:1.5;transform-origin:100% 100%}
+.zb .l{white-space:nowrap}.zb .l.sp{margin-top:14px}.zb .s{opacity:0;display:inline-block;white-space:pre}
+.zb .hl{font-weight:800;padding:0 9px;margin:0 -9px;border-radius:9px;background:rgba(255,255,255,0);box-shadow:inset 0 -3px 0 rgba(255,255,255,0)}
+.zb .lk{font-size:15.5px;font-weight:700;text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(255,255,255,.6);margin-top:2px}`);
+  const { EIXO, X, ret, fundo } = escuro();
+  const S = (i, txt, h) => `<span class="s ${h ? 'hl' : ''}" data-i="${i}">${txt}</span>`;
+  const bal = X(`<div class="zb" data-caixa>
+    <div class="l">${S(0, 'Olá, Cooperativa Recomeço!')}</div><div class="l">${S(1, 'Aqui é da Recicla Vale Metais.')}</div>
+    <div class="l">${S(2, 'Segue o comprovante do ')}${S(3, 'Pedido #1761', 1)}${S(4, ', de ')}${S(5, '10/11/2026', 1)}${S(6, '.')}</div>
+    <div class="l">${S(7, 'Valor total, ')}${S(8, 'R$ 18.714,08', 1)}${S(9, '.')}</div>
+    <div class="l sp">${S(10, 'Acesse pelo link abaixo:')}</div><div class="l lk">${S(11, '…/portal/recicla-vale-metais-cooperativa-…?pedido=…', 1)}</div></div>`, 0, 40);
+  const chTe = X(htmlChip(`${ic('smartphone', 18)}Telefone do cadastro`, 'n'), bal.w / 2, 40 - bal.h / 2 - 22, { anc: [1, 1], z: 40 });
+  fundo(0, 20, { aneis: false });
+  const tit = titulo('Pedidos', 'A mensagem pronta', 'escuro');
+  const R = uneRet(bal.ret(), chTe.ret());
+  const S1 = enquadraRet(EIXO, R, { az: -.03, max: 1.4 / EE });
+  camera([[t0 - 3, { ...S1, d: S1.d * 1.04 }], [tAb + 1.4, S1], [tFim + 2.5, { ...S1, az: .03, d: S1.d * .985 }, 'lin']]);
+  const sp = [...bal.e.querySelectorAll('.s')], hl = i => sp[i];
+  const mostra = (i, t, a) => { const x = sp[i]; x.style.opacity = eo(pr(t, a, .3)).toFixed(3); x.style.transform = `translateY(${((1 - eo5(pr(t, a, .45))) * 8).toFixed(2)}px)`; };
+  const marcaH = (i, t, a) => { const x = sp[i], k = eo(pr(t, a, .35)) * (1 - eo(pr(t, a + 1.1, .5)) * .55); x.style.background = `rgba(255,255,255,${(.26 * k).toFixed(3)})`; x.style.boxShadow = `inset 0 -3px 0 rgba(255,255,255,${(.9 * k).toFixed(3)})`; };
+  return t => {
+    STAND2(t, tit, t0);
+    const p = pr(t, tAb - .1, .6); bal.e.style.opacity = eo(pr(t, tAb - .1, .3)).toFixed(3); bal.e.style.transform = `scale(${(.6 + .4 * eo(p) + .045 * Math.sin(PI * p) * (1 - p)).toFixed(4)})`;
+    vis(chTe.e, t, tTe - .1, NUNCA, { dy: 12, sc: .9 });
+    mostra(0, t, tMe - .05); mostra(1, t, tMe + .3);
+    mostra(2, t, tNu - .05); mostra(3, t, tPd - .1); marcaH(3, t, tPd - .1);
+    mostra(4, t, tDa - .1); mostra(5, t, tDa - .05); marcaH(5, t, tDa - .05); mostra(6, t, tDa - .05);
+    mostra(7, t, tVl - .1); mostra(8, t, tVl - .1); marcaH(8, t, tVl - .1); mostra(9, t, tVl - .1);
+    mostra(10, t, tAnd - .05); mostra(11, t, tLk - .1); marcaH(11, t, tLk - .1);
+  };
+}
+
+// =====================================================================================================================
+// CENA "links" · cap14, linhas 5 e 6 · clima escuro
+// 5 "Uma dica: são dois links diferentes. O de fotos mostra só aquele pedido. O do portal mostra o histórico inteiro do parceiro, então cuida mais dele."
+// 6 "E no comprovante que sai no caixa, o QR Code leva o parceiro pro portal dele, já aberto naquele pedido."
+// Link de fotos → só aquele pedido; Link do portal → histórico inteiro (cuida mais dele); QR do caixa → portal já aberto no pedido.
+function links() {
+  const t0 = W(5, 'uma'), tFo = W(5, 'fotos'), tPe = W(5, 'pedido'), tPo = W(5, 'portal'), tHi = W(5, 'historico'), tPa = W(5, 'parceiro'), tCu = W(5, 'cuida'),
+    tCo = W(6, 'comprovante'), tQr = W(6, 'qr'), tPo2 = W(6, 'portal'), tAb = W(6, 'aberto'), tFim = W(6, 'pedido', 1, 'e');
+  cores();
+  const { EIXO, X, ret, fundo } = escuro();
+  const R1 = -190, R2 = -74, R3 = 125, CW = 310, VAO = 100;
+  const r1 = X(htmlFluxoCartoes({ cartoes: [['images', 'Link de fotos', ''], ['package-check', 'Só aquele pedido', '', 'res']], cw: CW, vao: VAO }), 0, R1);
+  const r2 = X(htmlFluxoCartoes({ cartoes: [['link', 'Link do portal', ''], ['history', 'Histórico inteiro', 'do parceiro', 'a']], cw: CW, vao: VAO }), 0, R2);
+  const r3 = X(htmlFluxoCartoes({ cartoes: [['qr-code', 'QR Code do caixa', 'no comprovante'], ['layout-dashboard', 'Portal', 'já aberto naquele pedido', 'res']], cw: CW, vao: VAO }), 0, R3);
+  const cx = (row, i) => parte(row.e, i).offsetLeft + parte(row.e, i).offsetWidth / 2 - row.w / 2;
+  const chCu = X(htmlChip(`${ic('lock', 18)}Cuida mais dele`, 'a'), cx(r2, 1) + 0, R2 + r2.h / 2 + 12, { anc: [.5, 0] });
+  fundo(0, 0, { aneis: false });
+  const tit = titulo('Portal', 'Dois links', 'escuro');
+  const A1 = uneRet(r1.ret(), r2.ret(), chCu.ret()), A2 = uneRet(A1, r3.ret());
+  const S1 = enquadraRet(EIXO, A1, { az: -.03, max: 1.6 / EE }), S2 = enquadraRet(EIXO, A2, { az: .02, max: 1.6 / EE });
+  const tMove = tCo - .55;
+  camera([[t0 - 3, S1], [tMove - .1, { ...S1, az: -.012, d: S1.d * .985 }, 'lin'], [tMove + 1.0, S2], [tFim + 2.5, { ...S2, az: .035, d: S2.d * .985 }, 'lin']]);
+  return t => {
+    STAND2(t, tit, t0);
+    fluxoCartoes(r1.e, t, tFo - .35, NUNCA, { tempos: [tFo, tPe] }); pulso(parte(r1.e, 1), t, tPe + .3, .04, .7);
+    fluxoCartoes(r2.e, t, tPo - .35, NUNCA, { tempos: [tPo, tHi] }); subDe({ e: parte(r2.e, 1) }, t, tPa - .05); pulso(parte(r2.e, 1), t, tPa + .3, .04, .7);
+    vis(chCu.e, t, tCu - .1, NUNCA, { dy: 12, sc: .9 }); pulso(chCu.e, t, tCu + .3, .05, .7);
+    foco(r1.e, t, -9, tCo - .1, { min: .6 }); foco(r2.e, t, -9, tCo - .1, { min: .6 }); foco(chCu.e, t, -9, tCo - .1, { min: .6 });
+    fluxoCartoes(r3.e, t, tQr - .35, NUNCA, { tempos: [tQr, tPo2] }); subDe({ e: parte(r3.e, 0) }, t, tCo + .05); subDe({ e: parte(r3.e, 1) }, t, tAb - .05);
+    pulso(parte(r3.e, 1), t, tPo2 + .35, .05, .8);
+  };
+}
+
+const CAPS = { 1: portal, 3: duplo, 10: precos, 12: comprovante, 13: zap, 14: links };
+cena(d => CAPS[d.cap](d), { fov: 26 });
+</script></body></html>
