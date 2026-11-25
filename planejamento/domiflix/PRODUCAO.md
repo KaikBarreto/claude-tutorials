@@ -834,3 +834,6 @@ O ZIP único de ~4,5 GB não cabe no disco: no fim, cada aula vai como MP4 próp
 as legendas (.srt/.vtt) e um LEIA-ME com a ordem. Já enviados em 06/11: T0 vertical, T21, T22.
 ZIP único (ou em partes, se passar do limite de envio) com `Domiflix Tnn - <Título>.mp4/.srt/.vtt` de todas as aulas
 (T0 a T22, incluindo o T3 já entregue), 1080p, CRF 20 (padrão T3).
+
+## 25/11 · limpeza de disco (OK do Kaik: só o refazível)
+- Apagados: `t*/edit/out/*/proj`, `t*/edit/out/*/video_sem_audio.mp4`, `t*/narracao/takes/*/audio16k.wav` e `audio48k.wav` (refaz com `prep.py` a partir do MP3 em `recebido_*`). `t*/edit/cenas/node_modules` virou link para `claude-tutorials/ferramentas/edit/cenas/node_modules` (conteúdo idêntico). Ficaram: MP3 da voz, transcrições, robôs (`rec`), app, modelos, specs da edição e os finais (`entrega_final`, `aula_final.mp4`). Para refazer uma aula: refazer os `takes` (prep) e remontar com o `fechar` da aula.

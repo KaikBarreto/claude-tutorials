@@ -45,7 +45,7 @@ nos três): copie `t03/edit/t03_mix.py` e `t03_music_bed.py` (mesmo som, pouca m
    texto na tela sem travessão e sem dado real; título de capítulo certo; nada cortado; áudio sem estouro.
 7. **Entrega**: `entregar.py` → aula final 1080p em `tNN/edit/out/Tnn/aula_final.mp4` + legendas, e uma prévia 720p de até
    28 MB em `$TUT_HOME/entrega_previa/EcoFlix Tnn - <título> 1.60.22 (previa 720p).mp4`.
-8. **Disco** (sobra pouco: ~1,3 GB para tudo; na T02 chegou a zero no `finish.py`; a T03 de 23 min ocupou ~0,6 GB no fim): `proj` e `video_sem_audio.mp4` em
+8. **Disco** (~8 GB livres em 25/11, para todas as aulas que faltam: cada final ocupa ~0,5 GB; nunca abaixo de 1,5 GB; na T02 chegou a zero no `finish.py`; a T03 de 23 min ocupou ~0,6 GB no fim): `proj` e `video_sem_audio.mp4` em
    `/dev/shm/tNN_*` (link simbólico em `out/Tnn/`), `df -h /` antes de cada passo pesado e pare se ficar abaixo de 600 MB; no fim, apague `out/Tnn/proj`, `out/Tnn/video_sem_audio.mp4` e as pastas
    `out/capNN` (regeráveis), sempre com caminho absoluto literal. Fica: `aula_final.mp4`, legendas, `capitulos.json`, a prévia,
    as gravações finais em `rec/tNN/` e as ilustrações em `out/ilus/`.
