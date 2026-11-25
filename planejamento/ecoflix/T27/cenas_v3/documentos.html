@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- T27 "White Label" · cap05, linhas 2 a 4 · o COMPROVANTE REAL na tela (kit v3, clima claro: papel é mundo físico).
+       ilu05_documentos   "Vale também pra tabela de preços, pro ticket de pesagem, pro fechamento de caixa e pros outros relatórios.
+                           Olha o comprovante de um pedido. Em cima, o logo da Recicla Vale ... E embaixo, acabou o rodapé do EcoSistema.
+                           E, se você usa o QR Code das fotos no comprovante, o logo da Recicla Vale vai no meio do QR Code."
+     Estações: (1) quatro cartões de documentos (tabela de preços, ticket, fechamento de caixa, outros relatórios); (2) a câmera
+     atravessa para o papel REAL (pedido #1758, rec/t27/t27-cap05.comprovante.pdf rasterizado em 720 dpi, sem redesenho) e fecha no
+     logo do topo; (3) desce até o fim, onde não há rodapé do EcoSistema; (4) abre para o QR Code ao lado, com o ícone da Recicla Vale
+     no meio. O QR é um cartão à parte: o pedido do robô não tem foto, então o papel real não traz QR.
+     Papel: página de 226,77 x 456,38 pt, 1,5 px por pt. Coordenadas das marcas (pt): logo [17,20,121,54]; vão do rodapé [12,432,214,452].
+     Render: render_cenas.cjs 5 cap05.json saida.mp4 --html .../documentos.html --anexo $TUT_HOME/t27/edit/out/comprovantes --larg 1422 --dsf 1.35
+     Ícones lucide usados: 'tags' 'scale' 'wallet' 'file-spreadsheet' 'file-minus' -->
+</head><body>
+<script type="module">
+import { pr, eo, eo5, W, ic, vis, pulso, titulo, posTitulo, GL, mancha, piso, U, camera, plano, cena, estilo, enquadraRet, uneRet, htmlChip }
+  from '../../../../perfis/ecoflix/cenas_v3/motor.js';
+import { ceuClaro } from '../../../../perfis/ecoflix/cenas_v3/fundo.js';
+import { htmlFluxoCartoes, fluxoCartoes } from '../../../../perfis/ecoflix/cenas_v3/dados/fluxoCartoes.js';
+
+const K = 1.5, LP = 226.77, HPT = 456.378, WP = Math.round(LP * K), E = .01, YC = 4.35, LEITURA = 2.87 / E;
+function papel(src, hpt, marcas) {
+  estilo('cupom', `
+.cupom{position:relative;width:${WP}px;background:#fff;border-radius:7px 7px 0 0;box-shadow:0 34px 60px -18px rgba(30,80,60,.38),0 8px 16px -6px rgba(30,80,60,.14)}
+.cupom img{display:block;width:${WP}px;border-radius:7px 7px 0 0}
+.cupom .z{position:absolute;left:0;bottom:-8px;display:block}
+.cupom .mk{position:absolute;border-radius:4px;background:rgba(80,208,136,.46);mix-blend-mode:multiply;transform-origin:0 50%;transform:scaleX(0)}`);
+  const h = Math.round(hpt * K), n = Math.round(WP / 14), z = Array.from({ length: n + 1 }, (_, i) => `${(i * WP / n).toFixed(1)},${i % 2 ? 8 : 0}`).join(' ');
+  const mk = Object.entries(marcas).map(([id, [x0, y0, x1, y1]]) =>
+    `<i class="mk" data-m="${id}" style="left:${(x0 * K).toFixed(1)}px;top:${(y0 * K).toFixed(1)}px;width:${((x1 - x0) * K).toFixed(1)}px;height:${((y1 - y0) * K).toFixed(1)}px"></i>`).join('');
+  return { h, html: `<div class="cupom" style="height:${h}px"><img src="${src}" style="height:${h}px" alt="">${mk}<svg class="z" width="${WP}" height="8"><polygon points="0,0 ${z} ${WP},0" fill="#fff"/></svg></div>` };
+}
+const marca = (e, id, t, a) => { const m = (e._mk ??= {})[id] ??= e.querySelector(`[data-m="${id}"]`); m.style.transform = `scaleX(${eo(pr(t, a, .45)).toFixed(4)})`; };
+const faixa = (h, y0, y1) => [-WP / 2 * E, YC + (h / 2 - y1 * K) * E, WP / 2 * E, YC + (h / 2 - y0 * K) * E];
+
+// QR Code ilustrativo (25x25 módulos, semente fixa): três quadros de canto, módulos soltos e o vão do meio para o ícone
+function qr(d) {
+  const N = 25, C = 8; let s = 11; const r = () => (s = (s * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff;
+  const quad = (x0, y0) => `<rect x="${x0 * C}" y="${y0 * C}" width="${7 * C}" height="${7 * C}" fill="#14171A"/><rect x="${(x0 + 1) * C}" y="${(y0 + 1) * C}" width="${5 * C}" height="${5 * C}" fill="#fff"/><rect x="${(x0 + 2) * C}" y="${(y0 + 2) * C}" width="${3 * C}" height="${3 * C}" fill="#14171A"/>`;
+  let m = '';
+  for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
+    const canto = (x < 8 && y < 8) || (x > N - 9 && y < 8) || (x < 8 && y > N - 9), meio = x >= 8 && x <= 16 && y >= 8 && y <= 16;
+    if (!canto && !meio && r() > .52) m += `<rect x="${x * C}" y="${y * C}" width="${C}" height="${C}" fill="#14171A"/>`;
+  }
+  return `<div style="position:relative;width:230px;height:230px;background:#fff;border-radius:16px;padding:15px;box-shadow:0 30px 50px -16px rgba(30,80,60,.35),0 6px 14px -6px rgba(30,80,60,.14)">
+    <svg width="${N * C}" height="${N * C}" viewBox="0 0 ${N * C} ${N * C}" shape-rendering="crispEdges">${m}${quad(0, 0)}${quad(N - 7, 0)}${quad(0, N - 7)}</svg>
+    <div class="pl-ic" style="position:absolute;left:83px;top:83px;width:64px;height:64px;border-radius:14px;background:#fff;box-shadow:0 0 0 3px #fff;display:flex;align-items:center;justify-content:center;opacity:0"><img src="${d.anexo}/rv-icone.png" style="width:56px;height:56px;border-radius:12px;display:block"></div></div>`;
+}
+
+function documentos(d) {
+  const t0 = W(2, 'vale'), tpr = W(2, 'precos'), ttk = W(2, 'pesagem'), tfc = W(2, 'caixa'), tou = W(2, 'relatorios'),
+    tol = W(3, 'olha'), tlo = W(3, 'logo'), tem = W(3, 'embaixo'), trd = W(3, 'rodape'), teco = W(3, 'ecosistema'),
+    tqr = W(4, 'qr'), tfo = W(4, 'fotos'), tlg = W(4, 'logo'), tfim = W(4, 'code', 2, 'e');
+  piso({ r: 24, x: 0, z: -2, passo: 1.3 }); U.uNevoa.value.set(.955, .975, .965, .8); ceuClaro({ halo: [-3, 3.4, -12] });
+  // estação 1: os quatro documentos (2 x 2), à esquerda do papel
+  const EC = .0095, CWc = 300, XS = [-11.9, -8.6], YS = [4.9, 3.8];
+  const docs = [['tags', 'Tabela de preços', 0, 0], ['scale', 'Ticket de pesagem', 1, 0], ['wallet', 'Fechamento de caixa', 0, 1], ['file-spreadsheet', 'Outros relatórios', 1, 1]]
+    .map(([i, r, cx, ry]) => plano(htmlFluxoCartoes({ cartoes: [[i, r, '', 'n']], cw: CWc }), { pos: [XS[cx], YS[ry], 0], esc: EC }));
+  // o papel real
+  const P = papel(`${d.anexo}/cap05-1.png`, HPT, { logo: [17, 20, 121, 54], fim: [12, 432, 214, 452] });
+  const pp = plano(P.html, { pos: [0, YC, 0], esc: E, sangra: true }), sp = mancha(5.2, 1.6, [0, 0, .1], { op: 0 });
+  const yFim = YC - P.h / 2 * E;   // o pé do papel
+  const chRod = plano(htmlChip(`${ic('file-minus', 18)}Sem o rodapé do EcoSistema`), { pos: [0, yFim - .55, .2], esc: .0105 });
+  // o QR ao lado do papel, com o ícone da Recicla Vale no meio
+  const qq = plano(qr(d), { pos: [3.9, 1.95, 0], esc: .0095 }), chQR = plano(htmlChip(`${ic('qr-code', 18)}QR Code das fotos`, 'n'), { pos: [3.9, 3.55, 0], esc: .0105 });
+  const plIc = qq.e.querySelector('.pl-ic');
+  const tit = titulo('Documentos', 'Sem o rodapé');
+  const G = enquadraRet(null, uneRet(...docs.map(p => p.ret())), { topo: 150, margem: 64, max: 1.45 / EC, el: .02, az: -.03 }),
+    o = { topo: 70, margem: 56, max: LEITURA, el: .015 };
+  const F1 = enquadraRet(null, faixa(P.h, 0, 125), { ...o, az: .03 }),
+        F2 = enquadraRet(null, uneRet(faixa(P.h, 350, HPT), chRod.ret()), { ...o, margem: 76, az: -.03 }),
+        F3 = enquadraRet(null, uneRet(faixa(P.h, 300, HPT), qq.ret(), chQR.ret(), chRod.ret()), { ...o, max: LEITURA * .8, az: .035 });
+  camera([[t0 - 3, G], [tol - .05, { ...G, d: G.d * .985, az: -.01 }, 'lin'], [tol + 1.45, F1], [tem - .3, { ...F1, d: F1.d * .985, az: .02 }, 'lin'], [tem + .9, F2],
+    [tqr - .1, { ...F2, d: F2.d * .985, az: -.02 }, 'lin'], [tqr + .9, F3], [tfim + 2.5, { ...F3, d: F3.d * .985, az: .015 }, 'lin']]);
+  return t => {
+    GL.style.opacity = eo(pr(t, t0 + .08, .5)).toFixed(3); posTitulo(tit, t, t0 - .9, t0 - .45, tol - .3);
+    [tpr, ttk, tfc, tou].forEach((T, k) => fluxoCartoes(docs[k].e, t, T - .4, 1e9, { tempos: [T - .1] }));
+    vis(pp.e, t, tol + .1, 1e9, { dy: 30 }); sp.material.uniforms.uOp.value = .55 * (+pp.e.style.opacity || 0);
+    marca(pp.e, 'logo', t, tlo); marca(pp.e, 'fim', t, trd);
+    vis(chRod.e, t, teco - .1, 1e9, { dy: 10 });
+    vis(qq.e, t, tqr + .2, 1e9, { dy: 18 }); vis(chQR.e, t, tfo - .05, 1e9, { dy: 10 });
+    const k = eo(pr(t, tlg - .05, .45)); plIc.style.opacity = k.toFixed(3); plIc.style.transform = `scale(${(.7 + .3 * eo5(pr(t, tlg - .05, .6))).toFixed(3)})`;
+  };
+}
+const CAPS = { 5: documentos };
+cena(d => CAPS[d.cap](d), { fov: 26 });
+</script></body></html>

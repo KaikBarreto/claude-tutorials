@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- T27 "White Label" · ilustrações no kit v3 (perfis/ecoflix/cenas_v3/LEIA.md), clima escuro (mundo dos dados: módulo, lista, fluxo).
+     Só as frases que a gravação não mostra (andamento_160.md, "Frases só com ilustração"). Voz real 1.60.22 (cenas/tempos).
+       cap01 · modulo       ilu01_muda            "Se essa gaveta não aparece..." + "o que muda e o que continua" (linhas 2 a 4)
+       cap03 · menuEscuro   ilu03_menu_escuro     "o menu do sistema é escuro: o logo de letra escura some" (linha 7)
+       cap05 · portalPonto  ilu05_portal_ponto    comprovante do Portal sem rodapé; rosto no ponto e logo da nota (linhas 6 e 7)
+       cap06 · voltar       ilu06_remover_desligar "só remover o logo não desliga nada" (linha 6)
+     O papel real do comprovante (cap05, linhas 2 a 4) está em documentos.html (clima claro).
+     Imagens (logo e ícone FICTÍCIOS da Recicla Vale) vêm de --anexo $TUT_HOME/t27/edit/out/comprovantes.
+     Ícones lucide usados: 'panel-top' 'puzzle' 'flask-conical' 'repeat' 'lock' 'palette' 'moon' 'eye-off' 'circle-check' 'download'
+     'file-minus' 'scan-face' 'file-badge' 'trash-2' 'power' 'file-text' 'image' 'globe' 'mail' 'log-in' 'app-window' 'panel-left'
+     Auditoria: auditar.cjs --aula planejamento/ecoflix/T27 --larg 1422 -->
+</head><body>
+<script type="module">
+import { pr, eo, W, ic, vis, foco, pulso, titulo, posTitulo, GL, camera, cena, clima, lugar, htmlChip, enquadraRet, uneRet }
+  from '../../../../perfis/ecoflix/cenas_v3/motor.js';
+import { mundoEscuro } from '../../../../perfis/ecoflix/cenas_v3/fundo.js';
+import { htmlFluxoCartoes, fluxoCartoes } from '../../../../perfis/ecoflix/cenas_v3/dados/fluxoCartoes.js';
+
+const EE = .0112;
+// o mundo escuro: planos no eixo (0,0,0); X = posição em px do desenho (y para baixo); ret = retângulo em metros
+function mundo() {
+  const EIXO = lugar([0, 0, 0]), E = mundoEscuro(EIXO, 0, EE), X = (html, x, y, o = {}) => E(html, x * EE, -y * EE, 0, o);
+  return { EIXO, E, X };
+}
+const cartaoP = (icone, rot, sub, cls, cw = 190) => htmlFluxoCartoes({ cartoes: [[icone, rot, sub, cls]], cw });
+const um = (p, t, T, b = 1e9) => fluxoCartoes(p.e, t, T - .4, b, { tempos: [T - .1] });   // um cartão que entra na palavra T
+const subEm = (p, t, T) => { const s = p.e.querySelector('.d-s'); if (s) s.style.opacity = eo(pr(t, T - .1, .4)).toFixed(3); };   // a legenda chega na palavra T
+
+// =====================================================================================================================
+// cap01, linhas 2 a 4 · clima escuro
+// "Se essa gaveta não aparece pra você, é porque o módulo White Label não está no seu plano. No período de teste, ele já vem
+//  liberado." / "Ligado, ele troca o logo do menu, o ícone do menu recolhido e a cor principal. E tira o rodapé do EcoSistema dos
+//  documentos." / "O endereço do sistema, a aba do navegador, os e-mails e a tela de login continuam os do EcoSistema. E é uma
+//  cor só: no tema escuro, o sistema usa a mesma cor, um pouco mais clara."
+// Estação 1: gaveta -> módulo fora do plano -> período de teste (uma fileira). Ela sai quando a fala chega no "Ligado";
+// estação 2: duas colunas, o que MUDA (verde) e o que CONTINUA (neutro), e embaixo "uma cor só" e o tema escuro.
+function modulo() {
+  const t0 = W(2, 'se'), tga = W(2, 'nao'), tmo = W(2, 'nao', 2), tte = W(2, 'ja'),
+    tT = W(3, 'troca'), tlo = W(3, 'menu'), tic = W(3, 'recolhido'), tco = W(3, 'principal'), trd = W(3, 'ecosistema'),
+    tsi = W(4, 'sistema'), tna = W(4, 'navegador'), tem = W(4, 'e-mails'), tlg = W(4, 'login'), tcn = W(4, 'continuam'), tuc = W(4, 'cor'), ttm = W(4, 'tema'),
+    tfim = W(4, 'clara', 1, 'e');
+  const { EIXO, E, X } = mundo();
+  E.fundo(0, 0, { aneis: false });
+  const row = X(htmlFluxoCartoes({ cartoes: [['panel-top', 'Gaveta White Label', 'não aparece', 'a'], ['puzzle', 'Módulo White Label', 'fora do plano', 'n'],
+    ['flask-conical', 'Período de teste', 'já vem liberado', 'res']], cw: 230, vao: 64 }), 0, 0);
+  const CX = 215, CW = 340, yh = -222, ys = [-148, -66, 16, 98], yb = 214;
+  const hM = X(htmlChip(`${ic('repeat', 18)}Muda`), -CX, yh), hC = X(htmlChip(`${ic('lock', 18)}Continua do EcoSistema`, 'n'), CX, yh);
+  const M = [['image', 'Logo do menu'], ['panel-left', 'Ícone do menu recolhido'], ['palette', 'Cor principal'], ['file-text', 'Rodapé do EcoSistema']].map(([i, r], k) => X(cartaoP(i, r, '', 'res', CW), -CX, ys[k]));
+  const C = [['globe', 'Endereço do sistema'], ['app-window', 'Aba do navegador'], ['mail', 'E-mails'], ['log-in', 'Tela de login']].map(([i, r], k) => X(cartaoP(i, r, '', 'n', CW), CX, ys[k]));
+  const u1 = X(cartaoP('palette', 'Uma cor só', '', 'a', CW), -CX, yb), u2 = X(cartaoP('moon', 'No tema escuro', 'a mesma, um pouco mais clara', 'n', CW), CX, yb);
+  const tit = titulo('White Label', 'O que muda', 'escuro');
+  const S1 = enquadraRet(EIXO, row.ret(), { az: -.02, max: 1.3 / EE }),
+        S2 = enquadraRet(EIXO, uneRet(hM.ret(), hC.ret(), M[0].ret(), M[3].ret(), C[0].ret(), C[3].ret(), u1.ret(), u2.ret()), { az: .02, max: 1.2 / EE, margem: 56 });
+  camera([[t0 - 3, S1], [tT - .55, { ...S1, d: S1.d * .985, az: .03 }, 'lin'], [tT + .7, S2], [tfim + 2.5, { ...S2, d: S2.d * .985, az: -.02 }, 'lin']]);
+  return t => {
+    clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, t0 - .45);
+    fluxoCartoes(row.e, t, tga - .4, 1e9, { tempos: [tga - .1, tmo - .1, tte - .1] }); row.op = 1 - eo(pr(t, tT - .5, .45));
+    vis(hM.e, t, tT - .1, 1e9, { dy: 10 }); vis(hC.e, t, tcn - .1, 1e9, { dy: 10 });
+    [tlo, tic, tco, trd].forEach((T, k) => um(M[k], t, T)); [tsi, tna, tem, tlg].forEach((T, k) => um(C[k], t, T));
+    um(u1, t, tuc); um(u2, t, ttm); subEm(u2, t, W(4, 'mesma'));
+  };
+}
+
+// =====================================================================================================================
+// cap03, linha 7 · clima escuro
+// "Mais uma dica: o menu do sistema é escuro. Logo de letra escura, com fundo transparente, quase some aqui. Mande uma versão
+//  que apareça bem no fundo escuro."
+// Duas faixas de menu escuro: o logo de letra escura entra e some no fundo; a versão clara (a mesma arte numa placa branca)
+// aparece bem. A câmera começa na faixa da esquerda e abre para as duas na "versão".
+function menuEscuro(d) {
+  const L = 7, t0 = W(L, 'mais'), tes = W(L, 'escuro'), tlo = W(L, 'logo'), tle = W(L, 'escura'), tqu = W(L, 'quase'), tso = W(L, 'some'), tve = W(L, 'versao'), tbe = W(L, 'bem'),
+    tfim = W(L, 'escuro', 2, 'e');
+  const { EIXO, E, X } = mundo();
+  E.fundo(0, 0, { aneis: false });
+  const faixa = (img, h) => `<div style="position:relative;width:420px;height:190px;border-radius:22px;background:linear-gradient(180deg,#0E1012,#08090A);border:1.5px solid rgba(255,255,255,.16);box-shadow:0 24px 44px -18px rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center"><img src="${d.anexo}/${img}" style="height:${h}px;display:block"></div>`;
+  const sL = X(faixa('rv-logo.png', 140), -250, 30), sR = X(faixa('rv-logo-claro.png', 126), 250, 30);
+  const cL = X(htmlChip(`${ic('eye-off', 18)}Logo de letra escura`, 'n'), -250, 170), cR = X(htmlChip(`${ic('circle-check', 18)}Logo versão clara`), 250, 170);
+  const iL = sL.e.querySelector('img'), iR = sR.e.querySelector('img');
+  const tit = titulo('White Label', 'Menu escuro', 'escuro');
+  const S1 = enquadraRet(EIXO, uneRet(sL.ret(), cL.ret()), { az: -.02, max: 1.35 / EE }), S2 = enquadraRet(EIXO, uneRet(sL.ret(), sR.ret(), cL.ret(), cR.ret()), { az: .02, max: 1.3 / EE });
+  camera([[t0 - 3, S1], [tqu + .6, { ...S1, d: S1.d * .985, az: .02 }, 'lin'], [tve + .6, S2], [tfim + 2.5, { ...S2, d: S2.d * .985, az: -.02 }, 'lin']]);
+  return t => {
+    clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, t0 - .45);
+    vis(sL.e, t, tes - .1, 1e9, { dy: 16 });
+    iL.style.opacity = (eo(pr(t, tlo - .05, .4)) * (1 - .86 * eo(pr(t, tqu, tso - tqu + .3)))).toFixed(3);
+    vis(cL.e, t, tle - .05, 1e9, { dy: 10 });
+    vis(sR.e, t, tve - .1, 1e9, { dy: 16 }); iR.style.opacity = eo(pr(t, tve, .4)).toFixed(3); vis(cR.e, t, tbe - .05, 1e9, { dy: 10 });
+    pulso(sR.e, t, tbe - .05, .02, .8);
+  };
+}
+
+// =====================================================================================================================
+// cap05, linhas 6 e 7 · clima escuro
+// "E o comprovante que o parceiro baixa no Portal já sai sem o rodapé, mesmo sem cor salva." / "No cadastro do rosto pro ponto, o
+//  funcionário também vê o logo e a cor da empresa. Já o logo da nota fiscal é outro: ele fica na Configuração Fiscal."
+// Fileira de cima: o comprovante do Portal (baixado -> sem o rodapé -> mesmo sem cor salva). Embaixo, dois cartões separados:
+// o rosto no ponto (logo e cor da empresa) e o logo da nota fiscal (outro campo, na Configuração Fiscal, em âmbar).
+function portalPonto() {
+  const t0 = W(6, 'e'), tpo = W(6, 'portal'), trd = W(6, 'rodape'), tsa = W(6, 'salva'),
+    tro = W(7, 'ponto'), tem = W(7, 'empresa'), tnf = W(7, 'fiscal'), tcf = W(7, 'configuracao'), tfim = W(7, 'fiscal', 2, 'e');
+  const { EIXO, E, X } = mundo();
+  E.fundo(0, 0, { aneis: false });
+  const A = X(htmlFluxoCartoes({ cartoes: [['download', 'Comprovante baixado', 'no Portal do parceiro', 'n'], ['file-minus', 'Sem o rodapé', 'do EcoSistema', 'res'],
+    ['palette', 'Mesmo sem cor salva', '', 'a']], cw: 250, vao: 64 }), 0, -105);
+  const B1 = X(cartaoP('scan-face', 'Cadastro do rosto no ponto', 'logo e cor da empresa', 'n', 340), -200, 110), B2 = X(cartaoP('file-badge', 'Logo da nota fiscal', 'fica na Configuração Fiscal', 'a', 340), 200, 110);
+  const tit = titulo('Documentos', 'Mais lugares', 'escuro');
+  const S1 = enquadraRet(EIXO, A.ret(), { az: -.02, max: 1.25 / EE }), S2 = enquadraRet(EIXO, uneRet(A.ret(), B1.ret(), B2.ret()), { az: .02, max: 1.2 / EE });
+  camera([[t0 - 3, S1], [tro - .6, { ...S1, d: S1.d * .985, az: .03 }, 'lin'], [tro + .6, S2], [tfim + 2.5, { ...S2, d: S2.d * .985, az: -.02 }, 'lin']]);
+  return t => {
+    clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, t0 - .45);
+    fluxoCartoes(A.e, t, tpo - .4, 1e9, { tempos: [tpo - .1, trd - .1, tsa - .1] });
+    um(B1, t, tro); subEm(B1, t, tem); um(B2, t, tnf); subEm(B2, t, tcf);
+  };
+}
+
+// =====================================================================================================================
+// cap06, linha 6 · clima escuro
+// "Ou seja, só remover o logo não desliga nada: os documentos continuam sem o rodapé do EcoSistema. Pra desligar de verdade, use o
+//  interruptor."
+// Em cima: só remover o logo -> não desliga nada -> documentos sem o rodapé. Embaixo: desligar de verdade, com a legenda
+// "o interruptor" que chega na palavra.
+function voltar() {
+  const t0 = W(6, 'ou'), tlo = W(6, 'logo'), tna = W(6, 'nada'), tdo = W(6, 'ecosistema'), tde = W(6, 'desligar'), tin = W(6, 'interruptor'), tfim = W(6, 'interruptor', 1, 'e');
+  const { EIXO, E, X } = mundo();
+  E.fundo(0, 0, { aneis: false });
+  const A = X(htmlFluxoCartoes({ cartoes: [['trash-2', 'Só remover o logo', '', 'n'], ['power', 'Não desliga nada', '', 'a'], ['file-minus', 'Documentos sem o rodapé', 'do EcoSistema', 'n']], cw: 250, vao: 64 }), 0, -85);
+  const B = X(cartaoP('power', 'Desligar de verdade', 'o interruptor', 'res', 340), 0, 115);
+  const tit = titulo('White Label', 'Voltar atrás', 'escuro');
+  const S = enquadraRet(EIXO, uneRet(A.ret(), B.ret()), { az: -.02, max: 1.2 / EE });
+  camera([[t0 - 3, S], [tin, { ...S, d: S.d * .985, az: .02 }, 'lin'], [tfim + 2.5, { ...S, d: S.d * .97, az: -.015 }, 'lin']]);
+  return t => {
+    clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, t0 - .45);
+    fluxoCartoes(A.e, t, tlo - .4, 1e9, { tempos: [tlo - .1, tna - .1, tdo - .1] });
+    um(B, t, tde); subEm(B, t, tin);
+  };
+}
+
+const CAPS = { 1: modulo, 3: menuEscuro, 5: portalPonto, 6: voltar };
+cena(d => CAPS[d.cap](d), { fov: 26 });
+</script></body></html>
