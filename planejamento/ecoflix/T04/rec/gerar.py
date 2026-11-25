@@ -542,7 +542,7 @@ TEXTO_CAIXA = TXT('Falta isto para emitir NF-e', within=DLG, exact=False)
 POPS = "(()=>{const o=window.open;window.__pops=[];window.open=function(...a){const w=o.apply(this,a);window.__pops.push(w);return w};return 'ok'})()"
 # o extrato (e o relatório de saldos) abrem uma aba nova e escrevem HTML nela (não é o #pdf-frame do openPdfInTab): devolve o HTML da aba em
 # base64 (`HTML:<b64>`) para a ilustração `"cena": "pdf"` (a gravação filma uma aba só; t04_pdf.py grava o arquivo)
-HTML_JS = ("(async()=>{let w;for(let i=0;i<60&&!(w=(window.__pops||[]).slice(-1)[0]);i++)await new Promise(r=>setTimeout(r,250));if(!w)return 'SEM JANELA';const espera=%s;for(let i=0;i<60;i++){let t='';"
+HTML_JS = ("(async()=>{let w;for(let i=0;i<60&&!(w=(window.__pops||[]).slice(-1)[0]);i++)await new Promise(r=>setTimeout(r,250));if(!w)return 'SEM JANELA';const espera=%s;for(let i=0;i<160;i++){let t='';"
            "try{t=(w.document&&w.document.documentElement&&w.document.documentElement.textContent)||''}catch(e){return 'ERRO '+e}"
            "if(t&&espera.every(x=>t.toLowerCase().includes(x.toLowerCase()))){const h='<!doctype html>'+w.document.documentElement.outerHTML;const u=new TextEncoder().encode(h);let s='';"
            "for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'HTML:'+btoa(s)}"

@@ -59,7 +59,7 @@ except OSError:   # pragma: no cover
 HOJE = FAKE_NOW[:10]
 NOMES = ['Abertura', 'Onde o Cato fica', 'Autorizar o Cato', 'A memória do Cato', 'Conhecendo o painel', 'O que ele responde bem',
          'Gráfico, tabela e de onde vêm os números', 'Lançar uma compra pela conversa', 'Venda, ticket e preços', 'Contas, caixa e banco',
-         'Saldo de cliente e fornecedor', 'Cadastros', 'Fotos, planilhas e PDFs', 'Nota fiscal pelo Cato', 'Pedidos, rotinas e revisões',
+         'Saldo de cliente e fornecedor', 'Cadastros', 'Fotos, planilhas e PDFs', 'Nota fiscal pelo Cato', 'Pedidos e revisões',
          'Limites e permissões', 'Avaliar e falar com o suporte', 'Recapitulando']
 T14 = ['t14/inicio'] + [f't14/apos-cap{n:02d}' for n in (2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 14)]
 T15 = ['t15/inicio', 't15/apos-cap01', 't15/apos-cap02', 't15/apos-cap10']
@@ -757,7 +757,6 @@ def cap04():
     c.hover(SEL('[role=menuitem]:has-text("Notificações")'), seconds=0.5, at=c.A(4, 'som', 0.5), label='menu: Notificações', noScroll=True)
     c.hover(SEL('[role=menuitemcheckbox]:has-text("Ler respostas automaticamente")'), seconds=0.5, at=c.A(4, 'leitura', 0.5), label='menu: Ler respostas automaticamente', noScroll=True)
     c.hover(SEL('[role=menuitem]:has-text("Acompanhar pedidos")'), seconds=0.5, at=c.A(4, 'pedidos', 0.5), label='menu: Acompanhar pedidos', noScroll=True)
-    c.hover(SEL('[role=menuitem]:has-text("Suas rotinas")'), seconds=0.5, at=c.A(4, 'rotinas', 0.5), label='menu: Suas rotinas', noScroll=True)
     c.hover(SEL('[role=menuitem]:has-text("Falar com atendente")'), seconds=0.5, at=c.A(4, 'atendente', 0.5), label='menu: Falar com atendente', noScroll=True)
     c.press('Escape', at=c.A(4, 'volta', 0.0), label='fecha o menu', optional=True)
     c.mark(5)
@@ -1138,8 +1137,7 @@ def cap13():
 
 
 def cap14():
-    """Pedidos, rotinas e revisões (o `setup` lança a compra e a venda): Acompanhar pedidos (L1), Suas rotinas e Ver sinais agora (L2),
-    Programar (L3), Respostas revisadas (L4)."""
+    """Pedidos e revisões (o `setup` lança a compra e a venda): Acompanhar pedidos (L1), Respostas revisadas (L2)."""
     c = Cap(14, S_PAINEL + setup_compra() + setup_venda(), pace=0.5, start=(900, 560))
     MENU = SEL(f'{PAINEL} button[aria-label="Mais opções do Cato"]', noScroll=True)
     VOLTA = SEL(f'{PAINEL} button[aria-label="Voltar à conversa"]', noScroll=True)
@@ -1151,22 +1149,9 @@ def cap14():
     c.mark(2)
     c.click(VOLTA, at=c.L(2) - 1.8, label='Voltar à conversa')
     c.click(MENU, at=c.L(2) - 0.9, label='três pontinhos (de novo)')
-    c.click(SEL('[role=menuitem]:has-text("Suas rotinas")', noScroll=True), at=c.A(2, 'rotinas', 0.5), label='Suas rotinas')
-    c.waitfor(text='Ver sinais agora', timeout=10)
-    c.click(SEL(f'{PAINEL} button:has-text("Ver sinais agora")', noScroll=True), at=c.A(2, 'sinais', 0.6), label='clique em Ver sinais agora')
-    c.hover(T('Estoque sem saída'), seconds=1.5, at=c.A(2, 'parado', 0.6), label='sinais: Estoque sem saída há pelo menos 30 dias', optional=True)
-    c.mark(3)
-    c.click(SEL(f'{PAINEL} button:has-text("Programar")', noScroll=True), at=c.A(3, 'programar', 0.6), label='Programar (Agendamentos)')
-    c.waitfor(text='O que acompanhar', timeout=8)
-    c.add({'do': 'select', 'target': SEL(f'{PAINEL} select#cato-routine-focus', noScroll=True), 'option': 'Contas a vencer e vencidas', 'at': round(c.A(3, 'resumo', 0.8), 2), 'label': 'O que acompanhar: Contas a vencer e vencidas', 'optional': True})
-    c.click(SEL(f'{PAINEL} #cato-routine-enabled', noScroll=True), at=c.A(3, 'aviso', 0.6), label='liga Receber este resumo')
-    c.click(BT('Salvar agendamento'), at=c.A(3, 'você', 0.4), label='clique em Salvar agendamento')
-    c.mark(4)
-    c.click(VOLTA, at=c.L(4) - 1.8, label='Voltar à conversa')
-    c.click(MENU, at=c.L(4) - 0.9, label='três pontinhos (de novo)')
-    c.click(SEL('[role=menuitem]:has-text("Respostas revisadas")', noScroll=True), at=c.A(4, 'Respostas', 0.4), label='Respostas revisadas')
+    c.click(SEL('[role=menuitem]:has-text("Respostas revisadas")', noScroll=True), at=c.A(2, 'Respostas', 0.4), label='Respostas revisadas')
     c.waitfor(text='Nenhuma resposta revisada', timeout=8)
-    c.hover(T('Nenhuma resposta revisada'), seconds=1.5, at=c.A(4, 'revisadas', 0.5), label='Nenhuma resposta revisada', optional=True)
+    c.hover(T('Nenhuma resposta revisada'), seconds=1.5, at=c.A(2, 'revisadas', 0.5), label='Nenhuma resposta revisada', optional=True)
     c.fim()
     return c
 

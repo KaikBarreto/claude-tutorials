@@ -1,6 +1,6 @@
 {
  "name": "t04-cap06",
- "title": "T4 · Cap. 6 · Os avisos da consulta (narração ESTIMADA 73,4 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T4 · Cap. 6 · Os avisos da consulta (narração 63,8 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t04-cap06",
  "pace": 0.5,
  "cps": 40,
@@ -128,7 +128,7 @@
   {
    "do": "mark",
    "name": "L1",
-   "at": 0.4
+   "at": 0
   },
   {
    "do": "click",
@@ -138,7 +138,7 @@
     "exact": true,
     "within": "main"
    },
-   "at": 3.02,
+   "at": 2.04,
    "label": "Novo Fornecedor"
   },
   {
@@ -151,13 +151,13 @@
    "target": {
     "selector": "[role=dialog] #name"
    },
-   "at": 4.2,
+   "at": 3.18,
    "label": "Nome Oficina do Tonho (clique no campo)"
   },
   {
    "do": "eval",
    "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM ALVO (nada em foco)';document.execCommand('insertText',false,\"Oficina do Tonho\");return e.value})()",
-   "at": 5.34,
+   "at": 4.04,
    "label": "Nome Oficina do Tonho (colado)"
   },
   {
@@ -167,7 +167,7 @@
     "name": "Dados Fiscais",
     "within": "[role=dialog]"
    },
-   "at": 8.07,
+   "at": 6.12,
    "label": "aba Dados Fiscais"
   },
   {
@@ -178,7 +178,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 8.22,
+   "at": 6.46,
    "label": "Pessoa Jurídica"
   },
   {
@@ -186,13 +186,13 @@
    "target": {
     "selector": "[role=dialog] #cpf_cnpj"
    },
-   "at": 9.06,
+   "at": 7.1,
    "label": "CNPJ 52.917.384/0001-05 (clique no campo)"
   },
   {
    "do": "eval",
    "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM ALVO (nada em foco)';document.execCommand('insertText',false,\"52917384000105\");return e.value})()",
-   "at": 9.36,
+   "at": 7.4,
    "label": "CNPJ 52.917.384/0001-05 (colado)"
   },
   {
@@ -200,7 +200,7 @@
    "target": {
     "selector": "[role=dialog] button[aria-label='Buscar dados pelo CNPJ']"
    },
-   "at": 9.97,
+   "at": 8.64,
    "label": "clica na lupa"
   },
   {
@@ -216,7 +216,7 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 10.48
+   "at": 8.98
   },
   {
    "do": "type",
@@ -229,7 +229,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 10.88,
+   "at": 9.38,
    "label": "zoom: o alerta vermelho Atenção: a Receita informa que este CNPJ está Baixada (L2-L3)"
   },
   {
@@ -240,7 +240,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 2.0,
-   "at": 11.87,
+   "at": 10.18,
    "label": "o alerta vermelho: CNPJ Baixada",
    "optional": true,
    "timeout": 4
@@ -248,17 +248,17 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 18.12
+   "at": 16.1
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 26.75
+   "at": 23.84
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim()===\"Inscri\\u00e7\\u00e3o Estadual\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-230);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 26.75,
+   "at": 23.84,
    "label": "desce até a inscrição estadual"
   },
   {
@@ -274,7 +274,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 2.2,
-   "at": 28.44,
+   "at": 25.44,
    "label": "zoom: A Sintegra não tem inscrição estadual ativa (L4)",
    "optional": true,
    "timeout": 4
@@ -282,12 +282,12 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 39.77
+   "at": 35.2
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim()===\"CNPJ\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-200);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 39.77,
+   "at": 35.2,
    "label": "sobe até o CNPJ"
   },
   {
@@ -295,13 +295,13 @@
    "target": {
     "selector": "[role=dialog] #cpf_cnpj"
    },
-   "at": 42.96,
+   "at": 38.54,
    "label": "clica no CNPJ"
   },
   {
    "do": "eval",
    "js": "(()=>{const e=document.querySelector('[role=dialog] #cpf_cnpj');if(!e)return 'SEM ALVO';e.focus();e.select();document.execCommand('delete');return 'cnpj apagado: '+JSON.stringify(e.value)})()",
-   "at": 44.02,
+   "at": 39.51,
    "label": "apaga o CNPJ"
   },
   {
@@ -311,7 +311,7 @@
    },
    "text": "46280719000124",
    "cps": 30,
-   "at": 46.55,
+   "at": 41.93,
    "label": "digita o CNPJ da serralheria",
    "noClick": true
   },
@@ -343,7 +343,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.15,
-   "at": 59.38,
+   "at": 52.59,
    "label": "Já existe um fornecedor cadastrado com este CPF/CNPJ",
    "optional": true,
    "timeout": 4
@@ -351,7 +351,7 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 60.47
+   "at": 53.63
   },
   {
    "do": "click",
@@ -361,7 +361,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 71.78,
+   "at": 62.95,
    "label": "Cancelar (nada é salvo)"
   },
   {
@@ -372,7 +372,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 73.43
+   "at": 63.76
   }
  ]
 }

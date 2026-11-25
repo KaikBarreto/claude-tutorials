@@ -1,6 +1,6 @@
 {
  "name": "t04-cap04",
- "title": "T4 · Cap. 4 · O que falta pra emitir nota (narração ESTIMADA 127,0 s; marcas L1..L13 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T4 · Cap. 4 · O que falta pra emitir nota (narração 100,9 s; marcas L1..L13 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t04-cap04",
  "pace": 0.5,
  "cps": 40,
@@ -208,7 +208,7 @@
   {
    "do": "mark",
    "name": "L1",
-   "at": 0.4
+   "at": 0
   },
   {
    "do": "type",
@@ -221,7 +221,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 0.4,
+   "at": 0.35,
    "label": "zoom: a caixa âmbar Falta isto para emitir NF-e (1) com o link Número (L1)"
   },
   {
@@ -230,7 +230,7 @@
     "selector": "[role=dialog] section[aria-label='Pendências para emitir NF-e'] button:has-text('Número')"
    },
    "seconds": 0.15,
-   "at": 6.43,
+   "at": 5.3,
    "label": "o link Número (Dados Fiscais)",
    "optional": true,
    "timeout": 4
@@ -238,14 +238,14 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 6.99
+   "at": 5.46
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] section[aria-label='Pendências para emitir NF-e'] button:has-text('Número')"
    },
-   "at": 7.29,
+   "at": 5.76,
    "label": "Número (Dados Fiscais): a janela troca de aba e o cursor cai no campo"
   },
   {
@@ -262,7 +262,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 7.39,
+   "at": 5.86,
    "label": "zoom: Número vazio e a linha vermelha (L2)"
   },
   {
@@ -273,7 +273,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 1.8,
-   "at": 12.25,
+   "at": 9.7,
    "label": "linha vermelha: Não veio da Receita — obrigatório para emitir NF-e",
    "optional": true,
    "timeout": 4
@@ -281,19 +281,19 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 17.74
+   "at": 13.94
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 27.81
+   "at": 22.0
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] #numero"
    },
-   "at": 28.34,
+   "at": 22.54,
    "label": "Número 418 (clique no campo)"
   },
   {
@@ -303,7 +303,7 @@
    },
    "text": "418",
    "cps": 40,
-   "at": 30.78,
+   "at": 24.34,
    "label": "Número 418",
    "noClick": true
   },
@@ -320,12 +320,12 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 33.47
+   "at": 26.48
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim()===\"Inscri\\u00e7\\u00e3o Estadual\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-230);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 33.47,
+   "at": 26.48,
    "label": "sobe a janela até a inscrição estadual"
   },
   {
@@ -342,7 +342,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 34.17,
+   "at": 27.18,
    "label": "zoom: o aviso da Sintegra e o link Usar a da Sintegra (L5)"
   },
   {
@@ -354,7 +354,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.15,
-   "at": 41.09,
+   "at": 32.5,
    "label": "o link Usar a da Sintegra",
    "optional": true,
    "timeout": 4
@@ -362,7 +362,7 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 41.87
+   "at": 33.04
   },
   {
    "do": "click",
@@ -372,7 +372,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 43.16,
+   "at": 34.14,
    "label": "clica em Usar a da Sintegra"
   },
   {
@@ -386,7 +386,7 @@
     "selector": "[role=dialog] #inscricao_estadual"
    },
    "seconds": 0.8,
-   "at": 45.53,
+   "at": 36.16,
    "label": "zoom: Inscrição Estadual 688412573032 e Indicador IE Contribuinte ICMS (L6)",
    "optional": true,
    "timeout": 4
@@ -397,7 +397,7 @@
     "selector": "[role=dialog] button[role=combobox]:has-text('Contribuinte ICMS')"
    },
    "seconds": 1.4,
-   "at": 48.57,
+   "at": 38.56,
    "label": "Indicador IE: Contribuinte ICMS",
    "optional": true,
    "timeout": 4
@@ -405,15 +405,15 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 55.43
+   "at": 43.28
   },
   {
    "do": "hover",
    "target": {
     "selector": "[role=dialog] button[role=combobox]:has-text('Simples Nacional')"
    },
-   "seconds": 0.88,
-   "at": 57.65,
+   "seconds": 0.55,
+   "at": 45.36,
    "label": "zoom: Regime Simples Nacional e a linha da consulta (L7)",
    "optional": true,
    "timeout": 4
@@ -426,7 +426,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 1.6,
-   "at": 59.48,
+   "at": 46.86,
    "label": "Preenchido pela consulta do CNPJ",
    "optional": true,
    "timeout": 4
@@ -439,12 +439,12 @@
   {
    "do": "mark",
    "name": "L8",
-   "at": 63.07
+   "at": 49.42
   },
   {
    "do": "mark",
    "name": "L9",
-   "at": 75.18
+   "at": 59.34
   },
   {
    "do": "click",
@@ -454,7 +454,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 75.48,
+   "at": 59.64,
    "label": "Salvar"
   },
   {
@@ -472,7 +472,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll('main aside button')].find(b=>b.textContent.includes(\"Serralheria Bem-Te-Vi\"));if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-420);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 77.63,
+   "at": 61.26,
    "label": "rola a lista até a serralheria"
   },
   {
@@ -480,8 +480,8 @@
    "target": {
     "selector": "main aside button:has-text('Serralheria Bem-Te-Vi') .cursor-help:has(svg.lucide-badge-check)"
    },
-   "seconds": 2.0,
-   "at": 79.23,
+   "seconds": 1.29,
+   "at": 62.86,
    "label": "sinal verde da serralheria (Pronto para emitir NF-e)",
    "optional": true,
    "timeout": 4
@@ -494,15 +494,15 @@
   {
    "do": "mark",
    "name": "L10",
-   "at": 82.21
+   "at": 65.1
   },
   {
    "do": "hover",
    "target": {
     "selector": "main aside button:has-text('Rogério Alves Costa') .cursor-help:has(svg[class*=triangle])"
    },
-   "seconds": 3.7,
-   "at": 87.78,
+   "seconds": 2.61,
+   "at": 69.18,
    "label": "triângulo do Rogério (o que falta para a NF-e)",
    "optional": true,
    "timeout": 4
@@ -515,14 +515,14 @@
   {
    "do": "mark",
    "name": "L11",
-   "at": 92.43
+   "at": 72.74
   },
   {
    "do": "click",
    "target": {
     "selector": "main aside button:has-text('Rogério Alves Costa') p.font-medium"
    },
-   "at": 93.34,
+   "at": 73.58,
    "label": "clica no Rogério: a ficha abre ao lado"
   },
   {
@@ -540,7 +540,7 @@
     "exact": true,
     "within": "main section[aria-label='Detalhes de Rogério Alves Costa']"
    },
-   "at": 94.5,
+   "at": 74.42,
    "label": "Editar"
   },
   {
@@ -555,7 +555,7 @@
     "name": "Dados Fiscais",
     "within": "[role=dialog]"
    },
-   "at": 94.81,
+   "at": 74.68,
    "label": "aba Dados Fiscais"
   },
   {
@@ -563,7 +563,7 @@
    "target": {
     "selector": "[role=dialog] input[placeholder='00000-000']"
    },
-   "at": 95.74,
+   "at": 75.54,
    "label": "CEP 12062-150 (clique no campo)"
   },
   {
@@ -573,7 +573,7 @@
    },
    "text": "12062150",
    "cps": 40,
-   "at": 96.47,
+   "at": 76.15,
    "label": "CEP 12062-150",
    "noClick": true
   },
@@ -592,7 +592,7 @@
    "target": {
     "selector": "[role=dialog] #numero"
    },
-   "at": 100.37,
+   "at": 80.02,
    "label": "Número 77 (clique no campo)"
   },
   {
@@ -602,7 +602,7 @@
    },
    "text": "77",
    "cps": 40,
-   "at": 100.92,
+   "at": 80.45,
    "label": "Número 77",
    "noClick": true
   },
@@ -614,7 +614,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 101.23,
+   "at": 80.64,
    "label": "Salvar"
   },
   {
@@ -634,8 +634,8 @@
    "target": {
     "selector": "main aside button:has-text('Rogério Alves Costa') .cursor-help:has(svg.lucide-badge-check)"
    },
-   "seconds": 0.29,
-   "at": 103.84,
+   "seconds": 0.15,
+   "at": 82.9,
    "label": "o Rogério agora com o sinal verde",
    "optional": true,
    "timeout": 4
@@ -643,14 +643,14 @@
   {
    "do": "mark",
    "name": "L12",
-   "at": 105.08
+   "at": 83.46
   },
   {
    "do": "click",
    "target": {
     "selector": "main button[aria-pressed]:has-text('incompletos')"
    },
-   "at": 105.68,
+   "at": 84.0,
    "label": "botão incompletos"
   },
   {
@@ -669,7 +669,7 @@
     "selector": "main aside button:has-text('Cida Ramos') p.font-medium"
    },
    "seconds": 1.0,
-   "at": 108.67,
+   "at": 86.26,
    "label": "a lista só com os incompletos",
    "optional": true,
    "timeout": 4
@@ -677,14 +677,14 @@
   {
    "do": "mark",
    "name": "L13",
-   "at": 112.72
+   "at": 89.14
   },
   {
    "do": "click",
    "target": {
     "selector": "main button[aria-pressed]:has-text('Mostrar todos')"
    },
-   "at": 113.02,
+   "at": 89.44,
    "label": "Mostrar todos (a lista volta)"
   },
   {
@@ -693,7 +693,7 @@
     "selector": "main aside button:has-text('Serralheria Bem-Te-Vi') p.font-medium"
    },
    "seconds": 1.0,
-   "at": 119.34,
+   "at": 95.01,
    "label": "a lista inteira",
    "optional": true,
    "timeout": 4
@@ -706,7 +706,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 127.04
+   "at": 100.88
   }
  ]
 }

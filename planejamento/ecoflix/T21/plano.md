@@ -4,10 +4,10 @@
   Agenda e rotina".
 - **Objetivo:** do "só consulta" ao "prepara e você confirma": autorizar e ligar a memória; perguntar (resultado, saldos,
   estoque, banco, caixa); gráfico × tabela e conferir na tela de origem; pedir compra, venda, ticket e reajuste de preço;
-  baixa de conta, caixa, transferência, saldo de parceiro; cadastros; anexos; NF-e de um pedido; acompanhar pedidos e
-  rotinas; limites e permissões; avaliar e chegar ao atendente.
-- **Áreas das vinhetas:** CATO · AUTORIZAÇÃO · MEMÓRIA · PERGUNTAS ×2 · RESPOSTAS · AÇÕES ×3 · FINANCEIRO ×2 · ARQUIVOS · FISCAL · ROTINA · LIMITES · AJUDA · RESUMO.
-- **Alvo:** ~24 min de vídeo (2.630 palavras, 14.065 caracteres de fala). Desktop **1600×900**, Rafael Nogueira (MASTER), cortes
+  baixa de conta, caixa, transferência, saldo de parceiro; cadastros; anexos; NF-e de um pedido; acompanhar pedidos;
+  limites e permissões; avaliar e chegar ao atendente.
+- **Áreas das vinhetas:** CATO · AUTORIZAÇÃO · MEMÓRIA · PERGUNTAS ×2 · RESPOSTAS · AÇÕES ×3 · FINANCEIRO ×2 · ARQUIVOS · FISCAL · PEDIDOS · LIMITES · AJUDA · RESUMO.
+- **Alvo:** ~24 min de vídeo (2.654 palavras, 14.181 caracteres de fala). Desktop **1600×900**, Rafael Nogueira (MASTER), cortes
   como **Marcos Antunes** (cap. 2 e cap. 15). `FAKE_NOW=2026-11-10T08:30:00-03:00`. Todas as respostas e cartões do Cato são
   **simulados** no backend falso, no formato real, com os números do mundo.
 - Base: `T21/inventario.md` (1.59.154) + a seção "Revisão 1.60.22" dele + `cobertura_160.md`. Código 1.60.22 em
@@ -32,7 +32,7 @@
 | 11 | AÇÕES / Cadastros | parceiro e material novos; produção só citada | cria × altera | conversa do cap. 10 |
 | 12 | ARQUIVOS / Fotos, planilhas e PDFs | foto de pesagem → ticket; print de tabela → pergunta | arquivo não manda; formatos | conversa do cap. 11 |
 | 13 | FISCAL / Nota fiscal pelo Cato | "Preparar NF-e", forma de pagamento, prévia do DANFE, "Criar rascunho", "Emitir NF-e", autorizada, "Abrir DANFE" | os três tempos; Cato × tela de Notas | conversa do cap. 12 |
-| 14 | ROTINA / Pedidos, rotinas e revisões | "Acompanhar pedidos", "Suas rotinas", "Respostas revisadas" | (só tela) | conversa do cap. 13 |
+| 14 | PEDIDOS / Pedidos e revisões | "Acompanhar pedidos", "Respostas revisadas" | (só tela) | conversa do cap. 13 |
 | 15 | LIMITES / Limites e permissões | "O que você consegue fazer?", corte do Marcos, restrições, o que não faz, limites de uso | permissão nas duas portas; o que fica nas telas; limites de uso | conversa do cap. 14 |
 | 16 | AJUDA / Avaliar e falar com o suporte | 👍 e 👎, pesquisa de fim de conversa, "Falar com atendente" | (só tela) | conversa do cap. 15 |
 | 17 | RESUMO / Recapitulando | montagem; cartão "Próximo: Dashboard, Agenda e rotina" | | |
@@ -81,7 +81,6 @@ a prévia vale 10 minutos (`CatoActionCard.tsx:329`); a permissão é conferida 
 | A17e | "Consultar situação" (13) | "NF-e autorizada", "A nota nº N foi aprovada pela SEFAZ.", "O DANFE já está pronto para abrir.", "Abrir DANFE" | `CatoInvoiceResult.tsx:131-140,143` |
 | (13) | recusa (só fala) | o `error_message` aparece no cartão; "Emitir novamente" | `CatoInvoiceResult.tsx:174-175,187` |
 | (14) | "Acompanhar pedidos" | "Pedidos lançados por você no Cato. Até 20 registros dos últimos 30 dias.", "Para acompanhar", "Outros pedidos" | `CatoOrderJourney.tsx:72-76` |
-| (14) | "Suas rotinas" | "Ver sinais agora", "Estoque sem saída há pelo menos 30 dias", "O que acompanhar", "Frequência", "Receber este resumo", "Salvar agendamento", "Agendamento salvo" | `CatoRoutinesPanel.tsx:25,68,88-105`; rótulos em `lib/cato/routines.ts:3-7` |
 | (14) | "Respostas revisadas" | "Nenhuma resposta revisada" | `CatoCorrectionsPanel.tsx:56` |
 | A18 | "O que você consegue fazer?" (15) | "O que consigo fazer no seu acesso agora", "1. Ações com sua confirmação" (lista dos 18 rótulos), "2. Consultas", "3. Limites" | `_shared/cato/capabilityAnswer.ts:1-37` |
 | A19 | Marcos pede preço (15) | "Seu usuário não tem permissão para alterar preços. Peça ao administrador da empresa para conferir seu acesso. Nenhum preço foi alterado." | `_shared/cato/priceIntent.ts:67` |
@@ -211,7 +210,7 @@ R8 · "Lista meu estoque em tabela"
 
 ## Riscos e decisões para o Kaik
 1. **Duração:** ~24 min numa aula só (o Kaik pediu "nenhuma aula se divide"). A cobertura sugeria duas; ficou uma.
-2. **Rotinas (cap. 14):** os resumos agendados são recentes; confirmar se já estão liberados para todos os clientes antes da voz.
+2. **Rotinas (cap. 14):** decidido em 25/11: os resumos agendados ainda não estão liberados para os clientes e saíram da aula (fala, gerar.py e ilustrações); só os pedidos e as respostas revisadas ficam no cap. 14.
 3. **Balão de dica (cap. 1):** sorteia a frase e depende da chave local; se não der para encenar, a linha sai sem prejuízo.
 4. **Títulos:** o painel diz "Agente de IA da EcoSistema"; o catálogo segue "Cato, o assistente".
 5. **Ambiente da nota** não é anunciado; o modelo novo do DANFE só vale em produção a partir de 01/12/2026 (não citar).

@@ -88,7 +88,7 @@ Depois, o fiado. Em Contas a Pagar e Receber, na aba A Receber, ficam as parcela
 O que passar da data aparece como Vencida, e é hora de cobrar. Assim, nenhum fiado fica esquecido.""",
 12: """E uma vez por mês, o fechamento: umas duas horas, em quatro passos.
 Conciliar o extrato do banco com o sistema e conferir o dê-érri-ê do mês, no Relatório Financeiro.
-Mandar o pacote das notas pro contador e ver se ficou algum ême-tê-érre ou cê-dê-éfe pendente. Esses dois dependem do módulo de notas fiscais, do plano contratado.
+Mandar o pacote das notas pro contador e ver se ficou algum ême-tê-érre ou cê-dê-éfe pendente. Esses dois ficam no Fiscal e Ambiental, que depende do plano contratado.
 Pra não esquecer, a gente marca o fechamento na Agenda, no primeiro dia útil: terça, primeiro de dezembro.
 Nova Tarefa: Fechamento de novembro, com os quatro passos na descrição, às oito da manhã, e Lembrar no dia ligado. No dia, ela aparece logo cedo.""",
 13: """Pronto! Recapitulando: a gente leu o Dashboard sem confundir margem com lucro, com os gráficos de seis meses, o comparativo, os rankings e os saldos em aberto.

@@ -1,6 +1,6 @@
 {
  "name": "t04-cap05",
- "title": "T4 · Cap. 5 · Empresa do Lucro Real (narração ESTIMADA 171,6 s; marcas L1..L15 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T4 · Cap. 5 · Empresa do Lucro Real (narração 133,4 s; marcas L1..L15 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t04-cap05",
  "pace": 0.5,
  "cps": 40,
@@ -111,14 +111,14 @@
   {
    "do": "mark",
    "name": "L1",
-   "at": 0.4
+   "at": 0.04
   },
   {
    "do": "click",
    "target": {
     "selector": "main aside button:has-text('Aços Quiririm Ltda') p.font-medium"
    },
-   "at": 2.08,
+   "at": 1.68,
    "label": "clica na Aços Quiririm: a ficha abre ao lado"
   },
   {
@@ -136,7 +136,7 @@
     "exact": true,
     "within": "main section[aria-label='Detalhes de Aços Quiririm Ltda']"
    },
-   "at": 14.83,
+   "at": 12.18,
    "label": "Editar"
   },
   {
@@ -151,21 +151,21 @@
     "name": "Dados Fiscais",
     "within": "[role=dialog]"
    },
-   "at": 16.57,
+   "at": 13.84,
    "label": "aba Dados Fiscais"
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 17.31
+   "at": 14.42
   },
   {
    "do": "hover",
    "target": {
     "selector": "[role=dialog] button[aria-label='Buscar dados pelo CNPJ']"
    },
-   "seconds": 1.0,
-   "at": 17.86,
+   "seconds": 0.71,
+   "at": 14.98,
    "label": "a lupa do CNPJ (conferir cadastro antigo)",
    "optional": true,
    "timeout": 4
@@ -175,7 +175,7 @@
    "target": {
     "selector": "[role=dialog] button[aria-label='Buscar dados pelo CNPJ']"
    },
-   "at": 20.11,
+   "at": 16.64,
    "label": "clica na lupa: consulta de novo"
   },
   {
@@ -186,12 +186,12 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 24.95
+   "at": 20.1
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim()===\"Inscri\\u00e7\\u00e3o Estadual\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-230);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 24.95,
+   "at": 20.1,
    "label": "sobe a janela até a inscrição estadual"
   },
   {
@@ -208,7 +208,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 25.25,
+   "at": 20.4,
    "label": "zoom: o aviso da Sintegra e o link Usar a da Sintegra (L3-L4)"
   },
   {
@@ -220,7 +220,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 1.4,
-   "at": 27.93,
+   "at": 22.5,
    "label": "o aviso: a ficha tem outro número",
    "optional": true,
    "timeout": 4
@@ -228,12 +228,12 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 36.54
+   "at": 28.99
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 44.56
+   "at": 34.91
   },
   {
    "do": "click",
@@ -243,7 +243,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 45.77,
+   "at": 35.93,
    "label": "clica em Usar a da Sintegra"
   },
   {
@@ -254,14 +254,14 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 53.87
+   "at": 42.35
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] button[role=combobox]:has-text('Contribuinte ICMS')"
    },
-   "at": 55.15,
+   "at": 43.61,
    "label": "abre o Indicador IE"
   },
   {
@@ -291,7 +291,7 @@
     "name": "Contribuinte ICMS"
    },
    "seconds": 0.5,
-   "at": 56.09,
+   "at": 44.58,
    "label": "Contribuinte ICMS",
    "optional": true,
    "timeout": 4
@@ -303,7 +303,7 @@
     "name": "Isento de Inscrição"
    },
    "seconds": 0.5,
-   "at": 63.3,
+   "at": 49.54,
    "label": "Isento de Inscrição",
    "optional": true,
    "timeout": 4
@@ -315,7 +315,7 @@
     "name": "Não Contribuinte"
    },
    "seconds": 0.5,
-   "at": 67.7,
+   "at": 53.14,
    "label": "Não Contribuinte",
    "optional": true,
    "timeout": 4
@@ -326,13 +326,13 @@
     "role": "option",
     "name": "Contribuinte ICMS"
    },
-   "at": 72.74,
+   "at": 56.82,
    "label": "fecha em Contribuinte ICMS"
   },
   {
    "do": "mark",
    "name": "L7",
-   "at": 72.74
+   "at": 56.82
   },
   {
    "do": "hover",
@@ -342,7 +342,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 1.8,
-   "at": 73.14,
+   "at": 57.22,
    "label": "a ajuda: Contribuinte ICMS exige Inscrição Estadual",
    "optional": true,
    "timeout": 4
@@ -350,12 +350,12 @@
   {
    "do": "mark",
    "name": "L8",
-   "at": 82.05
+   "at": 63.62
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim()===\"Regime tribut\\u00e1rio do cliente\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-300);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 82.05,
+   "at": 63.62,
    "label": "desce até o Regime tributário do cliente"
   },
   {
@@ -369,7 +369,7 @@
     "selector": "[role=dialog] button[role=combobox]:has-text('Lucro Real')"
    },
    "seconds": 1.6,
-   "at": 86.62,
+   "at": 67.41,
    "label": "zoom: Regime tributário do cliente em Lucro Real e a frase da escrituração (L8-L9)",
    "optional": true,
    "timeout": 4
@@ -377,7 +377,7 @@
   {
    "do": "mark",
    "name": "L9",
-   "at": 93.79
+   "at": 72.21
   },
   {
    "do": "hover",
@@ -387,7 +387,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 1.6,
-   "at": 95.55,
+   "at": 73.65,
    "label": "Confirme com o contador se mudou desde então",
    "optional": true,
    "timeout": 4
@@ -395,14 +395,14 @@
   {
    "do": "mark",
    "name": "L10",
-   "at": 101.43
+   "at": 78.05
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] button[role=combobox]:has-text('Lucro Real')"
    },
-   "at": 101.95,
+   "at": 78.51,
    "label": "abre o seletor de regime"
   },
   {
@@ -420,7 +420,7 @@
     "name": "Simples Nacional"
    },
    "seconds": 0.3,
-   "at": 102.89,
+   "at": 79.49,
    "label": "opção Simples Nacional",
    "optional": true,
    "timeout": 4
@@ -432,7 +432,7 @@
     "name": "MEI"
    },
    "seconds": 0.15,
-   "at": 104.41,
+   "at": 80.93,
    "label": "opção MEI",
    "optional": true,
    "timeout": 4
@@ -444,7 +444,7 @@
     "name": "Lucro Presumido"
    },
    "seconds": 0.3,
-   "at": 105.39,
+   "at": 81.97,
    "label": "opção Lucro Presumido",
    "optional": true,
    "timeout": 4
@@ -456,7 +456,7 @@
     "name": "Lucro Real"
    },
    "seconds": 0.3,
-   "at": 106.76,
+   "at": 83.25,
    "label": "opção Lucro Real",
    "optional": true,
    "timeout": 4
@@ -468,7 +468,7 @@
     "name": "Não informado"
    },
    "seconds": 0.3,
-   "at": 108.13,
+   "at": 84.61,
    "label": "opção Não informado",
    "optional": true,
    "timeout": 4
@@ -476,13 +476,13 @@
   {
    "do": "press",
    "key": "Escape",
-   "at": 113.64,
+   "at": 88.95,
    "label": "fecha o seletor sem trocar (Esc)"
   },
   {
    "do": "mark",
    "name": "L11",
-   "at": 113.69
+   "at": 88.56
   },
   {
    "do": "hover",
@@ -492,7 +492,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 2.0,
-   "at": 114.09,
+   "at": 88.96,
    "label": "zoom: a ajuda É o regime de quem compra de você (L11)",
    "optional": true,
    "timeout": 4
@@ -500,12 +500,12 @@
   {
    "do": "mark",
    "name": "L12",
-   "at": 126.34
+   "at": 98.56
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim()===\"\\u00c9 Ind\\u00fastria\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-300);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 126.34,
+   "at": 98.56,
    "label": "desce até É Indústria e É uma Reciclagem"
   },
   {
@@ -513,13 +513,13 @@
    "target": {
     "selector": "[role=dialog] #is_industry"
    },
-   "at": 140.92,
+   "at": 109.92,
    "label": "liga É Indústria"
   },
   {
    "do": "mark",
    "name": "L13",
-   "at": 141.72
+   "at": 110.26
   },
   {
    "do": "hover",
@@ -529,7 +529,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 1.4,
-   "at": 142.73,
+   "at": 111.54,
    "label": "É uma Reciclagem (sem ligar)",
    "optional": true,
    "timeout": 4
@@ -537,7 +537,7 @@
   {
    "do": "mark",
    "name": "L14",
-   "at": 150.96
+   "at": 117.7
   },
   {
    "do": "click",
@@ -547,7 +547,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 151.26,
+   "at": 118.0,
    "label": "Salvar"
   },
   {
@@ -568,7 +568,7 @@
     "selector": "main aside button:has-text('Aços Quiririm Ltda') .cursor-help:has(svg.lucide-badge-check)"
    },
    "seconds": 1.4,
-   "at": 156.37,
+   "at": 122.42,
    "label": "a Aços continua com o sinal verde",
    "optional": true,
    "timeout": 4
@@ -576,7 +576,7 @@
   {
    "do": "mark",
    "name": "L15",
-   "at": 162.47
+   "at": 126.42
   },
   {
    "do": "hover",
@@ -587,7 +587,7 @@
     "within": "main"
    },
    "seconds": 1.0,
-   "at": 166.81,
+   "at": 130.18,
    "label": "Novo Cliente (sem clicar)",
    "optional": true,
    "timeout": 4
@@ -600,7 +600,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 171.56
+   "at": 133.44
   }
  ]
 }

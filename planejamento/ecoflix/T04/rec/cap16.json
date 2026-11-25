@@ -1,6 +1,6 @@
 {
  "name": "t04-cap16",
- "title": "T4 · Cap. 16 · Relatório de saldos (narração ESTIMADA 87,9 s; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T4 · Cap. 16 · Relatório de saldos (narração 70,1 s; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t04-cap16",
  "pace": 0.5,
  "cps": 40,
@@ -115,20 +115,20 @@
   {
    "do": "mark",
    "name": "L1",
-   "at": 0.4
+   "at": 0
   },
   {
    "do": "click",
    "target": {
     "selector": "main button[aria-label='Relatório']"
    },
-   "at": 5.94,
+   "at": 5.2,
    "label": "Relatório"
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 6.83
+   "at": 5.94
   },
   {
    "do": "waitFor",
@@ -148,7 +148,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 1.4,
-   "at": 10.34,
+   "at": 9.06,
    "label": "zoom: bloco A Receber, Total R$ 19.540,00 (L2-L4)",
    "optional": true,
    "timeout": 4
@@ -159,7 +159,7 @@
     "selector": "[role=dialog] tr:has-text('Fundição Bandeira do Vale')"
    },
    "seconds": 1.6,
-   "at": 14.97,
+   "at": 13.06,
    "label": "Fundição Bandeira do Vale R$ 14.370,00",
    "optional": true,
    "timeout": 4
@@ -167,7 +167,7 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 19.63
+   "at": 16.18
   },
   {
    "do": "hover",
@@ -175,7 +175,7 @@
     "selector": "[role=dialog] tr:has-text('Aços Quiririm Ltda')"
    },
    "seconds": 1.0,
-   "at": 20.18,
+   "at": 16.74,
    "label": "Aços Quiririm Ltda, Cliente",
    "optional": true,
    "timeout": 4
@@ -186,7 +186,7 @@
     "selector": "[role=dialog] tr:has-text('Aços Quiririm Ltda') td:nth-child(3)"
    },
    "seconds": 1.4,
-   "at": 23.83,
+   "at": 20.1,
    "label": "R$ 4.870,00 em verde",
    "optional": true,
    "timeout": 4
@@ -194,7 +194,7 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 28.33
+   "at": 23.79
   },
   {
    "do": "hover",
@@ -202,7 +202,7 @@
     "selector": "[role=dialog] tr:has-text('Valdir Pereira')"
    },
    "seconds": 1.0,
-   "at": 28.88,
+   "at": 24.35,
    "label": "Valdir Pereira, Fornecedor",
    "optional": true,
    "timeout": 4
@@ -213,7 +213,7 @@
     "selector": "[role=dialog] tr:has-text('Valdir Pereira') td:nth-child(3)"
    },
    "seconds": 1.4,
-   "at": 32.83,
+   "at": 27.63,
    "label": "-R$ 300,00 em verde",
    "optional": true,
    "timeout": 4
@@ -221,12 +221,12 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 38.47
+   "at": 32.11
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim()===\"A Pagar\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-150);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 38.47,
+   "at": 32.11,
    "label": "desce até A Pagar"
   },
   {
@@ -241,8 +241,8 @@
     "exact": false,
     "within": "[role=dialog]"
    },
-   "seconds": 1.4,
-   "at": 41.45,
+   "seconds": 1.19,
+   "at": 35.09,
    "label": "zoom: bloco A Pagar, Total R$ 3.690,00 (L5-L8)",
    "optional": true,
    "timeout": 4
@@ -255,7 +255,7 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 44.22
+   "at": 37.23
   },
   {
    "do": "hover",
@@ -263,7 +263,7 @@
     "selector": "[role=dialog] tr:has-text('Cooperativa Recomeço')"
    },
    "seconds": 1.0,
-   "at": 44.77,
+   "at": 37.79,
    "label": "Cooperativa Recomeço, Fornecedor",
    "optional": true,
    "timeout": 4
@@ -274,7 +274,7 @@
     "selector": "[role=dialog] tr:has-text('Cooperativa Recomeço') td:nth-child(3)"
    },
    "seconds": 1.4,
-   "at": 48.56,
+   "at": 40.99,
    "label": "R$ 1.350,00 em vermelho",
    "optional": true,
    "timeout": 4
@@ -282,7 +282,7 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 54.74
+   "at": 45.33
   },
   {
    "do": "hover",
@@ -290,7 +290,7 @@
     "selector": "[role=dialog] tr:has-text('Depósito Irmãos Siqueira')"
    },
    "seconds": 1.0,
-   "at": 55.29,
+   "at": 45.81,
    "label": "Depósito Irmãos Siqueira, Cliente+Fornecedor",
    "optional": true,
    "timeout": 4
@@ -301,7 +301,7 @@
     "selector": "[role=dialog] tr:has-text('Depósito Irmãos Siqueira') td:nth-child(3)"
    },
    "seconds": 0.15,
-   "at": 60.53,
+   "at": 49.89,
    "label": "-R$ 840,00 em vermelho",
    "optional": true,
    "timeout": 4
@@ -309,7 +309,7 @@
   {
    "do": "mark",
    "name": "L8",
-   "at": 61.46
+   "at": 50.37
   },
   {
    "do": "hover",
@@ -317,7 +317,7 @@
     "selector": "[role=dialog] tr:has-text('Serra Fina Alumínio Reciclagem')"
    },
    "seconds": 1.0,
-   "at": 62.17,
+   "at": 51.01,
    "label": "Serra Fina Alumínio Reciclagem, Cliente",
    "optional": true,
    "timeout": 4
@@ -328,7 +328,7 @@
     "selector": "[role=dialog] tr:has-text('Serra Fina Alumínio Reciclagem') td:nth-child(3)"
    },
    "seconds": 1.6,
-   "at": 65.58,
+   "at": 54.05,
    "label": "-R$ 1.500,00 em vermelho",
    "optional": true,
    "timeout": 4
@@ -336,12 +336,12 @@
   {
    "do": "mark",
    "name": "L9",
-   "at": 74.87
+   "at": 60.93
   },
   {
    "do": "eval",
    "js": "(async()=>{const d=document.querySelector('[role=dialog]');if(!d)return 'sem janela';const c=[...d.querySelectorAll('*')].find(e=>{const s=getComputedStyle(e);return /(auto|scroll)/.test(s.overflowY)&&e.scrollHeight>e.clientHeight+4});if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,dy=-y0;if(y0<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
-   "at": 74.87,
+   "at": 60.93,
    "label": "sobe ao topo do relatório"
   },
   {
@@ -352,7 +352,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 75.4,
+   "at": 61.47,
    "label": "Exportar Relatório (abre o menu)"
   },
   {
@@ -361,8 +361,8 @@
     "role": "menuitem",
     "name": "Exportar em PDF"
    },
-   "seconds": 0.34,
-   "at": 77.98,
+   "seconds": 0.17,
+   "at": 63.45,
    "label": "Exportar em PDF",
    "optional": true,
    "timeout": 4
@@ -374,7 +374,7 @@
     "name": "Exportar em Excel"
    },
    "seconds": 0.15,
-   "at": 79.27,
+   "at": 64.57,
    "label": "Exportar em Excel (sem clicar)",
    "optional": true,
    "timeout": 4
@@ -385,7 +385,7 @@
     "role": "menuitem",
     "name": "Exportar em PDF"
    },
-   "at": 79.33,
+   "at": 64.41,
    "label": "Exportar em PDF: abre o relatório em aba nova"
   },
   {
@@ -405,14 +405,14 @@
   {
    "do": "mark",
    "name": "L10",
-   "at": 80.23
+   "at": 64.83
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] tr:has-text('Aços Quiririm Ltda') button:has(svg.lucide-eye)"
    },
-   "at": 80.91,
+   "at": 65.61,
    "label": "olho da Aços Quiririm: abre a conta-corrente"
   },
   {
@@ -437,8 +437,8 @@
     "exact": false,
     "within": "main"
    },
-   "seconds": 1.4,
-   "at": 85.26,
+   "seconds": 0.62,
+   "at": 68.51,
    "label": "Conta-Corrente do Cliente, com o extrato",
    "optional": true,
    "timeout": 4
@@ -451,7 +451,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 87.88
+   "at": 70.08
   }
  ]
 }

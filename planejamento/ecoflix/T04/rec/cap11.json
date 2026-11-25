@@ -1,6 +1,6 @@
 {
  "name": "t04-cap11",
- "title": "T4 · Cap. 11 · Os materiais que ele mais movimenta (narração ESTIMADA 40,1 s; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T4 · Cap. 11 · Os materiais que ele mais movimenta (narração 33,3 s; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t04-cap11",
  "pace": 0.5,
  "cps": 40,
@@ -145,14 +145,14 @@
   {
    "do": "mark",
    "name": "L1",
-   "at": 0.4
+   "at": 0
   },
   {
    "do": "click",
    "target": {
     "selector": "[aria-label='Seções da ficha'] button:has-text('Pedidos')"
    },
-   "at": 0.4,
+   "at": 0.0,
    "label": "aba Pedidos"
   },
   {
@@ -178,7 +178,7 @@
     "within": "main section[aria-label='Detalhes de Cooperativa Recomeço']"
    },
    "seconds": 0.8,
-   "at": 2.79,
+   "at": 2.26,
    "label": "Total Comprado R$ 52.937,50",
    "optional": true,
    "timeout": 4
@@ -190,8 +190,8 @@
     "exact": true,
     "within": "main section[aria-label='Detalhes de Cooperativa Recomeço']"
    },
-   "seconds": 1.4,
-   "at": 5.06,
+   "seconds": 0.89,
+   "at": 4.34,
    "label": "Total de Pedidos 14",
    "optional": true,
    "timeout": 4
@@ -199,12 +199,12 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 7.67
+   "at": 6.18
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"main section[aria-label='Detalhes de Cooperativa Recome\\u00e7o'] *\")].filter(e=>e.textContent.trim()===\"Top 5 Materiais Mais Comprados\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-140);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 7.82,
+   "at": 6.34,
    "label": "desce até o gráfico Top 5"
   },
   {
@@ -214,8 +214,8 @@
     "exact": true,
     "within": "main section[aria-label='Detalhes de Cooperativa Recomeço']"
    },
-   "seconds": 0.44,
-   "at": 13.31,
+   "seconds": 0.15,
+   "at": 10.9,
    "label": "o gráfico (por peso)",
    "optional": true,
    "timeout": 4
@@ -228,7 +228,7 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 14.7
+   "at": 11.94
   },
   {
    "do": "hover",
@@ -238,7 +238,7 @@
     "within": "main section[aria-label='Detalhes de Cooperativa Recomeço']"
    },
    "seconds": 2.0,
-   "at": 15.25,
+   "at": 12.5,
    "label": "zoom: legenda, Papelão: 59%",
    "optional": true,
    "timeout": 4
@@ -246,7 +246,7 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 21.2
+   "at": 17.22
   },
   {
    "do": "hover",
@@ -256,7 +256,7 @@
     "within": "main section[aria-label='Detalhes de Cooperativa Recomeço']"
    },
    "seconds": 1.6,
-   "at": 21.98,
+   "at": 18.02,
    "label": "zoom: legenda, Alumínio latinha: 9%",
    "optional": true,
    "timeout": 4
@@ -264,12 +264,12 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 31.58
+   "at": 26.27
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const s=document.querySelector(\"main section[aria-label^='Detalhes de']\");if(!s)return 'SEM ALVO';const c=rolagem(s.firstElementChild||s);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,dy=-y0;if(y0<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
-   "at": 31.58,
+   "at": 26.27,
    "label": "sobe a ficha até a faixa das abas"
   },
   {
@@ -278,7 +278,7 @@
     "selector": "main section[aria-label='Detalhes de Cooperativa Recomeço'] button:has-text('Período')"
    },
    "seconds": 1.0,
-   "at": 32.2,
+   "at": 26.91,
    "label": "Período (sem abrir)",
    "optional": true,
    "timeout": 4
@@ -286,7 +286,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"main section[aria-label='Detalhes de Cooperativa Recome\\u00e7o'] *\")].filter(e=>e.textContent.trim()===\"Hist\\u00f3rico de Pedidos\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-140);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 34.61,
+   "at": 28.99,
    "label": "desce até o Histórico de Pedidos"
   },
   {
@@ -295,8 +295,8 @@
     "selector": "main section[aria-label='Detalhes de Cooperativa Recomeço'] tbody tr",
     "nth": 0
    },
-   "seconds": 1.2,
-   "at": 37.59,
+   "seconds": 0.78,
+   "at": 31.55,
    "label": "cada pedido, com o valor e a data",
    "optional": true,
    "timeout": 4
@@ -309,7 +309,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 40.06
+   "at": 33.28
   }
  ]
 }

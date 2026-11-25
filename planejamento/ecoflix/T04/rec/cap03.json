@@ -1,6 +1,6 @@
 {
  "name": "t04-cap03",
- "title": "T4 · Cap. 3 · Buscar dados pelo CNPJ (narração ESTIMADA 54,5 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T4 · Cap. 3 · Buscar dados pelo CNPJ (narração 44,6 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t04-cap03",
  "pace": 0.5,
  "cps": 40,
@@ -128,7 +128,7 @@
   {
    "do": "mark",
    "name": "L1",
-   "at": 0.4
+   "at": 0
   },
   {
    "do": "click",
@@ -138,7 +138,7 @@
     "exact": true,
     "within": "main"
    },
-   "at": 1.68,
+   "at": 1.84,
    "label": "Novo Fornecedor"
   },
   {
@@ -151,13 +151,13 @@
    "target": {
     "selector": "[role=dialog] #name"
    },
-   "at": 4.32,
+   "at": 4.22,
    "label": "Nome Serralheria Bem-Te-Vi (clique no campo)"
   },
   {
    "do": "eval",
    "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM ALVO (nada em foco)';document.execCommand('insertText',false,\"Serralheria Bem-Te-Vi\");return e.value})()",
-   "at": 5.94,
+   "at": 5.56,
    "label": "Nome Serralheria Bem-Te-Vi (colado)"
   },
   {
@@ -167,13 +167,13 @@
     "name": "Dados Fiscais",
     "within": "[role=dialog]"
    },
-   "at": 7.69,
+   "at": 7.0,
    "label": "aba Dados Fiscais"
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 10.71
+   "at": 8.9
   },
   {
    "do": "click",
@@ -183,7 +183,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 12.22,
+   "at": 10.34,
    "label": "Pessoa Jurídica"
   },
   {
@@ -191,18 +191,13 @@
    "target": {
     "selector": "[role=dialog] #cpf_cnpj"
    },
-   "at": 13.66,
+   "at": 11.72,
    "label": "zoom: CNPJ 46.280.719/0001-24 (L2; colado: 14 dígitos a ~0,16 s não cabem na frase) (clique no campo)"
-  },
-  {
-   "do": "mark",
-   "name": "L3",
-   "at": 15.69
   },
   {
    "do": "eval",
    "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM ALVO (nada em foco)';document.execCommand('insertText',false,\"46280719000124\");return e.value})()",
-   "at": 15.73,
+   "at": 13.27,
    "label": "zoom: CNPJ 46.280.719/0001-24 (L2; colado: 14 dígitos a ~0,16 s não cabem na frase) (colado)"
   },
   {
@@ -211,12 +206,17 @@
    "label": "confere CNPJ com a máscara"
   },
   {
+   "do": "mark",
+   "name": "L3",
+   "at": 13.54
+  },
+  {
    "do": "hover",
    "target": {
     "selector": "[role=dialog] button[aria-label='Buscar dados pelo CNPJ']"
    },
    "seconds": 1.6,
-   "at": 17.98,
+   "at": 15.78,
    "label": "lupa: Buscar dados da empresa pelo CNPJ (a dica agora aparece na tela)",
    "optional": true,
    "timeout": 4
@@ -231,7 +231,7 @@
    "target": {
     "selector": "[role=dialog] button[aria-label='Buscar dados pelo CNPJ']"
    },
-   "at": 21.38,
+   "at": 19.32,
    "label": "clica na lupa: consulta a Receita e a inscrição estadual"
   },
   {
@@ -252,7 +252,7 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 27.27
+   "at": 23.58
   },
   {
    "do": "hover",
@@ -262,7 +262,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.8,
-   "at": 29.5,
+   "at": 25.58,
    "label": "caixa âmbar: Falta isto para emitir NF-e (1)",
    "optional": true,
    "timeout": 4
@@ -272,8 +272,8 @@
    "target": {
     "selector": "[role=dialog] #razao_social"
    },
-   "seconds": 0.73,
-   "at": 32.15,
+   "seconds": 0.41,
+   "at": 27.82,
    "label": "Razão Social (da busca)",
    "optional": true,
    "timeout": 4
@@ -284,7 +284,7 @@
     "selector": "[role=dialog] #nome_fantasia"
    },
    "seconds": 0.15,
-   "at": 33.83,
+   "at": 29.18,
    "label": "Nome Fantasia (da busca)",
    "optional": true,
    "timeout": 4
@@ -292,12 +292,12 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 34.53
+   "at": 29.5
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim()===\"Endere\\u00e7o Fiscal\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-150);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 34.53,
+   "at": 29.5,
    "label": "desce a janela até o Endereço Fiscal"
   },
   {
@@ -306,7 +306,7 @@
     "selector": "[role=dialog] input[placeholder='00000-000']"
    },
    "seconds": 0.15,
-   "at": 36.15,
+   "at": 31.02,
    "label": "CEP 12062-150 (com a máscara, 1.60.18)",
    "optional": true,
    "timeout": 4
@@ -316,8 +316,8 @@
    "target": {
     "selector": "[role=dialog] button[role=combobox]:has-text('Taubaté')"
    },
-   "seconds": 0.6,
-   "at": 36.68,
+   "seconds": 0.49,
+   "at": 31.74,
    "label": "Cidade Taubaté (rua e bairro logo abaixo)",
    "optional": true,
    "timeout": 4
@@ -335,12 +335,12 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 38.45
+   "at": 33.18
   },
   {
    "do": "eval",
    "js": "(async()=>{const d=document.querySelector('[role=dialog]');if(!d)return 'sem janela';const c=[...d.querySelectorAll('*')].find(e=>{const s=getComputedStyle(e);return /(auto|scroll)/.test(s.overflowY)&&e.scrollHeight>e.clientHeight+4});if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,dy=-y0;if(y0<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
-   "at": 38.45,
+   "at": 33.18,
    "label": "sobe a janela até as abas"
   },
   {
@@ -350,7 +350,7 @@
     "name": "Dados de Contato",
     "within": "[role=dialog]"
    },
-   "at": 38.98,
+   "at": 33.72,
    "label": "aba Dados de Contato"
   },
   {
@@ -359,7 +359,7 @@
     "selector": "[role=dialog] #phone"
    },
    "seconds": 0.6,
-   "at": 41.2,
+   "at": 35.42,
    "label": "Telefone e E-mail (da busca)",
    "optional": true,
    "timeout": 4
@@ -370,7 +370,7 @@
     "selector": "[role=dialog] #name"
    },
    "seconds": 0.8,
-   "at": 43.1,
+   "at": 37.02,
    "label": "Nome: Serralheria Bem-Te-Vi (o digitado)",
    "optional": true,
    "timeout": 4
@@ -388,7 +388,7 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 46.62
+   "at": 38.94
   },
   {
    "do": "type",
@@ -401,7 +401,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 46.62,
+   "at": 38.94,
    "label": "zoom: a caixa âmbar Falta isto para emitir NF-e (1) com o link Número (Dados Fiscais) (L7)"
   },
   {
@@ -410,7 +410,7 @@
     "selector": "[role=dialog] section[aria-label='Pendências para emitir NF-e'] button:has-text('Número')"
    },
    "seconds": 1.4,
-   "at": 48.62,
+   "at": 40.62,
    "label": "o link Número (Dados Fiscais), na caixa âmbar",
    "optional": true,
    "timeout": 4
@@ -423,7 +423,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 54.49
+   "at": 44.64
   }
  ]
 }
