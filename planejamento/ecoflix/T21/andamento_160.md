@@ -106,3 +106,11 @@ longa termina de digitar ~10 s depois); cap02/cap15 cortes do Marcos (`02b`, `15
 
 ## 21/11 22:23 · reensaio da coordenação (depois das 3 frases)
 - cap07: 0 falho, maxLate 0,50, PDF do comprovante capturado (`t21-cap07.actions.json`). cap13 (sem a frase da recusa da SEFAZ): 0 falho, 3,76 (resposta do Cato). cap15: 0 falho, 0,94. Instância 54321 derrubada. **T21 pronta para a voz** (14.446 + títulos); atrasos da resposta do Cato ficam para as âncoras da voz real.
+
+## 25/11 · rotinas (resumos agendados) fora da aula
+Decisão do Kaik: os resumos agendados do Cato ainda não estão liberados para os clientes, então saem da fala.
+- `tts_textos.py`, `roteiro.md`, `plano.md` (o `config_narracao.json` não tinha nada de rotinas): cap04 L4 "...os pedidos e o atendente." (sem "as rotinas"); cap14 perde as duas frases das rotinas (Ver sinais agora e o agendamento das 8h) e fica com Acompanhar pedidos e Respostas revisadas (agora L1 e L2). Título do cap14: "Pedidos e revisões." (kicker "Pedidos"; vinheta PEDIDOS). Fica a menção a "rotina" só no cartão "Próximo: Dashboard, Agenda e rotina" (nome do T25).
+- `gerar.py`: cap14 sem os passos de Suas rotinas/Ver sinais agora/Programar/Salvar agendamento; cap04 sem o hover em "Suas rotinas"; `NOMES` atualizado. `cenas/ilustracoes.json` não tinha entrada de rotinas (nada a tirar). Cópia de trabalho em `/home/claude/ecoflix/rec/t21/gerar.py` igualada.
+- `preparar_aula.sh T21`: 18 capítulos estimados refeitos. Ensaio pela fila (lote em `/dev/shm`): cap04 rápido 0 falho, completo 0 falho (maxLate 2,34 s, espera da resposta); cap14 rápido 0 falho, completo 0 falho (maxLate 0,04 s). Instância 54321 derrubada.
+- **Fala final: 14.181 caracteres (2.654 palavras), +383 de títulos.** Reabrir "Suas rotinas" na aula só quando os clientes tiverem o recurso.
+- Obs.: o app (8080) estava parado; subi só ele (`rec/run.sh app`) e deixei no ar para a gravação da T04.

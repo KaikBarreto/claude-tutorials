@@ -134,7 +134,7 @@
   },
   {
    "do": "eval",
-   "js": "(()=>{const o=window.open;window.__pops=[];window.open=function(...a){const w=o.apply(this,a);window.__pops.push(w);return w};return 'ok'})()"
+   "js": "(()=>{const o=window.open;window.__pops=[];window.open=function(...a){const w=o.apply(this,a);window.__pops.push(w);return w};window.__net=[];const of=window.fetch;window.fetch=function(...a){window.__net.push('F '+String((a[0]&&a[0].url)||a[0]).slice(0,100));return of.apply(this,a)};const d=Object.getOwnPropertyDescriptor(HTMLImageElement.prototype,'src');Object.defineProperty(HTMLImageElement.prototype,'src',{set(v){window.__net.push('IMG '+String(v).slice(0,100));d.set.call(this,v)},get(){return d.get.call(this)}});return 'ok'})()"
   },
   {
    "do": "eval",
@@ -493,7 +493,7 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{let w;for(let i=0;i<60&&!(w=(window.__pops||[]).slice(-1)[0]);i++)await new Promise(r=>setTimeout(r,250));if(!w)return 'SEM JANELA';const espera=[\"Cooperativa Recomeço\", \"Saldo Final\", \"Preço unit.\"];for(let i=0;i<160;i++){let t='';try{t=(w.document&&w.document.documentElement&&w.document.documentElement.textContent)||''}catch(e){return 'ERRO '+e}if(t&&espera.every(x=>t.toLowerCase().includes(x.toLowerCase()))){const h='<!doctype html>'+w.document.documentElement.outerHTML;const u=new TextEncoder().encode(h);let s='';for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'HTML:'+btoa(s)}await new Promise(r=>setTimeout(r,250))}let d='';try{d=' pops='+window.__pops.length+' fechada='+w.closed+' texto='+((w.document.documentElement&&w.document.documentElement.textContent)||'').slice(0,160)}catch(e){d=' '+e}return 'SEM HTML'+d})()",
+   "js": "(async()=>{let w;for(let i=0;i<60&&!(w=(window.__pops||[]).slice(-1)[0]);i++)await new Promise(r=>setTimeout(r,250));if(!w)return 'SEM JANELA';const espera=[\"Cooperativa Recomeço\", \"Saldo Final\", \"Preço unit.\"];for(let i=0;i<160;i++){let t='';try{t=(w.document&&w.document.documentElement&&w.document.documentElement.textContent)||''}catch(e){return 'ERRO '+e}if(t&&espera.every(x=>t.toLowerCase().includes(x.toLowerCase()))){const h='<!doctype html>'+w.document.documentElement.outerHTML;const u=new TextEncoder().encode(h);let s='';for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'HTML:'+btoa(s)}await new Promise(r=>setTimeout(r,250))}let d='';try{d=' pops='+window.__pops.length+' fechada='+w.closed+' texto='+((w.document.documentElement&&w.document.documentElement.textContent)||'').slice(0,160)}catch(e){d=' '+e}return 'SEM HTML'+d+' NET='+(window.__net||[]).slice(-14).join('|')})()",
    "label": "PDF DO EXTRATO DETALHADO (aba nova, para a ilustração)"
   },
   {

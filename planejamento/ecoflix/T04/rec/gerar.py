@@ -539,14 +539,14 @@ FC = FICHA_DE(COOP)
 CAIXA_NFE = "section[aria-label='Pendências para emitir NF-e']"
 PEND = lambda campo: SEL(f"{DLG} {CAIXA_NFE} button:has-text('{campo}')")                # o link do campo na caixa âmbar
 TEXTO_CAIXA = TXT('Falta isto para emitir NF-e', within=DLG, exact=False)
-POPS = "(()=>{const o=window.open;window.__pops=[];window.open=function(...a){const w=o.apply(this,a);window.__pops.push(w);return w};return 'ok'})()"
+POPS = "(()=>{const o=window.open;window.__pops=[];window.open=function(...a){const w=o.apply(this,a);window.__pops.push(w);return w};window.__net=[];const of=window.fetch;window.fetch=function(...a){window.__net.push('F '+String((a[0]&&a[0].url)||a[0]).slice(0,100));return of.apply(this,a)};const d=Object.getOwnPropertyDescriptor(HTMLImageElement.prototype,'src');Object.defineProperty(HTMLImageElement.prototype,'src',{set(v){window.__net.push('IMG '+String(v).slice(0,100));d.set.call(this,v)},get(){return d.get.call(this)}});return 'ok'})()"
 # o extrato (e o relatório de saldos) abrem uma aba nova e escrevem HTML nela (não é o #pdf-frame do openPdfInTab): devolve o HTML da aba em
 # base64 (`HTML:<b64>`) para a ilustração `"cena": "pdf"` (a gravação filma uma aba só; t04_pdf.py grava o arquivo)
 HTML_JS = ("(async()=>{let w;for(let i=0;i<60&&!(w=(window.__pops||[]).slice(-1)[0]);i++)await new Promise(r=>setTimeout(r,250));if(!w)return 'SEM JANELA';const espera=%s;for(let i=0;i<160;i++){let t='';"
            "try{t=(w.document&&w.document.documentElement&&w.document.documentElement.textContent)||''}catch(e){return 'ERRO '+e}"
            "if(t&&espera.every(x=>t.toLowerCase().includes(x.toLowerCase()))){const h='<!doctype html>'+w.document.documentElement.outerHTML;const u=new TextEncoder().encode(h);let s='';"
            "for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'HTML:'+btoa(s)}"
-           "await new Promise(r=>setTimeout(r,250))}let d='';try{d=' pops='+window.__pops.length+' fechada='+w.closed+' texto='+((w.document.documentElement&&w.document.documentElement.textContent)||'').slice(0,160)}catch(e){d=' '+e}return 'SEM HTML'+d})()")
+           "await new Promise(r=>setTimeout(r,250))}let d='';try{d=' pops='+window.__pops.length+' fechada='+w.closed+' texto='+((w.document.documentElement&&w.document.documentElement.textContent)||'').slice(0,160)}catch(e){d=' '+e}return 'SEM HTML'+d+' NET='+(window.__net||[]).slice(-14).join('|')})()")
 
 
 def html_js(espera):
@@ -702,6 +702,8 @@ def cap04():
     c.waitfor(text='Fornecedor cadastrado com sucesso!', timeout=12)
     c.waitfor(gone={'role': 'dialog'}, timeout=8)
     c.ev(js_rola_linha('Serralheria Bem-Te-Vi'), at=c.A(9, 'verde:', 0.5) - 1.6, label='rola a lista até a serralheria')
+    c.hover(FISCAL_OK('Serralheria Bem-Te-Vi'), 0.5, at=c.A(9, 'verde:', 0.5) - 0.9, label='sinal verde da serralheria (chega)')
+    c.press('Escape', at=c.A(9, 'verde:', 0.5) - 0.3, label='fecha o menu "..." que o cursor abriu no caminho (Esc)')   # 25/11: o cursor passa por cima do "..." da linha e o menu cobria a lista
     c.hover(FISCAL_OK('Serralheria Bem-Te-Vi'), 2.0, at=c.A(9, 'verde:', 0.5), label='sinal verde da serralheria (Pronto para emitir NF-e)')
     c.confere('body', ['Pronto para emitir NF-e'], 'tooltip Pronto para emitir NF-e')
     c.mark(10)
