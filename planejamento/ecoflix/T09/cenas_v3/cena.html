@@ -120,7 +120,7 @@ function duasTelas() {
   const tit = titulo('Pedidos e histórico do caixa', 'O trabalho de cada tela', 'escuro');
   const TOPO = YL - 38, BASE = YC2 + 19, ME = Math.max(CW, aP.reduce((s, p) => s + p.w, 20)) / 2, MD = Math.max(CW, aC.reduce((s, p) => s + p.w, 10)) / 2;
   const S1 = enquadraRet(EIXO, ret(XE - ME, TOPO, XE + ME, BASE), { az: -.035, max: 1.4 / EE }), S2 = enquadraRet(EIXO, ret(XE - ME, TOPO, XD + MD, BASE), { az: -.005, max: 1.4 / EE });
-  camera([[t0 - 3, S1], [thi - .75, { ...S1, az: -.015, d: S1.d * .985 }, 'lin'], [thi + .55, S2], [ttp - .3, { ...S2, az: .012, d: S2.d * .988 }, 'lin'], [tfim + 2.5, { ...S2, az: .04, d: S2.d * .972 }, 'lin']]);
+  camera([[t0 - 3, S1], [thi - .75, S1], [thi + .55, S2], [ttp - .3, S2], [tfim + 2.5, S2]]);   // sem deriva: o texto escuro tremia 1 px na deriva lenta (piscadas.py, 21/11)
   return t => {
     clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, t0 - .45);
     vis(hP.e, t, t0 - .1, NUNCA, { dy: 20 });
@@ -205,7 +205,7 @@ function naoSoma() {
   const TOPO = YS - 38 - 12 - 38, D1 = X2 + WC / 2, BASE = YK + HC / 2, o = { max: 1.42 / EE };
   const S1 = enquadraRet(EIXO, ret(X1 - WC / 2, TOPO, D1, YH + 42), { az: -.03, ...o }), S2 = enquadraRet(EIXO, ret(XLb - WL / 2, TOPO, D1, BASE), { az: -.012, ...o }),
     S3 = enquadraRet(EIXO, ret(XLb - WL / 2, TOPO, X3 + Math.max(WC, chAp.w) / 2, BASE + 54), { az: .012, ...o });   // o chip da Aparecida é mais largo que a coluna
-  const cam = [[t0 - 3, S1], [tpr - .55, { ...S1, az: -.018, d: S1.d * .985 }, 'lin'], [tpr + .6, S2], [tnf - .5, { ...S2, az: .0, d: S2.d * .985 }, 'lin'], [tnf + .75, S3], [tfim + 2.5, { ...S3, az: .04, d: S3.d * .978 }, 'lin']];
+  const cam = [[t0 - 3, S1], [tpr - .55, S1], [tpr + .6, S2], [tnf - .5, S2], [tnf + .75, S3], [tfim + 2.5, S3]];   // sem deriva (piscadas.py, 21/11)
   return { cam, L, r: t => {
     posTitulo(tit, t, t0 - .9, t0 - .45);
     vis(hA.e, t, tsi - .15, NUNCA, { dy: 20 }); vis(hB.e, t, tsa - .15, NUNCA, { dy: 20 }); vis(chNS.e, t, tna - .1, NUNCA, { dy: 10, sc: .8 });

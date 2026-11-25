@@ -472,7 +472,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll('main aside button')].find(b=>b.textContent.includes(\"Serralheria Bem-Te-Vi\"));if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-420);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 61.26,
+   "at": 59.96,
    "label": "rola a lista até a serralheria"
   },
   {
@@ -481,7 +481,7 @@
     "selector": "main aside button:has-text('Serralheria Bem-Te-Vi') .cursor-help:has(svg.lucide-badge-check)"
    },
    "seconds": 0.15,
-   "at": 61.96,
+   "at": 60.86,
    "label": "sinal verde da serralheria (chega)",
    "optional": true,
    "timeout": 4
@@ -489,8 +489,19 @@
   {
    "do": "press",
    "key": "Escape",
-   "at": 62.56,
+   "at": 61.46,
    "label": "fecha o menu \"...\" que o cursor abriu no caminho (Esc)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main aside button:has-text('Serralheria Bem-Te-Vi') p.font-medium"
+   },
+   "seconds": 0.2,
+   "at": 61.71,
+   "label": "sai do sinal (o tooltip só abre com movimento)",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "hover",

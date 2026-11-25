@@ -1,6 +1,6 @@
 {
  "name": "t04-cap08",
- "title": "T4 · Cap. 8 · Tabela de preço do parceiro (narração 73,0 s; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T4 · Cap. 8 · Tabela de preço do parceiro (narração 74,2 s; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t04-cap08",
  "pace": 0.5,
  "cps": 40,
@@ -185,18 +185,18 @@
     "role": "option",
     "name": "Tabela Depósitos"
    },
-   "at": 13.02,
+   "at": 14.31,
    "label": "Tabela Depósitos"
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 14.42
+   "at": 15.71
   },
   {
    "do": "eval",
    "js": "(async()=>{const d=document.querySelector('[role=dialog]');if(!d)return 'sem janela';const c=[...d.querySelectorAll('*')].find(e=>{const s=getComputedStyle(e);return /(auto|scroll)/.test(s.overflowY)&&e.scrollHeight>e.clientHeight+4});if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,dy=-y0;if(y0<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
-   "at": 14.42,
+   "at": 15.71,
    "label": "sobe a janela até o aviso azul"
   },
   {
@@ -207,7 +207,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 2.4,
-   "at": 16.98,
+   "at": 18.27,
    "label": "zoom: aviso azul do cadastro vinculado",
    "optional": true,
    "timeout": 4
@@ -215,7 +215,7 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 21.14
+   "at": 22.43
   },
   {
    "do": "click",
@@ -225,7 +225,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 21.44,
+   "at": 22.73,
    "label": "Salvar"
   },
   {
@@ -243,17 +243,17 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 27.98
+   "at": 29.27
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 37.34
+   "at": 38.63
   },
   {
    "do": "eval",
    "js": "(async()=>{const s=document.querySelector(\"[aria-label='Seções da ficha']\");if(!s)return 'SEM ALVO';const x0=s.scrollLeft,dx=(s.scrollWidth-s.clientWidth)-x0;if(Math.abs(dx)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;s.scrollLeft=x0+dx*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'faixa:'+Math.round(s.scrollLeft)})()",
-   "at": 37.34,
+   "at": 38.63,
    "label": "rola a faixa das abas até Preços (só se a faixa não couber)"
   },
   {
@@ -262,7 +262,7 @@
     "selector": "[aria-label='Seções da ficha'] button:has-text('Preços')"
    },
    "seconds": 0.15,
-   "at": 40.3,
+   "at": 41.59,
    "label": "aba Preços",
    "optional": true,
    "timeout": 4
@@ -272,7 +272,7 @@
    "target": {
     "selector": "[aria-label='Seções da ficha'] button:has-text('Preços')"
    },
-   "at": 41.16,
+   "at": 42.45,
    "label": "aba Preços da ficha: Preços Personalizados (Compra e Venda)"
   },
   {
@@ -292,7 +292,7 @@
     "nth": 0
    },
    "seconds": 0.15,
-   "at": 44.46,
+   "at": 45.75,
    "label": "as abas Compra e Venda",
    "optional": true,
    "timeout": 4
@@ -300,14 +300,14 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 44.53
+   "at": 45.82
   },
   {
    "do": "click",
    "target": {
     "selector": "main section[aria-label='Detalhes de Depósito Irmãos Siqueira'] button:has-text('Já comprados')"
    },
-   "at": 45.55,
+   "at": 46.84,
    "label": "filtro Já comprados"
   },
   {
@@ -318,7 +318,13 @@
   {
    "do": "mark",
    "name": "L8",
-   "at": 50.61
+   "at": 51.9
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"main section[aria-label='Detalhes de Dep\\u00f3sito Irm\\u00e3os Siqueira'] *\")].filter(e=>e.textContent.trim()===\"Ferro pesado\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-380);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 52.95,
+   "label": "rola a ficha até a linha do ferro pesado"
   },
   {
    "do": "hover",
@@ -326,7 +332,7 @@
     "selector": "main section[aria-label='Detalhes de Depósito Irmãos Siqueira'] tr:has-text('Ferro pesado') button[role=combobox]"
    },
    "seconds": 0.6,
-   "at": 52.29,
+   "at": 53.58,
    "label": "o Estado da linha Ferro pesado: Herda",
    "optional": true,
    "timeout": 4
@@ -336,7 +342,7 @@
    "target": {
     "selector": "main section[aria-label='Detalhes de Depósito Irmãos Siqueira'] tr:has-text('Ferro pesado') button[role=combobox]"
    },
-   "at": 54.87,
+   "at": 56.16,
    "label": "abre o Estado do ferro pesado"
   },
   {
@@ -345,7 +351,7 @@
     "role": "option",
     "name": "Fixo"
    },
-   "at": 56.45,
+   "at": 57.74,
    "label": "Fixo"
   },
   {
@@ -353,7 +359,7 @@
    "target": {
     "selector": "main section[aria-label='Detalhes de Depósito Irmãos Siqueira'] tr:has-text('Ferro pesado') input[placeholder='0,00']"
    },
-   "at": 58.99,
+   "at": 60.28,
    "label": "zoom: preço fixo R$ 1,00 do ferro pesado (L8) (clique no campo)"
   },
   {
@@ -363,21 +369,21 @@
    },
    "text": "1,00",
    "cps": 40,
-   "at": 60.98,
+   "at": 62.27,
    "label": "zoom: preço fixo R$ 1,00 do ferro pesado (L8)",
    "noClick": true
   },
   {
    "do": "mark",
    "name": "L9",
-   "at": 62.05
+   "at": 63.34
   },
   {
    "do": "click",
    "target": {
     "selector": "main section[aria-label='Detalhes de Depósito Irmãos Siqueira'] tr:has-text('Ferro pesado') button[role=combobox]"
    },
-   "at": 62.39,
+   "at": 63.68,
    "label": "abre o Estado de novo: Herda, Vinculado, Fixo"
   },
   {
@@ -387,7 +393,7 @@
     "name": "Vinculado"
    },
    "seconds": 1.2,
-   "at": 64.31,
+   "at": 65.6,
    "label": "Vinculado (sem escolher)",
    "optional": true,
    "timeout": 4
@@ -395,13 +401,13 @@
   {
    "do": "press",
    "key": "Escape",
-   "at": 67.01,
+   "at": 68.3,
    "label": "fecha a lista (Esc)"
   },
   {
    "do": "mark",
    "name": "L10",
-   "at": 67.01
+   "at": 68.3
   },
   {
    "do": "click",
@@ -411,7 +417,7 @@
     "exact": true,
     "within": "main section[aria-label='Detalhes de Depósito Irmãos Siqueira']"
    },
-   "at": 67.31,
+   "at": 68.6,
    "label": "Salvar preços"
   },
   {
@@ -424,7 +430,7 @@
    "target": {
     "selector": "main section[aria-label='Detalhes de Depósito Irmãos Siqueira'] button:has-text('Personalizados')"
    },
-   "at": 68.92,
+   "at": 70.21,
    "label": "filtro Personalizados"
   },
   {
@@ -440,7 +446,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 72.96
+   "at": 74.25
   }
  ]
 }

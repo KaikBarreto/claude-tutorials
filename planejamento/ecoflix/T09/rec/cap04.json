@@ -1,6 +1,6 @@
 {
  "name": "t09-cap04",
- "title": "T09 · Cap. 4 · Editar um pedido (narração 218,4 s ESTIMADA; marcas L1..L16 = início de cada linha do roteiro; FAKE_NOW 2026-11-11T08:30:00-03:00)",
+ "title": "T09 · Cap. 4 · Editar um pedido (narração 178,3 s; marcas L1..L16 = início de cada linha do roteiro; FAKE_NOW 2026-11-11T08:30:00-03:00)",
  "seed": "t09-cap04",
  "pace": 0.5,
  "cps": 9,
@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-11",
   "pwa-install-dismissed": "true",
   "theme": "light",
@@ -273,7 +273,7 @@
     "selector": "main tbody tr:has-text('Depósito Irmãos Siqueira'):has-text('744,00') button"
    },
    "seconds": 0.3,
-   "at": 1.78,
+   "at": 1.18,
    "label": "menu do pedido de 21/10",
    "optional": false,
    "timeout": 8
@@ -292,7 +292,7 @@
     "role": "menuitem",
     "name": "Editar"
    },
-   "at": 2.68,
+   "at": 2.08,
    "label": "Editar (pedido de 21/10)",
    "noScroll": true
   },
@@ -316,7 +316,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 4.52,
+   "at": 3.76,
    "label": "[ZOOM] \"Se o caixa original estiver fechado, você poderá mantê-lo quando o pedido não movimentar dinheiro ou escolher um caixa aberto para receber o acerto.\""
   },
   {
@@ -326,7 +326,7 @@
     "within": "[role=dialog], [role=alertdialog]"
    },
    "seconds": 1.0,
-   "at": 7.85,
+   "at": 5.84,
    "label": "o aviso do caixa fechado",
    "optional": true,
    "timeout": 4
@@ -339,8 +339,13 @@
     "exact": true,
     "within": "[role=dialog], [role=alertdialog]"
    },
-   "at": 18.95,
+   "at": 12.6,
    "label": "Editar Pedido (abre a tela Compra em edição)"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 14.0
   },
   {
    "do": "waitFor",
@@ -348,7 +353,8 @@
     "text": "Editando Compra",
     "within": "main"
    },
-   "timeout": 15
+   "timeout": 15,
+   "at": 14.2
   },
   {
    "do": "waitFor",
@@ -361,18 +367,13 @@
    "label": "confere tela Compra: Caixa de destino da edição #70 Original"
   },
   {
-   "do": "mark",
-   "name": "L2",
-   "at": 19.3
-  },
-  {
    "do": "hover",
    "target": {
     "text": "Caixa de destino da edição",
     "within": "main"
    },
    "seconds": 1.6,
-   "at": 26.94,
+   "at": 19.87,
    "label": "[ZOOM] \"Caixa de destino da edição:\" com \"Caixa #70 · Original\" e \"Sem movimento em dinheiro: você pode manter o caixa original sem alterar o fechamento.\"",
    "optional": true,
    "timeout": 4
@@ -382,7 +383,7 @@
    "target": {
     "selector": "main [aria-label='Trocar caixa']"
    },
-   "at": 35.54,
+   "at": 25.93,
    "label": "o selo do caixa"
   },
   {
@@ -398,7 +399,7 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 36.04
+   "at": 26.43
   },
   {
    "do": "hover",
@@ -406,7 +407,7 @@
     "selector": "[role=dialog] button:has-text('Caixa #88')"
    },
    "seconds": 0.8,
-   "at": 43.23,
+   "at": 32.11,
    "label": "o meu caixa de hoje (#88)",
    "optional": true,
    "timeout": 4
@@ -416,7 +417,7 @@
    "target": {
     "selector": "[role=dialog] button:has-text('Manter no caixa original')"
    },
-   "at": 45.86,
+   "at": 34.31,
    "label": "Manter no caixa original #70"
   },
   {
@@ -427,11 +428,16 @@
    "timeout": 8
   },
   {
+   "do": "mark",
+   "name": "L4",
+   "at": 36.65
+  },
+  {
    "do": "click",
    "target": {
     "selector": "#supplier-desktop-top"
    },
-   "at": 46.9,
+   "at": 37.01,
    "label": "Fornecedor: Depósito Irmãos Siqueira"
   },
   {
@@ -442,18 +448,13 @@
    "timeout": 8
   },
   {
-   "do": "mark",
-   "name": "L4",
-   "at": 47.17
-  },
-  {
    "do": "type",
    "target": {
     "placeholder": "Buscar por nome, apelido, CPF/CNPJ ou telefone..."
    },
    "text": "Vale Forte",
    "cps": 14,
-   "at": 48.84,
+   "at": 38.31,
    "label": "busca Vale Forte",
    "noClick": true
   },
@@ -462,7 +463,7 @@
    "target": {
     "selector": "[role=dialog] button:has-text('Auto Peças Vale Forte')"
    },
-   "at": 49.05,
+   "at": 39.93,
    "label": "Auto Peças Vale Forte"
   },
   {
@@ -485,7 +486,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 51.95,
+   "at": 41.51,
    "label": "[ZOOM] \"Atualizar os preços?\": Bateria automotiva R$ 3,10 → R$ 3,40/kg e o total dos itens; botões \"Manter preços\" e \"Atualizar 1 preço\""
   },
   {
@@ -496,7 +497,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 60.13,
+   "at": 46.49,
    "label": "Manter preços"
   },
   {
@@ -519,13 +520,13 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll('main button')].find(b=>b.textContent.trim()==='Finalizar');if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-560);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 66.18,
+   "at": 50.67,
    "label": "a tela desce até o Finalizar (fica atrás do rodapé)"
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 66.88
+   "at": 51.37
   },
   {
    "do": "click",
@@ -534,7 +535,7 @@
     "name": "Finalizar",
     "exact": true
    },
-   "at": 66.88,
+   "at": 51.37,
    "label": "Finalizar"
   },
   {
@@ -547,7 +548,7 @@
    "target": {
     "selector": "[role=dialog] button:has(span:text-is('Pix/Transferência'))"
    },
-   "at": 67.57,
+   "at": 52.65,
    "label": "Pix/Transferência (Conta Principal)"
   },
   {
@@ -556,7 +557,7 @@
     "role": "button",
     "name": "CONFIRMAR PAGAMENTO"
    },
-   "at": 69.34,
+   "at": 54.01,
    "label": "CONFIRMAR PAGAMENTO"
   },
   {
@@ -571,7 +572,7 @@
     "name": "Visualizar PDF",
     "exact": true
    },
-   "at": 71.19,
+   "at": 56.43,
    "label": "Visualizar PDF (aba nova: o comprovante no nome da Auto Peças entra na edição)"
   },
   {
@@ -582,12 +583,12 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 81.35
+   "at": 63.33
   },
   {
    "do": "eval",
    "js": "(()=>{window.history.pushState({},'','/pedidos');window.dispatchEvent(new PopStateEvent('popstate'));return 'nav'})()",
-   "at": 81.5,
+   "at": 63.49,
    "label": "volta à tela Pedidos (sem recarregar)"
   },
   {
@@ -605,7 +606,7 @@
    "target": {
     "selector": "main [role=combobox]:has-text('Este mês')"
    },
-   "at": 82.24,
+   "at": 64.81,
    "label": "período"
   },
   {
@@ -614,7 +615,7 @@
     "role": "option",
     "name": "Mês passado"
    },
-   "at": 83.04,
+   "at": 66.05,
    "label": "Mês passado"
   },
   {
@@ -631,7 +632,7 @@
     "name": "Filtros",
     "within": "main"
    },
-   "at": 86.28,
+   "at": 67.01,
    "label": "Filtros"
   },
   {
@@ -645,8 +646,8 @@
     "placeholder": "Pedido, cliente, operador, placa..."
    },
    "text": "166",
-   "cps": 14,
-   "at": 85.58,
+   "cps": 22,
+   "at": 68.47,
    "label": "busca \"166\": a bateria (1665) e a compra em dinheiro (1663)",
    "clear": true
   },
@@ -672,8 +673,8 @@
    "target": {
     "selector": "main tbody tr:has-text('Auto Peças Vale Forte'):has-text('744,00')"
    },
-   "seconds": 0.8,
-   "at": 86.97,
+   "seconds": 0.3,
+   "at": 70.35,
    "label": "[DESTAQUE] a linha de 21/10, agora da Auto Peças Vale Forte, sem selo de estornado",
    "optional": true,
    "timeout": 4
@@ -684,7 +685,7 @@
     "selector": "main tbody tr:has-text('21/10/2026 09:15') button"
    },
    "seconds": 0.3,
-   "at": 89.5,
+   "at": 71.89,
    "label": "menu da compra em dinheiro de 21/10 09:15",
    "optional": false,
    "timeout": 8
@@ -703,7 +704,7 @@
     "role": "menuitem",
     "name": "Editar"
    },
-   "at": 90.61,
+   "at": 74.13,
    "label": "Editar",
    "noScroll": true
   },
@@ -720,7 +721,7 @@
     "exact": true,
     "within": "[role=dialog], [role=alertdialog]"
    },
-   "at": 90.97,
+   "at": 75.13,
    "label": "Editar Pedido"
   },
   {
@@ -748,7 +749,7 @@
     "within": "main"
    },
    "seconds": 1.6,
-   "at": 91.96,
+   "at": 78.41,
    "label": "[ZOOM] \"Caixa de destino da edição:\" com \"Caixa #88 · Você\" e \"O caixa original está fechado. Como houve movimento em dinheiro, escolha um caixa aberto.\"",
    "optional": true,
    "timeout": 4
@@ -756,7 +757,7 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 101.36
+   "at": 85.25
   },
   {
    "do": "click",
@@ -764,7 +765,7 @@
     "selector": "main button:has-text('Cancelar Edição')",
     "nth": 0
    },
-   "at": 101.67,
+   "at": 85.49,
    "label": "Cancelar Edição"
   },
   {
@@ -778,12 +779,12 @@
   {
    "do": "mark",
    "name": "L8",
-   "at": 117.88
+   "at": 98.24
   },
   {
    "do": "eval",
    "js": "(()=>{window.history.pushState({},'','/pedidos');window.dispatchEvent(new PopStateEvent('popstate'));return 'nav'})()",
-   "at": 117.88,
+   "at": 98.24,
    "label": "volta à tela Pedidos (sem recarregar)"
   },
   {
@@ -801,7 +802,7 @@
    "target": {
     "selector": "main [role=combobox]:has-text('Este mês')"
    },
-   "at": 118.63,
+   "at": 99.64,
    "label": "período"
   },
   {
@@ -810,7 +811,7 @@
     "role": "option",
     "name": "Hoje"
    },
-   "at": 120.52,
+   "at": 100.78,
    "label": "Hoje"
   },
   {
@@ -826,7 +827,7 @@
     "selector": "main tbody tr:has-text('11/11/2026 07:22')"
    },
    "seconds": 0.6,
-   "at": 122.57,
+   "at": 101.6,
    "label": "a latinha da Aparecida (24 kg, R$ 148,80)",
    "optional": true,
    "timeout": 4
@@ -838,7 +839,7 @@
     "within": "main tbody tr:has-text('11/11/2026 07:22')"
    },
    "seconds": 0.6,
-   "at": 126.52,
+   "at": 104.88,
    "label": "R$ 148,80 (24 kg)",
    "optional": true,
    "timeout": 4
@@ -846,7 +847,7 @@
   {
    "do": "mark",
    "name": "L9",
-   "at": 128.49
+   "at": 105.92
   },
   {
    "do": "hover",
@@ -854,7 +855,7 @@
     "selector": "main tbody tr:has-text('11/11/2026 07:22') button"
    },
    "seconds": 0.3,
-   "at": 128.49,
+   "at": 105.92,
    "label": "menu da latinha da Aparecida",
    "optional": false,
    "timeout": 8
@@ -873,7 +874,7 @@
     "role": "menuitem",
     "name": "Editar"
    },
-   "at": 129.68,
+   "at": 106.8,
    "label": "Editar",
    "noScroll": true
   },
@@ -890,7 +891,7 @@
     "exact": true,
     "within": "[role=dialog], [role=alertdialog]"
    },
-   "at": 131.27,
+   "at": 108.08,
    "label": "Editar Pedido (abre a tela Compra em edição)"
   },
   {
@@ -913,7 +914,7 @@
     "within": "main"
    },
    "seconds": 0.8,
-   "at": 135.53,
+   "at": 111.44,
    "label": "[DESTAQUE] o selo \"Editando Compra #N\"",
    "optional": true,
    "timeout": 4
@@ -924,7 +925,7 @@
     "selector": "#supplier-desktop-top"
    },
    "seconds": 0.3,
-   "at": 138.49,
+   "at": 113.76,
    "label": "Fornecedor",
    "optional": true,
    "timeout": 4
@@ -935,7 +936,7 @@
     "selector": "main tbody tr:has-text('Alumínio latinha')"
    },
    "seconds": 0.3,
-   "at": 139.78,
+   "at": 114.88,
    "label": "os itens",
    "optional": true,
    "timeout": 4
@@ -947,7 +948,7 @@
     "nth": 0
    },
    "seconds": 0.2,
-   "at": 140.61,
+   "at": 115.68,
    "label": "o peso",
    "optional": true,
    "timeout": 4
@@ -959,7 +960,7 @@
     "nth": 1
    },
    "seconds": 0.2,
-   "at": 141.37,
+   "at": 116.4,
    "label": "o preço",
    "optional": true,
    "timeout": 4
@@ -967,14 +968,14 @@
   {
    "do": "mark",
    "name": "L10",
-   "at": 144.4
+   "at": 118.72
   },
   {
    "do": "click",
    "target": {
     "selector": "main tbody tr:has-text('Alumínio latinha') button[aria-label='Ações do item']"
    },
-   "at": 144.4,
+   "at": 118.72,
    "label": "Ações do item"
   },
   {
@@ -983,7 +984,7 @@
     "role": "menuitem",
     "name": "Editar"
    },
-   "at": 144.83,
+   "at": 119.2,
    "label": "Editar (o item volta para o formulário)",
    "noScroll": true
   },
@@ -998,7 +999,7 @@
     "selector": "main input[placeholder='0,000']",
     "nth": 0
    },
-   "at": 147.69,
+   "at": 121.66,
    "label": "Quantidade (Kg) com 24"
   },
   {
@@ -1009,7 +1010,7 @@
    },
    "text": "42",
    "cps": 6,
-   "at": 149.63,
+   "at": 123.43,
    "label": "[ZOOM] Quantidade (Kg): 24 vira 42",
    "noClick": true,
    "clear": true
@@ -1027,7 +1028,7 @@
     "within": "main"
    },
    "seconds": 1.0,
-   "at": 151.36,
+   "at": 124.24,
    "label": "[ZOOM] Valor Total do Item R$ 260,40",
    "optional": true,
    "timeout": 4
@@ -1039,7 +1040,7 @@
     "name": "Incluir Item",
     "exact": true
    },
-   "at": 155.56,
+   "at": 127.26,
    "label": "Incluir Item"
   },
   {
@@ -1050,7 +1051,7 @@
   {
    "do": "mark",
    "name": "L11",
-   "at": 156.06
+   "at": 127.76
   },
   {
    "do": "hover",
@@ -1058,7 +1059,7 @@
     "selector": "main tbody tr:has-text('Alumínio latinha')"
    },
    "seconds": 0.8,
-   "at": 159.22,
+   "at": 130.16,
    "label": "o item na lista com o peso certo",
    "optional": true,
    "timeout": 4
@@ -1066,7 +1067,7 @@
   {
    "do": "mark",
    "name": "L12",
-   "at": 160.89
+   "at": 131.52
   },
   {
    "do": "scroll",
@@ -1077,24 +1078,29 @@
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 160.89,
+   "at": 131.52,
    "label": "cursor descansa (ilustração: não soma por cima)"
   },
   {
    "do": "mark",
    "name": "L13",
-   "at": 174.83
+   "at": 142.5
   },
   {
    "do": "mark",
    "name": "L14",
-   "at": 186.34
+   "at": 151.06
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll('main button')].find(b=>b.textContent.trim()==='Finalizar');if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-560);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 191.5,
+   "at": 155.14,
    "label": "a tela desce até o Finalizar (fica atrás do rodapé; sob a ilustração)"
+  },
+  {
+   "do": "mark",
+   "name": "L15",
+   "at": 159.38
   },
   {
    "do": "click",
@@ -1103,7 +1109,7 @@
     "name": "Finalizar",
     "exact": true
    },
-   "at": 196.13,
+   "at": 159.58,
    "label": "Finalizar"
   },
   {
@@ -1112,16 +1118,11 @@
    "timeout": 10
   },
   {
-   "do": "mark",
-   "name": "L15",
-   "at": 196.63
-  },
-  {
    "do": "click",
    "target": {
     "selector": "[role=dialog] button:has(span:text-is('Dinheiro'))"
    },
-   "at": 197.45,
+   "at": 160.86,
    "label": "Dinheiro (R$ 260,40)"
   },
   {
@@ -1130,7 +1131,7 @@
     "role": "button",
     "name": "CONFIRMAR PAGAMENTO"
    },
-   "at": 198.26,
+   "at": 162.08,
    "label": "CONFIRMAR PAGAMENTO"
   },
   {
@@ -1147,13 +1148,13 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 200.58,
+   "at": 164.6,
    "label": "[ZOOM] os avisos: Revertendo pedido original... / Pedido original revertido! Criando pedido editado... / Compra registrada!"
   },
   {
    "do": "mark",
    "name": "L16",
-   "at": 206.24
+   "at": 168.08
   },
   {
    "do": "type",
@@ -1165,7 +1166,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 206.55,
+   "at": 168.4,
    "label": "a compra editada registrada (janela Imprimir Comprovante)"
   },
   {
@@ -1175,7 +1176,7 @@
     "name": "Não, obrigado",
     "exact": true
    },
-   "at": 216.42,
+   "at": 177.3,
    "label": "Imprimir Comprovante: Não, obrigado"
   },
   {
@@ -1186,7 +1187,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 218.35
+   "at": 178.34
   }
  ]
 }

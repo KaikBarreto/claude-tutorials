@@ -1,6 +1,6 @@
 {
  "name": "t09-cap03",
- "title": "T09 · Cap. 3 · Filtrar até achar (narração 80,0 s ESTIMADA; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-11T08:30:00-03:00)",
+ "title": "T09 · Cap. 3 · Filtrar até achar (narração 66,1 s; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-11T08:30:00-03:00)",
  "seed": "t09-cap03",
  "pace": 0.5,
  "cps": 9,
@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-11",
   "pwa-install-dismissed": "true",
   "theme": "light",
@@ -109,7 +109,7 @@
    "target": {
     "selector": "main [role=combobox]:has-text('Este mês')"
    },
-   "at": 4.57,
+   "at": 3.08,
    "label": "período"
   },
   {
@@ -118,7 +118,7 @@
     "role": "option",
     "name": "Mês passado"
    },
-   "at": 6.1,
+   "at": 4.4,
    "label": "Mês passado"
   },
   {
@@ -131,7 +131,7 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 7.84
+   "at": 6.0
   },
   {
    "do": "click",
@@ -140,7 +140,7 @@
     "name": "Filtros",
     "within": "main"
    },
-   "at": 7.84,
+   "at": 6.0,
    "label": "Filtros"
   },
   {
@@ -157,7 +157,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 9.89,
+   "at": 7.92,
    "label": "a busca do painel (pedido, cliente, operador, placa)"
   },
   {
@@ -165,7 +165,7 @@
    "target": {
     "placeholder": "Pedido, cliente, operador, placa..."
    },
-   "at": 16.37,
+   "at": 12.94,
    "label": "clica na busca"
   },
   {
@@ -175,19 +175,19 @@
    },
    "text": "Vale Forte",
    "cps": 40,
-   "at": 17.55,
+   "at": 14.31,
    "label": "digita Vale Forte",
    "noClick": true
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 18.66
+   "at": 15.36
   },
   {
    "do": "press",
    "key": "Escape",
-   "at": 18.66,
+   "at": 15.36,
    "label": "fecha o painel (a lista fica à mostra)"
   },
   {
@@ -199,7 +199,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 18.89,
+   "at": 15.52,
    "label": "[ZOOM] as compras de outubro da Auto Peças Vale Forte (nenhuma de bateria)"
   },
   {
@@ -211,7 +211,7 @@
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 19.1,
+   "at": 15.52,
    "label": "cursor passa pelas linhas da Vale Forte"
   },
   {
@@ -221,13 +221,13 @@
     "name": "Filtros",
     "within": "main"
    },
-   "at": 24.29,
+   "at": 19.88,
    "label": "Filtros de novo"
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 25.69
+   "at": 21.04
   },
   {
    "do": "type",
@@ -235,14 +235,14 @@
     "placeholder": "Pedido, cliente, operador, placa..."
    },
    "text": "",
-   "at": 25.69,
+   "at": 21.04,
    "label": "apaga a busca",
    "clear": true
   },
   {
    "do": "eval",
    "js": "(async()=>{const p=[...document.querySelectorAll('[data-radix-popper-content-wrapper]')].find(w=>w.innerText.includes('Filtrar pedidos'));const b=p&&[...p.querySelectorAll('button')].filter(x=>x.className.includes('justify-between'))[0];if(!b)return 'SEM ALVO';b.click();await new Promise(r=>setTimeout(r,150));return 'aberto'})()",
-   "at": 29.14,
+   "at": 23.5,
    "label": "abre o campo Tipo (sem cursor)"
   },
   {
@@ -250,7 +250,7 @@
    "target": {
     "selector": "[data-radix-popper-content-wrapper] label:has-text('Compras')"
    },
-   "at": 28.94,
+   "at": 23.5,
    "label": "filtro: Compras"
   },
   {
@@ -261,7 +261,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const p=[...document.querySelectorAll('[data-radix-popper-content-wrapper]')].find(w=>w.innerText.includes('Filtrar pedidos'));const b=p&&[...p.querySelectorAll('button')].filter(x=>x.className.includes('justify-between'))[1];if(!b)return 'SEM ALVO';b.click();await new Promise(r=>setTimeout(r,150));for(let i=0;i<20;i++){const inp=[...document.querySelectorAll('[data-radix-popper-content-wrapper] input[placeholder=\\'Buscar...\\']')].pop();if(inp){Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set.call(inp,\"bat\");inp.dispatchEvent(new Event('input',{bubbles:true}));return 'aberto e buscou'}await new Promise(r=>setTimeout(r,100));}return 'SEM ALVO (busca)';return 'aberto'})()",
-   "at": 30.42,
+   "at": 25.34,
    "label": "abre o campo Material e busca \"bat\" (sem cursor)"
   },
   {
@@ -269,7 +269,7 @@
    "target": {
     "selector": "[data-radix-popper-content-wrapper] label:has-text('Bateria automotiva')"
    },
-   "at": 30.54,
+   "at": 25.42,
    "label": "filtro: Bateria automotiva"
   },
   {
@@ -280,7 +280,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const p=[...document.querySelectorAll('[data-radix-popper-content-wrapper]')].find(w=>w.innerText.includes('Filtrar pedidos'));const b=p&&[...p.querySelectorAll('button')].filter(x=>x.className.includes('justify-between'))[2];if(!b)return 'SEM ALVO';b.click();await new Promise(r=>setTimeout(r,150));return 'aberto'})()",
-   "at": 33.16,
+   "at": 28.14,
    "label": "abre o campo Forma de Pagamento (sem cursor)"
   },
   {
@@ -288,24 +288,24 @@
    "target": {
     "selector": "[data-radix-popper-content-wrapper] label:has-text('Com Pix/Transferência')"
    },
-   "at": 34.03,
+   "at": 28.62,
    "label": "filtro: Com Pix/Transferência"
   },
   {
    "do": "press",
    "key": "Escape",
-   "at": 35.06,
+   "at": 29.07,
    "label": "fecha a lista da forma de pagamento"
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 35.46
+   "at": 29.47
   },
   {
    "do": "press",
    "key": "Escape",
-   "at": 35.46,
+   "at": 29.47,
    "label": "fecha o painel Filtros"
   },
   {
@@ -314,7 +314,7 @@
     "text": "21/10/2026",
     "within": "main tbody"
    },
-   "at": 35.74,
+   "at": 30.84,
    "label": "abre a linha de 21/10 (Depósito Irmãos Siqueira, R$ 744,00)"
   },
   {
@@ -331,7 +331,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 39.55,
+   "at": 33.48,
    "label": "[ZOOM] a linha e o item: Bateria automotiva, 240 kg, R$ 744,00"
   },
   {
@@ -341,7 +341,7 @@
     "within": "main tbody"
    },
    "seconds": 0.5,
-   "at": 39.91,
+   "at": 33.56,
    "label": "o item Bateria automotiva",
    "optional": true,
    "timeout": 4
@@ -353,7 +353,7 @@
     "within": "main tbody"
    },
    "seconds": 0.6,
-   "at": 45.0,
+   "at": 37.56,
    "label": "o fornecedor errado: Depósito Irmãos Siqueira",
    "optional": true,
    "timeout": 4
@@ -361,7 +361,7 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 47.72
+   "at": 40.12
   },
   {
    "do": "hover",
@@ -370,7 +370,7 @@
     "within": "main"
    },
    "seconds": 0.5,
-   "at": 52.49,
+   "at": 44.24,
    "label": "[DESTAQUE] as etiquetas \"Filtrando por\"",
    "optional": true,
    "timeout": 4
@@ -382,7 +382,7 @@
     "within": "main"
    },
    "seconds": 0.8,
-   "at": 54.69,
+   "at": 45.76,
    "label": "Limpar todos (sem clicar)",
    "optional": true,
    "timeout": 4
@@ -390,7 +390,7 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 58.1
+   "at": 48.64
   },
   {
    "do": "click",
@@ -399,7 +399,7 @@
     "name": "Filtros",
     "within": "main"
    },
-   "at": 58.1,
+   "at": 48.64,
    "label": "Filtros de novo"
   },
   {
@@ -410,7 +410,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const p=[...document.querySelectorAll('[data-radix-popper-content-wrapper]')].find(w=>w.innerText.includes('Filtrar pedidos'));const b=p&&[...p.querySelectorAll('button')].filter(x=>x.className.includes('justify-between'))[2];if(!b)return 'SEM ALVO';b.click();await new Promise(r=>setTimeout(r,150));return 'aberto'})()",
-   "at": 61.35,
+   "at": 51.14,
    "label": "abre a lista de Forma de Pagamento (Com Saldo, Pagamento Misto, Não informado)"
   },
   {
@@ -418,8 +418,8 @@
    "target": {
     "selector": "[data-radix-popper-content-wrapper] label:has-text('Pagamento Misto')"
    },
-   "seconds": 0.8,
-   "at": 63.09,
+   "seconds": 0.4,
+   "at": 52.56,
    "label": "[DESTAQUE] Pagamento Misto",
    "optional": true,
    "timeout": 4
@@ -427,13 +427,13 @@
   {
    "do": "press",
    "key": "Escape",
-   "at": 64.19,
+   "at": 53.66,
    "label": "fecha a lista"
   },
   {
    "do": "eval",
    "js": "(async()=>{const p=[...document.querySelectorAll('[data-radix-popper-content-wrapper]')].find(w=>w.innerText.includes('Filtrar pedidos'));const b=p&&[...p.querySelectorAll('button')].filter(x=>x.className.includes('justify-between'))[3];if(!b)return 'SEM ALVO';b.click();await new Promise(r=>setTimeout(r,150));return 'aberto'})()",
-   "at": 64.9,
+   "at": 53.98,
    "label": "abre o campo Conta"
   },
   {
@@ -441,8 +441,8 @@
    "target": {
     "selector": "[data-radix-popper-content-wrapper] label:has-text('Conta Principal')"
    },
-   "seconds": 0.8,
-   "at": 65.36,
+   "seconds": 0.4,
+   "at": 54.1,
    "label": "[DESTAQUE] a conta bancária",
    "optional": true,
    "timeout": 4
@@ -450,19 +450,19 @@
   {
    "do": "press",
    "key": "Escape",
-   "at": 65.44,
+   "at": 55.23,
    "label": "fecha a lista"
   },
   {
    "do": "press",
    "key": "Escape",
-   "at": 66.04,
+   "at": 55.48,
    "label": "fecha o painel"
   },
   {
    "do": "mark",
    "name": "L8",
-   "at": 67.4
+   "at": 55.76
   },
   {
    "do": "hover",
@@ -470,7 +470,7 @@
     "selector": "main [role=combobox]:has-text('Mês passado')"
    },
    "seconds": 1.0,
-   "at": 68.22,
+   "at": 56.56,
    "label": "[DESTAQUE] o período (a dica da lista cortada)",
    "optional": true,
    "timeout": 4
@@ -483,7 +483,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 79.97
+   "at": 66.08
   }
  ]
 }

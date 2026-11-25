@@ -542,11 +542,11 @@ TEXTO_CAIXA = TXT('Falta isto para emitir NF-e', within=DLG, exact=False)
 POPS = "(()=>{const o=window.open;window.__pops=[];window.open=function(...a){const w=o.apply(this,a);window.__pops.push(w);return w};window.__net=[];const of=window.fetch;window.fetch=function(...a){window.__net.push('F '+String((a[0]&&a[0].url)||a[0]).slice(0,100));return of.apply(this,a)};const d=Object.getOwnPropertyDescriptor(HTMLImageElement.prototype,'src');Object.defineProperty(HTMLImageElement.prototype,'src',{set(v){window.__net.push('IMG '+String(v).slice(0,100));d.set.call(this,v)},get(){return d.get.call(this)}});return 'ok'})()"
 # o extrato (e o relatório de saldos) abrem uma aba nova e escrevem HTML nela (não é o #pdf-frame do openPdfInTab): devolve o HTML da aba em
 # base64 (`HTML:<b64>`) para a ilustração `"cena": "pdf"` (a gravação filma uma aba só; t04_pdf.py grava o arquivo)
-HTML_JS = ("(async()=>{let w;for(let i=0;i<60&&!(w=(window.__pops||[]).slice(-1)[0]);i++)await new Promise(r=>setTimeout(r,250));if(!w)return 'SEM JANELA';const espera=%s;for(let i=0;i<160;i++){let t='';"
+HTML_JS = ("(async()=>{let w;for(let i=0;i<60&&!(w=(window.__pops||[]).slice(-1)[0]);i++)await new Promise(r=>setTimeout(r,250));if(!w)return 'SEM JANELA';const espera=%s;for(let i=0;i<80;i++){let t='';"
            "try{t=(w.document&&w.document.documentElement&&w.document.documentElement.textContent)||''}catch(e){return 'ERRO '+e}"
            "if(t&&espera.every(x=>t.toLowerCase().includes(x.toLowerCase()))){const h='<!doctype html>'+w.document.documentElement.outerHTML;const u=new TextEncoder().encode(h);let s='';"
            "for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'HTML:'+btoa(s)}"
-           "await new Promise(r=>setTimeout(r,250))}let d='';try{d=' pops='+window.__pops.length+' fechada='+w.closed+' texto='+((w.document.documentElement&&w.document.documentElement.textContent)||'').slice(0,160)}catch(e){d=' '+e}return 'SEM HTML'+d+' NET='+(window.__net||[]).slice(-14).join('|')})()")
+           "await new Promise(r=>setTimeout(r,250))}let d='';try{d=' pops='+window.__pops.length+' fechada='+w.closed+' texto='+((w.document.documentElement&&w.document.documentElement.textContent)||'').slice(0,160)}catch(e){d=' '+e}return 'SEM HTML'+d+' BODY['+((w.document.body&&w.document.body.innerText)||'').length+']='+((w.document.body&&w.document.body.innerText)||'').slice(0,400)+' LEN='+w.document.documentElement.outerHTML.length+' NET='+(window.__net||[]).slice(-6).join('|')})()")
 
 
 def html_js(espera):
@@ -701,10 +701,12 @@ def cap04():
     c.click(SALVAR, at=c.A(9, 'Salvar.', 0.6), label='Salvar')
     c.waitfor(text='Fornecedor cadastrado com sucesso!', timeout=12)
     c.waitfor(gone={'role': 'dialog'}, timeout=8)
-    c.ev(js_rola_linha('Serralheria Bem-Te-Vi'), at=c.A(9, 'verde:', 0.5) - 1.6, label='rola a lista até a serralheria')
-    c.hover(FISCAL_OK('Serralheria Bem-Te-Vi'), 0.5, at=c.A(9, 'verde:', 0.5) - 0.9, label='sinal verde da serralheria (chega)')
-    c.press('Escape', at=c.A(9, 'verde:', 0.5) - 0.3, label='fecha o menu "..." que o cursor abriu no caminho (Esc)')   # 25/11: o cursor passa por cima do "..." da linha e o menu cobria a lista
-    c.hover(FISCAL_OK('Serralheria Bem-Te-Vi'), 2.0, at=c.A(9, 'verde:', 0.5), label='sinal verde da serralheria (Pronto para emitir NF-e)')
+    A9 = c.A(9, 'verde:', 0.5)
+    c.ev(js_rola_linha('Serralheria Bem-Te-Vi'), at=A9 - 2.9, label='rola a lista até a serralheria')
+    c.hover(FISCAL_OK('Serralheria Bem-Te-Vi'), 0.4, at=A9 - 2.0, label='sinal verde da serralheria (chega)')
+    c.press('Escape', at=A9 - 1.4, label='fecha o menu "..." que o cursor abriu no caminho (Esc)')   # 25/11: o cursor passa por cima do "..." da linha e o menu cobria a lista
+    c.hover(NOME_LINHA('Serralheria Bem-Te-Vi'), 0.2, at=A9 - 1.15, label='sai do sinal (o tooltip só abre com movimento)')
+    c.hover(FISCAL_OK('Serralheria Bem-Te-Vi'), 2.0, at=A9, label='sinal verde da serralheria (Pronto para emitir NF-e)')
     c.confere('body', ['Pronto para emitir NF-e'], 'tooltip Pronto para emitir NF-e')
     c.mark(10)
     c.hover(INCOMPLETO('Rogério Alves Costa'), 4.0, at=c.A(10, 'triângulo', 0.5), label='triângulo do Rogério (o que falta para a NF-e)')
@@ -926,6 +928,7 @@ def cap08():
     c.confere(FICHA_DE('Depósito Irmãos Siqueira'), ['Ferro pesado', 'Ferro misto', 'Cobre misto'], 'Já comprados: ferro pesado, ferro misto e cobre misto')
     c.mark(8)
     FP = f"{FICHA_DE('Depósito Irmãos Siqueira')} tr:has-text('Ferro pesado')"
+    c.ev(js_rola_texto('Ferro pesado', 380, escopo=FICHA_DE('Depósito Irmãos Siqueira')), at=c.L(8) + 0.15, label='rola a ficha até a linha do ferro pesado')   # 25/11: a rolagem do robô para alcançar a lista do Estado levava 7 s
     c.hover(SEL(f"{FP} button[role=combobox]"), 0.6, at=c.A(8, 'estado.', 0.5), label='o Estado da linha Ferro pesado: Herda')
     c.click(SEL(f"{FP} button[role=combobox]"), at=c.A(8, 'Fixo', 0.8), label='abre o Estado do ferro pesado')
     c.click(OPT('Fixo'), at=c.A(8, 'combinado,', 0.5), label='Fixo')
@@ -1124,9 +1127,7 @@ LINHA_AJUSTE = SEL(f"{FC} tbody tr:has-text('Desconto do papelão molhado')", nt
 
 def cap13():
     """Movimentação Receber e Dinheiro; Crédito/débito (abate R$ 50,00); lápis e lixeira; exclusão do ajuste; Editar saldo (sem salvar); filtro Data."""
-    c = cap_novo(13, ficha=COOP, start=(700, 400))
-    c.click(ABA_FICHA('Conta-corrente'), label='aba Conta-corrente (antes da fala)')
-    c.waitfor(text='Saldo Atual', timeout=12)
+    c = cap_novo(13, ficha=COOP, start=(700, 400), extra=[{'do': 'click', 'target': ABA_FICHA('Conta-corrente')}, {'do': 'waitFor', 'text': 'Saldo Atual', 'timeout': 12}, AGUARDA])   # aba aberta ANTES da fala (filmada comia 1,35 s do início)
     c.confere(FC, ['R$ 1.350,00'], 'Saldo Atual R$ 1.350,00 (semente apos-cap09)')
     c.mark(1)
     c.click(BTN('Movimentação', FC), at=c.A(1, 'Movimentação', 0.6), label='Movimentação')

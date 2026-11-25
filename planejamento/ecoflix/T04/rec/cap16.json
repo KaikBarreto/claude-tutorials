@@ -1,6 +1,6 @@
 {
  "name": "t04-cap16",
- "title": "T4 · Cap. 16 · Relatório de saldos (narração 70,1 s; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T4 · Cap. 16 · Relatório de saldos (narração 72,8 s; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t04-cap16",
  "pace": 0.5,
  "cps": 40,
@@ -100,7 +100,7 @@
   },
   {
    "do": "eval",
-   "js": "(()=>{const o=window.open;window.__pops=[];window.open=function(...a){const w=o.apply(this,a);window.__pops.push(w);return w};return 'ok'})()"
+   "js": "(()=>{const o=window.open;window.__pops=[];window.open=function(...a){const w=o.apply(this,a);window.__pops.push(w);return w};window.__net=[];const of=window.fetch;window.fetch=function(...a){window.__net.push('F '+String((a[0]&&a[0].url)||a[0]).slice(0,100));return of.apply(this,a)};const d=Object.getOwnPropertyDescriptor(HTMLImageElement.prototype,'src');Object.defineProperty(HTMLImageElement.prototype,'src',{set(v){window.__net.push('IMG '+String(v).slice(0,100));d.set.call(this,v)},get(){return d.get.call(this)}});return 'ok'})()"
   },
   {
    "do": "eval",
@@ -336,12 +336,12 @@
   {
    "do": "mark",
    "name": "L9",
-   "at": 60.93
+   "at": 63.6
   },
   {
    "do": "eval",
    "js": "(async()=>{const d=document.querySelector('[role=dialog]');if(!d)return 'sem janela';const c=[...d.querySelectorAll('*')].find(e=>{const s=getComputedStyle(e);return /(auto|scroll)/.test(s.overflowY)&&e.scrollHeight>e.clientHeight+4});if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,dy=-y0;if(y0<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
-   "at": 60.93,
+   "at": 63.6,
    "label": "sobe ao topo do relatório"
   },
   {
@@ -352,7 +352,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 61.47,
+   "at": 64.14,
    "label": "Exportar Relatório (abre o menu)"
   },
   {
@@ -362,7 +362,7 @@
     "name": "Exportar em PDF"
    },
    "seconds": 0.17,
-   "at": 63.45,
+   "at": 66.12,
    "label": "Exportar em PDF",
    "optional": true,
    "timeout": 4
@@ -374,7 +374,7 @@
     "name": "Exportar em Excel"
    },
    "seconds": 0.15,
-   "at": 64.57,
+   "at": 67.24,
    "label": "Exportar em Excel (sem clicar)",
    "optional": true,
    "timeout": 4
@@ -385,12 +385,12 @@
     "role": "menuitem",
     "name": "Exportar em PDF"
    },
-   "at": 64.41,
+   "at": 67.08,
    "label": "Exportar em PDF: abre o relatório em aba nova"
   },
   {
    "do": "eval",
-   "js": "(async()=>{let w;for(let i=0;i<60&&!(w=(window.__pops||[]).slice(-1)[0]);i++)await new Promise(r=>setTimeout(r,250));if(!w)return 'SEM JANELA';const espera=[\"Fundição Bandeira do Vale\"];for(let i=0;i<60;i++){let t='';try{t=(w.document&&w.document.documentElement&&w.document.documentElement.textContent)||''}catch(e){return 'ERRO '+e}if(t&&espera.every(x=>t.toLowerCase().includes(x.toLowerCase()))){const h='<!doctype html>'+w.document.documentElement.outerHTML;const u=new TextEncoder().encode(h);let s='';for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'HTML:'+btoa(s)}await new Promise(r=>setTimeout(r,250))}let d='';try{d=' pops='+window.__pops.length+' fechada='+w.closed+' texto='+((w.document.documentElement&&w.document.documentElement.textContent)||'').slice(0,160)}catch(e){d=' '+e}return 'SEM HTML'+d})()",
+   "js": "(async()=>{let w;for(let i=0;i<60&&!(w=(window.__pops||[]).slice(-1)[0]);i++)await new Promise(r=>setTimeout(r,250));if(!w)return 'SEM JANELA';const espera=[\"Fundição Bandeira do Vale\"];for(let i=0;i<160;i++){let t='';try{t=(w.document&&w.document.documentElement&&w.document.documentElement.textContent)||''}catch(e){return 'ERRO '+e}if(t&&espera.every(x=>t.toLowerCase().includes(x.toLowerCase()))){const h='<!doctype html>'+w.document.documentElement.outerHTML;const u=new TextEncoder().encode(h);let s='';for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'HTML:'+btoa(s)}await new Promise(r=>setTimeout(r,250))}let d='';try{d=' pops='+window.__pops.length+' fechada='+w.closed+' texto='+((w.document.documentElement&&w.document.documentElement.textContent)||'').slice(0,160)}catch(e){d=' '+e}return 'SEM HTML'+d+' NET='+(window.__net||[]).slice(-14).join('|')})()",
    "label": "PDF DO RELATÓRIO DE SALDOS (aba nova, para a ilustração)"
   },
   {
@@ -405,14 +405,14 @@
   {
    "do": "mark",
    "name": "L10",
-   "at": 64.83
+   "at": 67.5
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] tr:has-text('Aços Quiririm Ltda') button:has(svg.lucide-eye)"
    },
-   "at": 65.61,
+   "at": 68.28,
    "label": "olho da Aços Quiririm: abre a conta-corrente"
   },
   {
@@ -438,7 +438,7 @@
     "within": "main"
    },
    "seconds": 0.62,
-   "at": 68.51,
+   "at": 71.18,
    "label": "Conta-Corrente do Cliente, com o extrato",
    "optional": true,
    "timeout": 4
@@ -451,7 +451,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 70.08
+   "at": 72.75
   }
  ]
 }
