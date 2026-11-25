@@ -49,3 +49,7 @@ FAKE_NOW=2026-11-10T08:35:00-03:00 FAKE_PORT=54307 bash rec/run.sh fake      # s
 TUT_SENHA=<8+> bash rec/t07/t07_lote160b.sh "<rápidos>" "<completos>"          # um lote pela fila (rec/fila.sh --prio 07)
 FAKE_PORT=54307 bash rec/run.sh down                                           # instância derrubada em 20/11
 ```
+
+## 25/11 · ilustrações v3 com a voz real 1.60.22
+- Feitas 6 (`cena.html`): ilu00_dia, ilu04_preco, ilu06_pesagem (3D: tara, impureza, Bruto − Tara − Impureza = Líquido, dupla pesagem 412 − 96 = 316 kg), ilu09_formas, ilu12_cupom (papel real 58 mm #1760), ilu17_sem_valores (papel real 80 mm #1761). Tiradas 7 (a tela mostra). Auditoria 0, piscadas 0. Prévia `$TUT_HOME/previa_ilustracoes/T07_v3.mp4`. Papéis em `$TUT_HOME/t07/edit/out/comprovantes/`.
+- **Para o fechamento**: na ilu06_pesagem os números 412, 96 e 316 aparecem antes da voz (a fala deles está na linha 4 do cap06, fora da janela). Estender a janela até a linha 4 ou prender a estação da dupla pesagem em `W(4, ...)`. O marca-texto do cupom15 foi posto por estimativa (o PDF não tem texto): conferir no quadro.
