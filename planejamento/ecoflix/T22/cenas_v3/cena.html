@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- T22 "Gerencial: matriz e filiais" · ilustrações no kit v3 (perfis/ecoflix/cenas_v3/LEIA.md), 16:9 (--larg 1422).
+     Uma função por CENA e CAPS[cap] diz qual cena cada capítulo ilustrado usa. As janelas (de/ate) estão em ../cenas/ilustracoes.json.
+     Âncoras por palavra (W) sobre a voz real 1.60.22 ($TUT_HOME/t22/narracao/capNN.json, cópia em ../cenas/tempos). Tudo escuro (mundo dos dados).
+       cap00 · somar       (escuro)  ilu00_somar         "Duas unidades, uma tela"  linha 1: antes, abrir os dois sistemas e somar na mão; agora os números das duas chegam juntos numa tela só
+       cap08 · caixa       (escuro)  ilu07_caixa         "Caixa × competência"      linha 2: quase 45 mil do pátio, comprados em outubro: no caixa já pesam no mês; na competência só viram custo quando vendidos
+       cap11 · divergencia (escuro)  ilu11_divergencia   "Aviso de divergência"     linha 6: a tela soma as movimentações; saldo no cadastro sem movimentação que explique vira aviso; o sistema não mexe sozinho, a conferência é sua
+       cap15 · transf      (escuro)  ilu15_aprovacao     "Com e sem aprovação"      linha 2: com a aprovação ligada o pedido cai numa fila; desligada, não existe fila e a transferência da matriz move o estoque na hora
+                                     ilu15_lote          "Executar todas"           linha 7: as outras duas executadas juntas; sem saldo na origem uma falha, as demais seguem e a tela lista qual falhou e por quê
+       cap17 · ciclos      (escuro)  ilu17_ciclos        "Pagar junto"              linha 8: pagar junto exige o mesmo ciclo; uma anual e outra mensal, o sistema avisa e não gera a fatura; acertar o ciclo no Gerenciar
+     Saíram do ilustracoes.json (ver o relatório): ilu01_grupo, ilu03_dia, ilu04_recusas, ilu05_compra, ilu07_semcusto, ilu10_vinculos, ilu13_variacao, ilu16_venda.
+     Nenhum comprovante/PDF na fala desta aula (o QR Code do cap17 a tela já mostra). Só textos e números da fala; cada rótulo entra na palavra da voz.
+     Acabamento: node perfis/ecoflix/cenas_v3/auditar.cjs --aula planejamento/ecoflix/T22 --larg 1422
+     Render de uma janela: node ferramentas/edit/cenas/render_cenas.cjs <cap> <capNN.json> saida.mp4 --html planejamento/ecoflix/T22/cenas_v3/cena.html \
+               --larg 1422 --dsf 1.35 --de <s> --ate <s>
+     Ícones lucide usados (o nome tem de estar literal nesta página): 'warehouse' 'building-2' 'layout-dashboard' 'hand-coins' 'monitor' 'calculator' 'wallet' 'chart-no-axes-column'
+     'history' 'package' 'equal-not' 'triangle-alert' 'lock' 'user-check' 'file-text' 'clock' 'toggle-left' 'ban' 'arrow-left-right' 'package-check' 'play' 'circle-check'
+     'list-checks' 'repeat' 'refresh-cw' 'file-warning' -->
+</head><body>
+<script type="module">
+import { PI, cl, lerp, pr, eo, eio, eo5, W, el, ic, vis, foco, pulso, titulo, posTitulo, selo, htmlChip, htmlCartao, GL,
+  camera, plano, clima, cena, estilo, enquadraRet, uneRet, lugar, htmlFluxo, fluxo }
+  from '../../../../perfis/ecoflix/cenas_v3/motor.js';
+import { mundoEscuro } from '../../../../perfis/ecoflix/cenas_v3/fundo.js';
+import { base, pt } from '../../../../perfis/ecoflix/cenas_v3/dados/base.js';
+import { htmlFluxoCartoes, fluxoCartoes, parte, seta } from '../../../../perfis/ecoflix/cenas_v3/dados/fluxoCartoes.js';
+
+// =====================================================================================================================
+// comuns
+const NUNCA = 1e9, EE = .0112;
+const cores = () => base();
+function escuro() {   // um lugar do mundo escuro: posições em px do desenho (y para baixo)
+  const EIXO = lugar([0, 0, 0]), E = mundoEscuro(EIXO, 0, EE);
+  return { EIXO, X: (html, x, y, o = {}) => E(html, x * EE, -y * EE, 0, o), fundo: (cx, cy, o) => E.fundo(cx * EE, -cy * EE, o) };
+}
+const STAND2 = (t, tit, t0, b = NUNCA) => { clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, -9, b); };   // título já no alto desde o primeiro quadro
+// texto que entra palavra por palavra, cada uma na palavra da voz: ws([[texto, instante], ...]) devolve o html e os instantes
+const ws = ps => ps.map(([w]) => `<span class="pw">${w}</span>`).join(' ');
+const tp = ps => ps.map(p => p[1]);
+const rev = (e, t, ts) => pt(e, '.pw').forEach((s, i) => { s.style.opacity = eo(pr(t, ts[i] - .05, .28)).toFixed(3); });
+const chipP = (icone, cls, ps) => htmlChip(`${ic(icone, 18)}<span style="white-space:pre">${ws(ps)}</span>`, cls);
+const falaChip = (p, t, ps, b = NUNCA) => { const ts = tp(ps); vis(p.e, t, ts[0] - .12, b, { dy: 12, sc: .9 }); rev(p.e, t, ts); };
+// cartão de fluxoCartoes sozinho, com rótulo e legenda que entram palavra por palavra: rot e sub são listas [[texto, instante]]
+const cartaoP = (icone, rot, sub, cls, cw) => htmlFluxoCartoes({ cartoes: [[icone, ws(rot), ws(sub), cls]], cw });
+const revCartao = (p, t, rot, sub) => rev(parte(p.e, 0), t, [...tp(rot), ...tp(sub)]);
+// seta que chega ao cartão i + 1, desenhada em a (a mesma do fluxoCartoes, para quando dois cartões chegam juntos)
+function setaEm(e, i, t, a) {
+  const s = seta(e, i), vao = +e.dataset.vao, r0 = +(e.dataset.r ?? 8), t0 = a - .42, p = eio(pr(t, t0, .4)), q = pr(t, t0, .45), l = s.querySelector('.sl');
+  s.style.opacity = eo(pr(t, t0 - .18, .3)).toFixed(3); s.querySelector('.st').setAttribute('stroke-dashoffset', (1 - p).toFixed(4)); s.querySelector('.sp').setAttribute('opacity', eo(pr(t, t0 + .3, .15)).toFixed(3));
+  l.setAttribute('cx', (r0 + (vao - 2 * r0) * eio(q)).toFixed(1)); l.setAttribute('opacity', (q > 0 && q < 1 ? Math.sin(PI * q) ** .5 : 0).toFixed(3));
+}
+estilo('t22', `.pw{display:inline-block;white-space:pre}`);
+
+// =====================================================================================================================
+// CENA "somar" · cap00, linha 1 · clima escuro
+// 1 "Com duas unidades, pra saber quanto o grupo vendeu no mês, alguém precisava abrir os dois sistemas e somar na mão. Aqui, os números das duas chegam juntos numa tela só."
+// Matriz e filial de cada lado; em cima a pergunta, embaixo o trabalho antigo (abrir os dois sistemas, somar na mão); no "Aqui" o trabalho some e as duas setas chegam juntas no cartão do meio.
+function somar() {
+  const t0 = W(1, 'com'), tDu = W(1, 'duas'), tUn = W(1, 'unidades'), tQu = W(1, 'quanto'), tO = W(1, 'o'), tGr = W(1, 'grupo'), tVe = W(1, 'vendeu'), tNo = W(1, 'no'), tMe = W(1, 'mes'),
+    tAb = W(1, 'abrir'), tOs = W(1, 'os'), tSi = W(1, 'sistemas'), tSo = W(1, 'somar'), tNa = W(1, 'na'), tAq = W(1, 'aqui'), tNu = W(1, 'numeros'), tDas = W(1, 'das'), tCh = W(1, 'chegam'),
+    tJu = W(1, 'juntos'), tNu2 = W(1, 'numa'), tFim = W(1, 'so', 1, 'e');
+  cores();
+  const { EIXO, X, fundo } = escuro();
+  const YR = 15;
+  const sub = [['juntos', tJu], ['numa tela só', tNu2]], rot = [['Números', tNu], ['das duas', tDas]];
+  const row = X(htmlFluxoCartoes({ cartoes: [['warehouse', 'Matriz', 'Taubaté'], ['layout-dashboard', ws(rot), ws(sub), 'res'], ['building-2', 'Filial', 'Pindamonhangaba']], cw: 280, vao: 120 }), 0, YR);
+  seta(row.e, 1).style.transform = 'scaleX(-1)';   // a filial também chega no meio: a seta aponta da direita para o centro
+  const pQ = [['Quanto', tQu], ['o grupo', tO], ['vendeu', tVe], ['no mês', tNo]], p1 = [['abrir', tAb], ['os dois', tOs], ['sistemas', tSi]], p2 = [['somar', tSo], ['na mão', tNa]];
+  const chQ = X(chipP('hand-coins', 'n', pQ), 0, YR - row.h / 2 - 26, { anc: [.5, 1] });
+  const c1 = X(chipP('monitor', 'n', p1), 0, YR + row.h / 2 + 30, { anc: [.5, 0] }), c2 = X(chipP('calculator', 'a', p2), 0, YR + row.h / 2 + 30 + 52, { anc: [.5, 0] });
+  fundo(0, 10, { aneis: false });
+  const tit = titulo('Gerencial', 'Duas unidades, uma tela', 'escuro');
+  const R = uneRet(row.ret(), chQ.ret(), c1.ret(), c2.ret());
+  const S1 = enquadraRet(EIXO, R, { az: -.03, max: 1.4 / EE });
+  camera([[t0 - 3, S1], [tFim + 2.5, { ...S1, az: .035, d: S1.d * .985 }, 'lin']]);
+  return t => {
+    STAND2(t, tit, t0);
+    fluxoCartoes(row.e, t, tDu - .35, NUNCA, { tempos: [tDu, tNu, tUn] });
+    setaEm(row.e, 0, t, tCh + .42); setaEm(row.e, 1, t, tCh + .42);   // as duas chegam juntas, no "chegam juntos"
+    rev(parte(row.e, 1), t, [...tp(rot), ...tp(sub)]);
+    pulso(parte(row.e, 0), t, tDu + .3, .04, .7); pulso(parte(row.e, 2), t, tUn + .3, .04, .7); pulso(parte(row.e, 1), t, tJu + .3, .05, .8);
+    falaChip(chQ, t, pQ);
+    falaChip(c1, t, p1, tAq - .05); falaChip(c2, t, p2, tAq - .05); pulso(c2.e, t, tNa + .25, .05, .7);   // o trabalho antigo sai quando a voz diz "Aqui"
+  };
+}
+
+// =====================================================================================================================
+// CENA "caixa" · cap08, linha 2 · clima escuro
+// 2 "A diferença, quase quarenta e cinco mil, é o material que a gente comprou em outubro e ainda está no pátio. No caixa, ele já pesa no mês. Na competência, ele só vira custo quando for vendido."
+// O material do pátio (quase 45 mil) à esquerda; dele saem dois fios: o do caixa (já pesa no mês) e o da competência (só vira custo quando for vendido).
+function caixa() {
+  const t0 = W(2, 'a'), tQua = W(2, 'quase'), tCin = W(2, 'cinco'), tMil = W(2, 'mil'), tMat = W(2, 'material'), tCom = W(2, 'comprou'), tEm = W(2, 'em'), tAin = W(2, 'ainda'), tNo1 = W(2, 'no', 1),
+    tNo2 = W(2, 'no', 2), tCx = W(2, 'caixa'), tJa = W(2, 'ja'), tPe = W(2, 'pesa'), tNo3 = W(2, 'no', 3), tNa = W(2, 'na'), tCp = W(2, 'competencia'), tSo = W(2, 'so'), tVi = W(2, 'vira'),
+    tQd = W(2, 'quando'), tVd = W(2, 'vendido'), tFim = W(2, 'vendido', 1, 'e');
+  cores();
+  const { EIXO, X, fundo } = escuro();
+  const XP = -405, XR = 285, YT = -105, YB = 105;
+  const pRot = [['Material', tMat]], pSub = [['comprado', tCom], ['em outubro,', tEm], ['ainda', tAin], ['no pátio', tNo1]], pNum = [['quase', tQua], ['45', tCin], ['mil', tMil]];
+  const cP = X(htmlCartao('warehouse', ws(pRot), ws(pSub), ws(pNum), { w: 350, h: 134, cls: 'a' }), XP, 0);
+  const kRot = [['No', tNo2], ['caixa', tCx]], kSub = [['já', tJa], ['pesa', tPe], ['no mês', tNo3]];
+  const nRot = [['Na', tNa], ['competência', tCp]], nSub = [['só', tSo], ['vira custo', tVi], ['quando for', tQd], ['vendido', tVd]];
+  const cC = X(cartaoP('wallet', kRot, kSub, 'n', 400), XR, YT), cK = X(cartaoP('chart-no-axes-column', nRot, nSub, 'res', 400), XR, YB);
+  // os dois fios, da borda do cartão do pátio (a 10 px) até a borda de cada cartão da direita (a 10 px)
+  const xa = XP + cP.w / 2 + 10, xb = XR - cC.w / 2 - 10, Wd = xb - xa, H = YB - YT, Ym = -YT;
+  const fl = X(htmlFluxo(Wd, H, [`M0 ${Ym}C${Wd * .5} ${Ym} ${Wd * .5} 0 ${Wd} 0`, `M0 ${Ym}C${Wd * .5} ${Ym} ${Wd * .5} ${H} ${Wd} ${H}`]), xa, YT, { anc: [0, 0], z: -1 });
+  fundo(-60, 0, { aneis: false });
+  const tit = titulo('Financeiro', 'Caixa × competência', 'escuro');
+  const R = uneRet(cP.ret(), cC.ret(), cK.ret());
+  const S1 = enquadraRet(EIXO, R, { az: -.03, max: 1.4 / EE });
+  camera([[t0 - 3, S1], [tFim + 2.5, { ...S1, az: .035, d: S1.d * .985 }, 'lin']]);
+  return t => {
+    STAND2(t, tit, t0);
+    vis(cP.e, t, tQua - .25, NUNCA, { dy: 18, sc: .95 }); rev(cP.e, t, [...tp(pRot), ...tp(pSub), ...tp(pNum)]); pulso(cP.e, t, tMil + .2, .04, .7);
+    vis(fl.e, t, tNo2 - .6, NUNCA, { dy: 0, sc: 1 });
+    fluxo(fl.e, 0, t, tNo2 - .55, .5); fluxo(fl.e, 1, t, tNa - .5, .5);
+    vis(cC.e, t, tNo2 - .08, NUNCA, { dy: 14, sc: .96 }); revCartao(cC, t, kRot, kSub); pulso(cC.e, t, tPe + .2, .04, .7);
+    vis(cK.e, t, tNa - .05, NUNCA, { dy: 14, sc: .96 }); revCartao(cK, t, nRot, nSub); pulso(cK.e, t, tVd + .2, .05, .8);
+  };
+}
+
+// =====================================================================================================================
+// CENA "divergencia" · cap11, linha 6 · clima escuro
+// 6 "Uma dica: essa tela soma as movimentações de cada unidade. Se um material tiver saldo no cadastro sem movimentação que explique, aparece um aviso embaixo, com a diferença material por material.
+//    O sistema não mexe sozinho: a conferência é sua."
+// Movimentações (a soma da tela) de um lado, o saldo no cadastro do outro; sem movimentação que explique, a diferença vira o aviso embaixo; o sistema não mexe e a conferência é sua.
+function divergencia() {
+  const t0 = W(6, 'uma'), tTe = W(6, 'tela'), tSm = W(6, 'soma'), tMov = W(6, 'movimentacoes'), tDe = W(6, 'de'), tUni = W(6, 'unidade'), tSa = W(6, 'saldo'), tCad = W(6, 'cadastro'),
+    tSem = W(6, 'sem'), tQue = W(6, 'que'), tExp = W(6, 'explique'), tAv = W(6, 'aviso'), tDif = W(6, 'diferenca'), tMa2 = W(6, 'material', 2),
+    tO = W(6, 'o'), tNao = W(6, 'nao'), tSoz = W(6, 'sozinho'), tA = W(6, 'a', 2), tE = W(6, 'e'), tFim = W(6, 'sua', 1, 'e');
+  cores();
+  const { EIXO, X, fundo } = escuro();
+  const XL = -255, XR = 255, YC = -85;
+  const mRot = [['Movimentações', tMov]], mSub = [['soma de', tSm], ['cada unidade', tDe]], sRot = [['Saldo', tSa], ['no cadastro', tCad]], sSub = [['sem movimentação', tSem], ['que explique', tQue]];
+  const cM = X(cartaoP('history', mRot, mSub, 'n', 320), XL, YC), cS = X(cartaoP('package', sRot, sSub, 'n', 320), XR, YC);
+  const ne = X(`<div style="position:relative;display:flex">${selo('equal-not', 'a', 56)}</div>`, 0, YC);
+  const aRot = [['Aviso', tAv]], aSub = [['diferença', tDif], ['material por material', tMa2]];
+  const cA = X(cartaoP('triangle-alert', aRot, aSub, 'a', 620), 0, YC + cM.h / 2 + 62 + 36);
+  const y2 = YC + cM.h / 2 + 62 + 36 + cA.h / 2 + 34, p1 = [['O sistema', tO], ['não mexe', tNao], ['sozinho', tSoz]], p2 = [['A conferência', tA], ['é sua', tE]];
+  const k1 = X(chipP('lock', 'n', p1), 0, y2, { anc: [.5, 0] }), k2 = X(chipP('user-check', '', p2), 0, y2, { anc: [.5, 0] });
+  const GAP = 28, tot = k1.w + k2.w + GAP; k1.pos[0] = (-tot / 2 + k1.w / 2) * EE; k2.pos[0] = (tot / 2 - k2.w / 2) * EE;
+  fundo(0, 20, { aneis: false });
+  const tit = titulo('Estoque do grupo', 'Aviso de divergência', 'escuro');
+  const R = uneRet(cM.ret(), cS.ret(), cA.ret(), k1.ret(), k2.ret());
+  const S1 = enquadraRet(EIXO, R, { az: -.03, max: 1.4 / EE });
+  camera([[t0 - 3, S1], [tFim + 2.5, { ...S1, az: .035, d: S1.d * .985 }, 'lin']]);
+  return t => {
+    STAND2(t, tit, t0);
+    fluxoCartoes(cM.e, t, tSm - .35, NUNCA, { tempos: [tSm] }); revCartao(cM, t, mRot, mSub);
+    fluxoCartoes(cS.e, t, tSa - .35, NUNCA, { tempos: [tSa] }); revCartao(cS, t, sRot, sSub);
+    vis(ne.e, t, tSem - .12, NUNCA, { dy: 8, sc: .55 }); pulso(ne.e, t, tExp + .15, .08, .8);
+    fluxoCartoes(cA.e, t, tAv - .35, NUNCA, { tempos: [tAv] }); revCartao(cA, t, aRot, aSub); pulso(parte(cA.e, 0), t, tMa2 + .45, .04, .8);
+    falaChip(k1, t, p1); falaChip(k2, t, p2); pulso(k2.e, t, W(6, 'sua') + .1, .05, .8);
+  };
+}
+
+// =====================================================================================================================
+// CENA "transf" · cap15, linhas 2 e 7 · clima escuro · DUAS estações na mesma peça (as duas janelas estão longe uma da outra)
+// 2 "Esse pedido cai numa fila porque o grupo exige aprovação. Com o Exigir aprovação desligado, não existe fila: a transferência feita pela matriz move o estoque na hora."
+// 7 "E as outras duas eu executo juntas, no Executar todas. Se alguma não tiver saldo na origem, as demais seguem, e a tela lista qual falhou e por quê."
+// Estação A: o pedido que cai na fila (linha de cima); com o Exigir aprovação desligado, não existe fila e o estoque move na hora (linha de baixo).
+// Estação B (à direita, outro lugar do mundo): Executar todas; dois pedidos, um sem saldo na origem, o outro segue; a tela lista qual falhou.
+function transf() {
+  const XB = 2100;
+  // ---------- estação A (linha 2)
+  const tA0 = W(2, 'esse'), tPed = W(2, 'pedido'), tCai = W(2, 'cai'), tNum = W(2, 'numa'), tFi = W(2, 'fila'), tO1 = W(2, 'o'), tGr = W(2, 'grupo'), tEx = W(2, 'exige'), tAp = W(2, 'aprovacao'),
+    tExg = W(2, 'exigir'), tDes = W(2, 'desligado'), tNa = W(2, 'nao'), tExi = W(2, 'existe'), tTr = W(2, 'transferencia'), tFe = W(2, 'feita'), tPel = W(2, 'pela'), tMo = W(2, 'move'),
+    tEs = W(2, 'estoque'), tNa2 = W(2, 'na'), tHo = W(2, 'hora'), tAFim = W(2, 'hora', 1, 'e');
+  // ---------- estação B (linha 7)
+  const tB0 = W(7, 'e'), tOut = W(7, 'outras'), tDu = W(7, 'duas'), tExe = W(7, 'executar'), tTod = W(7, 'todas'), tAlg = W(7, 'alguma'), tSal = W(7, 'saldo'), tNb = W(7, 'na'), tAs = W(7, 'as', 2),
+    tDem = W(7, 'demais'), tSeg = W(7, 'seguem'), tE2 = W(7, 'e', 2), tQual = W(7, 'qual'), tFal = W(7, 'falhou'), tE3 = W(7, 'e', 3), tBFim = W(7, 'que', 1, 'e');
+  cores();
+  const { EIXO, X, fundo } = escuro();
+  const CW = 340, VAO = 110, Y1 = -125, Y2 = 80;
+  const r1 = [[['Pedido', tPed]], [['cai', tCai], ['numa fila', tNum]]], r1b = [[['Fila', tFi]], [['porque o grupo', tO1], ['exige', tEx], ['aprovação', tAp]]];
+  const r2 = [[['Transferência', tTr]], [['feita', tFe], ['pela matriz', tPel]]], r2b = [[['Estoque', tEs]], [['move', tMo], ['na hora', tNa2]]];
+  const row1 = X(htmlFluxoCartoes({ cartoes: [['file-text', ws(r1[0]), ws(r1[1])], ['clock', ws(r1b[0]), ws(r1b[1]), 'a']], cw: CW, vao: VAO }), 0, Y1);
+  const row2 = X(htmlFluxoCartoes({ cartoes: [['arrow-left-right', ws(r2[0]), ws(r2[1])], ['package-check', ws(r2b[0]), ws(r2b[1]), 'res']], cw: CW, vao: VAO }), 0, Y2);
+  const pD1 = [['Exigir aprovação', tExg], ['desligado', tDes]], pD2 = [['não existe fila', tNa]];
+  const d1 = X(chipP('toggle-left', 'a', pD1), 0, -22), d2 = X(chipP('ban', 'n', pD2), 0, -22);
+  const GAP = 24, tot = d1.w + d2.w + GAP; d1.pos[0] = (-tot / 2 + d1.w / 2) * EE; d2.pos[0] = (tot / 2 - d2.w / 2) * EE;
+  fundo(0, -20, { aneis: false });
+  const titA = titulo('Transferências', 'Com e sem aprovação', 'escuro');
+  const RA = uneRet(row1.ret(), row2.ret(), d1.ret(), d2.ret());
+  const SA = enquadraRet(EIXO, RA, { az: -.03, max: 1.3 / EE });
+  // ---------- estação B
+  const CB = 270, YH = -140, YK = -10, YS = 75, YL = 150;
+  const hP = [['Executar', tExe], ['todas', tTod]];
+  const hd = X(chipP('play', 'n', hP), XB, YH);
+  const kA = X(cartaoP('file-text', [['Pedido', tDu]], [], 'n', CB), XB - 190, YK), kB = X(cartaoP('file-text', [['Pedido', tDu]], [], 'n', CB), XB + 190, YK);
+  const sB = [['sem saldo', tSal], ['na origem', tNb]], sA = [['as demais', tAs], ['seguem', tSeg]], lP = [['a tela lista', tE2], ['qual falhou', tQual], ['e por quê', tE3]];
+  const cB = X(chipP('triangle-alert', 'a', sB), XB + 190, YS), cA = X(chipP('circle-check', '', sA), XB - 190, YS);
+  const li = X(chipP('list-checks', 'n', lP), XB, YL);
+  fundo(XB, 0, { aneis: false });
+  const titB = titulo('Transferências', 'Executar todas', 'escuro');
+  const RB = uneRet(hd.ret(), kA.ret(), kB.ret(), cA.ret(), cB.ret(), li.ret());
+  const SB = enquadraRet(EIXO, RB, { az: .02, max: 1.4 / EE });
+  camera([[tA0 - 3, SA], [tAFim + 2.5, { ...SA, az: .035, d: SA.d * .985 }, 'lin'], [tB0 - 3, SB], [tBFim + 2.5, { ...SB, az: -.02, d: SB.d * .985 }, 'lin']]);
+  const tCorte = (tAFim + tB0) / 2;
+  return t => {
+    STAND2(t, titA, tA0, tCorte); STAND2(t, titB, tB0, NUNCA);
+    // A
+    fluxoCartoes(row1.e, t, tPed - .4, tCorte, { tempos: [tPed - .05, tFi - .05] });
+    rev(parte(row1.e, 0), t, [...tp(r1[0]), ...tp(r1[1])]); rev(parte(row1.e, 1), t, [...tp(r1b[0]), ...tp(r1b[1])]); pulso(parte(row1.e, 1), t, tAp + .3, .045, .8);
+    falaChip(d1, t, pD1, tCorte); falaChip(d2, t, pD2, tCorte); pulso(d2.e, t, tExi + .3, .05, .8);
+    fluxoCartoes(row2.e, t, tTr - .4, tCorte, { tempos: [tTr - .05, tMo - .1] });
+    rev(parte(row2.e, 0), t, [...tp(r2[0]), ...tp(r2[1])]); rev(parte(row2.e, 1), t, [...tp(r2b[0]), ...tp(r2b[1])]); pulso(parte(row2.e, 1), t, tHo + .25, .05, .8);
+    // B
+    falaChip(hd, t, hP); pulso(hd.e, t, tTod + .2, .05, .7);
+    fluxoCartoes(kA.e, t, tOut - .15, NUNCA, { tempos: [tOut] }); fluxoCartoes(kB.e, t, tOut - .15, NUNCA, { tempos: [tOut] }); revCartao(kA, t, [['Pedido', tDu]], []); revCartao(kB, t, [['Pedido', tDu]], []);
+    falaChip(cB, t, sB); pulso(cB.e, t, tFal + .1, .06, .8); falaChip(cA, t, sA); pulso(cA.e, t, tSeg + .25, .05, .7);
+    falaChip(li, t, lP); pulso(li.e, t, tFal + .35, .05, .8);
+  };
+}
+
+// =====================================================================================================================
+// CENA "ciclos" · cap17, linha 8 · clima escuro
+// 8 "Uma dica: pra pagar junto, todas as unidades precisam estar no mesmo ciclo, mensal ou anual. Se uma for anual e a outra mensal, o sistema avisa e não gera a fatura. Acerte o ciclo no Gerenciar e tente de novo."
+// Duas unidades no mesmo ciclo (mensal ou anual); uma anual e a outra mensal: a igualdade quebra, o sistema avisa e não gera a fatura; acertar o ciclo no Gerenciar.
+function ciclos() {
+  const t0 = W(8, 'uma'), tPa = W(8, 'pagar'), tJu = W(8, 'junto'), tUni = W(8, 'unidades'), tMes = W(8, 'mesmo'), tCic = W(8, 'ciclo'), tMen = W(8, 'mensal', 1), tOu = W(8, 'ou'),
+    tAn = W(8, 'anual', 1), tUma = W(8, 'uma', 2), tAn2 = W(8, 'anual', 2), tMen2 = W(8, 'mensal', 2), tSis = W(8, 'sistema'), tAv = W(8, 'avisa'), tNao = W(8, 'nao'),
+    tAc = W(8, 'acerte'), tGe = W(8, 'gerenciar'), tTen = W(8, 'tente'), tFim = W(8, 'novo', 1, 'e');
+  cores();
+  const { EIXO, X, fundo } = escuro();
+  const XL = -195, XR = 195, YC = 5;
+  const u1 = [['Unidade', tUni]], u2 = [['anual', tAn2]], u3 = [['mensal', tMen2]];
+  const c1 = X(cartaoP('building-2', u1, u2, 'n', 260), XL, YC), c2 = X(cartaoP('building-2', u1, u3, 'n', 260), XR, YC);
+  const ne = X(`<div style="position:relative;display:flex">${selo('equal-not', 'a', 56)}</div>`, 0, YC);
+  const pP = [['pagar', tPa], ['junto', tJu]], pM = [['mesmo ciclo:', tMes], ['mensal', tMen], ['ou anual', tOu]];
+  const hP = X(chipP('wallet', 'n', pP), 0, YC - c1.h / 2 - 96, { anc: [.5, 1] }), hM = X(chipP('repeat', '', pM), 0, YC - c1.h / 2 - 28, { anc: [.5, 1] });
+  const pF = [['O sistema', tSis], ['avisa', tAv], ['e não gera a fatura', tNao]], pA = [['Acerte o ciclo', tAc], ['no Gerenciar', tGe], ['e tente de novo', tTen]];
+  const fa = X(chipP('file-warning', 'a', pF), 0, YC + c1.h / 2 + 34, { anc: [.5, 0] }), ac = X(chipP('refresh-cw', 'n', pA), 0, YC + c1.h / 2 + 34 + 52, { anc: [.5, 0] });
+  fundo(0, 10, { aneis: false });
+  const tit = titulo('Assinaturas', 'Pagar junto', 'escuro');
+  const R = uneRet(hP.ret(), hM.ret(), c1.ret(), c2.ret(), fa.ret(), ac.ret());
+  const S1 = enquadraRet(EIXO, R, { az: -.03, max: 1.4 / EE });
+  camera([[t0 - 3, S1], [tFim + 2.5, { ...S1, az: .035, d: S1.d * .985 }, 'lin']]);
+  return t => {
+    STAND2(t, tit, t0);
+    falaChip(hP, t, pP); falaChip(hM, t, pM); pulso(hM.e, t, tCic + .2, .05, .7);
+    fluxoCartoes(c1.e, t, tUni - .35, NUNCA, { tempos: [tUni] }); fluxoCartoes(c2.e, t, tUni - .35, NUNCA, { tempos: [tUni] });
+    revCartao(c1, t, u1, u2); revCartao(c2, t, u1, u3);
+    pulso(parte(c1.e, 0), t, tAn2 + .25, .04, .7); pulso(parte(c2.e, 0), t, tMen2 + .25, .04, .7);
+    vis(ne.e, t, tMen2 - .05, NUNCA, { dy: 8, sc: .55 }); pulso(ne.e, t, tMen2 + .3, .08, .8);
+    falaChip(fa, t, pF); pulso(fa.e, t, W(8, 'fatura') + .1, .05, .8); falaChip(ac, t, pA); pulso(ac.e, t, tGe + .3, .05, .8);
+  };
+}
+
+const CAPS = { 0: somar, 8: caixa, 11: divergencia, 15: transf, 17: ciclos };
+cena(d => CAPS[d.cap](d), { fov: 26 });
+</script></body></html>

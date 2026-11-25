@@ -997,7 +997,7 @@ def cap13():
     """Exportar: (setup: Posição em 31/10 23:59) Exportar > PDF: colunas (tira e põe "Valor do estoque") e materiais; Exportar (o PDF vai
     para o actions.json); Exportar > Excel > Exportar; Relatório de Estoque de outubro: Exportar Relatório (a aba HTML vai para o
     actions.json); Estoque Fiscal só falado."""
-    st = setup_estoque() + POS + escolhe_31_10() + [{'do': 'eval', 'js': JS_PDF_GANCHO},
+    st = setup_estoque() + POS + escolhe_31_10() + [{'do': 'eval', 'js': JS_PDF_GANCHO}, {'do': 'eval', 'js': POPS},
                                                     {'do': 'scroll', 'point': {'x': 700, 'y': 420}, 'by': 0, 'duration': 0.2, 'after': 0}]
     c = Cap(13, st)
     c.click(BTN('Exportar'), w=(1, 'Exportar,', 1), label='Exportar (abre o menu)')
@@ -1016,9 +1016,13 @@ def cap13():
     c.click(BTN('Exportar', within=DLG), w=(3, 'Exportar,'), label='Exportar (o PDF abre noutra aba)')
     c.waitfor(text='Posição de estoque exportada em PDF', timeout=15)
     c.ev(js_pdf(0, 'posicao-estoque-31-10-pdf'), label='PDF da posição de 31/10 (para a edição mostrar a aba)')
-    c.pause(1.5)
+    c.ev("(()=>{let n=0;(window.__pops||[]).forEach(w=>{try{w.close();n++}catch(e){}});return 'abas fechadas: '+n})()", label='fecha a aba do PDF (a página volta ao primeiro plano)')
+    c.pause(0.7)
     c.ev("'diálogos abertos: '+document.querySelectorAll('[role=dialog]').length", label='o diálogo fechou depois do PDF?')
-    c.ev("(()=>{const b=[...document.querySelectorAll('[role=dialog] button')].find(x=>x.textContent.trim()==='Cancelar');if(b){b.click();return 'Cancelar (ficou aberto)'}return 'já fechado'})()", label='fecha o diálogo pelo Cancelar se ele ficou aberto')
+    c.ev("(()=>{const ds=[...document.querySelectorAll('[role=dialog]')];if(!ds.length)return 'já fechado';ds.forEach(d=>{const w=d.closest('[data-radix-portal]');(w||d).remove()});"
+         "document.querySelectorAll('[data-state=closed].fixed.inset-0').forEach(e=>e.remove());document.body.style.pointerEvents='';document.body.removeAttribute('data-scroll-locked');"
+         "document.querySelectorAll('[aria-hidden=true]').forEach(e=>{if(e!==document.body&&!e.matches('svg,[data-focus-guard]'))e.removeAttribute('aria-hidden')});return 'diálogo preso removido ('+ds.length+')'})()",
+         label='remove o diálogo se ele ficou preso (animação de saída parada)')
     c.press('Escape', label='fecha o diálogo se ele ficou aberto')
     c.pause(0.6)
     c.ev("'diálogos abertos depois do Escape: '+document.querySelectorAll('[role=dialog]').length", label='diálogo depois do Escape')
@@ -1030,7 +1034,7 @@ def cap13():
     c.click(BTN('Exportar', within=DLG), w=(4, 'baixa'), primeiro=True, label='Exportar (o arquivo baixa)')
     c.waitfor(text='Posição de estoque exportada em Excel', timeout=15)
     # L5: o Relatório de Estoque de outubro e o Exportar Relatório
-    c.goto('/relatorio-estoque', w=(5, 'O', 0, 1.4), label='corte: Relatório de Estoque')
+    c.goto('/relatorio-estoque', w=(5, 'O', 0, 0.7), label='corte: Relatório de Estoque')
     c.waitfor(text='Análise detalhada de compras, vendas e lucro por material', timeout=15)
     c.ev(POPS, label='guarda as abas que o app abrir')
     c.click(COMBO('Este mês'), w=(5, 'Histórico'), label='período (abre a lista)')

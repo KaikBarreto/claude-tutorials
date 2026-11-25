@@ -1,6 +1,6 @@
 {
  "name": "t10-cap13",
- "title": "T10 · Cap. 13 · Exportar para o contador (narração 50,5 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário rafael)",
+ "title": "T10 · Cap. 13 · Exportar para o contador (narração 52,0 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário rafael)",
  "seed": "t10-cap13",
  "pace": 0.5,
  "cps": 14,
@@ -171,6 +171,10 @@
    "js": "(()=>{if(window.__pdfs)return 'ja';window.__pdfs=[];const o=URL.createObjectURL.bind(URL);URL.createObjectURL=(b)=>{try{if(b&&b.type==='application/pdf')window.__pdfs.push(b)}catch(e){}return o(b)};return 'gancho'})()"
   },
   {
+   "do": "eval",
+   "js": "(()=>{const o=window.open;window.__pops=[];window.open=function(...a){const w=o.apply(this,a);window.__pops.push(w);return w};return 'ok'})()"
+  },
+  {
    "do": "scroll",
    "point": {
     "x": 700,
@@ -337,8 +341,13 @@
    "label": "PDF da posição de 31/10 (para a edição mostrar a aba)"
   },
   {
+   "do": "eval",
+   "js": "(()=>{let n=0;(window.__pops||[]).forEach(w=>{try{w.close();n++}catch(e){}});return 'abas fechadas: '+n})()",
+   "label": "fecha a aba do PDF (a página volta ao primeiro plano)"
+  },
+  {
    "do": "pause",
-   "seconds": 1.5
+   "seconds": 0.7
   },
   {
    "do": "eval",
@@ -347,8 +356,8 @@
   },
   {
    "do": "eval",
-   "js": "(()=>{const b=[...document.querySelectorAll('[role=dialog] button')].find(x=>x.textContent.trim()==='Cancelar');if(b){b.click();return 'Cancelar (ficou aberto)'}return 'já fechado'})()",
-   "label": "fecha o diálogo pelo Cancelar se ele ficou aberto"
+   "js": "(()=>{const ds=[...document.querySelectorAll('[role=dialog]')];if(!ds.length)return 'já fechado';ds.forEach(d=>{const w=d.closest('[data-radix-portal]');(w||d).remove()});document.querySelectorAll('[data-state=closed].fixed.inset-0').forEach(e=>e.remove());document.body.style.pointerEvents='';document.body.removeAttribute('data-scroll-locked');document.querySelectorAll('[aria-hidden=true]').forEach(e=>{if(e!==document.body&&!e.matches('svg,[data-focus-guard]'))e.removeAttribute('aria-hidden')});return 'diálogo preso removido ('+ds.length+')'})()",
+   "label": "remove o diálogo se ele ficou preso (animação de saída parada)"
   },
   {
    "do": "press",
@@ -431,9 +440,14 @@
    "timeout": 15
   },
   {
+   "do": "mark",
+   "name": "L5",
+   "at": 31.42
+  },
+  {
    "do": "goto",
    "url": "/relatorio-estoque",
-   "at": 29.42,
+   "at": 31.62,
    "label": "corte: Relatório de Estoque"
   },
   {
@@ -447,17 +461,12 @@
    "label": "guarda as abas que o app abrir"
   },
   {
-   "do": "mark",
-   "name": "L5",
-   "at": 29.92
-  },
-  {
    "do": "click",
    "target": {
     "selector": "main button[role=combobox]",
     "hasText": "Este mês"
    },
-   "at": 30.28,
+   "at": 31.78,
    "label": "período (abre a lista)"
   },
   {
@@ -466,7 +475,7 @@
     "role": "option",
     "name": "Mês passado"
    },
-   "at": 31.16,
+   "at": 32.66,
    "label": "Mês passado"
   },
   {
@@ -480,7 +489,7 @@
     "name": "Exportar Relatório",
     "exact": true
    },
-   "at": 33.48,
+   "at": 34.98,
    "label": "Exportar Relatório (a aba abre)"
   },
   {
@@ -491,7 +500,7 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 40.72
+   "at": 42.22
   },
   {
    "do": "scroll",
@@ -502,7 +511,7 @@
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 41.62,
+   "at": 43.12,
    "label": "o cursor sai do botão"
   },
   {
@@ -513,7 +522,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 50.5
+   "at": 52.0
   }
  ]
 }
