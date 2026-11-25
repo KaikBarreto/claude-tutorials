@@ -104,7 +104,7 @@ E em Quem assina você escolhe: o operador e o cliente ou fornecedor, só o clie
 Com as duas, cada uma fica de um lado. Sozinha, a linha ocupa a largura toda do papel, e sobra espaço pra assinar.
 Vou escolher Só o cliente ou fornecedor, que é a assinatura de quem entregou o material. Escolhi, e o sistema já grava.
 Isso vale no comprovante de compra e venda e no ticket de pesagem. No ticket, a linha do operador sai como Empresa.
-Mais abaixo ficam a Marca de ticket não valorizado, que é do ticket de pesagem, e o QR de fotos no comprovante, pra quem tem o Portal do Cliente. Os dois a gente vê nos tutoriais deles.
+Mais abaixo ficam a Marca de ticket não valorizado, que é do ticket de pesagem, e o quê-érre de fotos no comprovante, pra quem tem o Portal do Cliente. Os dois a gente vê nos tutoriais deles.
 O terceiro é o Estilo do comprovante térmico, que vale só pro cupom da bobina. No Compacto, o nome do material fica do lado dos valores.
 No Nome em destaque, o nome vai em cima, numa linha só dele. É bom pra material de nome comprido. Essa escolha vale pra empresa inteira.
 Aqui eu só mostrei, então volto pro Compacto e desligo as assinaturas. Quando a Recicla Vale quiser, é só voltar aqui.""",

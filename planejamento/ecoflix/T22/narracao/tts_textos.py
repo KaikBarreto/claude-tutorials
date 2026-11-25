@@ -120,7 +120,7 @@ E dá pra pagar tudo de uma vez, numa fatura só, na matriz.
 Repara no aviso: ao pagar, a cobrança de cada unidade é cancelada e vira uma fatura única, na matriz.
 Uma dica importante: se a filial tinha um boleto ou um Pix da assinatura dela em aberto, ela não deve mais pagar aquele documento. Quem paga agora é a matriz, nessa fatura.
 Repara na Cobrança recorrente, que já vem ligada: o total do grupo é cobrado sozinho todo mês. Se quiser pagar só este mês, desligue antes de escolher a forma de pagamento.
-As formas são cartão, sempre recorrente, Pix ou boleto. Escolho o Pix, e o QR Code do grupo aparece.
+As formas são cartão, sempre recorrente, Pix ou boleto. Escolho o Pix, e o quê-érre côde do grupo aparece.
 Pagou, e pronto: as cobranças das unidades passam a vir nessa fatura da matriz.
 Uma dica: pra pagar junto, todas as unidades precisam estar no mesmo ciclo, mensal ou anual. Se uma for anual e a outra mensal, o sistema avisa e não gera a fatura. Acerte o ciclo no Gerenciar e tente de novo.""",
 18: """Pronto! Recapitulando: a gente criou o grupo na matriz, gerou o código de convite e vinculou a filial de Pindamonhangaba.
