@@ -57,3 +57,6 @@ aulas nem `PRODUCAO.md`. Sem commit. Nada de `pkill`/`killall`, `git stash/reset
 
 ## Relatório final (até 120 palavras)
 Cenas feitas (capítulo, id, clima), as que saíram, objetos novos, tempo de render e o caminho da prévia.
+
+## Espera da fila (25/11)
+A fila pesada pode ficar ocupada por um fechamento por até 1 h. Lance stills e renders com a ferramenta Bash em `run_in_background: true` e espere o aviso de término; em primeiro plano o comando morre em 10 min. Nunca mate um render seu para entregar o relatório: "nada rodando no fim" quer dizer relatar só depois que eles terminarem sozinhos.
