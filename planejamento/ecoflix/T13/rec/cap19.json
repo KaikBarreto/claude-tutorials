@@ -112,7 +112,7 @@
     "selector": "main button:text-is('Todas')"
    },
    "seconds": 0.25,
-   "at": 2.24,
+   "at": 1.48,
    "label": "as abas",
    "optional": true,
    "timeout": 4
@@ -125,7 +125,7 @@
     "within": "main"
    },
    "seconds": 0.15,
-   "at": 3.44,
+   "at": 2.64,
    "label": "os quatro cartões",
    "optional": true,
    "timeout": 4
@@ -137,7 +137,7 @@
     "name": "Visão em calendário"
    },
    "seconds": 0.15,
-   "at": 4.24,
+   "at": 3.44,
    "label": "o calendário",
    "optional": true,
    "timeout": 4
@@ -145,12 +145,12 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 4.9
+   "at": 4.43
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"main thead\")].filter(e=>e.offsetParent)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-110);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 5.3,
+   "at": 4.73,
    "label": "desce a tela até a lista"
   },
   {
@@ -199,14 +199,14 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 33.84
+   "at": 33.04
   },
   {
    "do": "click",
    "target": {
     "selector": "main button:text-is('A Receber')"
    },
-   "at": 34.14,
+   "at": 33.34,
    "label": "aba A Receber"
   },
   {
@@ -231,7 +231,7 @@
     "selector": "main button:has-text('Filtros')"
    },
    "seconds": 0.15,
-   "at": 45.26,
+   "at": 44.84,
    "label": "Filtros",
    "optional": true,
    "timeout": 4

@@ -1,6 +1,6 @@
 {
  "name": "t13-cap17",
- "title": "T13 · Cap. 17 · Filtrar a lista (narração 67,0 s; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T13 · Cap. 17 · Filtrar a lista (narração 67,7 s; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t13-cap17",
  "pace": 0.5,
  "cps": 40,
@@ -111,13 +111,13 @@
    "target": {
     "selector": "main button:text-is('A Receber')"
    },
-   "at": 4.3,
+   "at": 3.52,
    "label": "aba A Receber"
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"main tbody tr:last-child\")].filter(e=>e.offsetParent)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-600);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 5.42,
+   "at": 4.71,
    "label": "desce a tela até o fim da lista"
   },
   {
@@ -126,7 +126,7 @@
     "selector": "main tbody tr:has-text('Aços Quiririm Ltda') :text-is('Saldo')"
    },
    "seconds": 0.19,
-   "at": 6.32,
+   "at": 5.73,
    "label": "as linhas de saldo, lá no fim",
    "optional": true,
    "timeout": 4
@@ -157,7 +157,7 @@
     "selector": "[role=dialog] label:text-is('Status')"
    },
    "seconds": 0.15,
-   "at": 10.5,
+   "at": 10.16,
    "label": "Status",
    "optional": true,
    "timeout": 4
@@ -212,7 +212,7 @@
     "selector": "[role=dialog] label:text-is('Vencimento (período)')"
    },
    "seconds": 0.17,
-   "at": 16.34,
+   "at": 16.25,
    "label": "Vencimento (período)",
    "optional": true,
    "timeout": 4
@@ -220,14 +220,14 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 17.46
+   "at": 17.13
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] div:has(> label:text-is('Status')) button"
    },
-   "at": 17.9,
+   "at": 17.43,
    "label": "Status (abre a lista)"
   },
   {
@@ -235,13 +235,13 @@
    "target": {
     "selector": "[data-radix-popper-content-wrapper] label:has(span:text-is('Pendente'))"
    },
-   "at": 19.2,
+   "at": 18.86,
    "label": "marca Pendente"
   },
   {
    "do": "press",
    "key": "Escape",
-   "at": 20.22,
+   "at": 19.95,
    "label": "fecha a lista do Status (Esc)"
   },
   {
@@ -315,14 +315,14 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 42.51
+   "at": 41.61
   },
   {
    "do": "click",
    "target": {
     "selector": "main button:has-text('Filtros')"
    },
-   "at": 43.01,
+   "at": 41.91,
    "label": "Filtros (de novo)"
   },
   {
@@ -331,7 +331,7 @@
     "selector": "[role=dialog] button[role=combobox]:has-text('Todos')",
     "nth": 0
    },
-   "at": 44.07,
+   "at": 42.97,
    "label": "Cliente/Fornecedor (abre a busca)"
   },
   {
@@ -340,7 +340,7 @@
     "placeholder": "Buscar parceiro..."
    },
    "text": "Fundição",
-   "at": 45.17,
+   "at": 44.07,
    "label": "busca Fundição",
    "noClick": true
   },
@@ -350,7 +350,7 @@
     "role": "option",
     "name": "Fundição Bandeira do Vale"
    },
-   "at": 45.85,
+   "at": 44.75,
    "label": "Fundição Bandeira do Vale"
   },
   {
@@ -360,7 +360,7 @@
     "name": "Aplicar",
     "exact": true
    },
-   "at": 46.79,
+   "at": 45.69,
    "label": "Aplicar",
    "noScroll": true
   },
@@ -371,7 +371,7 @@
     "nth": 1
    },
    "seconds": 0.15,
-   "at": 47.69,
+   "at": 46.59,
    "label": "as três parcelas dela",
    "optional": true,
    "timeout": 4
@@ -384,14 +384,14 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 48.51
+   "at": 47.65
   },
   {
    "do": "click",
    "target": {
     "selector": "main button:has-text('Filtros')"
    },
-   "at": 49.05,
+   "at": 47.95,
    "label": "Filtros (de novo)"
   },
   {
@@ -410,7 +410,7 @@
    "target": {
     "selector": "[role=dialog] button:has-text('Limpar filtros')"
    },
-   "at": 50.17,
+   "at": 49.77,
    "label": "Limpar filtros",
    "noScroll": true
   },
@@ -421,14 +421,14 @@
     "name": "Aplicar",
     "exact": true
    },
-   "at": 51.21,
+   "at": 50.81,
    "label": "Aplicar",
    "noScroll": true
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"main tbody tr:last-child\")].filter(e=>e.offsetParent)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-600);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 51.93,
+   "at": 51.53,
    "label": "desce a tela até o fim da lista"
   },
   {
@@ -437,7 +437,7 @@
     "selector": "main tbody tr:has-text('Aços Quiririm Ltda') :text-is('Saldo')"
    },
    "seconds": 0.15,
-   "at": 52.73,
+   "at": 52.33,
    "label": "as linhas de saldo voltam",
    "optional": true,
    "timeout": 4
@@ -445,12 +445,12 @@
   {
    "do": "mark",
    "name": "L8",
-   "at": 53.07
+   "at": 52.82
   },
   {
    "do": "eval",
    "js": "(async()=>{const c=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,dy=-y0;if(y0<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
-   "at": 53.07,
+   "at": 53.12,
    "label": "sobe a tela até os cartões e o botão Filtros"
   },
   {
@@ -458,7 +458,7 @@
    "target": {
     "selector": "main button:has-text('Filtros')"
    },
-   "at": 53.43,
+   "at": 54.13,
    "label": "Filtros (período de vencimento)"
   },
   {
@@ -473,13 +473,8 @@
    "target": {
     "selector": "[role=dialog] button:text-is('Este mês')"
    },
-   "at": 56.25,
+   "at": 56.1,
    "label": "atalho Este mês"
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const esp=[\"01/11/2026\", \"30/11/2026\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog]\"+' input, '+\"[role=dialog]\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere De 01/11/2026 e Até 30/11/2026 (Este mês)"
   },
   {
    "do": "hover",
@@ -487,7 +482,7 @@
     "selector": "[role=dialog] button:text-is('Próximos 7 dias')"
    },
    "seconds": 0.5,
-   "at": 57.21,
+   "at": 57.47,
    "label": "atalho Próximos 7 dias",
    "optional": true,
    "timeout": 4
@@ -498,7 +493,7 @@
     "selector": "[role=dialog] button:text-is('Até o fim do mês')"
    },
    "seconds": 0.15,
-   "at": 58.89,
+   "at": 58.66,
    "label": "atalho Até o fim do mês",
    "optional": true,
    "timeout": 4
@@ -510,19 +505,19 @@
     "name": "Aplicar",
     "exact": true
    },
-   "at": 59.87,
+   "at": 59.59,
    "label": "Aplicar",
    "noScroll": true
   },
   {
    "do": "mark",
    "name": "L9",
-   "at": 59.87
+   "at": 60.57
   },
   {
    "do": "eval",
    "js": "(async()=>{const c=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,dy=-y0;if(y0<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
-   "at": 60.77,
+   "at": 61.47,
    "label": "sobe aos cartões"
   },
   {
@@ -538,7 +533,7 @@
     "within": "main"
    },
    "seconds": 1.6,
-   "at": 62.17,
+   "at": 62.87,
    "label": "ZOOM A receber no período e Recebido no período",
    "optional": true,
    "timeout": 4
@@ -551,7 +546,7 @@
     "within": "main"
    },
    "seconds": 1.0,
-   "at": 64.89,
+   "at": 65.59,
    "label": "Recebido no período",
    "optional": true,
    "timeout": 4
@@ -564,7 +559,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 66.96
+   "at": 67.66
   }
  ]
 }
