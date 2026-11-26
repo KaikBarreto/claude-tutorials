@@ -68,7 +68,7 @@ NOMES = ['Abertura', 'O que o módulo de Coletas resolve', 'O quadro das ordens'
          'Veículos e motoristas', 'As caçambas e onde estão', 'Movimentações e a ficha do parceiro', 'Onde está o caminhão',
          'O relatório das coletas', 'As regras das coletas', 'Checklist e assinaturas', 'Recapitulando']
 SEMENTE = {0: None, 1: None, 2: None, 3: None, 4: None, 5: None, 6: 'apos-cap05', 7: 'apos-cap06', 8: 'apos-cap07', 9: 'apos-cap07',
-           10: 'apos-cap09', 11: 'apos-cap10', 12: 'apos-cap11', 13: 'apos-cap12', 14: 'apos-cap12', 15: 'apos-cap12', 16: 'apos-cap15', 17: 'apos-cap15'}
+           10: 'apos-cap09', 11: 'apos-cap10', 12: 'apos-cap11', 13: 'apos-cap12', 14: 'apos-cap12', 15: 'apos-cap12', 16: 'apos-cap15', 17: 'apos-cap16'}
 
 
 def sementes(n):

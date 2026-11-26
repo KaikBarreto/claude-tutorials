@@ -748,7 +748,7 @@ def cap09(v):
     c.mark(1)
     c.mark(2)
     if v == 'd':
-        c.click(BTN('Configurações'), at=c.A(2, 'Uma', 1.4), label='rodapé: Configurações', noScroll=True)
+        c.click(BTN('Configurações'), at=c.A(2, 'Uma', 2.5), label='rodapé: Configurações', noScroll=True)
         c.waitfor(text='Usabilidade', timeout=15)
         c.click(TXT('Usabilidade'), at=c.A(2, 'dica:', 0.9), label='aba Usabilidade')
     else:
@@ -810,7 +810,7 @@ def cap10(v):
     c.mark(8)
     rola_ate(c, 'Pagar Agora', at=c.A(8, 'Uma', 1.6), label='a página desce a Pagar Agora', y=520 if v == 'd' else 380, dur_ms=800, dentro='main', prefixo=True)
     c.hover(BTNX('Pagar Agora'), 0.5, at=c.A(8, 'Pagar', 0.9), label='botão Pagar Agora (sem clicar)')
-    rola_ate(c, 'Gerenciar plano', at=c.A(8, 'mudar', 1.3), label='a página desce a Gerenciar plano', y=520 if v == 'd' else 380, dur_ms=1200, dentro='main', prefixo=True)
+    rola_ate(c, 'Gerenciar plano', at=c.A(8, 'mudar', 1.7), label='a página desce a Gerenciar plano', y=520 if v == 'd' else 380, dur_ms=1200, dentro='main', prefixo=True)
     c.hover(BTNX('Gerenciar plano'), 0.6, at=c.A(8, 'plano', 0.9), label='botão Gerenciar plano (sem clicar)')
     c.fim()
     return c
@@ -819,9 +819,9 @@ def cap10(v):
 def cap11(v):
     c = cap_novo(11, v, setup=assinatura(v), prewarm=['/login', '/dashboard', '/assinatura'])
     c.mark(1)
-    rola_ate(c, 'Plano & módulos', at=c.A(1, 'Mais', 0.8), label='desce a Plano & módulos', y=140, dur_ms=1400, dentro='main')
+    rola_ate(c, 'Plano & módulos', at=c.A(1, 'Mais', 0.8), label='desce a Plano & módulos', y=140, dur_ms=700, dentro='main')
     c.marcar(EM_MAIN('Plano & módulos'), label='cartão Plano & módulos')
-    rola_ate(c, 'Módulos ativos', at=c.A(1, 'Módulos', 0.9), label='desce a Módulos ativos', y=170, dur_ms=800, dentro='main')
+    rola_ate(c, 'Módulos ativos', at=c.A(1, 'Módulos', 0.9), label='desce a Módulos ativos', y=170, dur_ms=550, dentro='main')
     c.hover(EM_MAIN('Módulos ativos', exact=True), 0.6, at=c.A(1, 'libera', 0.9), label='Módulos ativos')
     c.mark(2)
     c.hover(EM_MAIN('· Nível 1'), 0.8, at=c.A(2, 'nível,', 0.9), label='Notas Fiscais · Nível 1 (Módulos ativos)')
@@ -901,7 +901,7 @@ def cap15(v):
         rola_ate(c, 'Assisti ao vídeo até o final e entendi os combinados.', at=c.A(4, 'Agora', 1.6), label='desce à caixa', y=300, dur_ms=800, dentro=PORTAO)
     c.click(P('Assisti ao vídeo até o final e entendi os combinados.'), at=c.A(4, 'marcar', 1.1), label='caixa Assisti ao vídeo (liga)')
     c.marcar(BTN('Confirmar e começar a primeira aula', within=PORTAO), at=c.A(4, 'clicar', 1.5), label='botão Confirmar e começar a primeira aula')
-    c.click(BTN('Confirmar e começar a primeira aula', within=PORTAO), at=c.E(4, 'aula.', 0.8), label='Confirmar e começar a primeira aula')
+    c.click(BTN('Confirmar e começar a primeira aula', within=PORTAO), at=c.E(4, 'aula.', 2.3), label='Confirmar e começar a primeira aula')
     c.waitfor(text='Tirar dúvidas com o suporte', timeout=25)
     c.mark(5)
     c.fim()
@@ -909,7 +909,7 @@ def cap15(v):
 
 
 # ================================================================ cap08 · O Cato, o seu agente (S2; o único com o balão de dica ligado)
-BALAO_ESPERA = {'d': 2.7, 'p': 3.3}   # medido no ensaio completo de 18/11 (com 1,5 s o balão subia 1,0 s e 1,5 s depois da frase). s parados no fim do `setup`, depois de recarregar o Dashboard: o balão sobe 15 s depois da tela abrir (CatoFab.tsx)
+BALAO_ESPERA = {'d': 4.7, 'p': 5.3}   # medido no ensaio completo de 18/11 (com 1,5 s o balão subia 1,0 s e 1,5 s depois da frase). s parados no fim do `setup`, depois de recarregar o Dashboard: o balão sobe 15 s depois da tela abrir (CatoFab.tsx)
 FAB_CATO = SEL('button[aria-expanded][aria-label*="Cato"]')
 
 
@@ -947,7 +947,7 @@ def cap12(v):
     c.mark(1)
     rola_ate(c, 'Plano & módulos', at=0.0, label='desce ao cartão Plano & módulos', y=140, dur_ms=1000, dentro='main')
     rola_ate(c, 'Gerenciar plano', at=c.A(1, 'Clicando', 1.6), label='desce a Gerenciar plano', y=440 if not ph else 380, dur_ms=1000, dentro='main', prefixo=True)
-    c.click(BTNX('Gerenciar plano'), at=c.A(1, 'Gerenciar', 0.9), label='Gerenciar plano (abre a janela Montar plano)')
+    c.click(BTNX('Gerenciar plano'), at=c.A(1, 'Gerenciar', 1.7), label='Gerenciar plano (abre a janela Montar plano)')
     c.waitfor(text='Monte seu plano e veja como fica ao vivo', timeout=12)
     c.marcar(NA('Monte seu plano e veja como fica ao vivo'), at=c.A(1, 'Montar', 0.3), label='janela Montar plano')
     c.mark(2)

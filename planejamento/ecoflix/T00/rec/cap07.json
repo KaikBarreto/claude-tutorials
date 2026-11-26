@@ -1,6 +1,6 @@
 {
  "name": "t00-cap07",
- "title": "T0 · Cap. 7 · Os menus e a sua conta (computador 1280x800; narração 75,1 s, ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T0 · Cap. 7 · Os menus e a sua conta (computador 1280x800; narração 60,2 s, da voz; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "fakeNow": "2026-11-10T08:30:00-03:00",
  "seed": "t00-cap07",
  "pace": 0.5,
@@ -109,7 +109,7 @@
     "name": "Menu da conta",
     "exact": true
    },
-   "at": 3.65,
+   "at": 2.88,
    "label": "cartão Rafael Nogueira (menu da conta)"
   },
   {
@@ -123,7 +123,7 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 5.77
+   "at": 4.34
   },
   {
    "do": "hover",
@@ -132,7 +132,7 @@
     "name": "Perfil"
    },
    "seconds": 0.4,
-   "at": 6.3,
+   "at": 4.74,
    "label": "Meu Perfil",
    "optional": true,
    "timeout": 4
@@ -144,7 +144,7 @@
     "name": "Assinatura"
    },
    "seconds": 0.4,
-   "at": 10.25,
+   "at": 8.26,
    "label": "Assinatura",
    "optional": true,
    "timeout": 4
@@ -155,7 +155,7 @@
     "role": "menuitem",
     "name": "Tema"
    },
-   "at": 13.28,
+   "at": 10.98,
    "label": "Tema (abre Claro, Escuro e Sistema)"
   },
   {
@@ -166,7 +166,7 @@
    },
    "text": "",
    "noClick": true,
-   "at": 18.06,
+   "at": 14.96,
    "label": "Tema: Claro, Escuro, Sistema (sem trocar)",
    "optional": true,
    "timeout": 4
@@ -174,7 +174,7 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 18.87
+   "at": 15.3
   },
   {
    "do": "hover",
@@ -183,7 +183,7 @@
     "name": "Tutoriais | EcoFlix"
    },
    "seconds": 0.4,
-   "at": 19.1,
+   "at": 15.54,
    "label": "Tutoriais | EcoFlix",
    "optional": true,
    "timeout": 4
@@ -194,7 +194,7 @@
     "role": "menuitem",
     "name": "Central de Ajuda"
    },
-   "at": 22.57,
+   "at": 18.64,
    "label": "Central de Ajuda (abre a gaveta de artigos)"
   },
   {
@@ -211,7 +211,7 @@
    },
    "text": "",
    "noClick": true,
-   "at": 24.58,
+   "at": 20.18,
    "label": "Pesquisar artigos...",
    "optional": true,
    "timeout": 4
@@ -219,7 +219,7 @@
   {
    "do": "press",
    "key": "Escape",
-   "at": 25.27,
+   "at": 20.36,
    "label": "fecha a Central de Ajuda"
   },
   {
@@ -229,7 +229,7 @@
     "name": "Menu da conta",
     "exact": true
    },
-   "at": 26.07,
+   "at": 21.16,
    "label": "menu da conta de novo"
   },
   {
@@ -246,7 +246,7 @@
     "role": "menuitem",
     "name": "Falar com o Suporte"
    },
-   "at": 26.97,
+   "at": 22.06,
    "label": "Falar com o Suporte (abre a janela)"
   },
   {
@@ -260,8 +260,8 @@
     "text": "Em qual tela/módulo?",
     "within": "[role=dialog]"
    },
-   "seconds": 0.36,
-   "at": 30.11,
+   "seconds": 0.28,
+   "at": 24.4,
    "label": "Em qual tela/módulo? *",
    "optional": true,
    "timeout": 4
@@ -273,7 +273,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.5,
-   "at": 31.47,
+   "at": 25.68,
    "label": "O que aconteceu? Descreva com detalhes *",
    "optional": true,
    "timeout": 4
@@ -285,8 +285,8 @@
     "name": "Falar no WhatsApp",
     "within": "[role=dialog]"
    },
-   "seconds": 0.8,
-   "at": 34.28,
+   "seconds": 0.6,
+   "at": 27.92,
    "label": "Falar no WhatsApp (apagado até preencher; sem clicar)",
    "optional": true,
    "timeout": 4
@@ -294,12 +294,12 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 36.45
+   "at": 29.52
   },
   {
    "do": "eval",
    "js": "(() => { const ds = [...document.querySelectorAll('[role=dialog]')]; const d = ds[ds.length - 1]; if (!d) return 'ja fechada'; const b = [...d.querySelectorAll('button')].find((x) => [x.textContent, x.getAttribute('aria-label')].some((v) => /^\\s*fechar\\s*$/i.test(v || ''))); if (!b) return 'sem botao Fechar'; b.click(); return 'fechada pelo botao'; })()",
-   "at": 36.5,
+   "at": 29.68,
    "label": "fecha a janela do suporte sem enviar"
   },
   {
@@ -309,7 +309,7 @@
     "name": "Menu da conta",
     "exact": true
    },
-   "at": 37.0,
+   "at": 30.07,
    "label": "menu da conta"
   },
   {
@@ -328,7 +328,7 @@
     "name": "Trocar de conta",
     "exact": true
    },
-   "at": 37.59,
+   "at": 30.4,
    "label": "cartão da conta (Trocar de conta): abre Adicionar conta"
   },
   {
@@ -345,7 +345,7 @@
   {
    "do": "press",
    "key": "Escape",
-   "at": 41.65,
+   "at": 32.8,
    "label": "fecha o menu da conta"
   },
   {
@@ -356,7 +356,7 @@
     "exact": true
    },
    "seconds": 0.8,
-   "at": 42.91,
+   "at": 34.0,
    "label": "rodapé: Sair (NUNCA clicar)",
    "noScroll": true,
    "optional": true,
@@ -365,12 +365,12 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 46.07
+   "at": 36.48
   },
   {
    "do": "press",
    "key": "Escape",
-   "at": 46.37,
+   "at": 36.78,
    "label": "fecha o menu da conta"
   },
   {
@@ -380,7 +380,7 @@
     "name": "Configurações",
     "exact": true
    },
-   "at": 48.12,
+   "at": 38.12,
    "label": "rodapé: Configurações",
    "noScroll": true
   },
@@ -395,7 +395,7 @@
     "text": "Aparência",
     "exact": true
    },
-   "at": 49.91,
+   "at": 39.66,
    "label": "aba Aparência"
   },
   {
@@ -420,7 +420,7 @@
    "target": {
     "selector": "label[for=topbar-nav]"
    },
-   "at": 52.34,
+   "at": 41.74,
    "label": "Menu Superior (o menu passa para a barra do topo)"
   },
   {
@@ -435,7 +435,7 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 57.65
+   "at": 45.62
   },
   {
    "do": "scroll",
@@ -446,7 +446,7 @@
    "by": 0,
    "duration": 0.2,
    "after": 0,
-   "at": 57.95,
+   "at": 45.92,
    "label": "cursor ao centro"
   },
   {
@@ -457,7 +457,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 75.08
+   "at": 60.24
   }
  ]
 }

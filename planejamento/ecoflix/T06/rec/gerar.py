@@ -1052,7 +1052,7 @@ def _cap13(sub=''):
     c.click(TXTX('Projeção de Lucro', DLG), at=c.A(10, 'Projeção', 0.6), label='Projeção de Lucro (abre a tabela por material)')
     c.confere('dlg', ['Alumínio latinha', 'Comprado: R$ 260,40', 'Ferro misto', 'Comprado: R$ 232,50'], 'Projeção de Lucro por material (1.60.22: lista)')
     # 1.60.22: a tabela comprado x vendido por material fica no acordeão ao lado, "Relatório de Pedidos do Caixa"
-    c.click(TXTX('Relatório de Pedidos do Caixa', DLG), at=c.A(10, 'material', 0.6), label='Relatório de Pedidos do Caixa (tabela comprado e vendido por material)')
+    c.click(TXTX('Relatório de Pedidos do Caixa', DLG), at=c.A(10, 'Relatório', 1.7), label='Relatório de Pedidos do Caixa (tabela comprado e vendido por material)')
     c.confere('dlg', ['Comprado (kg)', 'Valor Compra', 'Vendido (kg)', 'Valor Venda'], 'tabela do Relatório de Pedidos do Caixa por material')
     c.mark(11)
     c.mark(12)

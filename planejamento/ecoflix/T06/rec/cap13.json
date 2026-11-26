@@ -1,6 +1,6 @@
 {
  "name": "t06-cap13",
- "title": "T6 · Cap. 13 · Fechar o caixa (narração 161,8 s; marcas L1..L20 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T17:40:00-03:00; logado como Rafael Nogueira)",
+ "title": "T6 · Cap. 13 · Fechar o caixa (narração 163,1 s; marcas L1..L20 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T17:40:00-03:00; logado como Rafael Nogueira)",
  "seed": "t06-cap13",
  "pace": 0.5,
  "cps": 40,
@@ -182,7 +182,7 @@
     "selector": "main tbody tr:has-text('Gás da empilhadeira')"
    },
    "seconds": 0.3,
-   "at": 10.1,
+   "at": 10.02,
    "label": "despesa gás da empilhadeira (Dinheiro)",
    "optional": true,
    "timeout": 4
@@ -354,7 +354,7 @@
   {
    "do": "mark",
    "name": "L10",
-   "at": 75.04
+   "at": 74.96
   },
   {
    "do": "click",
@@ -363,7 +363,7 @@
     "exact": false,
     "within": "[role=dialog]"
    },
-   "at": 75.9,
+   "at": 75.42,
    "label": "Projeção de Lucro (abre a tabela por material)"
   },
   {
@@ -378,7 +378,7 @@
     "exact": false,
     "within": "[role=dialog]"
    },
-   "at": 78.22,
+   "at": 77.84,
    "label": "Relatório de Pedidos do Caixa (tabela comprado e vendido por material)"
   },
   {
@@ -389,17 +389,17 @@
   {
    "do": "mark",
    "name": "L11",
-   "at": 82.24
+   "at": 83.68
   },
   {
    "do": "mark",
    "name": "L12",
-   "at": 88.53
+   "at": 89.98
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.children.length===0&&e.textContent.trim()===\"Valor de Fechamento\")[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;const dy=Math.round(el.getBoundingClientRect().top-380);if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 94.99,
+   "at": 96.36,
    "label": "desce a janela até o Valor de Fechamento"
   },
   {
@@ -410,7 +410,7 @@
   {
    "do": "mark",
    "name": "L13",
-   "at": 96.29
+   "at": 97.66
   },
   {
    "do": "hover",
@@ -418,7 +418,7 @@
     "selector": "[role=dialog] #closingBalance"
    },
    "seconds": 0.6,
-   "at": 96.85,
+   "at": 98.22,
    "label": "Valor de Fechamento (já com o esperado)",
    "optional": true,
    "timeout": 4
@@ -426,14 +426,14 @@
   {
    "do": "mark",
    "name": "L14",
-   "at": 102.45
+   "at": 103.82
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] #closingBalance"
    },
-   "at": 102.75,
+   "at": 104.12,
    "label": "campo Valor de Fechamento"
   },
   {
@@ -442,7 +442,7 @@
     "selector": "[role=dialog] #closingBalance"
    },
    "text": "950,00",
-   "at": 105.14,
+   "at": 106.51,
    "label": "digita 950,00",
    "noClick": true,
    "clear": true
@@ -460,7 +460,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.6,
-   "at": 107.09,
+   "at": 108.43,
    "label": "ZOOM Diferença detectada -R$ 7,10 e a chave (L14 e L15)",
    "optional": true,
    "timeout": 4
@@ -468,7 +468,7 @@
   {
    "do": "mark",
    "name": "L15",
-   "at": 110.0
+   "at": 111.47
   },
   {
    "do": "hover",
@@ -478,7 +478,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.6,
-   "at": 110.56,
+   "at": 112.03,
    "label": "chave Registrar diferença no DRE",
    "optional": true,
    "timeout": 4
@@ -486,14 +486,14 @@
   {
    "do": "mark",
    "name": "L16",
-   "at": 122.08
+   "at": 123.47
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] #closingBalance"
    },
-   "at": 122.38,
+   "at": 123.77,
    "label": "campo Valor de Fechamento"
   },
   {
@@ -502,7 +502,7 @@
     "selector": "[role=dialog] #closingBalance"
    },
    "text": "957,10",
-   "at": 125.39,
+   "at": 126.96,
    "label": "ZOOM digita 957,10 e o valor esperado (L16)",
    "noClick": true,
    "clear": true
@@ -515,7 +515,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.6,
-   "at": 127.76,
+   "at": 129.14,
    "label": "Valor esperado pelo sistema: R$ 957,10",
    "optional": true,
    "timeout": 4
@@ -523,12 +523,12 @@
   {
    "do": "mark",
    "name": "L17",
-   "at": 129.94
+   "at": 131.38
   },
   {
    "do": "mark",
    "name": "L18",
-   "at": 140.66
+   "at": 142.1
   },
   {
    "do": "hover",
@@ -538,7 +538,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.6,
-   "at": 142.74,
+   "at": 144.1,
    "label": "ZOOM Data/hora do fechamento (L18)",
    "optional": true,
    "timeout": 4
@@ -546,7 +546,7 @@
   {
    "do": "mark",
    "name": "L19",
-   "at": 147.22
+   "at": 148.66
   },
   {
    "do": "click",
@@ -556,7 +556,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 147.52,
+   "at": 148.96,
    "label": "Confirmar Fechamento",
    "noScroll": true
   },
@@ -568,7 +568,7 @@
   {
    "do": "mark",
    "name": "L20",
-   "at": 154.0
+   "at": 155.54
   },
   {
    "do": "click",
@@ -577,7 +577,7 @@
     "name": "Não, obrigado",
     "exact": true
    },
-   "at": 155.42,
+   "at": 156.8,
    "label": "Não, obrigado"
   },
   {
@@ -593,7 +593,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 161.76
+   "at": 163.15
   }
  ]
 }
