@@ -35,17 +35,18 @@ const liga = (ps, on) => ps.forEach(p => { p.op = on ? 1 : 0; });
 // cap05, linha 7 · "O logo, o nome e o CNPJ saem no comprovante do pátio. E o CNPJ, junto com o endereço, vai na nota da assinatura."
 // Duas fileiras: de cima, logo, nome e CNPJ -> comprovante do pátio; de baixo, CNPJ e endereço -> nota da assinatura.
 function paraOndeVao() {
-  const t0 = W(7, 'o'), tlo = W(7, 'logo'), tco = W(7, 'comprovante'), tcn = W(7, 'cnpj', 2), tno = W(7, 'nota'), tfim = W(7, 'assinatura', 1, 'e');
+  // 26/11: a primeira metade da fala ("O logo, o nome e o CNPJ saem no comprovante do pátio.") passou a mostrar o PAPEL REAL
+  // (comprovante.html, ilu05_papel); esta cena ficou só com a segunda ("E o CNPJ, junto com o endereço, vai na nota da assinatura.").
+  const t0 = W(7, 'e', 2), tcn = W(7, 'cnpj', 2), tno = W(7, 'nota'), tfim = W(7, 'assinatura', 1, 'e');
   const { EIXO, E, X } = mundo();
   E.fundo(0, 0, { aneis: false });
-  const A = X(htmlFluxoCartoes({ cartoes: [['building-2', 'Logo, nome e CNPJ', '', 'n'], ['file-text', 'Comprovante do pátio', '', 'res']], cw: 330, vao: 90 }), 0, -62);
-  const B = X(htmlFluxoCartoes({ cartoes: [['map-pin', 'CNPJ e endereço', '', 'n'], ['receipt', 'Nota da assinatura', '', 'a']], cw: 330, vao: 90 }), 0, 62);
+  const B = X(htmlFluxoCartoes({ cartoes: [['map-pin', 'CNPJ e endereço', '', 'n'], ['receipt', 'Nota da assinatura', '', 'a']], cw: 330, vao: 90 }), 0, 0);
   const tit = titulo('Empresa', 'Para onde vão os dados', 'escuro');
-  const S = enquadraRet(EIXO, uneRet(A.ret(), B.ret()), { az: -.02, max: 1.25 / EE });
+  const S = enquadraRet(EIXO, B.ret(), { az: -.02, max: 1.25 / EE });
   camera([[t0 - 3, S], [tcn, { ...S, d: S.d * .985, az: .02 }, 'lin'], [tfim + 2.5, { ...S, d: S.d * .97, az: -.015 }, 'lin']]);
   return t => {
     clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, t0 - .45);
-    fileira(A, t, tlo, [tlo, tco]); fileira(B, t, tcn, [tcn, tno]);
+    fileira(B, t, tcn, [tcn, tno]);
   };
 }
 

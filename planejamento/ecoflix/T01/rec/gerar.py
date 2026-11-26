@@ -711,7 +711,7 @@ def cap07():
     c.confere('main', ['Exemplo: RV-0030'], 'exemplo do formato livre')
     c.hover(SEL("main span:text-is('Exemplo:') >> xpath=.."), 1.6, at=c.A(8, 'embaixo', 0.7), label='ZOOM Exemplo: RV-0030')
     c.mark(9)
-    c.type(SEL('#order-number-template'), 'RV-', at=c.A(9, 'Sem', 0.4), cps=14, clear=True, label='apaga o {NUM:4}: fica RV-')
+    c.type(SEL('#order-number-template'), 'RV-', at=c.A(9, 'faltar', 0.4), cps=14, clear=True, label='apaga o {NUM:4}: fica RV-')
     c.confere('main', ['Seu formato não tem'], 'aviso: o formato não tem {NUM}')
     c.hover(TXTP('Seu formato não tem'), 1.8, at=c.A(9, 'avisa', 0.8), label='aviso em vermelho: Seu formato não tem {NUM}')
     c.click(BTNX('Padrão'), at=c.A(9, 'Padrão.', 0.8), label='volta ao Padrão')

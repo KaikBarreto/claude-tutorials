@@ -1,6 +1,6 @@
 {
  "name": "t01-cap14",
- "title": "T01 · Cap. 14 · Senha, termos e Zona de Perigo (narração 111,0 s ESTIMADA; marcas L1..L12 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T01 · Cap. 14 · Senha, termos e Zona de Perigo (narração 91,3 s; marcas L1..L12 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "seed": "t01-cap14",
  "pace": 0.5,
  "cps": 14,
@@ -96,7 +96,7 @@
   {
    "do": "mark",
    "name": "L1",
-   "at": 0.4
+   "at": 0
   },
   {
    "do": "eval",
@@ -112,7 +112,7 @@
     "exact": true
    },
    "seconds": 0.2,
-   "at": 4.89,
+   "at": 4.16,
    "label": "Segurança: Alterar Senha",
    "optional": true,
    "timeout": 3
@@ -120,7 +120,7 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 6.08
+   "at": 5.14
   },
   {
    "do": "click",
@@ -129,7 +129,7 @@
     "name": "Alterar Senha",
     "exact": true
    },
-   "at": 6.48,
+   "at": 5.54,
    "label": "Alterar Senha (abre)"
   },
   {
@@ -145,7 +145,7 @@
     "exact": true
    },
    "seconds": 0.2,
-   "at": 9.41,
+   "at": 7.6,
    "label": "Nova Senha",
    "optional": true,
    "timeout": 3
@@ -157,8 +157,8 @@
     "within": "[role=dialog]",
     "exact": true
    },
-   "seconds": 0.28,
-   "at": 10.85,
+   "seconds": 0.2,
+   "at": 9.04,
    "label": "Confirmar Nova Senha",
    "optional": true,
    "timeout": 3
@@ -170,7 +170,7 @@
     "name": "Cancelar",
     "exact": true
    },
-   "at": 12.68,
+   "at": 10.74,
    "label": "Cancelar (o mesmo botão fica no Perfil)"
   },
   {
@@ -184,7 +184,7 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 14.55
+   "at": 12.18
   },
   {
    "do": "click",
@@ -193,7 +193,7 @@
     "name": "Ver Contrato",
     "exact": true
    },
-   "at": 15.94,
+   "at": 13.38,
    "label": "Ver Contrato"
   },
   {
@@ -207,8 +207,8 @@
     "text": "Aceito em",
     "within": "[role=dialog]"
    },
-   "seconds": 0.4,
-   "at": 21.53,
+   "seconds": 0.2,
+   "at": 17.84,
    "label": "Aceito em ... (data e hora do aceite)",
    "optional": true,
    "timeout": 3
@@ -216,7 +216,7 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 23.48
+   "at": 19.38
   },
   {
    "do": "hover",
@@ -226,7 +226,7 @@
     "exact": true
    },
    "seconds": 0.2,
-   "at": 24.31,
+   "at": 20.08,
    "label": "Baixar PDF (sem clicar)",
    "optional": true,
    "timeout": 3
@@ -236,7 +236,7 @@
    "target": {
     "selector": "[role=dialog] button:not([type=button]):text-is(\"Fechar\")"
    },
-   "at": 26.05,
+   "at": 21.2,
    "label": "Fechar o contrato"
   },
   {
@@ -250,12 +250,12 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 28.31
+   "at": 22.54
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].filter(e=>e.textContent.trim().startsWith(\"Histórico de Exclusões\")&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 28.81,
+   "at": 23.04,
    "label": "desce até o Histórico de Exclusões"
   },
   {
@@ -265,7 +265,7 @@
     "exact": true
    },
    "seconds": 2.0,
-   "at": 30.05,
+   "at": 24.04,
    "label": "Histórico de Exclusões: quem apagou o quê e quando",
    "optional": true,
    "timeout": 3
@@ -273,12 +273,12 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 37.77
+   "at": 30.22
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].filter(e=>e.textContent.trim().startsWith(\"Zona de Perigo\")&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 37.77,
+   "at": 30.22,
    "label": "desce até a Zona de Perigo"
   },
   {
@@ -288,7 +288,7 @@
     "exact": true
    },
    "seconds": 0.6,
-   "at": 38.83,
+   "at": 31.26,
    "label": "Zona de Perigo, em vermelho",
    "optional": true,
    "timeout": 3
@@ -300,7 +300,7 @@
     "exact": true
    },
    "seconds": 0.2,
-   "at": 42.09,
+   "at": 34.46,
    "label": "Zerar Sistema",
    "optional": true,
    "timeout": 3
@@ -310,8 +310,8 @@
    "target": {
     "text": "Exclui dados operacionais selecionados"
    },
-   "seconds": 1.5,
-   "at": 43.69,
+   "seconds": 1.33,
+   "at": 35.82,
    "label": "Zerar Sistema: exclui os dados de operação escolhidos",
    "optional": true,
    "timeout": 3
@@ -319,7 +319,7 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 47.53
+   "at": 38.7
   },
   {
    "do": "click",
@@ -328,7 +328,7 @@
     "name": "Zerar Sistema",
     "exact": true
    },
-   "at": 50.19,
+   "at": 40.78,
    "label": "Zerar Sistema (abre Tem certeza?)"
   },
   {
@@ -341,8 +341,8 @@
    "target": {
     "text": "Você está prestes a acessar a função de zerar o sistema."
    },
-   "seconds": 0.3,
-   "at": 53.01,
+   "seconds": 0.2,
+   "at": 43.16,
    "label": "Tem certeza?",
    "optional": true,
    "timeout": 3
@@ -350,7 +350,7 @@
   {
    "do": "mark",
    "name": "L8",
-   "at": 54.94
+   "at": 44.46
   },
   {
    "do": "click",
@@ -359,7 +359,7 @@
     "name": "Sim, continuar",
     "exact": true
    },
-   "at": 55.14,
+   "at": 44.66,
    "label": "Sim, continuar"
   },
   {
@@ -374,7 +374,7 @@
     "exact": true
    },
    "seconds": 0.4,
-   "at": 58.78,
+   "at": 47.64,
    "label": "Clientes e Fornecedores (marcado)",
    "optional": true,
    "timeout": 3
@@ -386,7 +386,7 @@
     "exact": true
    },
    "seconds": 0.3,
-   "at": 63.11,
+   "at": 51.56,
    "label": "Estoque de Materiais (passa por Cadastro de Materiais)",
    "optional": true,
    "timeout": 3
@@ -397,8 +397,8 @@
     "text": "Pedidos (Vendas e Compras)",
     "exact": true
    },
-   "seconds": 0.2,
-   "at": 70.47,
+   "seconds": 0.3,
+   "at": 57.72,
    "label": "Pedidos (Vendas e Compras) (passa por Movimentações Financeiras)",
    "optional": true,
    "timeout": 3
@@ -409,8 +409,8 @@
     "text": "Selecionar tudo",
     "exact": true
    },
-   "seconds": 0.4,
-   "at": 72.09,
+   "seconds": 0.2,
+   "at": 59.58,
    "label": "tudo já vem marcado (Selecionar tudo)",
    "optional": true,
    "timeout": 3
@@ -418,7 +418,7 @@
   {
    "do": "mark",
    "name": "L9",
-   "at": 74.04
+   "at": 61.1
   },
   {
    "do": "click",
@@ -426,7 +426,7 @@
     "role": "checkbox",
     "name": "Clientes e Fornecedores"
    },
-   "at": 74.67,
+   "at": 61.6,
    "label": "desmarca Clientes e Fornecedores (o que se quer guardar)"
   },
   {
@@ -435,18 +435,18 @@
     "role": "checkbox",
     "name": "Cadastro de Materiais"
    },
-   "at": 84.58,
+   "at": 69.27,
    "label": "desmarca Cadastro de Materiais"
   },
   {
    "do": "mark",
    "name": "L10",
-   "at": 85.63
+   "at": 69.81
   },
   {
    "do": "eval",
    "js": "(async()=>{const d=[...document.querySelectorAll('[role=dialog]')].pop();if(!d)return 'sem janela';const c=[d,...d.querySelectorAll('*')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,dy=c.scrollHeight-c.clientHeight-y0,t0=performance.now();if(dy<3)return 'ok';await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'fim:'+Math.round(c.scrollTop)})()",
-   "at": 86.48,
+   "at": 70.69,
    "label": "a janela desce até o que fica e o nome da empresa"
   },
   {
@@ -455,7 +455,7 @@
     "text": "Serão mantidos:"
    },
    "seconds": 2.0,
-   "at": 86.84,
+   "at": 70.91,
    "label": "Serão mantidos: dados básicos, usuários, histórico de pagamentos, mais o que foi desmarcado",
    "optional": true,
    "timeout": 3
@@ -463,7 +463,7 @@
   {
    "do": "mark",
    "name": "L11",
-   "at": 94.71
+   "at": 77.01
   },
   {
    "do": "hover",
@@ -471,7 +471,7 @@
     "text": "Esta ação NÃO PODE ser desfeita!"
    },
    "seconds": 1.2,
-   "at": 95.01,
+   "at": 77.31,
    "label": "Esta ação NÃO PODE ser desfeita!",
    "optional": true,
    "timeout": 3
@@ -482,7 +482,7 @@
     "placeholder": "Nome da empresa"
    },
    "seconds": 1.5,
-   "at": 97.82,
+   "at": 80.43,
    "label": "PARA CONFIRMAR, DIGITE O NOME DA EMPRESA (campo vazio)",
    "optional": true,
    "timeout": 3
@@ -490,14 +490,14 @@
   {
    "do": "mark",
    "name": "L12",
-   "at": 104.77
+   "at": 85.97
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] button:text-is(\"Cancelar\")"
    },
-   "at": 106.62,
+   "at": 87.83,
    "label": "Cancelar sem digitar nada"
   },
   {
@@ -516,7 +516,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 110.98
+   "at": 91.28
   }
  ]
 }

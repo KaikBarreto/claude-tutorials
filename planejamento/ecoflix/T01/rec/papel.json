@@ -1,0 +1,611 @@
+{
+ "name": "t01-papel",
+ "title": "T01 · captura do papel real do comprovante (sem voz)",
+ "seed": "t01-papel",
+ "pace": 0.5,
+ "cps": 14,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "anonymous": true,
+ "seedExtra": [
+  "t01/inicio",
+  "t01/apos-cap05",
+  "t01/apos-cap06",
+  "t01/apos-cap08",
+  "t01/papel"
+ ],
+ "storage": {
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "initial-preferences-set": "true",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "cato_adoption_nudge_38814e47-876a-5977-a5f7-53af364c17bb_34c36c63-0890-5e89-8963-7c77b7996908": "{\"count\":99,\"lastShownAt\":0}"
+ },
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/login"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "input[type=password]"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 40
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__pdfs)return 'ja';window.__pdfs=[];window.__janelas=[];const o=URL.createObjectURL.bind(URL);URL.createObjectURL=(b)=>{try{if(b&&b.type==='application/pdf')window.__pdfs.push(b)}catch(e){}return o(b)};const wo=window.open;window.open=function(...a){const w=wo.apply(this,a);if(w)window.__janelas.push(w);return w};return 'gancho'})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/pedidos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Pedidos",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main tbody tr:nth-child(1) button[aria-haspopup=menu]"
+   },
+   "timeout": 20
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__pdfs)return 'ja';window.__pdfs=[];window.__janelas=[];const o=URL.createObjectURL.bind(URL);URL.createObjectURL=(b)=>{try{if(b&&b.type==='application/pdf')window.__pdfs.push(b)}catch(e){}return o(b)};const wo=window.open;window.open=function(...a){const w=wo.apply(this,a);if(w)window.__janelas.push(w);return w};return 'gancho'})()"
+  },
+  {
+   "do": "eval",
+   "js": "window.__n0=window.__pdfs.length"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:nth-child(1) button[aria-haspopup=menu]"
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Ver comprovante"
+   }
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const n0=window.__n0||0;let n=-1,parado=0;for(let i=0;i<60;i++){const k=(window.__pdfs||[]).length;if(k>n0&&k===n){if(++parado>=3)break}else parado=0;n=k;await new Promise(r=>setTimeout(r,250))}const b=window.__pdfs&&window.__pdfs.length>n0&&window.__pdfs[window.__pdfs.length-1];if(!b)return 'SEM PDF';const u=new Uint8Array(await b.arrayBuffer());let s='';for(let i=0;i<u.length;i+=8192)s+=String.fromCharCode.apply(null,u.subarray(i,i+8192));return {nome:'A',pdfs:window.__pdfs.length,bytes:u.length,b64:btoa(s)}})()",
+   "label": "captura A"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const j=window.__janelas||[];for(const w of j){try{if(!w.closed)w.close()}catch(e){}}return 'ok'})()"
+  },
+  {
+   "do": "goto",
+   "url": "/pedidos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Pedidos",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main tbody tr:nth-child(2) button[aria-haspopup=menu]"
+   },
+   "timeout": 20
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__pdfs)return 'ja';window.__pdfs=[];window.__janelas=[];const o=URL.createObjectURL.bind(URL);URL.createObjectURL=(b)=>{try{if(b&&b.type==='application/pdf')window.__pdfs.push(b)}catch(e){}return o(b)};const wo=window.open;window.open=function(...a){const w=wo.apply(this,a);if(w)window.__janelas.push(w);return w};return 'gancho'})()"
+  },
+  {
+   "do": "eval",
+   "js": "window.__n0=window.__pdfs.length"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:nth-child(2) button[aria-haspopup=menu]"
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Ver comprovante"
+   }
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const n0=window.__n0||0;let n=-1,parado=0;for(let i=0;i<60;i++){const k=(window.__pdfs||[]).length;if(k>n0&&k===n){if(++parado>=3)break}else parado=0;n=k;await new Promise(r=>setTimeout(r,250))}const b=window.__pdfs&&window.__pdfs.length>n0&&window.__pdfs[window.__pdfs.length-1];if(!b)return 'SEM PDF';const u=new Uint8Array(await b.arrayBuffer());let s='';for(let i=0;i<u.length;i+=8192)s+=String.fromCharCode.apply(null,u.subarray(i,i+8192));return {nome:'T_off',pdfs:window.__pdfs.length,bytes:u.length,b64:btoa(s)}})()",
+   "label": "captura T_off"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const j=window.__janelas||[];for(const w of j){try{if(!w.closed)w.close()}catch(e){}}return 'ok'})()"
+  },
+  {
+   "do": "goto",
+   "url": "/configuracoes"
+  },
+  {
+   "do": "waitFor",
+   "text": "Configurações do Sistema",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#tab-btn-usability"
+   }
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const el=[...document.querySelectorAll('main label')].find(e=>e.textContent.trim()==='Mostrar só peso líquido');if(!el)return 'SEM ALVO';let c=el;while(c&&c!==document.body){const b=c.querySelector('button[role=switch]');if(b){b.scrollIntoView({block:'center'});b.click();return 'clicou: '+b.getAttribute('aria-checked')}c=c.parentElement}return 'SEM SWITCH'})()",
+   "label": "liga peso líquido"
+  },
+  {
+   "do": "pause",
+   "seconds": 1.5
+  },
+  {
+   "do": "goto",
+   "url": "/pedidos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Pedidos",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main tbody tr:nth-child(2) button[aria-haspopup=menu]"
+   },
+   "timeout": 20
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__pdfs)return 'ja';window.__pdfs=[];window.__janelas=[];const o=URL.createObjectURL.bind(URL);URL.createObjectURL=(b)=>{try{if(b&&b.type==='application/pdf')window.__pdfs.push(b)}catch(e){}return o(b)};const wo=window.open;window.open=function(...a){const w=wo.apply(this,a);if(w)window.__janelas.push(w);return w};return 'gancho'})()"
+  },
+  {
+   "do": "eval",
+   "js": "window.__n0=window.__pdfs.length"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:nth-child(2) button[aria-haspopup=menu]"
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Ver comprovante"
+   }
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const n0=window.__n0||0;let n=-1,parado=0;for(let i=0;i<60;i++){const k=(window.__pdfs||[]).length;if(k>n0&&k===n){if(++parado>=3)break}else parado=0;n=k;await new Promise(r=>setTimeout(r,250))}const b=window.__pdfs&&window.__pdfs.length>n0&&window.__pdfs[window.__pdfs.length-1];if(!b)return 'SEM PDF';const u=new Uint8Array(await b.arrayBuffer());let s='';for(let i=0;i<u.length;i+=8192)s+=String.fromCharCode.apply(null,u.subarray(i,i+8192));return {nome:'T_on',pdfs:window.__pdfs.length,bytes:u.length,b64:btoa(s)}})()",
+   "label": "captura T_on"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const j=window.__janelas||[];for(const w of j){try{if(!w.closed)w.close()}catch(e){}}return 'ok'})()"
+  },
+  {
+   "do": "goto",
+   "url": "/configuracoes"
+  },
+  {
+   "do": "waitFor",
+   "text": "Configurações do Sistema",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#tab-btn-usability"
+   }
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const el=[...document.querySelectorAll('main label')].find(e=>e.textContent.trim()==='Mostrar só peso líquido');if(!el)return 'SEM ALVO';let c=el;while(c&&c!==document.body){const b=c.querySelector('button[role=switch]');if(b){b.scrollIntoView({block:'center'});b.click();return 'clicou: '+b.getAttribute('aria-checked')}c=c.parentElement}return 'SEM SWITCH'})()",
+   "label": "desliga peso líquido"
+  },
+  {
+   "do": "pause",
+   "seconds": 1.5
+  },
+  {
+   "do": "goto",
+   "url": "/configuracoes"
+  },
+  {
+   "do": "waitFor",
+   "text": "Configurações do Sistema",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#tab-btn-usability"
+   }
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const el=[...document.querySelectorAll('main label')].find(e=>e.textContent.trim()==='Assinaturas no comprovante');if(!el)return 'SEM ALVO';let c=el;while(c&&c!==document.body){const b=c.querySelector('button[role=switch]');if(b){b.scrollIntoView({block:'center'});b.click();return 'clicou: '+b.getAttribute('aria-checked')}c=c.parentElement}return 'SEM SWITCH'})()",
+   "label": "liga assinaturas"
+  },
+  {
+   "do": "pause",
+   "seconds": 1.5
+  },
+  {
+   "do": "goto",
+   "url": "/pedidos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Pedidos",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main tbody tr:nth-child(1) button[aria-haspopup=menu]"
+   },
+   "timeout": 20
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__pdfs)return 'ja';window.__pdfs=[];window.__janelas=[];const o=URL.createObjectURL.bind(URL);URL.createObjectURL=(b)=>{try{if(b&&b.type==='application/pdf')window.__pdfs.push(b)}catch(e){}return o(b)};const wo=window.open;window.open=function(...a){const w=wo.apply(this,a);if(w)window.__janelas.push(w);return w};return 'gancho'})()"
+  },
+  {
+   "do": "eval",
+   "js": "window.__n0=window.__pdfs.length"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:nth-child(1) button[aria-haspopup=menu]"
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Ver comprovante"
+   }
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const n0=window.__n0||0;let n=-1,parado=0;for(let i=0;i<60;i++){const k=(window.__pdfs||[]).length;if(k>n0&&k===n){if(++parado>=3)break}else parado=0;n=k;await new Promise(r=>setTimeout(r,250))}const b=window.__pdfs&&window.__pdfs.length>n0&&window.__pdfs[window.__pdfs.length-1];if(!b)return 'SEM PDF';const u=new Uint8Array(await b.arrayBuffer());let s='';for(let i=0;i<u.length;i+=8192)s+=String.fromCharCode.apply(null,u.subarray(i,i+8192));return {nome:'S_ambas',pdfs:window.__pdfs.length,bytes:u.length,b64:btoa(s)}})()",
+   "label": "captura S_ambas"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const j=window.__janelas||[];for(const w of j){try{if(!w.closed)w.close()}catch(e){}}return 'ok'})()"
+  },
+  {
+   "do": "goto",
+   "url": "/configuracoes"
+  },
+  {
+   "do": "waitFor",
+   "text": "Configurações do Sistema",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#tab-btn-usability"
+   }
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#receipt-signature-mode"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Só o cliente/fornecedor"
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 1.5
+  },
+  {
+   "do": "goto",
+   "url": "/pedidos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Pedidos",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main tbody tr:nth-child(1) button[aria-haspopup=menu]"
+   },
+   "timeout": 20
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__pdfs)return 'ja';window.__pdfs=[];window.__janelas=[];const o=URL.createObjectURL.bind(URL);URL.createObjectURL=(b)=>{try{if(b&&b.type==='application/pdf')window.__pdfs.push(b)}catch(e){}return o(b)};const wo=window.open;window.open=function(...a){const w=wo.apply(this,a);if(w)window.__janelas.push(w);return w};return 'gancho'})()"
+  },
+  {
+   "do": "eval",
+   "js": "window.__n0=window.__pdfs.length"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:nth-child(1) button[aria-haspopup=menu]"
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Ver comprovante"
+   }
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const n0=window.__n0||0;let n=-1,parado=0;for(let i=0;i<60;i++){const k=(window.__pdfs||[]).length;if(k>n0&&k===n){if(++parado>=3)break}else parado=0;n=k;await new Promise(r=>setTimeout(r,250))}const b=window.__pdfs&&window.__pdfs.length>n0&&window.__pdfs[window.__pdfs.length-1];if(!b)return 'SEM PDF';const u=new Uint8Array(await b.arrayBuffer());let s='';for(let i=0;i<u.length;i+=8192)s+=String.fromCharCode.apply(null,u.subarray(i,i+8192));return {nome:'S_cli',pdfs:window.__pdfs.length,bytes:u.length,b64:btoa(s)}})()",
+   "label": "captura S_cli"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const j=window.__janelas||[];for(const w of j){try{if(!w.closed)w.close()}catch(e){}}return 'ok'})()"
+  },
+  {
+   "do": "goto",
+   "url": "/configuracoes"
+  },
+  {
+   "do": "waitFor",
+   "text": "Configurações do Sistema",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#tab-btn-usability"
+   }
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const el=[...document.querySelectorAll('main label')].find(e=>e.textContent.trim()==='Assinaturas no comprovante');if(!el)return 'SEM ALVO';let c=el;while(c&&c!==document.body){const b=c.querySelector('button[role=switch]');if(b){b.scrollIntoView({block:'center'});b.click();return 'clicou: '+b.getAttribute('aria-checked')}c=c.parentElement}return 'SEM SWITCH'})()",
+   "label": "desliga assinaturas"
+  },
+  {
+   "do": "pause",
+   "seconds": 1.5
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Nome em destaque",
+    "exact": true
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 1.5
+  },
+  {
+   "do": "goto",
+   "url": "/pedidos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Pedidos",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main tbody tr:nth-child(1) button[aria-haspopup=menu]"
+   },
+   "timeout": 20
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__pdfs)return 'ja';window.__pdfs=[];window.__janelas=[];const o=URL.createObjectURL.bind(URL);URL.createObjectURL=(b)=>{try{if(b&&b.type==='application/pdf')window.__pdfs.push(b)}catch(e){}return o(b)};const wo=window.open;window.open=function(...a){const w=wo.apply(this,a);if(w)window.__janelas.push(w);return w};return 'gancho'})()"
+  },
+  {
+   "do": "eval",
+   "js": "window.__n0=window.__pdfs.length"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:nth-child(1) button[aria-haspopup=menu]"
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Ver comprovante"
+   }
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const n0=window.__n0||0;let n=-1,parado=0;for(let i=0;i<60;i++){const k=(window.__pdfs||[]).length;if(k>n0&&k===n){if(++parado>=3)break}else parado=0;n=k;await new Promise(r=>setTimeout(r,250))}const b=window.__pdfs&&window.__pdfs.length>n0&&window.__pdfs[window.__pdfs.length-1];if(!b)return 'SEM PDF';const u=new Uint8Array(await b.arrayBuffer());let s='';for(let i=0;i<u.length;i+=8192)s+=String.fromCharCode.apply(null,u.subarray(i,i+8192));return {nome:'E_nome',pdfs:window.__pdfs.length,bytes:u.length,b64:btoa(s)}})()",
+   "label": "captura E_nome"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const j=window.__janelas||[];for(const w of j){try{if(!w.closed)w.close()}catch(e){}}return 'ok'})()"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos||\"sem observador\")"
+  }
+ ]
+}

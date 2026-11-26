@@ -3,8 +3,8 @@
   "cap": 0,
   "id": "ilu00_comprovante",
   "de": [
-   0,
-   "Oi",
+   1,
+   "Quando",
    1
   ],
   "ate": [
@@ -13,21 +13,15 @@
    1
   ],
   "cauda": 0.6,
-  "resumo": "o comprovante sem identidade ganha a cara da empresa: logo, nome, CNPJ e telefone",
+  "resumo": "o papel real do comprovante (PDF do app): nome, CNPJ e telefone da Recicla Vale",
   "mostra": [
-   "Comprovante",
-   "A cara da empresa",
-   "De quem é?",
    "Recicla Vale Metais",
-   "CNPJ 47.318.506/0001-07",
-   "(12) 90000-4410",
-   "Ferro misto",
-   "190 kg",
-   "Total",
-   "R$ 142,50"
+   "CNPJ: 47.318.506/0001-07",
+   "Telefone: (12) 90000-4410"
   ],
-  "v3": "tirada",
-  "motivo": "o papel do comprovante tem de ser o real e nenhum PDF dele veio nos actions.json da T01 (cap00 sem PDF); desenhar o papel seria inventar resultado"
+  "v3": "cenas_v3/comprovante.html",
+  "anexo": "t01/edit/out/comprovantes",
+  "clima": "fisico"
  },
  {
   "cap": 2,
@@ -111,7 +105,7 @@
  },
  {
   "cap": 5,
-  "id": "ilu05_para_onde_vao",
+  "id": "ilu05_papel",
   "de": [
    7,
    "O",
@@ -119,24 +113,39 @@
   ],
   "ate": [
    7,
+   "comprovante",
+   1
+  ],
+  "cauda": 0.3,
+  "clima": "fisico",
+  "v3": "cenas_v3/comprovante.html",
+  "anexo": "t01/edit/out/comprovantes",
+  "resumo": "o papel real do comprovante: logo, nome e CNPJ da Recicla Vale",
+  "mostra": [
+   "Recicla Vale Metais",
+   "CNPJ: 47.318.506/0001-07"
+  ]
+ },
+ {
+  "cap": 5,
+  "id": "ilu05_para_onde_vao",
+  "de": [
+   7,
+   "E",
+   2
+  ],
+  "ate": [
+   7,
    "assinatura",
    1
   ],
   "cauda": 0.6,
-  "resumo": "logo, nome e CNPJ vão para o comprovante; CNPJ e endereço vão para a nota da assinatura",
+  "resumo": "o CNPJ e o endereço vão para a nota da assinatura",
   "mostra": [
    "Empresa",
    "Para onde vão os dados",
-   "Configurações › Empresa",
-   "Logo da Empresa",
-   "Nome da Empresa",
-   "Recicla Vale Metais",
-   "CNPJ/CPF",
-   "47.318.506/0001-07",
-   "Endereço",
-   "CNPJ 47.318.506/0001-07",
-   "Nota fiscal da assinatura",
-   "CNPJ"
+   "CNPJ e endereço",
+   "Nota da assinatura"
   ],
   "v3": "cenas_v3/cena.html",
   "clima": "dados"
@@ -247,24 +256,36 @@
    1
   ],
   "cauda": 0.6,
-  "resumo": "no papel, a frase sai logo abaixo dos dados da empresa, entre duas linhas",
+  "resumo": "o papel real: a frase da empresa logo abaixo dos dados, entre duas linhas",
   "mostra": [
-   "Comprovante",
-   "A frase no comprovante",
-   "Recicla Vale Metais",
-   "CNPJ 47.318.506/0001-07",
-   "(12) 90000-4410",
-   "contato@reciclavalemetais.example",
-   "Rua das Oficinas, 1250",
-   "Parque Industrial, Taubaté/SP",
-   "CEP 12086-410",
-   "Obrigado pela parceria! Atendemos de segunda a sexta, das 7h às 17h.",
-   "Dados da empresa",
-   "Frase Personalizada"
+   "Obrigado pela parceria! Atendemos de segunda a sexta, das 7h às 17h."
   ],
   "clima": "fisico",
-  "v3": "tirada",
-  "motivo": "depende do papel real do comprovante e não há PDF dele nos actions.json do cap08; sem papel desenhado"
+  "v3": "cenas_v3/comprovante.html",
+  "anexo": "t01/edit/out/comprovantes"
+ },
+ {
+  "cap": 8,
+  "id": "ilu08_cara",
+  "de": [
+   5,
+   "comprovante",
+   1
+  ],
+  "ate": [
+   5,
+   "Vale",
+   1
+  ],
+  "cauda": 0.6,
+  "clima": "fisico",
+  "v3": "cenas_v3/comprovante.html",
+  "anexo": "t01/edit/out/comprovantes",
+  "resumo": "o papel real já com o logo, o nome e a frase da Recicla Vale",
+  "mostra": [
+   "Recicla Vale Metais",
+   "Obrigado pela parceria!"
+  ]
  },
  {
   "cap": 9,
@@ -366,6 +387,32 @@
  },
  {
   "cap": 10,
+  "id": "ilu10_peso",
+  "de": [
+   1,
+   "Ligado",
+   1
+  ],
+  "ate": [
+   1,
+   "separada",
+   1
+  ],
+  "cauda": 0.6,
+  "clima": "fisico",
+  "v3": "cenas_v3/comprovante.html",
+  "anexo": "t01/edit/out/comprovantes",
+  "resumo": "o papel real do pedido com 5 kg de tara: ligado mostra só o líquido (95 kg); desligado mostra o bruto (100 kg) e o líquido",
+  "mostra": [
+   "PESO LÍQ.",
+   "BRUTO",
+   "LÍQUIDO",
+   "100 Kg",
+   "95"
+  ]
+ },
+ {
+  "cap": 10,
   "id": "ilu10_assinaturas",
   "de": [
    4,
@@ -379,17 +426,38 @@
   ],
   "cauda": 0.6,
   "clima": "fisico",
-  "v3": "tirada",
-  "resumo": "o rodapé do cupom: com as duas assinaturas, uma linha de cada lado; sozinha, a linha cresce até a largura inteira do papel",
+  "v3": "cenas_v3/comprovante.html",
+  "resumo": "o papel real: com as duas assinaturas, uma de cada lado; só a do fornecedor, sozinha no rodapé",
   "mostra": [
-   "Comprovante",
-   "Assinaturas no comprovante",
+   "Marcos Antunes",
    "Operador",
-   "Fornecedor",
-   "Operador e cliente/fornecedor",
-   "Só o cliente/fornecedor"
+   "Aparecida Ramos",
+   "Fornecedor"
   ],
-  "motivo": "depende do papel real do comprovante e o PDF do cap10 não veio nos actions.json (só a tela de configuração); sem papel desenhado"
+  "anexo": "t01/edit/out/comprovantes"
+ },
+ {
+  "cap": 10,
+  "id": "ilu10_estilo",
+  "de": [
+   8,
+   "Compacto",
+   1
+  ],
+  "ate": [
+   9,
+   "dele",
+   1
+  ],
+  "cauda": 0.6,
+  "clima": "fisico",
+  "v3": "cenas_v3/comprovante.html",
+  "anexo": "t01/edit/out/comprovantes",
+  "resumo": "o papel real nos dois estilos do cupom térmico: Compacto (nome ao lado dos valores) e Nome em destaque (nome em cima)",
+  "mostra": [
+   "Alumínio latinha",
+   "R$ 161,20"
+  ]
  },
  {
   "cap": 11,

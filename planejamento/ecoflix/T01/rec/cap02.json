@@ -1,6 +1,6 @@
 {
  "name": "t01-cap02",
- "title": "T01 · Cap. 2 · Os 7 dias de teste (narração 37,2 s ESTIMADA; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T01 · Cap. 2 · Os 7 dias de teste (narração 28,4 s; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "seed": "t01-cap02",
  "pace": 0.5,
  "cps": 14,
@@ -100,14 +100,14 @@
  ],
  "steps": [
   {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
    "do": "eval",
    "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Teste Grátis · Acesso Total\", \"7 dias grátis\", \"com acesso a todos os módulos\", \"5 usuários\", \"inclusos durante o teste\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"body\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
    "label": "confere cartão do teste grátis"
-  },
-  {
-   "do": "mark",
-   "name": "L1",
-   "at": 0.4
   },
   {
    "do": "hover",
@@ -115,8 +115,8 @@
     "text": "Teste Grátis · Acesso Total",
     "exact": true
    },
-   "seconds": 0.6,
-   "at": 0.69,
+   "seconds": 0.27,
+   "at": 0.0,
    "label": "cartão Teste Grátis · Acesso Total",
    "optional": true,
    "timeout": 3
@@ -129,7 +129,7 @@
     "exact": true
    },
    "seconds": 0.2,
-   "at": 2.96,
+   "at": 1.82,
    "label": "botão Criar Conta, logo abaixo",
    "optional": true,
    "timeout": 3
@@ -139,8 +139,8 @@
    "target": {
     "text": "7 dias grátis"
    },
-   "seconds": 0.24,
-   "at": 4.36,
+   "seconds": 0.2,
+   "at": 3.28,
    "label": "7 dias grátis e 5 usuários",
    "optional": true,
    "timeout": 3
@@ -148,22 +148,22 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 6.15
+   "at": 4.74
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 15.54
+   "at": 12.34
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 25.3
+   "at": 19.46
   },
   {
    "do": "eval",
    "js": "(async()=>{const c=document.scrollingElement;const y0=c.scrollTop,t0=performance.now();if(y0<3)return 'ok';await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0*(1-e),behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
-   "at": 25.3,
+   "at": 19.46,
    "label": "a página sobe ao subtítulo"
   },
   {
@@ -172,7 +172,7 @@
     "text": "Teste grátis por 7 dias"
    },
    "seconds": 3.0,
-   "at": 28.18,
+   "at": 21.68,
    "label": "subtítulo Teste grátis por 7 dias · Sem compromisso · Acesso total",
    "optional": true,
    "timeout": 3
@@ -183,7 +183,7 @@
     "text": "Teste grátis por 7 dias"
    },
    "seconds": 1.6,
-   "at": 34.28,
+   "at": 26.66,
    "label": "subtítulo: o que vale é o que está escrito aqui",
    "optional": true,
    "timeout": 3
@@ -196,7 +196,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 37.2
+   "at": 28.4
   }
  ]
 }

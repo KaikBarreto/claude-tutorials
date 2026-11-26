@@ -1,6 +1,6 @@
 {
  "name": "t01-cap15",
- "title": "T01 · Cap. 15 · Recapitulando (narração 60,7 s ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T01 · Cap. 15 · Recapitulando (narração 45,8 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "seed": "t01-cap15",
  "pace": 0.5,
  "cps": 14,
@@ -96,15 +96,15 @@
   {
    "do": "mark",
    "name": "L1",
-   "at": 0.4
+   "at": 0
   },
   {
    "do": "hover",
    "target": {
     "selector": "[aria-label='Menu da conta']"
    },
-   "seconds": 2.0,
-   "at": 2.91,
+   "seconds": 1.57,
+   "at": 2.0,
    "label": "a conta da Recicla Vale",
    "noScroll": true,
    "optional": true,
@@ -115,8 +115,8 @@
    "target": {
     "selector": "[aria-label='Menu da conta']"
    },
-   "seconds": 1.6,
-   "at": 6.78,
+   "seconds": 0.79,
+   "at": 5.12,
    "label": "o card da conta (trocador de contas no menu)",
    "noScroll": true,
    "optional": true,
@@ -125,7 +125,7 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 10.17
+   "at": 7.46
   },
   {
    "do": "hover",
@@ -133,7 +133,7 @@
     "selector": "main img[alt='Logo']"
    },
    "seconds": 0.2,
-   "at": 12.43,
+   "at": 9.04,
    "label": "o logo",
    "optional": true,
    "timeout": 3
@@ -144,7 +144,7 @@
     "selector": "main img[alt='Ícone']"
    },
    "seconds": 0.2,
-   "at": 13.69,
+   "at": 10.18,
    "label": "o ícone",
    "optional": true,
    "timeout": 3
@@ -152,7 +152,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].filter(e=>e.textContent.trim().startsWith(\"CNPJ/CPF\")&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-160);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 14.95,
+   "at": 11.32,
    "label": "o CNPJ, o contato e o endereço"
   },
   {
@@ -160,8 +160,8 @@
    "target": {
     "selector": "#company-cnpj"
    },
-   "seconds": 0.29,
-   "at": 15.7,
+   "seconds": 0.2,
+   "at": 12.52,
    "label": "CNPJ 47.318.506/0001-07",
    "optional": true,
    "timeout": 3
@@ -169,7 +169,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Prévia no comprovante\"&&e.offsetParent);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-280);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 17.54,
+   "at": 13.62,
    "label": "a Prévia no comprovante"
   },
   {
@@ -178,7 +178,7 @@
     "selector": "main p.font-mono"
    },
    "seconds": 0.2,
-   "at": 19.76,
+   "at": 15.06,
    "label": "o endereço sem o galpão",
    "optional": true,
    "timeout": 3
@@ -186,12 +186,12 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 20.69
+   "at": 15.62
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Numeração de pedidos\"&&e.offsetParent);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-150);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 20.99,
+   "at": 15.92,
    "label": "a Numeração de pedidos"
   },
   {
@@ -201,7 +201,7 @@
     "name": "Padrão"
    },
    "seconds": 0.2,
-   "at": 22.69,
+   "at": 17.06,
    "label": "modelo Padrão",
    "optional": true,
    "timeout": 3
@@ -209,7 +209,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Frase Personalizada\"&&e.offsetParent);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-200);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 24.04,
+   "at": 18.18,
    "label": "a frase do comprovante"
   },
   {
@@ -217,8 +217,8 @@
    "target": {
     "selector": "#receipt-phrase"
    },
-   "seconds": 0.6,
-   "at": 25.12,
+   "seconds": 0.2,
+   "at": 18.9,
    "label": "a frase da Recicla Vale",
    "optional": true,
    "timeout": 3
@@ -226,12 +226,12 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 27.27
+   "at": 20.34
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const c=rolagem(document.querySelector('main h1'));if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,t0=performance.now();if(y0<3)return 'ok';await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0*(1-e),behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
-   "at": 27.27,
+   "at": 20.34,
    "label": "sobe às abas"
   },
   {
@@ -239,7 +239,7 @@
    "target": {
     "selector": "#tab-btn-usability"
    },
-   "at": 28.31,
+   "at": 21.34,
    "label": "aba Usabilidade"
   },
   {
@@ -250,7 +250,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Impureza/Tara Desconta no Valor\"&&e.offsetParent);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 29.8,
+   "at": 22.36,
    "label": "Impureza/Tara Desconta no Valor"
   },
   {
@@ -260,7 +260,7 @@
     "exact": true
    },
    "seconds": 0.1,
-   "at": 30.69,
+   "at": 23.06,
    "label": "Impureza/Tara (ligada)",
    "optional": true,
    "timeout": 3
@@ -268,12 +268,12 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 39.23
+   "at": 29.22
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const c=rolagem(document.querySelector('main h1'));if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,t0=performance.now();if(y0<3)return 'ok';await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0*(1-e),behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
-   "at": 39.84,
+   "at": 29.82,
    "label": "sobe às abas (de novo)"
   },
   {
@@ -281,7 +281,7 @@
    "target": {
     "selector": "#tab-btn-condicoes-pagamento"
    },
-   "at": 40.54,
+   "at": 30.48,
    "label": "aba Condições de Pagamento"
   },
   {
@@ -295,8 +295,8 @@
     "text": "30/60/90 dias",
     "exact": true
    },
-   "seconds": 0.4,
-   "at": 42.42,
+   "seconds": 0.2,
+   "at": 31.92,
    "label": "30/60/90 dias com o selo Padrão",
    "optional": true,
    "timeout": 3
@@ -304,14 +304,14 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 44.44
+   "at": 33.22
   },
   {
    "do": "click",
    "target": {
     "selector": "#tab-btn-appearance"
    },
-   "at": 45.71,
+   "at": 34.22,
    "label": "aba Aparência"
   },
   {
@@ -324,7 +324,7 @@
    "target": {
     "selector": "#tab-btn-company"
    },
-   "at": 48.44,
+   "at": 36.22,
    "label": "aba Empresa"
   },
   {
@@ -335,13 +335,13 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].filter(e=>e.textContent.trim().startsWith(\"Zona de Perigo\")&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/1000),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 50.06,
+   "at": 37.56,
    "label": "a Zona de Perigo"
   },
   {
    "do": "mark",
    "name": "L7",
-   "at": 51.93
+   "at": 38.98
   },
   {
    "do": "scroll",
@@ -352,7 +352,7 @@
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 52.23,
+   "at": 39.28,
    "label": "cursor parado (cartão Próximo: Usuários e permissões)"
   },
   {
@@ -363,7 +363,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 60.72
+   "at": 45.76
   }
  ]
 }

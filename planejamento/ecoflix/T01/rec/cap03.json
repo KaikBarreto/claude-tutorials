@@ -1,6 +1,6 @@
 {
  "name": "t01-cap03",
- "title": "T01 · Cap. 3 · Entrar no sistema (narração 98,6 s ESTIMADA; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T01 · Cap. 3 · Entrar no sistema (narração 77,7 s; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "seed": "t01-cap03",
  "pace": 0.5,
  "cps": 14,
@@ -48,14 +48,14 @@
  ],
  "steps": [
   {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
    "do": "eval",
    "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Acesse sua conta\", \"Entre para continuar no EcoSistema.\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"body\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
    "label": "confere tela de login"
-  },
-  {
-   "do": "mark",
-   "name": "L1",
-   "at": 0.4
   },
   {
    "do": "hover",
@@ -63,8 +63,8 @@
     "text": "Acesse sua conta",
     "exact": true
    },
-   "seconds": 0.8,
-   "at": 1.62,
+   "seconds": 0.73,
+   "at": 0.96,
    "label": "Acesse sua conta",
    "optional": true,
    "timeout": 3
@@ -74,13 +74,13 @@
    "target": {
     "placeholder": "seu@email.com"
    },
-   "at": 4.38,
+   "at": 3.24,
    "label": "E-mail"
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 5.39
+   "at": 4.1
   },
   {
    "do": "type",
@@ -89,7 +89,7 @@
    },
    "text": "$TUT_USER",
    "cps": 40,
-   "at": 5.39,
+   "at": 4.1,
    "label": "digita o e-mail do Rafael",
    "noClick": true
   },
@@ -98,7 +98,7 @@
    "target": {
     "selector": "input[type=password]"
    },
-   "at": 8.05,
+   "at": 6.4,
    "label": "Senha"
   },
   {
@@ -108,7 +108,7 @@
    },
    "text": "$TUT_SENHA",
    "cps": 40,
-   "at": 8.81,
+   "at": 7.2,
    "label": "digita a senha (pontinhos)",
    "noClick": true
   },
@@ -118,13 +118,13 @@
     "role": "checkbox",
     "name": "Lembrar de mim"
    },
-   "at": 9.59,
+   "at": 7.94,
    "label": "marca Lembrar de mim"
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 14.48
+   "at": 11.38
   },
   {
    "do": "hover",
@@ -133,7 +133,7 @@
     "name": "Entrar com Google"
    },
    "seconds": 2.4,
-   "at": 16.95,
+   "at": 13.18,
    "label": "Entrar com Google (sem clicar)",
    "optional": true,
    "timeout": 3
@@ -144,8 +144,8 @@
     "role": "button",
     "name": "Entrar com Google"
    },
-   "seconds": 1.39,
-   "at": 22.39,
+   "seconds": 0.85,
+   "at": 17.46,
    "label": "Entrar com Google: entra na conta que já existe",
    "optional": true,
    "timeout": 3
@@ -158,7 +158,7 @@
     "exact": true
    },
    "seconds": 0.2,
-   "at": 25.33,
+   "at": 19.86,
    "label": "Cadastre-se",
    "optional": true,
    "timeout": 3
@@ -166,7 +166,7 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 27.05
+   "at": 21.14
   },
   {
    "do": "click",
@@ -175,13 +175,13 @@
     "name": "Entrar",
     "exact": true
    },
-   "at": 27.83,
+   "at": 21.96,
    "label": "Entrar"
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 31.35
+   "at": 24.7
   },
   {
    "do": "waitFor",
@@ -193,8 +193,8 @@
    "target": {
     "selector": "[aria-label='Menu da conta']"
    },
-   "seconds": 1.62,
-   "at": 34.07,
+   "seconds": 0.63,
+   "at": 26.84,
    "label": "card da conta: Rafael Nogueira e Recicla Vale Metais",
    "noScroll": true,
    "optional": true,
@@ -203,14 +203,14 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 37.24
+   "at": 29.02
   },
   {
    "do": "click",
    "target": {
     "selector": "[aria-label='Menu da conta']"
    },
-   "at": 37.64,
+   "at": 29.42,
    "label": "abre o menu da conta",
    "noScroll": true
   },
@@ -229,7 +229,7 @@
     "name": "Meu Perfil"
    },
    "seconds": 0.4,
-   "at": 40.57,
+   "at": 32.28,
    "label": "Meu Perfil",
    "optional": true,
    "timeout": 3
@@ -241,7 +241,7 @@
     "name": "Assinatura"
    },
    "seconds": 0.2,
-   "at": 44.75,
+   "at": 36.04,
    "label": "menu: Assinatura",
    "optional": true,
    "timeout": 3
@@ -253,7 +253,7 @@
     "name": "Tema"
    },
    "seconds": 0.2,
-   "at": 45.96,
+   "at": 37.24,
    "label": "menu: Tema",
    "optional": true,
    "timeout": 3
@@ -265,7 +265,7 @@
     "name": "Tutoriais | EcoFlix"
    },
    "seconds": 0.1,
-   "at": 46.8,
+   "at": 37.96,
    "label": "menu: Tutoriais | EcoFlix",
    "optional": true,
    "timeout": 3
@@ -277,7 +277,7 @@
     "name": "Central de Ajuda"
    },
    "seconds": 0.1,
-   "at": 48.77,
+   "at": 39.72,
    "label": "menu: Central de Ajuda",
    "optional": true,
    "timeout": 3
@@ -289,7 +289,7 @@
     "name": "Falar com o Suporte"
    },
    "seconds": 0.2,
-   "at": 50.97,
+   "at": 41.42,
    "label": "menu: Falar com o Suporte",
    "optional": true,
    "timeout": 3
@@ -297,7 +297,7 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 52.01
+   "at": 41.98
   },
   {
    "do": "click",
@@ -305,7 +305,7 @@
     "selector": "[aria-label='Trocar de conta']",
     "nth": 0
    },
-   "at": 54.03,
+   "at": 43.78,
    "label": "trocador de contas (o card cresce)"
   },
   {
@@ -323,8 +323,8 @@
    "target": {
     "text": "Apenas essa conta está salva"
    },
-   "seconds": 1.4,
-   "at": 55.95,
+   "seconds": 0.71,
+   "at": 45.56,
    "label": "Apenas essa conta está salva",
    "optional": true,
    "timeout": 3
@@ -332,12 +332,12 @@
   {
    "do": "mark",
    "name": "L8",
-   "at": 59.5
+   "at": 47.82
   },
   {
    "do": "mark",
    "name": "L9",
-   "at": 72.22
+   "at": 57.18
   },
   {
    "do": "hover",
@@ -346,7 +346,7 @@
     "exact": true
    },
    "seconds": 2.4,
-   "at": 74.7,
+   "at": 59.14,
    "label": "Adicionar conta (sem clicar)",
    "optional": true,
    "timeout": 3
@@ -357,8 +357,8 @@
     "text": "Adicionar conta",
     "exact": true
    },
-   "seconds": 0.22,
-   "at": 80.67,
+   "seconds": 0.2,
+   "at": 64.06,
    "label": "Adicionar conta: até cinco contas",
    "optional": true,
    "timeout": 3
@@ -366,15 +366,15 @@
   {
    "do": "mark",
    "name": "L10",
-   "at": 82.44
+   "at": 65.58
   },
   {
    "do": "hover",
    "target": {
     "selector": "[aria-label='Sair desta conta']"
    },
-   "seconds": 0.81,
-   "at": 87.72,
+   "seconds": 0.45,
+   "at": 69.86,
    "label": "Sair desta conta (ícone ao lado do nome, sem clicar)",
    "optional": true,
    "timeout": 3
@@ -386,7 +386,7 @@
     "exact": true
    },
    "seconds": 1.6,
-   "at": 90.08,
+   "at": 71.86,
    "label": "Sair de todas as contas (sem clicar)",
    "optional": true,
    "timeout": 3
@@ -394,7 +394,7 @@
   {
    "do": "press",
    "key": "Escape",
-   "at": 97.66,
+   "at": 77.56,
    "label": "Esc fecha o menu"
   },
   {
@@ -405,7 +405,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 98.59
+   "at": 77.68
   }
  ]
 }

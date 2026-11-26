@@ -1,6 +1,6 @@
 {
  "name": "t01-cap09",
- "title": "T01 · Cap. 9 · O jeito do pátio (narração 222,2 s ESTIMADA; marcas L1..L19 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T01 · Cap. 9 · O jeito do pátio (narração 183,1 s; marcas L1..L19 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "seed": "t01-cap09",
  "pace": 0.5,
  "cps": 14,
@@ -95,14 +95,14 @@
   {
    "do": "mark",
    "name": "L1",
-   "at": 0.4
+   "at": 0.04
   },
   {
    "do": "click",
    "target": {
     "selector": "#tab-btn-usability"
    },
-   "at": 0.74,
+   "at": 0.52,
    "label": "aba Usabilidade"
   },
   {
@@ -116,8 +116,8 @@
     "text": "Configure preferências gerais de usabilidade do sistema",
     "exact": true
    },
-   "seconds": 0.8,
-   "at": 3.75,
+   "seconds": 0.47,
+   "at": 3.28,
    "label": "Usabilidade: preferências gerais do sistema",
    "optional": true,
    "timeout": 3
@@ -125,7 +125,7 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 6.53
+   "at": 5.3
   },
   {
    "do": "hover",
@@ -134,7 +134,7 @@
     "exact": true
    },
    "seconds": 1.8,
-   "at": 8.12,
+   "at": 6.64,
    "label": "Nomenclatura de clientes e fornecedores",
    "optional": true,
    "timeout": 3
@@ -144,8 +144,8 @@
    "target": {
     "selector": "#invert-customer-supplier-terms"
    },
-   "seconds": 1.58,
-   "at": 17.39,
+   "seconds": 1.35,
+   "at": 14.32,
    "label": "chave Inverter os termos Cliente e Fornecedor (desligada, sem clicar)",
    "optional": true,
    "timeout": 3
@@ -157,7 +157,7 @@
     "exact": true
    },
    "seconds": 0.4,
-   "at": 20.52,
+   "at": 17.22,
    "label": "troca as palavras na tela",
    "optional": true,
    "timeout": 3
@@ -165,7 +165,7 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 26.78
+   "at": 22.19
   },
   {
    "do": "hover",
@@ -173,7 +173,7 @@
     "text": "continuam com a mesma lógica"
    },
    "seconds": 4.0,
-   "at": 27.08,
+   "at": 22.49,
    "label": "descrição: compras, vendas, vínculos, saldos e documentos fiscais continuam iguais",
    "optional": true,
    "timeout": 3
@@ -181,12 +181,12 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 35.55
+   "at": 30.27
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].filter(e=>e.textContent.trim().startsWith(\"Caixa\")&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-120);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 35.55,
+   "at": 30.27,
    "label": "desce até a seção Caixa"
   },
   {
@@ -195,7 +195,7 @@
     "text": "Cada operador abre e gerencia seu próprio caixa"
    },
    "seconds": 3.4,
-   "at": 37.43,
+   "at": 32.53,
    "label": "Multi-Caixas: cada operador, o próprio caixa",
    "optional": true,
    "timeout": 3
@@ -206,7 +206,7 @@
     "selector": "main div:has(> div > div > label:text-is(\"Multi-Caixas\")) > button[role=switch]"
    },
    "seconds": 0.2,
-   "at": 46.03,
+   "at": 40.81,
    "label": "chave Multi-Caixas ligada",
    "optional": true,
    "timeout": 3
@@ -214,7 +214,7 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 47.44
+   "at": 42.03
   },
   {
    "do": "hover",
@@ -222,8 +222,8 @@
     "text": "Rastreabilidade do dinheiro físico (Cofre)",
     "exact": true
    },
-   "seconds": 1.99,
-   "at": 49.19,
+   "seconds": 0.84,
+   "at": 43.45,
    "label": "Rastreabilidade do dinheiro físico (Cofre), ligada",
    "optional": true,
    "timeout": 3
@@ -231,7 +231,7 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 52.73
+   "at": 45.84
   },
   {
    "do": "hover",
@@ -240,7 +240,7 @@
     "exact": true
    },
    "seconds": 0.2,
-   "at": 53.26,
+   "at": 46.38,
    "label": "Formato do Comprovante",
    "optional": true,
    "timeout": 3
@@ -250,7 +250,7 @@
    "target": {
     "selector": "main div:has(> span:text-is(\"Computador\")) button[role=combobox]"
    },
-   "at": 54.93,
+   "at": 47.52,
    "label": "abre o formato do Computador"
   },
   {
@@ -269,8 +269,8 @@
     "name": "Térmico (58/80mm)",
     "exact": true
    },
-   "seconds": 1.6,
-   "at": 57.2,
+   "seconds": 0.93,
+   "at": 49.34,
    "label": "Térmico (58/80mm)",
    "noScroll": true,
    "optional": true,
@@ -283,8 +283,8 @@
     "name": "A4 (PDF em folha)",
     "exact": true
    },
-   "seconds": 1.2,
-   "at": 60.39,
+   "seconds": 0.45,
+   "at": 51.82,
    "label": "A4 (PDF em folha)",
    "noScroll": true,
    "optional": true,
@@ -297,7 +297,7 @@
     "name": "Térmico (58/80mm)",
     "exact": true
    },
-   "at": 63.16,
+   "at": 53.82,
    "label": "fica no Térmico (58/80mm)",
    "noScroll": true
   },
@@ -313,7 +313,7 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 64.54
+   "at": 54.96
   },
   {
    "do": "hover",
@@ -321,7 +321,7 @@
     "selector": "main div:has(> span:text-is(\"Computador\")) button[role=combobox]"
    },
    "seconds": 0.2,
-   "at": 66.13,
+   "at": 56.3,
    "label": "Computador: Térmico",
    "optional": true,
    "timeout": 3
@@ -332,7 +332,7 @@
     "selector": "main div:has(> span:text-is(\"Celular/Tablet\")) button[role=combobox]"
    },
    "seconds": 0.2,
-   "at": 67.8,
+   "at": 57.58,
    "label": "Celular/Tablet: Térmico",
    "optional": true,
    "timeout": 3
@@ -343,7 +343,7 @@
     "text": "(preferência por usuário)"
    },
    "seconds": 0.2,
-   "at": 69.17,
+   "at": 58.78,
    "label": "(preferência por usuário)",
    "optional": true,
    "timeout": 3
@@ -351,7 +351,7 @@
   {
    "do": "mark",
    "name": "L8",
-   "at": 70.88
+   "at": 59.92
   },
   {
    "do": "hover",
@@ -360,7 +360,7 @@
     "exact": true
    },
    "seconds": 0.4,
-   "at": 71.41,
+   "at": 60.46,
    "label": "Pedidos e Pagamentos",
    "optional": true,
    "timeout": 3
@@ -377,7 +377,7 @@
     "exact": true
    },
    "seconds": 1.0,
-   "at": 74.65,
+   "at": 62.92,
    "label": "Mostrar jogos nos pedidos (a quantidade também em jogos)",
    "optional": true,
    "timeout": 3
@@ -389,7 +389,7 @@
     "exact": true
    },
    "seconds": 1.0,
-   "at": 82.72,
+   "at": 70.06,
    "label": "Forma de Pagamento Padrão",
    "optional": true,
    "timeout": 3
@@ -399,7 +399,7 @@
    "target": {
     "selector": "main div:has(> div > div > label:text-is(\"Forma de Pagamento Padrão\")) > button[role=combobox]"
    },
-   "at": 87.16,
+   "at": 73.22,
    "label": "abre a Forma de Pagamento Padrão"
   },
   {
@@ -419,7 +419,7 @@
     "exact": true
    },
    "seconds": 0.2,
-   "at": 89.12,
+   "at": 74.96,
    "label": "Dinheiro",
    "noScroll": true,
    "optional": true,
@@ -432,8 +432,8 @@
     "name": "Pix/Transferência",
     "exact": true
    },
-   "seconds": 0.3,
-   "at": 90.03,
+   "seconds": 0.25,
+   "at": 75.6,
    "label": "Pix/Transferência",
    "noScroll": true,
    "optional": true,
@@ -447,7 +447,7 @@
     "exact": true
    },
    "seconds": 0.2,
-   "at": 91.88,
+   "at": 77.4,
    "label": "Perguntar sempre",
    "noScroll": true,
    "optional": true,
@@ -456,7 +456,7 @@
   {
    "do": "mark",
    "name": "L9",
-   "at": 93.4
+   "at": 78.48
   },
   {
    "do": "click",
@@ -465,7 +465,7 @@
     "name": "Perguntar sempre",
     "exact": true
    },
-   "at": 95.29,
+   "at": 80.3,
    "label": "fica em Perguntar sempre",
    "noScroll": true
   },
@@ -483,8 +483,8 @@
    "target": {
     "selector": "main div:has(> div > div > label:text-is(\"Forma de Pagamento Padrão\")) > button[role=combobox]"
    },
-   "seconds": 0.86,
-   "at": 97.72,
+   "seconds": 0.23,
+   "at": 82.14,
    "label": "Perguntar sempre: cada fornecedor recebe de um jeito",
    "optional": true,
    "timeout": 3
@@ -492,7 +492,7 @@
   {
    "do": "mark",
    "name": "L10",
-   "at": 100.13
+   "at": 83.92
   },
   {
    "do": "hover",
@@ -500,8 +500,8 @@
     "text": "Permitir Edição de Itens",
     "exact": true
    },
-   "seconds": 0.7,
-   "at": 100.48,
+   "seconds": 0.35,
+   "at": 84.36,
    "label": "Permitir Edição de Itens (ligada)",
    "optional": true,
    "timeout": 3
@@ -512,7 +512,7 @@
     "text": "Editar peso, impureza/tara e valor de materiais já incluídos"
    },
    "seconds": 1.2,
-   "at": 102.73,
+   "at": 86.26,
    "label": "Editar peso, impureza/tara e valor de materiais já incluídos",
    "optional": true,
    "timeout": 3
@@ -523,7 +523,7 @@
     "selector": "main div:has(> label:text-is(\"Permitir Edição de Itens\")) > svg"
    },
    "seconds": 2.4,
-   "at": 106.33,
+   "at": 89.08,
    "label": "a dica: Adicionou 100kg de alumínio e percebeu que era 95kg?",
    "optional": true,
    "timeout": 3
@@ -531,12 +531,12 @@
   {
    "do": "mark",
    "name": "L11",
-   "at": 114.3
+   "at": 95.63
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Arredondar Pagamentos\"&&e.offsetParent);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 114.3,
+   "at": 95.63,
    "label": "desce até Arredondar Pagamentos"
   },
   {
@@ -545,7 +545,7 @@
     "selector": "main div:has(> label:text-is(\"Arredondar Pagamentos\")) > svg"
    },
    "seconds": 1.6,
-   "at": 114.85,
+   "at": 96.19,
    "label": "Arredondar Pagamentos: a dica aparece",
    "optional": true,
    "timeout": 3
@@ -556,7 +556,7 @@
     "selector": "main div:has(> label:text-is(\"Na Venda\")) > button[role=switch]"
    },
    "seconds": 0.2,
-   "at": 120.17,
+   "at": 100.53,
    "label": "Na Venda (desligada)",
    "optional": true,
    "timeout": 3
@@ -567,7 +567,7 @@
     "selector": "main div:has(> label:text-is(\"Na Compra\")) > button[role=switch]"
    },
    "seconds": 0.2,
-   "at": 121.48,
+   "at": 101.73,
    "label": "Na Compra (desligada)",
    "optional": true,
    "timeout": 3
@@ -575,12 +575,12 @@
   {
    "do": "mark",
    "name": "L12",
-   "at": 122.77
+   "at": 102.75
   },
   {
    "do": "mark",
    "name": "L13",
-   "at": 142.4
+   "at": 117.36
   },
   {
    "do": "hover",
@@ -588,8 +588,8 @@
     "text": "Múltiplas Tabelas de Preço",
     "exact": true
    },
-   "seconds": 1.2,
-   "at": 143.87,
+   "seconds": 0.91,
+   "at": 118.82,
    "label": "Múltiplas Tabelas de Preço (ligada, sem parar)",
    "optional": true,
    "timeout": 3
@@ -599,8 +599,8 @@
    "target": {
     "text": "Permite criar e gerenciar múltiplas tabelas de preço vinculadas"
    },
-   "seconds": 0.55,
-   "at": 147.41,
+   "seconds": 0.2,
+   "at": 121.28,
    "label": "Permite criar e gerenciar múltiplas tabelas de preço vinculadas",
    "optional": true,
    "timeout": 3
@@ -608,7 +608,7 @@
   {
    "do": "mark",
    "name": "L14",
-   "at": 149.51
+   "at": 122.96
   },
   {
    "do": "hover",
@@ -617,7 +617,7 @@
     "exact": true
    },
    "seconds": 1.6,
-   "at": 151.86,
+   "at": 125.18,
    "label": "Impureza/Tara Desconta no Valor (ligada)",
    "optional": true,
    "timeout": 3
@@ -628,7 +628,7 @@
     "selector": "main div:has(> label:text-is(\"Impureza/Tara Desconta no Valor\")) > svg"
    },
    "seconds": 3.4,
-   "at": 155.5,
+   "at": 129.02,
    "label": "Impureza/Tara: a dica (Ex: compra de 100kg com 5kg de impureza)",
    "optional": true,
    "timeout": 3
@@ -638,8 +638,8 @@
    "target": {
     "selector": "main div:has(> div > div > label:text-is(\"Impureza/Tara Desconta no Valor\")) > button[role=switch]"
    },
-   "seconds": 1.6,
-   "at": 161.43,
+   "seconds": 0.95,
+   "at": 134.46,
    "label": "chave Impureza/Tara ligada",
    "optional": true,
    "timeout": 3
@@ -647,22 +647,22 @@
   {
    "do": "mark",
    "name": "L15",
-   "at": 164.66
+   "at": 136.96
   },
   {
    "do": "mark",
    "name": "L16",
-   "at": 176.18
+   "at": 146.91
   },
   {
    "do": "mark",
    "name": "L17",
-   "at": 190.34
+   "at": 157.82
   },
   {
    "do": "mark",
    "name": "L18",
-   "at": 203.9
+   "at": 169.5
   },
   {
    "do": "hover",
@@ -670,8 +670,8 @@
     "text": "Lucro no Comprovante",
     "exact": true
    },
-   "seconds": 0.8,
-   "at": 204.06,
+   "seconds": 0.51,
+   "at": 169.66,
    "label": "Lucro no Comprovante (desligado)",
    "optional": true,
    "timeout": 3
@@ -682,7 +682,7 @@
     "text": "Exibe o lucro estimado no PDF do comprovante de venda"
    },
    "seconds": 1.2,
-   "at": 206.69,
+   "at": 171.72,
    "label": "Exibe o lucro estimado no comprovante de venda",
    "optional": true,
    "timeout": 3
@@ -692,8 +692,8 @@
    "target": {
     "selector": "main div:has(> label:text-is(\"Lucro no Comprovante\")) > svg"
    },
-   "seconds": 0.5,
-   "at": 210.64,
+   "seconds": 0.2,
+   "at": 174.6,
    "label": "Lucro no Comprovante: só para quem vê a projeção de lucro",
    "optional": true,
    "timeout": 3
@@ -701,12 +701,12 @@
   {
    "do": "mark",
    "name": "L19",
-   "at": 213.06
+   "at": 176.14
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Forma de Pagamento Padrão\"&&e.offsetParent);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-120);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 213.06,
+   "at": 176.14,
    "label": "as opções de pedido, de Forma de Pagamento Padrão a Lucro no Comprovante"
   },
   {
@@ -715,7 +715,7 @@
     "selector": "[aria-label='Menu da conta']"
    },
    "seconds": 0.1,
-   "at": 219.34,
+   "at": 180.97,
    "label": "aqui o Rafael (o card da conta)",
    "noScroll": true,
    "optional": true,
@@ -734,7 +734,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 222.23
+   "at": 183.12
   }
  ]
 }

@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- T01 "Sua conta e sua empresa" · o COMPROVANTE REAL na tela (kit v3, clima claro: papel é mundo físico). Molde: T08/cenas_v3/comprovante.html.
+     O papel é o PDF que o próprio app 1.60.22 gerou no mundo da Recicla Vale (rec/t01/t01_papel.py: o robô abre "Ver comprovante" e o gancho
+     guarda o PDF), rasterizado a 300 dpi em $TUT_HOME/t01/edit/out/comprovantes/NOME.png (pdftoppm). Aqui o papel é a imagem real, sem
+     redesenho: só a câmera passeia por ele e um marca-texto verde acompanha a fala. Coordenadas: pontos do PDF (pdftotext -bbox), página de 226,77 pt.
+       cap00 · linha 1  · ilu00_comprovante     papel A: nome, CNPJ e telefone
+       cap05 · linha 7  · ilu05_papel           papel A: logo, nome e CNPJ
+       cap08 · linha 4  · ilu08_frase_comprovante  papel A: a frase entre duas linhas, logo abaixo dos dados
+       cap10 · linha 1  · ilu10_peso            T_on (só líquido) e T_off (bruto e líquido), pedido #1757 com 5 kg de tara
+       cap10 · linha 4  · ilu10_assinaturas     S_ambas (as duas) e S_cli (só o cliente/fornecedor)
+       cap10 · linhas 8 e 9 · ilu10_estilo      A (Compacto) e E_nome (Nome em destaque)
+     A cena de cada janela é escolhida por d.cap e pelo tempo (cada janela é renderizada só no seu trecho: --de/--ate).
+     Render: render_cenas.cjs <cap> <capNN.json> saida.mp4 --html .../comprovante.html --anexo $TUT_HOME/t01/edit/out/comprovantes
+             --larg 1422 --dsf 1.35 --de <s> --ate <s>. -->
+</head><body>
+<script type="module">
+import { pr, eo, W, vis, titulo, posTitulo, GL, mancha, piso, U, camera, plano, cena, estilo, enquadraRet }
+  from '../../../../perfis/ecoflix/cenas_v3/motor.js';
+import { ceuClaro } from '../../../../perfis/ecoflix/cenas_v3/fundo.js';
+
+const K = 1.5, LP = 226.77, WP = Math.round(LP * K), E = .01, YC = 4.35;   // px por pt, largura da página (pt e px), metros por px
+const LEITURA = 2.87 / E;   // zoom de leitura: ~2,9 px de quadro por px do papel
+
+// papel com uma ou mais folhas empilhadas (trocam por fusão); hpt = altura da maior; marcas: id -> [x0, y0, x1, y1] em pt
+function papel(srcs, hpt, marcas) {
+  estilo('cupom', `
+.cupom{position:relative;width:${WP}px;background:#fff;border-radius:7px 7px 0 0;box-shadow:0 34px 60px -18px rgba(30,80,60,.38),0 8px 16px -6px rgba(30,80,60,.14)}
+.cupom img{position:absolute;left:0;top:0;display:block;width:${WP}px;border-radius:7px 7px 0 0}
+.cupom .z{position:absolute;left:0;bottom:-8px;display:block}
+.cupom .mk{position:absolute;border-radius:4px;background:rgba(80,208,136,.46);mix-blend-mode:multiply;transform-origin:0 50%;transform:scaleX(0)}`);
+  const h = Math.round(hpt * K), n = Math.round(WP / 14), z = Array.from({ length: n + 1 }, (_, i) => `${(i * WP / n).toFixed(1)},${i % 2 ? 8 : 0}`).join(' ');
+  const mk = Object.entries(marcas).map(([id, [x0, y0, x1, y1]]) =>
+    `<i class="mk" data-m="${id}" style="left:${(x0 * K).toFixed(1)}px;top:${(y0 * K).toFixed(1)}px;width:${((x1 - x0) * K).toFixed(1)}px;height:${((y1 - y0) * K).toFixed(1)}px"></i>`).join('');
+  const im = srcs.map(([s, hp], i) => `<img data-f="${i}" src="${s}" style="height:${Math.round(hp * K)}px;opacity:${i ? 0 : 1}" alt="">`).join('');
+  return { h, html: `<div class="cupom" style="height:${h}px">${im}${mk}<svg class="z" width="${WP}" height="8"><polygon points="0,0 ${z} ${WP},0" fill="#fff"/></svg></div>` };
+}
+const marca = (e, id, t, a) => { const m = (e._mk ??= {})[id] ??= e.querySelector(`[data-m="${id}"]`); m.style.transform = `scaleX(${eo(pr(t, a, .45)).toFixed(4)})`; };
+// folha i aparece por fusão em t >= a (as anteriores somem junto); a marca de uma folha só vale enquanto ela está à vista
+const folha = (e, i, t, a) => { const f = (e._fl ??= {})[i] ??= e.querySelector(`[data-f="${i}"]`); f.style.opacity = eo(pr(t, a, .4)).toFixed(3); };
+const folhaSai = (e, i, t, a) => { const f = (e._fl ??= {})[i] ??= e.querySelector(`[data-f="${i}"]`); f.style.opacity = (1 - eo(pr(t, a, .4))).toFixed(3); };
+const marcaSai = (e, id, t, a) => { const m = (e._mk ??= {})[id] ??= e.querySelector(`[data-m="${id}"]`); if (t >= a) m.style.opacity = (1 - eo(pr(t, a, .3))).toFixed(3); };
+const faixa = (h, y0, y1) => [-WP / 2 * E, YC + (h / 2 - y1 * K) * E, WP / 2 * E, YC + (h / 2 - y0 * K) * E];
+const palco = () => { piso({ r: 24, x: 0, z: -2, passo: 1.3 }); U.uNevoa.value.set(.955, .975, .965, .8); ceuClaro({ halo: [.2, 3.4, -12] }); };
+const A = 'A.png', HA = 524.41;
+
+function monta(srcs, hpt, marcas, t0) {
+  palco();
+  const P = papel(srcs, hpt, marcas), pp = plano(P.html, { pos: [0, YC, 0], esc: E, sangra: true }), sp = mancha(5.2, 1.6, [0, 0, .1], { op: 0 });
+  return { P, pp, sp, h: P.h, entra: t => { GL.style.opacity = eo(pr(t, t0 + .08, .5)).toFixed(3); vis(pp.e, t, t0 - .2, 1e9, { dy: 30 }); sp.material.uniforms.uOp.value = .55 * (+pp.e.style.opacity || 0); } };
+}
+
+// cap00, linha 1 · "Quando o fornecedor sai do pátio com o comprovante na mão, ele precisa ver ali o nome, o CNPJ e o telefone da empresa."
+function cap00(d) {
+  const t0 = W(1, 'quando'), tco = W(1, 'comprovante'), tno = W(1, 'nome'), tcn = W(1, 'cnpj'), tte = W(1, 'telefone'), tfim = W(1, 'empresa', 1, 'e');
+  const M = monta([[`${d.anexo}/${A}`, HA]], HA, { nome: [14.2, 65.8, 115.7, 76], cnpj: [14.2, 80.7, 111.9, 88.1], tel: [14.2, 125.7, 117, 133.6] }, t0);
+  const TUDO = enquadraRet(null, faixa(M.h, 0, HA), { topo: 150, margem: 40, el: .02, az: .05 });
+  const F = enquadraRet(null, faixa(M.h, 14, 150), { topo: 70, margem: 56, max: LEITURA, el: .015, az: -.03 });
+  camera([[t0 - 3, TUDO], [tco - .2, { ...TUDO, d: TUDO.d * .975, az: .045 }, 'lin'], [tno - .5, F], [tfim + 2, { ...F, d: F.d * .98, az: .02 }, 'lin']]);
+  return t => { M.entra(t); marca(M.pp.e, 'nome', t, tno - .1); marca(M.pp.e, 'cnpj', t, tcn - .1); marca(M.pp.e, 'tel', t, tte - .1); };
+}
+
+// cap05, linha 7 (primeira frase) · "O logo, o nome e o CNPJ saem no comprovante do pátio."
+function cap05(d) {
+  const t0 = W(7, 'o'), tlo = W(7, 'logo'), tno = W(7, 'nome'), tcn = W(7, 'cnpj'), tco = W(7, 'comprovante'), tfim = W(7, 'comprovante', 1, 'e');
+  const M = monta([[`${d.anexo}/${A}`, HA]], HA, { logo: [16.1, 21.4, 111.6, 52.1], nome: [14.2, 65.8, 115.7, 76], cnpj: [14.2, 80.7, 111.9, 88.1] }, t0);
+  const TUDO = enquadraRet(null, faixa(M.h, 0, HA), { topo: 150, margem: 40, el: .02, az: .05 });
+  const F = enquadraRet(null, faixa(M.h, 14, 100), { topo: 70, margem: 56, max: LEITURA, el: .015, az: -.03 });
+  camera([[t0 - 3, { ...TUDO, d: TUDO.d * 1.05 }], [tlo - .6, F], [tfim + 2, { ...F, d: F.d * .98, az: .02 }, 'lin']]);
+  return t => { M.entra(t); marca(M.pp.e, 'logo', t, tlo - .1); marca(M.pp.e, 'nome', t, tno - .1); marca(M.pp.e, 'cnpj', t, tcn - .1); };
+}
+
+// cap08, duas janelas · linha 4: "No papel, ela sai logo abaixo dos dados da empresa, entre duas linhas." e linha 5 (fim):
+// "O comprovante já sai com a cara da Recicla Vale." (o clique em Salvar alterações, antes dele, fica à mostra na tela)
+function cap08(d) {
+  const t0 = W(4, 'no'), tda = W(4, 'dados'), ten = W(4, 'entre'), tfim = W(4, 'linhas', 1, 'e');
+  const u0 = W(5, 'comprovante'), uca = W(5, 'cara'), ufim = W(5, 'vale', 1, 'e');
+  palco();
+  const mk = (x, marcas) => { const P = papel([[`${d.anexo}/${A}`, HA]], HA, marcas); return { pp: plano(P.html, { pos: [x, YC, 0], esc: E, sangra: true }), h: P.h }; };
+  const P1 = mk(0, { dados: [14.2, 65.8, 193.5, 144.9], frase: [14, 161, 213, 192] });
+  const P2 = mk(16, { logo: [16.1, 21.4, 111.6, 52.1], nome: [14.2, 65.8, 115.7, 76], frase: [14, 161, 213, 192] });
+  const fx = (x, y0, y1) => { const r = faixa(P1.h, y0, y1); return [r[0] + x, r[1], r[2] + x, r[3]]; };
+  const o = { topo: 70, margem: 56, max: LEITURA, el: .015 };
+  const T1 = enquadraRet(null, fx(0, 0, HA), { topo: 150, margem: 40, el: .02, az: .05 }), F1 = enquadraRet(null, fx(0, 55, 200), { ...o, az: -.03 });
+  const T2 = enquadraRet(null, fx(16, 0, HA), { topo: 150, margem: 40, el: .02, az: .05 }), F2 = enquadraRet(null, fx(16, 14, 200), { ...o, az: -.03 });
+  camera([[t0 - 3, { ...T1, d: T1.d * 1.05 }], [tda - .5, F1], [tfim + 2, { ...F1, d: F1.d * .98, az: .02 }, 'lin'],
+    [u0 - 6, { ...T2, d: T2.d * 1.05 }], [u0 - 3, { ...T2, d: T2.d * 1.05 }], [u0 + .3, F2], [ufim + 2, { ...F2, d: F2.d * .98, az: .02 }, 'lin']]);
+  const sp = mancha(5.2, 1.6, [0, 0, .1], { op: 0 });
+  return t => {
+    GL.style.opacity = eo(pr(t, t0 + .08, .5)).toFixed(3); sp.material.uniforms.uOp.value = 0;
+    vis(P1.pp.e, t, t0 - .2, 1e9, { dy: 30 }); vis(P2.pp.e, t, u0 - .2, 1e9, { dy: 30 });
+    marca(P1.pp.e, 'dados', t, tda - .1); marca(P1.pp.e, 'frase', t, ten - .1);
+    marca(P2.pp.e, 'logo', t, uca - .1); marca(P2.pp.e, 'nome', t, uca + .1); marca(P2.pp.e, 'frase', t, uca + .3);
+  };
+}
+
+// cap10, três janelas (peso, assinaturas, estilo): as três folhas ficam lado a lado no palco (16 m de distância) e a câmera vai de uma à outra
+// entre as janelas, nas linhas sem papel; cada janela é renderizada só no seu trecho (--de/--ate) e mostra a folha da vez.
+function cap10(d) {
+  const XO = [0, 16, 32];
+  const faixaX = (i, h, y0, y1) => { const r = faixa(h, y0, y1); return [r[0] + XO[i], r[1], r[2] + XO[i], r[3]]; };
+  // peso (linha 1): "Ligado, o comprovante esconde a tara e mostra só o peso líquido. Por exemplo: comprou cem quilos com cinco de tara,
+  // e a notinha mostra direto noventa e cinco. Desligado, ela mostra os cem quilos e a tara separada."
+  const p0 = W(1, 'ligado'), pli = W(1, 'liquido'), pno = W(1, 'noventa'), pde = W(1, 'desligado'), pce = W(1, 'cem', 2), pse = W(1, 'separada'), pfim = W(1, 'separada', 1, 'e');
+  // assinaturas (linha 4): "Com as duas, cada uma fica de um lado. Sozinha, a linha ocupa a largura toda do papel, e sobra espaço pra assinar."
+  const a0 = W(4, 'com'), aum = W(4, 'cada'), aso = W(4, 'sozinha'), afim = W(4, 'assinar', 1, 'e');
+  // estilo (linhas 8 e 9): "No Compacto, o nome do material fica do lado dos valores." / "No Nome em destaque, o nome vai em cima, numa linha só dele."
+  const e0 = W(8, 'compacto'), eva = W(8, 'valores'), end = W(9, 'destaque'), eci = W(9, 'cima'), eli = W(9, 'linha'), efim = W(9, 'dele', 1, 'e');
+  palco();
+  const mk = (i, srcs, h, marcas) => { const P = papel(srcs.map(([s, hp]) => [`${d.anexo}/${s}`, hp]), h, marcas); return { P, pp: plano(P.html, { pos: [XO[i], YC, 0], esc: E, sangra: true }), h: P.h }; };
+  const HP = 515.91, HS = 603.78, HE = 535.75;
+  const P1 = mk(0, [['T_on.png', HP], ['T_off.png', HP]], HP, { liq: [75, 345, 118, 384], v95: [83, 372, 110, 383], bru: [72, 371, 104, 383], liq2: [106, 371, 132, 383] });
+  const P2 = mk(1, [['S_ambas.png', HS], ['S_cli.png', HS]], HS, { duas: [24, 516, 206, 548], so: [76, 516, 150, 548] });
+  const P3 = mk(2, [['A.png', HA], ['E_nome.png', HE]], HE, { comp: [19, 356, 208, 380], nome: [19, 356.5, 92, 366.5], vals: [33, 370.5, 199, 380.5] });
+  const sp = mancha(5.2, 1.6, [0, 0, .1], { op: 0 });
+  const o = { topo: 70, margem: 56, max: LEITURA, el: .015 };
+  const F1 = enquadraRet(null, faixaX(0, P1.h, 318, 402), { ...o, az: -.03 }), T1 = enquadraRet(null, faixaX(0, P1.h, 150, HP), { topo: 150, margem: 40, el: .02, az: .05 });
+  const F2 = enquadraRet(null, faixaX(1, P2.h, 440, 560), { ...o, az: -.03 }), T2 = enquadraRet(null, faixaX(1, P2.h, 150, HS), { topo: 150, margem: 40, el: .02, az: .05 });
+  const F3 = enquadraRet(null, faixaX(2, P3.h, 325, 425), { ...o, az: -.03 }), T3 = enquadraRet(null, faixaX(2, P3.h, 150, HE), { topo: 150, margem: 40, el: .02, az: .05 });
+  camera([[p0 - 3, { ...T1, d: T1.d * 1.04 }], [p0 + .3, F1], [pfim + 2, { ...F1, d: F1.d * .985, az: .02 }, 'lin'],
+    [a0 - 6, { ...T2, d: T2.d * 1.04 }], [a0 - 3, { ...T2, d: T2.d * 1.04 }], [a0 + .3, F2], [afim + 2, { ...F2, d: F2.d * .985, az: .02 }, 'lin'],
+    [e0 - 6, { ...T3, d: T3.d * 1.04 }], [e0 - 3, { ...T3, d: T3.d * 1.04 }], [e0 + .3, F3], [efim + 2, { ...F3, d: F3.d * .985, az: .02 }, 'lin']]);
+  return t => {
+    GL.style.opacity = eo(pr(t, p0 + .08, .5)).toFixed(3);
+    vis(P1.pp.e, t, p0 - .2, 1e9, { dy: 30 }); vis(P2.pp.e, t, a0 - .2, 1e9, { dy: 30 }); vis(P3.pp.e, t, e0 - .2, 1e9, { dy: 30 });
+    sp.material.uniforms.uOp.value = 0;
+    const e1 = P1.pp.e, e2 = P2.pp.e, e3 = P3.pp.e;
+    folha(e1, 1, t, pde - .1); folhaSai(e1, 0, t, pde - .1);
+    marca(e1, 'liq', t, pli - .1); marca(e1, 'v95', t, pno - .1); marcaSai(e1, 'liq', t, pde - .2); marcaSai(e1, 'v95', t, pde - .2);
+    marca(e1, 'bru', t, pce - .1); marca(e1, 'liq2', t, pse - .55);
+    folha(e2, 1, t, aso - .1); folhaSai(e2, 0, t, aso - .1); marca(e2, 'duas', t, aum - .1); marcaSai(e2, 'duas', t, aso - .2); marca(e2, 'so', t, aso + .1);
+    folha(e3, 1, t, end - .1); folhaSai(e3, 0, t, end - .1); marca(e3, 'comp', t, eva - .8); marcaSai(e3, 'comp', t, end - .2);
+    marca(e3, 'nome', t, eci - .1); marca(e3, 'vals', t, eli - .1);
+  };
+}
+const CAPS = { 0: cap00, 5: cap05, 8: cap08, 10: cap10 };
+cena(d => CAPS[d.cap](d), { fov: 26 });
+</script></body></html>

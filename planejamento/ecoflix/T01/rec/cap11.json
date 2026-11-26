@@ -1,6 +1,6 @@
 {
  "name": "t01-cap11",
- "title": "T01 · Cap. 11 · Ticket, idioma e guia (narração 67,3 s ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T01 · Cap. 11 · Ticket, idioma e guia (narração 52,8 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "seed": "t01-cap11",
  "pace": 0.5,
  "cps": 14,
@@ -95,14 +95,14 @@
   {
    "do": "mark",
    "name": "L1",
-   "at": 0.4
+   "at": 0
   },
   {
    "do": "click",
    "target": {
     "selector": "#tab-btn-usability"
    },
-   "at": 0.89,
+   "at": 0.36,
    "label": "aba Usabilidade"
   },
   {
@@ -113,13 +113,13 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Exigir cliente/fornecedor no Ticket de Pesagem\"&&e.offsetParent);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/2000),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 2.54,
+   "at": 1.86,
    "label": "desce até Exigir cliente/fornecedor no Ticket de Pesagem"
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 6.46
+   "at": 5.22
   },
   {
    "do": "hover",
@@ -128,7 +128,7 @@
     "exact": true
    },
    "seconds": 1.0,
-   "at": 6.81,
+   "at": 5.66,
    "label": "Exigir cliente/fornecedor no Ticket de Pesagem (desligado)",
    "optional": true,
    "timeout": 3
@@ -139,7 +139,7 @@
     "text": "Quando ligado, o funcionário não consegue salvar um ticket"
    },
    "seconds": 2.6,
-   "at": 10.73,
+   "at": 9.24,
    "label": "Quando ligado, ninguém salva um ticket sem escolher com quem foi",
    "optional": true,
    "timeout": 3
@@ -149,8 +149,8 @@
    "target": {
     "selector": "main div:has(> div > div > label:text-is(\"Exigir cliente/fornecedor no Ticket de Pesagem\")) > button[role=switch]"
    },
-   "seconds": 0.73,
-   "at": 16.22,
+   "seconds": 0.2,
+   "at": 13.82,
    "label": "chave Exigir cliente/fornecedor (vale pra empresa toda)",
    "optional": true,
    "timeout": 3
@@ -158,7 +158,7 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 18.5
+   "at": 15.54
   },
   {
    "do": "hover",
@@ -167,7 +167,7 @@
     "exact": true
    },
    "seconds": 2.0,
-   "at": 19.89,
+   "at": 16.84,
    "label": "Permitir forma de pagamento no ticket de pesagem (sem parar)",
    "optional": true,
    "timeout": 3
@@ -175,12 +175,12 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 26.97
+   "at": 21.81
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Regionalização\"&&e.offsetParent);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-140);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 26.97,
+   "at": 21.81,
    "label": "desce até a Regionalização"
   },
   {
@@ -188,7 +188,7 @@
    "target": {
     "selector": "main button[role=combobox]:has-text('Português (Brasil)')"
    },
-   "at": 29.88,
+   "at": 24.79,
    "label": "abre o Idioma do Sistema"
   },
   {
@@ -211,7 +211,7 @@
     "name": "Português (Brasil)"
    },
    "seconds": 0.2,
-   "at": 32.03,
+   "at": 26.49,
    "label": "Português (Brasil)",
    "noScroll": true,
    "optional": true,
@@ -224,7 +224,7 @@
     "name": "English (USA)"
    },
    "seconds": 0.2,
-   "at": 33.02,
+   "at": 27.29,
    "label": "English (USA)",
    "noScroll": true,
    "optional": true,
@@ -237,7 +237,7 @@
     "name": "Español (América Latina)"
    },
    "seconds": 0.2,
-   "at": 33.68,
+   "at": 27.99,
    "label": "Español (América Latina)",
    "noScroll": true,
    "optional": true,
@@ -246,12 +246,12 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 34.68
+   "at": 28.69
   },
   {
    "do": "press",
    "key": "Escape",
-   "at": 35.28,
+   "at": 29.29,
    "label": "Esc fecha o idioma em Português (Brasil)"
   },
   {
@@ -270,7 +270,7 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 47.11
+   "at": 37.65
   },
   {
    "do": "hover",
@@ -278,8 +278,8 @@
     "text": "Moeda do Sistema",
     "exact": true
    },
-   "seconds": 2.0,
-   "at": 48.35,
+   "seconds": 1.39,
+   "at": 38.71,
    "label": "Moeda do Sistema (sem abrir)",
    "optional": true,
    "timeout": 3
@@ -287,7 +287,7 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 52.77
+   "at": 41.65
   },
   {
    "do": "hover",
@@ -296,7 +296,7 @@
     "exact": true
    },
    "seconds": 1.0,
-   "at": 53.1,
+   "at": 41.91,
    "label": "Agenda › Exibir Feriados (sem clicar)",
    "optional": true,
    "timeout": 3
@@ -309,7 +309,7 @@
     "exact": true
    },
    "seconds": 1.8,
-   "at": 57.58,
+   "at": 45.75,
    "label": "Guia de configuração › Reativar guia de configuração (sem clicar)",
    "optional": true,
    "timeout": 3
@@ -327,7 +327,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 67.26
+   "at": 52.8
   }
  ]
 }

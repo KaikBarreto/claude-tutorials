@@ -1,0 +1,42 @@
+{
+ "_doc": "T1 · só para a captura do papel real (rec/t01/t01_papel.py, cap10: peso líquido): o pedido #1757 vira 100 kg de ferro pesado com 5 kg de tara (líquido 95 kg), o exemplo da fala. Nunca entra na cadeia da gravação.",
+ "_patch": {
+  "purchase_items": [
+   {
+    "match": {
+     "id": "@id:pi.1757.0"
+    },
+    "set": {
+     "quantity": 100,
+     "unit_price": 0.95,
+     "total_price": 90.25,
+     "impurity": 5,
+     "impurity_kg": 5,
+     "impurity_pct": 5,
+     "tare_weight": 5
+    }
+   }
+  ],
+  "purchases": [
+   {
+    "match": {
+     "id": "@id:compra.1757"
+    },
+    "set": {
+     "total_amount": 90.25,
+     "paid_amount": 90.25
+    }
+   }
+  ],
+  "bank_transactions": [
+   {
+    "match": {
+     "id": "@id:bt.190"
+    },
+    "set": {
+     "amount": -90.25
+    }
+   }
+  ]
+ }
+}

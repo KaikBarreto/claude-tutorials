@@ -1,6 +1,6 @@
 {
  "name": "t01-cap13",
- "title": "T01 · Cap. 13 · Aparência e atalhos (narração 76,9 s ESTIMADA; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T01 · Cap. 13 · Aparência e atalhos (narração 63,5 s; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "seed": "t01-cap13",
  "pace": 0.5,
  "cps": 14,
@@ -96,14 +96,14 @@
   {
    "do": "mark",
    "name": "L1",
-   "at": 0.4
+   "at": 0
   },
   {
    "do": "click",
    "target": {
     "selector": "#tab-btn-appearance"
    },
-   "at": 0.43,
+   "at": 0.18,
    "label": "aba Aparência"
   },
   {
@@ -117,8 +117,8 @@
     "text": "Estilo de Navegação (Desktop)",
     "exact": true
    },
-   "seconds": 1.31,
-   "at": 1.7,
+   "seconds": 0.55,
+   "at": 1.2,
    "label": "Estilo de Navegação (Desktop): Menu Lateral marcado",
    "optional": true,
    "timeout": 3
@@ -126,7 +126,7 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 4.56
+   "at": 3.3
   },
   {
    "do": "click",
@@ -134,7 +134,7 @@
     "text": "Menu Superior",
     "exact": true
    },
-   "at": 6.33,
+   "at": 4.68,
    "label": "Menu Superior (o menu vai para o alto)"
   },
   {
@@ -148,7 +148,7 @@
     "text": "Menu Lateral",
     "exact": true
    },
-   "at": 13.57,
+   "at": 11.26,
    "label": "volta ao Menu Lateral"
   },
   {
@@ -159,7 +159,7 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 15.54
+   "at": 12.66
   },
   {
    "do": "hover",
@@ -167,8 +167,8 @@
     "text": "Escuro (recomendado)",
     "exact": true
    },
-   "seconds": 0.88,
-   "at": 17.74,
+   "seconds": 0.2,
+   "at": 14.48,
    "label": "Menu: Escuro (recomendado)",
    "optional": true,
    "timeout": 3
@@ -180,7 +180,7 @@
     "exact": true
    },
    "seconds": 0.2,
-   "at": 20.17,
+   "at": 16.18,
    "label": "Menu: Seguir o tema",
    "optional": true,
    "timeout": 3
@@ -188,12 +188,12 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 21.66
+   "at": 17.3
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].filter(e=>e.textContent.trim().startsWith(\"Tema do Sistema\")&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-200);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 21.66,
+   "at": 17.3,
    "label": "desce até o Tema do Sistema"
   },
   {
@@ -202,7 +202,7 @@
     "role": "button",
     "name": "Tema Escuro"
    },
-   "at": 24.19,
+   "at": 19.72,
    "label": "Tema Escuro"
   },
   {
@@ -211,18 +211,18 @@
     "role": "button",
     "name": "Tema Claro"
    },
-   "at": 26.46,
+   "at": 21.56,
    "label": "volta ao Tema Claro"
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 28.31
+   "at": 22.9
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const c=rolagem(document.querySelector('main h1'));if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,t0=performance.now();if(y0<3)return 'ok';await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0*(1-e),behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
-   "at": 28.61,
+   "at": 23.2,
    "label": "sobe às abas"
   },
   {
@@ -230,7 +230,7 @@
    "target": {
     "selector": "#tab-btn-shortcuts svg"
    },
-   "at": 29.52,
+   "at": 24.48,
    "label": "aba Atalhos",
    "noScroll": true
   },
@@ -246,7 +246,7 @@
     "exact": true
    },
    "seconds": 0.3,
-   "at": 30.58,
+   "at": 25.84,
    "label": "lista Navegação",
    "optional": true,
    "timeout": 3
@@ -257,7 +257,7 @@
     "selector": "main button:text-is('D')"
    },
    "seconds": 0.2,
-   "at": 33.62,
+   "at": 28.4,
    "label": "Dashboard: Shift + D",
    "optional": true,
    "timeout": 3
@@ -267,8 +267,8 @@
    "target": {
     "selector": "main button:text-is('C')"
    },
-   "seconds": 1.6,
-   "at": 35.06,
+   "seconds": 0.55,
+   "at": 29.92,
    "label": "clicando na letra, troca por outra (sem clicar)",
    "optional": true,
    "timeout": 3
@@ -276,7 +276,7 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 38.38
+   "at": 32.02
   },
   {
    "do": "hover",
@@ -285,7 +285,7 @@
     "exact": true
    },
    "seconds": 0.2,
-   "at": 41.81,
+   "at": 34.74,
    "label": "a chave Atalhos de Teclado, no alto da aba",
    "optional": true,
    "timeout": 3
@@ -296,7 +296,7 @@
     "selector": "main [role=switch]"
    },
    "seconds": 1.6,
-   "at": 42.27,
+   "at": 35.3,
    "label": "chave que liga e desliga todos os atalhos (sem clicar)",
    "optional": true,
    "timeout": 3
@@ -304,12 +304,12 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 52.24
+   "at": 42.82
   },
   {
    "do": "press",
    "key": "Control+k",
-   "at": 55.01,
+   "at": 45.62,
    "label": "Ctrl+K abre a busca"
   },
   {
@@ -326,7 +326,7 @@
     "exact": true
    },
    "seconds": 0.8,
-   "at": 60.89,
+   "at": 50.78,
    "label": "Ações Rápidas (sem digitar nada)",
    "optional": true,
    "timeout": 3
@@ -338,7 +338,7 @@
    },
    "text": "cobre",
    "cps": 12,
-   "at": 65.44,
+   "at": 54.58,
    "label": "digita cobre",
    "noClick": true
   },
@@ -353,8 +353,8 @@
     "text": "Cobre mel",
     "exact": true
    },
-   "seconds": 0.32,
-   "at": 67.04,
+   "seconds": 0.2,
+   "at": 55.92,
    "label": "Cobre mel, Cobre misto e Fio de cobre encapado",
    "optional": true,
    "timeout": 3
@@ -362,7 +362,7 @@
   {
    "do": "mark",
    "name": "L8",
-   "at": 68.91
+   "at": 57.04
   },
   {
    "do": "hover",
@@ -371,7 +371,7 @@
     "exact": true
    },
    "seconds": 1.6,
-   "at": 70.73,
+   "at": 58.62,
    "label": "Resultados da Busca",
    "optional": true,
    "timeout": 3
@@ -379,7 +379,7 @@
   {
    "do": "press",
    "key": "Escape",
-   "at": 74.8,
+   "at": 62.32,
    "label": "Esc fecha a busca"
   },
   {
@@ -390,7 +390,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 76.86
+   "at": 63.52
   }
  ]
 }
