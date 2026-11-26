@@ -1191,3 +1191,4 @@ Decisões:
 - 26/11 1x:xx **Voz T05 pronta** no flow (14 nós "T05 … (1.60.22)", todos completed). Falta o Kaik baixar os 14 MP3 e mandar. Fechamento da T13 despachado (Sonnet, prio 13; disco 2,5 GB, parar abaixo de 1 GB). Remendo T07 caps 17/18 segue.
 - 26/11 1x:xx **Remendo T07 entregue** (Sonnet): cap17 maxLate 0,36 (era 6,83), cap18 0,47 (era 7,83), 1 rodada cada; 9 respiros (0,8 a 3,2 s) + 4 acelerações com selo (2x a 4x); clique em "Cobre misto" na 1ª menção. Aula 1416,1 s, -16,3 LUFS, pico -3,8. Prévia 29,3 MiB. Final antigo em /dev/shm/t07_bak_r/final (apagar depois do ok do Kaik).
 - 26/11 1x:xx Fechamento da T14 despachado (Sonnet, prio 14), junto com a T13.
+- 26/11 17:1x **MP3 da T05 recebidos** (zip com o flow inteiro; usados os 14 "T05 … (1.60.22)"): `t05/narracao/recebido_1.60.22/` cap00 a cap12 + titulos, 12,3 min de voz. Fechamento da T05 entra quando a T13 ou a T14 liberar vaga.

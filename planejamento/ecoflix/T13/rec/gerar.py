@@ -1162,7 +1162,7 @@ def cap17():
     c.click(FILTROS, at=c.A(8, 'período', 0.7), label='Filtros (período de vencimento)')
     c.waitfor(target=ROT('Vencimento (período)'), timeout=8)
     c.click(SEL(f"{PAINEL} button:text-is('Este mês')"), at=c.A(8, 'Este', 0.6), label='atalho Este mês')
-    c.confere_campos(['01/11/2026', '30/11/2026'], 'De 01/11/2026 e Até 30/11/2026 (Este mês)')
+    # (confere dos campos De/Até removido na gravação final: o app não mostra as datas ali e a espera de ~3,7 s atrasava o resto do capítulo)
     c.hover(SEL(f"{PAINEL} button:text-is('Próximos 7 dias')"), 0.5, at=c.A(8, 'Próximos', 0.6), label='atalho Próximos 7 dias')
     c.hover(SEL(f"{PAINEL} button:text-is('Até o fim do mês')"), 0.8, at=c.A(8, 'Até', 0.6, nth=0), label='atalho Até o fim do mês')
     c.click(RODAPE('Aplicar'), at=c.L(9) - 0.9, label='Aplicar', noScroll=True)
