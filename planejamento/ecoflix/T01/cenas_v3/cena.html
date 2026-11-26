@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- T01 "Sua conta e sua empresa" · ilustrações no kit v3 (perfis/ecoflix/cenas_v3/LEIA.md), clima escuro (mundo dos dados: conta,
+     fluxo, regra do sistema). Só o que a gravação não mostra. Voz real 1.60.22 (cenas/tempos). Sem papel de comprovante: nenhum
+     PDF real do comprovante veio dos actions.json da T01, e papel desenhado seria inventar resultado.
+       cap05 · paraOndeVao   ilu05_para_onde_vao      "O logo, o nome e o CNPJ saem no comprovante do pátio. E o CNPJ, junto com o endereço, vai na nota da assinatura."
+       cap07 · numeracao     ilu07_reinicio_numeracao (linha 2) e ilu07_numeracao_separada (linha 10), duas estações no mesmo mundo
+       cap09 · conta         ilu09_arredondar (linha 11) e ilu09_impureza_tara (linhas 14 a 16)
+       cap11 · idioma        ilu11_idioma_usuario     "Essa escolha fica gravada no seu usuário..." (linha 4)
+       cap12 · parcelas      ilu12_parcelas           "Imagina que a Fundição Bandeira do Vale compra cobre e paga em três vezes..." (linha 1)
+     Ícones lucide usados: 'building-2' 'file-text' 'map-pin' 'receipt' 'calendar' 'arrow-right' 'rotate-ccw' 'list-ordered' 'shopping-cart'
+     'hand-coins' 'package' 'wallet' 'scale' 'minus' 'warehouse' 'toggle-right' 'toggle-left' 'user-round' 'monitor' 'smartphone' 'languages'
+     'factory' 'calendar-days' 'calendar-check'
+     Auditoria: auditar.cjs --aula planejamento/ecoflix/T01 --larg 1422 -->
+</head><body>
+<script type="module">
+import { pr, eo, W, ic, vis, foco, pulso, titulo, posTitulo, GL, camera, cena, clima, lugar, htmlChip, enquadraRet, uneRet }
+  from '../../../../perfis/ecoflix/cenas_v3/motor.js';
+import { mundoEscuro } from '../../../../perfis/ecoflix/cenas_v3/fundo.js';
+import { htmlFluxoCartoes, fluxoCartoes } from '../../../../perfis/ecoflix/cenas_v3/dados/fluxoCartoes.js';
+
+const EE = .0112;
+// o mundo escuro: planos no eixo (0,0,0); X = posição em px do desenho (y para baixo)
+function mundo() {
+  const EIXO = lugar([0, 0, 0]), E = mundoEscuro(EIXO, 0, EE), X = (html, x, y, o = {}) => E(html, x * EE, -y * EE, 0, o);
+  return { EIXO, E, X };
+}
+const NUNCA = 1e9;
+const cartaoP = (icone, rot, sub, cls, cw = 190) => htmlFluxoCartoes({ cartoes: [[icone, rot, sub, cls]], cw });
+const um = (p, t, T, b = NUNCA) => fluxoCartoes(p.e, t, T - .4, b, { tempos: [T - .1] });   // um cartão que entra na palavra T
+const fileira = (p, t, T0, tempos) => fluxoCartoes(p.e, t, T0 - .4, NUNCA, { tempos: tempos.map(x => x - .1) });
+const liga = (ps, on) => ps.forEach(p => { p.op = on ? 1 : 0; });
+
+// =====================================================================================================================
+// cap05, linha 7 · "O logo, o nome e o CNPJ saem no comprovante do pátio. E o CNPJ, junto com o endereço, vai na nota da assinatura."
+// Duas fileiras: de cima, logo, nome e CNPJ -> comprovante do pátio; de baixo, CNPJ e endereço -> nota da assinatura.
+function paraOndeVao() {
+  const t0 = W(7, 'o'), tlo = W(7, 'logo'), tco = W(7, 'comprovante'), tcn = W(7, 'cnpj', 2), tno = W(7, 'nota'), tfim = W(7, 'assinatura', 1, 'e');
+  const { EIXO, E, X } = mundo();
+  E.fundo(0, 0, { aneis: false });
+  const A = X(htmlFluxoCartoes({ cartoes: [['building-2', 'Logo, nome e CNPJ', '', 'n'], ['file-text', 'Comprovante do pátio', '', 'res']], cw: 330, vao: 90 }), 0, -62);
+  const B = X(htmlFluxoCartoes({ cartoes: [['map-pin', 'CNPJ e endereço', '', 'n'], ['receipt', 'Nota da assinatura', '', 'a']], cw: 330, vao: 90 }), 0, 62);
+  const tit = titulo('Empresa', 'Para onde vão os dados', 'escuro');
+  const S = enquadraRet(EIXO, uneRet(A.ret(), B.ret()), { az: -.02, max: 1.25 / EE });
+  camera([[t0 - 3, S], [tcn, { ...S, d: S.d * .985, az: .02 }, 'lin'], [tfim + 2.5, { ...S, d: S.d * .97, az: -.015 }, 'lin']]);
+  return t => {
+    clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, t0 - .45);
+    fileira(A, t, tlo, [tlo, tco]); fileira(B, t, tcn, [tcn, tno]);
+  };
+}
+
+// =====================================================================================================================
+// cap07 · duas estações no mesmo mundo; cada janela do ilustracoes.json mostra a sua.
+// linha 2: "Imagina que outubro terminou no pedido trinta. Seguindo direto, novembro começa no trinta e um. No Mensal, novembro recomeça do um."
+//   duas fileiras: Outubro (último pedido #30) -> Novembro segue direto (#31); Outubro -> Novembro no Mensal (recomeça do #1).
+// linha 10: "Hoje, compra e venda dividem uma fila só de números. Separando, as compras seguem uma fila, e as vendas, outra."
+//   em cima, a fila única; embaixo, as duas filas separadas.
+function numeracao() {
+  const a0 = W(2, 'imagina'), aou = W(2, 'outubro'), a30 = W(2, 'trinta'), asd = W(2, 'direto'), a31 = W(2, 'trinta', 2), ame = W(2, 'mensal'), arc = W(2, 'recomeca'), afim = W(2, 'recomeca', 1, 'e');
+  const b0 = W(10, 'hoje'), bco = W(10, 'compra'), bve = W(10, 'venda'), bse = W(10, 'separando'), bcs = W(10, 'compras'), bvs = W(10, 'vendas'), bfim = W(10, 'outra', 1, 'e');
+  const tCorte = W(4, 'no');
+  const { EIXO, E, X } = mundo();
+  E.fundo(0, 0, { aneis: false });
+  // estação A
+  const A1 = X(htmlFluxoCartoes({ cartoes: [['calendar', 'Outubro', 'último pedido: #30', 'n'], ['arrow-right', 'Novembro: segue direto', 'começa no #31', 'a']], cw: 330, vao: 90 }), 0, -66);
+  const A2 = X(htmlFluxoCartoes({ cartoes: [['calendar', 'Outubro', 'último pedido: #30', 'n'], ['rotate-ccw', 'Novembro: Mensal', 'recomeça do #1', 'res']], cw: 330, vao: 90 }), 0, 66);
+  const titA = titulo('Pedidos', 'Reinício da numeração', 'escuro');
+  const SA = enquadraRet(EIXO, uneRet(A1.ret(), A2.ret()), { az: -.02, max: 1.25 / EE });
+  // estação B
+  const B1 = X(cartaoP('list-ordered', 'Hoje: uma fila só', 'compra e venda dividem os números', 'n', 400), 0, -84);
+  const B2 = X(cartaoP('shopping-cart', 'Compras', 'uma fila', 'res', 300), -190, 84), B3 = X(cartaoP('hand-coins', 'Vendas', 'outra fila', 'a', 300), 190, 84);
+  const titB = titulo('Pedidos', 'Numeração separada', 'escuro');
+  const SB = enquadraRet(EIXO, uneRet(B1.ret(), B2.ret(), B3.ret()), { az: .02, max: 1.25 / EE });
+  camera([[a0 - 3, SA], [a31, { ...SA, d: SA.d * .985, az: .02 }, 'lin'], [afim + 2.5, { ...SA, d: SA.d * .97, az: -.015 }, 'lin'],
+    [tCorte, SA, 'lin'], [tCorte + .5, SB], [bfim + 2.5, { ...SB, d: SB.d * .985, az: -.02 }, 'lin']]);
+  return t => {
+    clima(1); GL.style.visibility = 'hidden';
+    const emA = t < tCorte; liga([A1, A2], emA); liga([B1, B2, B3], !emA);
+    posTitulo(titA, t, a0 - .9, a0 - .45, tCorte); posTitulo(titB, t, b0 - .9, b0 - .45);
+    fileira(A1, t, aou, [aou, asd]); fileira(A2, t, ame, [ame, arc]);
+    um(B1, t, b0); um(B2, t, bse); um(B3, t, bvs);
+  };
+}
+
+// =====================================================================================================================
+// cap09 · duas estações no mesmo mundo.
+// linha 11: Dona Cida, 37 kg de latinha = R$ 229,40; arredondando na compra ela recebe R$ 229,00 e R$ 0,40 ficam como saldo a pagar.
+// linhas 14 a 16: a chave Impureza e Tara decide só o valor pago; o estoque recebe sempre 190 kg.
+function conta() {
+  const a0 = W(11, 'por'), adc = W(11, 'cida'), ala = W(11, 'latinha'), a229 = W(11, 'duzentos'), aar = W(11, 'arredondamento'), are = W(11, 'recebe'), asa = W(11, 'saldo'), afim = W(11, 'ela', 2, 'e');
+  const b0 = W(14, 'uma'), bes = W(14, 'estoque'), bch = W(14, 'chave'), bva = W(14, 'valor'),
+    bvd = W(15, 'valdir'), bfe = W(15, 'ferro'), bte = W(15, 'terra'), bli = W(15, 'ligada'), b142 = W(15, 'cento', 2), bde = W(16, 'desligada'), b150 = W(16, 'cento'), bes2 = W(16, 'estoque'), bfim = W(16, 'ligada', 1, 'e');
+  const tCorte = W(12, 'logo');
+  const { EIXO, E, X } = mundo();
+  E.fundo(0, 0, { aneis: false });
+  // estação A: a Dona Cida
+  const A1 = X(htmlFluxoCartoes({ cartoes: [['package', 'Latinha: 37 kg', 'dão R$ 229,40', 'n'], ['wallet', 'Ela recebe', 'R$ 229,00', 'res']], cw: 330, vao: 120 }), 0, -66);
+  const A2 = X(cartaoP('hand-coins', 'Saldo a pagar', 'R$ 0,40 pra ela', 'a', 330), 225, 84);
+  const A3 = X(htmlChip(`${ic('minus', 18)}Arredondar na compra`, 'n'), 0, -150);
+  const titA = titulo('Usabilidade', 'Arredondar pagamentos', 'escuro');
+  const SA = enquadraRet(EIXO, uneRet(A1.ret(), A2.ret(), A3.ret()), { az: -.02, max: 1.25 / EE });
+  // estação B: o Valdir
+  const B0a = X(cartaoP('warehouse', 'Estoque', 'sempre desconta', 'res', 330), -200, 0), B0b = X(cartaoP('wallet', 'Valor pago', 'a chave decide', 'a', 330), 200, 0);
+  const R1 = X(htmlFluxoCartoes({ cartoes: [['scale', 'Ferro misto', '200 kg', 'n'], ['package', 'Impureza', '10 kg de terra', 'a'], ['warehouse', 'Estoque', 'recebe 190 kg', 'res']], cw: 250, vao: 64 }), 0, -92);
+  const R2 = X(cartaoP('toggle-right', 'Chave ligada', 'recebe por 190 kg: R$ 142,50', 'res', 400), -225, 66), R3 = X(cartaoP('toggle-left', 'Chave desligada', 'recebe por 200 kg: R$ 150,00', 'a', 400), 225, 66);
+  const titB = titulo('Usabilidade', 'Impureza e tara no valor', 'escuro');
+  const SB1 = enquadraRet(EIXO, uneRet(B0a.ret(), B0b.ret()), { az: .02, max: 1.25 / EE }), SB2 = enquadraRet(EIXO, uneRet(R1.ret(), R2.ret(), R3.ret()), { az: -.02, max: 1.25 / EE });
+  camera([[a0 - 3, SA], [aar, { ...SA, d: SA.d * .985, az: .02 }, 'lin'], [afim + 2.5, { ...SA, d: SA.d * .97, az: -.015 }, 'lin'],
+    [tCorte, SA, 'lin'], [tCorte + .5, SB1], [bvd - .5, { ...SB1, d: SB1.d * .985, az: -.02 }, 'lin'], [bvd + .5, SB2], [bfim + 2.5, { ...SB2, d: SB2.d * .985, az: .02 }, 'lin']]);
+  return t => {
+    clima(1); GL.style.visibility = 'hidden';
+    const emA = t < tCorte, emB1 = !emA && t < bvd - .1;
+    liga([A1, A2, A3], emA); liga([B0a, B0b], emB1); liga([R1, R2, R3], !emA && !emB1);
+    posTitulo(titA, t, a0 - .9, a0 - .45, tCorte); posTitulo(titB, t, b0 - .9, b0 - .45);
+    fileira(A1, t, ala, [ala, are]); vis(A3.e, t, aar - .1, NUNCA, { dy: 10 }); um(A2, t, asa);
+    um(B0a, t, bes); um(B0b, t, bva);
+    fileira(R1, t, bfe, [bfe, bte, bes2]); um(R2, t, bli); um(R3, t, bde);
+  };
+}
+
+// =====================================================================================================================
+// cap11, linha 4 · "Essa escolha fica gravada no seu usuário. Então ela vale em qualquer computador ou celular em que você entrar,
+// mesmo que o navegador esteja em outro idioma."
+// O idioma fica no usuário e vai com ele para o computador e para o celular, mesmo com o navegador em outro idioma.
+function idioma() {
+  const t0 = W(4, 'essa'), tus = W(4, 'usuario'), tcc = W(4, 'computador'), tce = W(4, 'celular'), tna = W(4, 'navegador'), tfim = W(4, 'idioma', 1, 'e');
+  const { EIXO, E, X } = mundo();
+  E.fundo(0, 0, { aneis: false });
+  const U = X(cartaoP('user-round', 'Rafael Nogueira', 'idioma: Português (Brasil)', 'res', 380), -250, -40);
+  const C = X(cartaoP('monitor', 'Computador', 'Português (Brasil)', 'n', 300), 195, -90), M = X(cartaoP('smartphone', 'Celular', 'Português (Brasil)', 'n', 300), 195, 40);
+  const N = X(htmlChip(`${ic('languages', 18)}mesmo com o navegador em outro idioma`, 'a'), 0, 150);
+  const tit = titulo('Usabilidade', 'Idioma do sistema', 'escuro');
+  const S = enquadraRet(EIXO, uneRet(U.ret(), C.ret(), M.ret(), N.ret()), { az: -.02, max: 1.25 / EE });
+  camera([[t0 - 3, S], [tcc, { ...S, d: S.d * .985, az: .02 }, 'lin'], [tfim + 2.5, { ...S, d: S.d * .97, az: -.015 }, 'lin']]);
+  return t => {
+    clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, t0 - .45);
+    um(U, t, tus); um(C, t, tcc); um(M, t, tce); vis(N.e, t, tna - .1, NUNCA, { dy: 10 });
+  };
+}
+
+// =====================================================================================================================
+// cap12, linha 1 · "Imagina que a Fundição Bandeira do Vale compra cobre e paga em três vezes: trinta, sessenta e noventa dias."
+// Uma fileira: a venda de cobre -> 30 dias -> 60 dias -> 90 dias.
+function parcelas() {
+  const t0 = W(1, 'imagina'), tfu = W(1, 'fundicao'), tco = W(1, 'cobre'), t3 = W(1, 'tres'), t30 = W(1, 'trinta'), t60 = W(1, 'sessenta'), t90 = W(1, 'noventa'), tfim = W(1, 'dias', 1, 'e');
+  const { EIXO, E, X } = mundo();
+  E.fundo(0, 0, { aneis: false });
+  const F0 = X(cartaoP('factory', 'Fundição Bandeira do Vale', 'compra cobre', 'n', 380), 0, -90);
+  const F = X(htmlFluxoCartoes({ cartoes: [['calendar-days', '30 dias', 'primeira parcela', 'res'], ['calendar-days', '60 dias', 'segunda parcela', 'res'], ['calendar-check', '90 dias', 'terceira parcela', 'res']], cw: 260, vao: 70 }), 0, 60);
+  const tit = titulo('Pagamento', 'Parcelas 30, 60 e 90 dias', 'escuro');
+  const S = enquadraRet(EIXO, uneRet(F0.ret(), F.ret()), { az: -.02, max: 1.25 / EE });
+  camera([[t0 - 3, S], [t30, { ...S, d: S.d * 1.02, az: .02 }, 'lin'], [tfim + 2.5, { ...S, d: S.d * 1.0, az: -.015 }, 'lin']]);
+  return t => {
+    clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, t0 - .45);
+    um(F0, t, tfu); fileira(F, t, t30, [t30, t60, t90]);
+  };
+}
+
+const CAPS = { 5: paraOndeVao, 7: numeracao, 9: conta, 11: idioma, 12: parcelas };
+cena(d => CAPS[d.cap](d), { fov: 26 });
+</script></body></html>

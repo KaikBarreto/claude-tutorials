@@ -41,3 +41,7 @@ Depois apagar MP4/jpg de ensaio: `/dev/shm/t01_rec` (disco apertado).
 - Completos feitos: cap14 (maxLate 0,60 s, 1 atraso >= 0,3) e cap10 (maxLate 0,28 s): dentro de 0,8 s.
 - Completos NÃO feitos (prazo): 03, 12, 09, 11, 13, 04. A gravação final com a voz confere esses.
 - Instância 54301 derrubada; `/dev/shm/t01_rec` apagado.
+
+## 26/11 · ilustrações v3 prontas; papel para o fechamento
+- 7 feitas, 7 tiradas (`cenas/ilustracoes.json`), auditoria 0, piscadas 0. Números das cenas conferidos na fala (Dona Cida 37 kg, R$ 229,40 → R$ 229,00 + R$ 0,40; 190 kg, R$ 142,50 × R$ 150,00; Fundição Bandeira do Vale 30/60/90).
+- **No fechamento, mostrar papel real onde a fala cita o comprovante** (hoje nenhum actions.json da T01 traz o PDF do comprovante; o do cap14 é outro): cap00 L0 e cap04 L"O logo, o nome e o CNPJ saem no comprovante" (dá para reusar papel real do mesmo mundo: T27 pedido #1758 com logo, T07 cupom #1760); cap08 L"O comprovante já sai com a cara da Recicla Vale" e cap10 (formato, peso líquido, assinaturas): capturar o PDF depois de salvar, no molde `T04/cenas_v3/pdf12.html` / T21 cap07. Nunca desenhar papel.
