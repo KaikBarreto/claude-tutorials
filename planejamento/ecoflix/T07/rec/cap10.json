@@ -1,6 +1,6 @@
 {
  "name": "t07-cap10",
- "title": "T07 · Cap. 10 · Rascunho: sair, descartar e recuperar (narração 77,6 s ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:35:00-03:00; usuário rafael)",
+ "title": "T07 · Cap. 10 · Rascunho: sair, descartar e recuperar (narração 67,0 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:35:00-03:00; usuário rafael)",
  "seed": "t07-cap10",
  "pace": 0.5,
  "cps": 14,
@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
@@ -779,8 +779,8 @@
    "target": {
     "selector": "div:has(> button[aria-label='Novo pedido de compra']) > button:not([aria-label])"
    },
-   "seconds": 1.0,
-   "at": 1.82,
+   "seconds": 0.4,
+   "at": 1.01,
    "label": "a barra com os dois pedidos (sob a ilustração)",
    "optional": true,
    "timeout": 4
@@ -788,7 +788,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const c=rolagem(document.querySelector(\"main\"+' *'));if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;if(y0<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/400),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0*(1-e);p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
-   "at": 6.86,
+   "at": 5.88,
    "label": "rola ao topo (sob a ilustração)"
   },
   {
@@ -796,7 +796,7 @@
    "target": {
     "selector": "main a:has-text('Voltar para o caixa')"
    },
-   "at": 7.37,
+   "at": 6.3,
    "label": "Voltar para o caixa (sob a ilustração)",
    "noScroll": true
   },
@@ -808,14 +808,14 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 10.63
+   "at": 8.9
   },
   {
    "do": "click",
    "target": {
     "selector": "main button:has-text('Pedidos Não Finalizados')"
    },
-   "at": 13.03,
+   "at": 11.02,
    "label": "Pedidos Não Finalizados 2 (zoom)"
   },
   {
@@ -825,8 +825,8 @@
     "within": "main",
     "exact": false
    },
-   "seconds": 1.6,
-   "at": 15.39,
+   "seconds": 0.64,
+   "at": 13.33,
    "label": "os cartões do Zé e do Depósito",
    "optional": true,
    "timeout": 4
@@ -839,20 +839,21 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const c=rolagem(document.querySelector(\"main\"+' *'));if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;if(y0<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/400),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0*(1-e);p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
-   "at": 16.55,
+   "at": 15.7,
    "label": "rola ao topo do caixa"
   },
   {
-   "do": "hover",
+   "do": "type",
    "target": {
     "role": "button",
     "name": "Fechar Caixa"
    },
-   "seconds": 1.6,
-   "at": 16.9,
-   "label": "Fechar Caixa travado",
+   "text": "",
+   "noClick": true,
    "optional": true,
-   "timeout": 4
+   "timeout": 4,
+   "at": 15.7,
+   "label": "Fechar Caixa travado"
   },
   {
    "do": "click",
@@ -861,7 +862,7 @@
     "name": "Nova Compra",
     "exact": true
    },
-   "at": 22.53,
+   "at": 21.13,
    "label": "Nova Compra (volta aos pedidos)"
   },
   {
@@ -882,14 +883,14 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 23.13
+   "at": 21.73
   },
   {
    "do": "click",
    "target": {
     "selector": "div:has(> button[aria-label='Novo pedido de compra']) > button:not([aria-label])"
    },
-   "at": 27.28,
+   "at": 24.63,
    "label": "barra de pedidos (abre a lista)"
   },
   {
@@ -897,8 +898,8 @@
    "target": {
     "selector": "div:has(> button:has-text('Depósito')) > button[aria-label='Descartar pedido']"
    },
-   "seconds": 0.8,
-   "at": 28.26,
+   "seconds": 0.32,
+   "at": 26.24,
    "label": "lixeira Descartar pedido (Depósito)",
    "optional": false,
    "timeout": 8
@@ -908,7 +909,7 @@
    "target": {
     "selector": "div:has(> button:has-text('Depósito')) > button[aria-label='Descartar pedido']"
    },
-   "at": 29.33,
+   "at": 27.21,
    "label": "Descartar pedido"
   },
   {
@@ -922,8 +923,8 @@
     "text": "Descartar este pedido?",
     "within": "[role=alertdialog]"
    },
-   "seconds": 2.0,
-   "at": 31.07,
+   "seconds": 0.8,
+   "at": 28.72,
    "label": "janela Descartar este pedido? (zoom)",
    "optional": true,
    "timeout": 4
@@ -934,11 +935,6 @@
    "label": "confere Descartar este pedido?"
   },
   {
-   "do": "mark",
-   "name": "L4",
-   "at": 34.11
-  },
-  {
    "do": "click",
    "target": {
     "role": "button",
@@ -946,7 +942,7 @@
     "exact": true,
     "within": "[role=alertdialog]"
    },
-   "at": 34.31,
+   "at": 30.39,
    "label": "Descartar"
   },
   {
@@ -957,9 +953,14 @@
    "timeout": 8
   },
   {
+   "do": "mark",
+   "name": "L4",
+   "at": 31.01
+  },
+  {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const c=rolagem(document.querySelector(\"main\"+' *'));if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;if(y0<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0*(1-e);p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
-   "at": 36.24,
+   "at": 33.57,
    "label": "rola ao topo (Rascunhos apagados)"
   },
   {
@@ -967,8 +968,8 @@
    "target": {
     "selector": "main button:has-text('Rascunhos apagados')"
    },
-   "seconds": 1.2,
-   "at": 37.88,
+   "seconds": 0.48,
+   "at": 34.96,
    "label": "Rascunhos apagados com 1 (zoom)",
    "optional": true,
    "timeout": 4
@@ -978,7 +979,7 @@
    "target": {
     "selector": "main button:has-text('Rascunhos apagados')"
    },
-   "at": 39.39,
+   "at": 36.41,
    "label": "Rascunhos apagados (abre)"
   },
   {
@@ -993,27 +994,9 @@
     "within": "[role=dialog]",
     "exact": false
    },
-   "seconds": 1.65,
-   "at": 42.58,
+   "seconds": 0.96,
+   "at": 38.8,
    "label": "Apagado ... por Rafael Nogueira",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L5",
-   "at": 44.78
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Apagado",
-    "within": "[role=dialog]",
-    "exact": false
-   },
-   "seconds": 0.55,
-   "at": 44.78,
-   "label": "Apagado ... por Rafael Nogueira (continua)",
    "optional": true,
    "timeout": 4
   },
@@ -1023,6 +1006,11 @@
    "label": "confere janela Rascunhos apagados"
   },
   {
+   "do": "mark",
+   "name": "L5",
+   "at": 40.85
+  },
+  {
    "do": "click",
    "target": {
     "role": "button",
@@ -1030,7 +1018,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 44.98,
+   "at": 41.05,
    "label": "Recuperar"
   },
   {
@@ -1060,8 +1048,8 @@
    "target": {
     "selector": "div:has(> button[aria-label='Novo pedido de compra']) > button:not([aria-label])"
    },
-   "seconds": 1.6,
-   "at": 46.57,
+   "seconds": 0.64,
+   "at": 42.56,
    "label": "o pedido do Depósito de volta na barra (2)",
    "optional": true,
    "timeout": 4
@@ -1072,24 +1060,24 @@
    "label": "confere rascunho recuperado como estava"
   },
   {
-   "do": "mark",
-   "name": "L6",
-   "at": 50.52
-  },
-  {
    "do": "click",
    "target": {
     "selector": "div:has(> button[aria-label='Novo pedido de compra']) > button:not([aria-label])"
    },
-   "at": 50.72,
+   "at": 44.48,
    "label": "barra de pedidos (abre a lista)"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 45.1
   },
   {
    "do": "click",
    "target": {
     "selector": "div:has(> button:has-text('Depósito')) > button[aria-label='Descartar pedido']"
    },
-   "at": 53.76,
+   "at": 46.72,
    "label": "Descartar pedido (de novo)"
   },
   {
@@ -1105,7 +1093,7 @@
     "exact": true,
     "within": "[role=alertdialog]"
    },
-   "at": 54.67,
+   "at": 47.44,
    "label": "Descartar"
   },
   {
@@ -1120,7 +1108,7 @@
    "target": {
     "selector": "main button:has-text('Rascunhos apagados')"
    },
-   "at": 56.41,
+   "at": 49.12,
    "label": "Rascunhos apagados"
   },
   {
@@ -1133,7 +1121,7 @@
    "target": {
     "selector": "[role=dialog] button[aria-label='Excluir definitivamente']"
    },
-   "at": 57.17,
+   "at": 50.74,
    "label": "lixeira Excluir definitivamente"
   },
   {
@@ -1169,12 +1157,12 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 59.83
+   "at": 52.94
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const c=rolagem(document.querySelector('main *'));if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+(140-y0)*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'rolado:'+Math.round(c.scrollTop)})()",
-   "at": 59.83,
+   "at": 52.94,
    "label": "rola o formulário (rodapé)"
   },
   {
@@ -1182,8 +1170,8 @@
    "target": {
     "selector": "main button:text-is('Cancelar')"
    },
-   "seconds": 3.0,
-   "at": 60.55,
+   "seconds": 1.2,
+   "at": 53.77,
    "label": "Cancelar do rodapé, sem clicar (zoom)",
    "optional": true,
    "timeout": 4
@@ -1198,8 +1186,8 @@
    "target": {
     "selector": "div:has(> button[aria-label='Novo pedido de compra']) > button:not([aria-label])"
    },
-   "seconds": 2.4,
-   "at": 68.6,
+   "seconds": 0.96,
+   "at": 60.49,
    "label": "a barra (aviso de colega: só na fala)",
    "optional": true,
    "timeout": 4
@@ -1212,7 +1200,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 77.57
+   "at": 67.04
   }
  ]
 }

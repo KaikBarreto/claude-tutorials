@@ -1,6 +1,6 @@
 {
  "name": "t07-cap16",
- "title": "T07 · Cap. 16 · A tela de venda (narração 100,9 s ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:35:00-03:00; usuário rafael)",
+ "title": "T07 · Cap. 16 · A tela de venda (narração 82,5 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:35:00-03:00; usuário rafael)",
  "seed": "t07-cap16",
  "pace": 0.5,
  "cps": 14,
@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
@@ -116,13 +116,13 @@
   {
    "do": "eval",
    "js": "(()=>{const a=document.activeElement;if(a&&a!==document.body)a.blur();return 'foco fora: '+(document.activeElement&&document.activeElement.tagName)})()",
-   "at": 1.77,
+   "at": 1.1,
    "label": "foco fora de campo"
   },
   {
    "do": "press",
    "key": "Shift+V",
-   "at": 2.02,
+   "at": 1.35,
    "label": "Shift+V (Nova Venda)"
   },
   {
@@ -140,13 +140,13 @@
    "target": {
     "selector": "#customer-desktop-top"
    },
-   "at": 6.15,
+   "at": 5.18,
    "label": "Selecionar cliente"
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 7.69
+   "at": 6.46
   },
   {
    "do": "type",
@@ -155,7 +155,7 @@
    },
    "text": "bandeira",
    "cps": 30,
-   "at": 7.69,
+   "at": 6.46,
    "label": "busca bandeira"
   },
   {
@@ -163,7 +163,7 @@
    "target": {
     "selector": "[role=dialog] button:has-text('Fundição Bandeira do Vale')"
    },
-   "at": 10.07,
+   "at": 8.14,
    "label": "Fundição Bandeira do Vale"
   },
   {
@@ -178,7 +178,7 @@
    "peso": 152,
    "subir": 0.6,
    "oscilar": 0.6,
-   "at": 12.75,
+   "at": 10.36,
    "label": "latão na balança (152 kg)"
   },
   {
@@ -186,7 +186,7 @@
    "target": {
     "placeholder": "Escreva o nome ou código do material"
    },
-   "at": 13.03,
+   "at": 10.4,
    "label": "Material"
   },
   {
@@ -206,7 +206,7 @@
     "name": "Metal amarelo (latão)",
     "exact": false
    },
-   "at": 15.92,
+   "at": 11.35,
    "label": "Metal amarelo (latão)"
   },
   {
@@ -221,7 +221,7 @@
     "name": "Incluir Item",
     "exact": true
    },
-   "at": 17.66,
+   "at": 16.39,
    "label": "Incluir Item (latão)"
   },
   {
@@ -232,15 +232,16 @@
    "label": "tira o latão da balança"
   },
   {
-   "do": "hover",
+   "do": "type",
    "target": {
     "selector": "main thead th:has-text('Lucro')"
    },
-   "seconds": 1.6,
-   "at": 18.57,
-   "label": "coluna Lucro R$ 668,80 e Lucro estimado (zoom)",
+   "text": "",
+   "noClick": true,
    "optional": true,
-   "timeout": 4
+   "timeout": 4,
+   "at": 18.55,
+   "label": "coluna Lucro R$ 668,80 e Lucro estimado (zoom)"
   },
   {
    "do": "hover",
@@ -249,8 +250,8 @@
     "within": "main",
     "exact": false
    },
-   "seconds": 1.6,
-   "at": 23.66,
+   "seconds": 0.64,
+   "at": 22.61,
    "label": "Lucro estimado R$ 668,80",
    "optional": true,
    "timeout": 4
@@ -263,15 +264,15 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 28.75
+   "at": 26.34
   },
   {
    "do": "hover",
    "target": {
     "selector": "main button:has(svg.lucide-eye), main button:has(svg.lucide-eye-off)"
    },
-   "seconds": 1.2,
-   "at": 38.66,
+   "seconds": 0.48,
+   "at": 34.29,
    "label": "o olho do lucro estimado",
    "optional": true,
    "timeout": 4
@@ -279,20 +280,20 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 43.52
+   "at": 37.38
   },
   {
    "do": "click",
    "target": {
     "selector": "main tbody tr:has-text('Metal amarelo') td:has(span[class*='max-w-[5rem]'][title]) input"
    },
-   "at": 46.07,
+   "at": 39.1,
    "label": "Valor/Kg na linha do latão"
   },
   {
    "do": "eval",
    "js": "(()=>{const tr=[...document.querySelectorAll('main tbody tr')].find(r=>r.innerText.includes(\"Metal amarelo\"));const sp=tr&&tr.querySelector(\"span[class*='max-w-[5rem]'][title]\");const el=sp&&sp.closest('td').querySelector('input');if(!el)return 'SEM ALVO';el.focus();el.select();document.execCommand('insertText',false,\"32,00\");return el.value})()",
-   "at": 51.02,
+   "at": 43.64,
    "label": "Valor/Kg 32,00"
   },
   {
@@ -301,8 +302,8 @@
     "selector": "main tbody tr:has-text('Metal amarelo') span[class*='max-w-[5rem]'][title]",
     "nth": 0
    },
-   "seconds": 1.6,
-   "at": 52.45,
+   "seconds": 0.64,
+   "at": 44.61,
    "label": "legenda Preço informado (zoom)",
    "optional": true,
    "timeout": 4
@@ -315,15 +316,15 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 57.23
+   "at": 48.26
   },
   {
    "do": "hover",
    "target": {
     "selector": "main thead th:has-text('Valor Total')"
    },
-   "seconds": 2.0,
-   "at": 57.96,
+   "seconds": 0.8,
+   "at": 49.09,
    "label": "Valor Total da linha: só reduz",
    "optional": true,
    "timeout": 4
@@ -333,7 +334,7 @@
    "target": {
     "selector": "main tbody tr:has-text('Metal amarelo') td:has(span[class*='max-w-[5rem]'][title]) input"
    },
-   "at": 63.28,
+   "at": 53.9,
    "label": "Valor/Kg de novo"
   },
   {
@@ -354,14 +355,14 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 74.97
+   "at": 62.26
   },
   {
    "do": "click",
    "target": {
     "placeholder": "Escreva o nome ou código do material"
    },
-   "at": 75.47,
+   "at": 62.78,
    "label": "Material"
   },
   {
@@ -372,7 +373,7 @@
    "text": "latão",
    "cps": 30,
    "noClick": true,
-   "at": 76.33,
+   "at": 63.6,
    "label": "material: latão de novo"
   },
   {
@@ -382,7 +383,7 @@
     "name": "Metal amarelo (latão)",
     "exact": false
    },
-   "at": 76.73,
+   "at": 64.0,
    "label": "Metal amarelo (latão), sem incluir"
   },
   {
@@ -390,8 +391,8 @@
    "target": {
     "selector": "main label:has-text('Estoque Disponível')"
    },
-   "seconds": 4.0,
-   "at": 80.56,
+   "seconds": 1.6,
+   "at": 66.96,
    "label": "Estoque Disponível 62, Em estoque 214, Nesta venda -152 (zoom)",
    "optional": true,
    "timeout": 4
@@ -404,7 +405,7 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 90.65
+   "at": 74.53
   },
   {
    "do": "click",
@@ -412,7 +413,7 @@
     "role": "button",
     "name": "Opções avançadas"
    },
-   "at": 95.26,
+   "at": 77.35,
    "label": "Opções avançadas"
   },
   {
@@ -425,13 +426,13 @@
    "target": {
     "selector": "[data-radix-popper-content-wrapper] div:has(p:text-is('Comprovante sem valores')) > button[role=switch]"
    },
-   "at": 97.0,
+   "at": 78.63,
    "label": "liga Comprovante sem valores"
   },
   {
    "do": "press",
    "key": "Escape",
-   "at": 99.95,
+   "at": 82.33,
    "label": "fecha o menu"
   },
   {
@@ -442,7 +443,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 100.88
+   "at": 82.48
   }
  ]
 }

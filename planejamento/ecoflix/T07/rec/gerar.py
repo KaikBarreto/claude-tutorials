@@ -109,6 +109,19 @@ def carregar_voz(n):
 
 
 # ---------------------------------------------------------------- capítulo
+# fator da parada do cursor (hover.seconds) por capítulo: 1.0 = a do ensaio. Ajustado na gravação final com a voz real (rec/t07/auto_pausas.py).
+DWELL = {3: 0.4, 5: 0.4, 7: 0.4, 10: 0.4, 13: 0.4, 15: 0.4, 16: 0.4, 17: 0.4, 6: 0.4, 18: 0.4}
+# passos (pelo rótulo) que partem antes da palavra, em segundos, quando a sequência que vem depois não cabe no tempo da fala (rec/t07/auto_pausas.py)
+ANTECIPA = {"1": {"selo do caixa Caixa #85 · Você (zoom)": 1.3}, "5": {"Substituir 12,4 pelo peso da balança? (zoom)": 1.3, "botão azul da balança dentro do campo (zoom)": 1.3}, "9": {"a linha do cobre misto: R$ 36,00 → R$ 37,44/kg (zoom)": 1.3, "Total dos itens: R$ 360,00 riscado e R$ 374,40": 1.3, "Total dos itens: R$ 360,00 riscado e R$ 374,40 (continua)": 1.3}, "12": {"Saldo atual: e Saldo após o pedido: (zoom)": 1.3}, "15": {"Visualizar": 1.3}, "3": {"Telefone": 0.9, "Telefone (12) 90000-4471": 0.9}, "7": {"material: latinha": 0.9, "Alumínio latinha": 0.9, "Tara/Imp.": 0.9, "Material": 0.9, "tara 0,4": 0.9, "Incluir Item (2ª latinha)": 0.9}, "10": {"Fechar Caixa travado": 1.3, "barra de pedidos (abre a lista)": 0.82, "Descartar pedido (de novo)": 0.82, "Descartar": 0.82, "Rascunhos apagados": 0.82}, "11": {"valor do Dinheiro": 0.81, "Dinheiro 920,00": 0.81}, "13": {"Selecionar fornecedor": 0.9, "busca vale forte": 0.9, "Incluir Item (bateria)": 0.9, "legenda Preço personalizado na linha da bateria (zoom)": 1.01, "Cobre misto": 0.9, "Incluir Item (cobre)": 0.9, "Saldo do Fornecedor": 0.9, "valor do Dinheiro": 0.9, "Dinheiro 200,00": 0.9, "Dinheiro (já vem marcado)": 1.07, "Pix/Transferência": 0.9}, "16": {"Metal amarelo (latão)": 0.87, "Incluir Item (latão)": 0.87, "Opções avançadas": 0.9, "liga Comprovante sem valores": 0.9}, "17": {"Faltam 18 Kg de Cobre mel. (zoom)": 0.85, "grupo Esta unidade": 0.9, "Cobre misto": 0.9}, "18": {"Selecionar fornecedor": 0.9, "busca cida": 0.9, "Aparecida Ramos": 0.9}}
+# hovers que viram `registra` (só o retângulo para a câmera, sem mover o cursor nem parar): quando a sequência atrasada não tem folga nem para a parada do cursor
+REGISTRA = {"5": ["botão azul da balança dentro do campo (zoom)", "Substituir 12,4 pelo peso da balança? (zoom)"], "9": ["a linha do cobre misto: R$ 36,00 → R$ 37,44/kg (zoom)", "Total dos itens: R$ 360,00 riscado e R$ 374,40"], "15": ["Visualizar"], "10": ["Fechar Caixa travado"], "11": ["Excesso: R$ 6,80 (zoom)"], "13": ["Total da Compra R$ 2.936,40 (zoom)"], "16": ["coluna Lucro R$ 668,80 e Lucro estimado (zoom)"], "17": ["grupo Esta unidade"]}
+
+
+def DWELL_F(n):
+    v = os.environ.get('T07_DW')
+    return float(v) if v else DWELL.get(n, 1.0)
+
+
 class Cap:
     def __init__(s, n, setup, prewarm=('/login',), pace=0.5, cps=CPS, start=(700, 300), sub='', user='rafael', erros_ok=(),
                  voz_de=None, seed_extra=None):
@@ -182,6 +195,7 @@ class Cap:
             for mt, mi in s.pending:
                 if d['at'] < mt <= d['at'] + lim:
                     d['at'] = round(mt, 2)
+            s.flush(d['at'])   # marcas já vencidas entram ANTES da marca antecipada pela digitação (cap05: L3 saía antes de L2)
             if d.get('do') == 'type':   # digitação que antecipa a linha: a marca entra antes dela, já no instante do passo
                 for mt, mi in list(s.pending):
                     if d['at'] < mt <= d['at'] + 2.6:
@@ -193,6 +207,10 @@ class Cap:
 
     def _p(s, d, w, gesto, label, kw):
         at = s.at(w, gesto)
+        ant = float(os.environ['T07_ANT_' + s.nome[3:5]]) if os.environ.get('T07_ANT_' + s.nome[3:5]) else 0.0
+        _tab = json.loads(os.environ['T07_ANT']) if os.environ.get('T07_ANT') else ANTECIPA.get(str(s.n), {})
+        if at is not None and label in _tab:
+            at = round(max(0.0, at - _tab[label]), 2)
         if at is not None:
             d['at'] = at
         if label:
@@ -204,6 +222,10 @@ class Cap:
         return s._p({'do': 'click', 'target': alvo}, w, 'click1' if primeiro else 'click', label, kw)
 
     def hover(s, alvo, seconds=0.6, w=None, label=None, **kw):
+        _reg = json.loads(os.environ['T07_REG']) if os.environ.get('T07_REG') else REGISTRA.get(str(s.n), [])
+        if label in _reg:
+            return s.registra(alvo, w, label)
+        seconds = round(max(0.3, seconds * DWELL_F(s.n)), 2) if seconds > 0.3 else seconds   # parada do cursor mais curta nos capítulos de gesto atrasado (final 1.60.22)
         kw.setdefault('optional', True)
         kw.setdefault('timeout', 4)
         at = s.at(w, 'hover')
@@ -882,7 +904,7 @@ def cap06():
     c.click(OPT('Ferro misto', exact=False), w=(4, 'misto'), label='Ferro misto')
     c.click(BTN('Pesagem avançada'), w=(4, 'Pesagem'), label='Pesagem avançada')
     c.waitfor(text='Registre pesagem dupla', timeout=10)
-    c.add({'do': 'balanca', 'peso': 412, 'subir': 0.6, 'oscilar': 0.6, 'at': c.at((5, 'Carroca', 0, 0.0), 'balanca'), 'label': 'carroça cheia na balança (412 kg)'})
+    c.add({'do': 'balanca', 'peso': 412, 'subir': 0.6, 'oscilar': 0.6, 'at': c.at((5, 'Carroca', 0, 1.6), 'balanca'), 'label': 'carroça cheia na balança (412 kg)'})
     c.click(CAP_PES('1ª Pesagem'), w=(5, 'primeira'), primeiro=True, label='balança da 1ª Pesagem (412)')
     c.add({'do': 'balanca', 'peso': 96, 'subir': 0.6, 'oscilar': 0.6, 'label': 'carroça vazia na balança (96 kg): logo depois da 1ª captura, para assentar até a 2ª'})
     c.click(CAP_PES('2ª Pesagem'), w=(5, 'segunda'), label='balança da 2ª Pesagem (96)')
@@ -1362,10 +1384,11 @@ def cap17():
 def cap18():
     """A internet cai: faixa e Modo Offline; Shift+C, Dona Cida com 14,6 kg de latinha em dinheiro: Compra salva localmente; Pendências no
     caixa; a internet volta e sincroniza; (ilustração L5)."""
+    # a internet cai no início do capítulo (a queda feita no setup não vale: a página filmada é outra); a faixa sobe em ~0,3 s
     c = Cap(18, setup_login() + vai('/caixa', 'Nova Venda') + vai('/compra', 'Voltar para o caixa') + setup_tela('/venda', 'Selecionar cliente')[len(setup_login()):])
     c.ev(JS_OFFLINE, w=(1, 'cair', None, 6.0), label='a internet cai (navigator.onLine e evento offline; dispara no início do capítulo porque a faixa pode levar até 8 s: um ping em andamento tem de estourar)')
     c.waitfor(text='Sem conexão', timeout=8)
-    c.hover({'text': 'Sem conexão', 'exact': False}, 1.6, w=(1, 'faixa'), label='faixa Sem conexão (zoom)')
+    c.hover({'text': 'Sem conexão', 'exact': False}, 1.6, w=(1, 'faixa'), noScroll=True, label='faixa Sem conexão (zoom)')   # faixa fixa no topo (y < 96): sem noScroll o robô gastava ~7,5 s tentando rolar até ela
     c.hover(P('Modo Offline', exact=False), 1.0, w=(1, 'trabalho'), label='Modo Offline')
     c.ev(JS_BLUR, w=(1, 'internet.', 1, 0.4), label='foco fora de campo')
     c.press('Shift+C', w=(1, 'internet.', 1, 0.2), label='Shift+C (Nova Compra)')

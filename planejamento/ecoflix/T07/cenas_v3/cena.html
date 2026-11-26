@@ -11,7 +11,7 @@
        cap15 · cupom      (claro)   ilu12_cupom     "O cupom"                 linha 2: o PAPEL REAL (58 mm) da compra #1760, com marca-texto em material, peso, preço, pagamento e fornecedor
        cap17 · semvalores (claro)   ilu17_sem_valores "Sem valores"          linha 6: o PAPEL REAL (80 mm) da venda #1761, só material e peso
      Os dois papéis vêm do robô ($TUT_HOME/t07/edit/out/comprovantes/cupom15-1.png e pdf17-1.png, pdftoppm -r 720 do PDF do actions.json); coordenadas
-     do marca-texto em pontos do PDF (cupom15: estimadas sobre a imagem, o PDF não traz texto; pdf17: pdftotext -bbox), 1,5 px por pt.
+     do marca-texto em pontos do PDF (cupom15: medidas sobre a imagem do PDF, que não traz texto; pdf17: pdftotext -bbox), 1,5 px por pt.
      Saíram do ilustracoes.json (ver o relatório): ilu02_nao_informado, ilu05_botao_cores, ilu10_rascunho, ilu11_parcelas, ilu13_lucro, ilu14_transferencia, ilu15_erro.
      Só textos e números da fala e da tela. Acabamento: node perfis/ecoflix/cenas_v3/auditar.cjs --aula planejamento/ecoflix/T07 --larg 1422
      Render de uma janela: node ferramentas/edit/cenas/render_cenas.cjs <cap> <capNN.json> saida.mp4 --html planejamento/ecoflix/T07/cenas_v3/cena.html \
@@ -141,7 +141,7 @@ function formas() {
 // 1 "E o peso líquido é o que sobra: o bruto, menos a tara, menos a impureza. É pelo líquido que o material entra no estoque."
 // 2 "E quando a sucata vem numa carroça ou num caminhão, tem a dupla pesagem. Pesa cheio, descarrega e pesa vazio. A diferença é a carga."
 // Estação 1: saco, tambor e caçamba (a tara). Estação 2: terra, borracha e plástico (a impureza). Estação 3: a conta em cartões (Bruto − Tara − Impureza = Líquido → Estoque).
-// Estação 4: a carroça cheia na balança (412 kg), descarregada e vazia (96 kg), e a carga (316 kg). Tudo no clima claro: é o pátio, sem passar pelos dados.
+// Estação 4: a carroça cheia na balança, descarregada e vazia, e a carga (a diferença), SEM números (412, 96 e 316 a fala só diz na linha 4, com a tela do app). Tudo no clima claro: é o pátio, sem passar pelos dados.
 function pesagem() {
   const R1 = 412, R2 = 96, BR = R1 - R2, TAT = -9, TAB = -6.2, TCX = -9.9;
   const t0 = W(0, 'antes'), tTa = W(0, 'tara'), tSa = W(0, 'saco'), tTm = W(0, 'tambor'), tCa = W(0, 'cacamba'), tIm = W(0, 'impureza'), tSu = W(0, 'sujeira'), tTe = W(0, 'terra'), tBo = W(0, 'borracha'), tPl = W(0, 'plastico'),
@@ -174,13 +174,13 @@ function pesagem() {
   const SB = 2.0, B = balancaPlataforma(CENA, [XB, 0, 0], { c: 1.2, l: 1.0 }); B.scale.setScalar(SB);
   const SUP = B.userData.sup * SB + .02, CAR = carroca(CENA, [XB - .15, SUP, .05], { carga: 'ferro', n: 24 });
   const lotesC = CAR.userData.lotes || [], descarga = monte(CENA, [XB + 3.4, 0, -1.0], { tipo: 'ferro', n: 36, r: .8, h: .5 });
-  const visor = plano(htmlVisor(['1ª Pesagem', '2ª Pesagem', 'Peso Bruto']), { pos: [XB, 2.55, -.4], rot: ROT, esc: .0046 }); ligaVisor(visor.e);
-  const FY = .95, EC4 = .0084, F4 = XB - .4, G = 3.4, d1 = plano(htmlCartao('scale', '1ª Pesagem', 'carroça cheia', kg(R1)), { pos: [F4 - G, FY, FZ + 1.4], rot: ROT, esc: EC4 }),
-    d2 = plano(htmlCartao('scale', '2ª Pesagem', 'carroça vazia', kg(R2)), { pos: [F4, FY, FZ + 1.4], rot: ROT, esc: EC4 }),
-    d3 = plano(htmlCartao('package-open', 'A carga', 'a diferença', kg(BR), { res: true }), { pos: [F4 + G, FY, FZ + 1.4], rot: ROT, esc: EC4 });
+  const visor = plano(htmlVisor(['1ª Pesagem', '2ª Pesagem', 'Peso Bruto']), { pos: [XB, 2.55, -.4], rot: ROT, esc: .0046 }); ligaVisor(visor.e); visor.e.vn.style.display = 'none';   // sem números: a fala diz 412, 96 e 316 só na linha 4, com a tela do app
+  const FY = .95, EC4 = .0084, F4 = XB - .4, G = 3.4, d1 = plano(htmlCartao('scale', '1ª Pesagem', 'carroça cheia', '', { h: 84 }), { pos: [F4 - G, FY, FZ + 1.4], rot: ROT, esc: EC4 }),
+    d2 = plano(htmlCartao('scale', '2ª Pesagem', 'carroça vazia', '', { h: 84 }), { pos: [F4, FY, FZ + 1.4], rot: ROT, esc: EC4 }),
+    d3 = plano(htmlCartao('package-open', 'A carga', 'a diferença', '', { res: true, h: 84 }), { pos: [F4 + G, FY, FZ + 1.4], rot: ROT, esc: EC4 });
   const dM = plano(htmlOp('−'), { pos: [F4 - G / 2, FY, FZ + 1.45], rot: ROT, esc: EC4 }), dI = plano(htmlOp('='), { pos: [F4 + G / 2, FY, FZ + 1.45], rot: ROT, esc: EC4 });
   const sD = [F4 - G, F4, F4 + G].map(x => mancha(3.0, 1.2, [x, 0, FZ + 1.3], { op: 0 }));
-  const n3 = d3.e.querySelector('.num'), on3 = d3.e.querySelector('.onda');
+  const on3 = d3.e.querySelector('.onda');
   const tit1 = titulo('Pesagem', 'Tara, impureza e líquido'), tit2 = titulo('Pesagem', 'Dupla pesagem');
   // ---------------------------------------------------------------- câmera: uma estação por conceito, a viagem entre elas é o movimento
   const P1 = { x: XT + .2, y: 2.0, z: 0, d: 10.8, az: .08, el: .18, oy: 6 }, P2 = { x: XI, y: 2.0, z: 0, d: 10.8, az: -.05, el: .18, oy: 6 },
@@ -206,11 +206,10 @@ function pesagem() {
     for (const p of [cB, cT, cI, cL, oM1, oM2, oIg, chE]) p.op = 1 - eo(pr(t, tCr - .9, .6));
     // estação 4: cheia (412), descarrega (os lotes saem e o monte aparece), vazia (96), a diferença
     visor.e.zera(); vis(visor.e, t, tCr - .2, NUNCA, { dy: 10 });
-    if (t < tVz - .1) pesa(visor.e, t, -9, .1, R1, R1); else if (t < tDf + .2) pesa(visor.e, t, tVz - .05, .95, R1, R2); else conta(visor.e.vn, t, tDf + .25, .6, R2, BR);
     visor.e.troca(t, tVz + .45, 1); visor.e.troca(t, tDf + .2, 2); pulso(visor.e, t, tVz + .9, .04, .7);
     const q = pr(t, tDe, .9); for (const l of lotesC) l.visible = q < .5; descarga.scale.setScalar(.2 + .8 * eo(q)); descarga.visible = q > .02;
     vis(d1.e, t, tCh - .1, NUNCA, { dy: 22 }); vis(dM.e, t, tVz - .15, NUNCA, { sc: .6, dy: 0 }); vis(d2.e, t, tVz + .12, NUNCA, { dy: 22 });
-    vis(dI.e, t, tDf - .1, NUNCA, { sc: .6, dy: 0 }); vis(d3.e, t, tDf + .1, NUNCA, { dy: 22, sc: .94 }); conta(n3, t, tDf + .2, .7, 0, BR); pulso(d3.e, t, tCg, .04, .8); ondaEm(on3, t, tCg);
+    vis(dI.e, t, tDf - .1, NUNCA, { sc: .6, dy: 0 }); vis(d3.e, t, tDf + .1, NUNCA, { dy: 22, sc: .94 }); pulso(d3.e, t, tCg, .04, .8); ondaEm(on3, t, tCg);
     [d1, d2, d3].forEach((c, i) => { sD[i].material.uniforms.uOp.value = .55 * (+c.e.style.opacity || 0); });
   };
 }
@@ -236,13 +235,13 @@ function papel(src, lpt, hpt, marcas) {
 const marca = (e, id, t, a) => { const m = (e._mk ??= {})[id] ??= e.querySelector(`[data-m="${id}"]`); m.style.transform = `scaleX(${eo(pr(t, a, .45)).toFixed(4)})`; };
 const palco = () => { piso({ r: 24, x: 0, z: -2, passo: 1.3 }); U.uNevoa.value.set(.955, .975, .965, .8); ceuClaro({ halo: [.2, 3.4, -12] }); };
 
-// cap15, linha 2 · "Pronto. O cupom sai com o material, o peso, o preço e como foi pago. Esse papel fica com o fornecedor."
+// cap15, da linha 0 ("E em Visualizar, o comprovante abre em PDF na tela": o papel real já está na tela quando a voz cita o PDF) até a linha 2 · "Pronto. O cupom sai com o material, o peso, o preço e como foi pago. Esse papel fica com o fornecedor."
 // O cupom de 58 mm sobe inteiro; a câmera desce aos itens (material), ao peso total, ao total (preço), ao bloco de pagamento e, no fim, volta ao fornecedor do topo.
 function cupom15(d) {
-  const t0 = W(2, 'pronto'), tCu = W(2, 'cupom'), tMa = W(2, 'material'), tPe = W(2, 'peso'), tPr = W(2, 'preco'), tCo = W(2, 'como'), tPg = W(2, 'pago'), tPp = W(2, 'papel'), tFo = W(2, 'fornecedor'), tFim = W(2, 'fornecedor', 1, 'e');
+  const t0 = W(0, 'visualizar'), tCu = W(2, 'cupom'), tMa = W(2, 'material'), tPe = W(2, 'peso'), tPr = W(2, 'preco'), tCo = W(2, 'como'), tPg = W(2, 'pago'), tPp = W(2, 'papel'), tFo = W(2, 'fornecedor'), tFim = W(2, 'fornecedor', 1, 'e');
   palco();
   const P = papel(`${d.anexo}/cupom15-1.png`, 164.409, 397.135, {
-    forn: [11, 114.6, 154, 124], it1: [8, 206, 149, 226], it2: [8, 235.5, 149, 254.5], pes: [5.5, 265, 75, 275], tot: [0, 277, 164.4, 301.5, 'n'], pag: [30, 312, 135, 360.5] });
+    forn: [11, 114.6, 154, 124], it1: [8, 206, 153, 226], it2: [8, 235.5, 153, 254.5], pes: [5.5, 265, 75, 275], tot: [5.5, 275.8, 159, 301.5, 'n'], pag: [28, 311, 137, 361] });   // conferido sobre o PNG real (overlay 720 dpi): it2 passava do 'R$ 2.304,00'; tot agora na faixa preta
   const pp = plano(P.html, { pos: [0, YC, 0], esc: E, sangra: true }), sp = mancha(5.2, 1.6, [0, 0, .1], { op: 0 });
   const tit = titulo('Comprovante', 'O cupom');
   const o = { topo: 60, margem: 50, max: LEITURA, el: .015 };

@@ -1,6 +1,6 @@
 {
  "name": "t07-cap03",
- "title": "T07 · Cap. 3 · Cadastrar o fornecedor na hora (narração 42,7 s ESTIMADA; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:35:00-03:00; usuário rafael)",
+ "title": "T07 · Cap. 3 · Cadastrar o fornecedor na hora (narração 36,3 s; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:35:00-03:00; usuário rafael)",
  "seed": "t07-cap03",
  "pace": 0.5,
  "cps": 14,
@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
@@ -150,8 +150,8 @@
    "target": {
     "selector": "[role=dialog] button:has-text('Cadastrar «')"
    },
-   "seconds": 0.5,
-   "at": 2.66,
+   "seconds": 0.3,
+   "at": 1.81,
    "label": "Cadastrar «Moreira»",
    "optional": true,
    "timeout": 4
@@ -161,8 +161,8 @@
    "target": {
     "selector": "[role=dialog] button[aria-label='Cadastrar novo']"
    },
-   "seconds": 0.5,
-   "at": 4.1,
+   "seconds": 0.3,
+   "at": 3.01,
    "label": "o + lá de cima (Cadastrar novo)",
    "optional": true,
    "timeout": 4
@@ -172,13 +172,18 @@
    "target": {
     "selector": "[role=dialog] button:has-text('Cadastrar «')"
    },
-   "at": 5.24,
+   "at": 4.14,
    "label": "Cadastrar «Moreira» (abre o cadastro)"
   },
   {
    "do": "waitFor",
    "text": "Novo Fornecedor",
    "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 5.75
   },
   {
    "do": "type",
@@ -191,26 +196,21 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 6.88,
+   "at": 5.75,
    "label": "Novo Fornecedor, Dados de Contato"
-  },
-  {
-   "do": "mark",
-   "name": "L2",
-   "at": 9.8
   },
   {
    "do": "click",
    "target": {
     "selector": "#name"
    },
-   "at": 10.0,
+   "at": 7.78,
    "label": "Nome"
   },
   {
    "do": "eval",
    "js": "(()=>{const el=document.querySelector(\"#name\");if(!el)return 'SEM ALVO';el.focus();if(el.select)el.select();document.execCommand('insertText',false,\"José Carlos Moreira\");return el.value})()",
-   "at": 13.58,
+   "at": 11.08,
    "label": "Nome: José Carlos Moreira"
   },
   {
@@ -218,13 +218,13 @@
    "target": {
     "selector": "#contact_name"
    },
-   "at": 14.7,
+   "at": 12.38,
    "label": "Pessoa de Contato ou Apelido"
   },
   {
    "do": "eval",
    "js": "(()=>{const el=document.querySelector(\"#contact_name\");if(!el)return 'SEM ALVO';el.focus();if(el.select)el.select();document.execCommand('insertText',false,\"Zé Moreira\");return el.value})()",
-   "at": 16.24,
+   "at": 13.72,
    "label": "apelido: Zé Moreira"
   },
   {
@@ -232,13 +232,13 @@
    "target": {
     "selector": "#phone"
    },
-   "at": 19.18,
+   "at": 15.0,
    "label": "Telefone"
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 20.09
+   "at": 15.9
   },
   {
    "do": "type",
@@ -248,7 +248,7 @@
    "text": "12900004471",
    "cps": 40,
    "noClick": true,
-   "at": 20.09,
+   "at": 15.9,
    "label": "Telefone (12) 90000-4471"
   },
   {
@@ -256,13 +256,13 @@
    "target": {
     "selector": "#pix_key"
    },
-   "at": 20.44,
+   "at": 16.78,
    "label": "Chave PIX"
   },
   {
    "do": "eval",
    "js": "(()=>{const el=document.querySelector(\"#pix_key\");if(!el)return 'SEM ALVO';el.focus();if(el.select)el.select();document.execCommand('insertText',false,\"(12) 90000-4471\");return el.value})()",
-   "at": 22.58,
+   "at": 18.92,
    "label": "Chave PIX (12) 90000-4471"
   },
   {
@@ -270,8 +270,8 @@
    "target": {
     "selector": "[role=dialog] div:has(> label:has-text('Tabela de Preços Padrão')) button"
    },
-   "seconds": 0.6,
-   "at": 25.07,
+   "seconds": 0.3,
+   "at": 20.73,
    "label": "Tabela de Preços Padrão",
    "optional": true,
    "timeout": 4
@@ -279,24 +279,24 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.offsetParent!==null&&e.textContent.trim().startsWith(\"Também é\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-420);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 27.73,
+   "at": 22.88,
    "label": "rola a janela até Também é cliente"
-  },
-  {
-   "do": "mark",
-   "name": "L4",
-   "at": 30.01
   },
   {
    "do": "hover",
    "target": {
     "selector": "[role=dialog] label[for=also-counterpart]"
    },
-   "seconds": 0.6,
-   "at": 30.01,
+   "seconds": 0.3,
+   "at": 24.09,
    "label": "Também é cliente (desmarcado)",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 25.54
   },
   {
    "do": "click",
@@ -306,7 +306,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 30.21,
+   "at": 25.74,
    "label": "Salvar"
   },
   {
@@ -319,8 +319,8 @@
    "target": {
     "selector": "#supplier-desktop-top"
    },
-   "seconds": 1.2,
-   "at": 32.64,
+   "seconds": 0.48,
+   "at": 28.53,
    "label": "fornecedor José Carlos Moreira já escolhido",
    "optional": true,
    "timeout": 4
@@ -338,7 +338,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 42.74
+   "at": 36.28
   }
  ]
 }

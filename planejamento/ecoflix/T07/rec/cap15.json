@@ -1,6 +1,6 @@
 {
  "name": "t07-cap15",
- "title": "T07 · Cap. 15 · O cupom e o cupom sem valor (narração 95,6 s ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:35:00-03:00; usuário rafael)",
+ "title": "T07 · Cap. 15 · O cupom e o cupom sem valor (narração 77,7 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:35:00-03:00; usuário rafael)",
  "seed": "t07-cap15",
  "pace": 0.5,
  "cps": 14,
@@ -432,30 +432,31 @@
     "role": "button",
     "name": "Imprimir direto"
    },
-   "seconds": 1.2,
-   "at": 4.03,
+   "seconds": 0.48,
+   "at": 2.85,
    "label": "Imprimir direto",
    "optional": true,
    "timeout": 4
   },
   {
-   "do": "hover",
+   "do": "type",
    "target": {
     "role": "button",
     "name": "Visualizar",
     "exact": true,
     "within": "[role=dialog]"
    },
-   "seconds": 1.2,
-   "at": 9.11,
-   "label": "Visualizar",
+   "text": "",
+   "noClick": true,
    "optional": true,
-   "timeout": 4
+   "timeout": 4,
+   "at": 6.05,
+   "label": "Visualizar"
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 19.59
+   "at": 16.88
   },
   {
    "do": "click",
@@ -463,7 +464,7 @@
     "role": "button",
     "name": "Imprimir direto"
    },
-   "at": 19.79,
+   "at": 17.08,
    "label": "Imprimir direto"
   },
   {
@@ -479,18 +480,18 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 21.23
+   "at": 19.24
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const c=rolagem(document.querySelector('main *'));if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+(140-y0)*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'rolado:'+Math.round(c.scrollTop)})()",
-   "at": 22.13,
+   "at": 20.14,
    "label": "rola o formulário (sob a ilustração do cupom)"
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 29.7
+   "at": 26.69
   },
   {
    "do": "click",
@@ -498,7 +499,7 @@
     "role": "button",
     "name": "Opções avançadas"
    },
-   "at": 34.15,
+   "at": 29.85,
    "label": "Opções avançadas"
   },
   {
@@ -511,8 +512,8 @@
    "target": {
     "selector": "[data-radix-popper-content-wrapper] div:has(> div > p:text-is('Comprovante sem valores'))"
    },
-   "seconds": 1.2,
-   "at": 35.14,
+   "seconds": 0.48,
+   "at": 30.88,
    "label": "Comprovante sem valores (zoom)",
    "optional": true,
    "timeout": 4
@@ -523,8 +524,8 @@
     "role": "button",
     "name": "Opções avançadas"
    },
-   "seconds": 0.6,
-   "at": 37.79,
+   "seconds": 0.3,
+   "at": 33.04,
    "label": "botão Opções avançadas, do lado do Finalizar",
    "optional": true,
    "timeout": 4
@@ -532,15 +533,15 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 40.98
+   "at": 35.41
   },
   {
    "do": "hover",
    "target": {
     "selector": "button[aria-label='Sobre comprovante sem valores']"
    },
-   "seconds": 6.0,
-   "at": 41.48,
+   "seconds": 2.4,
+   "at": 35.92,
    "label": "balão: o pedido é salvo normalmente (zoom)",
    "optional": true,
    "timeout": 4
@@ -550,8 +551,8 @@
    "target": {
     "selector": "[data-radix-popper-content-wrapper] div:has(> div > p:text-is('Comprovante sem valores'))"
    },
-   "seconds": 4.0,
-   "at": 48.24,
+   "seconds": 1.6,
+   "at": 41.52,
    "label": "Comprovante sem valores (desligado)",
    "optional": true,
    "timeout": 4
@@ -559,15 +560,15 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 58.95
+   "at": 50.05
   },
   {
    "do": "hover",
    "target": {
     "selector": "[data-radix-popper-content-wrapper] :text('Data e hora do pedido')"
    },
-   "seconds": 4.0,
-   "at": 60.89,
+   "seconds": 1.6,
+   "at": 51.76,
    "label": "Data e hora do pedido (zoom)",
    "optional": true,
    "timeout": 4
@@ -580,15 +581,15 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 78.13
+   "at": 64.37
   },
   {
    "do": "hover",
    "target": {
     "selector": "[data-radix-popper-content-wrapper] button:has-text('Anexar')"
    },
-   "seconds": 2.4,
-   "at": 79.92,
+   "seconds": 0.96,
+   "at": 65.68,
    "label": "fotos: Anexar",
    "optional": true,
    "timeout": 4
@@ -596,13 +597,13 @@
   {
    "do": "press",
    "key": "Escape",
-   "at": 87.38,
+   "at": 71.44,
    "label": "fecha o menu sem ligar nada"
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.offsetParent!==null&&e.textContent.trim().startsWith(\"Observação\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-420);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 88.5,
+   "at": 72.38,
    "label": "rola até a Observação"
   },
   {
@@ -610,8 +611,8 @@
    "target": {
     "selector": "main textarea"
    },
-   "seconds": 2.0,
-   "at": 91.38,
+   "seconds": 0.8,
+   "at": 74.55,
    "label": "campo Observação",
    "optional": true,
    "timeout": 4
@@ -624,7 +625,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 95.64
+   "at": 77.7
   }
  ]
 }

@@ -1,6 +1,6 @@
 {
  "name": "t07-cap08",
- "title": "T07 · Cap. 8 · Desconto e conferência (narração 84,1 s ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:35:00-03:00; usuário rafael)",
+ "title": "T07 · Cap. 8 · Desconto e conferência (narração 69,0 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:35:00-03:00; usuário rafael)",
  "seed": "t07-cap08",
  "pace": 0.5,
  "cps": 14,
@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
@@ -542,7 +542,7 @@
    "target": {
     "selector": "main tbody tr:has-text('Ferro misto') button[aria-label='Ações do item']"
    },
-   "at": 7.52,
+   "at": 6.06,
    "label": "Ações do item (ferro)"
   },
   {
@@ -551,7 +551,7 @@
     "role": "menuitem",
     "name": "Adicionar tara / pesagem avançada"
    },
-   "at": 8.96,
+   "at": 7.1,
    "label": "Adicionar tara / pesagem avançada"
   },
   {
@@ -565,22 +565,22 @@
    "label": "confere abre com 412, 96 e 316"
   },
   {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.offsetParent!==null&&e.textContent.trim()===\"Valor final\").sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-330);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 13.64,
-   "label": "rola a janela até o valor"
-  },
-  {
    "do": "mark",
    "name": "L2",
-   "at": 13.9
+   "at": 10.98
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.offsetParent!==null&&e.textContent.trim()===\"Valor final\").sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-330);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 10.98,
+   "label": "rola a janela até o valor"
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] div:has(> label:text-is('Valor final')) input"
    },
-   "at": 16.91,
+   "at": 12.9,
    "label": "Valor final"
   },
   {
@@ -591,7 +591,7 @@
    "text": "225,00",
    "cps": 5,
    "noClick": true,
-   "at": 18.84,
+   "at": 15.03,
    "label": "Valor final 225,00 (devagar)",
    "clear": true
   },
@@ -601,7 +601,7 @@
     "selector": "[role=dialog] div:has(> label:text-is('Desconto (R$)')) input"
    },
    "seconds": 1.6,
-   "at": 22.29,
+   "at": 17.73,
    "label": "Desconto (R$) 4,89 e Valor final (zoom)",
    "optional": true,
    "timeout": 4
@@ -614,7 +614,7 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 27.0
+   "at": 21.54
   },
   {
    "do": "hover",
@@ -622,7 +622,7 @@
     "selector": "[role=dialog] div:has(> label:text-is('Valor final')) input"
    },
    "seconds": 3.0,
-   "at": 27.65,
+   "at": 22.29,
    "label": "os dois campos (dica do ponto)",
    "optional": true,
    "timeout": 4
@@ -630,7 +630,7 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 41.85
+   "at": 34.93
   },
   {
    "do": "click",
@@ -640,7 +640,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 42.05,
+   "at": 35.13,
    "label": "Confirmar"
   },
   {
@@ -655,7 +655,7 @@
     "nth": 0
    },
    "seconds": 0.8,
-   "at": 43.19,
+   "at": 36.48,
    "label": "ferro R$ 225,00",
    "optional": true,
    "timeout": 4
@@ -667,7 +667,7 @@
     "within": "main"
    },
    "seconds": 1.6,
-   "at": 46.83,
+   "at": 39.12,
    "label": "Total da Compra R$ 913,20 (zoom)",
    "optional": true,
    "timeout": 4
@@ -685,14 +685,14 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 51.08
+   "at": 42.61
   },
   {
    "do": "click",
    "target": {
     "selector": "main tbody tr:has-text('Ferro misto') button[aria-label='Ver detalhes da pesagem']"
    },
-   "at": 51.28,
+   "at": 42.81,
    "label": "seta da linha do ferro (abre o detalhe)"
   },
   {
@@ -708,7 +708,7 @@
     "selector": "main tbody tr:has-text('Ferro misto') + tr"
    },
    "seconds": 3.0,
-   "at": 55.45,
+   "at": 46.11,
    "label": "detalhe da pesagem (zoom)",
    "optional": true,
    "timeout": 4
@@ -721,7 +721,7 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 62.89
+   "at": 52.48
   },
   {
    "do": "hover",
@@ -729,7 +729,7 @@
     "selector": "main button[aria-label='Editar valor total']"
    },
    "seconds": 2.0,
-   "at": 67.19,
+   "at": 55.63,
    "label": "lápis Editar valor total (zoom)",
    "optional": true,
    "timeout": 4
@@ -742,7 +742,7 @@
     "exact": false
    },
    "seconds": 2.0,
-   "at": 80.56,
+   "at": 66.75,
    "label": "Projeção de Lucro da compra",
    "optional": true,
    "timeout": 4
@@ -760,7 +760,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 84.06
+   "at": 69.04
   }
  ]
 }
