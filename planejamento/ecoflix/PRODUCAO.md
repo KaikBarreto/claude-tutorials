@@ -1193,3 +1193,4 @@ Decisões:
 - 26/11 1x:xx Fechamento da T14 despachado (Sonnet, prio 14), junto com a T13.
 - 26/11 17:1x **MP3 da T05 recebidos** (zip com o flow inteiro; usados os 14 "T05 … (1.60.22)"): `t05/narracao/recebido_1.60.22/` cap00 a cap12 + titulos, 12,3 min de voz. Fechamento da T05 entra quando a T13 ou a T14 liberar vaga.
 - 26/11 2x:xx **T14 fechada** (Sonnet): 21:19 (1279,2 s), -16,3 LUFS, pico -3,8; maxLate ≤ 0,72 exceto cap05 1,06 (lentidão do app em "Centro de custo", sem silêncio para respiro; pendente se o Kaik pedir). Respiros em 8 caps, acelera em 6. Diálogo Exportar Extrato (PDF/Excel) na tela; PDF aberto não aparece (abre em outra aba). 0 piscadas. Prévia 28,6 MiB. Disco / 1,2 GB.
+- 26/11 2x:xx Fechamento da T05 despachado (Sonnet, prio 05; grava em /dev/shm/t05_rec; parar se / < 0,8 GB ou /dev/shm < 1,2 GB). T13 segue (estava parada numa permissão).
