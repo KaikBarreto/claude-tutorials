@@ -1,6 +1,6 @@
 {
  "name": "t13-cap19",
- "title": "T13 · Cap. 19 · Recapitulando (narração ESTIMADA 67,4 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T13 · Cap. 19 · Recapitulando (narração 52,2 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t13-cap19",
  "pace": 0.5,
  "cps": 40,
@@ -104,15 +104,15 @@
   {
    "do": "mark",
    "name": "L1",
-   "at": 0.4
+   "at": 0
   },
   {
    "do": "hover",
    "target": {
     "selector": "main button:text-is('Todas')"
    },
-   "seconds": 0.4,
-   "at": 3.22,
+   "seconds": 0.25,
+   "at": 2.24,
    "label": "as abas",
    "optional": true,
    "timeout": 4
@@ -125,7 +125,7 @@
     "within": "main"
    },
    "seconds": 0.15,
-   "at": 4.58,
+   "at": 3.44,
    "label": "os quatro cartões",
    "optional": true,
    "timeout": 4
@@ -137,7 +137,7 @@
     "name": "Visão em calendário"
    },
    "seconds": 0.15,
-   "at": 5.49,
+   "at": 4.24,
    "label": "o calendário",
    "optional": true,
    "timeout": 4
@@ -145,12 +145,12 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 6.45
+   "at": 4.9
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"main thead\")].filter(e=>e.offsetParent)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-110);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 6.85,
+   "at": 5.3,
    "label": "desce a tela até a lista"
   },
   {
@@ -159,7 +159,7 @@
     "selector": "main tbody tr:has-text('Manutenção da prensa enfardadeira') :text-is('Manutenção da prensa enfardadeira')"
    },
    "seconds": 1.0,
-   "at": 7.44,
+   "at": 5.76,
    "label": "a manutenção da prensa",
    "optional": true,
    "timeout": 4
@@ -167,7 +167,7 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 19.33
+   "at": 14.42
   },
   {
    "do": "hover",
@@ -175,7 +175,7 @@
     "selector": "main tbody tr:has-text('Aluguel da empilhadeira') :text-is('Aluguel da empilhadeira')"
    },
    "seconds": 1.0,
-   "at": 20.32,
+   "at": 15.2,
    "label": "o aluguel da empilhadeira",
    "optional": true,
    "timeout": 4
@@ -183,7 +183,7 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 30.24
+   "at": 22.88
   },
   {
    "do": "hover",
@@ -191,7 +191,7 @@
     "selector": "main tbody tr:has-text('Manutenção da prensa enfardadeira') :text-is('Parcial')"
    },
    "seconds": 1.0,
-   "at": 33.12,
+   "at": 25.42,
    "label": "a prensa Parcial",
    "optional": true,
    "timeout": 4
@@ -199,14 +199,14 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 44.41
+   "at": 33.84
   },
   {
    "do": "click",
    "target": {
     "selector": "main button:text-is('A Receber')"
    },
-   "at": 44.71,
+   "at": 34.14,
    "label": "aba A Receber"
   },
   {
@@ -215,7 +215,7 @@
     "selector": "main tbody tr:has-text('Aços Quiririm Ltda') :text-is('R$ 2.870,00')"
    },
    "seconds": 1.0,
-   "at": 46.68,
+   "at": 35.58,
    "label": "o saldo da Aços Quiririm",
    "optional": true,
    "timeout": 4
@@ -223,15 +223,15 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 55.92
+   "at": 43.28
   },
   {
    "do": "hover",
    "target": {
     "selector": "main button:has-text('Filtros')"
    },
-   "seconds": 0.39,
-   "at": 58.12,
+   "seconds": 0.15,
+   "at": 45.26,
    "label": "Filtros",
    "optional": true,
    "timeout": 4
@@ -239,7 +239,7 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 59.46
+   "at": 46.1
   },
   {
    "do": "eval",
@@ -249,7 +249,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 67.41
+   "at": 52.16
   }
  ]
 }

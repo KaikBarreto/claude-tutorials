@@ -1,6 +1,6 @@
 {
  "name": "t13-cap03",
- "title": "T13 · Cap. 3 · Lista e calendário (narração ESTIMADA 46,3 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T13 · Cap. 3 · Lista e calendário (narração 36,2 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t13-cap03",
  "pace": 0.5,
  "cps": 40,
@@ -103,7 +103,7 @@
   {
    "do": "mark",
    "name": "L1",
-   "at": 0.4
+   "at": 0
   },
   {
    "do": "hover",
@@ -111,8 +111,8 @@
     "role": "radio",
     "name": "Visão em lista"
    },
-   "seconds": 0.8,
-   "at": 4.43,
+   "seconds": 0.57,
+   "at": 3.36,
    "label": "Lista (marcado)",
    "optional": true,
    "timeout": 4
@@ -124,7 +124,7 @@
     "name": "Visão em calendário"
    },
    "seconds": 0.15,
-   "at": 6.41,
+   "at": 4.88,
    "label": "Calendário",
    "optional": true,
    "timeout": 4
@@ -132,7 +132,7 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 7.37
+   "at": 5.46
   },
   {
    "do": "click",
@@ -140,7 +140,7 @@
     "role": "radio",
     "name": "Visão em calendário"
    },
-   "at": 7.79,
+   "at": 5.82,
    "label": "abre o Calendário"
   },
   {
@@ -157,7 +157,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"main div.grid.grid-cols-7\")].filter(e=>e.offsetParent)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-290);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 9.94,
+   "at": 7.64,
    "label": "desce a tela: o aviso e as quatro primeiras semanas"
   },
   {
@@ -166,7 +166,7 @@
     "selector": "main div.grid-cols-7 > button span[title^='Água e esgoto de outubro']"
    },
    "seconds": 0.6,
-   "at": 12.22,
+   "at": 9.52,
    "label": "etiqueta vermelha: a pagar",
    "optional": true,
    "timeout": 4
@@ -176,8 +176,8 @@
    "target": {
     "selector": "main div.grid-cols-7 > button span[title^='Fatura venda #']"
    },
-   "seconds": 0.6,
-   "at": 14.5,
+   "seconds": 0.19,
+   "at": 11.52,
    "label": "etiqueta verde: a receber",
    "optional": true,
    "timeout": 4
@@ -185,7 +185,7 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 16.07
+   "at": 12.66
   },
   {
    "do": "hover",
@@ -193,7 +193,7 @@
     "selector": "main div.grid-cols-7 > button:has(svg[class*='triangle'])"
    },
    "seconds": 1.0,
-   "at": 16.52,
+   "at": 13.12,
    "label": "dia 5 com o triângulo de vencida",
    "optional": true,
    "timeout": 4
@@ -203,8 +203,8 @@
    "target": {
     "selector": "main div.grid-cols-7 > button span[title^='Água e esgoto de outubro']"
    },
-   "seconds": 0.76,
-   "at": 20.7,
+   "seconds": 0.27,
+   "at": 16.48,
    "label": "a água, do dia cinco",
    "optional": true,
    "timeout": 4
@@ -212,14 +212,14 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 22.41
+   "at": 17.7
   },
   {
    "do": "click",
    "target": {
     "selector": "main div.grid-cols-7 > button:has(span:text-is('10'))"
    },
-   "at": 22.71,
+   "at": 18.0,
    "label": "clica no dia 10"
   },
   {
@@ -233,7 +233,7 @@
     "selector": "[role=dialog] button:has-text('Marcar pago')"
    },
    "seconds": 0.3,
-   "at": 26.86,
+   "at": 21.1,
    "label": "Marcar pago (na janela do dia)",
    "optional": true,
    "timeout": 4
@@ -244,7 +244,7 @@
     "selector": "[role=dialog] button:has-text('Editar')"
    },
    "seconds": 0.15,
-   "at": 28.52,
+   "at": 22.56,
    "label": "Editar (na janela do dia)",
    "optional": true,
    "timeout": 4
@@ -252,12 +252,12 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 29.22
+   "at": 22.96
   },
   {
    "do": "press",
    "key": "Escape",
-   "at": 29.92,
+   "at": 23.66,
    "label": "fecha a janela do dia (Esc)"
   },
   {
@@ -271,7 +271,7 @@
     "within": "main"
    },
    "seconds": 2.0,
-   "at": 33.99,
+   "at": 27.42,
    "label": "o aviso do topo",
    "optional": true,
    "timeout": 4
@@ -283,7 +283,7 @@
     "within": "main"
    },
    "seconds": 0.15,
-   "at": 41.36,
+   "at": 32.62,
    "label": "a própria tela avisa",
    "optional": true,
    "timeout": 4
@@ -291,7 +291,7 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 41.94
+   "at": 33.04
   },
   {
    "do": "click",
@@ -299,7 +299,7 @@
     "role": "radio",
     "name": "Visão em lista"
    },
-   "at": 43.68,
+   "at": 34.54,
    "label": "volta para a Lista"
   },
   {
@@ -310,7 +310,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 46.32
+   "at": 36.24
   }
  ]
 }

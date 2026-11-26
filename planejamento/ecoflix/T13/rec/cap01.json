@@ -1,6 +1,6 @@
 {
  "name": "t13-cap01",
- "title": "T13 · Cap. 1 · A tela e as abas (narração ESTIMADA 67,0 s; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T13 · Cap. 1 · A tela e as abas (narração 56,6 s; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t13-cap01",
  "pace": 0.5,
  "cps": 40,
@@ -103,7 +103,7 @@
   {
    "do": "mark",
    "name": "L1",
-   "at": 0.4
+   "at": 0.04
   },
   {
    "do": "hover",
@@ -111,7 +111,7 @@
     "selector": "main h1"
    },
    "seconds": 0.8,
-   "at": 0.4,
+   "at": 0.04,
    "label": "título Contas a Pagar/Receber",
    "optional": true,
    "timeout": 4
@@ -122,7 +122,7 @@
     "selector": "main button:text-is('Todas')"
    },
    "seconds": 0.8,
-   "at": 2.99,
+   "at": 2.72,
    "label": "aba Todas",
    "optional": true,
    "timeout": 4
@@ -130,14 +130,14 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 7.59
+   "at": 6.26
   },
   {
    "do": "click",
    "target": {
     "selector": "main button:text-is('A Pagar')"
    },
-   "at": 8.48,
+   "at": 7.42,
    "label": "aba A Pagar (fica vermelha)"
   },
   {
@@ -146,7 +146,7 @@
     "selector": "main button:text-is('A Pagar')"
    },
    "seconds": 0.8,
-   "at": 10.95,
+   "at": 9.62,
    "label": "A Pagar em vermelho",
    "optional": true,
    "timeout": 4
@@ -156,26 +156,26 @@
    "target": {
     "selector": "main button:text-is('A Receber')"
    },
-   "at": 15.16,
+   "at": 12.94,
    "label": "aba A Receber"
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 17.35
+   "at": 14.9
   },
   {
    "do": "click",
    "target": {
     "selector": "main button:text-is('Todas')"
    },
-   "at": 17.77,
+   "at": 15.48,
    "label": "volta para Todas"
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"main thead\")].filter(e=>e.offsetParent)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-110);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 18.36,
+   "at": 15.9,
    "label": "desce a tela até o cabeçalho da lista"
   },
   {
@@ -183,8 +183,8 @@
    "target": {
     "selector": "main thead th:has-text('Descrição')"
    },
-   "seconds": 0.19,
-   "at": 20.18,
+   "seconds": 0.15,
+   "at": 17.22,
    "label": "coluna Descrição",
    "optional": true,
    "timeout": 4
@@ -194,8 +194,8 @@
    "target": {
     "selector": "main thead th:has-text('Categoria')"
    },
-   "seconds": 0.19,
-   "at": 21.32,
+   "seconds": 0.15,
+   "at": 18.1,
    "label": "coluna Categoria",
    "optional": true,
    "timeout": 4
@@ -205,8 +205,8 @@
    "target": {
     "selector": "main thead th:has-text('Vencimento')"
    },
-   "seconds": 0.25,
-   "at": 22.46,
+   "seconds": 0.15,
+   "at": 19.06,
    "label": "coluna Vencimento",
    "optional": true,
    "timeout": 4
@@ -217,7 +217,7 @@
     "selector": "main thead th:has-text('Valor')"
    },
    "seconds": 0.15,
-   "at": 23.67,
+   "at": 20.1,
    "label": "coluna Valor",
    "optional": true,
    "timeout": 4
@@ -228,7 +228,7 @@
     "selector": "main thead th:has-text('Status')"
    },
    "seconds": 0.15,
-   "at": 24.53,
+   "at": 21.08,
    "label": "coluna Status",
    "optional": true,
    "timeout": 4
@@ -236,7 +236,7 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 24.99
+   "at": 21.38
   },
   {
    "do": "hover",
@@ -244,7 +244,7 @@
     "selector": "main tbody tr:has-text('Água e esgoto de outubro') :text-is('Água e esgoto de outubro')"
    },
    "seconds": 0.8,
-   "at": 25.44,
+   "at": 21.84,
    "label": "a água de outubro",
    "optional": true,
    "timeout": 4
@@ -254,8 +254,8 @@
    "target": {
     "selector": "main tbody tr:has-text('Água e esgoto de outubro') :text-is('Vencida')"
    },
-   "seconds": 0.24,
-   "at": 30.43,
+   "seconds": 0.15,
+   "at": 26.14,
    "label": "status Vencida",
    "optional": true,
    "timeout": 4
@@ -265,8 +265,8 @@
    "target": {
     "selector": "main tbody tr:has-text('Água e esgoto de outubro') :text-is('05/11/2026')"
    },
-   "seconds": 0.5,
-   "at": 31.62,
+   "seconds": 0.23,
+   "at": 27.08,
    "label": "vencimento 05/11/2026 em vermelho",
    "optional": true,
    "timeout": 4
@@ -274,7 +274,7 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 33.23
+   "at": 28.26
   },
   {
    "do": "hover",
@@ -282,7 +282,7 @@
     "selector": "main tbody tr:has-text('Energia elétrica de outubro') :text-is('Energia elétrica de outubro')"
    },
    "seconds": 0.6,
-   "at": 33.69,
+   "at": 28.72,
    "label": "a energia de outubro",
    "optional": true,
    "timeout": 4
@@ -293,7 +293,7 @@
     "selector": "main tbody tr:has-text('Energia elétrica de outubro') :text-is('Pendente')"
    },
    "seconds": 0.15,
-   "at": 35.66,
+   "at": 30.72,
    "label": "status Pendente",
    "optional": true,
    "timeout": 4
@@ -301,7 +301,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const acha=()=>[...document.querySelectorAll('main tbody tr')].filter(e=>e.offsetParent&&e.innerText.includes(\"Aluguel do galp\\u00e3o de novembro\"))[0];let el=acha();for(let i=0;i<20&&!el;i++){await new Promise(r=>setTimeout(r,150));el=acha();}if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-380);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 36.56,
+   "at": 31.62,
    "label": "desce a tela até o aluguel do galpão"
   },
   {
@@ -310,7 +310,7 @@
     "selector": "main tbody tr:has-text('Aluguel do galpão de novembro') :text-is('Aluguel do galpão de novembro')"
    },
    "seconds": 0.6,
-   "at": 37.03,
+   "at": 32.06,
    "label": "o aluguel do galpão",
    "optional": true,
    "timeout": 4
@@ -321,7 +321,7 @@
     "selector": "main tbody tr:has-text('Aluguel do galpão de novembro') :text-is('Paga')"
    },
    "seconds": 0.15,
-   "at": 40.37,
+   "at": 34.64,
    "label": "status Paga e Quitada em 05/11/2026",
    "optional": true,
    "timeout": 4
@@ -329,12 +329,12 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 40.87
+   "at": 35.14
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const acha=()=>[...document.querySelectorAll('main tbody tr')].filter(e=>e.offsetParent&&e.innerText.includes(\"\\u00c1gua e esgoto de outubro\"))[0];let el=acha();for(let i=0;i<20&&!el;i++){await new Promise(r=>setTimeout(r,150));el=acha();}if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-360);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 40.87,
+   "at": 35.14,
    "label": "sobe a tela até a água de outubro"
   },
   {
@@ -343,7 +343,7 @@
     "selector": "main tbody tr:has-text('Água e esgoto de outubro') :text-is('Vencida')"
    },
    "seconds": 2.2,
-   "at": 43.23,
+   "at": 36.88,
    "label": "ZOOM dica do status: Vencimento 05/11/2026 e Vencida há 5 dia(s)",
    "optional": true,
    "timeout": 4
@@ -356,14 +356,14 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 50.18
+   "at": 42.5
   },
   {
    "do": "click",
    "target": {
     "selector": "main tbody tr:has-text('Energia elétrica de outubro') :text-is('Energia elétrica')"
    },
-   "at": 50.53,
+   "at": 42.94,
    "label": "clique no meio da linha da energia (categoria)"
   },
   {
@@ -381,8 +381,8 @@
    "target": {
     "selector": "[role=dialog] :text-is('Parcela')"
    },
-   "seconds": 0.83,
-   "at": 58.97,
+   "seconds": 0.73,
+   "at": 50.17,
    "label": "ZOOM Detalhes da conta: Tipo, Valor, Vencimento, Categoria, Parcela e Observação",
    "optional": true,
    "timeout": 4
@@ -390,18 +390,18 @@
   {
    "do": "press",
    "key": "Escape",
-   "at": 60.75,
+   "at": 51.85,
    "label": "fecha os Detalhes da conta (Esc)"
   },
   {
    "do": "mark",
    "name": "L8",
-   "at": 60.85
+   "at": 51.95
   },
   {
    "do": "eval",
    "js": "(async()=>{const c=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,dy=-y0;if(y0<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
-   "at": 60.85,
+   "at": 51.95,
    "label": "sobe a tela até o topo"
   },
   {
@@ -412,8 +412,8 @@
     "exact": true,
     "within": "main"
    },
-   "seconds": 1.4,
-   "at": 64.11,
+   "seconds": 1.28,
+   "at": 54.41,
    "label": "botão Nova conta",
    "optional": true,
    "timeout": 4
@@ -426,7 +426,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 66.97
+   "at": 56.64
   }
  ]
 }

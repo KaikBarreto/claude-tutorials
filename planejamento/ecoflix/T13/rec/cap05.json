@@ -1,6 +1,6 @@
 {
  "name": "t13-cap05",
- "title": "T13 · Cap. 5 · A conta que já nasce paga (narração ESTIMADA 51,0 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T13 · Cap. 5 · A conta que já nasce paga (narração 41,4 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t13-cap05",
  "pace": 0.5,
  "cps": 40,
@@ -104,7 +104,7 @@
   {
    "do": "mark",
    "name": "L1",
-   "at": 0.4
+   "at": 0
   },
   {
    "do": "click",
@@ -114,7 +114,7 @@
     "exact": true,
     "within": "main"
    },
-   "at": 1.68,
+   "at": 0.86,
    "label": "Nova conta"
   },
   {
@@ -125,20 +125,20 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 9.72
+   "at": 7.38
   },
   {
    "do": "click",
    "target": {
     "selector": "#bill-description"
    },
-   "at": 10.42,
+   "at": 8.08,
    "label": "Descrição (colada) (clique no campo)"
   },
   {
    "do": "eval",
    "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM ALVO (nada em foco)';document.execCommand('insertText',false,\"Conserto do pneu da empilhadeira\");return e.value})()",
-   "at": 11.3,
+   "at": 9.0,
    "label": "Descrição (colada)"
   },
   {
@@ -146,7 +146,7 @@
    "target": {
     "selector": "#bill-due"
    },
-   "at": 12.06,
+   "at": 9.34,
    "label": "Vencimento 09/11/2026 (ontem) (abre o calendário)"
   },
   {
@@ -154,7 +154,7 @@
    "target": {
     "selector": "[data-radix-popper-content-wrapper] button[name='day']:not(.day-outside):text-is('9')"
    },
-   "at": 14.74,
+   "at": 11.52,
    "label": "Vencimento 09/11/2026 (ontem)"
   },
   {
@@ -169,7 +169,7 @@
    "target": {
     "selector": "#bill-amount"
    },
-   "at": 14.98,
+   "at": 11.72,
    "label": "Valor 180,00 (clique no campo)"
   },
   {
@@ -179,14 +179,14 @@
    },
    "text": "180,00",
    "cps": 40,
-   "at": 15.78,
+   "at": 12.52,
    "label": "Valor 180,00",
    "noClick": true
   },
   {
    "do": "eval",
    "js": "(async()=>{const acha=()=>[...document.querySelectorAll(\"#bill-category\")].find(e=>e.offsetParent);let el=acha();for(let i=0;i<30&&!el;i++){await new Promise(r=>setTimeout(r,100));el=acha();}if(!el)return 'SEM ALVO';el.click();const viu=async()=>{for(let i=0;i<10;i++){if([...document.querySelectorAll(\"input[placeholder='Pesquisar categoria...']\")].some(e=>e.offsetParent))return true;await new Promise(r=>setTimeout(r,100));}return false};if(!(await viu())){const e2=acha();if(e2){e2.click();return 'ok: '+e2.textContent.trim().slice(0,60)+' (2º clique)'+((await viu())?'':' SEM ALVO: não abriu')}}return 'ok: '+el.textContent.trim().slice(0,60)})()",
-   "at": 16.61,
+   "at": 13.24,
    "label": "Categoria (abre a lista, sem cursor)"
   },
   {
@@ -195,7 +195,7 @@
     "placeholder": "Pesquisar categoria..."
    },
    "text": "máquinas",
-   "at": 16.71,
+   "at": 13.34,
    "label": "Manutenção de máquinas (busca + Enter)",
    "noClick": true,
    "submit": true
@@ -205,13 +205,13 @@
    "target": {
     "selector": "#bill-cost-center"
    },
-   "at": 17.97,
+   "at": 14.5,
    "label": "Centro de custo (abre a lista)"
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 18.42
+   "at": 14.5
   },
   {
    "do": "click",
@@ -219,13 +219,13 @@
     "role": "option",
     "name": "Pátio"
    },
-   "at": 18.43,
+   "at": 14.76,
    "label": "Pátio"
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim()===\"Pagamento previsto\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-300);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 19.02,
+   "at": 15.1,
    "label": "desce a janela até o bloco Dinheiro"
   },
   {
@@ -233,7 +233,7 @@
    "target": {
     "selector": "[role=dialog] button[role=combobox]:has-text('Não definido')"
    },
-   "at": 20.0,
+   "at": 15.82,
    "label": "Pagamento previsto (abre a lista)"
   },
   {
@@ -242,20 +242,20 @@
     "role": "option",
     "name": "Conta Principal"
    },
-   "at": 23.5,
+   "at": 19.05,
    "label": "Conta Principal"
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 24.38
+   "at": 19.22
   },
   {
    "do": "click",
    "target": {
     "selector": "#bill-pay-now"
    },
-   "at": 26.1,
+   "at": 20.54,
    "label": "liga Já paguei essa conta"
   },
   {
@@ -265,7 +265,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 1.2,
-   "at": 28.7,
+   "at": 23.1,
    "label": "Registra o pagamento agora: a conta já nasce quitada",
    "optional": true,
    "timeout": 4
@@ -275,7 +275,7 @@
    "target": {
     "selector": "#bill-pay-date"
    },
-   "at": 33.23,
+   "at": 26.76,
    "label": "Data do pagamento 09/11/2026 (abre o calendário)"
   },
   {
@@ -283,13 +283,13 @@
    "target": {
     "selector": "[data-radix-popper-content-wrapper] button[name='day']:not(.day-outside):text-is('9')"
    },
-   "at": 35.03,
+   "at": 28.24,
    "label": "Data do pagamento 09/11/2026"
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 35.51
+   "at": 28.72
   },
   {
    "do": "click",
@@ -298,7 +298,7 @@
     "name": "Criar conta",
     "exact": true
    },
-   "at": 35.71,
+   "at": 28.92,
    "label": "Criar conta",
    "noScroll": true
   },
@@ -312,7 +312,7 @@
    "target": {
     "selector": "main input[aria-label='Buscar contas']"
    },
-   "at": 37.73,
+   "at": 31.02,
    "label": "busca pneu (clique no campo)"
   },
   {
@@ -322,7 +322,7 @@
    },
    "text": "pneu",
    "cps": 40,
-   "at": 38.38,
+   "at": 31.62,
    "label": "busca pneu",
    "noClick": true
   },
@@ -338,8 +338,8 @@
    "target": {
     "selector": "main tbody tr:has-text('Conserto do pneu da empilhadeira') :text-is('Paga')"
    },
-   "seconds": 0.87,
-   "at": 39.37,
+   "seconds": 0.45,
+   "at": 32.46,
    "label": "ZOOM a linha Paga, Quitada em 09/11/2026",
    "optional": true,
    "timeout": 4
@@ -350,7 +350,7 @@
     "selector": "main tbody tr:has-text('Conserto do pneu da empilhadeira') :text-is('Conta Principal')"
    },
    "seconds": 1.2,
-   "at": 41.19,
+   "at": 33.86,
    "label": "Conta Principal",
    "optional": true,
    "timeout": 4
@@ -363,7 +363,7 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 44.9
+   "at": 36.4
   },
   {
    "do": "hover",
@@ -371,7 +371,7 @@
     "selector": "main tbody tr:has-text('Conserto do pneu da empilhadeira') :text-is('09/11/2026')"
    },
    "seconds": 1.5,
-   "at": 47.17,
+   "at": 38.3,
    "label": "a linha (a câmera fica)",
    "optional": true,
    "timeout": 4
@@ -384,7 +384,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 51.02
+   "at": 41.36
   }
  ]
 }
