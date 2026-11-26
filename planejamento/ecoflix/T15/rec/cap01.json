@@ -1,6 +1,6 @@
 {
  "name": "t15-cap01",
- "title": "T15 · Cap. 1 · O plano de contas (narração ESTIMADA 199,3 s; marcas L1..L16 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T15 · Cap. 1 · O plano de contas (narração 157,4 s; marcas L1..L16 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t15-cap01",
  "pace": 0.5,
  "cps": 40,
@@ -96,7 +96,7 @@
     "name": "Financeiro",
     "exact": true
    },
-   "at": 2.11,
+   "at": 1.52,
    "label": "menu Financeiro",
    "unless": {
     "role": "link",
@@ -109,13 +109,13 @@
     "role": "link",
     "name": "Categorias Financeiras"
    },
-   "at": 3.57,
+   "at": 2.8,
    "label": "Categorias Financeiras"
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 5.85
+   "at": 4.66
   },
   {
    "do": "waitFor",
@@ -131,7 +131,7 @@
     "within": "main"
    },
    "seconds": 0.6,
-   "at": 16.73,
+   "at": 13.56,
    "label": "Aluguel de caçamba (receita)",
    "optional": true,
    "timeout": 4
@@ -139,7 +139,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.getClientRects().length&&(e=>e.children.length===0?e.textContent.trim():[...e.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent).join('').trim())(e)===\"Categorias de despesa\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-120);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 18.75,
+   "at": 15.5,
    "label": "desce para as despesas"
   },
   {
@@ -151,7 +151,7 @@
     "within": "main"
    },
    "seconds": 0.15,
-   "at": 21.1,
+   "at": 17.28,
    "label": "Folha salarial",
    "optional": true,
    "timeout": 4
@@ -165,7 +165,7 @@
     "within": "main"
    },
    "seconds": 0.3,
-   "at": 22.7,
+   "at": 18.57,
    "label": "Combustível",
    "optional": true,
    "timeout": 4
@@ -173,12 +173,12 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 23.88
+   "at": 19.3
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 34.33
+   "at": 27.25
   },
   {
    "do": "hover",
@@ -187,7 +187,7 @@
     "within": "main"
    },
    "seconds": 0.3,
-   "at": 36.69,
+   "at": 29.08,
    "label": "divisória Impostos e deduções",
    "optional": true,
    "timeout": 4
@@ -199,7 +199,7 @@
     "within": "main"
    },
    "seconds": 0.3,
-   "at": 37.72,
+   "at": 29.86,
    "label": "divisória Custos adicionais",
    "optional": true,
    "timeout": 4
@@ -211,7 +211,7 @@
     "within": "main"
    },
    "seconds": 0.6,
-   "at": 39.47,
+   "at": 31.13,
    "label": "divisória Despesas operacionais (OPEX)",
    "optional": true,
    "timeout": 4
@@ -219,7 +219,7 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 45.54
+   "at": 34.93
   },
   {
    "do": "hover",
@@ -230,7 +230,7 @@
     "within": "main"
    },
    "seconds": 0.3,
-   "at": 45.54,
+   "at": 34.93,
    "label": "cartão Frete (frete de compra)",
    "optional": true,
    "timeout": 4
@@ -242,7 +242,7 @@
     "name": "Ações de Frete",
     "exact": true
    },
-   "at": 55.03,
+   "at": 42.69,
    "label": "Ações de Frete"
   },
   {
@@ -251,7 +251,7 @@
     "role": "menuitem",
     "name": "Adicionar subcategoria"
    },
-   "at": 56.29,
+   "at": 43.67,
    "label": "Adicionar subcategoria"
   },
   {
@@ -267,7 +267,7 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 59.25
+   "at": 45.98
   },
   {
    "do": "type",
@@ -275,7 +275,7 @@
     "selector": "#financial-category-name"
    },
    "text": "Frete de entrega",
-   "at": 59.25,
+   "at": 46.26,
    "label": "Nome: Frete de entrega",
    "noClick": true
   },
@@ -285,7 +285,7 @@
     "selector": "[role=dialog] button[role=combobox]:has-text(\"Frete\")"
    },
    "seconds": 0.4,
-   "at": 60.85,
+   "at": 47.82,
    "label": "Categoria principal: Frete",
    "optional": true,
    "timeout": 4
@@ -296,7 +296,7 @@
     "selector": "[role=dialog] button[role=combobox]:has-text(\"Custos adicionais\")"
    },
    "seconds": 0.6,
-   "at": 63.41,
+   "at": 49.42,
    "label": "Onde aparece no DRE: Custos adicionais (do pai)",
    "optional": true,
    "timeout": 4
@@ -306,7 +306,7 @@
    "target": {
     "selector": "[role=dialog] button[role=combobox]:has-text(\"Custos adicionais\")"
    },
-   "at": 71.35,
+   "at": 55.98,
    "label": "abre Onde aparece no DRE"
   },
   {
@@ -315,7 +315,7 @@
     "role": "option",
     "name": "Despesas operacionais (OPEX)"
    },
-   "at": 71.65,
+   "at": 56.24,
    "label": "Despesas operacionais (OPEX)"
   },
   {
@@ -326,7 +326,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 1.0,
-   "at": 74.79,
+   "at": 59.28,
    "label": "Prévia no DRE padrão (ZOOM)",
    "optional": true,
    "timeout": 4
@@ -334,7 +334,7 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 78.13
+   "at": 61.5
   },
   {
    "do": "click",
@@ -343,7 +343,7 @@
     "name": "Criar categoria",
     "exact": true
    },
-   "at": 78.83,
+   "at": 62.2,
    "label": "Criar categoria"
   },
   {
@@ -358,7 +358,7 @@
     "within": "main"
    },
    "seconds": 0.8,
-   "at": 83.11,
+   "at": 65.86,
    "label": "selo e nota do Frete de entrega (ZOOM)",
    "optional": true,
    "timeout": 4
@@ -375,7 +375,7 @@
     "within": "main"
    },
    "seconds": 0.6,
-   "at": 92.84,
+   "at": 73.4,
    "label": "a nota do selo",
    "optional": true,
    "timeout": 4
@@ -383,7 +383,7 @@
   {
    "do": "mark",
    "name": "L8",
-   "at": 96.02
+   "at": 75.58
   },
   {
    "do": "click",
@@ -392,7 +392,7 @@
     "name": "Ações de Frete de entrega",
     "exact": true
    },
-   "at": 96.7,
+   "at": 76.22,
    "label": "Ações de Frete de entrega"
   },
   {
@@ -402,7 +402,7 @@
     "name": "Editar"
    },
    "seconds": 0.3,
-   "at": 99.33,
+   "at": 78.26,
    "label": "menu: Editar",
    "optional": true,
    "timeout": 4
@@ -414,7 +414,7 @@
     "name": "Tornar principal"
    },
    "seconds": 0.8,
-   "at": 102.22,
+   "at": 80.9,
    "label": "menu: Tornar principal",
    "optional": true,
    "timeout": 4
@@ -422,18 +422,18 @@
   {
    "do": "press",
    "key": "Escape",
-   "at": 108.41,
+   "at": 85.8,
    "label": "fecha o menu sem escolher"
   },
   {
    "do": "mark",
    "name": "L9",
-   "at": 108.6
+   "at": 85.66
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.getClientRects().length&&(e=>e.children.length===0?e.textContent.trim():[...e.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent).join('').trim())(e)===\"Telefone e internet\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-330);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 108.6,
+   "at": 85.66,
    "label": "desce até Telefone e internet"
   },
   {
@@ -443,7 +443,7 @@
     "name": "Ações de Telefone e internet",
     "exact": true
    },
-   "at": 109.3,
+   "at": 86.36,
    "label": "Ações de Telefone e internet"
   },
   {
@@ -452,7 +452,7 @@
     "role": "menuitem",
     "name": "Excluir"
    },
-   "at": 108.8,
+   "at": 85.86,
    "label": "Excluir"
   },
   {
@@ -467,7 +467,7 @@
     "within": "[role=alertdialog]"
    },
    "seconds": 1.5,
-   "at": 110.57,
+   "at": 87.18,
    "label": "texto do Excluir categoria? (ZOOM)",
    "optional": true,
    "timeout": 4
@@ -480,18 +480,18 @@
     "exact": true,
     "within": "[role=alertdialog]"
    },
-   "at": 123.22,
+   "at": 97.72,
    "label": "Cancelar"
   },
   {
    "do": "mark",
    "name": "L10",
-   "at": 124.05
+   "at": 98.16
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.getClientRects().length&&(e=>e.children.length===0?e.textContent.trim():[...e.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent).join('').trim())(e)===\"Categorias de despesa\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-170);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 124.05,
+   "at": 98.16,
    "label": "sobe até Categorias de despesa"
   },
   {
@@ -502,7 +502,7 @@
     "nth": -1
    },
    "seconds": 1.0,
-   "at": 124.46,
+   "at": 98.58,
    "label": "arraste para reordenar",
    "optional": true,
    "timeout": 4
@@ -510,12 +510,12 @@
   {
    "do": "mark",
    "name": "L11",
-   "at": 130.1
+   "at": 102.72
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.getClientRects().length&&(e=>e.children.length===0?e.textContent.trim():[...e.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent).join('').trim())(e)===\"Categorias de despesa\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-170);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 130.1,
+   "at": 102.72,
    "label": "sobe até Categorias de despesa"
   },
   {
@@ -526,7 +526,7 @@
     "exact": true,
     "nth": 1
    },
-   "at": 131.19,
+   "at": 103.54,
    "label": "Nova (despesa)"
   },
   {
@@ -545,36 +545,36 @@
     "selector": "#financial-category-name"
    },
    "text": "Máquinas e veículos",
-   "at": 133.43,
+   "at": 105.38,
    "label": "Nome: Máquinas e veículos",
    "noClick": true
   },
   {
    "do": "mark",
    "name": "L12",
-   "at": 136.45
+   "at": 107.6
   },
   {
    "do": "mark",
    "name": "L13",
-   "at": 144.62
+   "at": 114.42
   },
   {
    "do": "mark",
    "name": "L14",
-   "at": 158.94
+   "at": 126.42
   },
   {
    "do": "mark",
    "name": "L15",
-   "at": 164.38
+   "at": 130.42
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] button[role=combobox]:has-text(\"Despesas operacionais\")"
    },
-   "at": 166.72,
+   "at": 132.32,
    "label": "abre Onde aparece no DRE"
   },
   {
@@ -583,7 +583,7 @@
     "role": "option",
     "name": "Não compõe o DRE"
    },
-   "at": 167.16,
+   "at": 132.78,
    "label": "Não compõe o DRE"
   },
   {
@@ -594,7 +594,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.8,
-   "at": 171.73,
+   "at": 136.32,
    "label": "prévia: informativo, não altera o resultado (ZOOM)",
    "optional": true,
    "timeout": 4
@@ -602,7 +602,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('[role=dialog] *')].find(e=>e.getClientRects().length&&(e=>e.children.length===0?e.textContent.trim():[...e.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent).join('').trim())(e)===\"Grupo no Fluxo de Caixa (DFC)\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-330);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 173.23,
+   "at": 137.52,
    "label": "desce a janela até o DFC"
   },
   {
@@ -610,7 +610,7 @@
    "target": {
     "selector": "[role=dialog] button[role=combobox]:has-text(\"Atividades operacionais\")"
    },
-   "at": 174.8,
+   "at": 138.54,
    "label": "abre Grupo no Fluxo de Caixa (DFC)"
   },
   {
@@ -619,13 +619,13 @@
     "role": "option",
     "name": "Atividades de investimento"
    },
-   "at": 178.82,
+   "at": 141.47,
    "label": "Atividades de investimento"
   },
   {
    "do": "mark",
    "name": "L16",
-   "at": 181.05
+   "at": 143.14
   },
   {
    "do": "click",
@@ -634,7 +634,7 @@
     "name": "Criar categoria",
     "exact": true
    },
-   "at": 181.05,
+   "at": 143.14,
    "label": "Criar categoria"
   },
   {
@@ -655,7 +655,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.getClientRects().length&&(e=>e.children.length===0?e.textContent.trim():[...e.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent).join('').trim())(e)===\"M\\u00e1quinas e ve\\u00edculos\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-420);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 183.62,
+   "at": 145.56,
    "label": "desce até Não compõe o DRE"
   },
   {
@@ -667,7 +667,7 @@
     "within": "main"
    },
    "seconds": 0.8,
-   "at": 184.45,
+   "at": 146.2,
    "label": "Máquinas e veículos em Não compõe o DRE",
    "optional": true,
    "timeout": 4
@@ -685,7 +685,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 199.32
+   "at": 157.36
   }
  ]
 }

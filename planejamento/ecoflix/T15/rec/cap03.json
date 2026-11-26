@@ -1,6 +1,6 @@
 {
  "name": "t15-cap03",
- "title": "T15 · Cap. 3 · O Relatório Financeiro (narração ESTIMADA 116,7 s; marcas L1..L11 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T15 · Cap. 3 · O Relatório Financeiro (narração 95,6 s; marcas L1..L11 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t15-cap03",
  "pace": 0.5,
  "cps": 40,
@@ -111,13 +111,13 @@
     "role": "link",
     "name": "Relatório Financeiro"
    },
-   "at": 3.99,
+   "at": 3.52,
    "label": "Relatório Financeiro"
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 6.91
+   "at": 6.02
   },
   {
    "do": "waitFor",
@@ -130,7 +130,7 @@
     "selector": "main button[role=combobox]:has-text(\"Este mês\")"
    },
    "seconds": 0.5,
-   "at": 8.45,
+   "at": 7.46,
    "label": "filtro de período: Este mês",
    "optional": true,
    "timeout": 4
@@ -140,7 +140,7 @@
    "target": {
     "selector": "main button[role=combobox]:has-text(\"Este mês\")"
    },
-   "at": 12.36,
+   "at": 11.56,
    "label": "abre o filtro de período"
   },
   {
@@ -150,7 +150,7 @@
     "name": "Personalizado"
    },
    "seconds": 0.5,
-   "at": 14.32,
+   "at": 13.1,
    "label": "Personalizado",
    "optional": true,
    "timeout": 4
@@ -162,7 +162,7 @@
     "name": "Todos os tempos"
    },
    "seconds": 0.5,
-   "at": 19.48,
+   "at": 16.94,
    "label": "Todos os tempos",
    "optional": true,
    "timeout": 4
@@ -173,13 +173,13 @@
     "role": "option",
     "name": "Mês passado"
    },
-   "at": 21.76,
+   "at": 18.96,
    "label": "Mês passado"
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 26.54
+   "at": 22.4
   },
   {
    "do": "hover",
@@ -187,7 +187,7 @@
     "selector": "main button[role=combobox]:has-text(\"Mês passado\")"
    },
    "seconds": 0.5,
-   "at": 30.16,
+   "at": 25.42,
    "label": "filtro em Mês passado",
    "optional": true,
    "timeout": 4
@@ -195,7 +195,7 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 31.98
+   "at": 26.64
   },
   {
    "do": "hover",
@@ -203,7 +203,7 @@
     "selector": "#tab-btn-dashboard"
    },
    "seconds": 0.3,
-   "at": 37.09,
+   "at": 31.04,
    "label": "aba Dashboard",
    "optional": true,
    "timeout": 4
@@ -214,7 +214,7 @@
     "selector": "#tab-btn-dre"
    },
    "seconds": 0.3,
-   "at": 38.45,
+   "at": 32.24,
    "label": "aba DRE",
    "optional": true,
    "timeout": 4
@@ -225,7 +225,7 @@
     "selector": "#tab-btn-dfc"
    },
    "seconds": 0.3,
-   "at": 39.81,
+   "at": 33.36,
    "label": "aba DFC",
    "optional": true,
    "timeout": 4
@@ -236,7 +236,7 @@
     "selector": "#tab-btn-centros-custo"
    },
    "seconds": 0.3,
-   "at": 41.26,
+   "at": 34.72,
    "label": "aba Centros de Custo",
    "optional": true,
    "timeout": 4
@@ -247,7 +247,7 @@
     "selector": "#tab-btn-historico"
    },
    "seconds": 0.4,
-   "at": 43.08,
+   "at": 36.24,
    "label": "aba Histórico",
    "optional": true,
    "timeout": 4
@@ -255,14 +255,14 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 47.81
+   "at": 39.76
   },
   {
    "do": "click",
    "target": {
     "selector": "#tab-btn-centros-custo"
    },
-   "at": 48.42,
+   "at": 40.3,
    "label": "Centros de Custo"
   },
   {
@@ -273,7 +273,7 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 52.49
+   "at": 43.28
   },
   {
    "do": "hover",
@@ -283,7 +283,7 @@
     "nth": 0
    },
    "seconds": 1.0,
-   "at": 52.97,
+   "at": 43.7,
    "label": "vs. período anterior nos cartões",
    "optional": true,
    "timeout": 4
@@ -291,12 +291,12 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 58.69
+   "at": 48.29
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.getClientRects().length&&(e=>e.children.length===0?e.textContent.trim():[...e.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent).join('').trim())(e)===\"Receitas x despesas por centro\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-120);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 58.69,
+   "at": 48.29,
    "label": "desce até o gráfico por centro"
   },
   {
@@ -304,7 +304,7 @@
    "target": {
     "selector": "main .recharts-bar-rectangle path[fill=\"#dc2626\"]"
    },
-   "at": 59.57,
+   "at": 48.97,
    "label": "coluna do Pátio do gráfico (despesas)",
    "timeout": 6
   },
@@ -316,12 +316,12 @@
   {
    "do": "mark",
    "name": "L8",
-   "at": 67.01
+   "at": 55.41
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.getClientRects().length&&(e=>e.children.length===0?e.textContent.trim():[...e.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent).join('').trim())(e)===\"Ranking dos centros de custo\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-170);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 67.01,
+   "at": 55.41,
    "label": "desce até o Ranking dos centros de custo"
   },
   {
@@ -333,7 +333,7 @@
     "nth": -1
    },
    "seconds": 0.5,
-   "at": 70.22,
+   "at": 57.97,
    "label": "Pátio no ranking",
    "optional": true,
    "timeout": 4
@@ -347,7 +347,7 @@
     "nth": -1
    },
    "seconds": 0.5,
-   "at": 73.93,
+   "at": 61.25,
    "label": "Coleta no ranking",
    "optional": true,
    "timeout": 4
@@ -355,7 +355,7 @@
   {
    "do": "mark",
    "name": "L9",
-   "at": 79.27
+   "at": 64.8
   },
   {
    "do": "click",
@@ -366,7 +366,7 @@
     "within": "main",
     "nth": 0
    },
-   "at": 80.23,
+   "at": 65.88,
    "label": "Movimentações (histórico do centro)"
   },
   {
@@ -383,7 +383,7 @@
     "within": "main"
    },
    "seconds": 0.6,
-   "at": 82.87,
+   "at": 68.18,
    "label": "o Histórico já filtrado",
    "optional": true,
    "timeout": 4
@@ -393,7 +393,7 @@
    "target": {
     "selector": "#tab-btn-centros-custo"
    },
-   "at": 86.79,
+   "at": 70.78,
    "label": "volta para Centros de Custo"
   },
   {
@@ -404,12 +404,12 @@
   {
    "do": "mark",
    "name": "L10",
-   "at": 87.29
+   "at": 71.28
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.getClientRects().length&&(e=>e.children.length===0?e.textContent.trim():[...e.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent).join('').trim())(e).includes(\"Esta vis\\u00e3o considera receitas\"));if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-420);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 87.29,
+   "at": 71.28,
    "label": "desce até o aviso azul"
   },
   {
@@ -419,7 +419,7 @@
     "within": "main"
    },
    "seconds": 1.0,
-   "at": 88.45,
+   "at": 72.32,
    "label": "aviso azul dos centros de custo (ZOOM)",
    "optional": true,
    "timeout": 4
@@ -427,12 +427,12 @@
   {
    "do": "mark",
    "name": "L11",
-   "at": 97.97
+   "at": 80.0
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=document.querySelector('main h1')||document.querySelector('main *');const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;if(y0<3)return 'ok';const dy=-y0;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo'})()",
-   "at": 98.77,
+   "at": 80.82,
    "label": "sobe ao cabeçalho"
   },
   {
@@ -441,7 +441,7 @@
     "selector": "main h1"
    },
    "seconds": 0.8,
-   "at": 103.46,
+   "at": 84.0,
    "label": "cabeçalho do Relatório Financeiro",
    "optional": true,
    "timeout": 4
@@ -454,7 +454,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 116.7
+   "at": 95.6
   }
  ]
 }

@@ -1,6 +1,6 @@
 {
  "name": "t15-cap11",
- "title": "T15 · Cap. 11 · Vai ter dinheiro? A DFC prevista (narração ESTIMADA 86,5 s; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T15 · Cap. 11 · Vai ter dinheiro? A DFC prevista (narração 71,0 s; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t15-cap11",
  "pace": 0.5,
  "cps": 40,
@@ -133,7 +133,7 @@
    "target": {
     "selector": "#tab-btn-dfc"
    },
-   "at": 2.76,
+   "at": 2.48,
    "label": "aba DFC"
   },
   {
@@ -149,7 +149,7 @@
     "exact": true
    },
    "seconds": 0.6,
-   "at": 9.37,
+   "at": 8.64,
    "label": "Previsto (marcado)",
    "optional": true,
    "timeout": 4
@@ -157,12 +157,12 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 11.92
+   "at": 10.42
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 22.14
+   "at": 18.5
   },
   {
    "do": "hover",
@@ -172,7 +172,7 @@
     "within": "main"
    },
    "seconds": 0.4,
-   "at": 23.22,
+   "at": 19.48,
    "label": "Saldo atual",
    "optional": true,
    "timeout": 4
@@ -185,7 +185,7 @@
     "within": "main"
    },
    "seconds": 0.4,
-   "at": 24.82,
+   "at": 20.88,
    "label": "A receber · 15 dias",
    "optional": true,
    "timeout": 4
@@ -198,7 +198,7 @@
     "within": "main"
    },
    "seconds": 0.4,
-   "at": 25.88,
+   "at": 21.76,
    "label": "A pagar · 15 dias",
    "optional": true,
    "timeout": 4
@@ -211,7 +211,7 @@
     "within": "main"
    },
    "seconds": 1.0,
-   "at": 28.69,
+   "at": 24.0,
    "label": "Dívidas a receber e a pagar (ZOOM)",
    "optional": true,
    "timeout": 4
@@ -219,12 +219,12 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 32.58
+   "at": 27.02
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.getClientRects().length&&(e=>e.children.length===0?e.textContent.trim():[...e.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent).join('').trim())(e)===\"Saldo inicial\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-330);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 32.58,
+   "at": 27.02,
    "label": "desce até a tabela do fluxo de caixa"
   },
   {
@@ -235,7 +235,7 @@
     "within": "main"
    },
    "seconds": 0.5,
-   "at": 35.55,
+   "at": 29.92,
    "label": "Saldo inicial",
    "optional": true,
    "timeout": 4
@@ -248,7 +248,7 @@
     "within": "main"
    },
    "seconds": 0.8,
-   "at": 36.15,
+   "at": 30.52,
    "label": "Saldo final",
    "optional": true,
    "timeout": 4
@@ -256,27 +256,27 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 39.54
+   "at": 32.94
   },
   {
    "do": "click",
    "target": {
     "selector": "main button[aria-label$=\"categorias de saída\"]"
    },
-   "at": 39.89,
+   "at": 33.38,
    "label": "seta do Total de saídas"
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 43.38
+   "at": 36.14
   },
   {
    "do": "click",
    "target": {
     "selector": "main tr:has(button[aria-label$=\"categorias de saída\"]) td[role=button] >> nth=0"
    },
-   "at": 43.73,
+   "at": 36.58,
    "label": "um valor do Total de saídas"
   },
   {
@@ -292,7 +292,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 1.0,
-   "at": 47.73,
+   "at": 39.84,
    "label": "lançamentos do dia (ZOOM)",
    "optional": true,
    "timeout": 4
@@ -300,41 +300,41 @@
   {
    "do": "press",
    "key": "Escape",
-   "at": 52.22,
+   "at": 43.28,
    "label": "fecha a janela"
   },
   {
    "do": "mark",
    "name": "L7",
-   "at": 52.92
+   "at": 43.98
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.getClientRects().length&&(e=>e.children.length===0?e.textContent.trim():[...e.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent).join('').trim())(e)===\"Saldo por conta\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-160);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 52.92,
+   "at": 43.98,
    "label": "desce até Saldo por conta"
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.getClientRects().length&&(e=>e.children.length===0?e.textContent.trim():[...e.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent).join('').trim())(e)===\"Evolu\\u00e7\\u00e3o do saldo\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-160);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 55.8,
+   "at": 46.62,
    "label": "Evolução do saldo"
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.getClientRects().length&&(e=>e.children.length===0?e.textContent.trim():[...e.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent).join('').trim())(e)===\"O que j\\u00e1 venceu e n\\u00e3o foi baixado\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-160);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 57.39,
+   "at": 48.06,
    "label": "O que já venceu e não foi baixado"
   },
   {
    "do": "mark",
    "name": "L8",
-   "at": 61.39
+   "at": 50.62
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=document.querySelector('main h1')||document.querySelector('main *');const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;if(y0<3)return 'ok';const dy=-y0;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo'})()",
-   "at": 61.39,
+   "at": 50.62,
    "label": "sobe ao topo"
   },
   {
@@ -344,18 +344,18 @@
     "name": "30 dias",
     "exact": true
    },
-   "at": 62.48,
+   "at": 51.6,
    "label": "30 dias"
   },
   {
    "do": "mark",
    "name": "L9",
-   "at": 65.91
+   "at": 53.98
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.getClientRects().length&&(e=>e.children.length===0?e.textContent.trim():[...e.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent).join('').trim())(e).includes(\"Previs\\u00e3o otimista\"));if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-420);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 65.91,
+   "at": 53.98,
    "label": "desce até a Previsão otimista"
   },
   {
@@ -365,7 +365,7 @@
     "within": "main"
    },
    "seconds": 1.5,
-   "at": 68.14,
+   "at": 56.0,
    "label": "Previsão otimista (ZOOM)",
    "optional": true,
    "timeout": 4
@@ -373,12 +373,12 @@
   {
    "do": "mark",
    "name": "L10",
-   "at": 79.85
+   "at": 65.33
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=document.querySelector('main h1')||document.querySelector('main *');const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;if(y0<3)return 'ok';const dy=-y0;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo'})()",
-   "at": 79.85,
+   "at": 65.33,
    "label": "sobe ao topo"
   },
   {
@@ -389,7 +389,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 86.52
+   "at": 70.96
   }
  ]
 }

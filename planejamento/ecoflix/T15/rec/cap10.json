@@ -1,6 +1,6 @@
 {
  "name": "t15-cap10",
- "title": "T15 · Cap. 10 · Mês a mês (narração ESTIMADA 69,4 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T15 · Cap. 10 · Mês a mês (narração 56,4 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t15-cap10",
  "pace": 0.5,
  "cps": 40,
@@ -190,7 +190,7 @@
     "nth": 0
    },
    "seconds": 0.6,
-   "at": 3.92,
+   "at": 2.9,
    "label": "Evolução Mensal",
    "optional": true,
    "timeout": 4
@@ -198,7 +198,7 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 11.08
+   "at": 8.58
   },
   {
    "do": "hover",
@@ -209,7 +209,7 @@
     "nth": -1
    },
    "seconds": 1.0,
-   "at": 11.94,
+   "at": 9.32,
    "label": "linha out/26 (ZOOM)",
    "optional": true,
    "timeout": 4
@@ -217,12 +217,12 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 20.17
+   "at": 16.5
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.getClientRects().length&&(e=>e.children.length===0?e.textContent.trim():[...e.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent).join('').trim())(e)===\"Comparar per\\u00edodos\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-200);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 20.17,
+   "at": 16.5,
    "label": "sobe até o cabeçalho da tabela"
   },
   {
@@ -232,7 +232,7 @@
     "name": "Comparar períodos",
     "exact": true
    },
-   "at": 23.65,
+   "at": 19.28,
    "label": "Comparar períodos"
   },
   {
@@ -253,7 +253,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.3,
-   "at": 25.5,
+   "at": 21.24,
    "label": "Período anterior (setembro)",
    "optional": true,
    "timeout": 4
@@ -274,7 +274,7 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 28.87
+   "at": 23.7
   },
   {
    "do": "hover",
@@ -284,7 +284,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.6,
-   "at": 32.46,
+   "at": 26.28,
    "label": "Mesmo período no ano passado",
    "optional": true,
    "timeout": 4
@@ -297,7 +297,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.6,
-   "at": 33.9,
+   "at": 27.48,
    "label": "Outro período",
    "optional": true,
    "timeout": 4
@@ -305,7 +305,7 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 37.95
+   "at": 30.82
   },
   {
    "do": "click",
@@ -314,14 +314,14 @@
     "name": "Aplicar comparação",
     "exact": true
    },
-   "at": 38.25,
+   "at": 31.12,
    "label": "Aplicar comparação",
    "noScroll": true
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.getClientRects().length&&(e=>e.children.length===0?e.textContent.trim():[...e.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent).join('').trim())(e)===\"(+) Receita Bruta\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-110);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/1500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 40.98,
+   "at": 33.58,
    "label": "desce pelas linhas comparadas"
   },
   {
@@ -332,14 +332,14 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 43.15
+   "at": 34.98
   },
   {
    "do": "click",
    "target": {
     "selector": "main button:has(span:text-is(\"06.01\"))"
    },
-   "at": 47.55,
+   "at": 38.88,
    "label": "abre as categorias das despesas operacionais"
   },
   {
@@ -351,7 +351,7 @@
     "nth": 0
    },
    "seconds": 1.0,
-   "at": 49.4,
+   "at": 40.42,
    "label": "linhas casadas pelo nome da categoria",
    "optional": true,
    "timeout": 4
@@ -359,12 +359,12 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 56.64
+   "at": 45.94
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.getClientRects().length&&(e=>e.children.length===0?e.textContent.trim():[...e.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent).join('').trim())(e)===\"Comparar per\\u00edodos\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-200);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 56.64,
+   "at": 45.94,
    "label": "sobe até o cabeçalho da tabela"
   },
   {
@@ -374,7 +374,7 @@
     "name": "Comparar períodos",
     "exact": true
    },
-   "at": 57.04,
+   "at": 46.28,
    "label": "Comparar períodos"
   },
   {
@@ -389,7 +389,7 @@
     "name": "Remover comparações",
     "exact": true
    },
-   "at": 60.18,
+   "at": 48.78,
    "label": "Remover comparações",
    "noScroll": true
   },
@@ -406,7 +406,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 69.37
+   "at": 56.4
   }
  ]
 }
