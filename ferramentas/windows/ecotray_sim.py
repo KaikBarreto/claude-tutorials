@@ -93,7 +93,15 @@ class EcoTrayFalso:
                     self.e["atividade"].insert(0, a_); del self.e["atividade"][20:]
                     await self._enviar(json.dumps({"type": "activity", **a_}, ensure_ascii=False))
                 elif a == "check_update":
-                    await ws.send(json.dumps({"type": "update_check", "status": "checking"}))
+                    at = self.e.get("atualizacao")
+                    if at:  # plano: {"status": "up-to-date", "atraso": 2.0}. Responde só depois do atraso, para a captura pegar o
+                        # "Verificando..." do painel. Diferença assumida: o ecotray.py de verdade responde "checking" na hora, e o
+                        # painel trata essa primeira resposta como erro ("✗ Erro ao verificar") por uns instantes (ver andamento T05).
+                        await asyncio.sleep(float(at.get("atraso", 2.0)))
+                        await ws.send(json.dumps({"type": "update_check", "status": at.get("status", "up-to-date"),
+                                                  "version": self.e["versao"]}))
+                    else:
+                        await ws.send(json.dumps({"type": "update_check", "status": "checking"}))
                 elif a == "get_activity":
                     await ws.send(json.dumps({"type": "activity_log", "data": list(self.e["atividade"])}, ensure_ascii=False))
                 elif a == "restore_dashboard":
@@ -420,12 +428,11 @@ def roteiro_painel(srv, s):
                 srv.enviar(p["enviar"])
             if "aba" in p:
                 import tkinter.ttk as ttk
-                for w in _todos(root):
+                for w in _todos(root):  # todo Notebook visível: a aba "Logs" e as subabas ("Geral", "Balança do pátio") do mesmo jeito
                     if isinstance(w, ttk.Notebook) and w.winfo_ismapped():
                         for i in range(w.index("end")):
                             if w.tab(i, "text").strip() == p["aba"]:
                                 w.select(i)
-                        break
             jan = achar_janela(root, p.get("janela")) if p.get("janela") != "lista" else None
             if p.get("janela") and p["janela"] != "lista" and jan is None:
                 ERROS.append(f"janela {p['janela']!r} não está aberta (passo {p})"); yield 0.1; continue

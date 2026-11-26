@@ -64,8 +64,10 @@ ECO_PATIO = {'balancas': [BAL], 'padrao': 'bal-patio', 'casas': 3, 'versao': VER
 GENERIC = {'name': 'Generic / Text Only', 'driver': 'Generic / Text Only', 'is_compatible': False, 'incompatible_reason': (
     'Driver "Generic / Text Only" só imprime texto puro — não suporta o cupom térmico (que é gerado como imagem). '
     'Troque pelo driver térmico real da sua impressora (ex: POS-58, GP-58, Elgin i9, Bematech, ou o driver oficial do fabricante).')}
+VERSAO_ANTIGA = '1.7.20'    # versão "velha" que o EcoTray falso informa só no trecho do aviso "EcoTray desatualizado" (cap03 L5, cap10 L1)
+AVISO_DESAT = {'text': 'EcoTray desatualizado'}
 ECO = {0: False, 1: False, 2: False, 3: ECO_SEM_BAL, 4: ECO_SEM_BAL, 5: ECO_SEM_BAL, 6: ECO_SEM_BAL,
-       7: ECO_PATIO, 8: {**ECO_PATIO, 'mudo': True}, 9: {**ECO_PATIO, 'pesoInicial': 312}, 10: ECO_PATIO,
+       7: ECO_PATIO, 8: {**ECO_PATIO, 'mudo': True}, 9: {**ECO_PATIO, 'pesoInicial': 312}, 10: {**ECO_PATIO, 'versao': VERSAO_ANTIGA},
        11: {**ECO_PATIO, 'impressoras': ['POS-58', GENERIC]}, 12: ECO_PATIO}
 
 
@@ -429,7 +431,12 @@ def cap03():
     c.mark(3)
     c.mark(4)
     c.mark(5)
-    c.registra(SELO_V, at=c.A(5, 'selo', 0.2), label='selo da versão (de volta à tela)')
+    # L5: "se um dia esse selo avisar que o EcoTray está desatualizado": o EcoTray falso passa a informar uma versão antiga e a tela
+    # remonta (o app lê a versão instalada ao montar, com cache de 60 s por carga de página); aparece o aviso real do app
+    c.ecotray(at=c.L(5) + 0.1, label='EcoTray falso informa a versão antiga', versao=VERSAO_ANTIGA)
+    c._p({'do': 'goto', 'url': '/configuracoes?tab=integrations', 'reload': True}, c.A(5, 'selo', 0.9), 'a tela recarrega com o aviso', {})
+    c.waitfor(text='EcoTray desatualizado', timeout=20)
+    c.registra(AVISO_DESAT, at=c.A(5, 'desatualizado', 0.2), label='aviso: EcoTray desatualizado (v1.7.20, atual é v1.7.26)')
     c.fim()
     return c
 
@@ -556,6 +563,26 @@ def cap07():
     c.mark(4)
     c.cursor(NEUTRO, at=c.L(4) - 0.1, label='cursor sai do "?"')
     c.registra(TXT('Padrão da empresa; exceções ficam em Usuários e Permissões'), at=c.A(4, 'exceção', 0.2), label='subtítulo: Padrão da empresa; exceções ficam em Usuários e Permissões')
+    # L4: a tela real da exceção por pessoa (Configurações > Usuários, Editar do Marcos, "Peso dos pedidos": Herdar padrão da empresa,
+    # Exigir peso da balança, Permitir digitação manual; o mesmo diálogo da T2). Volta às Integrações antes da L5.
+    MAINX = 'main'
+    c._p({'do': 'goto', 'url': '/configuracoes?tab=users'}, c.A(4, 'Usuários', 0.7), 'abre Usuários e Permissões', {})
+    c.waitfor(text='Marcos Antunes', timeout=25)
+    c.click(TXT('Marcos Antunes', within=MAINX), at=c.A(4, 'libera', 1.2), label='clica no Marcos')
+    c.waitfor(text='Perfil de acesso', timeout=10)
+    c.ev(js_topo(400), at=c.A(4, 'libera', 0.9), label='sobe ao topo do detalhe')
+    c.click(BTN('Editar', within=MAINX), at=c.A(4, 'libera', 0.4), label='Editar (detalhe do Marcos)')
+    c.waitfor(text='Peso dos pedidos', timeout=12)
+    c.hover(SEL(f"{DLG} label[for='scale-weight-policy']"), 0.4, at=c.A(4, 'digitação', 0.3), label='Peso dos pedidos')
+    c.click(SEL(f'{DLG} #scale-weight-policy'), at=c.A(4, 'digitação', -0.4), label='abre o Peso dos pedidos (Herdar padrão da empresa)')
+    c.registra(SEL('[role=listbox]'), at=c.A(4, 'usuário,', 0.6, nth=1), label='as três opções do Peso dos pedidos')
+    c.hover(OPT('Permitir digitação manual'), 0.5, at=c.A(4, 'usuário,', 0.2, nth=1), label='Permitir digitação manual')
+    c.hover(OPT('Exigir peso da balança'), 0.5, at=c.A(4, 'exige', -0.2), label='Exigir peso da balança')
+    c.press('Escape', at=c.W(4, 'Isso') - 0.3, label='fecha a lista sem trocar')
+    c.press('Escape', at=c.W(4, 'Isso') + 0.3, label='fecha o Editar Usuário sem salvar')
+    c._p({'do': 'goto', 'url': '/configuracoes?tab=integrations'}, c.W(4, 'tutorial') - 0.4, 'volta às Integrações', {})
+    c.waitfor(text=INTEG_OK, timeout=20)
+    c.cursor(NEUTRO, label='cursor descansa')
     c.mark(5)
     c.mark(6)
     c.fim()
@@ -613,11 +640,17 @@ def cap09():
 
 @capitulo
 def cap10():
-    """Atualizar e pedir ajuda: só cenas de Windows (painel, aba Logs, menu da bandeja; etapa 2). A tela web descansa em Integrações com o selo da versão."""
-    c = Cap(10, start=NEUTRO, setup=integ_setup(extra=[{'do': 'waitFor', 'text': 'Conectado ao EcoTray', 'timeout': 20}]), eco=ECO[10])
+    """Atualizar e pedir ajuda: só cenas de Windows (painel, aba Logs, menu da bandeja; etapa 2). A tela web começa com o aviso real
+    "EcoTray desatualizado (v1.7.20, atual é v1.7.26)" (L1, "se o sistema avisar que ele está desatualizado") e, antes do clique na bandeja da
+    cena 9, o EcoTray falso volta a informar a versão atual e a tela remonta com o selo "v1.7.26", igual ao painel da cena."""
+    c = Cap(10, start=NEUTRO, setup=integ_setup(extra=[{'do': 'waitFor', 'text': 'EcoTray desatualizado', 'timeout': 20}]), eco=ECO[10])
     c.mark(1)
     c.cursor(NEUTRO, at=0.3, label='cursor descansa (as cenas de Windows 9 e 10 cobrem)')
-    c.registra(SELO_V, at=c.A(1, 'desatualizado', 0.2), label='selo da versão do EcoTray')
+    c.registra(AVISO_DESAT, at=c.A(1, 'desatualizado', 0.4), label='aviso: EcoTray desatualizado')
+    c.ecotray(at=c.A(1, 'ou', -0.1), label='EcoTray falso volta à versão atual', versao=VERSAO_ECOTRAY)
+    c._p({'do': 'goto', 'url': '/configuracoes?tab=integrations', 'reload': True}, c.A(1, 'ou', -0.2), 'a tela recarrega com o selo atual', {})
+    c.waitfor(text='v' + VERSAO_ECOTRAY, timeout=20)
+    c.registra(SELO_V, label='selo da versão do EcoTray')
     marcas_ate_o_fim(c)
     c.fim()
     return c

@@ -180,6 +180,143 @@
    "label": "subtítulo: Padrão da empresa; exceções ficam em Usuários e Permissões"
   },
   {
+   "do": "goto",
+   "url": "/configuracoes?tab=users",
+   "at": 28.62,
+   "label": "abre Usuários e Permissões"
+  },
+  {
+   "do": "waitFor",
+   "text": "Marcos Antunes",
+   "timeout": 25
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Marcos Antunes",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 30.39,
+   "label": "clica no Marcos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Perfil de acesso",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=document.querySelector('main h1, main h2, main h3')||document.querySelector('main');const c=rolagem(el);if(!c)return 'SEM ROLAGEM';if(c.scrollTop<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/400),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0*(1-e),behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return c.scrollTop})()",
+   "at": 30.69,
+   "label": "sobe ao topo do detalhe"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Editar",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 31.19,
+   "label": "Editar (detalhe do Marcos)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Peso dos pedidos",
+   "timeout": 12
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] label[for='scale-weight-policy']"
+   },
+   "seconds": 0.4,
+   "at": 31.98,
+   "label": "Peso dos pedidos",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #scale-weight-policy"
+   },
+   "at": 32.68,
+   "label": "abre o Peso dos pedidos (Herdar padrão da empresa)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=listbox]"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 32.97,
+   "label": "as três opções do Peso dos pedidos"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Permitir digitação manual"
+   },
+   "seconds": 0.5,
+   "at": 33.37,
+   "label": "Permitir digitação manual",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Exigir peso da balança"
+   },
+   "seconds": 0.5,
+   "at": 34.83,
+   "label": "Exigir peso da balança",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 36.84,
+   "label": "fecha a lista sem trocar"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 37.43,
+   "label": "fecha o Editar Usuário sem salvar"
+  },
+  {
+   "do": "goto",
+   "url": "/configuracoes?tab=integrations",
+   "at": 38.25,
+   "label": "volta às Integrações"
+  },
+  {
+   "do": "waitFor",
+   "text": "Configure integrações com impressora e balança digital",
+   "timeout": 20
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 1000,
+    "y": 560
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "label": "cursor descansa"
+  },
+  {
    "do": "mark",
    "name": "L5",
    "at": 41.23
