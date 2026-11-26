@@ -39,8 +39,16 @@ def duracao(f):
         return "?"
 
 
+def mesma(src, dst):
+    # a pasta de arquivos da sessão insere um bloco 'uuid' (~6 KB) no MP4: vídeo igual, tamanho um pouco maior
+    if not dst.exists():
+        return False
+    d = dst.stat().st_size - src.stat().st_size
+    return d == 0 or (src.suffix == ".mp4" and 0 < d <= 65536)
+
+
 def copiar(src, dst):
-    if dst.exists() and dst.stat().st_size == src.stat().st_size:
+    if mesma(src, dst):
         return False
     tmp = dst.with_name(dst.name + ".parcial")
     shutil.copyfile(src, tmp)
@@ -76,7 +84,7 @@ def main():
                     copiar(lg, pasta / f"{nome}.{ext}")
             print(("copiada " if feito else "já estava ") + nome, flush=True)
             time.sleep(1)
-        if alvo.exists() and alvo.stat().st_size == mp4.stat().st_size:
+        if mesma(mp4, alvo):
             linhas.append(f"{nome}  ({duracao(mp4)})")
     (DEST / "LEIA-ME.txt").write_text(
         "Aulas EcoFlix prontas para subir (1080p, com legendas .srt e .vtt).\n"
