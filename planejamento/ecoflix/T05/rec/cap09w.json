@@ -1,6 +1,6 @@
 {
  "name": "t05-cap09w",
- "title": "T05 · Cap. 9 · Quando o EcoTray cai (narração 65,0 s ESTIMADA; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00) · SÓ O TRECHO COM O NAVEGADOR NA CENA DE WINDOWS (até a linha 8; device windows, 1280x712)",
+ "title": "T05 · Cap. 9 · Quando o EcoTray cai (narração 50,8 s; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00) · SÓ O TRECHO COM O NAVEGADOR NA CENA DE WINDOWS (até a linha 8; device windows, 1280x712)",
  "seed": "t05-cap09",
  "pace": 0.5,
  "cps": 9,
@@ -129,14 +129,14 @@
   },
   {
    "do": "ecotray",
-   "at": 6.91,
+   "at": 6.14,
    "label": "EcoTray fechado: 8053 e 8054 recusam conexão",
    "ligado": false
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 7.01
+   "at": 6.24
   },
   {
    "do": "type",
@@ -147,28 +147,28 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 11.26,
+   "at": 10.08,
    "label": "rodapé: Balança desconectada"
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 13.35
+   "at": 11.68
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 22.21
+   "at": 18.48
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 35.84
+   "at": 28.91
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll('main h3')].find(e=>e.textContent.trim()===\"Impressora\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-120);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 35.84,
+   "at": 28.91,
    "label": "mostra a seção Impressora"
   },
   {
@@ -180,17 +180,17 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 39.11,
+   "at": 31.47,
    "label": "EcoTray não encontrado"
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 41.28
+   "at": 33.39
   },
   {
    "do": "ecotray",
-   "at": 44.06,
+   "at": 35.77,
    "label": "EcoTray aberto de novo: só o peso volta; os comandos (impressora) demoram",
    "ligado": true,
    "comandos": false
@@ -198,7 +198,7 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 47.02
+   "at": 37.63
   },
   {
    "do": "type",
@@ -209,7 +209,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 48.69,
+   "at": 39.07,
    "label": "rodapé: Balança do pátio · 312 kg (voltou sozinho)"
   },
   {
@@ -220,26 +220,26 @@
     "exact": true
    },
    "seconds": 0.8,
-   "at": 54.52,
+   "at": 43.17,
    "label": "Tentar conectar (sem clicar)",
    "timeout": 10,
    "optional": true
   },
   {
    "do": "ecotray",
-   "at": 57.82,
+   "at": 45.91,
    "label": "os comandos do EcoTray voltam (a impressora reconecta sozinha)",
    "comandos": true
   },
   {
    "do": "mark",
    "name": "L8",
-   "at": 57.92
+   "at": 46.01
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=document.querySelector('main h1, main h2, main h3')||document.querySelector('main');const c=rolagem(el);if(!c)return 'SEM ROLAGEM';if(c.scrollTop<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0*(1-e),behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return c.scrollTop})()",
-   "at": 57.92,
+   "at": 46.01,
    "label": "volta ao topo"
   },
   {
@@ -251,7 +251,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 59.06,
+   "at": 47.13,
    "label": "texto do cartão: inicia automaticamente com o computador"
   },
   {
@@ -267,7 +267,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 65.02
+   "at": 50.8
   }
  ],
  "ecotray": {

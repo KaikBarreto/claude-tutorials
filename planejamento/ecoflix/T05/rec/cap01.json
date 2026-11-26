@@ -1,6 +1,6 @@
 {
  "name": "t05-cap01",
- "title": "T05 · Cap. 1 · O que é o EcoTray (narração 67,4 s ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T05 · Cap. 1 · O que é o EcoTray (narração 53,4 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "seed": "t05-cap01",
  "pace": 0.5,
  "cps": 9,
@@ -88,7 +88,7 @@
     "role": "button",
     "name": "Configurações"
    },
-   "at": 1.32,
+   "at": 0.58,
    "label": "engrenagem Configurações (rodapé do menu)",
    "noScroll": true
   },
@@ -102,7 +102,7 @@
    "target": {
     "selector": "#tab-btn-integrations"
    },
-   "at": 3.14,
+   "at": 2.26,
    "label": "aba Integrações"
   },
   {
@@ -113,7 +113,7 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 5.18
+   "at": 4.24
   },
   {
    "do": "scroll",
@@ -124,23 +124,23 @@
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 5.68,
+   "at": 4.74,
    "label": "cursor sai da aba"
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 15.63
+   "at": 12.72
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 23.65
+   "at": 18.88
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 34.4
+   "at": 26.92
   },
   {
    "do": "type",
@@ -151,13 +151,13 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 35.61,
+   "at": 27.8,
    "label": "texto do cartão do EcoTray"
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 45.76
+   "at": 35.56
   },
   {
    "do": "type",
@@ -169,18 +169,18 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 46.52,
+   "at": 36.28,
    "label": "selo \"EcoTray não detectado nesta estação\""
   },
   {
    "do": "mark",
    "name": "L7",
-   "at": 55.52
+   "at": 43.82
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll('main h3')].find(e=>e.textContent.trim()===\"Impressora\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-150);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/1000),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 55.52,
+   "at": 43.82,
    "label": "desce até a seção Impressora"
   },
   {
@@ -191,7 +191,7 @@
     "nth": 0
    },
    "seconds": 0.5,
-   "at": 56.44,
+   "at": 44.8,
    "label": "Como funciona? da impressora (sem clicar)",
    "optional": true,
    "timeout": 4
@@ -199,7 +199,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll('main h3')].find(e=>e.textContent.trim()===\"Integração com Balança Digital\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-150);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/1000),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 57.28,
+   "at": 45.38,
    "label": "desce até a seção Integração com Balança Digital"
   },
   {
@@ -210,7 +210,7 @@
     "nth": 1
    },
    "seconds": 0.5,
-   "at": 60.0,
+   "at": 47.76,
    "label": "Como funciona? da balança (sem clicar)",
    "optional": true,
    "timeout": 4
@@ -218,7 +218,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=document.querySelector('main h1, main h2, main h3')||document.querySelector('main');const c=rolagem(el);if(!c)return 'SEM ROLAGEM';if(c.scrollTop<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/1000),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0*(1-e),behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return c.scrollTop})()",
-   "at": 63.27,
+   "at": 50.1,
    "label": "volta ao topo"
   },
   {
@@ -229,7 +229,7 @@
     "exact": true
    },
    "seconds": 0.5,
-   "at": 64.61,
+   "at": 51.42,
    "label": "Baixar Instalador (sem clicar)",
    "optional": true,
    "timeout": 4
@@ -242,7 +242,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 67.4
+   "at": 53.44
   }
  ],
  "ecotray": false

@@ -1,6 +1,6 @@
 {
  "name": "t05-cap05",
- "title": "T05 · Cap. 5 · Largura do papel e impressão turbo (narração 96,2 s ESTIMADA; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T05 · Cap. 5 · Largura do papel e impressão turbo (narração 77,8 s; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "seed": "t05-cap05",
  "pace": 0.5,
  "cps": 9,
@@ -125,18 +125,18 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 1.49,
+   "at": 1.12,
    "label": "Escala e Largura do Comprovante: Papel 80mm · Escala 100%"
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 12.93
+   "at": 10.0
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 23.52
+   "at": 19.36
   },
   {
    "do": "click",
@@ -145,7 +145,7 @@
     "name": "Ajustar Escala",
     "exact": true
    },
-   "at": 23.52,
+   "at": 19.36,
    "label": "Ajustar Escala"
   },
   {
@@ -160,13 +160,13 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 24.95,
+   "at": 20.76,
    "label": "58 mm (bobina pequena)"
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 32.23
+   "at": 26.46
   },
   {
    "do": "type",
@@ -178,13 +178,13 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 32.38,
+   "at": 26.7,
    "label": "nota: tamanho exato do papel"
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 42.75
+   "at": 34.94
   },
   {
    "do": "type",
@@ -197,7 +197,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 42.9,
+   "at": 35.18,
    "label": "Escala fina (100%)"
   },
   {
@@ -209,7 +209,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.6,
-   "at": 51.08,
+   "at": 42.0,
    "label": "Restaurar padrão (desligado em 100%), sem clicar",
    "optional": true,
    "timeout": 4
@@ -217,7 +217,7 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 55.25
+   "at": 45.45
   },
   {
    "do": "click",
@@ -226,7 +226,7 @@
     "name": "Testar impressão",
     "exact": true
    },
-   "at": 56.99,
+   "at": 46.97,
    "label": "Testar impressão"
   },
   {
@@ -241,7 +241,7 @@
     "name": "Salvar",
     "exact": true
    },
-   "at": 60.37,
+   "at": 49.37,
    "label": "Salvar"
   },
   {
@@ -252,12 +252,12 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 62.05
+   "at": 50.73
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll('main label')].find(e=>e.textContent.trim()===\"Impressão térmica turbo (beta)\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 62.05,
+   "at": 50.73,
    "label": "mostra a impressão térmica turbo"
   },
   {
@@ -269,7 +269,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 63.72,
+   "at": 52.01,
    "label": "Impressão térmica turbo (beta)"
   },
   {
@@ -278,7 +278,7 @@
     "selector": "main label:text-is(\"Impressão térmica turbo (beta)\") ~ svg"
    },
    "seconds": 0.8,
-   "at": 67.27,
+   "at": 54.67,
    "label": "? do turbo",
    "optional": true,
    "timeout": 4
@@ -286,12 +286,12 @@
   {
    "do": "mark",
    "name": "L8",
-   "at": 72.88
+   "at": 59.29
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll('main label')].find(e=>e.textContent.trim()===\"Imprimir Automaticamente\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-240);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 72.88,
+   "at": 59.29,
    "label": "mostra Imprimir Automaticamente"
   },
   {
@@ -303,7 +303,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 75.46,
+   "at": 61.53,
    "label": "chave Imprimir Automaticamente (desligada, não liga)"
   },
   {
@@ -312,7 +312,7 @@
     "selector": "main label:text-is(\"Imprimir Automaticamente\") ~ svg"
    },
    "seconds": 0.8,
-   "at": 81.97,
+   "at": 66.91,
    "label": "? do Imprimir Automaticamente",
    "optional": true,
    "timeout": 4
@@ -320,7 +320,7 @@
   {
    "do": "mark",
    "name": "L9",
-   "at": 89.09
+   "at": 72.56
   },
   {
    "do": "scroll",
@@ -331,13 +331,13 @@
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 89.19,
+   "at": 72.66,
    "label": "cursor sai do \"?\""
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll('main label')].find(e=>e.textContent.trim()===\"Imprimir comprovante do Ticket de Pesagem\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-240);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 89.49,
+   "at": 72.96,
    "label": "mostra Imprimir comprovante do Ticket de Pesagem"
   },
   {
@@ -349,7 +349,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 91.44,
+   "at": 74.48,
    "label": "chave Imprimir comprovante do Ticket de Pesagem (desligada)"
   },
   {
@@ -360,7 +360,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 96.19
+   "at": 77.76
   }
  ],
  "ecotray": {

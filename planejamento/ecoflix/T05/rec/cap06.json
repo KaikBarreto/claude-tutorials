@@ -1,6 +1,6 @@
 {
  "name": "t05-cap06",
- "title": "T05 · Cap. 6 · Conectar a balança (narração 172,3 s ESTIMADA; marcas L1..L17 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T05 · Cap. 6 · Conectar a balança (narração 139,1 s; marcas L1..L17 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "seed": "t05-cap06",
  "pace": 0.5,
  "cps": 9,
@@ -119,7 +119,7 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 11.71
+   "at": 9.6
   },
   {
    "do": "type",
@@ -130,20 +130,20 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 13.0,
+   "at": 10.8,
    "label": "chave Integração com Balança Digital (desligada)"
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 22.46
+   "at": 18.48
   },
   {
    "do": "click",
    "target": {
     "selector": "main div:has(> div > div > label:text-is(\"Integração com Balança Digital\")) > button[role=switch]"
    },
-   "at": 22.46,
+   "at": 18.48,
    "label": "liga a chave Integração com Balança Digital"
   },
   {
@@ -165,41 +165,41 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 30.63
+   "at": 25.39
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 37.28
+   "at": 30.75
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 45.6
+   "at": 36.51
   },
   {
    "do": "mark",
    "name": "L7",
-   "at": 51.87
+   "at": 41.63
   },
   {
    "do": "mark",
    "name": "L8",
-   "at": 69.0
+   "at": 55.05
   },
   {
    "do": "mark",
    "name": "L9",
-   "at": 76.72
+   "at": 61.13
   },
   {
    "do": "mark",
    "name": "L10",
-   "at": 88.83
+   "at": 71.88
   },
   {
    "do": "ecotray",
-   "at": 90.09,
+   "at": 73.34,
    "label": "Gravar: a Balança do pátio passa a existir no EcoTray",
    "balancas": [
     {
@@ -214,7 +214,7 @@
   {
    "do": "mark",
    "name": "L11",
-   "at": 94.19
+   "at": 76.68
   },
   {
    "do": "type",
@@ -225,7 +225,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 96.09,
+   "at": 78.04,
    "label": "Balança do pátio na lista (Conectada, padrão)"
   },
   {
@@ -242,20 +242,20 @@
   {
    "do": "mark",
    "name": "L12",
-   "at": 100.92
+   "at": 81.8
   },
   {
    "do": "balanca",
    "peso": 18.6,
    "subir": 0.8,
    "oscilar": 0.8,
-   "at": 101.5,
+   "at": 82.26,
    "label": "saco de latinha na balança: 18,6 kg"
   },
   {
    "do": "mark",
    "name": "L13",
-   "at": 116.0
+   "at": 93.9
   },
   {
    "do": "type",
@@ -266,7 +266,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 116.15,
+   "at": 94.06,
    "label": "Unidade de medida padrão"
   },
   {
@@ -278,13 +278,13 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 118.12,
+   "at": 95.82,
    "label": "Casas decimais no peso"
   },
   {
    "do": "mark",
    "name": "L14",
-   "at": 125.84
+   "at": 102.3
   },
   {
    "do": "type",
@@ -295,7 +295,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 126.3,
+   "at": 102.62,
    "label": "Leitura contínua (desligada)"
   },
   {
@@ -304,7 +304,7 @@
     "selector": "main label:text-is(\"Leitura contínua\") ~ svg"
    },
    "seconds": 0.8,
-   "at": 133.24,
+   "at": 108.02,
    "label": "? da leitura contínua",
    "optional": true,
    "timeout": 4
@@ -318,18 +318,18 @@
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 137.31,
+   "at": 111.5,
    "label": "cursor sai do \"?\""
   },
   {
    "do": "mark",
    "name": "L15",
-   "at": 138.11
+   "at": 112.3
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll('main label')].find(e=>e.textContent.trim()===\"Balanças\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/1000),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 138.11,
+   "at": 112.3,
    "label": "desce até a lista Balanças"
   },
   {
@@ -338,7 +338,7 @@
     "selector": "main button[aria-label=\"Renomear balança\"]"
    },
    "seconds": 0.8,
-   "at": 139.58,
+   "at": 113.4,
    "label": "lápis Renomear balança (sem clicar)",
    "optional": true,
    "timeout": 4
@@ -346,7 +346,7 @@
   {
    "do": "mark",
    "name": "L16",
-   "at": 146.65
+   "at": 119.02
   },
   {
    "do": "type",
@@ -357,7 +357,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 149.08,
+   "at": 120.7,
    "label": "texto: escolha a balança padrão desta máquina"
   },
   {
@@ -366,7 +366,7 @@
     "selector": "main button[role=radio]"
    },
    "seconds": 0.6,
-   "at": 149.9,
+   "at": 121.28,
    "label": "bolinha da balança padrão (sem clicar)",
    "optional": true,
    "timeout": 4
@@ -374,12 +374,12 @@
   {
    "do": "mark",
    "name": "L17",
-   "at": 160.67
+   "at": 130.38
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll('main label')].find(e=>e.textContent.trim()===\"Integração com Impressora\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-200);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/1100),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 160.67,
+   "at": 130.42,
    "label": "sobe até as chaves da impressora e da balança"
   },
   {
@@ -401,7 +401,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 172.32
+   "at": 139.12
   }
  ],
  "ecotray": {

@@ -1,6 +1,6 @@
 {
  "name": "t05-cap04w",
- "title": "T05 · Cap. 4 · Conectar a impressora (narração 46,6 s ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:40:35-03:00) · SÓ O TRECHO COM O NAVEGADOR NA CENA DE WINDOWS (até a linha 6; device windows, 1280x712)",
+ "title": "T05 · Cap. 4 · Conectar a impressora (narração 37,4 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:40:40-03:00) · SÓ O TRECHO COM O NAVEGADOR NA CENA DE WINDOWS (até a linha 6; device windows, 1280x712)",
  "seed": "t05-cap04",
  "pace": 0.5,
  "cps": 9,
@@ -113,20 +113,20 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll('main h3')].find(e=>e.textContent.trim()===\"Impressora\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-120);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 0.7,
+   "at": 0.3,
    "label": "mostra a seção Impressora"
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 8.83
+   "at": 7.2
   },
   {
    "do": "click",
    "target": {
     "selector": "main div:has(> div > div > label:text-is(\"Integração com Impressora\")) > button[role=switch]"
    },
-   "at": 9.41,
+   "at": 7.54,
    "label": "chave Integração com Impressora"
   },
   {
@@ -137,14 +137,14 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 15.48
+   "at": 12.64
   },
   {
    "do": "click",
    "target": {
     "role": "combobox"
    },
-   "at": 16.49,
+   "at": 13.48,
    "label": "lista Selecione a impressora"
   },
   {
@@ -153,7 +153,7 @@
     "role": "option",
     "name": "POS-58"
    },
-   "at": 18.27,
+   "at": 14.66,
    "label": "impressora POS-58"
   },
   {
@@ -168,7 +168,7 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 21.67
+   "at": 17.28
   },
   {
    "do": "click",
@@ -177,7 +177,7 @@
     "name": "Testar",
     "exact": true
    },
-   "at": 21.67,
+   "at": 17.3,
    "label": "Testar"
   },
   {
@@ -193,7 +193,7 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 28.48
+   "at": 22.73
   },
   {
    "do": "scroll",
@@ -204,13 +204,13 @@
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 29.18,
+   "at": 23.43,
    "label": "cursor descansa"
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 39.61
+   "at": 32.17
   },
   {
    "do": "hover",
@@ -220,7 +220,7 @@
     "exact": true
    },
    "seconds": 0.6,
-   "at": 44.07,
+   "at": 35.63,
    "label": "Atualizar (sem clicar)",
    "optional": true,
    "timeout": 4
@@ -238,7 +238,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 46.55
+   "at": 37.36
   }
  ],
  "ecotray": {

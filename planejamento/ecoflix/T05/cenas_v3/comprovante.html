@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- T05 "Balança e impressora: o EcoTray" · o PAPEL REAL na tela (kit v3, clima claro: papel é mundo físico). Molde: T08/cenas_v3/comprovante.html.
+     Os dois papéis são os PDFs que o próprio app gerou na gravação final e o EcoTray falso guardou (rec/t05/t05-capNN.impressoes), rasterizados com
+     pdftoppm -r 720 em $TUT_HOME/t05/edit/out/comprovantes/capNN-1.png. Nada é redesenhado: a câmera passeia pelo papel e o marca-texto verde acompanha a fala.
+       cap04 · cupom04   ilu04_teste    "Na impressora sai um cupom de teste, com a data e a hora. ... Mas repara: ele saiu cortado do lado."
+                         (PDF do "Testar", 40 x 80 mm: o texto sai cortado de verdade; coordenadas em pt do pdftotext -bbox)
+       cap05 · cupom05   ilu05_cupom    "Testar impressão manda um cupom de exemplo. Agora ele sai inteiro, então eu salvo."
+                         (PDF do "Testar impressão" do Ajustar Escala, 58 mm, 125 mm de altura; coordenadas em pt = px a 720 dpi / 10)
+     Render: render_cenas.cjs <cap> <capNN.json> saida.mp4 --html .../comprovante.html --anexo $TUT_HOME/t05/edit/out/comprovantes --larg 1422 --dsf 1.35 --de <s> --ate <s> -->
+</head><body>
+<script type="module">
+import { pr, eo, W, vis, titulo, posTitulo, GL, mancha, piso, U, camera, plano, cena, estilo, enquadraRet }
+  from '../../../../perfis/ecoflix/cenas_v3/motor.js';
+import { ceuClaro } from '../../../../perfis/ecoflix/cenas_v3/fundo.js';
+
+const WP = 340, E = .01, YC = 4.35;   // largura do papel em px (as duas folhas saem com a mesma largura na tela), metros por px
+const LEITURA = 2.87 / E;
+
+function papel(src, wpt, hpt, marcas) {
+  const K = WP / wpt;   // px por pt
+  estilo('cupom', `
+.cupom{position:relative;width:${WP}px;background:#fff;border-radius:7px 7px 0 0;box-shadow:0 34px 60px -18px rgba(30,80,60,.38),0 8px 16px -6px rgba(30,80,60,.14)}
+.cupom img{display:block;width:${WP}px;border-radius:7px 7px 0 0}
+.cupom .z{position:absolute;left:0;bottom:-8px;display:block}
+.cupom .mk{position:absolute;border-radius:4px;background:rgba(80,208,136,.46);mix-blend-mode:multiply;transform-origin:0 50%;transform:scaleX(0)}`);
+  const h = Math.round(hpt * K), n = Math.round(WP / 14), z = Array.from({ length: n + 1 }, (_, i) => `${(i * WP / n).toFixed(1)},${i % 2 ? 8 : 0}`).join(' ');
+  const mk = Object.entries(marcas).map(([id, [x0, y0, x1, y1]]) =>
+    `<i class="mk" data-m="${id}" style="left:${(x0 * K).toFixed(1)}px;top:${(y0 * K).toFixed(1)}px;width:${((x1 - x0) * K).toFixed(1)}px;height:${((y1 - y0) * K).toFixed(1)}px"></i>`).join('');
+  return { K, h, html: `<div class="cupom" style="height:${h}px"><img src="${src}" style="height:${h}px" alt="">${mk}<svg class="z" width="${WP}" height="8"><polygon points="0,0 ${z} ${WP},0" fill="#fff"/></svg></div>` };
+}
+const marca = (e, id, t, a) => { const m = (e._mk ??= {})[id] ??= e.querySelector(`[data-m="${id}"]`); m.style.transform = `scaleX(${eo(pr(t, a, .45)).toFixed(4)})`; };
+// faixa de linhas do papel (pt, de cima para baixo) em metros, na largura inteira: para enquadraRet
+const faixa = (P, y0, y1) => [-WP / 2 * E, YC + (P.h / 2 - y1 * P.K) * E, WP / 2 * E, YC + (P.h / 2 - y0 * P.K) * E];
+const palco = () => { piso({ r: 24, x: 0, z: -2, passo: 1.3 }); U.uNevoa.value.set(.955, .975, .965, .8); ceuClaro({ halo: [.2, 3.4, -12] }); };
+
+// =====================================================================================================================
+// cap04, linha 5 (índice 4) · o papel do "Testar": 40 x 80 mm, "Teste de I", "Se você vê isso, e", "10/11/2026" (o resto sai do papel).
+// O papel sobe inteiro; a câmera chega no bloco de texto; o título, a data e, no "cortado do lado", a borda direita ganham o marca-texto.
+function cupom04(d) {
+  const t0 = W(4, 'na'), tte = W(4, 'teste'), tda = W(4, 'data'), tco = W(4, 'cortado'), tfim = W(4, 'lado', 1, 'e');
+  palco();
+  const P = papel(`${d.anexo}/cap04-1.png`, 113.39, 226.77, { ti: [58, 32.5, 113.4, 46.5], se: [50, 55.5, 113.4, 65.5], da: [74, 72.5, 113.4, 82.5], ed: [104, 28, 113.4, 86] });
+  const pp = plano(P.html, { pos: [0, YC, 0], esc: E, sangra: true }), sp = mancha(5.2, 1.6, [0, 0, .1], { op: 0 });
+  const tit = titulo('Impressora', 'O cupom de teste');
+  const TUDO = enquadraRet(null, faixa(P, 0, 227), { topo: 150, margem: 40, el: .02, az: .05 });
+  const F = enquadraRet(null, faixa(P, 24, 92), { topo: 70, margem: 56, max: LEITURA, el: .015, az: .03 });
+  camera([[t0 - 3, TUDO], [t0 + .9, { ...TUDO, d: TUDO.d * .975, az: .045 }, 'lin'], [tte - .35, F], [tfim + 2, { ...F, d: F.d * .98, az: -.02 }, 'lin']]);
+  return t => {
+    GL.style.opacity = eo(pr(t, t0 + .08, .5)).toFixed(3); posTitulo(tit, t, t0 - .9, t0 - .45, tte - .6);
+    vis(pp.e, t, t0 - .15, 1e9, { dy: 30 }); sp.material.uniforms.uOp.value = .55 * (+pp.e.style.opacity || 0);
+    marca(pp.e, 'ti', t, tte - .1); marca(pp.e, 'da', t, tda - .1); marca(pp.e, 'ed', t, tco - .1);
+  };
+}
+
+// =====================================================================================================================
+// cap05, linha 6 (índice 5) · o papel do "Testar impressão" (Ajustar Escala), 58 mm: o cupom de exemplo inteiro. O papel sobe; a câmera começa no
+// cabeçalho ("cupom de exemplo"), desce até o total ("sai inteiro") e fecha no rodapé ("salvo").
+function cupom05(d) {
+  const t0 = W(5, 'testar'), tex = W(5, 'exemplo'), tin = W(5, 'inteiro'), tsa = W(5, 'salvo'), tfim = W(5, 'salvo', 1, 'e');
+  palco();
+  const P = papel(`${d.anexo}/cap05-1.png`, 164.41, 354.34, { cab: [5, 8, 159, 44], ped: [3, 55, 161, 78], tot: [3, 256, 161, 283], rod: [30, 322, 134, 350] });
+  const pp = plano(P.html, { pos: [0, YC, 0], esc: E, sangra: true }), sp = mancha(5.2, 1.6, [0, 0, .1], { op: 0 });
+  const tit = titulo('Impressora', 'O cupom de exemplo');
+  const TUDO = enquadraRet(null, faixa(P, 0, 354), { topo: 150, margem: 40, el: .02, az: .05 });
+  const F1 = enquadraRet(null, faixa(P, 0, 90), { topo: 70, margem: 56, max: LEITURA, el: .015, az: .035 });
+  const F2 = enquadraRet(null, faixa(P, 240, 300), { topo: 70, margem: 56, max: LEITURA, el: .015, az: -.025 });
+  const F3 = enquadraRet(null, faixa(P, 290, 354), { topo: 70, margem: 56, max: LEITURA, el: .015, az: .02 });
+  camera([[t0 - 3, TUDO], [t0 + .5, { ...TUDO, d: TUDO.d * .98, az: .045 }, 'lin'], [tex - .3, F1], [tin - .6, { ...F1, d: F1.d * .985, az: .02 }, 'lin'], [tin + .25, F2],
+    [tsa - .3, F3], [tfim + 2, { ...F3, d: F3.d * .98, az: -.02 }, 'lin']]);
+  return t => {
+    GL.style.opacity = eo(pr(t, t0 + .08, .5)).toFixed(3); posTitulo(tit, t, t0 - .9, t0 - .45, tex - .6);
+    vis(pp.e, t, t0 - .15, 1e9, { dy: 30 }); sp.material.uniforms.uOp.value = .55 * (+pp.e.style.opacity || 0);
+    marca(pp.e, 'cab', t, tex - .1); marca(pp.e, 'tot', t, tin - .05); marca(pp.e, 'rod', t, tsa - .1);
+  };
+}
+
+const CAPS = { 4: cupom04, 5: cupom05 };
+cena(d => CAPS[d.cap](d), { fov: 26 });
+</script></body></html>
