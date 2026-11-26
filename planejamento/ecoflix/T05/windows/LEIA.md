@@ -1,6 +1,6 @@
 # T05 · cenas de Windows (EcoTray)
 
-Oito momentos, uma cena JSON cada, com os gestos presos às palavras da fala (tempos de `$TUT_HOME/t05/narracao/capNN.json`).
+Dez momentos (1.60.22 / EcoTray 1.7.26; 9 e 10 novas), uma cena JSON cada, com os gestos presos às palavras da fala (tempos de `$TUT_HOME/t05/narracao/capNN.json`).
 `t0` é o instante do capítulo em que a cena começa (está no `_leia` de cada JSON); `at` é segundos da cena.
 
 | # | Cena | Capítulo | t0 (s) | Duração (s) | Conteúdo |
@@ -10,9 +10,11 @@ Oito momentos, uma cena JSON cada, com os gestos presos às palavras da fala (te
 | 3 | `cap02_3_instalador.json` | 2 | 37,3 | 35,4 | instalador de "Pronto para instalar" a "✓  Instalado com sucesso!", atalho, bandeja, Fechar, painel, tracinho |
 | 4 | `cap04_4_impressao.json` | 4 | 15,0 | 26,0 | painel pela bandeja, "✓  Impresso em POS-58" (08:41:07), tracinho |
 | 5 | `cap06_5_destrava.json` | 6 | 27,7 | 8,3 | painel aguardando e libera a balança (08:44:10) |
-| 6 | `cap06_6_configurar.json` | 6 | 36,0 | 30,5 | "Configurar Balanças", "Nova balança", OK, Gravar |
+| 6 | `cap06_6_configurar.json` | 6 | 36,0 | 58,3 | "Configurar Balanças", "Nova balança", lista Protocolo (Toledo, Filizola), correção (clique em ÷10, depois Normal), Aplicar (era OK), Gravar |
 | 7 | `cap09_7_sair.json` | 9 | 0,0 | 7,2 | botão direito na bandeja, menu, "Sair" |
 | 8 | `cap09_8_atalho.json` | 9 | 41,0 | 6,9 | clique duplo no atalho "EcoTray" |
+| 9 | `cap10_9_atualizar.json` | 10 | 9,0 | 29,3 | painel, Atualizar Versão (Verificando... e ✓ Já atualizado), aba Logs (Geral e Balança do pátio), Copiar tudo (✓ Copiado) |
+| 10 | `cap10_10_menu.json` | 10 | 38,2 | 13,8 | botão direito na bandeja: menu com Reconectar balança e Desinstalar (cursor para, sem clicar), Esc |
 
 ## Render
 Pasta de trabalho `$TUT_HOME/t05/windows/` com `app/icon.png` (`ecotray/assets/icon.png` do app), `app/feature-integracao.png`
@@ -48,3 +50,11 @@ Conferência: `node ferramentas/windows/cena_windows.cjs <cena>.json stills --st
 renderizadas em 1280x800 (`"saida": [1280, 800]` numa cópia da cena) com `--mira` no lugar do cursor da skill (sem anel de clique).
 Quadros de conferência (`--stills --mira`) das 8 cenas olhados: textos do Windows e do EcoTray iguais ao código e ao inventário.
 Render final: o comando acima (2560x1600 + telemetria), sem `--mira`, depois `specs.json` → `montar_cap.py` → `render_chapter.py`.
+
+## Etapa 2 (22/11, EcoTray 1.7.26)
+- Capturas refeitas com `--app /dev/shm/ecoflix-src22/ecotray` (rodapé "EcoTray  v1.7.26", menu "EcoTray v1.7.26"). Sessão nova `painel_ecotray` (cenas 9 e 10).
+- `ecotray_sim.py`: `estado.atualizacao` ({"status": "up-to-date", "atraso": 2.0}) atrasa a resposta do `check_update` para a captura pegar o "Verificando...";
+  o passo `aba` agora também escolhe subabas (Geral, Balança do pátio). Diferença assumida: o `ecotray.py` de verdade responde "checking" na hora e o painel trata
+  essa resposta como erro por instantes (ver MELHORIAS_ECOSISTEMA.md).
+- O registro da aba Logs é FICTÍCIO, no formato do `ecotray.log` (asctime, nível, logger); as linhas [RAW] têm peso 312 (a "carroça do Valdir").
+- Cenas 4, 5, 7 e 8: só mudou a captura (versão); o JSON é o mesmo. Tempos de todas as cenas seguem a voz ESTIMADA: refazer os `at` com a voz real.

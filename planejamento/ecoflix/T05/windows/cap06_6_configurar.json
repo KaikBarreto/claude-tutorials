@@ -1,7 +1,7 @@
 {
- "_leia": "Momento 6 (cap. 6, t0 = 36,0 s): Configurar Balanças detecta a COM3, Adicionar abre Nova balança (nome, porta), OK e Gravar; a balança aparece conectada e a bolinha amarela sai do ícone. Falas: 'Balanças.' 36,37; 'tique.' 44,92; 'Adicionar,' 46,03; 'pátio,' 48,99; 'marcada.' 51,04; 'Automático.' 57,38; 'OK' 61,53; 'Gravar.' 61,91; 'conectada.' 65,33.",
+ "_leia": "Momento 6 (cap. 6, t0 = 36,0 s, ~58 s; EcoTray 1.7.26): Configurar Balanças detecta a COM3, Adicionar abre Nova balança (nome, porta); a lista Protocolo abre (Toledo, Filizola) em 'lista' (L7); a correção (L8) e o clique em ÷10 (L9, depois Normal); Aplicar (era OK), Gravar; a balança aparece conectada e a bolinha amarela sai do ícone. Falas (tempos estimados, refazer com a voz real): 'Balanças.' 36,37; 'tique.' 44,92; 'Adicionar,' 46,03; 'pátio,' 48,99; 'marcada.' 51,04; 'Automático.' 57,38; 'lista' 64,37; 'Toledo' 67,40; 'Filizola.' 68,09; 'correção.' 70,34; 'dividir' 84,20; 'dez.' 85,11; 'normal.' 88,08; 'Aplicar' 89,03; 'Gravar.' 89,79; 'conectada.' 93,21.",
  "nome": "t5-cap06-6-configurar",
- "duracao": 30.5,
+ "duracao": 58.3,
  "capturas": "capturas",
  "relogio": {
   "hora": "08:44",
@@ -140,53 +140,147 @@
    "quadro": "nova_porta"
   },
   {
-   "at": 17.8,
+   "at": 16.8,
    "do": "mover",
    "alvo": "dialogo:campo:Protocolo",
    "label": "Protocolo"
   },
   {
-   "at": 25.6,
+   "at": 28.0,
    "do": "clicar",
-   "alvo": "dialogo:OK",
-   "label": "OK"
+   "alvo": "dialogo:campo:Protocolo",
+   "label": "Protocolo (abre a lista)",
+   "ponto": [
+    0.94,
+    0.5
+   ]
   },
   {
-   "at": 25.66,
+   "at": 28.06,
+   "do": "janela",
+   "slot": "dialogo",
+   "quadro": "nova_proto_aberta"
+  },
+  {
+   "at": 28.06,
+   "do": "janela",
+   "slot": "lista",
+   "quadro": "nova_proto_lista"
+  },
+  {
+   "at": 31.2,
+   "do": "mover",
+   "alvo": "lista:item:Toledo",
+   "label": "Toledo"
+  },
+  {
+   "at": 32.0,
+   "do": "mover",
+   "alvo": "lista:item:Filizola",
+   "label": "Filizola"
+  },
+  {
+   "at": 33.0,
+   "do": "clicar",
+   "alvo": "lista:item:Automático",
+   "label": "Automático"
+  },
+  {
+   "at": 33.06,
+   "do": "janela",
+   "slot": "lista",
+   "quadro": null
+  },
+  {
+   "at": 33.06,
+   "do": "janela",
+   "slot": "dialogo",
+   "quadro": "nova_proto_auto"
+  },
+  {
+   "at": 34.2,
+   "do": "mover",
+   "alvo": "dialogo:campo:Correção (×)",
+   "label": "Correção"
+  },
+  {
+   "at": 46.3,
+   "do": "mover",
+   "alvo": "dialogo:÷10 (0,1×)",
+   "label": "÷10 (0,1×)"
+  },
+  {
+   "at": 46.3,
+   "do": "janela",
+   "slot": "dialogo",
+   "quadro": "nova_div10_hover"
+  },
+  {
+   "at": 48.9,
+   "do": "clicar",
+   "alvo": "dialogo:÷10 (0,1×)",
+   "label": "clica ÷10"
+  },
+  {
+   "at": 48.96,
+   "do": "janela",
+   "slot": "dialogo",
+   "quadro": "nova_div10"
+  },
+  {
+   "at": 51.9,
+   "do": "clicar",
+   "alvo": "dialogo:Normal (1×)",
+   "label": "clica Normal"
+  },
+  {
+   "at": 51.96,
+   "do": "janela",
+   "slot": "dialogo",
+   "quadro": "nova_normal"
+  },
+  {
+   "at": 53.2,
+   "do": "clicar",
+   "alvo": "dialogo:Aplicar",
+   "label": "Aplicar"
+  },
+  {
+   "at": 53.26,
    "do": "janela",
    "slot": "dialogo",
    "quadro": null
   },
   {
-   "at": 25.66,
+   "at": 53.26,
    "do": "janela",
    "slot": "config",
    "quadro": "cfg_com_balanca"
   },
   {
-   "at": 26.5,
+   "at": 54.1,
    "do": "clicar",
    "alvo": "config:Gravar",
    "label": "Gravar"
   },
   {
-   "at": 26.56,
+   "at": 54.16,
    "do": "janela",
    "slot": "config",
    "quadro": null
   },
   {
-   "at": 26.75,
+   "at": 54.35,
    "do": "painel",
    "quadro": "painel_balanca_do_patio"
   },
   {
-   "at": 26.95,
+   "at": 54.55,
    "do": "bandeja",
    "icone": "bandeja_ok"
   },
   {
-   "at": 28.3,
+   "at": 56.4,
    "do": "mover",
    "alvo": "painel:Balança do pátio",
    "label": "a balança no painel"

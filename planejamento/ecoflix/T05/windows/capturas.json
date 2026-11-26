@@ -1,5 +1,5 @@
 {
- "_leia": "Capturas do EcoTray da T5 (cenas de Windows). Cada sessão roda o código do app (dashboard.py, installer_gui.py, tray_app.py). Mundo: Recicla Vale Metais, 10/11/2026, de 08:33 a 08:58. Formato: docs/10-cena-windows.md.",
+ "_leia": "Capturas do EcoTray 1.7.26 da T5 (cenas de Windows; etapa 2, 22/11). Cada sessão roda o código do app (dashboard.py, installer_gui.py, tray_app.py). Mundo: Recicla Vale Metais, 10/11/2026, de 08:33 a 09:02. Formato: docs/10-cena-windows.md.",
  "tela": [
   1920,
   1200
@@ -133,10 +133,10 @@
     "printers_list": [
      "POS-58"
     ],
-    "version": "1.7.22"
+    "version": "1.7.26"
    },
    "servidor": {
-    "versao": "1.7.22",
+    "versao": "1.7.26",
     "balancas": [],
     "balanca_padrao": null,
     "pesos": {},
@@ -171,10 +171,10 @@
     "printers_list": [
      "POS-58"
     ],
-    "version": "1.7.22"
+    "version": "1.7.26"
    },
    "servidor": {
-    "versao": "1.7.22",
+    "versao": "1.7.26",
     "balancas": [],
     "balanca_padrao": null,
     "pesos": {},
@@ -225,10 +225,10 @@
     "printers_list": [
      "POS-58"
     ],
-    "version": "1.7.22"
+    "version": "1.7.26"
    },
    "servidor": {
-    "versao": "1.7.22",
+    "versao": "1.7.26",
     "balancas": [],
     "balanca_padrao": null,
     "pesos": {},
@@ -360,7 +360,42 @@
     },
     {
      "janela": "Nova balança",
-     "clique": "OK",
+     "abrir_lista": "Protocolo",
+     "espera": 0.4,
+     "capturar": "nova_proto_aberta"
+    },
+    {
+     "janela": "lista",
+     "capturar": "nova_proto_lista"
+    },
+    {
+     "janela": "Nova balança",
+     "escolher": {
+      "campo": "Protocolo",
+      "valor": "Automático"
+     },
+     "capturar": "nova_proto_auto"
+    },
+    {
+     "janela": "Nova balança",
+     "ponteiro": "÷10 (0,1×)",
+     "capturar": "nova_div10_hover"
+    },
+    {
+     "janela": "Nova balança",
+     "clique": "÷10 (0,1×)",
+     "espera": 0.3,
+     "capturar": "nova_div10"
+    },
+    {
+     "janela": "Nova balança",
+     "clique": "Normal (1×)",
+     "espera": 0.3,
+     "capturar": "nova_normal"
+    },
+    {
+     "janela": "Nova balança",
+     "clique": "Aplicar",
      "espera": 0.2
     },
     {
@@ -379,6 +414,125 @@
     {
      "espera": 1.2,
      "capturar": "painel_balanca_do_patio"
+    }
+   ]
+  },
+  {
+   "nome": "painel_ecotray",
+   "programa": "painel",
+   "_leia": "Cena 9 (cap. 10): o painel com a balança do pátio ligada; Atualizar Versão (Verificando... e ✓ Já atualizado), aba Logs com o registro (FICTÍCIO, no formato do ecotray.log: asctime, nível, logger) e as subabas Geral e Balança do pátio, Copiar tudo (✓ Copiado). A resposta do check_update é atrasada (atualizacao.atraso) para a captura pegar o Verificando.",
+   "abrir": {
+    "status": "ok",
+    "scale_info": "Balança: COM3@9600",
+    "printer_info": "Impressora: POS-58",
+    "printers_list": [
+     "POS-58"
+    ],
+    "version": "1.7.26"
+   },
+   "servidor": {
+    "versao": "1.7.26",
+    "balancas": [
+     {
+      "id": "bal-patio",
+      "nome": "Balança do pátio",
+      "conectada": true,
+      "porta": "COM3"
+     }
+    ],
+    "balanca_padrao": "bal-patio",
+    "pesos": {
+     "bal-patio": "0.000"
+    },
+    "impressoras": [
+     "POS-58"
+    ],
+    "impressora_padrao": "POS-58",
+    "trava": "unlocked",
+    "navegadores": 1,
+    "hora": "09:00:10",
+    "atividade": [
+     {
+      "ts": "08:59:31",
+      "msg": "[scale:Balança do pátio] conectada",
+      "kind": "ok"
+     },
+     {
+      "ts": "08:48:19",
+      "msg": "Impresso em POS-58",
+      "kind": "ok"
+     },
+     {
+      "ts": "08:44:42",
+      "msg": "[scale:Balança do pátio] conectada",
+      "kind": "ok"
+     }
+    ]
+   },
+   "log": [
+    "2026-11-10 08:12:30,118 [INFO] ecotray: Iniciando EcoTray v1.7.26...",
+    "2026-11-10 08:12:30,402 [INFO] ws_server: WebSocket server em ws://127.0.0.1:8053",
+    "2026-11-10 08:12:30,405 [INFO] ws_server: WebSocket server em ws://127.0.0.1:8054",
+    "2026-11-10 08:12:30,951 [INFO] ecotray: Impressora única detectada — selecionada automaticamente: POS-58",
+    "2026-11-10 08:12:31,020 [INFO] ecotray: EcoTray em execução.",
+    "2026-11-10 08:44:42,310 [INFO] ecotray: [scale:Balança do pátio] connected:COM3@9600",
+    "2026-11-10 08:44:44,812 [INFO] scale_reader: [scale:Balança do pátio] [RAW] porta COM3 @ 9600: hex[53 54 2c 47 53 2c 20 20 20 20 30 2e 30 6b 67 0d 0a] ascii[ST,GS,    0.0kg..]",
+    "2026-11-10 08:46:05,477 [INFO] scale_reader: [scale:Balança do pátio] [RAW] porta COM3 @ 9600: hex[53 54 2c 47 53 2c 20 20 20 33 31 32 2e 30 6b 67 0d 0a] ascii[ST,GS,   312.0kg..]",
+    "2026-11-10 08:46:06,031 [INFO] scale_reader: [scale:Balança do pátio] [RAW] porta COM3 @ 9600: hex[53 54 2c 47 53 2c 20 20 20 33 31 32 2e 30 6b 67 0d 0a] ascii[ST,GS,   312.0kg..]",
+    "2026-11-10 08:48:19,226 [INFO] ecotray: Impresso em POS-58",
+    "2026-11-10 08:58:01,640 [INFO] ecotray: Encerrando EcoTray...",
+    "2026-11-10 08:58:44,905 [INFO] ecotray: Iniciando EcoTray v1.7.26...",
+    "2026-11-10 08:58:45,333 [INFO] ecotray: [scale:Balança do pátio] connected:COM3@9600",
+    "2026-11-10 08:59:30,118 [INFO] ecotray: Reconectando balanças...",
+    "2026-11-10 08:59:31,402 [INFO] ecotray: [scale:Balança do pátio] connected:COM3@9600"
+   ],
+   "passos": [
+    {
+     "capturar": "upd_0"
+    },
+    {
+     "ponteiro": "Atualizar Versão",
+     "capturar": "upd_hover"
+    },
+    {
+     "estado": {
+      "atualizacao": {
+       "status": "up-to-date",
+       "atraso": 2.0
+      }
+     }
+    },
+    {
+     "clique": "Atualizar Versão",
+     "espera": 0.6,
+     "capturar": "upd_verificando"
+    },
+    {
+     "espera": 2.2,
+     "capturar": "upd_ok"
+    },
+    {
+     "aba": "Logs",
+     "espera": 0.9,
+     "capturar": "logs_geral"
+    },
+    {
+     "espera": 0.6,
+     "capturar": "logs_balanca",
+     "aba": "Balança do pátio"
+    },
+    {
+     "espera": 3.0,
+     "capturar": "logs_balanca_2"
+    },
+    {
+     "ponteiro": "Copiar tudo",
+     "capturar": "logs_copiar_hover"
+    },
+    {
+     "clique": "Copiar tudo",
+     "espera": 0.3,
+     "capturar": "logs_copiado"
     }
    ]
   }
