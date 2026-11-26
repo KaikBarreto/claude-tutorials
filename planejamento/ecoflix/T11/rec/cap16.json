@@ -1,6 +1,6 @@
 {
  "name": "t11-cap16",
- "title": "T11 · Cap. 16 · Perda padrão: a sobra já sai calculada (narração 77,8 s; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T17:30:00-03:00)",
+ "title": "T11 · Cap. 16 · Perda padrão: a sobra já sai calculada (narração 78,3 s; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T17:30:00-03:00)",
  "seed": "t11-cap16",
  "pace": 0.5,
  "cps": 9,
@@ -448,14 +448,14 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 50.72
+   "at": 51.22
   },
   {
    "do": "click",
    "target": {
     "selector": "main div.group:has(span:text-is('#4')) p.font-medium"
    },
-   "at": 50.72,
+   "at": 51.22,
    "label": "o cartão #4"
   },
   {
@@ -470,7 +470,7 @@
     "name": "Lançar produção do dia",
     "exact": true
    },
-   "at": 51.66,
+   "at": 52.16,
    "label": "Lançar produção do dia"
   },
   {
@@ -483,7 +483,7 @@
    "target": {
     "selector": "[role=dialog]:has(#entry-date) div.flex.items-center:has(> span:text-is('Diego Morais')) input"
    },
-   "at": 52.56,
+   "at": 53.06,
    "label": "Diego Morais"
   },
   {
@@ -493,7 +493,7 @@
    },
    "text": "40",
    "cps": 20,
-   "at": 53.51,
+   "at": 54.01,
    "label": "40",
    "noClick": true
   },
@@ -516,7 +516,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 54.48,
+   "at": 54.98,
    "label": "[ZOOM] Subprodutos: Capa de fio 24 Kg, selo Da ficha"
   },
   {
@@ -525,7 +525,7 @@
     "selector": "[role=dialog]:has(#entry-date) div.w-28 input"
    },
    "seconds": 1.0,
-   "at": 56.41,
+   "at": 56.91,
    "label": "Capa de fio 24 Kg (sugerido pela ficha)",
    "optional": true,
    "timeout": 4
@@ -533,12 +533,12 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 63.68
+   "at": 64.18
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog]:has(#entry-date) *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Mat\\u00e9ria-prima usada\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 63.68,
+   "at": 64.18,
    "label": "desce até Matéria-prima usada"
   },
   {
@@ -553,7 +553,7 @@
     "within": "[role=dialog]:has(#entry-date)"
    },
    "seconds": 1.6,
-   "at": 65.36,
+   "at": 65.86,
    "label": "[ZOOM] A ficha já conta 37,5% de perda deste insumo",
    "optional": true,
    "timeout": 4
@@ -561,7 +561,7 @@
   {
    "do": "mark",
    "name": "L8",
-   "at": 70.88
+   "at": 71.38
   },
   {
    "do": "click",
@@ -570,7 +570,7 @@
     "name": "Salvar lançamento",
     "exact": true
    },
-   "at": 70.88,
+   "at": 71.38,
    "label": "Salvar lançamento",
    "noScroll": true
   },
@@ -599,7 +599,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 77.84
+   "at": 78.34
   }
  ]
 }
