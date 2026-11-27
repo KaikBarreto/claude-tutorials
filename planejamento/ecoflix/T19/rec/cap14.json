@@ -1,6 +1,6 @@
 {
  "name": "t19-cap14",
- "title": "T19 · Cap. 14 · Folha, registro e ausências (narração 119,4 s, ESTIMADA; marcas L1..L11 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T16:30:00-03:00)",
+ "title": "T19 · Cap. 14 · Folha, registro e ausências (narração 95,0 s, da voz; marcas L1..L11 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T16:30:00-03:00)",
  "fakeNow": "2026-11-10T16:30:00-03:00",
  "seed": "t19-cap14",
  "pace": 0.5,
@@ -12,8 +12,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
@@ -149,7 +149,7 @@
     "within": "main"
    },
    "seconds": 0.3,
-   "at": 1.78,
+   "at": 0.89,
    "label": "tabela da equipe: Dias com registro, Trabalhado, Esperado",
    "optional": true,
    "timeout": 4
@@ -160,7 +160,7 @@
     "selector": "main tbody tr:has-text('Marcos Antunes') button"
    },
    "seconds": 3.0,
-   "at": 4.36,
+   "at": 2.97,
    "label": "o saldo do Marcos: Composição do saldo (extras e atrasos)",
    "optional": true,
    "timeout": 4
@@ -168,14 +168,14 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 11.32
+   "at": 8.02
   },
   {
    "do": "click",
    "target": {
     "selector": "main button[role=combobox]:has-text('Todos os funcionários')"
    },
-   "at": 11.32,
+   "at": 8.02,
    "label": "escolher o funcionário"
   },
   {
@@ -194,7 +194,7 @@
     "name": "Cláudio Ferraz",
     "exact": true
    },
-   "at": 18.22,
+   "at": 13.44,
    "label": "Cláudio Ferraz",
    "noScroll": true
   },
@@ -215,7 +215,7 @@
     "within": "main"
    },
    "seconds": 0.3,
-   "at": 18.9,
+   "at": 14.09,
    "label": "coluna Entrada → Saída",
    "optional": true,
    "timeout": 4
@@ -227,8 +227,8 @@
     "exact": true,
     "within": "main"
    },
-   "seconds": 0.21,
-   "at": 21.03,
+   "seconds": 0.1,
+   "at": 15.93,
    "label": "coluna Trabalhado",
    "optional": true,
    "timeout": 4
@@ -240,8 +240,8 @@
     "exact": true,
     "within": "main"
    },
-   "seconds": 0.4,
-   "at": 22.24,
+   "seconds": 0.21,
+   "at": 16.81,
    "label": "coluna Saldo",
    "optional": true,
    "timeout": 4
@@ -249,12 +249,12 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 23.89
+   "at": 18.02
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim().startsWith(\"05/11\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-380);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 24.18,
+   "at": 18.32,
    "label": "rola até o dia 05/11"
   },
   {
@@ -263,7 +263,7 @@
     "selector": "main tr:has-text('05/11') :text-is('Falta')"
    },
    "seconds": 2.4,
-   "at": 25.78,
+   "at": 19.69,
    "label": "a linha de 05/11: Falta (Lançar)",
    "optional": true,
    "timeout": 4
@@ -271,7 +271,7 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 36.22
+   "at": 28.54
   },
   {
    "do": "scroll",
@@ -282,20 +282,20 @@
    "by": 0,
    "duration": 0.2,
    "after": 0,
-   "at": 36.83,
+   "at": 29.14,
    "label": "cursor descansa (ilustração da falta que aparece sozinha)"
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 40.83
+   "at": 31.58
   },
   {
    "do": "click",
    "target": {
     "selector": "main tr:has-text('05/11') button:has-text('Lançar')"
    },
-   "at": 43.11,
+   "at": 33.58,
    "label": "Lançar (05/11)"
   },
   {
@@ -308,7 +308,7 @@
    "target": {
     "selector": "[role=dialog] #absence-type"
    },
-   "at": 43.87,
+   "at": 34.14,
    "label": "Tipo: Atestado (abre a lista)"
   },
   {
@@ -327,7 +327,7 @@
     "name": "Atestado",
     "exact": true
    },
-   "at": 44.77,
+   "at": 35.08,
    "label": "Tipo: Atestado",
    "noScroll": true
   },
@@ -336,7 +336,7 @@
    "target": {
     "selector": "[role=dialog] #absence-notes"
    },
-   "at": 45.61,
+   "at": 35.88,
    "label": "campo Observação"
   },
   {
@@ -346,7 +346,7 @@
    },
    "text": "Consulta médica",
    "cps": 40,
-   "at": 46.59,
+   "at": 36.82,
    "label": "Observação: Consulta médica",
    "noClick": true
   },
@@ -355,7 +355,7 @@
    "target": {
     "selector": "[role=dialog] button:text-is('Lançar ausência')"
    },
-   "at": 46.9,
+   "at": 37.02,
    "label": "Lançar ausência"
   },
   {
@@ -378,7 +378,7 @@
     "selector": "main tr:has-text('05/11') :text-is('Atestado')"
    },
    "seconds": 0.1,
-   "at": 49.48,
+   "at": 39.33,
    "label": "05/11 agora Atestado",
    "optional": true,
    "timeout": 4
@@ -386,12 +386,12 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 50.44
+   "at": 39.9
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim().startsWith(\"Total do m\\u00eas\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-520);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 50.97,
+   "at": 40.36,
    "label": "rola até o rodapé da folha"
   },
   {
@@ -405,8 +405,8 @@
     "text": "Total do mês",
     "within": "main"
    },
-   "seconds": 0.8,
-   "at": 51.88,
+   "seconds": 0.68,
+   "at": 41.33,
    "label": "Total do mês (1 com atestado)",
    "optional": true,
    "timeout": 4
@@ -418,7 +418,7 @@
     "within": "main"
    },
    "seconds": 2.0,
-   "at": 53.86,
+   "at": 43.01,
    "label": "aviso: dia(s) sem saída registrada não entram no saldo",
    "optional": true,
    "timeout": 4
@@ -426,14 +426,14 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 61.57
+   "at": 49.23
   },
   {
    "do": "click",
    "target": {
     "selector": "main button:has-text('Exportar')"
    },
-   "at": 64.46,
+   "at": 51.23,
    "label": "Exportar"
   },
   {
@@ -447,7 +447,7 @@
     "selector": "[role=dialog] label[for='time-sheet-mode-pdf']"
    },
    "seconds": 0.4,
-   "at": 65.67,
+   "at": 52.34,
    "label": "Espelho de Ponto (PDF)",
    "optional": true,
    "timeout": 4
@@ -458,7 +458,7 @@
     "selector": "[role=dialog] label[for='time-sheet-mode-excel']"
    },
    "seconds": 0.4,
-   "at": 68.33,
+   "at": 54.26,
    "label": "Planilha para contabilidade (Excel)",
    "optional": true,
    "timeout": 4
@@ -469,8 +469,8 @@
     "text": "Não substitui arquivos fiscais",
     "within": "[role=dialog]"
    },
-   "seconds": 1.2,
-   "at": 71.74,
+   "seconds": 0.91,
+   "at": 57.06,
    "label": "Não substitui arquivos fiscais AEJ ou AFD.",
    "optional": true,
    "timeout": 4
@@ -480,7 +480,7 @@
    "target": {
     "selector": "[role=dialog] button:text-is('Cancelar'):not(.absolute)"
    },
-   "at": 74.53,
+   "at": 58.97,
    "label": "Cancelar"
   },
   {
@@ -493,14 +493,14 @@
   {
    "do": "mark",
    "name": "L8",
-   "at": 74.98
+   "at": 59.23
   },
   {
    "do": "click",
    "target": {
     "selector": "#tab-btn-registro-ponto"
    },
-   "at": 75.36,
+   "at": 59.55,
    "label": "aba Registro de Ponto"
   },
   {
@@ -516,7 +516,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Gabriel Rocha\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-330);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 78.74,
+   "at": 62.29,
    "label": "rola até a batida do Gabriel"
   },
   {
@@ -525,7 +525,7 @@
     "selector": "xpath=//main//*[normalize-space(text())='Gabriel Rocha']/following::div[contains(@class,'border')][1]"
    },
    "seconds": 1.6,
-   "at": 79.76,
+   "at": 63.06,
    "label": "as batidas do Gabriel: selfie, hora, endereço, Mobile - Chrome",
    "optional": true,
    "timeout": 4
@@ -533,12 +533,12 @@
   {
    "do": "mark",
    "name": "L9",
-   "at": 84.36
+   "at": 66.37
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim().startsWith(\"Registro de Ponto\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-200);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/400),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 86.47,
+   "at": 68.07,
    "label": "volta ao topo"
   },
   {
@@ -546,7 +546,7 @@
    "target": {
     "selector": "main button:has-text('Lançar manual')"
    },
-   "at": 87.17,
+   "at": 68.77,
    "label": "Lançar manual"
   },
   {
@@ -559,7 +559,7 @@
    "target": {
     "selector": "[role=dialog] #punch-emp"
    },
-   "at": 88.46,
+   "at": 69.73,
    "label": "Funcionário: Juliana Prado (abre a lista)"
   },
   {
@@ -578,7 +578,7 @@
     "name": "Juliana Prado",
     "exact": true
    },
-   "at": 89.37,
+   "at": 70.59,
    "label": "Funcionário: Juliana Prado",
    "noScroll": true
   },
@@ -588,7 +588,7 @@
     "selector": "[role=dialog] #punch-type"
    },
    "seconds": 0.1,
-   "at": 89.9,
+   "at": 71.16,
    "label": "Tipo: Entrada",
    "optional": true,
    "timeout": 4
@@ -598,7 +598,7 @@
    "target": {
     "selector": "[role=dialog] #punch-when"
    },
-   "at": 90.51,
+   "at": 71.65,
    "label": "Data e hora da batida"
   },
   {
@@ -616,7 +616,7 @@
   {
    "do": "eval",
    "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM FOCO';document.execCommand('insertText',false,\"Esqueceu de bater\");return e.value})()",
-   "at": 91.79,
+   "at": 72.89,
    "label": "Observação: Esqueceu de bater"
   },
   {
@@ -624,7 +624,7 @@
    "target": {
     "selector": "[role=dialog] button:text-is('Lançar')"
    },
-   "at": 92.48,
+   "at": 73.65,
    "label": "Lançar"
   },
   {
@@ -642,7 +642,7 @@
   {
    "do": "mark",
    "name": "L10",
-   "at": 94.88
+   "at": 75.41
   },
   {
    "do": "hover",
@@ -650,7 +650,7 @@
     "selector": "main button:text-is('Hoje')"
    },
    "seconds": 0.3,
-   "at": 100.35,
+   "at": 79.8,
    "label": "filtros Hoje, Semana, Mês",
    "optional": true,
    "timeout": 4
@@ -678,14 +678,14 @@
   {
    "do": "mark",
    "name": "L11",
-   "at": 104.12
+   "at": 82.77
   },
   {
    "do": "click",
    "target": {
     "selector": "#tab-btn-ausencias"
    },
-   "at": 104.8,
+   "at": 83.41,
    "label": "aba Ausências"
   },
   {
@@ -698,7 +698,7 @@
    "target": {
     "selector": "main button:has-text('Lançar ausência')"
    },
-   "at": 105.94,
+   "at": 84.45,
    "label": "Lançar ausência"
   },
   {
@@ -711,7 +711,7 @@
    "target": {
     "selector": "[role=dialog] #absence-employee"
    },
-   "at": 107.23,
+   "at": 85.33,
    "label": "Funcionário: Juliana Prado (abre a lista)"
   },
   {
@@ -730,7 +730,7 @@
     "name": "Juliana Prado",
     "exact": true
    },
-   "at": 108.37,
+   "at": 86.13,
    "label": "Funcionário: Juliana Prado",
    "noScroll": true
   },
@@ -739,7 +739,7 @@
    "target": {
     "selector": "[role=dialog] #absence-type"
    },
-   "at": 108.75,
+   "at": 86.69,
    "label": "Tipo: Férias (abre a lista)"
   },
   {
@@ -758,7 +758,7 @@
     "name": "Férias",
     "exact": true
    },
-   "at": 109.58,
+   "at": 87.45,
    "label": "Tipo: Férias",
    "noScroll": true
   },
@@ -771,7 +771,7 @@
    "target": {
     "selector": "[role=dialog] #absence-start"
    },
-   "at": 110.1,
+   "at": 87.75,
    "label": "campo Data de início 07/12/2026 (abre o calendário)",
    "noScroll": true
   },
@@ -780,7 +780,7 @@
    "target": {
     "selector": "[data-radix-popper-content-wrapper] button[name='next-month']"
    },
-   "at": 110.85,
+   "at": 88.5,
    "label": "Data de início 07/12/2026: próximo mês",
    "noScroll": true
   },
@@ -789,7 +789,7 @@
    "target": {
     "selector": "[data-radix-popper-content-wrapper] button[name='day']:not(.day-outside):text-is('7')"
    },
-   "at": 111.65,
+   "at": 89.3,
    "label": "Data de início 07/12/2026",
    "noScroll": true
   },
@@ -802,7 +802,7 @@
    "target": {
     "selector": "[role=dialog] #absence-end"
    },
-   "at": 111.54,
+   "at": 88.95,
    "label": "campo Data de fim 05/01/2027 (abre o calendário)",
    "noScroll": true
   },
@@ -811,7 +811,7 @@
    "target": {
     "selector": "[data-radix-popper-content-wrapper] button[name='next-month']"
    },
-   "at": 112.29,
+   "at": 89.7,
    "label": "Data de fim 05/01/2027: próximo mês",
    "noScroll": true
   },
@@ -820,7 +820,7 @@
    "target": {
     "selector": "[data-radix-popper-content-wrapper] button[name='day']:not(.day-outside):text-is('5')"
    },
-   "at": 113.09,
+   "at": 90.5,
    "label": "Data de fim 05/01/2027",
    "noScroll": true
   },
@@ -838,7 +838,7 @@
    "target": {
     "selector": "[role=dialog] button:text-is('Lançar ausência')"
    },
-   "at": 113.61,
+   "at": 90.4,
    "label": "Lançar ausência"
   },
   {
@@ -854,7 +854,7 @@
     "selector": "main tr:has-text('Juliana Prado')"
    },
    "seconds": 1.4,
-   "at": 116.19,
+   "at": 92.71,
    "label": "a linha das férias da Juliana na tabela",
    "optional": true,
    "timeout": 4
@@ -867,7 +867,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 119.43
+   "at": 95.04
   }
  ]
 }

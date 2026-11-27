@@ -1,6 +1,6 @@
 {
  "name": "t19-cap02",
- "title": "T19 · Cap. 2 · Cadastrar o funcionário (narração 114,4 s, ESTIMADA; marcas L1..L11 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T19 · Cap. 2 · Cadastrar o funcionário (narração 98,3 s, da voz; marcas L1..L11 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "fakeNow": "2026-11-10T08:30:00-03:00",
  "seed": "t19-cap02",
  "pace": 0.5,
@@ -12,8 +12,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
@@ -122,7 +122,7 @@
    "target": {
     "selector": "main button:has-text('Novo Funcionário')"
    },
-   "at": 6.18,
+   "at": 4.9,
    "label": "Novo Funcionário"
   },
   {
@@ -138,7 +138,7 @@
     "selector": "[role=dialog] [role=tab]:has-text('Dados')"
    },
    "seconds": 0.1,
-   "at": 9.3,
+   "at": 7.46,
    "label": "janela Novo Funcionário, aba Dados",
    "optional": true,
    "timeout": 4
@@ -148,13 +148,13 @@
    "target": {
     "selector": "[role=dialog] #name"
    },
-   "at": 9.88,
+   "at": 7.88,
    "label": "campo Nome *"
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 10.18
+   "at": 8.18
   },
   {
    "do": "type",
@@ -163,7 +163,7 @@
    },
    "text": "Gabriel Rocha",
    "cps": 40,
-   "at": 11.46,
+   "at": 9.42,
    "label": "Nome: Gabriel Rocha",
    "noClick": true
   },
@@ -172,7 +172,7 @@
    "target": {
     "selector": "[role=dialog] #cpf"
    },
-   "at": 12.76,
+   "at": 10.72,
    "label": "campo CPF"
   },
   {
@@ -182,7 +182,7 @@
    },
    "text": "41827395664",
    "cps": 40,
-   "at": 13.56,
+   "at": 11.52,
    "label": "CPF 418.273.956-64",
    "noClick": true
   },
@@ -191,7 +191,7 @@
    "target": {
     "selector": "[role=dialog] #phone"
    },
-   "at": 15.49,
+   "at": 13.54,
    "label": "campo Telefone (sai do CPF: o CPF é conferido)"
   },
   {
@@ -201,7 +201,7 @@
    },
    "text": "12900004107",
    "cps": 40,
-   "at": 16.34,
+   "at": 14.39,
    "label": "Telefone (12) 90000-4107",
    "noClick": true
   },
@@ -213,12 +213,12 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 16.9
+   "at": 14.66
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim().startsWith(\"Cargo\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 16.9,
+   "at": 14.66,
    "label": "rola a janela até Cargo"
   },
   {
@@ -226,13 +226,13 @@
    "target": {
     "selector": "[role=dialog] #position"
    },
-   "at": 17.06,
+   "at": 14.82,
    "label": "campo Cargo"
   },
   {
    "do": "eval",
    "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM FOCO';document.execCommand('insertText',false,\"Operador de empilhadeira\");return e.value})()",
-   "at": 18.52,
+   "at": 16.39,
    "label": "Cargo: Operador de empilhadeira"
   },
   {
@@ -240,7 +240,7 @@
    "target": {
     "selector": "[role=dialog] #department"
    },
-   "at": 20.02,
+   "at": 17.22,
    "label": "Departamento: Pátio (abre a lista)"
   },
   {
@@ -259,7 +259,7 @@
     "name": "Pátio",
     "exact": true
    },
-   "at": 21.3,
+   "at": 18.16,
    "label": "Departamento: Pátio",
    "noScroll": true
   },
@@ -268,7 +268,7 @@
    "target": {
     "selector": "[role=dialog] #hire_date"
    },
-   "at": 22.83,
+   "at": 19.78,
    "label": "campo Data de Admissão 10/11/2026"
   },
   {
@@ -278,7 +278,7 @@
    },
    "text": "10112026",
    "cps": 40,
-   "at": 23.68,
+   "at": 20.63,
    "label": "Data de Admissão 10/11/2026",
    "noClick": true
   },
@@ -290,14 +290,14 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 25.07
+   "at": 21.47
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] [role=tab]:has-text('Remuneração')"
    },
-   "at": 25.6,
+   "at": 22.27,
    "label": "aba Remuneração"
   },
   {
@@ -305,7 +305,7 @@
    "target": {
     "selector": "[role=dialog] #salary"
    },
-   "at": 26.97,
+   "at": 23.47,
    "label": "campo Salário R$ 2.520,00"
   },
   {
@@ -315,14 +315,14 @@
    },
    "text": "2520,00",
    "cps": 40,
-   "at": 27.82,
+   "at": 24.32,
    "label": "Salário R$ 2.520,00",
    "noClick": true
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 30.81
+   "at": 26.75
   },
   {
    "do": "scroll",
@@ -333,20 +333,20 @@
    "by": 0,
    "duration": 0.2,
    "after": 0,
-   "at": 31.41,
+   "at": 27.35,
    "label": "cursor descansa (ilustração do iceberg)"
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 36.25
+   "at": 31.47
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] button:text-is('Calcular'):not(.absolute)"
    },
-   "at": 36.86,
+   "at": 32.19,
    "label": "Calcular (custo mensal)"
   },
   {
@@ -365,7 +365,7 @@
     "selector": "[role=dialog]:has(h2:text-is('Calcular custo mensal')) button:has-text('Lucro Real')"
    },
    "seconds": 1.0,
-   "at": 42.78,
+   "at": 37.06,
    "label": "Regime tributário: Lucro Real / Presumido",
    "optional": true,
    "timeout": 4
@@ -373,12 +373,12 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 46.24
+   "at": 40.27
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim().startsWith(\"Custos anuais\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-140);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 46.74,
+   "at": 40.77,
    "label": "rola até Custos anuais"
   },
   {
@@ -386,7 +386,7 @@
    "target": {
     "selector": "[role=dialog]:has(h2:text-is('Calcular custo mensal')) div.space-y-1:has(> label:text-is('EPI e uniformes')) input"
    },
-   "at": 46.77,
+   "at": 40.83,
    "label": "campo EPI e uniformes: 600,00 por ano"
   },
   {
@@ -396,7 +396,7 @@
    },
    "text": "600,00",
    "cps": 40,
-   "at": 47.62,
+   "at": 41.68,
    "label": "EPI e uniformes: 600,00 por ano",
    "noClick": true
   },
@@ -408,7 +408,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim().startsWith(\"Custo total mensal\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-520);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 52.69,
+   "at": 46.28,
    "label": "rola até o resumo do custo"
   },
   {
@@ -418,7 +418,7 @@
     "within": "[role=dialog]:has(h2:text-is('Calcular custo mensal'))"
    },
    "seconds": 0.2,
-   "at": 53.68,
+   "at": 47.11,
    "label": "+ FGTS (8%)",
    "optional": true,
    "timeout": 4
@@ -430,7 +430,7 @@
     "within": "[role=dialog]:has(h2:text-is('Calcular custo mensal'))"
    },
    "seconds": 0.2,
-   "at": 55.43,
+   "at": 48.39,
    "label": "+ 13º (provisão)",
    "optional": true,
    "timeout": 4
@@ -442,7 +442,7 @@
     "within": "[role=dialog]:has(h2:text-is('Calcular custo mensal'))"
    },
    "seconds": 0.1,
-   "at": 57.1,
+   "at": 49.83,
    "label": "+ Férias + 1/3 (provisão)",
    "optional": true,
    "timeout": 4
@@ -454,7 +454,7 @@
     "within": "[role=dialog]:has(h2:text-is('Calcular custo mensal'))"
    },
    "seconds": 0.3,
-   "at": 57.93,
+   "at": 50.63,
    "label": "+ INSS patronal (28,8%)",
    "optional": true,
    "timeout": 4
@@ -467,7 +467,7 @@
     "within": "[role=dialog]:has(h2:text-is('Calcular custo mensal'))"
    },
    "seconds": 1.2,
-   "at": 60.06,
+   "at": 52.63,
    "label": "Custo total mensal R$ 4.264,00",
    "optional": true,
    "timeout": 4
@@ -480,12 +480,12 @@
   {
    "do": "mark",
    "name": "L8",
-   "at": 65.5
+   "at": 57.36
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim().startsWith(\"Adicional\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-150);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 66.0,
+   "at": 57.86,
    "label": "rola até o Adicional"
   },
   {
@@ -494,7 +494,7 @@
     "selector": "[role=dialog]:has(h2:text-is('Calcular custo mensal')) label:text-is('Adicional')"
    },
    "seconds": 0.5,
-   "at": 68.15,
+   "at": 59.27,
    "label": "Adicional (periculosidade ou insalubridade)",
    "optional": true,
    "timeout": 4
@@ -502,7 +502,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim().startsWith(\"Benef\\u00edcios mensais\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-150);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 71.27,
+   "at": 61.88,
    "label": "rola até os Benefícios mensais"
   },
   {
@@ -512,7 +512,7 @@
     "within": "[role=dialog]:has(h2:text-is('Calcular custo mensal'))"
    },
    "seconds": 0.1,
-   "at": 72.17,
+   "at": 62.78,
    "label": "Benefícios mensais",
    "optional": true,
    "timeout": 4
@@ -520,7 +520,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim().startsWith(\"Horas trabalhadas por m\\u00eas\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-200);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 72.49,
+   "at": 63.0,
    "label": "rola até as horas trabalhadas"
   },
   {
@@ -530,7 +530,7 @@
     "within": "[role=dialog]:has(h2:text-is('Calcular custo mensal'))"
    },
    "seconds": 0.5,
-   "at": 73.39,
+   "at": 63.9,
    "label": "Horas trabalhadas por mês",
    "optional": true,
    "timeout": 4
@@ -538,7 +538,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim().startsWith(\"Hora Homem\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-420);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 75.56,
+   "at": 65.86,
    "label": "rola até o Hora Homem (HH)"
   },
   {
@@ -547,8 +547,8 @@
     "text": "Hora Homem",
     "within": "[role=dialog]:has(h2:text-is('Calcular custo mensal'))"
    },
-   "seconds": 1.4,
-   "at": 78.55,
+   "seconds": 0.58,
+   "at": 68.15,
    "label": "Hora Homem (HH): quanto custa a hora dele",
    "optional": true,
    "timeout": 4
@@ -556,7 +556,7 @@
   {
    "do": "mark",
    "name": "L9",
-   "at": 81.11
+   "at": 69.73
   },
   {
    "do": "hover",
@@ -565,7 +565,7 @@
     "within": "[role=dialog]:has(h2:text-is('Calcular custo mensal'))"
    },
    "seconds": 1.0,
-   "at": 82.17,
+   "at": 70.76,
    "label": "rodapé Valores estimados (contador)",
    "optional": true,
    "timeout": 4
@@ -575,7 +575,7 @@
    "target": {
     "selector": "[role=dialog]:has(h2:text-is('Calcular custo mensal')) button:has-text('Aplicar R$')"
    },
-   "at": 85.43,
+   "at": 73.65,
    "label": "Aplicar R$ 4.264,00"
   },
   {
@@ -591,7 +591,7 @@
     "selector": "[role=dialog] #monthly_cost"
    },
    "seconds": 0.8,
-   "at": 87.78,
+   "at": 75.64,
    "label": "Custo mensal total R$ 4.264,00 no cadastro",
    "optional": true,
    "timeout": 4
@@ -604,14 +604,14 @@
   {
    "do": "mark",
    "name": "L10",
-   "at": 91.93
+   "at": 79.01
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] #pix_key"
    },
-   "at": 93.6,
+   "at": 80.21,
    "label": "campo Chave PIX (12) 90000-4107"
   },
   {
@@ -621,7 +621,7 @@
    },
    "text": "(12) 90000-4107",
    "cps": 40,
-   "at": 94.45,
+   "at": 81.06,
    "label": "Chave PIX (12) 90000-4107",
    "noClick": true
   },
@@ -630,7 +630,7 @@
    "target": {
     "selector": "[role=dialog] button:text-is('Cadastrar'):not(.absolute)"
    },
-   "at": 96.18,
+   "at": 82.85,
    "label": "Cadastrar"
   },
   {
@@ -650,7 +650,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main [role=list] *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Gabriel Rocha\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-470);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 97.62,
+   "at": 84.57,
    "label": "a lista mostra o Gabriel no meio"
   },
   {
@@ -660,7 +660,7 @@
    },
    "text": "",
    "noClick": true,
-   "at": 99.97,
+   "at": 86.57,
    "label": "o Gabriel na lista Equipe",
    "optional": true,
    "timeout": 4
@@ -673,7 +673,7 @@
   {
    "do": "mark",
    "name": "L11",
-   "at": 100.25
+   "at": 86.69
   },
   {
    "do": "type",
@@ -682,7 +682,7 @@
    },
    "text": "",
    "noClick": true,
-   "at": 104.19,
+   "at": 90.17,
    "label": "selo de saldo do Gabriel R$ 2.520,00",
    "optional": true,
    "timeout": 4
@@ -695,7 +695,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 114.42
+   "at": 98.32
   }
  ]
 }

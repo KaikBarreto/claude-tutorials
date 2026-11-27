@@ -1,6 +1,6 @@
 {
  "name": "t19-cap07",
- "title": "T19 · Cap. 7 · A folha de quem é CLT (narração 111,0 s, ESTIMADA; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T19 · Cap. 7 · A folha de quem é CLT (narração 87,1 s, da voz; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "fakeNow": "2026-11-10T08:30:00-03:00",
  "seed": "t19-cap07",
  "pace": 0.5,
@@ -12,8 +12,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
@@ -126,7 +126,7 @@
    "target": {
     "selector": "main [role=listitem] > button:has(p:text-is('Marcos Antunes'))"
    },
-   "at": 2.79,
+   "at": 1.96,
    "label": "Marcos Antunes"
   },
   {
@@ -146,7 +146,7 @@
    "target": {
     "selector": "main section[aria-label^='Detalhes de'] button:text-is('Pagamento')"
    },
-   "at": 6.26,
+   "at": 4.98,
    "label": "Pagamento"
   },
   {
@@ -165,8 +165,8 @@
     "text": "Folha CLT",
     "within": "[role=dialog]"
    },
-   "seconds": 0.72,
-   "at": 10.2,
+   "seconds": 0.1,
+   "at": 8.09,
    "label": "Resumo do pagamento: Folha CLT",
    "optional": true,
    "timeout": 4
@@ -174,12 +174,12 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 11.92
+   "at": 9.06
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim().startsWith(\"Proventos e descontos desta folha\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-200);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 12.65,
+   "at": 9.72,
    "label": "rola até Proventos e descontos desta folha"
   },
   {
@@ -187,7 +187,7 @@
    "target": {
     "selector": "[role=dialog] button:has-text('Horas extras 50%')"
    },
-   "at": 16.63,
+   "at": 13.06,
    "label": "Adicionar rápido: Horas extras 50%"
   },
   {
@@ -202,7 +202,7 @@
    "target": {
     "selector": "[role=dialog] input[aria-label='Valor em reais']"
    },
-   "at": 21.46,
+   "at": 16.61,
    "label": "campo Valor em reais 180,00"
   },
   {
@@ -212,7 +212,7 @@
    },
    "text": "180,00",
    "cps": 40,
-   "at": 22.71,
+   "at": 17.86,
    "label": "Valor em reais 180,00",
    "noClick": true
   },
@@ -222,7 +222,7 @@
     "selector": "[role=dialog] input[aria-label='Valor em reais']"
    },
    "seconds": 0.1,
-   "at": 23.23,
+   "at": 18.09,
    "label": "a linha Horas extras 50% com R$ 180,00",
    "optional": true,
    "timeout": 4
@@ -230,7 +230,7 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 23.96
+   "at": 18.66
   },
   {
    "do": "hover",
@@ -239,7 +239,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 2.4,
-   "at": 25.4,
+   "at": 19.61,
    "label": "chave Compõe as bases de INSS, IRRF e FGTS",
    "optional": true,
    "timeout": 4
@@ -247,14 +247,14 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 39.19
+   "at": 30.58
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] button:has-text('Adicionar desconto')"
    },
-   "at": 39.49,
+   "at": 30.82,
    "label": "Adicionar desconto"
   },
   {
@@ -269,7 +269,7 @@
    "target": {
     "selector": "xpath=//div[@role='dialog']//p[normalize-space()='Descontos extras']/following::input[@aria-label='Descrição'][1]"
    },
-   "at": 43.74,
+   "at": 34.02,
    "label": "campo Descrição"
   },
   {
@@ -279,7 +279,7 @@
    },
    "text": "Convênio farmácia",
    "cps": 40,
-   "at": 44.59,
+   "at": 34.87,
    "label": "Descrição: Convênio farmácia",
    "noClick": true
   },
@@ -288,7 +288,7 @@
    "target": {
     "selector": "xpath=//div[@role='dialog']//p[normalize-space()='Descontos extras']/following::input[@aria-label='Valor em reais'][1]"
    },
-   "at": 45.47,
+   "at": 35.38,
    "label": "campo Valor em reais 60,00"
   },
   {
@@ -298,7 +298,7 @@
    },
    "text": "60,00",
    "cps": 40,
-   "at": 46.42,
+   "at": 36.33,
    "label": "Valor em reais 60,00",
    "noClick": true
   },
@@ -310,7 +310,7 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 47.13
+   "at": 36.5
   },
   {
    "do": "hover",
@@ -319,7 +319,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.3,
-   "at": 51.3,
+   "at": 39.85,
    "label": "Total de proventos R$ 2.580,00",
    "optional": true,
    "timeout": 4
@@ -331,7 +331,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.3,
-   "at": 53.66,
+   "at": 42.07,
    "label": "- INSS (tabela do ano)",
    "optional": true,
    "timeout": 4
@@ -343,7 +343,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.1,
-   "at": 59.2,
+   "at": 45.99,
    "label": "- IRRF R$ 0,00",
    "optional": true,
    "timeout": 4
@@ -355,7 +355,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.3,
-   "at": 60.11,
+   "at": 46.71,
    "label": "- Vale-transporte R$ 144,00",
    "optional": true,
    "timeout": 4
@@ -368,7 +368,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 1.4,
-   "at": 63.75,
+   "at": 49.51,
    "label": "Líquido R$ 2.168,11",
    "optional": true,
    "timeout": 4
@@ -388,12 +388,12 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 69.42
+   "at": 53.84
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim().startsWith(\"INSS desta folha\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-240);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 69.72,
+   "at": 54.14,
    "label": "rola até INSS desta folha"
   },
   {
@@ -403,7 +403,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.6,
-   "at": 69.95,
+   "at": 54.23,
    "label": "INSS desta folha: Calculado pela tabela oficial",
    "optional": true,
    "timeout": 4
@@ -413,7 +413,7 @@
    "target": {
     "selector": "[role=dialog] #override-inss"
    },
-   "at": 73.97,
+   "at": 57.36,
    "label": "liga o ajuste do INSS"
   },
   {
@@ -430,7 +430,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 1.0,
-   "at": 77.54,
+   "at": 60.23,
    "label": "Novo valor e Motivo do ajuste",
    "optional": true,
    "timeout": 4
@@ -440,18 +440,18 @@
    "target": {
     "selector": "[role=dialog] #override-inss"
    },
-   "at": 82.02,
+   "at": 64.11,
    "label": "desliga o ajuste (deixa o calculado)"
   },
   {
    "do": "mark",
    "name": "L7",
-   "at": 83.82
+   "at": 65.47
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim().startsWith(\"Valor l\\u00edquido do pagamento\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-200);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 84.82,
+   "at": 66.27,
    "label": "rola até o Valor líquido do pagamento"
   },
   {
@@ -462,7 +462,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim().startsWith(\"Forma de Pagamento\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-260);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 86.17,
+   "at": 67.41,
    "label": "rola até a Forma de Pagamento"
   },
   {
@@ -470,7 +470,7 @@
    "target": {
     "selector": "[role=dialog] label[for='payment-pix']"
    },
-   "at": 86.47,
+   "at": 67.71,
    "label": "Forma de Pagamento: PIX/Transferência"
   },
   {
@@ -478,7 +478,7 @@
    "target": {
     "selector": "[role=dialog] button:text-is('Confirmar Pagamento'):not(.absolute)"
    },
-   "at": 87.16,
+   "at": 68.59,
    "label": "Confirmar Pagamento"
   },
   {
@@ -489,12 +489,12 @@
   {
    "do": "mark",
    "name": "L8",
-   "at": 89.1
+   "at": 70.03
   },
   {
    "do": "eval",
    "js": "(()=>{const b=[...document.querySelectorAll('[role=alertdialog] button')].find(x=>x.textContent.trim().includes(\"Gerar Holerite\"));if(!b)return 'SEM ALVO';b.click();return 'ok'})()",
-   "at": 92.44,
+   "at": 72.59,
    "label": "Gerar Holerite (abre o holerite em aba nova)"
   },
   {
@@ -517,7 +517,7 @@
   {
    "do": "mark",
    "name": "L9",
-   "at": 99.32
+   "at": 77.95
   },
   {
    "do": "hover",
@@ -525,7 +525,7 @@
     "selector": "main section[aria-label^='Detalhes de'] div:has(> p:text-is('Saldo atual'))"
    },
    "seconds": 1.0,
-   "at": 101.9,
+   "at": 80.26,
    "label": "Saldo atual do Marcos (dica: a folha é estimativa)",
    "optional": true,
    "timeout": 4
@@ -538,7 +538,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 110.99
+   "at": 87.12
   }
  ]
 }

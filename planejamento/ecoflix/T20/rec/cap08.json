@@ -1,6 +1,6 @@
 {
  "name": "t20-cap08",
- "title": "T20 · Cap. 8 · O saldo do parceiro (narração 100,1 s ESTIMADA; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T15:00:00-03:00)",
+ "title": "T20 · Cap. 8 · O saldo do parceiro (narração 80,2 s; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T15:00:00-03:00)",
  "seed": "t20-cap08",
  "pace": 0.5,
  "cps": 9,
@@ -150,7 +150,7 @@
    "target": {
     "selector": "#tab-btn-saldo"
    },
-   "at": 0.53,
+   "at": 0.22,
    "label": "aba Saldo"
   },
   {
@@ -170,7 +170,7 @@
     "exact": true
    },
    "seconds": 2.0,
-   "at": 3.54,
+   "at": 3.05,
    "label": "[ZOOM] o valor R$ 1.350,00, o selo e a frase",
    "optional": true,
    "timeout": 4
@@ -178,18 +178,18 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 8.83
+   "at": 6.88
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\":is(main,body) *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Hist\\u00f3rico de Movimenta\\u00e7\\u00f5es\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-150);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 22.16,
+   "at": 17.38,
    "label": "desce ao extrato"
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 22.46
+   "at": 17.68
   },
   {
    "do": "hover",
@@ -198,7 +198,7 @@
     "nth": 0
    },
    "seconds": 0.6,
-   "at": 26.26,
+   "at": 20.96,
    "label": "linha de Pedido",
    "optional": true,
    "timeout": 4
@@ -210,7 +210,7 @@
     "nth": 0
    },
    "seconds": 0.6,
-   "at": 27.39,
+   "at": 22.0,
    "label": "linha de Pagamento",
    "optional": true,
    "timeout": 4
@@ -218,7 +218,7 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 31.39
+   "at": 24.86
   },
   {
    "do": "hover",
@@ -228,7 +228,7 @@
     "nth": 0
    },
    "seconds": 1.4,
-   "at": 34.83,
+   "at": 27.56,
    "label": "o selo Últimos 90 dias e o rodapé do extrato",
    "optional": true,
    "timeout": 4
@@ -236,7 +236,7 @@
   {
    "do": "goto",
    "url": "/clientes-fornecedores",
-   "at": 45.74,
+   "at": 35.46,
    "label": "navegador do sistema: Clientes e Fornecedores (corte)"
   },
   {
@@ -254,20 +254,20 @@
    "target": {
     "selector": "main div.no-scrollbar > button:has-text('Fornecedores')"
    },
-   "at": 47.54,
+   "at": 37.26,
    "label": "aba Fornecedores"
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 48.74
+   "at": 38.46
   },
   {
    "do": "click",
    "target": {
     "selector": "main aside button:has-text('Cooperativa Recomeço')"
    },
-   "at": 48.74,
+   "at": 38.46,
    "label": "Cooperativa Recomeço"
   },
   {
@@ -286,7 +286,7 @@
    "target": {
     "selector": "[aria-label='Seções da ficha'] button:has-text('Conta-corrente')"
    },
-   "at": 49.54,
+   "at": 39.26,
    "label": "aba Conta-corrente"
   },
   {
@@ -302,7 +302,7 @@
     "exact": true,
     "within": "main section[aria-label='Detalhes de Cooperativa Recomeço']"
    },
-   "at": 52.34,
+   "at": 41.42,
    "label": "Movimentação"
   },
   {
@@ -315,7 +315,7 @@
    "target": {
     "selector": "[role=dialog] #amount"
    },
-   "at": 53.78,
+   "at": 42.62,
    "label": "[ZOOM] Valor R$ 1.350,00 (campo)"
   },
   {
@@ -325,7 +325,7 @@
    },
    "text": "1350",
    "cps": 40,
-   "at": 55.04,
+   "at": 43.83,
    "label": "[ZOOM] Valor R$ 1.350,00",
    "noClick": true
   },
@@ -334,13 +334,13 @@
    "target": {
     "selector": "[role=dialog] #description"
    },
-   "at": 56.36,
+   "at": 44.55,
    "label": "Observação (campo)"
   },
   {
    "do": "eval",
    "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM ALVO (nada em foco)';document.execCommand('insertText',false,\"Acerto da entrega de 06/11\");return e.value})()",
-   "at": 57.06,
+   "at": 45.25,
    "label": "Observação: Acerto da entrega de 06/11 (colado)"
   },
   {
@@ -351,7 +351,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.6,
-   "at": 57.24,
+   "at": 45.14,
    "label": "Pix/Transferência",
    "optional": true,
    "timeout": 4
@@ -364,7 +364,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 57.87,
+   "at": 45.92,
    "label": "Confirmar"
   },
   {
@@ -387,7 +387,7 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 58.27
+   "at": 46.32
   },
   {
    "do": "hover",
@@ -397,7 +397,7 @@
     "within": "main section[aria-label='Detalhes de Cooperativa Recomeço']"
    },
    "seconds": 1.4,
-   "at": 60.86,
+   "at": 48.34,
    "label": "zoom: Saldo Atual R$ 0,00",
    "optional": true,
    "timeout": 4
@@ -405,12 +405,12 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 62.88
+   "at": 49.92
   },
   {
    "do": "goto",
    "url": "/portal/recicla-vale-metais-cooperativa-1B2yVwaud00G8omJQvmXcn",
-   "at": 62.88,
+   "at": 49.92,
    "label": "navegador do parceiro: volta ao portal da cooperativa"
   },
   {
@@ -426,7 +426,7 @@
   {
    "do": "eval",
    "js": "setTimeout(()=>location.reload(),50);'ok'",
-   "at": 62.98,
+   "at": 50.02,
    "label": "recarrega o portal (no ensaio rápido o cache de 30 s do app guardaria o saldo velho)"
   },
   {
@@ -444,7 +444,7 @@
    "target": {
     "selector": "#tab-btn-saldo"
    },
-   "at": 63.88,
+   "at": 50.92,
    "label": "aba Saldo"
   },
   {
@@ -465,7 +465,7 @@
     "nth": 0
    },
    "seconds": 2.0,
-   "at": 67.13,
+   "at": 53.46,
    "label": "[ZOOM] o saldo R$ 0,00, o selo Em dia e a frase",
    "optional": true,
    "timeout": 4
@@ -473,7 +473,7 @@
   {
    "do": "mark",
    "name": "L8",
-   "at": 68.16
+   "at": 54.32
   },
   {
    "do": "hover",
@@ -481,7 +481,7 @@
     "selector": "button[title='Atualizar dados']"
    },
    "seconds": 2.4,
-   "at": 81.8,
+   "at": 65.47,
    "label": "[ZOOM] o ícone Atualizar dados (sem clicar)",
    "optional": true,
    "timeout": 4
@@ -489,7 +489,7 @@
   {
    "do": "goto",
    "url": "/portal/recicla-vale-metais-valdir-7WlgFDJdZXRDRtjwpQ3GdS",
-   "at": 84.07,
+   "at": 67.41,
    "label": "navegador do parceiro: o portal do Valdir Pereira (sem senha)"
   },
   {
@@ -505,14 +505,14 @@
   {
    "do": "mark",
    "name": "L9",
-   "at": 84.37
+   "at": 67.71
   },
   {
    "do": "click",
    "target": {
     "selector": "#tab-btn-saldo"
    },
-   "at": 90.51,
+   "at": 72.77,
    "label": "aba Saldo"
   },
   {
@@ -532,7 +532,7 @@
     "exact": true
    },
    "seconds": 2.4,
-   "at": 93.49,
+   "at": 75.01,
    "label": "[ZOOM] o valor em vermelho, o selo Você tem a pagar e a frase",
    "optional": true,
    "timeout": 4
@@ -545,7 +545,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 100.05
+   "at": 80.16
   }
  ]
 }

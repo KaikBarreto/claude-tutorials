@@ -1,6 +1,6 @@
 {
  "name": "t19-cap13",
- "title": "T19 · Cap. 13 · O ponto no tablet da empresa (narração 54,9 s, ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T16:30:00-03:00)",
+ "title": "T19 · Cap. 13 · O ponto no tablet da empresa (narração 42,5 s, da voz; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T16:30:00-03:00)",
  "fakeNow": "2026-11-10T16:30:00-03:00",
  "seed": "t19-cap13",
  "pace": 0.5,
@@ -12,8 +12,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
@@ -117,7 +117,7 @@
    },
    "text": "",
    "noClick": true,
-   "at": 7.95,
+   "at": 5.7,
    "label": "o tablet: câmera e Buscar manualmente",
    "optional": true,
    "timeout": 4
@@ -127,7 +127,7 @@
    "target": {
     "selector": "button:has-text('Buscar manualmente')"
    },
-   "at": 10.43,
+   "at": 7.78,
    "label": "Buscar manualmente",
    "noScroll": true
   },
@@ -141,15 +141,15 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 12.98
+   "at": 9.78
   },
   {
    "do": "hover",
    "target": {
     "placeholder": "Buscar funcionário"
    },
-   "seconds": 0.29,
-   "at": 18.68,
+   "seconds": 0.1,
+   "at": 14.25,
    "label": "Buscar funcionário",
    "optional": true,
    "timeout": 4
@@ -169,20 +169,20 @@
    "target": {
     "selector": "button:text-is('Quem falta')"
    },
-   "at": 19.97,
+   "at": 15.22,
    "label": "Quem falta"
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 22.14
+   "at": 16.72
   },
   {
    "do": "click",
    "target": {
     "selector": "button:has-text('Diego Morais')"
    },
-   "at": 22.3,
+   "at": 16.88,
    "label": "cartão do Diego",
    "noScroll": true
   },
@@ -196,7 +196,7 @@
    "target": {
     "selector": "button:has-text('Registrar Saída')"
    },
-   "at": 25.18,
+   "at": 19.28,
    "label": "Registrar Saída",
    "noScroll": true
   },
@@ -210,7 +210,7 @@
    "target": {
     "selector": "button:has-text('Tirar foto agora')"
    },
-   "at": 26.2,
+   "at": 20.06,
    "label": "Tirar foto agora",
    "noScroll": true
   },
@@ -224,7 +224,7 @@
    "target": {
     "selector": "button:has-text('Confirmar registro')"
    },
-   "at": 27.1,
+   "at": 20.96,
    "label": "Confirmar registro",
    "noScroll": true
   },
@@ -240,7 +240,7 @@
    },
    "text": "",
    "noClick": true,
-   "at": 28.44,
+   "at": 21.96,
    "label": "Saída registrada com a hora",
    "optional": true,
    "timeout": 4
@@ -255,7 +255,7 @@
    "target": {
     "selector": "button:has-text('Buscar manualmente')"
    },
-   "at": 33.56,
+   "at": 25.84,
    "label": "Buscar manualmente (de novo)",
    "noScroll": true
   },
@@ -269,15 +269,15 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 32.36
+   "at": 24.64
   },
   {
    "do": "hover",
    "target": {
     "selector": "button:has-text('Gabriel Rocha')"
    },
-   "seconds": 1.6,
-   "at": 34.56,
+   "seconds": 1.57,
+   "at": 26.47,
    "label": "o cartão do Gabriel com o cadeado (Protegido por PIN)",
    "noScroll": true,
    "optional": true,
@@ -286,12 +286,12 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 37.8
+   "at": 29.04
   },
   {
    "do": "eval",
    "js": "location.assign('/funcionarios')",
-   "at": 38.1,
+   "at": 29.34,
    "label": "volta ao sistema (computador)"
   },
   {
@@ -304,7 +304,7 @@
    "target": {
     "selector": "#tab-btn-config-ponto"
    },
-   "at": 41.52,
+   "at": 31.68,
    "label": "aba Configurações de Ponto"
   },
   {
@@ -315,7 +315,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim().startsWith(\"Exigir reconhecimento facial\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-260);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 49.25,
+   "at": 38.04,
    "label": "rola até Exigir reconhecimento facial"
   },
   {
@@ -325,7 +325,7 @@
     "within": "main"
    },
    "seconds": 2.0,
-   "at": 50.1,
+   "at": 38.89,
    "label": "Exigir reconhecimento facial no quiosque",
    "optional": true,
    "timeout": 4
@@ -338,7 +338,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 54.94
+   "at": 42.48
   }
  ]
 }

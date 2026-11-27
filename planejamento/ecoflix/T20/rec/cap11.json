@@ -1,6 +1,6 @@
 {
  "name": "t20-cap11",
- "title": "T20 · Cap. 11 · O parceiro pede a coleta (narração 105,4 s ESTIMADA; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T15:00:00-03:00)",
+ "title": "T20 · Cap. 11 · O parceiro pede a coleta (narração 87,5 s; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T15:00:00-03:00)",
  "seed": "t20-cap11",
  "pace": 0.5,
  "cps": 9,
@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
   "pwa-install-dismissed": "true",
   "theme": "light",
@@ -150,7 +150,7 @@
    "target": {
     "selector": "#tab-btn-coletas"
    },
-   "at": 0.16,
+   "at": 0.0,
    "label": "aba Coletas"
   },
   {
@@ -165,7 +165,7 @@
     "exact": true
    },
    "seconds": 1.2,
-   "at": 8.43,
+   "at": 6.48,
    "label": "Minhas coletas",
    "optional": true,
    "timeout": 4
@@ -173,7 +173,7 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 12.24
+   "at": 9.68
   },
   {
    "do": "click",
@@ -182,7 +182,7 @@
     "name": "Solicitar coleta",
     "exact": true
    },
-   "at": 17.03,
+   "at": 13.8,
    "label": "Solicitar coleta"
   },
   {
@@ -195,14 +195,14 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 19.35
+   "at": 15.92
   },
   {
    "do": "click",
    "target": {
     "selector": "#coleta-material"
    },
-   "at": 19.71,
+   "at": 16.1,
    "label": "Material: Papelão e PET prensados (campo)"
   },
   {
@@ -212,7 +212,7 @@
    },
    "text": "Papelão e PET prensados",
    "cps": 40,
-   "at": 21.47,
+   "at": 17.59,
    "label": "Material: Papelão e PET prensados",
    "noClick": true
   },
@@ -221,7 +221,7 @@
    "target": {
     "selector": "#coleta-qtd"
    },
-   "at": 22.98,
+   "at": 18.98,
    "label": "[ZOOM] Quantidade estimada: 2.500 kg (campo)"
   },
   {
@@ -231,21 +231,21 @@
    },
    "text": "2.500 kg",
    "cps": 40,
-   "at": 25.19,
+   "at": 21.11,
    "label": "[ZOOM] Quantidade estimada: 2.500 kg",
    "noClick": true
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 27.67
+   "at": 22.57
   },
   {
    "do": "click",
    "target": {
     "selector": "#coleta-data"
    },
-   "at": 27.83,
+   "at": 22.61,
    "label": "Data preferida (campo)"
   },
   {
@@ -255,7 +255,7 @@
    },
    "text": "12112026",
    "cps": 40,
-   "at": 29.77,
+   "at": 24.15,
    "label": "Data preferida 12/11/2026",
    "noClick": true
   },
@@ -264,7 +264,7 @@
    "target": {
     "selector": "#coleta-janela"
    },
-   "at": 29.93,
+   "at": 24.11,
    "label": "abre Período"
   },
   {
@@ -274,13 +274,13 @@
     "name": "Manhã",
     "exact": true
    },
-   "at": 30.73,
+   "at": 24.91,
    "label": "Período: Manhã"
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Endere\\u00e7o da coleta\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-170);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 31.01,
+   "at": 25.31,
    "label": "desce ao Endereço da coleta (do cadastro)"
   },
   {
@@ -288,7 +288,7 @@
    "target": {
     "selector": "#coleta-obs"
    },
-   "at": 37.95,
+   "at": 30.71,
    "label": "Observações (campo)"
   },
   {
@@ -298,7 +298,7 @@
    },
    "text": "Os fardos ficam na doca do galpão.",
    "cps": 40,
-   "at": 39.85,
+   "at": 32.25,
    "label": "Observações: Os fardos ficam na doca do galpão.",
    "noClick": true
   },
@@ -310,7 +310,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 41.11,
+   "at": 33.43,
    "label": "Solicitar coleta (enviar)"
   },
   {
@@ -328,7 +328,7 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 41.61
+   "at": 33.93
   },
   {
    "do": "hover",
@@ -337,7 +337,7 @@
     "nth": 0
    },
    "seconds": 1.2,
-   "at": 44.27,
+   "at": 36.59,
    "label": "[ZOOM] o cartão da nova coleta com o selo Solicitada",
    "optional": true,
    "timeout": 4
@@ -345,7 +345,7 @@
   {
    "do": "eval",
    "js": "(()=>{location.assign('/dashboard');return 'recarrega o sistema'})()",
-   "at": 46.26,
+   "at": 38.25,
    "label": "navegador do sistema: recarrega a tela (sem realtime no falso)"
   },
   {
@@ -361,7 +361,7 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 46.66
+   "at": 38.65
   },
   {
    "do": "click",
@@ -369,7 +369,7 @@
     "selector": "button[aria-label^='Notificações'], button[aria-label*='notificações não lidas']",
     "nth": 0
    },
-   "at": 48.57,
+   "at": 40.05,
    "label": "o sino de notificações"
   },
   {
@@ -385,7 +385,7 @@
     "nth": 0
    },
    "seconds": 1.6,
-   "at": 49.95,
+   "at": 41.65,
    "label": "[ZOOM] Nova solicitação de coleta no sino",
    "optional": true,
    "timeout": 4
@@ -393,23 +393,23 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 52.25
+   "at": 43.53
   },
   {
    "do": "press",
    "key": "Escape",
-   "at": 52.75,
+   "at": 44.03,
    "label": "fecha o sino"
   },
   {
    "do": "mark",
    "name": "L8",
-   "at": 66.49
+   "at": 55.63
   },
   {
    "do": "goto",
    "url": "/portal/recicla-vale-metais-cooperativa-1B2yVwaud00G8omJQvmXcn",
-   "at": 66.49,
+   "at": 55.63,
    "label": "navegador do parceiro: de volta ao portal (com sessão, corte)"
   },
   {
@@ -427,7 +427,7 @@
    "target": {
     "selector": "#tab-btn-coletas"
    },
-   "at": 66.49,
+   "at": 55.63,
    "label": "aba Coletas"
   },
   {
@@ -442,7 +442,7 @@
     "nth": 0
    },
    "seconds": 1.2,
-   "at": 69.93,
+   "at": 58.15,
    "label": "[ZOOM] o atalho Ver relatório da coleta no cartão concluído",
    "optional": true,
    "timeout": 4
@@ -453,7 +453,7 @@
     "text": "Ver relatório da coleta",
     "nth": 0
    },
-   "at": 74.31,
+   "at": 61.95,
    "label": "abre o relatório da coleta"
   },
   {
@@ -468,7 +468,7 @@
     "exact": true
    },
    "seconds": 1.2,
-   "at": 77.02,
+   "at": 64.25,
    "label": "Voltar ao portal",
    "optional": true,
    "timeout": 4
@@ -479,13 +479,13 @@
     "text": "Voltar ao portal",
     "exact": true
    },
-   "at": 78.52,
+   "at": 65.75,
    "label": "volta ao portal"
   },
   {
    "do": "mark",
    "name": "L9",
-   "at": 84.15
+   "at": 70.56
   },
   {
    "do": "scroll",
@@ -496,7 +496,7 @@
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 84.65,
+   "at": 71.06,
    "label": "cursor em repouso (as regras ficam nas Configurações de Coletas)"
   },
   {
@@ -507,7 +507,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 105.37
+   "at": 87.52
   }
  ]
 }

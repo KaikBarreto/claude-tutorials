@@ -1,6 +1,6 @@
 {
  "name": "t20-cap14",
- "title": "T20 · Cap. 14 · As fotos do pedido (narração 81,4 s ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T15:00:00-03:00)",
+ "title": "T20 · Cap. 14 · As fotos do pedido (narração 67,3 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T15:00:00-03:00)",
  "seed": "t20-cap14",
  "pace": 0.5,
  "cps": 9,
@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
   "pwa-install-dismissed": "true",
   "theme": "light",
@@ -64,12 +64,12 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 24.54
+   "at": 20.64
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 32.86
+   "at": 26.88
   },
   {
    "do": "hover",
@@ -78,7 +78,7 @@
     "nth": 0
    },
    "seconds": 1.2,
-   "at": 33.3,
+   "at": 27.54,
    "label": "cabeçalho: Recicla Vale Metais e Fotos do pedido",
    "optional": true,
    "timeout": 4
@@ -91,7 +91,7 @@
     "nth": 0
    },
    "seconds": 1.2,
-   "at": 38.41,
+   "at": 32.1,
    "label": "Fotos (carrossel)",
    "optional": true,
    "timeout": 4
@@ -99,7 +99,7 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 40.27
+   "at": 33.6
   },
   {
    "do": "click",
@@ -107,7 +107,7 @@
     "selector": "button[aria-label='Próxima foto']",
     "nth": 0
    },
-   "at": 40.3,
+   "at": 33.6,
    "label": "Próxima foto"
   },
   {
@@ -116,7 +116,7 @@
     "selector": "button[aria-label='Próxima foto']",
     "nth": 0
    },
-   "at": 42.05,
+   "at": 34.7,
    "label": "Próxima foto"
   },
   {
@@ -125,25 +125,25 @@
     "selector": "button:has(img[src*='order-attachments'])",
     "nth": 0
    },
-   "at": 42.66,
+   "at": 35.18,
    "label": "abre a foto em tela cheia"
   },
   {
    "do": "press",
    "key": "Escape",
-   "at": 45.3,
+   "at": 37.44,
    "label": "fecha a foto"
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\":is(main,body) *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Dados do Pedido\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-150);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 45.48,
+   "at": 37.38,
    "label": "desce a Dados do Pedido"
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 45.78
+   "at": 37.68
   },
   {
    "do": "hover",
@@ -153,7 +153,7 @@
     "nth": 0
    },
    "seconds": 1.8,
-   "at": 50.65,
+   "at": 41.94,
    "label": "[ZOOM] Total R$ 3.700,00",
    "optional": true,
    "timeout": 4
@@ -161,12 +161,12 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 59.95
+   "at": 50.11
   },
   {
    "do": "mark",
    "name": "L7",
-   "at": 71.84
+   "at": 60.43
   },
   {
    "do": "scroll",
@@ -177,7 +177,7 @@
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 72.34,
+   "at": 60.93,
    "label": "cursor em repouso"
   },
   {
@@ -188,7 +188,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 81.44
+   "at": 67.28
   }
  ]
 }

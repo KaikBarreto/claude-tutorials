@@ -1,6 +1,6 @@
 {
  "name": "t20-cap12",
- "title": "T20 · Cap. 12 · O comprovante do portal (narração 56,5 s ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T15:00:00-03:00)",
+ "title": "T20 · Cap. 12 · O comprovante do portal (narração 41,8 s; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T15:00:00-03:00)",
  "seed": "t20-cap12",
  "pace": 0.5,
  "cps": 9,
@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
   "pwa-install-dismissed": "true",
   "theme": "light",
@@ -111,7 +111,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\":is(main,body) *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Hist\\u00f3rico de Pedidos\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-150);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 0.3,
+   "at": -0.1,
    "label": "desce ao Histórico de Pedidos"
   },
   {
@@ -120,7 +120,7 @@
     "selector": ":is(main,body) tbody tr:has-text('R$ 3.700,00') button[title='Gerar comprovante']"
    },
    "seconds": 1.0,
-   "at": 6.58,
+   "at": 4.5,
    "label": "a impressora Gerar comprovante da compra de 06/11",
    "optional": true,
    "timeout": 4
@@ -128,36 +128,36 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 8.9
+   "at": 6.16
   },
   {
    "do": "click",
    "target": {
     "selector": ":is(main,body) tbody tr:has-text('R$ 3.700,00') button[title='Gerar comprovante']"
    },
-   "at": 8.9,
+   "at": 6.16,
    "label": "clica na impressora: abre o comprovante A4 na janela nova"
   },
   {
    "do": "eval",
    "js": "(async()=>{const w=(window.__pops||[]).slice(-1)[0];if(!w)return 'SEM JANELA';for(let i=0;i<40;i++){let f=null;try{f=w.document&&w.document.querySelector('#pdf-frame')}catch(e){return 'ERRO '+e}if(f&&f.src){const b=await (await fetch(f.src.split('#')[0])).blob();const u=new Uint8Array(await b.arrayBuffer());let s='';for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'PDF:'+btoa(s)}await new Promise(r=>setTimeout(r,250))}return 'SEM PDF'})()",
-   "at": 11.6,
+   "at": 8.86,
    "label": "PDF do comprovante A4 (janela nova, para a ilustração)"
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 18.89
+   "at": 13.52
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 26.76
+   "at": 19.82
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 37.43
+   "at": 28.14
   },
   {
    "do": "scroll",
@@ -168,7 +168,7 @@
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 37.93,
+   "at": 28.64,
    "label": "de volta ao portal"
   },
   {
@@ -179,7 +179,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 56.52
+   "at": 41.76
   }
  ]
 }

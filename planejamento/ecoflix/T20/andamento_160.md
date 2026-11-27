@@ -11,3 +11,7 @@
 ## 25/11 · ilustrações v3 com a voz real 1.60.22
 - Feitas 6 (`cenas_v3/cena.html`): ilu01_portal, ilu03_duplo, ilu10_precos_pdf (papel A4 real da tabela), ilu12_comprovante_pdf (papel real do #1749), ilu13_balao_zap (texto real do wa.me), ilu10_links. Tiradas 7 (a tela mostra). Auditoria 0, piscadas 0. Prévia `$TUT_HOME/previa_ilustracoes/T20_v3.mp4`. Papéis em `$TUT_HOME/t20/edit/out/comprovantes/`.
 - **Para o fechamento**: `ilu09_relatorio_pdf` pendente: o "Baixar pê-dê-éfe" do Relatório do portal abre HTML em aba nova (sem PDF no actions). Fazer como a T04 no cap12 (gancho que captura o HTML escrito na aba e cena `cenas_v3/pdf12.html` da T04 como molde). O PDF da tabela de preços é a tabela geral (sem os blocos "Seus materiais"/"Outros materiais", que são da aba na tela): a fala do cap10 cita os blocos na tela, então está certa.
+
+## 27/11 · fechamento
+- Caps 3 e 4 ensaiados (rapido) OK. Cap10 pendente: o ensaio falhou no setup do portal (sementes regravadas com outra senha por um t20_final.sh abortado). Cap09 agora captura o HTML da aba (POPS_HTML/HTML_B64_JS no gerar.py, ainda sem teste).
+- Preparados: rec/t20/t20_prep.sh, t20_final.sh, t20_papel.py, t20_montagem_cap15.py; t20/edit/ copiado da T15. Retomar: `bash rec/t20/t20_prep.sh 9 10`.

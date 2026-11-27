@@ -1,6 +1,6 @@
 {
  "name": "t19-cap09",
- "title": "T19 · Cap. 9 · O extrato do funcionário (narração 66,8 s, ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T19 · Cap. 9 · O extrato do funcionário (narração 53,0 s, da voz; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "fakeNow": "2026-11-10T08:30:00-03:00",
  "seed": "t19-cap09",
  "pace": 0.5,
@@ -12,8 +12,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
@@ -143,7 +143,7 @@
    "target": {
     "selector": "main section[aria-label^='Detalhes de'] button:has-text('Extrato')"
    },
-   "at": 1.55,
+   "at": 0.66,
    "label": "Extrato"
   },
   {
@@ -163,7 +163,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.1,
-   "at": 5.57,
+   "at": 4.25,
    "label": "cartão Vales R$ 0,00",
    "optional": true,
    "timeout": 4
@@ -176,7 +176,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.1,
-   "at": 6.48,
+   "at": 5.05,
    "label": "cartão Bônus R$ 0,00",
    "optional": true,
    "timeout": 4
@@ -189,7 +189,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.5,
-   "at": 7.46,
+   "at": 5.85,
    "label": "cartão Saldo R$ 2.900,00",
    "optional": true,
    "timeout": 4
@@ -197,7 +197,7 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 9.49
+   "at": 7.62
   },
   {
    "do": "hover",
@@ -205,8 +205,8 @@
     "text": "Valor pago",
     "within": "[role=dialog]"
    },
-   "seconds": 0.52,
-   "at": 13.89,
+   "seconds": 0.13,
+   "at": 11.45,
    "label": "Valor pago R$ 2.750,00 (pagamento detalhado)",
    "optional": true,
    "timeout": 4
@@ -216,7 +216,7 @@
    "target": {
     "selector": "[role=dialog] button:has-text('Gerar Recibo')"
    },
-   "at": 15.41,
+   "at": 12.58,
    "label": "Gerar Recibo (pagamento de hoje)"
   },
   {
@@ -231,7 +231,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.1,
-   "at": 19.66,
+   "at": 16.33,
    "label": "formato Térmico (80 mm)",
    "optional": true,
    "timeout": 4
@@ -241,7 +241,7 @@
    "target": {
     "selector": "[role=dialog] button:has(span:text-is('A4'))"
    },
-   "at": 20.49,
+   "at": 16.98,
    "label": "formato A4 (abre o recibo em aba nova)"
   },
   {
@@ -256,7 +256,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.8,
-   "at": 24.9,
+   "at": 20.65,
    "label": "Ajuste: Reset para salário base",
    "optional": true,
    "timeout": 4
@@ -264,12 +264,12 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 27.98
+   "at": 22.93
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim().startsWith(\"Recebimento do funcion\\u00e1rio\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-220);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 29.17,
+   "at": 23.99,
    "label": "rola a lista do extrato"
   },
   {
@@ -279,7 +279,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.3,
-   "at": 29.65,
+   "at": 24.12,
    "label": "Recebimento +R$ 100,00",
    "optional": true,
    "timeout": 4
@@ -291,7 +291,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.3,
-   "at": 32.31,
+   "at": 26.2,
    "label": "o bônus de outubro",
    "optional": true,
    "timeout": 4
@@ -299,7 +299,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim().startsWith(\"Ajuste de sal\\u00e1rio\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-420);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 34.08,
+   "at": 27.73,
    "label": "rola até o ajuste de salário"
   },
   {
@@ -314,7 +314,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 2.0,
-   "at": 35.5,
+   "at": 28.92,
    "label": "Ajuste de salário: R$ 2.800,00 → R$ 2.900,00",
    "optional": true,
    "timeout": 4
@@ -322,7 +322,7 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 41.24
+   "at": 33.17
   },
   {
    "do": "hover",
@@ -331,7 +331,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 3.0,
-   "at": 44.8,
+   "at": 35.72,
    "label": "Ajuste de salário (continua)",
    "optional": true,
    "timeout": 4
@@ -339,7 +339,7 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 51.99
+   "at": 41.41
   },
   {
    "do": "hover",
@@ -347,7 +347,7 @@
     "selector": "xpath=//div[@role='dialog']//*[normalize-space(text())='Vale/Adiantamento']/ancestor::div[.//button//*[contains(@class,'lucide-trash')]][1]//button[.//*[contains(@class,'lucide-trash')]]"
    },
    "seconds": 1.6,
-   "at": 53.05,
+   "at": 42.41,
    "label": "lixeira de uma linha Vale/Adiantamento (sem clicar)",
    "optional": true,
    "timeout": 4
@@ -355,7 +355,7 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 59.63
+   "at": 47.54
   },
   {
    "do": "scroll",
@@ -366,7 +366,7 @@
    "by": 0,
    "duration": 0.2,
    "after": 0,
-   "at": 60.23,
+   "at": 48.14,
    "label": "cursor sai da lixeira (ilustração)"
   },
   {
@@ -374,7 +374,7 @@
    "target": {
     "selector": "[role=dialog] button:text-is('Fechar'):not(.absolute)"
    },
-   "at": 65.42,
+   "at": 51.64,
    "label": "Fechar o extrato"
   },
   {
@@ -385,7 +385,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 66.83
+   "at": 53.04
   }
  ]
 }

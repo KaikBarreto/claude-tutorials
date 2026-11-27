@@ -758,11 +758,22 @@ HTML_JS = ("(async()=>{const w=(window.__pops||[]).slice(-1)[0];if(!w)return 'SE
            "await new Promise(r=>setTimeout(r,250))}return 'SEM HTML'})()")
 
 
+# 27/11 · o relatório do portal escreve o HTML na aba nova (window.open + document.write): o gancho POPS_HTML guarda o que a aba recebe e HTML_B64_JS devolve
+# 'HTML:<base64>' para a cena do PDF (molde: rec/t04/gerar.py, cap12); t20_papel.py imprime esse HTML no Chromium e rasteriza o papel real.
+POPS_HTML = "(()=>{const o=window.open;window.__pops=[];window.open=function(...a){const w=o.apply(this,a);try{const d=w.document,ow=d.write.bind(d);w.__esc=[];d.write=function(...x){w.__esc.push(x.join(''));return ow(...x)}}catch(e){}window.__pops.push(w);return w};window.__net=[];const of=window.fetch;window.fetch=function(...a){window.__net.push('F '+String((a[0]&&a[0].url)||a[0]).slice(0,100));return of.apply(this,a)};const d=Object.getOwnPropertyDescriptor(HTMLImageElement.prototype,'src');Object.defineProperty(HTMLImageElement.prototype,'src',{set(v){window.__net.push('IMG '+String(v).slice(0,100));d.set.call(this,v)},get(){return d.get.call(this)}});return 'ok'})()"
+HTML_B64_JS = ("(async()=>{let w;for(let i=0;i<60&&!(w=(window.__pops||[]).slice(-1)[0]);i++)await new Promise(r=>setTimeout(r,250));if(!w)return 'SEM JANELA';const espera=%s;for(let i=0;i<40;i++){let t='';"
+           "try{const es=(w.__esc||[]).filter(h=>espera.every(x=>h.toLowerCase().includes(x.toLowerCase()))).slice(-1)[0];if(es){const u=new TextEncoder().encode(es);let s2='';for(let k=0;k<u.length;k+=8192)s2+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'HTML:'+btoa(s2)}}catch(e){}"
+           "try{t=(w.document&&w.document.documentElement&&w.document.documentElement.textContent)||''}catch(e){return 'ERRO '+e}"
+           "if(t&&espera.every(x=>t.toLowerCase().includes(x.toLowerCase()))){const h='<!doctype html>'+w.document.documentElement.outerHTML;const u=new TextEncoder().encode(h);let s='';"
+           "for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'HTML:'+btoa(s)}"
+           "await new Promise(r=>setTimeout(r,250))}try{const es=(w.__esc||[]).slice(-1)[0];if(es&&(w.__esc||[]).length>1){const u=new TextEncoder().encode(es);let s2='';for(let k=0;k<u.length;k+=8192)s2+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'HTML:'+btoa(s2)}}catch(e){}let d='';try{d=' pops='+window.__pops.length+' fechada='+w.closed+' texto='+((w.document.documentElement&&w.document.documentElement.textContent)||'').slice(0,160)}catch(e){d=' '+e}return 'SEM HTML'+d+' BODY['+((w.document.body&&w.document.body.innerText)||'').length+']='+((w.document.body&&w.document.body.innerText)||'').slice(0,400)+' LEN='+w.document.documentElement.outerHTML.length+' NET='+(window.__net||[]).slice(-6).join('|')})()")
+
+
 @capitulo
 def cap09():
     """Notas e relatório: as notas da Fundição (1250 e a de entrada 1253), a cancelada da Serra Fina; na cooperativa o Relatório de Mês passado, o total
     R$ 18.755,00, o filtro de Material, o Período Personalizado e o Baixar PDF (clicado: a janela nova é capturada)."""
-    setup = portal_entra(PORTAL_COOP, senha=True) + portal_entra(PORTAL_FUND) + [{'do': 'eval', 'js': POPS}]
+    setup = portal_entra(PORTAL_COOP, senha=True) + portal_entra(PORTAL_FUND) + [{'do': 'eval', 'js': POPS_HTML}]
     c = cap_(9, setup, start=(900, 440))
     c.mark(1)
     c.click(TABP('notas'), at=c.A(1, 'Notas', 0.7), label='aba Notas Fiscais')
@@ -806,7 +817,7 @@ def cap09():
     c.mark(10)
     c.hover(BTN('Baixar PDF'), 1.4, at=c.A(10, 'Baixar', 0.6), label='[ZOOM] o botão Baixar PDF')
     c.click(BTN('Baixar PDF'), at=c.A(10, 'abre', 0.4), label='clica em Baixar PDF: o relatório abre numa aba nova')
-    c.ev(HTML_JS, at=c.A(10, 'abre', -1.5), label='relatório (janela nova, texto para a cena do PDF)')
+    c.ev(HTML_B64_JS % json.dumps(['Papelão'], ensure_ascii=False), at=c.A(10, 'abre', -1.5), label='PDF DO RELATÓRIO (aba nova, para a ilustração)')
     c.fim()
     return c
 

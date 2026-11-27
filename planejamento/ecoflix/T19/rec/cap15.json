@@ -1,6 +1,6 @@
 {
  "name": "t19-cap15",
- "title": "T19 · Cap. 15 · Configurações do ponto (narração 78,1 s, ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T16:30:00-03:00)",
+ "title": "T19 · Cap. 15 · Configurações do ponto (narração 61,9 s, da voz; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T16:30:00-03:00)",
  "fakeNow": "2026-11-10T16:30:00-03:00",
  "seed": "t19-cap15",
  "pace": 0.5,
@@ -12,8 +12,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
@@ -133,7 +133,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim().startsWith(\"Jornada Padr\\u00e3o da Empresa\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-120);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 2.73,
+   "at": 1.72,
    "label": "o cartão Jornada Padrão da Empresa"
   },
   {
@@ -153,8 +153,8 @@
     "exact": true,
     "within": "main"
    },
-   "seconds": 0.21,
-   "at": 3.83,
+   "seconds": 0.28,
+   "at": 2.97,
    "label": "Exigir selfie (ligado)",
    "optional": true,
    "timeout": 4
@@ -167,7 +167,7 @@
     "within": "main"
    },
    "seconds": 0.8,
-   "at": 5.04,
+   "at": 4.25,
    "label": "Exigir localização (ligado)",
    "optional": true,
    "timeout": 4
@@ -175,15 +175,15 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 12.99
+   "at": 11.14
   },
   {
    "do": "hover",
    "target": {
     "selector": "main #default-in"
    },
-   "seconds": 0.29,
-   "at": 16.63,
+   "seconds": 0.2,
+   "at": 14.49,
    "label": "Entrada padrão 07:00",
    "optional": true,
    "timeout": 4
@@ -194,7 +194,7 @@
     "selector": "main #default-out"
    },
    "seconds": 0.3,
-   "at": 17.92,
+   "at": 15.69,
    "label": "Saída padrão 16:00",
    "optional": true,
    "timeout": 4
@@ -205,7 +205,7 @@
     "selector": "main #default-break"
    },
    "seconds": 0.3,
-   "at": 19.66,
+   "at": 17.05,
    "label": "Intervalo padrão (min) 60",
    "optional": true,
    "timeout": 4
@@ -216,7 +216,7 @@
     "selector": "main #late-tol"
    },
    "seconds": 0.6,
-   "at": 21.18,
+   "at": 18.41,
    "label": "Tolerância de atraso (min) 10",
    "optional": true,
    "timeout": 4
@@ -224,12 +224,12 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 24.19
+   "at": 20.34
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim().startsWith(\"Batidas da madrugada\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 27.51,
+   "at": 22.4,
    "label": "rola até a batida da madrugada"
   },
   {
@@ -238,7 +238,7 @@
     "selector": "main #overnight-until"
    },
    "seconds": 1.6,
-   "at": 28.01,
+   "at": 22.9,
    "label": "Batidas da madrugada contam para o dia anterior até",
    "optional": true,
    "timeout": 4
@@ -246,12 +246,12 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 33.57
+   "at": 26.75
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim().startsWith(\"Dias em que a empresa trabalha\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-330);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 34.07,
+   "at": 27.25,
    "label": "rola até os dias da empresa"
   },
   {
@@ -260,7 +260,7 @@
     "selector": "main #work-weekday-1"
    },
    "seconds": 0.1,
-   "at": 36.91,
+   "at": 29.06,
    "label": "Dias em que a empresa trabalha: Seg",
    "optional": true,
    "timeout": 4
@@ -271,7 +271,7 @@
     "selector": "main #work-weekday-5"
    },
    "seconds": 1.0,
-   "at": 37.67,
+   "at": 29.7,
    "label": "Seg a Sex ligados",
    "optional": true,
    "timeout": 4
@@ -279,12 +279,12 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 40.76
+   "at": 32.83
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim().startsWith(\"Jornada Individual\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-90);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 43.56,
+   "at": 34.89,
    "label": "rola até a Jornada Individual"
   },
   {
@@ -293,7 +293,7 @@
     "selector": "main tr:has-text('Juliana Prado')"
    },
    "seconds": 0.3,
-   "at": 45.08,
+   "at": 36.34,
    "label": "a linha da Juliana (horários herdados em cinza)",
    "optional": true,
    "timeout": 4
@@ -301,14 +301,14 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 49.69
+   "at": 39.63
   },
   {
    "do": "click",
    "target": {
     "selector": "main tr:has-text('Juliana Prado') button:has(svg.lucide-pencil)"
    },
-   "at": 49.91,
+   "at": 39.87,
    "label": "lápis da Juliana Prado"
   },
   {
@@ -319,7 +319,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const dorme=ms=>new Promise(r=>setTimeout(r,ms));const dlg=[...document.querySelectorAll('[role=dialog]')].pop();if(!dlg)return 'SEM JANELA';\nconst linhas=[...dlg.querySelectorAll('div.rounded-lg.border')].filter(d=>/^(Seg|Ter|Qua|Qui|Sex)$/.test((d.querySelector('span.w-10')||{}).textContent||''));\nif(linhas.length!==5)return 'SEM ALVO: '+linhas.length+' dias';let feito=[];\nconst escolhe=async(bt,hh)=>{bt.click();let lb=null;for(let i=0;i<30&&!lb;i++){await dorme(60);lb=[...document.querySelectorAll('[role=listbox]')].find(x=>/hora/i.test(x.getAttribute('aria-label')||''));}\nif(!lb)return false;const op=[...lb.querySelectorAll('[role=option]')].find(o=>o.textContent.trim()===hh);if(!op)return false;op.click();await dorme(120);\nconst ok=[...document.querySelectorAll('[data-radix-popper-content-wrapper] button')].find(b=>b.textContent.trim()==='Concluir');if(ok)ok.click();\nfor(let i=0;i<30&&document.querySelector('[role=listbox]');i++)await dorme(50);return true};\nfor(const l of linhas){const bts=[...l.querySelectorAll('button')].filter(b=>/^\\s*\\d\\d:\\d\\d\\s*$|--:--/.test(b.textContent));if(bts.length<2)return 'SEM ALVO: horas de '+l.textContent;\nif(!await escolhe(bts[0],'08'))return 'falhou entrada';if(!await escolhe(bts[1],'17'))return 'falhou saida';feito.push(l.querySelector('span.w-10').textContent);await dorme(150);}\nreturn 'ok '+feito.join(',')})()",
-   "at": 51.57,
+   "at": 41.27,
    "label": "Seg a Sex: 08:00 às 17:00 (trecho acelerado, selo 4x)"
   },
   {
@@ -333,7 +333,7 @@
     "selector": "[role=dialog] input[aria-label='Intervalo de Seg em minutos']"
    },
    "seconds": 1.0,
-   "at": 55.45,
+   "at": 44.26,
    "label": "Intervalo de Seg em minutos (por dia)",
    "optional": true,
    "timeout": 4
@@ -344,7 +344,7 @@
     "selector": "[role=dialog] button[role=switch]"
    },
    "seconds": 1.0,
-   "at": 59.25,
+   "at": 47.27,
    "label": "o interruptor do dia (Folga)",
    "optional": true,
    "timeout": 4
@@ -354,7 +354,7 @@
    "target": {
     "selector": "[role=dialog] button:has-text('Salvar jornada')"
    },
-   "at": 63.35,
+   "at": 50.8,
    "label": "Salvar jornada"
   },
   {
@@ -380,7 +380,7 @@
     "selector": "main tr:has-text('Juliana Prado')"
    },
    "seconds": 1.0,
-   "at": 65.17,
+   "at": 52.39,
    "label": "a linha da Juliana: 08:00-17:00 (1h int.)",
    "optional": true,
    "timeout": 4
@@ -388,7 +388,7 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 68.48
+   "at": 54.72
   },
   {
    "do": "scroll",
@@ -399,7 +399,7 @@
    "by": 0,
    "duration": 0.2,
    "after": 0,
-   "at": 69.08,
+   "at": 55.32,
    "label": "cursor descansa (ilustração da jornada)"
   },
   {
@@ -410,7 +410,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 78.11
+   "at": 61.92
   }
  ]
 }

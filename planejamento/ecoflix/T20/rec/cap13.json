@@ -1,6 +1,6 @@
 {
  "name": "t20-cap13",
- "title": "T20 · Cap. 13 · Mandar o pedido pelo WhatsApp (narração 47,1 s ESTIMADA; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T15:00:00-03:00)",
+ "title": "T20 · Cap. 13 · Mandar o pedido pelo WhatsApp (narração 38,6 s; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T15:00:00-03:00)",
  "seed": "t20-cap13",
  "pace": 0.5,
  "cps": 9,
@@ -180,7 +180,7 @@
     "nth": -1
    },
    "seconds": 0.3,
-   "at": 7.19,
+   "at": 5.08,
    "label": "o \"⋮\" da compra da cooperativa (#1761): o menu do pedido abre",
    "optional": false,
    "timeout": 8
@@ -200,7 +200,7 @@
     "name": "Enviar pelo WhatsApp"
    },
    "seconds": 1.2,
-   "at": 9.21,
+   "at": 6.8,
    "label": "[ZOOM] Enviar pelo WhatsApp",
    "optional": true,
    "timeout": 4
@@ -208,7 +208,7 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 11.56
+   "at": 9.12
   },
   {
    "do": "click",
@@ -216,19 +216,19 @@
     "role": "menuitem",
     "name": "Enviar pelo WhatsApp"
    },
-   "at": 11.56,
+   "at": 9.12,
    "label": "clica em Enviar pelo WhatsApp (a janela do wa.me é interceptada)"
   },
   {
    "do": "eval",
    "js": "(async()=>{for(let i=0;i<40&&!(window.__wa||[]).length;i++)await new Promise(r=>setTimeout(r,250));const u=(window.__wa||[]).slice(-1)[0];if(!u)return 'SEM wa.me';const m=u.match(/[?&]text=([^&]*)/);return 'WA:'+u.split('?')[0]+'|'+(m?decodeURIComponent(m[1].replace(/\\+/g,' ')):'')})()",
-   "at": 13.26,
+   "at": 10.82,
    "label": "a mensagem do WhatsApp (texto lido do endereço interceptado)"
   },
   {
    "do": "goto",
    "url": "/portal/recicla-vale-metais-cooperativa-1B2yVwaud00G8omJQvmXcn?pedido=12b2d598-29f7-5936-9bae-cc7360e9e757",
-   "at": 20.48,
+   "at": 16.61,
    "label": "navegador do parceiro: o link do pedido (?pedido=)"
   },
   {
@@ -244,7 +244,7 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 20.78
+   "at": 16.91
   },
   {
    "do": "hover",
@@ -253,7 +253,7 @@
     "nth": 0
    },
    "seconds": 2.4,
-   "at": 23.8,
+   "at": 19.63,
    "label": "[ZOOM] a linha do pedido aberta e contornada",
    "optional": true,
    "timeout": 4
@@ -261,7 +261,7 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 29.33
+   "at": 24.11
   },
   {
    "do": "scroll",
@@ -272,7 +272,7 @@
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 29.83,
+   "at": 24.61,
    "label": "de volta à tela de Pedidos (cortes)"
   },
   {
@@ -283,7 +283,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 47.14
+   "at": 38.56
   }
  ]
 }
