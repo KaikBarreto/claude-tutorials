@@ -1,6 +1,6 @@
 {
  "name": "t25-cap05",
- "title": "T25 · Cap. 5 · O painel do seu jeito (narração ESTIMADA 35,8 s; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T25 · Cap. 5 · O painel do seu jeito (narração 28,2 s; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t25-cap05",
  "pace": 0.5,
  "cps": 40,
@@ -99,7 +99,7 @@
   {
    "do": "mark",
    "name": "L1",
-   "at": 0.4
+   "at": 0
   },
   {
    "do": "hover",
@@ -110,7 +110,7 @@
     "within": "main"
    },
    "seconds": 0.6,
-   "at": 3.35,
+   "at": 2.3,
    "label": "destaque: Configurações",
    "optional": true,
    "timeout": 4
@@ -123,7 +123,7 @@
     "exact": true,
     "within": "main"
    },
-   "at": 6.13,
+   "at": 4.44,
    "label": "abre Configurações do Dashboard"
   },
   {
@@ -134,31 +134,31 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 9.11
+   "at": 6.82
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] div:has(> span:text-is('Métodos de Pagamento')) [role=switch]"
    },
-   "at": 11.24,
+   "at": 8.74,
    "label": "desliga Métodos de Pagamento"
   },
   {
    "do": "press",
    "key": "Escape",
-   "at": 14.42,
+   "at": 11.36,
    "label": "fecha a janela: o cartão sai do painel"
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 15.61
+   "at": 12.1
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll('main div.relative.group')].filter(e=>e.offsetParent&&e.querySelector(':scope > button.cursor-grab')&&e.innerText.includes(\"Compras vs Vendas\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-110);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 17.02,
+   "at": 13.32,
    "label": "ajusta a tela para o arrasto"
   },
   {
@@ -167,7 +167,7 @@
     "selector": "main div.relative.group:has(> button.cursor-grab):has-text('Volume Semanal de Compras')"
    },
    "seconds": 0.15,
-   "at": 18.24,
+   "at": 14.16,
    "label": "a alça do cartão Volume Semanal aparece",
    "optional": true,
    "timeout": 4
@@ -180,13 +180,13 @@
    "to": {
     "selector": "main div.relative.group:has(> button.cursor-grab):has-text('Compras vs Vendas')"
    },
-   "at": 18.24,
+   "at": 13.76,
    "label": "arrasta o Volume Semanal para depois dos cartões do topo"
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 24.24
+   "at": 18.82
   },
   {
    "do": "click",
@@ -196,7 +196,7 @@
     "exact": true,
     "within": "main"
    },
-   "at": 24.76,
+   "at": 19.12,
    "label": "abre Configurações de novo"
   },
   {
@@ -207,7 +207,7 @@
     "exact": true
    },
    "seconds": 1.4,
-   "at": 26.46,
+   "at": 20.82,
    "label": "destaque: Voltar ordem ao normal (sem clicar)",
    "optional": true,
    "timeout": 4
@@ -215,7 +215,7 @@
   {
    "do": "press",
    "key": "Escape",
-   "at": 34.56,
+   "at": 26.96,
    "label": "fecha a janela"
   },
   {
@@ -226,7 +226,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 35.76
+   "at": 28.16
   }
  ]
 }

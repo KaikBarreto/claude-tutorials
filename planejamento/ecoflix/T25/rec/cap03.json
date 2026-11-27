@@ -1,6 +1,6 @@
 {
  "name": "t25-cap03",
- "title": "T25 · Cap. 3 · Semanas e rankings (narração ESTIMADA 64,5 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T25 · Cap. 3 · Semanas e rankings (narração 49,3 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t25-cap03",
  "pace": 0.5,
  "cps": 40,
@@ -99,12 +99,12 @@
   {
    "do": "mark",
    "name": "L1",
-   "at": 0.4
+   "at": 0
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll('main div.relative.group')].filter(e=>e.offsetParent&&e.querySelector(':scope > button.cursor-grab')&&e.innerText.includes(\"Volume Semanal de Compras\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-130);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 0.6,
+   "at": 0.2,
    "label": "desce a tela até o Volume Semanal"
   },
   {
@@ -113,7 +113,7 @@
     "selector": "main div.relative.group:has(> button.cursor-grab):has-text('Volume Semanal de Compras')"
    },
    "seconds": 0.6,
-   "at": 5.93,
+   "at": 4.38,
    "label": "as oito semanas",
    "optional": true,
    "timeout": 4
@@ -121,7 +121,7 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 8.13
+   "at": 6.02
   },
   {
    "do": "hover",
@@ -129,7 +129,7 @@
     "selector": "main div.relative.group:has(> button.cursor-grab):has-text('Volume Semanal de Compras') .recharts-wrapper"
    },
    "seconds": 1.2,
-   "at": 9.16,
+   "at": 6.7,
    "label": "a dica Peso de uma semana",
    "optional": true,
    "timeout": 4
@@ -137,7 +137,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const c=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,dy=-y0;if(y0<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
-   "at": 15.11,
+   "at": 11.6,
    "label": "sobe a tela até o filtro"
   },
   {
@@ -146,13 +146,13 @@
     "role": "combobox",
     "hasText": "Este mês"
    },
-   "at": 16.02,
+   "at": 12.34,
    "label": "abre o filtro de período"
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 16.98
+   "at": 12.98
   },
   {
    "do": "click",
@@ -160,13 +160,13 @@
     "role": "option",
     "name": "Mês passado"
    },
-   "at": 18.38,
+   "at": 14.38,
    "label": "escolhe Mês passado"
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll('main div.relative.group')].filter(e=>e.offsetParent&&e.querySelector(':scope > button.cursor-grab')&&e.innerText.includes(\"Materiais Mais Comprados\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-130);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 19.88,
+   "at": 15.3,
    "label": "desce a tela até os rankings"
   },
   {
@@ -174,7 +174,7 @@
    "target": {
     "selector": "main div.relative.group:has(> button.cursor-grab):has-text('Materiais Mais Comprados') button:text-is('Kg')"
    },
-   "at": 25.61,
+   "at": 19.92,
    "label": "ranking de materiais em Kg"
   },
   {
@@ -182,8 +182,8 @@
    "target": {
     "selector": "main div.relative.group:has(> button.cursor-grab):has-text('Materiais Mais Comprados')"
    },
-   "seconds": 0.88,
-   "at": 26.66,
+   "seconds": 0.63,
+   "at": 20.71,
    "label": "ZOOM Ferro pesado em primeiro, com o peso",
    "optional": true,
    "timeout": 4
@@ -196,7 +196,7 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 28.49
+   "at": 22.29
   },
   {
    "do": "hover",
@@ -204,7 +204,7 @@
     "selector": "main div.relative.group:has(> button.cursor-grab):has-text('Principais Fornecedores')"
    },
    "seconds": 1.4,
-   "at": 31.12,
+   "at": 24.49,
    "label": "Principais Fornecedores: Depósito Irmãos Siqueira em primeiro",
    "optional": true,
    "timeout": 4
@@ -217,12 +217,12 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 37.26
+   "at": 28.69
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll('main div.relative.group')].filter(e=>e.offsetParent&&e.querySelector(':scope > button.cursor-grab')&&e.innerText.includes(\"Principais Clientes\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-130);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 38.26,
+   "at": 29.69,
    "label": "desce a tela até Principais Clientes"
   },
   {
@@ -231,7 +231,7 @@
     "selector": "main div.relative.group:has(> button.cursor-grab):has-text('Principais Clientes')"
    },
    "seconds": 1.0,
-   "at": 39.59,
+   "at": 30.41,
    "label": "Fundição Bandeira do Vale em primeiro, em reais",
    "optional": true,
    "timeout": 4
@@ -241,13 +241,13 @@
    "target": {
     "selector": "main div.relative.group:has(> button.cursor-grab):has-text('Principais Clientes') button:text-is('Kg')"
    },
-   "at": 44.12,
+   "at": 34.15,
    "label": "Principais Clientes em Kg: Aços Quiririm"
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 48.62
+   "at": 37.57
   },
   {
    "do": "click",
@@ -256,7 +256,7 @@
     "name": "Ver todos os clientes",
     "exact": true
    },
-   "at": 49.1,
+   "at": 38.15,
    "label": "Ver todos os clientes"
   },
   {
@@ -269,7 +269,7 @@
    "target": {
     "selector": "[role=dialog] [role=combobox]"
    },
-   "at": 53.83,
+   "at": 41.87,
    "label": "abre o seletor Por Valor (R$)"
   },
   {
@@ -278,7 +278,7 @@
     "role": "option",
     "name": "Por Quantidade (kg)"
    },
-   "at": 55.12,
+   "at": 42.97,
    "label": "escolhe Por Quantidade (kg)"
   },
   {
@@ -287,7 +287,7 @@
     "selector": "[role=dialog] :text-is('Todos os clientes')"
    },
    "seconds": 0.15,
-   "at": 55.98,
+   "at": 43.49,
    "label": "a lista por quantidade",
    "optional": true,
    "timeout": 4
@@ -295,20 +295,20 @@
   {
    "do": "press",
    "key": "Escape",
-   "at": 56.84,
+   "at": 43.96,
    "label": "fecha a lista"
   },
   {
    "do": "mark",
    "name": "L7",
-   "at": 56.94
+   "at": 44.06
   },
   {
    "do": "click",
    "target": {
     "selector": "main div.relative.group:has(> button.cursor-grab):has-text('Principais Clientes') :text-is('Aços Quiririm Ltda')"
    },
-   "at": 57.85,
+   "at": 44.86,
    "label": "clica no nome no pódio: abre o histórico do parceiro"
   },
   {
@@ -323,7 +323,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 64.51
+   "at": 49.28
   }
  ]
 }
