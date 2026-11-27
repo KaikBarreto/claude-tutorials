@@ -24,3 +24,10 @@ Sobras em rec/t15/_ens: MP4 e folhas de contato dos ensaios (apagar à mão, cam
 ## 21/11 · ilustrações v3 prontas (para o fechamento)
 - 5 cenas escuras em `T15/cenas_v3/cena.html` (cap00 L1, cap01 L11-13, cap02 L1, cap08 L3-7 com as contas do pátio, cap13 L8); 5 tiradas (a tela mostra). Auditoria 0.
 - **No fechamento**: `ilu07_patio` ainda tem 1 piscada (39,37 s, tremor do texto da tabela cheia): zerar antes de encaixar. cap15 L2 "O PDF é pra mandar pro contador ou guardar.": capturar o PDF do Histórico na gravação final e mostrar o papel real (cena `pdf`); se não sair, a tela mostra o menu Exportar com PDF e Excel.
+
+## 27/11 · fechamento (gravação final, montagem, render)
+- Voz real conferida; 16 capítulos gravados (maxLate < 0,8 s em todos), regravações pontuais de cap06, cap07 e cap14 por âncora (gerar.py).
+- PDF real capturado do Histórico (`out/comprovantes/cap15-historico.*`); cena `pdf` mostra o papel real (nunca desenhado) em cap15 L2.
+- `ilu07_patio`: `respira: 0` no cap 8; 0 piscadas. cap16 = recapitulação montada de clipes reais (`rec/t15/t15_montagem_cap16.py`).
+- Entrega: `out/T15/aula_final.mp4` (21:52, 1920x1080, -16,3 LUFS, pico -3,8 dB, 0 travessão nas legendas), `.srt`/`.vtt`, prévia 720p em `entrega_previa/`.
+- Lições: o limite de memória do cgroup (~6 GB, inclui /dev/shm) matava Python em mix/limiter/finish; resolvido com processamento em blocos, float32 e capítulos renderizados em disco.
