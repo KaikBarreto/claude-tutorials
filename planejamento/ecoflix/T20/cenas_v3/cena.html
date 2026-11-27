@@ -11,7 +11,7 @@
        cap14 · links     (escuro)  ilu10_links    "Dois links"            linhas 5 e 6: o link de fotos (só um pedido), o do portal (histórico inteiro) e o QR do caixa
      Os dois papéis vêm do robô ($TUT_HOME/t20/edit/out/comprovantes/cap10-1.png e cap12-1.png, pdftoppm -r 432 do PDF do actions.json do ensaio);
      coordenadas do marca-texto em pontos do PDF (pdftotext -bbox), 1,5 px por pt.
-     Saíram do ilustracoes.json (ver o relatório): ilu00_print, ilu02_chave, ilu04_tres, ilu05_secao, ilu06_saldo, ilu08_coleta, ilu10_fotos; pendente: ilu09_relatorio_pdf.
+     Saíram do ilustracoes.json (ver o relatório): ilu00_print, ilu02_chave, ilu04_tres, ilu05_secao, ilu06_saldo, ilu08_coleta, ilu10_fotos; ilu09_relatorio_pdf (cap09, relatorio) entrou em 27/11.
      Só textos e números da fala e da tela. Acabamento: node perfis/ecoflix/cenas_v3/auditar.cjs --aula planejamento/ecoflix/T20 --larg 1422
      Render de uma janela: node ferramentas/edit/cenas/render_cenas.cjs <cap> <capNN.json> saida.mp4 --html planejamento/ecoflix/T20/cenas_v3/cena.html \
                [--anexo $TUT_HOME/t20/edit/out/comprovantes] --larg 1422 --dsf 1.35 --de <s> --ate <s>
@@ -188,6 +188,34 @@ function comprovante(d) {
 }
 
 // =====================================================================================================================
+// cap09, linha 9 · "No Baixar PDF, o relatório abre pronto pra salvar." O papel REAL é a página que o app escreve na aba nova, impressa no
+// Chromium (rec/t20/t20_papel.py: A4 paisagem, 300 dpi). A página sobe inteira; o título e a tabela ganham o contorno na fala.
+function relatorio(d) {
+  const t0 = W(9, 'no'), tBa = W(9, 'baixar'), tRe = W(9, 'relatorio'), tAb = W(9, 'abre'), tPr = W(9, 'pronto'), tSa = W(9, 'salvar'), tFim = W(9, 'salvar', 1, 'e');
+  const KR = 2.0, ER = .005, LR = 841.92, HR = 594.96, WR = Math.round(LR * KR), HHR = Math.round(HR * KR), YR = HHR * ER / 2 + 1.4;
+  estilo('papelR', `
+.cupomR{position:relative;width:${WR}px;height:${HHR}px;background:#fff;border-radius:7px;box-shadow:0 34px 60px -18px rgba(30,80,60,.38),0 8px 16px -6px rgba(30,80,60,.14)}
+.cupomR img{display:block;width:${WR}px;height:${HHR}px;border-radius:7px}
+.cupomR .mk{position:absolute;border-radius:4px;background:rgba(80,208,136,.10);border:3px solid rgba(47,178,113,.95);box-shadow:0 0 14px rgba(80,208,136,.45);opacity:0}`);
+  const marcas = { tit: [310, 84, 530, 108], tab: [22, 124, 820, 254] };
+  const mk = Object.entries(marcas).map(([id, [x0, y0, x1, y1]]) =>
+    `<i class="mk" data-m="${id}" style="left:${(x0 * KR).toFixed(1)}px;top:${(y0 * KR).toFixed(1)}px;width:${((x1 - x0) * KR).toFixed(1)}px;height:${((y1 - y0) * KR).toFixed(1)}px"></i>`).join('');
+  palco();
+  const pp = plano(`<div class="cupomR"><img src="${d.anexo}/cap09-relatorio.png" alt="">${mk}</div>`, { pos: [0, YR, 0], esc: ER, sangra: true }), sp = mancha(9.4, 2.4, [0, 0, .1], { op: 0 });
+  const tt = titulo('Relatório', 'Baixar PDF');
+  const fx = (x0, y0, x1, y1) => [(x0 - LR / 2) * KR * ER, YR + (HR / 2 - y1) * KR * ER, (x1 - LR / 2) * KR * ER, YR + (HR / 2 - y0) * KR * ER];
+  const TUDO = enquadraRet(null, fx(0, 0, LR, HR), { topo: 150, margem: 40, el: .02, az: .05 });
+  const F = enquadraRet(null, fx(15, 60, 828, 270), { topo: 64, margem: 56, max: 2.87 / ER, el: .015, az: .03 });
+  camera([[t0 - 3, TUDO], [tRe - .35, { ...TUDO, d: TUDO.d * .985, az: .045 }, 'lin'], [tAb + .35, F], [tFim + 2, { ...F, d: F.d * .985, az: .012 }, 'lin']]);
+  const marca = (id, t, a) => { const m = (pp.e._mk ??= {})[id] ??= pp.e.querySelector(`[data-m="${id}"]`); m.style.opacity = eo(pr(t, a, .45)).toFixed(3); };
+  return t => {
+    GL.style.opacity = eo(pr(t, t0 + .08, .5)).toFixed(3); posTitulo(tt, t, t0 - .9, t0 - .45, tRe - .5);
+    vis(pp.e, t, t0 - .15, 1e9, { dy: 30 }); sp.material.uniforms.uOp.value = .55 * (+pp.e.style.opacity || 0);
+    marca('tit', t, tRe - .1); marca('tab', t, tPr - .1);
+  };
+}
+
+// =====================================================================================================================
 // CENA "zap" · cap13, linha 1 · clima escuro
 // 1 "O WhatsApp abre com a mensagem pronta, no telefone do cadastro: o número do pedido, a data, o valor e o link."
 // O balão da mensagem (texto real lido do endereço do ensaio): cada parte entra na palavra que a diz, com o destaque verde.
@@ -261,6 +289,6 @@ function links() {
   };
 }
 
-const CAPS = { 1: portal, 3: duplo, 10: precos, 12: comprovante, 13: zap, 14: links };
+const CAPS = { 1: portal, 3: duplo, 9: relatorio, 10: precos, 12: comprovante, 13: zap, 14: links };
 cena(d => CAPS[d.cap](d), { fov: 26 });
 </script></body></html>

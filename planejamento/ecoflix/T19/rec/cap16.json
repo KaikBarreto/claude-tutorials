@@ -1,6 +1,6 @@
 {
  "name": "t19-cap16",
- "title": "T19 · Cap. 16 · Arquivar ou excluir (narração 51,6 s, da voz; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T16:30:00-03:00)",
+ "title": "T19 · Cap. 16 · Arquivar ou excluir (narração 53,4 s, da voz; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T16:30:00-03:00)",
  "fakeNow": "2026-11-10T16:30:00-03:00",
  "seed": "t19-cap16",
  "pace": 0.5,
@@ -158,7 +158,7 @@
    "target": {
     "selector": "main section[aria-label^='Detalhes de'] dl > div:has(> dt:text-is('Último pagamento'))"
    },
-   "seconds": 0.1,
+   "seconds": 1.0,
    "at": 5.53,
    "label": "Último pagamento 30/10/2026",
    "optional": true,
@@ -167,12 +167,12 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 6.58
+   "at": 8.35
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main [role=list] *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Rog\\u00e9rio Batista\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-430);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/400),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 11.32,
+   "at": 13.09,
    "label": "a lista mostra Rogério Batista no meio"
   },
   {
@@ -181,7 +181,7 @@
     "selector": "main [role=listitem] button[aria-label='Ações de Rogério Batista']"
    },
    "seconds": 0.5,
-   "at": 11.92,
+   "at": 13.69,
    "label": "menu ⋯ do Rogério",
    "optional": false,
    "timeout": 8
@@ -215,7 +215,7 @@
     "name": "Arquivar"
    },
    "seconds": 3.0,
-   "at": 15.54,
+   "at": 17.31,
    "label": "Arquivar em destaque (sem clicar)",
    "noScroll": true,
    "optional": true,
@@ -238,7 +238,7 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 22.1
+   "at": 23.87
   },
   {
    "do": "click",
@@ -246,7 +246,7 @@
     "role": "menuitem",
     "name": "Arquivar"
    },
-   "at": 23.28,
+   "at": 25.05,
    "label": "Arquivar",
    "noScroll": true
   },
@@ -265,14 +265,14 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 30.02
+   "at": 31.79
   },
   {
    "do": "click",
    "target": {
     "selector": "main button:text-is('Inativos')"
    },
-   "at": 30.82,
+   "at": 32.59,
    "label": "Inativos"
   },
   {
@@ -285,7 +285,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main [role=list] *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Rog\\u00e9rio Batista\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-430);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/400),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 31.68,
+   "at": 33.45,
    "label": "a lista mostra Rogério Batista no meio"
   },
   {
@@ -294,7 +294,7 @@
     "selector": "main [role=listitem] button[aria-label='Ações de Rogério Batista']"
    },
    "seconds": 0.5,
-   "at": 32.28,
+   "at": 34.05,
    "label": "menu ⋯ do Rogério (Inativos)",
    "optional": false,
    "timeout": 8
@@ -328,7 +328,7 @@
     "name": "Reativar"
    },
    "seconds": 0.1,
-   "at": 33.92,
+   "at": 35.69,
    "label": "Reativar (sem clicar)",
    "noScroll": true,
    "optional": true,
@@ -351,7 +351,7 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 34.58
+   "at": 36.35
   },
   {
    "do": "click",
@@ -359,7 +359,7 @@
     "role": "menuitem",
     "name": "Excluir definitivamente"
    },
-   "at": 35.44,
+   "at": 37.21,
    "label": "Excluir definitivamente",
    "noScroll": true
   },
@@ -375,7 +375,7 @@
     "within": "[role=alertdialog], [role=dialog]"
    },
    "seconds": 2.0,
-   "at": 38.81,
+   "at": 40.58,
    "label": "o texto do Excluir definitivamente (zoom)",
    "optional": true,
    "timeout": 4
@@ -383,7 +383,7 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 42.98
+   "at": 44.75
   },
   {
    "do": "scroll",
@@ -394,20 +394,20 @@
    "by": 0,
    "duration": 0.2,
    "after": 0,
-   "at": 43.58,
+   "at": 45.35,
    "label": "cursor descansa (ilustração arquivo x lixeira)"
   },
   {
    "do": "mark",
    "name": "L7",
-   "at": 48.56
+   "at": 50.33
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=alertdialog] button:text-is('Cancelar'), [role=dialog] button:text-is('Cancelar')"
    },
-   "at": 49.84,
+   "at": 51.61,
    "label": "Cancelar"
   },
   {
@@ -425,7 +425,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 51.6
+   "at": 53.37
   }
  ]
 }

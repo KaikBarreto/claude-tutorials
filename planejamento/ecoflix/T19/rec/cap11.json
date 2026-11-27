@@ -1,6 +1,6 @@
 {
  "name": "t19-cap11",
- "title": "T19 · Cap. 11 · Ligar o ponto e gerar o link (narração 67,6 s, da voz; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T19 · Cap. 11 · Ligar o ponto e gerar o link (narração 72,1 s, da voz; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "fakeNow": "2026-11-10T08:30:00-03:00",
  "seed": "t19-cap11",
  "pace": 0.5,
@@ -192,7 +192,7 @@
    "target": {
     "selector": "[role=dialog] [role=tab]:has-text('Ponto eletrônico')"
    },
-   "at": 3.06,
+   "at": 4.12,
    "label": "aba Ponto eletrônico"
   },
   {
@@ -213,7 +213,7 @@
     "selector": "[role=dialog] #ponto-enabled"
    },
    "seconds": 0.1,
-   "at": 8.81,
+   "at": 9.87,
    "label": "Ativar ponto eletrônico (ligado)",
    "optional": true,
    "timeout": 4
@@ -221,14 +221,14 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 9.46
+   "at": 10.52
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] button:has-text('Definir PIN')"
    },
-   "at": 14.26,
+   "at": 15.32,
    "label": "Definir PIN"
   },
   {
@@ -243,7 +243,7 @@
    "target": {
     "placeholder": "Novo PIN"
    },
-   "at": 17.06,
+   "at": 18.12,
    "label": "campo Novo PIN 4107"
   },
   {
@@ -253,7 +253,7 @@
    },
    "text": "4107",
    "cps": 40,
-   "at": 17.51,
+   "at": 18.57,
    "label": "Novo PIN 4107",
    "noClick": true
   },
@@ -262,7 +262,7 @@
    "target": {
     "placeholder": "Repita o PIN"
    },
-   "at": 17.48,
+   "at": 18.54,
    "label": "campo Repita o PIN 4107"
   },
   {
@@ -272,7 +272,7 @@
    },
    "text": "4107",
    "cps": 40,
-   "at": 17.83,
+   "at": 18.89,
    "label": "Repita o PIN 4107",
    "noClick": true
   },
@@ -281,7 +281,7 @@
    "target": {
     "selector": "[role=dialog] button:text-is('Atualizar'):not(.absolute)"
    },
-   "at": 19.1,
+   "at": 21.66,
    "label": "Atualizar (grava o PIN)"
   },
   {
@@ -294,7 +294,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main [role=list] *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Gabriel Rocha\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-430);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/400),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 19.3,
+   "at": 21.86,
    "label": "a lista mostra Gabriel Rocha no meio"
   },
   {
@@ -303,7 +303,7 @@
     "selector": "main [role=listitem] button[aria-label='Ações de Gabriel Rocha']"
    },
    "seconds": 0.1,
-   "at": 19.9,
+   "at": 22.46,
    "label": "menu ⋯ do Gabriel",
    "optional": false,
    "timeout": 8
@@ -350,7 +350,7 @@
     "role": "menuitem",
     "name": "Editar"
    },
-   "at": 20.9,
+   "at": 23.46,
    "label": "Editar",
    "noScroll": true
   },
@@ -366,7 +366,7 @@
    "target": {
     "selector": "[role=dialog] [role=tab]:has-text('Ponto eletrônico')"
    },
-   "at": 21.9,
+   "at": 24.46,
    "label": "aba Ponto eletrônico"
   },
   {
@@ -382,7 +382,7 @@
     "selector": "[role=dialog] button:has-text('Trocar PIN')"
    },
    "seconds": 0.1,
-   "at": 24.51,
+   "at": 27.07,
    "label": "Trocar PIN",
    "optional": true,
    "timeout": 4
@@ -393,7 +393,7 @@
     "selector": "[role=dialog] button:has-text('Remover PIN')"
    },
    "seconds": 0.19,
-   "at": 25.23,
+   "at": 27.79,
    "label": "Remover PIN (sem clicar)",
    "optional": true,
    "timeout": 4
@@ -403,7 +403,7 @@
    "target": {
     "selector": "[role=dialog] button:text-is('Cancelar'):not(.absolute)"
    },
-   "at": 26.42,
+   "at": 28.98,
    "label": "Cancelar"
   },
   {
@@ -416,12 +416,12 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 26.05
+   "at": 30.5
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main [role=list] *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Gabriel Rocha\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-430);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/400),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 26.89,
+   "at": 31.34,
    "label": "a lista mostra Gabriel Rocha no meio"
   },
   {
@@ -430,7 +430,7 @@
     "selector": "main [role=listitem] button[aria-label='Ações de Gabriel Rocha']"
    },
    "seconds": 0.18,
-   "at": 27.49,
+   "at": 31.94,
    "label": "menu ⋯ do Gabriel",
    "optional": false,
    "timeout": 8
@@ -477,7 +477,7 @@
     "role": "menuitem",
     "name": "Copiar link do ponto"
    },
-   "at": 28.67,
+   "at": 33.12,
    "label": "Copiar link do ponto",
    "noScroll": true
   },
@@ -489,7 +489,7 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 30.21
+   "at": 34.66
   },
   {
    "do": "scroll",
@@ -500,20 +500,20 @@
    "by": 0,
    "duration": 0.2,
    "after": 0,
-   "at": 30.81,
+   "at": 35.26,
    "label": "cursor descansa (ilustração do link no celular)"
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 33.57
+   "at": 38.02
   },
   {
    "do": "click",
    "target": {
     "selector": "#tab-btn-config-ponto"
    },
-   "at": 37.81,
+   "at": 42.26,
    "label": "aba Configurações de Ponto"
   },
   {
@@ -524,7 +524,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim().startsWith(\"Marque quem vai bater ponto\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-250);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 39.63,
+   "at": 44.08,
    "label": "rola até o cartão Ativar ponto eletrônico"
   },
   {
@@ -532,7 +532,7 @@
    "target": {
     "selector": "main div.cursor-pointer:has(p:text-is('Juliana Prado'))"
    },
-   "at": 42.95,
+   "at": 47.4,
    "label": "marca Juliana Prado"
   },
   {
@@ -540,7 +540,7 @@
    "target": {
     "selector": "main button:has-text('Ativar ponto (1)')"
    },
-   "at": 44.61,
+   "at": 49.06,
    "label": "Ativar ponto (1)"
   },
   {
@@ -551,12 +551,12 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 45.97
+   "at": 50.42
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim().startsWith(\"Tablet da empresa\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-150);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 46.71,
+   "at": 51.16,
    "label": "sobe até o cartão Tablet da empresa"
   },
   {
@@ -566,7 +566,7 @@
     "within": "main"
    },
    "seconds": 1.2,
-   "at": 48.68,
+   "at": 53.13,
    "label": "link do tablet /ponto/empresa/...",
    "optional": true,
    "timeout": 4
@@ -577,7 +577,7 @@
     "selector": "main svg[role=img], main canvas, main img[alt*='QR']"
    },
    "seconds": 1.0,
-   "at": 51.26,
+   "at": 55.71,
    "label": "QR Code do tablet",
    "optional": true,
    "timeout": 4
@@ -585,7 +585,7 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 54.87
+   "at": 59.32
   },
   {
    "do": "scroll",
@@ -596,7 +596,7 @@
    "by": 0,
    "duration": 0.2,
    "after": 0,
-   "at": 55.47,
+   "at": 59.92,
    "label": "cursor descansa (ilustração dos dois links)"
   },
   {
@@ -607,7 +607,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 67.62
+   "at": 72.07
   }
  ]
 }

@@ -1,6 +1,6 @@
 {
  "name": "t20-cap04",
- "title": "T20 · Cap. 4 · Usuário e senha (narração 69,0 s; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T15:00:00-03:00)",
+ "title": "T20 · Cap. 4 · Usuário e senha (narração 73,5 s; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T15:00:00-03:00)",
  "seed": "t20-cap04",
  "pace": 0.5,
  "cps": 9,
@@ -206,7 +206,7 @@
    "target": {
     "selector": "#portal-password-enabled"
    },
-   "at": 5.2,
+   "at": 5.4,
    "label": "liga Pedir login no portal"
   },
   {
@@ -219,14 +219,14 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 5.6
+   "at": 5.8
   },
   {
    "do": "click",
    "target": {
     "selector": "#portal-username"
    },
-   "at": 7.5,
+   "at": 7.7,
    "label": "Usuário: cooperativa.recomeco (campo)"
   },
   {
@@ -236,7 +236,7 @@
    },
    "text": "cooperativa.recomeco",
    "cps": 40,
-   "at": 9.03,
+   "at": 9.23,
    "label": "Usuário: cooperativa.recomeco",
    "noClick": true
   },
@@ -245,7 +245,7 @@
    "target": {
     "selector": "#portal-password"
    },
-   "at": 10.8,
+   "at": 11.0,
    "label": "Senha (campo)"
   },
   {
@@ -255,14 +255,14 @@
    },
    "text": "$PORTAL_SENHA",
    "cps": 40,
-   "at": 12.07,
+   "at": 12.27,
    "label": "Senha (pontinhos)",
    "noClick": true
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 12.96
+   "at": 13.16
   },
   {
    "do": "click",
@@ -272,7 +272,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 13.2,
+   "at": 13.4,
    "label": "Salvar acesso"
   },
   {
@@ -283,13 +283,13 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim().startsWith(\"O que exibir no portal\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-130);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 14.4,
+   "at": 14.6,
    "label": "rola até O que exibir no portal"
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 14.8
+   "at": 15.0
   },
   {
    "do": "hover",
@@ -297,7 +297,7 @@
     "selector": "[role=dialog] [role=radiogroup][aria-label='Aba Histórico']"
    },
    "seconds": 2.2,
-   "at": 16.9,
+   "at": 17.1,
    "label": "[ZOOM] as pílulas Oculto, Livre e Com senha da Aba Histórico",
    "optional": true,
    "timeout": 4
@@ -305,7 +305,7 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 23.9
+   "at": 24.1
   },
   {
    "do": "scroll",
@@ -316,13 +316,13 @@
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 24.4,
+   "at": 24.6,
    "label": "cursor em repouso (ilustração)"
   },
   {
    "do": "goto",
    "url": "/portal/recicla-vale-metais-cooperativa-1B2yVwaud00G8omJQvmXcn",
-   "at": 33.58,
+   "at": 33.78,
    "label": "navegador do parceiro: abre o link da cooperativa"
   },
   {
@@ -338,7 +338,7 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 33.98
+   "at": 34.18
   },
   {
    "do": "hover",
@@ -347,7 +347,7 @@
     "exact": true
    },
    "seconds": 1.2,
-   "at": 36.64,
+   "at": 36.84,
    "label": "Acesso restrito",
    "optional": true,
    "timeout": 4
@@ -355,14 +355,14 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 38.22
+   "at": 38.42
   },
   {
    "do": "click",
    "target": {
     "selector": "#portal-user"
    },
-   "at": 38.5,
+   "at": 38.7,
    "label": "Usuário (campo)"
   },
   {
@@ -372,7 +372,7 @@
    },
    "text": "cooperativa.recomeco",
    "cps": 40,
-   "at": 39.25,
+   "at": 39.45,
    "label": "Usuário: cooperativa.recomeco",
    "noClick": true
   },
@@ -381,7 +381,7 @@
    "target": {
     "selector": "#portal-pass"
    },
-   "at": 39.34,
+   "at": 39.54,
    "label": "Senha (campo)"
   },
   {
@@ -391,7 +391,7 @@
    },
    "text": "$PORTAL_SENHA",
    "cps": 40,
-   "at": 39.89,
+   "at": 40.09,
    "label": "Senha (pontinhos)",
    "noClick": true
   },
@@ -402,7 +402,7 @@
     "name": "Entrar",
     "exact": true
    },
-   "at": 40.46,
+   "at": 40.66,
    "label": "Entrar"
   },
   {
@@ -413,7 +413,7 @@
   {
    "do": "mark",
    "name": "L8",
-   "at": 46.86
+   "at": 47.56
   },
   {
    "do": "hover",
@@ -421,7 +421,7 @@
     "selector": "button[title='Sair']"
    },
    "seconds": 2.2,
-   "at": 47.44,
+   "at": 48.14,
    "label": "[ZOOM] o ícone Sair no cartão do parceiro (sem clicar)",
    "optional": true,
    "timeout": 4
@@ -429,7 +429,7 @@
   {
    "do": "eval",
    "js": "(()=>{location.assign('/clientes-fornecedores');return 'ok'})()",
-   "at": 48.22,
+   "at": 50.02,
    "label": "navegador do sistema: Clientes e Fornecedores (corte, carga inteira)"
   },
   {
@@ -447,7 +447,7 @@
    "target": {
     "selector": "main div.no-scrollbar > button:has-text('Fornecedores')"
    },
-   "at": 50.22,
+   "at": 52.02,
    "label": "aba Fornecedores"
   },
   {
@@ -455,7 +455,7 @@
    "target": {
     "selector": "main aside button:has-text('Cooperativa Recomeço')"
    },
-   "at": 51.22,
+   "at": 53.02,
    "label": "Cooperativa Recomeço"
   },
   {
@@ -468,7 +468,7 @@
   {
    "do": "press",
    "key": "Escape",
-   "at": 52.22,
+   "at": 54.02,
    "label": "fecha o menu da linha (o mouse o abriu)"
   },
   {
@@ -478,7 +478,7 @@
   {
    "do": "eval",
    "js": "(()=>{const b=[...document.querySelectorAll(\"section[aria-label='Detalhes de Cooperativa Recome\\u00e7o'] button\")].find(b=>b.offsetParent!==null&&(b.textContent||'').includes(\"Editar\"));if(!b)return 'SEM ALVO';b.click();return 'clicado'})()",
-   "at": 52.42,
+   "at": 54.22,
    "label": "Editar (clique por eval)"
   },
   {
@@ -494,7 +494,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 53.62,
+   "at": 55.42,
    "label": "aba Portal"
   },
   {
@@ -505,12 +505,12 @@
   {
    "do": "mark",
    "name": "L9",
-   "at": 55.02
+   "at": 56.82
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim().startsWith(\"Exigir senha\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-130);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 55.02,
+   "at": 56.82,
    "label": "rola até Exigir senha"
   },
   {
@@ -525,7 +525,7 @@
    "target": {
     "selector": "#portal-password-enabled"
    },
-   "at": 65.74,
+   "at": 70.24,
    "label": "[ZOOM] desliga a chave Pedir login no portal"
   },
   {
@@ -547,7 +547,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 1.4,
-   "at": 67.26,
+   "at": 71.76,
    "label": "o botão Remover login (sem clicar)",
    "optional": true,
    "timeout": 4
@@ -560,7 +560,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 68.96
+   "at": 73.46
   }
  ]
 }

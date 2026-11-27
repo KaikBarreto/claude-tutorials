@@ -1,6 +1,6 @@
 {
  "name": "t19-cap13",
- "title": "T19 · Cap. 13 · O ponto no tablet da empresa (narração 42,5 s, da voz; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T16:30:00-03:00)",
+ "title": "T19 · Cap. 13 · O ponto no tablet da empresa (narração 45,4 s, da voz; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T16:30:00-03:00)",
  "fakeNow": "2026-11-10T16:30:00-03:00",
  "seed": "t19-cap13",
  "pace": 0.5,
@@ -240,7 +240,6 @@
    },
    "text": "",
    "noClick": true,
-   "at": 21.96,
    "label": "Saída registrada com a hora",
    "optional": true,
    "timeout": 4
@@ -251,11 +250,16 @@
    "timeout": 20
   },
   {
+   "do": "mark",
+   "name": "L4",
+   "at": 26.44
+  },
+  {
    "do": "click",
    "target": {
     "selector": "button:has-text('Buscar manualmente')"
    },
-   "at": 25.84,
+   "at": 27.64,
    "label": "Buscar manualmente (de novo)",
    "noScroll": true
   },
@@ -267,17 +271,12 @@
    "timeout": 15
   },
   {
-   "do": "mark",
-   "name": "L4",
-   "at": 24.64
-  },
-  {
    "do": "hover",
    "target": {
     "selector": "button:has-text('Gabriel Rocha')"
    },
    "seconds": 1.57,
-   "at": 26.47,
+   "at": 29.36,
    "label": "o cartão do Gabriel com o cadeado (Protegido por PIN)",
    "noScroll": true,
    "optional": true,
@@ -286,12 +285,12 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 29.04
+   "at": 31.93
   },
   {
    "do": "eval",
    "js": "location.assign('/funcionarios')",
-   "at": 29.34,
+   "at": 32.23,
    "label": "volta ao sistema (computador)"
   },
   {
@@ -304,8 +303,22 @@
    "target": {
     "selector": "#tab-btn-config-ponto"
    },
-   "at": 31.68,
+   "at": 34.57,
    "label": "aba Configurações de Ponto"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.2
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#tab-btn-config-ponto"
+   },
+   "label": "aba Configurações de Ponto de novo (só se não abriu)",
+   "unless": {
+    "text": "Exigir reconhecimento facial no quiosque"
+   }
   },
   {
    "do": "waitFor",
@@ -315,7 +328,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim().startsWith(\"Exigir reconhecimento facial\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-260);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 38.04,
+   "at": 40.93,
    "label": "rola até Exigir reconhecimento facial"
   },
   {
@@ -325,7 +338,7 @@
     "within": "main"
    },
    "seconds": 2.0,
-   "at": 38.89,
+   "at": 41.78,
    "label": "Exigir reconhecimento facial no quiosque",
    "optional": true,
    "timeout": 4
@@ -338,7 +351,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 42.48
+   "at": 45.37
   }
  ]
 }

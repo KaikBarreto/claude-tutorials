@@ -1,6 +1,6 @@
 {
  "name": "t19-cap05",
- "title": "T19 · Cap. 5 · Lançar vale, bônus e falta (narração 81,0 s, da voz; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T19 · Cap. 5 · Lançar vale, bônus e falta (narração 85,8 s, da voz; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "fakeNow": "2026-11-10T08:30:00-03:00",
  "seed": "t19-cap05",
  "pace": 0.5,
@@ -122,8 +122,22 @@
    "target": {
     "selector": "main [role=listitem] > button:has(p:text-is('Diego Morais'))"
    },
-   "at": 0.92,
+   "at": 1.6,
    "label": "Diego Morais"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main [role=listitem] > button:has(p:text-is('Diego Morais'))"
+   },
+   "label": "Diego Morais de novo (só se a ficha não abriu)",
+   "unless": {
+    "selector": "main section[aria-label^='Detalhes de'] div:has(> p:text-is('Saldo atual'))"
+   }
   },
   {
    "do": "waitFor",
@@ -354,7 +368,7 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 47.9
+   "at": 50.44
   },
   {
    "do": "hover",
@@ -362,7 +376,7 @@
     "selector": "main section[aria-label^='Detalhes de'] div:has(> p:text-is('Salário'))"
    },
    "seconds": 0.3,
-   "at": 50.93,
+   "at": 53.47,
    "label": "Salário R$ 1.980,00",
    "optional": true,
    "timeout": 4
@@ -373,7 +387,7 @@
     "selector": "main section[aria-label^='Detalhes de'] div:has(> p:text-is('Vales/Adiantamentos'))"
    },
    "seconds": 0.3,
-   "at": 52.77,
+   "at": 55.31,
    "label": "Vales R$ 200,00",
    "optional": true,
    "timeout": 4
@@ -384,7 +398,7 @@
     "selector": "main section[aria-label^='Detalhes de'] div:has(> p:text-is('Faltas'))"
    },
    "seconds": 0.1,
-   "at": 54.37,
+   "at": 56.91,
    "label": "Faltas R$ 90,00",
    "optional": true,
    "timeout": 4
@@ -395,7 +409,7 @@
     "selector": "main section[aria-label^='Detalhes de'] div:has(> p:text-is('Saldo atual'))"
    },
    "seconds": 1.2,
-   "at": 55.01,
+   "at": 57.55,
    "label": "Saldo atual R$ 1.690,00",
    "optional": true,
    "timeout": 4
@@ -403,7 +417,7 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 57.42
+   "at": 59.96
   },
   {
    "do": "scroll",
@@ -414,20 +428,20 @@
    "by": 0,
    "duration": 0.2,
    "after": 0,
-   "at": 58.02,
+   "at": 60.56,
    "label": "cursor descansa (ilustração da conta do saldo)"
   },
   {
    "do": "mark",
    "name": "L8",
-   "at": 69.14
+   "at": 71.68
   },
   {
    "do": "click",
    "target": {
     "selector": "main [role=listitem] > button:has(p:text-is('Cláudio Ferraz'))"
    },
-   "at": 70.92,
+   "at": 73.46,
    "label": "Cláudio Ferraz"
   },
   {
@@ -442,8 +456,22 @@
    "target": {
     "selector": "main section[aria-label^='Detalhes de'] button:text-is('Bônus')"
    },
-   "at": 73.46,
+   "at": 76.0,
    "label": "Bônus"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main section[aria-label^='Detalhes de'] button:text-is('Bônus')"
+   },
+   "label": "Bônus de novo (só se a janela não abriu)",
+   "unless": {
+    "selector": "[role=dialog] #amount"
+   }
   },
   {
    "do": "waitFor",
@@ -457,7 +485,7 @@
    "target": {
     "selector": "[role=dialog] #amount"
    },
-   "at": 74.74,
+   "at": 79.55,
    "label": "campo Valor R$ 150,00"
   },
   {
@@ -467,7 +495,7 @@
    },
    "text": "150,00",
    "cps": 40,
-   "at": 75.89,
+   "at": 80.7,
    "label": "Valor R$ 150,00",
    "noClick": true
   },
@@ -476,7 +504,7 @@
    "target": {
     "selector": "[role=dialog] #description"
    },
-   "at": 76.5,
+   "at": 81.31,
    "label": "campo Descrição"
   },
   {
@@ -509,7 +537,7 @@
     "selector": "main section[aria-label^='Detalhes de'] div:has(> p:text-is('Saldo atual'))"
    },
    "seconds": 1.0,
-   "at": 78.55,
+   "at": 83.36,
    "label": "Saldo atual R$ 2.250,00",
    "optional": true,
    "timeout": 4
@@ -522,7 +550,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 80.96
+   "at": 85.77
   }
  ]
 }

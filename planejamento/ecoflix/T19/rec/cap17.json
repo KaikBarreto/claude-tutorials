@@ -1,6 +1,6 @@
 {
  "name": "t19-cap17",
- "title": "T19 · Cap. 17 · Recapitulando (narração 55,0 s, da voz; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T16:30:00-03:00)",
+ "title": "T19 · Cap. 17 · Recapitulando (narração 61,9 s, da voz; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T16:30:00-03:00)",
  "fakeNow": "2026-11-10T16:30:00-03:00",
  "seed": "t19-cap17",
  "pace": 0.5,
@@ -191,7 +191,7 @@
    "target": {
     "selector": "[role=dialog] [role=tab]:has-text('Remuneração')"
    },
-   "at": 3.46,
+   "at": 4.71,
    "label": "Remuneração: salário, custo mensal R$ 4.264,00 e CLT"
   },
   {
@@ -209,7 +209,7 @@
    "target": {
     "selector": "[role=dialog] button:text-is('Cancelar'):not(.absolute)"
    },
-   "at": 7.52,
+   "at": 8.77,
    "label": "Cancelar"
   },
   {
@@ -222,7 +222,7 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 8.66
+   "at": 9.91
   },
   {
    "do": "hover",
@@ -230,7 +230,7 @@
     "selector": "main [role=listitem]:has(p:text-is('Edson Moura')) span:has-text('Transporte')"
    },
    "seconds": 0.4,
-   "at": 9.93,
+   "at": 11.18,
    "label": "o departamento Transporte",
    "optional": true,
    "timeout": 4
@@ -240,7 +240,7 @@
    "target": {
     "selector": "main [role=listitem] > button:has(p:text-is('Diego Morais'))"
    },
-   "at": 12.36,
+   "at": 13.61,
    "label": "Diego: vale e falta"
   },
   {
@@ -258,7 +258,7 @@
    "target": {
     "selector": "main [role=listitem] > button:has(p:text-is('Cláudio Ferraz'))"
    },
-   "at": 13.56,
+   "at": 17.29,
    "label": "Cláudio: bônus"
   },
   {
@@ -274,22 +274,29 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 14.18
+   "at": 19.51
   },
   {
    "do": "click",
    "target": {
     "selector": "main [role=listitem] > button:has(p:text-is('Edson Moura'))"
    },
-   "at": 15.88,
+   "at": 21.21,
    "label": "Edson"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main section[aria-label^='Detalhes de'] h2:text-is('Edson Moura')"
+   },
+   "timeout": 10
   },
   {
    "do": "click",
    "target": {
     "selector": "main section[aria-label^='Detalhes de'] button:has-text('Extrato')"
    },
-   "at": 18.37,
+   "at": 23.7,
    "label": "Extrato - Edson Moura"
   },
   {
@@ -300,14 +307,14 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 26.45
+   "at": 31.78
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] button:text-is('Fechar'):not(.absolute)"
    },
-   "at": 27.71,
+   "at": 33.04,
    "label": "Fechar o extrato"
   },
   {
@@ -322,7 +329,7 @@
    "target": {
     "selector": "main button:has-text('Exportar Relatório')"
    },
-   "at": 28.45,
+   "at": 33.78,
    "label": "Exportar Relatório"
   },
   {
@@ -354,13 +361,13 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main [role=list] *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Gabriel Rocha\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-430);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/400),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 29.35,
+   "at": 36.31,
    "label": "a lista mostra Gabriel Rocha no meio"
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 29.65
+   "at": 36.61
   },
   {
    "do": "hover",
@@ -368,7 +375,7 @@
     "selector": "main [role=listitem] button[aria-label='Ações de Gabriel Rocha']"
    },
    "seconds": 0.5,
-   "at": 29.95,
+   "at": 36.91,
    "label": "menu ⋯ do Gabriel: Copiar link do ponto",
    "optional": false,
    "timeout": 8
@@ -418,14 +425,14 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 36.37
+   "at": 43.33
   },
   {
    "do": "click",
    "target": {
     "selector": "#tab-btn-espelho-ponto"
    },
-   "at": 38.05,
+   "at": 45.01,
    "label": "Folha de Ponto"
   },
   {
@@ -436,14 +443,14 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 45.76
+   "at": 52.72
   },
   {
    "do": "click",
    "target": {
     "selector": "#tab-btn-employees"
    },
-   "at": 46.0,
+   "at": 52.96,
    "label": "Funcionários"
   },
   {
@@ -458,7 +465,7 @@
    "target": {
     "selector": "main button:text-is('Inativos')"
    },
-   "at": 46.94,
+   "at": 53.9,
    "label": "Inativos com o Rogério"
   },
   {
@@ -471,7 +478,7 @@
   {
    "do": "mark",
    "name": "L8",
-   "at": 49.2
+   "at": 56.16
   },
   {
    "do": "scroll",
@@ -482,7 +489,7 @@
    "by": 0,
    "duration": 0.2,
    "after": 0,
-   "at": 49.8,
+   "at": 56.76,
    "label": "cursor descansa (cartão Próximo)"
   },
   {
@@ -493,7 +500,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 54.96
+   "at": 61.92
   }
  ]
 }

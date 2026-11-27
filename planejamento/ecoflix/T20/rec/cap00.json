@@ -1,6 +1,6 @@
 {
  "name": "t20-cap00",
- "title": "T20 · Cap. 0 · Abertura (narração 46,2 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T15:00:00-03:00)",
+ "title": "T20 · Cap. 0 · Abertura (narração 48,9 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T15:00:00-03:00)",
  "seed": "t20-cap00",
  "pace": 0.5,
  "cps": 9,
@@ -119,7 +119,7 @@
     "nth": 0
    },
    "seconds": 0.4,
-   "at": 24.1,
+   "at": 24.6,
    "label": "o cursor desce pelo menu até Clientes e Fornecedores",
    "optional": true,
    "timeout": 4
@@ -130,7 +130,7 @@
     "selector": "a:has-text('Clientes e Fornecedores')",
     "nth": 0
    },
-   "at": 24.72,
+   "at": 25.22,
    "label": "Clientes e Fornecedores (menu lateral)"
   },
   {
@@ -143,7 +143,7 @@
    "target": {
     "selector": "main div.no-scrollbar > button:has-text('Fornecedores')"
    },
-   "at": 25.44,
+   "at": 25.94,
    "label": "aba Fornecedores"
   },
   {
@@ -158,7 +158,7 @@
    "target": {
     "selector": "main aside button:has-text('Cooperativa Recomeço')"
    },
-   "at": 26.96,
+   "at": 27.46,
    "label": "clica na Cooperativa Recomeço: a ficha abre em Visão geral"
   },
   {
@@ -171,7 +171,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\":is(main,body) *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Acesso ao portal\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-330);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 27.7,
+   "at": 28.2,
    "label": "a câmera desce até Acesso ao portal"
   },
   {
@@ -180,7 +180,7 @@
     "selector": "input[aria-label='Link do portal']"
    },
    "seconds": 1.6,
-   "at": 29.14,
+   "at": 29.64,
    "label": "[ZOOM] Acesso ao portal: o link e o botão Copiar (sem clicar)",
    "optional": true,
    "timeout": 4
@@ -188,12 +188,12 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 30.88
+   "at": 33.58
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 35.92
+   "at": 38.62
   },
   {
    "do": "scroll",
@@ -204,7 +204,7 @@
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 36.62,
+   "at": 39.32,
    "label": "cursor em repouso"
   },
   {
@@ -215,7 +215,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 46.16
+   "at": 48.86
   }
  ]
 }

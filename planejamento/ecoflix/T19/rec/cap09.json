@@ -125,7 +125,7 @@
   },
   {
    "do": "eval",
-   "js": "(()=>{if(window.__abas)return 'ja';window.__abas=[];window.__pdfs=[];const o=URL.createObjectURL.bind(URL);URL.createObjectURL=(b)=>{try{if(b&&b.type==='application/pdf')window.__pdfs.push(b)}catch(e){}return o(b)};const wo=window.open.bind(window);window.open=(...a)=>{const w=wo(...a);window.__abas.push(w);return w};return 'ganchos'})()"
+   "js": "(()=>{if(window.__abas)return 'ja';window.__abas=[];window.__pdfs=[];const o=URL.createObjectURL.bind(URL);URL.createObjectURL=(b)=>{try{if(b&&b.type==='application/pdf')window.__pdfs.push(b)}catch(e){}return o(b)};const wo=window.open.bind(window);window.open=(...a)=>{const w=wo(...a);window.__abas.push(w);try{const dw=w.document.write.bind(w.document);w.document.write=(h)=>dw(String(h).replace(/<script[^>]*html2pdf[^>]*><\\/script>/gi,''))}catch(e){}return w};return 'ganchos'})()"
   },
   {
    "do": "eval",
@@ -227,8 +227,7 @@
   {
    "do": "hover",
    "target": {
-    "text": "Térmico",
-    "within": "[role=dialog]"
+    "selector": "[role=dialog] button:has(span:text-is('Térmico'))"
    },
    "seconds": 0.1,
    "at": 16.33,
@@ -248,6 +247,11 @@
    "do": "eval",
    "js": "(async()=>{let w=null,h='';for(let i=0;i<50;i++){w=window.__abas&&window.__abas[0];try{h=w&&w.document&&w.document.documentElement.outerHTML||''}catch(e){h=''}if(h.includes(\"Edson Moura\"))break;await new Promise(r=>setTimeout(r,200));}if(!h.includes(\"Edson Moura\"))return 'SEM ABA: '+h.slice(0,120);return {html:\"recibo-extrato-edson\",chars:h.length,b64:btoa(unescape(encodeURIComponent(h)))}})()",
    "label": "HTML do recibo A4 do Edson (aba nova, para a ilustração do comprovante)"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{(window.__abas||[]).forEach(w=>{try{w.close()}catch(e){}});window.__abas=[];return 'ok (abas fechadas)'})()",
+   "label": "fecha a aba nova"
   },
   {
    "do": "hover",

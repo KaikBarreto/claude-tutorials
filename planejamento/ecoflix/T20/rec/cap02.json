@@ -1,6 +1,6 @@
 {
  "name": "t20-cap02",
- "title": "T20 · Cap. 2 · Pegar o link do portal (narração 58,6 s; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T15:00:00-03:00)",
+ "title": "T20 · Cap. 2 · Pegar o link do portal (narração 60,0 s; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T15:00:00-03:00)",
  "seed": "t20-cap02",
  "pace": 0.5,
  "cps": 9,
@@ -216,18 +216,18 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 16.56
+   "at": 16.76
   },
   {
    "do": "press",
    "key": "Escape",
-   "at": 16.66,
+   "at": 16.86,
    "label": "fecha o menu"
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\":is(main,body) *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Acesso ao portal\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-330);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 16.96,
+   "at": 17.16,
    "label": "a câmera volta ao Acesso ao portal"
   },
   {
@@ -236,7 +236,7 @@
     "selector": "input[aria-label='Link do portal']"
    },
    "seconds": 2.4,
-   "at": 16.9,
+   "at": 17.1,
    "label": "[ZOOM] o fim do endereço: recicla-vale-metais-cooperativa- e o código",
    "optional": true,
    "timeout": 4
@@ -244,7 +244,7 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 25.63
+   "at": 27.03
   },
   {
    "do": "scroll",
@@ -255,13 +255,13 @@
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 26.13,
+   "at": 27.53,
    "label": "cursor em repouso (ilustração)"
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 32.91
+   "at": 34.31
   },
   {
    "do": "click",
@@ -271,7 +271,7 @@
     "exact": true,
     "within": "main section[aria-label='Detalhes de Cooperativa Recomeço']"
    },
-   "at": 33.59,
+   "at": 34.99,
    "label": "Editar"
   },
   {
@@ -287,7 +287,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 35.07,
+   "at": 36.47,
    "label": "aba Portal"
   },
   {
@@ -303,7 +303,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 1.2,
-   "at": 36.85,
+   "at": 38.25,
    "label": "Link do portal (sem clicar em Abrir portal)",
    "optional": true,
    "timeout": 4
@@ -311,7 +311,7 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 39.15
+   "at": 40.55
   },
   {
    "do": "hover",
@@ -319,7 +319,7 @@
     "selector": "[role=dialog] button[title='Abrir portal'], [role=dialog] a[title='Abrir portal']"
    },
    "seconds": 1.6,
-   "at": 39.15,
+   "at": 40.55,
    "label": "[ZOOM] o ícone Abrir portal (sem clicar)",
    "optional": true,
    "timeout": 4
@@ -327,7 +327,7 @@
   {
    "do": "mark",
    "name": "L8",
-   "at": 45.8
+   "at": 47.2
   },
   {
    "do": "scroll",
@@ -338,7 +338,7 @@
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 46.3,
+   "at": 47.7,
    "label": "cursor em repouso (fala sobre cadastro antigo)"
   },
   {
@@ -349,7 +349,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 58.64
+   "at": 60.04
   }
  ]
 }

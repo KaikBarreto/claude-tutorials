@@ -1,6 +1,6 @@
 {
  "name": "t20-cap10",
- "title": "T20 · Cap. 10 · A tabela de preços do fornecedor (narração 47,0 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T15:00:00-03:00)",
+ "title": "T20 · Cap. 10 · A tabela de preços do fornecedor (narração 50,4 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T15:00:00-03:00)",
  "seed": "t20-cap10",
  "pace": 0.5,
  "cps": 9,
@@ -245,7 +245,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Aba Pre\\u00e7os\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-330);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": -0.1,
+   "at": 0.0,
    "label": "rola até Aba Preços"
   },
   {
@@ -291,7 +291,7 @@
   {
    "do": "goto",
    "url": "/portal/recicla-vale-metais-cooperativa-1B2yVwaud00G8omJQvmXcn",
-   "at": 15.3,
+   "at": 17.3,
    "label": "navegador da cooperativa (com sessão, corte)"
   },
   {
@@ -317,14 +317,14 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 15.6
+   "at": 17.6
   },
   {
    "do": "click",
    "target": {
     "selector": "button[title='Atualizar dados']"
    },
-   "at": 16.1,
+   "at": 18.1,
    "label": "Atualizar dados (o portal recarrega)"
   },
   {
@@ -336,7 +336,7 @@
    "target": {
     "selector": "#tab-btn-precos"
    },
-   "at": 16.02,
+   "at": 18.02,
    "label": "aba Preços"
   },
   {
@@ -356,7 +356,7 @@
     "exact": true
    },
    "seconds": 1.0,
-   "at": 18.04,
+   "at": 21.44,
    "label": "Seus materiais",
    "optional": true,
    "timeout": 4
@@ -368,7 +368,7 @@
     "exact": true
    },
    "seconds": 1.0,
-   "at": 21.6,
+   "at": 25.0,
    "label": "Outros materiais que compramos",
    "optional": true,
    "timeout": 4
@@ -376,7 +376,7 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 23.84
+   "at": 27.24
   },
   {
    "do": "hover",
@@ -384,7 +384,7 @@
     "text": "Valores sujeitos a alteração"
    },
    "seconds": 2.4,
-   "at": 23.94,
+   "at": 27.34,
    "label": "[ZOOM] Valores sujeitos a alteração. Vale o preço do momento da pesagem.",
    "optional": true,
    "timeout": 4
@@ -392,7 +392,7 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 29.84
+   "at": 33.24
   },
   {
    "do": "hover",
@@ -402,7 +402,7 @@
     "exact": true
    },
    "seconds": 0.1,
-   "at": 29.84,
+   "at": 33.24,
    "label": "[ZOOM] o botão Baixar em PDF",
    "optional": true,
    "timeout": 4
@@ -415,7 +415,7 @@
     "exact": true
    },
    "seconds": 0.99,
-   "at": 29.84,
+   "at": 33.24,
    "label": "[ZOOM] o botão Baixar em PDF (continua)",
    "optional": true,
    "timeout": 4
@@ -427,19 +427,19 @@
     "name": "Baixar em PDF",
     "exact": true
    },
-   "at": 31.2,
+   "at": 34.6,
    "label": "clica em Baixar em PDF: a tabela abre numa aba nova"
   },
   {
    "do": "eval",
    "js": "(async()=>{for(let i=0;i<60;i++){const b=(window.__blobs||[]).filter(x=>x&&x.type==='application/pdf').slice(-1)[0];if(b){const u=new Uint8Array(await b.arrayBuffer());let s='';for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'PDF:'+btoa(s)}await new Promise(r=>setTimeout(r,250))}return 'SEM PDF'})()",
-   "at": 34.3,
+   "at": 37.7,
    "label": "PDF da tabela de preços (janela nova navegada ao blob, para a cena do PDF)"
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 33.12
+   "at": 36.52
   },
   {
    "do": "scroll",
@@ -450,7 +450,7 @@
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 33.62,
+   "at": 37.02,
    "label": "de volta à lista de preços"
   },
   {
@@ -461,7 +461,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 46.96
+   "at": 50.36
   }
  ]
 }

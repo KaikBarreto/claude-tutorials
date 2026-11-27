@@ -936,8 +936,8 @@ def cap05():
     c.click(SEL('#portal-password-enabled'), at=c.A(1, 'ligo', 0.6), label='liga Pedir login no portal')
     c.waitfor(target=SEL('#portal-username'), timeout=8)
     c.digita(SEL('#portal-username'), 'deposito.siqueira', c.A(1, 'usuário', 0.8), c.A(1, 'usuário', 0.05), 'Usuário: deposito.siqueira')
-    c.click(SEL('#portal-password'), at=c.A(1, 'senha,', 0.6), label='Senha (campo)')
-    c.type(SEL('#portal-password'), '$PORTAL_SENHA', at=c.A(1, 'senha,', 0.05), label='Senha (pontinhos)', cps=40, noClick=True)
+    c.click(SEL('#portal-password'), at=c.A(1, 'senha,', 0.6, nth=1), label='Senha (campo)')
+    c.type(SEL('#portal-password'), '$PORTAL_SENHA', at=c.A(1, 'senha,', 0.05, nth=1), label='Senha (pontinhos)', cps=40, noClick=True)
     c.click(BTN('Salvar acesso', within=DLG), at=c.A(1, 'salvo', 0.6), label='Salvar acesso')
     c.waitfor(text='Acesso salvo', timeout=10)
     c.hover(TXT('Este parceiro é cliente e fornecedor: o acesso vale pros dois links.', within=DLG), 2.2, at=c.A(1, 'aviso:', 0.6), label='[ZOOM] o aviso: o acesso vale pros dois links')
@@ -975,8 +975,8 @@ def cap06():
     rola_ate(c, 'Histórico de Pedidos', c.L(3) - 0.5, 'desce ao Histórico de Pedidos', y=170, dur_ms=800)
     c.click(SEL(":is(main,body) button:has-text('Vendas')", nth=0), at=c.A(3, 'Vendas,', 0.7), label='filtro Vendas')
     c.waitfor(text='Top 5 Materiais Mais Vendidos', timeout=8)
-    c.hover(TXT('Top 5 Materiais Mais Vendidos'), 1.4, at=c.A(3, 'acompanham.', 0.8), label='cartões e gráfico de vendas')
-    c.click(SEL(":is(main,body) button:has-text('Todos')", nth=0), at=c.A(3, 'acompanham.', -0.4), label='volta a Todos')
+    c.hover(TXT('Top 5 Materiais Mais Vendidos'), 0.5, at=c.A(3, 'acompanham.', 1.3), label='cartões e gráfico de vendas')
+    c.click(SEL(":is(main,body) button:has-text('Todos')", nth=0), at=c.A(3, 'acompanham.', 0.3), label='volta a Todos')
     c.mark(4)
     c.hover(TABP('saldo'), 1.6, at=c.A(4, 'saldo', 0.6), label='a aba Saldo (única, sem clicar)')
     c.fim()
@@ -1063,6 +1063,8 @@ def main():
         if n == 15:
             continue
         c = CAPS_ROBO[n]()
+        for st in c.steps:   # 27/11: `at` negativo (rola no começo da linha 1) o gravador recusa; o ensaio já cortava em 0
+            if isinstance(st.get('at'), (int, float)) and st['at'] < 0: st['at'] = 0.0
         caminho = os.path.join(HERE, f'cap{n:02d}.json')
         json.dump(c.out(), open(caminho, 'w', encoding='utf8'), ensure_ascii=False, indent=1)
         print(f'cap{n:02d}: {len(c.steps)} passos, narração {c.dur:.1f} s -> {caminho}')

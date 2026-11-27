@@ -691,7 +691,9 @@ def cap05():
     """Vale de R$ 200,00 e falta de R$ 90,00 do Diego (saldo 1.690,00); bônus de R$ 150,00 do Cláudio (2.250,00)."""
     c = cap_novo(5, setup=RH)
     c.mark(1)
-    c.click(LINHA('Diego Morais'), at=c.A(1, 'Diego', 0.8), label='Diego Morais')
+    c.click(LINHA('Diego Morais'), at=max(1.6, c.A(1, 'Diego', 0.8)), label='Diego Morais')
+    c.wait(0.6)
+    c.click(LINHA('Diego Morais'), label='Diego Morais de novo (só se a ficha não abriu)', unless=RESUMO('Saldo atual'))
     c.waitfor(target=RESUMO('Saldo atual'), timeout=10)
     c.confere(FICHA, ['Salário', 'R$ 1.980,00', 'Saldo atual'], 'Diego com saldo 1.980,00')
     c.hover(RESUMO('Saldo atual'), 1.2, at=c.A(1, 'saldo', 0.75), label='Resumo financeiro: Salário e Saldo atual R$ 1.980,00')
@@ -729,6 +731,8 @@ def cap05():
     c.click(LINHA('Cláudio Ferraz'), at=c.A(8, 'Cláudio,', 0.8), label='Cláudio Ferraz')
     c.waitfor(target=SEL(f"{FICHA} h2:text-is('Cláudio Ferraz')"), timeout=10)
     c.click(BOTAO_FICHA('Bônus'), at=c.A(8, 'meta', 0.9), label='Bônus')
+    c.wait(0.8)
+    c.click(BOTAO_FICHA('Bônus'), label='Bônus de novo (só se a janela não abriu)', unless=CAMPO('amount'))
     c.waitfor(target=CAMPO('amount'), timeout=10)
     c.digita(CAMPO('amount'), '150,00', c.W(8, 'cento'), 'Valor R$ 150,00', folga_clique=1.2)
     c.click(CAMPO('description'), at=c.A(8, 'reais.', 0.5), label='campo Descrição')
@@ -746,7 +750,9 @@ def cap05():
 # devolve o HTML para a edição montar a cena do comprovante (regra de 19/11, padrão da T09).
 GANCHOS = ("(()=>{if(window.__abas)return 'ja';window.__abas=[];window.__pdfs=[];const o=URL.createObjectURL.bind(URL);"
            "URL.createObjectURL=(b)=>{try{if(b&&b.type==='application/pdf')window.__pdfs.push(b)}catch(e){}return o(b)};"
-           "const wo=window.open.bind(window);window.open=(...a)=>{const w=wo(...a);window.__abas.push(w);return w};return 'ganchos'})()")
+           "const wo=window.open.bind(window);window.open=(...a)=>{const w=wo(...a);window.__abas.push(w);"
+           "try{const dw=w.document.write.bind(w.document);w.document.write=(h)=>dw(String(h).replace(/<script[^>]*html2pdf[^>]*><\\/script>/gi,''))}catch(e){}"
+           "return w};return 'ganchos'})()")   # a aba nova carrega o html2pdf de um CDN que o mundo da gravação não alcança: o carregamento travava a página por ~15 s (cap06)
 GAN = {'do': 'eval', 'js': GANCHOS}
 
 
@@ -761,6 +767,18 @@ def js_alerta_botao(texto):
     """clica o botão do AlertDialog aberto (o "Pagamento registrado!" pergunta se quer o recibo)"""
     return ("(()=>{const b=[...document.querySelectorAll('[role=alertdialog] button')].find(x=>x.textContent.trim().includes(%s));"
             "if(!b)return 'SEM ALVO';b.click();return 'ok'})()") % json.dumps(texto)
+
+
+def js_fecha_abas():
+    """fecha a aba nova (recibo/holerite/relatório) depois de guardar o HTML: com a aba aberta por cima, a página filmada fica em segundo plano e as animações dela
+    (o fechar do AlertDialog) só terminam ~10 s depois"""
+    return "(()=>{(window.__abas||[]).forEach(w=>{try{w.close()}catch(e){}});window.__abas=[];return 'ok (abas fechadas)'})()"
+
+
+def js_fecha_alerta():
+    """depois do recibo/holerite aberto em aba nova a pergunta "Pagamento registrado!" fica na tela por ~10 s: fecha pelo "Não, obrigado" se ainda estiver aberta"""
+    return ("(()=>{const b=[...document.querySelectorAll('[role=alertdialog] button')].find(x=>/não, obrigado|nao, obrigado|fechar/i.test(x.textContent.trim()));"
+            "if(!b)return 'ok (já fechada)';b.click();return 'ok (fechada)'})()")
 
 
 ALERTA = "[role=alertdialog]"
@@ -848,7 +866,10 @@ def cap06():
     c.hover(TXTX('Deseja gerar o recibo', within=ALERTA), 1.0, at=c.A(12, 'pergunta', 0.75), label='Pagamento registrado! Deseja gerar o recibo desse pagamento?')
     c.ev(js_alerta_botao('Gerar Recibo'), at=c.A(12, 'Gerar', 0.9), label='Gerar Recibo (abre o recibo em aba nova)')
     c.ev(js_aba_html(0, 'recibo-pagamento-edson', 'Edson Moura'), label='HTML do recibo do pagamento do Edson (aba nova, para a ilustração do comprovante)')
+    c.ev(js_fecha_abas(), label='fecha a aba nova')
+    c.ev(js_fecha_alerta(), label='fecha a pergunta do recibo (se ainda aberta)')
     c.wait(1.0)
+    c.ev("(()=>JSON.stringify({vis:document.visibilityState,foco:document.hasFocus(),abertos:[...document.querySelectorAll('[role=alertdialog],[role=dialog]')].map(x=>x.getAttribute('data-state')+':'+(x.textContent||'').slice(0,40)),abas:(window.__abas||[]).length,aberta:!!(window.__abas||[])[0]&&!(window.__abas||[])[0].closed}))()", label='diagnóstico do recibo')
     c.mark(13)
     c.confere(FICHA, ['R$ 2.900,00'], 'saldo do Edson volta a 2.900,00')
     c.hover(RESUMO('Saldo atual'), 1.0, at=c.A(13, 'saldo', 0.75), label='Saldo atual R$ 2.900,00')
@@ -886,7 +907,7 @@ def cap07():
     c.waitfor(target=DESC, timeout=6)
     c.click(DESC, at=c.A(4, 'convênio', 0.9), label='campo Descrição')
     c.type(DESC, 'Convênio farmácia', at=c.A(4, 'convênio', 0.05), label='Descrição: Convênio farmácia', cps=40, noClick=True)
-    c.digita(VAL_D, '60,00', c.W(4, 'sessenta'), 'Valor em reais 60,00', folga_clique=1.0)
+    c.digita(VAL_D, '60,00', c.W(4, 'sessenta'), 'Valor em reais 60,00', folga_clique=0.4)
     c.mark(5)
     c.confere('dlg', ['Total de proventos', 'R$ 2.580,00', '- INSS', 'R$ 207,89', '- Vale-transporte', 'R$ 144,00', 'Convênio farmácia', 'R$ 411,89', 'R$ 2.168,11'],
               'resumo CLT do Marcos: proventos 2.580,00, INSS 207,89, VT 144,00, líquido 2.168,11')
@@ -913,6 +934,8 @@ def cap07():
     c.waitfor(text='Pagamento registrado!', timeout=15)
     c.ev(js_alerta_botao('Gerar Holerite'), at=c.A(8, 'holerite:', 0.9), label='Gerar Holerite (abre o holerite em aba nova)')
     c.ev(js_aba_html(0, 'holerite-marcos', 'Marcos Antunes'), label='HTML do holerite do Marcos (aba nova, para a ilustração do comprovante)')
+    c.ev(js_fecha_abas(), label='fecha a aba nova')
+    c.ev(js_fecha_alerta(), label='fecha a pergunta do holerite (se ainda aberta)')
     c.waitfor(gone={'role': 'alertdialog'}, timeout=10)
     c.mark(9)
     c.confere(FICHA, ['R$ 2.400,00'], 'saldo do Marcos volta ao salário')
@@ -925,9 +948,9 @@ def cap08():
     """Férias da Juliana (R$ 3.733,33, Pix) e 1ª parcela do 13º do Cláudio (R$ 1.050,00): lançamentos de competência própria."""
     c = cap_novo(8, setup=RH)
     c.mark(1)
-    c.click(LINHA('Juliana Prado'), at=round(max(0.0, c.L(1) - 0.2), 2), label='Juliana Prado')
+    c.click(LINHA('Juliana Prado'), at=round(max(0.0, c.L(1) - 3.0), 2), label='Juliana Prado')   # abre a ficha no respiro de abertura da voz (pausas.py 08 0.0:3.0)
     c.waitfor(target=RESUMO('Saldo atual'), timeout=10)
-    menu_linha(c, 'Juliana Prado', 'Pagar férias', at=0.2, label='menu ⋯ da Juliana')
+    menu_linha(c, 'Juliana Prado', 'Pagar férias', at=round(max(c.L(1) - 1.5, 0.0), 2), label='menu ⋯ da Juliana')
     c.hover(ITEM('Pagar férias'), 0.3, at=max(1.4, c.A(1, 'Férias,', 0.75)), label='Pagar férias', noScroll=True)
     c.hover(ITEM('Pagar 13º salário'), 0.3, at=max(2.0, c.A(1, 'décimo', 0.75)), label='Pagar 13º salário', noScroll=True)
     c.hover(ITEM('Pagar rescisão'), 0.6, at=max(2.6, c.A(1, 'rescisão', 0.75)), label='Pagar rescisão', noScroll=True)
@@ -940,7 +963,7 @@ def cap08():
     c.digita(CAMPO('competence-amount'), '3733,33', c.W(3, 'três'), 'Valor 3.733,33', folga_clique=1.2)
     c.click(SEL(f"{DLG} label[for='competence-pix']"), at=c.A(3, 'Pix,', 0.9), label='Forma de pagamento: PIX/Transferência (Banco)')
     c.click(CAMPO('competence-description'), at=c.A(3, 'observação,', 0.9), label='campo Observação')
-    c.ev(colar('Período aquisitivo 2025/2026'), at=c.A(3, 'observação,', 0.1), label='Observação: Período aquisitivo 2025/2026')
+    c.ev(colar('Período aquisitivo 2025/2026'), label='Observação: Período aquisitivo 2025/2026')
     c.ev("(()=>{const i=document.querySelector('[role=dialog] #competence-amount');if(i&&/^[0,.\\s]*$/.test(i.value)){i.focus();i.select();document.execCommand('insertText',false,'3733,33');return 'reforço'}return 'ok'})()", label='o valor entrou (reforço só se o campo ficou vazio)')
     c.click(BDLG('Confirmar'), at=c.A(3, 'Confirmar.', 0.9), label='Confirmar')
     c.waitfor(gone={'role': 'dialog'}, timeout=12)
@@ -953,7 +976,7 @@ def cap08():
     c.click(BDLG('Fechar'), label='Fechar o extrato')
     c.waitfor(gone={'role': 'dialog'}, timeout=8)
     c.mark(5)
-    c.click(LINHA('Cláudio Ferraz'), at=round(max(c.L(5) - 0.2, 0.0), 2), label='Cláudio Ferraz')
+    c.click(LINHA('Cláudio Ferraz'), at=round(max(c.L(5) - 4.5, 0.0), 2), label='Cláudio Ferraz')   # no respiro antes da L5
     c.waitfor(target=SEL(f"{FICHA} h2:text-is('Cláudio Ferraz')"), timeout=10)
     menu_linha(c, 'Cláudio Ferraz', 'Pagar 13º salário', at=c.A(5, 'décimo', 0.9), label='menu ⋯ do Cláudio')
     item_menu(c, 'Cláudio Ferraz', 'Pagar 13º salário', at=c.A(5, 'terceiro', 0.6), label='Pagar 13º salário')
@@ -964,7 +987,7 @@ def cap08():
     c.click(CAMPO('competence-description'), label='campo Observação')
     c.ev(colar('1ª parcela 2026'), label='Observação: 1ª parcela 2026')
     c.ev("(()=>{const i=document.querySelector('[role=dialog] #competence-amount');if(i&&/^[0,.\\s]*$/.test(i.value)){i.focus();i.select();document.execCommand('insertText',false,'1050,00');return 'reforço'}return 'ok'})()", label='o valor entrou (reforço só se o campo ficou vazio)')
-    c.click(BDLG('Confirmar'), at=round(c.Lfim(5) - 0.8, 2), label='Confirmar')
+    c.click(BDLG('Confirmar'), label='Confirmar')   # sem âncora: o robô termina no respiro antes da L6 (pausas.py 08)
     c.waitfor(gone={'role': 'dialog'}, timeout=12)
     c.mark(6)
     c.cursor((900, 140), at=c.A(6, 'Uma', 0.3), label='cursor descansa (ilustração das três gavetas)')
@@ -992,6 +1015,7 @@ def cap10():
     c.hover(SEL(f"{DLG} button:text-is('Excel')"), 0.6, at=c.A(3, 'Excel.', 0.75), label='Excel')
     c.click(SEL(f"{DLG} button:has-text('Visualizar / PDF')"), at=round(c.Lfim(3) - 2.6, 2), label='Visualizar / PDF (abre em aba nova)')
     c.ev(js_aba_html(0, 'relacao-de-pagamento', 'Marcos Antunes'), label='HTML da Relação de pagamento (aba nova, para a ilustração do comprovante)')
+    c.ev(js_fecha_abas(), label='fecha a aba nova')
     fechar_janela(c, at=round(c.Lfim(3) - 0.5, 2))
     c.fim()
     return c
@@ -1013,9 +1037,10 @@ def cap09():
     c.hover(TXTX('Valor pago', within=DLG), 0.8, at=c.A(2, 'conta', 0.75), label='Valor pago R$ 2.750,00 (pagamento detalhado)')
     c.click(SEL(f"{DLG} button:has-text('Gerar Recibo')"), at=c.A(2, 'Gerar', 0.9), label='Gerar Recibo (pagamento de hoje)')
     c.waitfor(text='Gerar recibo', timeout=8)
-    c.hover(TXTX('Térmico', within=DLG), 0.5, at=c.A(2, 'térmico,', 0.75), label='formato Térmico (80 mm)')
+    c.hover(SEL(f"{DLG} button:has(span:text-is('Térmico'))"), 0.5, at=c.A(2, 'térmico,', 0.75), label='formato Térmico (80 mm)')
     c.click(SEL(f"{DLG} button:has(span:text-is('A4'))"), at=c.A(2, 'abre', 0.9), label='formato A4 (abre o recibo em aba nova)')
     c.ev(js_aba_html(0, 'recibo-extrato-edson', 'Edson Moura'), label='HTML do recibo A4 do Edson (aba nova, para a ilustração do comprovante)')
+    c.ev(js_fecha_abas(), label='fecha a aba nova')
     c.hover(TXTX('Reset para salário base', within=DLG), 0.8, at=c.A(2, 'ajuste', 0.75), label='Ajuste: Reset para salário base')
     c.mark(3)
     c.ev(js_rola_ate(DLG, 'Recebimento do funcionário', 220, 800), at=c.A(3, 'baixo,', 0.4), label='rola a lista do extrato')
@@ -1159,7 +1184,6 @@ def cap12():
     c.mark(3)
     c.click(SEL("button:has-text('Registrar Entrada')"), at=c.A(3, 'toca', 0.9), label='Registrar Entrada', noScroll=True)
     c.waitfor(text='Confirme localização e selfie para registrar o ponto', timeout=8)
-    c.marcar(TXTX('Confirme localização e selfie'), at=c.A(3, 'localização.', 0.4), label='Obtendo sua localização...')
     c.waitfor(text='Tirar foto agora', timeout=15)
     c.mark(4)
     c.marcar(SEL("video"), at=c.A(4, 'selfie.', 0.3), label='Selfie do ponto (câmera)')
@@ -1226,17 +1250,19 @@ def cap13():
     c.waitfor(text='Confirmar registro', timeout=12)
     c.click(SEL("button:has-text('Confirmar registro')"), at=c.A(3, 'confirma', 0.5), label='Confirmar registro', noScroll=True)
     c.waitfor(text='Saída registrada', timeout=12)
-    c.marcar(TXTX('Saída registrada'), at=c.A(3, 'hora', 0.3), label='Saída registrada com a hora')
+    c.marcar(TXTX('Saída registrada'), label='Saída registrada com a hora')
     # o app volta sozinho em 4 s para a câmera (não para a lista): o robô reabre a busca manual (achado: a fala diz "volta pra lista")
+    c.mark(4)
     c.waitfor(text='Buscar manualmente', timeout=20)
     c.click(SEL("button:has-text('Buscar manualmente')"), at=round(c.L(4) + 0.3, 2), label='Buscar manualmente (de novo)', noScroll=True)
     c.waitfor(target={'placeholder': 'Buscar funcionário'}, timeout=15)
-    c.mark(4)
     c.hover(SEL("button:has-text('Gabriel Rocha')"), 1.6, at=c.A(4, 'cadeado,', 0.75), label='o cartão do Gabriel com o cadeado (Protegido por PIN)', noScroll=True)
     c.mark(5)
     c.ev("location.assign('/funcionarios')", at=c.A(5, 'Se', 0.6), label='volta ao sistema (computador)')
     c.waitfor(text=SUBTITULO, timeout=30)
     c.click(ABA('Configurações de Ponto'), at=c.A(5, 'rosto,', 0.9), label='aba Configurações de Ponto')
+    c.wait(1.2)
+    c.click(ABA('Configurações de Ponto'), label='aba Configurações de Ponto de novo (só se não abriu)', unless=TXTX('Exigir reconhecimento facial no quiosque'))
     c.waitfor(text='Exigir reconhecimento facial no quiosque', timeout=15)
     rola_ate(c, 'main', 'Exigir reconhecimento facial', c.A(5, 'chave', 1.6), 'rola até Exigir reconhecimento facial', y=260)
     c.hover(TXTX('Exigir reconhecimento facial no quiosque', within='main'), 2.0, at=c.A(5, 'chave', 0.75), label='Exigir reconhecimento facial no quiosque')
@@ -1334,7 +1360,9 @@ def cap14():
     c.confere('dlg', ['30 dias'], '30 dias de ausência')
     c.click(SEL(f"{DLG} button:text-is('Lançar ausência')"), at=c.A(11, 'Nesses', 0.9), label='Lançar ausência')
     c.waitfor(gone={'role': 'dialog'}, timeout=10)
-    c.hover(SEL("main tr:has-text('Juliana Prado')"), 1.4, at=c.A(11, 'Férias,', 0.75, nth=1), label='a linha das férias da Juliana na tabela')
+    # a tabela abre em "Este mês" (nov) e as férias começam em 07/12: o filtro vai para "Este ano" para a linha aparecer
+    escolhe(c, SEL("main button[role=combobox]:has-text('Este mês')"), 'Este ano', c.A(11, 'dias', 0.2), c.A(11, 'dela', 0.2), 'Período: Este ano')
+    c.hover(SEL("main tr:has-text('Juliana Prado')"), 1.4, at=c.A(11, 'Férias,', 0.3, nth=1), label='a linha das férias da Juliana na tabela')
     c.fim()
     return c
 
@@ -1367,6 +1395,7 @@ def cap17():
     c.hover(RESUMO('Bônus'), 0.3, label='Cláudio: Bônus 150')
     c.mark(3)
     c.click(LINHA('Edson Moura'), at=c.A(3, 'Edson', 0.8), label='Edson')
+    c.waitfor(target=SEL(f"{FICHA} h2:text-is('Edson Moura')"), timeout=10)
     c.click(SEL(f"{FICHA} button:has-text('Extrato')"), at=c.A(3, 'Fez', 0.9), label='Extrato - Edson Moura')
     c.waitfor(text='Extrato - Edson Moura', timeout=10)
     c.mark(4)

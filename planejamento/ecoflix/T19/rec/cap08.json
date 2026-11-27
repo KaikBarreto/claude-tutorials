@@ -1,6 +1,6 @@
 {
  "name": "t19-cap08",
- "title": "T19 · Cap. 8 · Férias e décimo terceiro (narração 50,2 s, da voz; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T19 · Cap. 8 · Férias e décimo terceiro (narração 69,3 s, da voz; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "fakeNow": "2026-11-10T08:30:00-03:00",
  "seed": "t19-cap08",
  "pace": 0.5,
@@ -122,7 +122,7 @@
    "target": {
     "selector": "main [role=listitem] > button:has(p:text-is('Juliana Prado'))"
    },
-   "at": 0.0,
+   "at": 0.04,
    "label": "Juliana Prado"
   },
   {
@@ -135,7 +135,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main [role=list] *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Juliana Prado\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-430);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/400),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 0.0,
+   "at": 0.94,
    "label": "a lista mostra Juliana Prado no meio"
   },
   {
@@ -143,8 +143,8 @@
    "target": {
     "selector": "main [role=listitem] button[aria-label='Ações de Juliana Prado']"
    },
-   "seconds": 0.2,
-   "at": 0.2,
+   "seconds": 0.1,
+   "at": 1.54,
    "label": "menu ⋯ da Juliana",
    "optional": false,
    "timeout": 8
@@ -178,7 +178,7 @@
     "name": "Pagar férias"
    },
    "seconds": 0.1,
-   "at": 1.4,
+   "at": 2.29,
    "label": "Pagar férias",
    "noScroll": true,
    "optional": true,
@@ -191,7 +191,7 @@
     "name": "Pagar 13º salário"
    },
    "seconds": 0.1,
-   "at": 2.0,
+   "at": 3.21,
    "label": "Pagar 13º salário",
    "noScroll": true,
    "optional": true,
@@ -204,7 +204,7 @@
     "name": "Pagar rescisão"
    },
    "seconds": 0.6,
-   "at": 2.6,
+   "at": 4.29,
    "label": "Pagar rescisão",
    "noScroll": true,
    "optional": true,
@@ -227,7 +227,7 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 4.82
+   "at": 7.82
   },
   {
    "do": "click",
@@ -235,7 +235,7 @@
     "role": "menuitem",
     "name": "Pagar férias"
    },
-   "at": 6.02,
+   "at": 9.02,
    "label": "Pagar férias",
    "noScroll": true
   },
@@ -255,7 +255,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 2.4,
-   "at": 9.45,
+   "at": 12.45,
    "label": "aviso: não altera o saldo de salário em aberto",
    "optional": true,
    "timeout": 4
@@ -263,14 +263,14 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 15.38
+   "at": 18.38
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] #competence-amount"
    },
-   "at": 18.5,
+   "at": 21.5,
    "label": "campo Valor 3.733,33"
   },
   {
@@ -280,7 +280,7 @@
    },
    "text": "3733,33",
    "cps": 40,
-   "at": 19.65,
+   "at": 22.65,
    "label": "Valor 3.733,33",
    "noClick": true
   },
@@ -289,7 +289,7 @@
    "target": {
     "selector": "[role=dialog] label[for='competence-pix']"
    },
-   "at": 23.15,
+   "at": 26.15,
    "label": "Forma de pagamento: PIX/Transferência (Banco)"
   },
   {
@@ -297,13 +297,12 @@
    "target": {
     "selector": "[role=dialog] #competence-description"
    },
-   "at": 24.27,
+   "at": 27.27,
    "label": "campo Observação"
   },
   {
    "do": "eval",
    "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM FOCO';document.execCommand('insertText',false,\"Per\\u00edodo aquisitivo 2025/2026\");return e.value})()",
-   "at": 25.07,
    "label": "Observação: Período aquisitivo 2025/2026"
   },
   {
@@ -316,7 +315,7 @@
    "target": {
     "selector": "[role=dialog] button:text-is('Confirmar'):not(.absolute)"
    },
-   "at": 25.47,
+   "at": 28.47,
    "label": "Confirmar"
   },
   {
@@ -334,7 +333,7 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 26.51
+   "at": 31.31
   },
   {
    "do": "hover",
@@ -342,7 +341,7 @@
     "selector": "main section[aria-label^='Detalhes de'] div:has(> p:text-is('Saldo atual'))"
    },
    "seconds": 0.85,
-   "at": 26.82,
+   "at": 31.62,
    "label": "Saldo atual R$ 2.800,00 (igual)",
    "optional": true,
    "timeout": 4
@@ -352,7 +351,7 @@
    "target": {
     "selector": "main section[aria-label^='Detalhes de'] button:has-text('Extrato')"
    },
-   "at": 28.67,
+   "at": 33.47,
    "label": "Extrato"
   },
   {
@@ -365,8 +364,8 @@
    "target": {
     "selector": "[role=dialog] :text-is('Férias')"
    },
-   "seconds": 0.1,
-   "at": 30.66,
+   "seconds": 1.6,
+   "at": 35.46,
    "label": "a linha com o selo Férias",
    "optional": true,
    "timeout": 4
@@ -386,16 +385,11 @@
    "timeout": 8
   },
   {
-   "do": "mark",
-   "name": "L5",
-   "at": 31.55
-  },
-  {
    "do": "click",
    "target": {
     "selector": "main [role=listitem] > button:has(p:text-is('Cláudio Ferraz'))"
    },
-   "at": 32.25,
+   "at": 38.35,
    "label": "Cláudio Ferraz"
   },
   {
@@ -408,8 +402,13 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main [role=list] *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Cl\\u00e1udio Ferraz\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-430);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/400),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 31.11,
+   "at": 41.51,
    "label": "a lista mostra Cláudio Ferraz no meio"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 41.95
   },
   {
    "do": "hover",
@@ -417,7 +416,7 @@
     "selector": "main [role=listitem] button[aria-label='Ações de Cláudio Ferraz']"
    },
    "seconds": 0.1,
-   "at": 31.71,
+   "at": 42.11,
    "label": "menu ⋯ do Cláudio",
    "optional": false,
    "timeout": 8
@@ -464,7 +463,7 @@
     "role": "menuitem",
     "name": "Pagar 13º salário"
    },
-   "at": 32.49,
+   "at": 42.89,
    "label": "Pagar 13º salário",
    "noScroll": true
   },
@@ -482,7 +481,7 @@
    "target": {
     "selector": "[role=dialog] #competence-amount"
    },
-   "at": 35.81,
+   "at": 50.21,
    "label": "campo Valor 1.050,00"
   },
   {
@@ -492,7 +491,7 @@
    },
    "text": "1050,00",
    "cps": 40,
-   "at": 36.96,
+   "at": 51.36,
    "label": "Valor 1.050,00",
    "noClick": true
   },
@@ -525,7 +524,6 @@
    "target": {
     "selector": "[role=dialog] button:text-is('Confirmar'):not(.absolute)"
    },
-   "at": 37.49,
    "label": "Confirmar"
   },
   {
@@ -538,7 +536,7 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 37.87
+   "at": 56.97
   },
   {
    "do": "scroll",
@@ -549,7 +547,7 @@
    "by": 0,
    "duration": 0.2,
    "after": 0,
-   "at": 38.47,
+   "at": 57.57,
    "label": "cursor descansa (ilustração das três gavetas)"
   },
   {
@@ -560,7 +558,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 50.16
+   "at": 69.26
   }
  ]
 }
