@@ -1,0 +1,146 @@
+// VERSÃO VERTICAL (9:16) do render_cenas.cjs para o kit perfis/<serie>/cenas_v3_vertical: a janela é LARG x ALT (504x850) e a saída a 2x é o painel 1008x1700 (o palco é
+// montado depois por compor_painel_vertical.py). Mesmos argumentos do render_cenas.cjs; --larg/--alt trocam a janela.
+// Renderiza um capítulo ilustrado (cenas.html) no lugar da gravação de tela: vídeo 2560x1600 a 30 q/s, mesmo formato
+// do robô, para o render_chapter.py tratar igual (palco, vinheta, trilha, legendas).
+// uso: node render_cenas.cjs <cap> <capNN.json da narração> <saida.mp4> [--cauda 1.2] [--html cenas.html] [--de S --ate S]
+//      node render_cenas.cjs <cap> <capNN.json> <pasta> --stills 1.5,6,12.3      (quadros JPEG para conferir)
+//      --de/--ate: só esse trecho do relógio da narração (o 1º quadro do vídeo é o instante --de). É o caso da ilustração
+//      de conceito no meio de um capítulo gravado: --de = o "at" dela no specs.json, --ate = at + dur.
+// A página (padrão: cenas.html ao lado) expõe window.setup(dados) e window.R(t); ícones lucide usados como ic('nome',...)
+// são achados sozinhos no HTML (npm i na pasta: lucide-static). Ver docs/09-aula-ilustrada.md.
+// Cena 3D (kit perfis/ecoflix/cenas3d, three.js em módulo ES): o Chromium sobe com --allow-file-access-from-files, sem o
+// qual o import de módulo em file:// cai no CORS (origem "null"); o 2D sai idêntico com ela. --dsf N: escala do dispositivo
+// (padrão 2 = 2560x1600; 1,35 = 1728x1080 para prévia; 1 = 1280x800 para conferir rápido).
+// --larg N: largura do desenho (1280 = 16:10; 1422 = 16:9). A altura é sempre 800.
+const LARG = (() => { const i = process.argv.indexOf('--larg'); return i > 0 ? Number(process.argv[i + 1]) : 504; })();
+const ALT = (() => { const i = process.argv.indexOf('--alt'); return i > 0 ? Number(process.argv[i + 1]) : 850; })();   // VERTICAL (kit cenas_v3_vertical): janela 504x850 a 2x = painel 1008x1700 do 9:16
+const { chromium } = require('playwright');
+const fs = require('fs'), path = require('path'), { spawn } = require('child_process');
+const HERE = __dirname;
+const [cap, tempos, saida] = process.argv.slice(2);
+const opt = (k, d) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
+const FPS = 30, CAUDA = parseFloat(opt('--cauda', '1.2')), STILLS = opt('--stills', null), DSF = parseFloat(opt('--dsf', '2'));
+// --stills sem instantes (lista vazia por engano) renderizaria o MP4 inteiro sob a trava: recusa.
+if (process.argv.includes('--stills') && !(STILLS || '').trim()) { console.error('render_cenas: --stills sem instantes'); process.exit(2); }
+const HTML = path.resolve(opt('--html', path.join(HERE, 'cenas.html')));
+const LUCIDE = path.join(path.dirname(require.resolve('lucide-static/package.json', { paths: [HERE, path.dirname(HTML)] })), 'icons');
+// ícones: todo texto entre aspas na página que for nome de um ícone do lucide (pega também os que vêm de listas)
+const ICONS = [...new Set([...fs.readFileSync(HTML, 'utf8').matchAll(/['"]([a-z][a-z0-9-]{0,40})['"]/g)].map(m => m[1]))]
+  .filter(n => fs.existsSync(path.join(LUCIDE, n + '.svg')));
+// Vigia: cena travada (promessa que nunca resolve, laço sem fim no setup ou no R) sai com erro em vez de segurar a trava
+// pesada dos outros (10/11: um render de quadros parado prendeu a fila de 18 agentes por 10 min). --vigia S (padrão 90).
+// Em SCHED_IDLE (abaixo) o render só usa CPU que sobra: com a máquina cheia, um quadro 3D chegou a passar de 90 s sem
+// estar travado (11/11, T00). Aí o padrão é 600 s; com RENDER_PRIORIDADE=normal, 90 s.
+const VIGIA_S = parseFloat(opt('--vigia', process.env.RENDER_PRIORIDADE === 'normal' ? '90' : '600'));
+let vigia = null;
+const vivo = () => {
+  clearTimeout(vigia);
+  vigia = setTimeout(() => { console.error(`render_cenas: nada andou em ${VIGIA_S} s (cena travada?); saindo`); process.exit(3); }, VIGIA_S * 1000);
+  vigia.unref();
+};
+vivo();
+// Prioridade mínima (SCHED_IDLE) para este processo e tudo o que ele abre (Chromium, ffmpeg herdam a política): como root,
+// o Chromium sobe sozinho o processo da GPU para nice -8, o que furava o "nice -n 19" e tirava CPU da gravação do robô
+// (11/11: a cena 3D a 57% de CPU, no mesmo nível da gravação). Em SCHED_IDLE o -8 não vale: a cena só usa CPU que sobra.
+// RENDER_PRIORIDADE=normal desliga (render sozinho na máquina, com pressa).
+if (process.env.RENDER_PRIORIDADE !== 'normal') {
+  try { require('child_process').execFileSync('chrt', ['-i', '-a', '-p', '0', String(process.pid)], { stdio: 'ignore' }); } catch (e) { /* sem chrt: segue */ }
+}
+// Pausa enquanto o robô captura (um `node .../record.mjs` vivo sem ffmpeg/ffprobe filho; com filho, ele já está montando o
+// MP4 e a cena pode seguir): mesmo em SCHED_IDLE, a cena 3D ao lado deixava os gestos da gravação 1,5 a 2x mais lentos
+// (11/11, T13 cap04 com maxLate 8,2 s). Olha o /proc no máximo a cada 0,5 s. RENDER_PAUSA=0 desliga.
+let olhou = 0;
+function roboCapturando() {
+  const procs = [];
+  for (const d of fs.readdirSync('/proc')) {
+    if (!/^\d+$/.test(d)) continue;
+    try {
+      const c = fs.readFileSync(`/proc/${d}/cmdline`, 'utf8').split('\0'), st = fs.readFileSync(`/proc/${d}/stat`, 'utf8');
+      procs.push({ pid: +d, c, ppid: +st.slice(st.lastIndexOf(')') + 2).split(' ')[1] });
+    } catch (e) { /* processo saiu no meio */ }
+  }
+  return procs.filter(p => /(^|\/)node$/.test(p.c[0]) && /(^|\/)record\.mjs$/.test(p.c[1] || ''))
+    .some(r => !procs.some(p => p.ppid === r.pid && /(^|\/)ff(mpeg|probe)$/.test(p.c[0])));
+}
+async function esperaRobo() {
+  if (process.env.RENDER_PAUSA === '0' || Date.now() - olhou < 500) return;
+  let avisou = false;
+  while (roboCapturando()) {
+    if (!avisou) { console.log('render_cenas: em pausa enquanto o robô grava'); avisou = true; }
+    vivo(); await new Promise(r => setTimeout(r, 1000));
+  }
+  olhou = Date.now();
+}
+
+(async () => {
+  const N = JSON.parse(fs.readFileSync(tempos, 'utf8'));
+  const dados = { cap: parseInt(cap, 10), dur: N.dur, words: N.words.map(w => ({ w: w.w, linha: w.linha, s: w.s, e: w.e })),
+    linhas: (N.linhas || []).map(l => ({ i: l.i, s: l.s, e: l.e })),
+    // --anexo <pasta>: arquivos da cena que não vão para o git (ex.: o PNG do comprovante real gerado pelo app); a página lê d.anexo
+    anexo: opt('--anexo', null) ? 'file://' + path.resolve(opt('--anexo')) : null };
+  const icons = {};
+  for (const n of ICONS) {
+    const f = path.join(LUCIDE, n + '.svg');
+    icons[n] = fs.readFileSync(f, 'utf8').replace(/<!--[\s\S]*?-->/g, '').replace(/width="24"/, '').replace(/height="24"/, '')
+      .replace(/stroke-width="2"/, 'stroke-width="2.1"');
+  }
+  const b = await chromium.launch({ args: ['--allow-file-access-from-files'] });
+  const page = await b.newPage({ viewport: { width: LARG, height: ALT }, deviceScaleFactor: DSF });
+  page.setDefaultTimeout(VIGIA_S * 1000);   // com a máquina cheia, um quadro 3D passou dos 30 s padrão da captura
+  const erros = []; page.on('pageerror', e => erros.push(String(e)));
+  await page.route('**/*', r => r.request().url().startsWith('file:') ? r.continue() : r.abort());
+  await page.addInitScript(`window.ICONS=${JSON.stringify(icons)};`);
+  await page.goto('file://' + HTML);
+  // Montserrat: a do cenas.html (../../../web/fonts no $TUT_HOME); se não achar (cena guardada fora do $TUT_HOME, ex.:
+  // planejamento/<serie>/Tnn/cenas/), a da skill (ferramentas/web/fonts), sem mudar nada quando a da página carrega.
+  await page.evaluate(async dir => {
+    for (const w of [500, 600, 700, 800]) {
+      let ok = false;
+      try { ok = (await document.fonts.load(`${w} 20px M`)).some(f => f.status === 'loaded'); } catch (e) { ok = false; }
+      if (!ok) document.fonts.add(await new FontFace('M', `url("file://${dir}/montserrat-latin-${w}-normal.woff2")`, { weight: String(w) }).load());
+    }
+    await document.fonts.ready;
+  }, path.resolve(HERE, '../../web/fonts'));
+  await page.evaluate(async () => { await Promise.all([...document.images].map(i => i.complete ? 0 : new Promise(r => { i.onload = i.onerror = r; }))); });
+  vivo();
+  await page.evaluate(d => window.setup(d), dados);
+  await page.evaluate(async () => { await Promise.all([...document.images].map(i => i.complete ? 0 : new Promise(r => { i.onload = i.onerror = r; }))); });
+  vivo();
+  const avisos = []; page.on('console', m => { if (m.type() === 'warning' && !/WebGL-|GL Driver|GPU stall/.test(m.text())) avisos.push(m.text()); });
+  if (STILLS) {
+    fs.mkdirSync(saida, { recursive: true });
+    for (const s of STILLS.split(',')) {
+      await esperaRobo();
+      const t = parseFloat(s); await page.evaluate(t => window.R(t), t);
+      await page.screenshot({ path: path.join(saida, `cap${String(cap).padStart(2, '0')}_${t.toFixed(2)}.jpg`), type: 'jpeg', quality: 90 });
+      vivo();
+    }
+    if (avisos.length) console.log('AVISOS:', [...new Set(avisos)].join(' | '));
+    if (erros.length) console.log('ERROS:', [...new Set(erros)].join(' | '));
+    await b.close(); return;
+  }
+  const de = parseFloat(opt('--de', '0')), ate = parseFloat(opt('--ate', String(N.dur + CAUDA)));
+  const i0 = Math.round(de * FPS), n = Math.round(ate * FPS) - i0, dur = n / FPS, tmp = saida.replace(/\.mp4$/, '.parcial.mp4');
+  const ff = spawn('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', String(FPS), '-c:v', 'mjpeg', '-i', '-',
+    '-c:v', 'libx264', '-preset', 'veryfast', '-crf', opt('--crf', '16'), '-pix_fmt', 'yuv420p', '-r', String(FPS), '-movflags', '+faststart', tmp],
+    { stdio: ['pipe', 'inherit', 'inherit'] });
+  // ffmpeg que morre cedo (ex.: largura ímpar com --dsf 1.3 em 16:9) deixava o laço preso no 'drain' até o vigia (10 min): sai já
+  let fim = false; ff.on('exit', c => { if (!fim) { console.error(`render_cenas: o ffmpeg saiu antes do fim (código ${c}); confira a largura (tem de ser par)`); process.exit(1); } });
+  const t0 = Date.now();
+  for (let i = 0; i < n; i++) {
+    await esperaRobo();
+    await page.evaluate(t => window.R(t), (i0 + i) / FPS);
+    const buf = await page.screenshot({ type: 'jpeg', quality: 92 });
+    if (!ff.stdin.write(buf)) await new Promise(r => ff.stdin.once('drain', r));
+    vivo();
+    if (i % 300 === 0) console.log(`cap${cap}: ${i}/${n} quadros (${((Date.now() - t0) / 1000).toFixed(0)} s)`);
+  }
+  fim = true; ff.stdin.end();
+  const code = await new Promise(r => ff.on('close', r));
+  await b.close();
+  if (code !== 0) { console.error('ffmpeg falhou', code); process.exit(1); }
+  fs.renameSync(tmp, saida);
+  if (avisos.length) console.log('AVISOS:', [...new Set(avisos)].join(' | '));
+  if (erros.length) console.log('ERROS:', [...new Set(erros)].join(' | '));
+  console.log(`ok ${saida}: ${n} quadros, ${dur.toFixed(2)} s, ${((Date.now() - t0) / 1000).toFixed(0)} s de render`);
+})();

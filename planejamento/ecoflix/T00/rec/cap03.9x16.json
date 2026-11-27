@@ -1,6 +1,6 @@
 {
  "name": "t00-cap03b",
- "title": "T0 · Cap. 3 · Aulas de outros módulos (celular 390x844, 9:16; narração 36,9 s, ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T0 · Cap. 3 · Aulas de outros módulos (celular 390x844, 9:16; narração 27,8 s, da voz; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "fakeNow": "2026-11-10T08:30:00-03:00",
  "seed": "t00-cap03b",
  "pace": 0.5,
@@ -124,12 +124,12 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 8.05
+   "at": 5.86
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 12.95
+   "at": 9.94
   },
   {
    "do": "click",
@@ -137,7 +137,7 @@
     "role": "button",
     "name": "CRM/Kanban"
    },
-   "at": 12.95,
+   "at": 9.94,
    "label": "aula CRM/Kanban (Conheça este módulo)"
   },
   {
@@ -152,7 +152,7 @@
     "name": "Consultar esta aula",
     "exact": true
    },
-   "at": 14.45,
+   "at": 11.06,
    "label": "Consultar esta aula",
    "noScroll": true
   },
@@ -179,7 +179,7 @@
     "role": "button",
     "name": "Ver trilha"
    },
-   "at": 14.93,
+   "at": 11.48,
    "label": "Ver trilha (gaveta)",
    "noScroll": true
   },
@@ -191,7 +191,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const vis=e=>e.getClientRects().length>0&&getComputedStyle(e).visibility!=='hidden';const nz=t=>t.replace(/[\\s\\u00a0]+/g,' ').trim();const rolagem=(el)=>{let c=el.parentElement;while(c&&c!==document.body&&c!==document.documentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const root=document.querySelector(\"[role=dialog]\")||document.body;const el=[...root.querySelectorAll('*')].filter(e=>vis(e)&&nz(e.textContent)===\"Conhe\\u00e7a outros m\\u00f3dulos\"&&![...e.children].some(k=>nz(k.textContent)===\"Conhe\\u00e7a outros m\\u00f3dulos\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/1500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 15.22,
+   "at": 11.48,
    "label": "a gaveta desce a Conheça outros módulos"
   },
   {
@@ -210,18 +210,18 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 19.15
+   "at": 14.5
   },
   {
    "do": "press",
    "key": "Escape",
-   "at": 19.15,
+   "at": 14.5,
    "label": "fecha a gaveta"
   },
   {
    "do": "eval",
    "js": "(async()=>{const vis=e=>e.getClientRects().length>0&&getComputedStyle(e).visibility!=='hidden';const nz=t=>t.replace(/[\\s\\u00a0]+/g,' ').trim();const rolagem=(el)=>{let c=el.parentElement;while(c&&c!==document.body&&c!==document.documentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const root=document.querySelector(\"body\")||document.body;const el=[...root.querySelectorAll('*')].filter(e=>vis(e)&&nz(e.textContent)===\"Conhe\\u00e7a agora. Ative quando fizer sentido.\"&&![...e.children].some(k=>nz(k.textContent)===\"Conhe\\u00e7a agora. Ative quando fizer sentido.\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-250);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 20.32,
+   "at": 15.36,
    "label": "a página desce ao cartão Conheça agora"
   },
   {
@@ -231,8 +231,8 @@
     "name": "Adicionar ao meu plano",
     "exact": true
    },
-   "seconds": 0.6,
-   "at": 23.86,
+   "seconds": 0.36,
+   "at": 18.26,
    "label": "botão Adicionar ao meu plano (sem clicar)",
    "optional": true,
    "timeout": 4
@@ -240,7 +240,7 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 26.18
+   "at": 19.62
   },
   {
    "do": "eval",
@@ -250,7 +250,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 36.87
+   "at": 27.84
   }
  ],
  "device": "phone"

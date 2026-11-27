@@ -66,3 +66,11 @@ Ver a tabela no fim deste arquivo (atualizada a cada capítulo).
 - Lote em segundo plano: `rec/t00/_ens/lote_rapido.log` (36 rápidos) e depois `lote_completo.log` (06, 07, 06b completos); resultados em `rec/t00/_ens/lote/*.txt`.
   Instância 54300 ligada para o lote (derrubar: `FAKE_PORT=54300 bash rec/run.sh down`).
 - Corrigidos pelo app (achados antigos do MELHORIAS): plural do plano, "Sucesso do Cliente" nos 8 motivos, botões de 10 s do player com nome.
+
+## Vertical (9:16) · andamento (27/11, parcial)
+**Estado: NÃO concluído.** A fila pesada (`rec/fila.sh`) está dominada pela T15 (prio 15) e anda ~1 capítulo a cada 15 min; `/` ficou entre 817 e 915 MB (a T15 grava ilustrações lá; do lado da T00 só vão actions, telemetria e folha em `rec/t00`; mp4 em /dev/shm).
+- **Roteiros do celular**: os `.9x16.json` estavam defasados (20/11, voz ESTIMADA de 53 s). Regerados com a voz real (`python3 -I rec/t00/gerar.py --so-p`; o 16:9 não foi tocado; cópia dos antigos em `/dev/shm/t00v_old`).
+- **Gravação** (`rec/t00/t00v_final.sh`, prio 30, mp4 em `/dev/shm/t00v_rec`, resumo em `rec/t00/capNNb.resumo`, log `rec/t00/final_v.log`): feitos 00b, 01b (maxLate 2,77 s: revisar âncora), 02b (0,68 s), 03b (1,61 s: revisar). Faltam 04b a 15b (reexecutar `bash rec/t00/t00v_final.sh 04 05 ...` com `TUT_SENHA`). 00 e 05 são só ilustração; 40/41 (variantes) não gravadas.
+- **Ilustrações verticais**: kit novo `perfis/ecoflix/cenas_v3_vertical/` (cópia do v3 com janela 504x850 = painel 1008x1700; o v3 do 16:9 não mudou), render `ferramentas/edit/cenas/render_cenas_v3_vertical.cjs`, cena `planejamento/ecoflix/T00/cenas_v3/cena_vertical.html` (as 8 cenas em coluna, um item por vez; folhas de conferência olhadas e enquadramento ajustado). Palco: `t00/edit/compor_painel_vertical.py`. Pronto: `ilu00_abertura_full.mp4` (1001 quadros). Faltam as outras 7 (`bash t00/edit/render_ilus_vertical.sh`).
+- **Montagem**: `t00/edit/montar_vertical.py` (gera `caps/capNN.9x16.chapter.json` e `caps/T00.9x16.aula.json`) e `t00/edit/finish_v.py` (só o vídeo; copia o áudio do 16:9 sem recodificar: LUFS -16,3 e pico -3,8 dBTP idênticos). Falta: render dos capítulos (`render_chapter_vertical.py`, `compor_ilus_vertical.py`), `finish_v.py`, folha de 3 em 3 s, copiar `legendas/aula_final.{srt,vtt}` (linhas <= 32 caracteres, servem).
+- Nenhum achado novo do app até aqui.

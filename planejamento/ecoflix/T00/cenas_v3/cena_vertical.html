@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- T00 "Bem-vindo ao EcoSistema" · ilustrações VERTICAIS (9:16) no kit perfis/ecoflix/cenas_v3_vertical (janela 504x850, a 2x = painel 1008x1700).
+     Mesmas cenas, mesmas âncoras de fala (W) e mesmas janelas (../cenas/ilustracoes.json) da cena.html (16:9): muda só a montagem. Coluna, UM item de cada vez;
+     o que a câmera já deixou para trás sai de cena. Área útil (px do desenho): x 36 a 468, y 150 a 655 (o título ocupa o alto; a faixa da legenda do player
+     fica livre embaixo: 655 a 745). Render: node ferramentas/edit/cenas/render_cenas_v3_vertical.cjs <cap> <capNN.json> saida.mp4 --html <esta página> --de S --ate S
+     Ícones lucide usados (o nome tem de estar literal nesta página): 'door-open' 'scale' 'wallet' 'package' 'file-text' 'landmark' 'handshake' 'layout-dashboard'
+     'clipboard-list' 'map-pin' 'message-circle' 'user-round' 'receipt' 'building-2' 'calendar-days' 'calendar-range' 'hand-coins' 'tag' 'truck' 'circle-check'
+     'triangle-alert' 'lock' 'user-x' 'monitor' 'smartphone' 'users' 'party-popper' 'sparkles' 'arrow-up-right' 'arrow-down-left' 'flag' 'plug-zap' 'shield-check'
+     'circle-dollar-sign' 'users-round' 'package-plus' 'clock' -->
+</head><body>
+<script type="module">
+import { PI, cl, lerp, pr, eo, eio, eo5, eis, golpe, W, el, ic, vis, foco, pulso, ondaEm, conta, pesa, kg, titulo, posTitulo, selo,
+  htmlChip, htmlCartao, htmlOp, htmlVisor, ligaVisor, htmlFluxo, fluxo, CENA, GL, mundo, piso, U, camera, pose, posCam, olho, mergulho, lugar, lugarDeFrente,
+  plano, clima, cena, estilo, enquadraRet, uneRet, ALT, LARG }
+  from '../../../../perfis/ecoflix/cenas_v3_vertical/motor.js';
+import { ceuClaro, mundoEscuro } from '../../../../perfis/ecoflix/cenas_v3_vertical/fundo.js';
+import { base } from '../../../../perfis/ecoflix/cenas_v3_vertical/dados/base.js';
+import { htmlFluxoCartoes, fluxoCartoes, parte, seta } from '../../../../perfis/ecoflix/cenas_v3_vertical/dados/fluxoCartoes.js';
+import { htmlDocumento, documento } from '../../../../perfis/ecoflix/cenas_v3_vertical/dados/documento.js';
+import { pessoa } from '../../../../perfis/ecoflix/cenas_v3_vertical/objetos/pessoa.js';
+import { saco } from '../../../../perfis/ecoflix/cenas_v3_vertical/objetos/saco.js';
+import { balancaPlataforma } from '../../../../perfis/ecoflix/cenas_v3_vertical/objetos/balancaPlataforma.js';
+import { portao } from '../../../../perfis/ecoflix/cenas_v3_vertical/objetos/portao.js';
+import { galpao } from '../../../../perfis/ecoflix/cenas_v3_vertical/objetos/galpao.js';
+import { caminhao, dirige } from '../../../../perfis/ecoflix/cenas_v3_vertical/objetos/caminhao.js';
+import { carroca, puxa } from '../../../../perfis/ecoflix/cenas_v3_vertical/objetos/carroca.js';
+
+// =====================================================================================================================
+// comuns (vertical)
+const NUNCA = 1e9, EE = .0112, ROT = [-.2, .1, 0];
+const K = { margem: 36, topo: 150, base: 195 };                 // área útil do quadro vertical: x 36 a 468, y 150 a 655
+const MAX = 2.1 / EE;                                           // no máximo 2,1x o tamanho do desenho
+const cores = () => { base(); estilo('t00-cor', `.chip.am{background:linear-gradient(150deg,#F7CB68,#E59A22);color:#3A2A06;border-color:rgba(255,255,255,.4);box-shadow:0 12px 22px -8px rgba(229,154,34,.6)}
+.chip.vm{background:linear-gradient(150deg,#FF9A8C,#E5564A);color:#3A0A06;border-color:rgba(255,255,255,.4);box-shadow:0 12px 22px -8px rgba(229,86,74,.6)}
+.selo.vm{background:linear-gradient(150deg,#FF9A8C,#E5564A);box-shadow:0 10px 18px -6px rgba(229,86,74,.6),inset 0 1px 0 rgba(255,255,255,.45)}
+.chip.sl{height:auto;padding:9px 12px;white-space:normal;text-align:center;justify-content:center;line-height:1.25;font-size:14.5px}`); };
+const subDe = (p, t, a, sel = '.sub') => { const s = p.e.querySelector(sel); if (s) s.style.opacity = eo(pr(t, a, .3)).toFixed(3); };
+const degrau = (icone, rot, sub, o = {}) => `<div class="cartao ${o.cc ?? ''}" style="position:relative;width:${o.w ?? 360}px;height:${o.h ?? 84}px;padding:0 20px;display:flex;align-items:center;gap:13px;white-space:nowrap">
+  ${selo(icone, o.cls ?? 'n', o.selo ?? 46)}<div><div class="rot" style="${o.fr ? 'font-size:' + o.fr + 'px' : ''}">${rot}</div>${sub ? `<div class="sub">${sub}</div>` : ''}</div>${o.res ? '<div class="onda"></div>' : ''}</div>`;
+function escuro() {
+  const EIXO = lugar([0, 0, 0]), E = mundoEscuro(EIXO, 0, EE);
+  return { EIXO, X: (html, x, y, o = {}) => E(html, x * EE, -y * EE, 0, o), ret: (a, b, c, d) => [a * EE, -d * EE, c * EE, -b * EE], fundo: (cx, cy, o) => E.fundo(cx * EE, -cy * EE, o), L: E.lista };
+}
+const STAND = (t, tit, t0, sai) => { clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, t0 - .45, sai); };
+const sai01 = (t, a, d = .4) => 1 - eo(pr(t, a, d));    // 1 -> 0 (o que a câmera deixa para trás)
+
+// =====================================================================================================================
+// CENA "abertura" · cap00, linhas 0 a 3 · escuro
+// O caminho do portão à conta desce em coluna (a câmera desce com ele); os três assuntos, um embaixo do outro; o cartão da empresa de exemplo.
+function abertura() {
+  const t0 = .4, tOr = W(0, 'organizar'), tSu = W(0, 'sucata'), tPo = W(0, 'portao'), tDi = W(0, 'dinheiro'), tCo = W(0, 'conta'),
+    tNe = W(1, 'neste'), tCb = W(1, 'combinados'), tSi = W(1, 'sistema'), tPl = W(1, 'plano'),
+    tEm = W(2, 'empresa'), tRe = W(2, 'recicla'), tFe = W(2, 'ferro-velho'), tDa = W(2, 'dados'), tFim = W(3, 'combinados', 1, 'e');
+  cores();
+  const { EIXO, X, ret, fundo } = escuro();
+  const est = [['door-open', 'Portão', ''], ['scale', 'Balança', ''], ['wallet', 'Caixa', ''], ['package', 'Estoque', ''], ['file-text', 'Venda', ''], ['landmark', 'Dinheiro na conta', '', 'res']];
+  const col = X(htmlFluxoCartoes({ cartoes: est, cw: 250, vao: 44, vertical: true }), 0, 0), RW = col.w, RH = col.h;
+  const cy = i => parte(col.e, i).offsetTop + parte(col.e, i).offsetHeight / 2 - RH / 2, hc = parte(col.e, 0).offsetHeight / 2 + 6;
+  const CWD = 340, YS = [-100, 0, 100];
+  const cb = X(degrau('handshake', 'Os combinados', '', { w: CWD, cls: '' }), 0, YS[0]), si = X(degrau('layout-dashboard', 'O sistema por cima', '', { w: CWD, cls: 'n' }), 0, YS[1]), pl = X(degrau('clipboard-list', 'O seu plano', '', { w: CWD, cls: 'a' }), 0, YS[2]);
+  const chE = X(htmlChip(`${ic('map-pin', 18)}Empresa de exemplo`, 'n'), 0, -92, { anc: [.5, 1], z: 40 });
+  const card = X(htmlCartao('building-2', 'Recicla Vale Metais', 'Ferro-velho em Taubaté, SP', 'Dados inventados', { w: 400, h: 150, fn: 26, selo: 46 }), 0, 12);
+  const nC = card.e.querySelector('.num');
+  fundo(0, 0, { aneis: false });
+  const tit = titulo('Primeira aula', 'Bem-vindo ao EcoSistema', 'escuro');
+  const S1 = enquadraRet(EIXO, ret(-RW / 2, cy(0) - hc, RW / 2, cy(2) + hc), { ...K, az: -.03, max: MAX }),
+        S2 = enquadraRet(EIXO, ret(-RW / 2, cy(3) - hc, RW / 2, cy(5) + hc), { ...K, az: .02, max: MAX }),
+        S3 = enquadraRet(EIXO, ret(-CWD / 2 - 6, YS[0] - 48, CWD / 2 + 6, YS[2] + 48), { ...K, az: -.02, max: MAX }),
+        S4 = enquadraRet(EIXO, ret(-210, -92 - 40, 210, 12 + 80), { ...K, az: .02, max: MAX });
+  camera([[t0 - 3, S1], [tPo + .5, { ...S1, az: -.012, d: S1.d * .985 }, 'lin'], [tDi + .6, S2], [tNe - .4, { ...S2, az: .0, d: S2.d * .985 }, 'lin'], [tNe + 1.0, S3],
+    [tEm - .3, { ...S3, az: .01, d: S3.d * .985 }, 'lin'], [tEm + 1.1, S4], [tFim + 2.5, { ...S4, az: .035, d: S4.d * .985 }, 'lin']]);
+  const sai = tEm - .15;
+  return t => {
+    STAND(t, tit, t0); posTitulo(tit, t, t0 - .9, tOr - .1);
+    fluxoCartoes(col.e, t, tSu - .35, NUNCA, { tempos: [tSu, tPo + .05, tPo + .4, tDi - .2, tDi + .15, tCo - .05] }); col.op = sai01(t, tNe - .45, .45);
+    pulso(parte(col.e, 5), t, tCo + .3, .05, .8);
+    vis(cb.e, t, tCb - .1, sai, { dy: 18 }); vis(si.e, t, tSi - .1, sai, { dy: 18 }); vis(pl.e, t, tPl - .1, sai, { dy: 18 });
+    vis(chE.e, t, tEm + .05, NUNCA, { dy: 10, sc: .8 });
+    vis(card.e, t, tRe - .1, NUNCA, { dy: 22, sc: .95 }); subDe(card, t, tFe - .05); nC.style.opacity = eo(pr(t, tDa - .05, .3)).toFixed(3); pulso(card.e, t, tDa + .1, .03, .8);
+  };
+}
+
+// =====================================================================================================================
+// CENA "mensagem" · cap04, linha 4 · escuro (a mensagem pronta; cada item entra na palavra que o nomeia)
+function mensagem() {
+  const t0 = W(4, 'ele'), tSu = W(4, 'suporte'), tEm = W(4, 'e-mail'), tEp = W(4, 'empresa'), tTr = W(4, 'trilha'), tAu = W(4, 'aula'), tDu = W(4, 'duvida'), tFim = W(4, 'enviar', 1, 'e');
+  cores();
+  const { EIXO, X, ret, fundo } = escuro();
+  const lin = (k, v, id) => `<div data-m="${id}" style="opacity:0;white-space:nowrap"><div class="d-s" style="font-size:15px">${k}</div><div class="d-v" style="font-size:18px;margin-top:3px">${v}</div></div>`;
+  const msg = X(`<div class="cartao" style="position:relative;width:432px;padding:24px 26px 28px">
+    <div data-m="cab" style="display:flex;align-items:center;gap:14px;opacity:0">${selo('message-circle', '', 50)}<div><div class="d-t" style="font-size:22px">Suporte</div><div class="d-s">Mensagem pronta</div></div></div>
+    <div style="margin-top:18px;padding-top:20px;border-top:1px solid var(--ln);display:grid;gap:15px">
+      ${lin('E-mail do usuário:', 'rafael@reciclavalemetais.example', 'e')}${lin('Empresa:', 'Recicla Vale Metais Ltda', 'p')}${lin('Trilha:', 'Tutoriais do sistema', 't')}${lin('Módulo:', 'Sua conta e sua empresa', 'a')}
+      ${lin('Minha dúvida:', '<i class="cur" style="display:inline-block;vertical-align:middle;width:3px;height:24px;border-radius:2px;background:var(--ac)"></i>', 'd')}</div></div>`, 0, 0);
+  const m = id => msg.e.querySelector(`[data-m=${id}]`);
+  fundo(0, 0, { aneis: false });
+  const tit = titulo('Ajuda', 'Mensagem pronta para o suporte', 'escuro');
+  const S1 = enquadraRet(EIXO, msg.ret(), { ...K, az: -.03, max: MAX });
+  camera([[t0 - 3, S1], [tFim + 2.5, { ...S1, az: .035, d: S1.d * .985 }, 'lin']]);
+  const ent = (e, t, a) => { const p = eo5(pr(t, a, .6)); e.style.opacity = eo(pr(t, a, .3)).toFixed(3); e.style.transform = `translateY(${((1 - p) * 12).toFixed(2)}px)`; };
+  return t => {
+    STAND(t, tit, t0);
+    vis(msg.e, t, tSu - .1, NUNCA, { dy: 22, sc: .96 }); msg.e.style.opacity = (+msg.e.style.opacity).toFixed(3);
+    ent(m('cab'), t, tSu - .05); ent(m('e'), t, tEm - .1); ent(m('p'), t, tEp - .1); ent(m('t'), t, tTr - .1); ent(m('a'), t, tAu - .1); ent(m('d'), t, tDu - .15);
+    msg.e.querySelector('.cur').style.opacity = t < tDu ? 0 : (Math.sin((t - tDu) * 7) > -.3 ? 1 : 0);
+  };
+}
+
+// =====================================================================================================================
+// CENA "caminho" · cap05, linhas 0 a 6 · claro (o pátio, câmera de retrato seguindo a Dona Cida) → escuro (cada estação do caminho, uma por vez, em coluna)
+function caminho() {
+  const t0 = .4, tRe = W(0, 'recicla'), tDo = W(0, 'dona'), tCi = W(0, 'cida'), tLa = W(0, 'latinha'),
+    tB = W(1, 'balanca'), tMa = W(1, 'marca'), tQu = W(1, 'quilos'),
+    tCx = W(2, 'caixa'), tPe = W(2, 'pedido'), tSe = W(2, 'seis'), tDz = W(2, 'duzentos'), tPg = W(2, 'pagos'),
+    tMt = W(3, 'material'), tEn = W(3, 'entra'), tVe = W(4, 'vendida'), tSf = W(4, 'serra'), tNo = W(4, 'nota'), tCo = W(5, 'dinheiro'), tCc = W(5, 'conta'), tNu = W(5, 'numeros'), tDi = W(5, 'dia'), tMe = W(5, 'mes'),
+    tAu = W(6, 'cada'), tFim = W(6, 'trilha', 1, 'e');
+  cores();
+  // ================================================================ CLIMA CLARO · o pátio
+  piso({ r: 30, x: 0, z: -2, passo: 1.3 }); U.uNevoa.value.set(.955, .975, .965, .8);
+  const ceu = ceuClaro({ halo: [1.2, 3.2, -14] });
+  const PORT = portao(CENA, [-6.4, 0, -2.2], { h: 3.4, placa: '' });
+  const SX = -.45, B = balancaPlataforma(CENA, [SX, 0, 1.1], { c: 1.3, l: 1.1 }); B.scale.setScalar(1.6);
+  const SUP = B.userData.sup * 1.6 + .02;
+  const DC = pessoa(CENA, [-6.4, 0, -2.2], { camisa: '#C8664A', coque: true });
+  const SAC = saco(CENA, [0, 0, 0], { aberto: true, carga: 'latinha', s: .8 });
+  const chRe = plano(htmlChip(`${ic('map-pin', 18)}Recicla Vale Metais`, 'n'), { pos: [-6.4, 3.0, -1.9], rot: ROT, esc: .0185, anc: [.5, .5] });
+  const chDo = plano(htmlChip(`${ic('user-round', 18)}Dona Cida`), { pos: [0, 2.3, 1.1], rot: ROT, esc: .0185, anc: [.5, 1] });
+  const chLa = plano(htmlChip(`${ic('package', 18)}Latinha`, 'n'), { pos: [0, 1.5, 1.1], rot: ROT, esc: .0185, anc: [.5, 1] });
+  // o visor: a tela do indicador da balança (a única superfície escura do mundo claro), de frente para onde a câmera vai mergulhar
+  const VP = mundo(B, B.userData.tela), P4 = { x: VP[0] + .4, y: VP[1] - .5, z: VP[2], d: 6.6, az: .1, el: .16, oy: 6 }, EIXO = lugarDeFrente(VP, posCam(P4));
+  const visor = plano(htmlVisor(['Peso']), { em: EIXO, pos: [0, 0, 0], esc: .0028, anc: [.5, .5] }); ligaVisor(visor.e);
+  const tit1 = titulo('O sistema', 'Do portão até a conta');
+  const CLAROS = [...ceu, chRe, chDo, chLa];
+  // ================================================================ CLIMA ESCURO · uma estação por vez, numa coluna (a câmera desce)
+  const ZD = -18, E = mundoEscuro(EIXO, ZD, EE), X = (html, x, y, o = {}) => E(html, x * EE, -y * EE, 0, o), ret = (a, b, c, d) => [a * EE, -d * EE, c * EE, -b * EE];
+  const PASSO = 330;                                  // distância entre as estações da coluna
+  const Y = k => k * PASSO;
+  const est = (ic_, rot, sub = '', c = '') => X(htmlFluxoCartoes({ cartoes: [[ic_, rot, sub, c]], cw: 250 }), 0, 0);
+  const sCx = X(htmlFluxoCartoes({ cartoes: [['wallet', 'Caixa', '']], cw: 250 }), 0, Y(0)), sEs = X(htmlFluxoCartoes({ cartoes: [['package', 'Estoque', '']], cw: 250 }), 0, Y(1)),
+        sVe = X(htmlFluxoCartoes({ cartoes: [['file-text', 'Venda', '']], cw: 250 }), 0, Y(2)), sDi = X(htmlFluxoCartoes({ cartoes: [['landmark', 'Dinheiro na conta', '', 'res']], cw: 250 }), 0, Y(3));
+  const DY = 40;   // folga entre o cartão da estação e o detalhe
+  const sh = 34;   // meia altura do cartão da estação
+  const doc = X(htmlDocumento({ icone: 'receipt', tipo: 'Pedido de compra', numero: 'Dona Cida', campos: [], itens: [['Alumínio latinha', '38 kg × R$ 6,20', 'R$ 235,60']], total: ['Total', 'R$ 235,60'], status: 'Pago na hora', w: 330, chave: false }), 0, Y(0) + sh + DY, { anc: [.5, 0] });
+  const dEs = X(htmlCartao('package', 'Alumínio latinha', 'entra no estoque', '+0 kg', { res: true, w: 300 }), 0, Y(1) + sh + DY, { anc: [.5, 0] }), nEs = dEs.e.querySelector('.num'), oEs = dEs.e.querySelector('.onda');
+  const dVe = X(htmlCartao('building-2', 'Serra Fina Alumínio<br>Reciclagem', 'Cliente', 'Nota fiscal', { w: 330, h: 150, fn: 28 }), 0, Y(2) + sh + DY, { anc: [.5, 0] }), nVe = dVe.e.querySelector('.num');
+  const dDi = X(degrau('calendar-days', 'Dia', '', { w: 190 }), -100, Y(3) + sh + DY, { anc: [.5, 0] }), dMe = X(degrau('calendar-range', 'Mês', '', { w: 190 }), 100, Y(3) + sh + DY, { anc: [.5, 0] });
+  const dNu = X(htmlChip(`${ic('flag', 18)}Números do dia e do mês`, ''), 0, Y(3) + sh + DY + 84 + 22, { anc: [.5, 0], z: 40 });
+  // a coluna final: cada estação com a sua aula (uma lista, linhas baixas)
+  const AUL = [['door-open', 'Portão', 'Comprar e vender sucata'], ['scale', 'Balança', 'Balança e impressora: o EcoTray'], ['wallet', 'Caixa', 'Caixa: abrir, fechar e o cofre'], ['package', 'Estoque', 'Estoque: saldo, histórico e posição'], ['file-text', 'Venda', 'Nota Fiscal de mercadoria (NF-e)'], ['landmark', 'Dinheiro na conta', 'Bancos, cofre e conciliação bancária']];
+  const YL = Y(4) + 40, LH = 82;
+  const lista = AUL.map(([i, r, s], k) => X(degrau(i, r, s, { w: 350, h: 76, selo: 44, fr: 20, cls: k === 5 ? '' : 'n' }), 0, YL + (k - 2.5) * 86));
+  const ZERO = 0;
+  E.fundo(0, 0, { aneis: false });
+  const tit2 = titulo('O sistema', 'Do portão até a conta', 'escuro');
+  const bloco = (p, ...ps) => uneRet(p.ret(), ...ps.map(q => q.ret()));
+  const R2 = bloco(sCx, doc), R3 = bloco(sEs, dEs), R4 = bloco(sVe, dVe), R5 = bloco(sDi, dDi, dMe, dNu), R6 = uneRet(...lista.map(p => p.ret()));
+  // o mundo escuro anda o necessário para a primeira estação ficar no eixo do visor: o mergulho segue reto e o visor não sai do centro
+  const k0 = enquadraRet(null, R2, { ...K, z: ZD, max: MAX }), gx = k0.x, gy = k0.y, sh_ = r => [r[0] - gx, r[1] - gy, r[2] - gx, r[3] - gy];
+  for (const p of E.lista) { p.pos[0] -= gx; p.pos[1] -= gy; }
+  const G = enquadraRet(EIXO, sh_(R2), { ...K, z: ZD, az: 0, max: MAX }), S3 = enquadraRet(EIXO, sh_(R3), { ...K, z: ZD, az: .0, max: MAX }), S4 = enquadraRet(EIXO, sh_(R4), { ...K, z: ZD, az: .02, max: MAX }),
+        S5 = enquadraRet(EIXO, sh_(R5), { ...K, z: ZD, az: -.01, max: MAX }), S6 = enquadraRet(EIXO, sh_(R6), { ...K, z: ZD, az: .0, max: 1.5 / EE });
+  // ================================================================ CÂMERA
+  const A1 = { x: -5.4, y: 1.6, z: 1.1, d: 17, az: .15, el: .2, oy: 50 };
+  const tM = tMa + .05, tC = tCx - .3, ZF = EIXO.local(posCam(G))[2], merg = mergulho(EIXO.local(posCam(P4))[2], ZF, .5);
+  camera([[t0 - 3, A1], [tLa + .2, { ...A1, x: -2.6, d: 16.5, az: .13 }, 'lin'], [tB + .45, P4], [tM, { ...P4, d: P4.d * .985 }, 'lin'], [tC, G, merg, { reta: true, mira: x => eis(cl(x * 2.1)) }],
+    [tMt - .4, { ...G, az: -.005 }, 'lin'], [tMt + .9, S3], [tVe - .4, { ...S3, az: .01 }, 'lin'], [tVe + .9, S4], [tCo - .4, { ...S4, az: .0 }, 'lin'], [tCo + .9, S5],
+    [tAu - .4, { ...S5, az: .01 }, 'lin'], [tAu + 1.0, S6], [tFim + 2.5, { ...S6, az: .02, d: S6.d * .985 }, 'lin']]);
+  const zCam = u => { const k = pose(u); return EIXO.local([k.px, k.py, k.pz])[2]; };
+  let tX = tM; while (tX < tC && zCam(tX) > .6) tX += 1 / 120;
+  // ================================================================ a ação do pátio
+  const camX = u => lerp(-6.4, -2.15, eio(pr(u, 3.55, 3.15)));
+  const camZ = u => lerp(-2.2, 1.1, eio(pr(u, .4, 3.4)));
+  const giro = u => lerp(-PI / 2, 0, eio(pr(u, 3.4, .7)));
+  return t => {
+    const x = camX(t), z = camZ(t), gi = giro(t), anda = (t > .4 && t < 6.8) ? 1 : 0, dist = (z + 2.2) + (x + 6.4);
+    DC.position.set(x, 0, z); DC.rotation.y = gi; DC.userData.anda(anda * dist * 5.2, .85);
+    const lev = eio(pr(t, tB - .55, .75)), fx = x + Math.cos(gi) * .62, fz = z - Math.sin(gi) * .62;
+    SAC.position.set(lerp(fx, SX, lev), lerp(.32, SUP, lev) + .5 * Math.sin(PI * lev), lerp(fz, 1.1, lev));
+    if (lev > 0) DC.userData.anda(0, lerp(.85, 0, lev));
+    vis(chRe.e, t, tRe - .1, tB - .3, { dy: 10 });
+    chDo.pos[0] = x; chDo.pos[2] = z; vis(chDo.e, t, tDo - .05, tB - .3, { dy: 10 });
+    chLa.pos[0] = SAC.position.x; chLa.pos[1] = SAC.position.y + 1.25; chLa.pos[2] = SAC.position.z; vis(chLa.e, t, tLa - .1, tB - .3, { dy: 10 });
+    posTitulo(tit1, t, t0 - .9, t0 - .45, tM - .15); GL.style.opacity = eo(pr(t, t0 + .25, .5)).toFixed(3);
+    visor.e.zera?.(); vis(visor.e, t, tB - .2, NUNCA, { dy: 8 }); pesa(visor.e, t, tMa - .3, 1.0, 0, 38, { passo: 1 }); pulso(visor.e, t, tMa + .85, .04, .7);
+    const dentro = t >= tX ? 1 : 0;
+    clima(dentro); GL.style.visibility = dentro ? 'hidden' : 'visible'; for (const p of CLAROS) p.op = dentro ? 0 : 1; for (const p of E.lista) p.op = dentro;
+    visor.op = 1 - eo(pr(t, tX + .05, .3));
+    // ---------------- os dados, uma estação por vez (a câmera desce; o que ficou para trás sai de cena)
+    posTitulo(tit2, t, tX + .25, -9, NUNCA); tit2.style.opacity = (+tit2.style.opacity * dentro).toFixed(3);
+    const saiDe = (a, ...ps) => { const m = sai01(t, a, .45); for (const p of ps) p.op = dentro * m; };
+    fluxoCartoes(sCx.e, t, tX - .2, NUNCA, { tempos: [tAu - 99] }); pulso(parte(sCx.e, 0), t, tPg + .2, .04, .8);
+    fluxoCartoes(sEs.e, t, tMt - .1, NUNCA, { tempos: [tMt] }); pulso(parte(sEs.e, 0), t, tEn + .1, .04, .8);
+    fluxoCartoes(sVe.e, t, tSf - .3, NUNCA, { tempos: [tSf - .2] }); pulso(parte(sVe.e, 0), t, tNo, .04, .8);
+    fluxoCartoes(sDi.e, t, tCo - .1, NUNCA, { tempos: [tCo] }); pulso(parte(sDi.e, 0), t, tCc + .1, .05, .8);
+    documento(doc.e, t, tPe - .1, NUNCA, { tempos: [tPe + .2, tSe - .05, tDz - .1, tPg] });
+    vis(dEs.e, t, tMt + .15, NUNCA, { dy: 20, sc: .95 }); const ne = pr(t, tEn - .05, .7); nEs.textContent = '+' + Math.round(38 * eo5(ne)) + ' kg'; ondaEm(oEs, t, tEn + .55);
+    vis(dVe.e, t, tSf - .1, NUNCA, { dy: 20, sc: .95 }); nVe.style.opacity = eo(pr(t, tNo - .05, .3)).toFixed(3);
+    vis(dNu.e, t, tNu - .1, NUNCA, { dy: 10, sc: .85 }); vis(dDi.e, t, tDi - .1, NUNCA, { dy: 16 }); vis(dMe.e, t, tMe - .1, NUNCA, { dy: 16 });
+    // estação que a câmera já deixou: sai
+    for (const [a, ...ps] of [[tMt - .3, sCx, doc], [tVe - .3, sEs, dEs], [tCo - .3, sVe, dVe], [tAu - .6, sDi, dDi, dMe, dNu]]) { const m = sai01(t, a, .45); for (const p of ps) p.op = Math.min(p.op, dentro * m); }
+    // as aulas (a coluna final, uma linha por palavra "cada")
+    lista.forEach((p, i) => { vis(p.e, t, tAu + .3 + i * .28, NUNCA, { dy: -10, sc: .94 }); p.op = dentro; });
+  };
+}
+
+// =====================================================================================================================
+// CENA "cap09" · janela 1 (claro: o pátio; quem vende e quem traz, um lado de cada vez) e janela 2 (escuro: um cartão por palavra, um de cada vez)
+function cliente() {
+  const t0 = W(0, 'antes'), tCl = W(0, 'cliente'), tVe = W(0, 'vende'), tFo = W(0, 'fornecedor'), tCm = W(0, 'compra'), tCa = W(0, 'catador'), tCr = W(0, 'carroceiro'), tOu = W(0, 'outro'), tFim = W(0, 'deposito', 1, 'e');
+  piso({ r: 32, x: 0, z: -2, passo: 1.3 }); U.uNevoa.value.set(.955, .975, .965, .8);
+  const ceu = ceuClaro({ halo: [-1, 3.2, -14] });
+  const G = galpao(CENA, [0, 0, -3.4], { c: 9, l: 5, h: 3.0 }), GP = galpao(CENA, [-13.5, 0, -4.4], { c: 9, l: 5, h: 3.0 });
+  const T = caminhao(CENA, { tipo: 'tres4', carga: 140 }); T.position.z = 1.7; const h0 = () => 0;
+  const CT = pessoa(CENA, [-9, 0, 1.8], { camisa: '#5B8FD6', bone: '#F2B63D' }), SC = saco(CENA, [0, 0, 0], { aberto: true, carga: 'pet', s: .8 });
+  const CR = pessoa(CENA, [-6, 0, 2.4], { camisa: '#3FA45B', bone: '#E9EEF2' }), CA = carroca(CENA, [-8, 0, 2.4], { carga: 'papelao', n: 34 });
+  const chPa = plano(htmlChip(`${ic('map-pin', 18)}Seu pátio`, 'n'), { pos: [0, 1.0, -.9], rot: ROT, esc: .026, anc: [.5, .5] });
+  const pC = plano(cartaoP('arrow-up-right', 'Cliente', 'pra quem você vende', '', 215), { pos: [5.6, 4.1, 1.7], rot: ROT, esc: .019, anc: [.5, 1] });
+  const pF = plano(cartaoP('arrow-down-left', 'Fornecedor', 'de quem você compra', 'a', 215), { pos: [-7.8, 4.3, 2.1], rot: ROT, esc: .019, anc: [.5, 1] });
+  const chTr = plano(htmlChip(`${ic('truck', 18)}Aços Quiririm Ltda`, 'n'), { pos: [6.4, 2.9, 1.7], rot: ROT, esc: .019, anc: [.5, 1] });
+  const chCt = plano(htmlChip(`${ic('user-round', 18)}Catador`, 'n'), { pos: [-9, 2.4, 1.8], rot: ROT, esc: .019, anc: [.5, 1] });
+  const chCr = plano(htmlChip(`${ic('user-round', 18)}Carroceiro`, 'n'), { pos: [-6, 2.4, 2.4], rot: ROT, esc: .019, anc: [.5, 1] });
+  const chOu = plano(htmlChip(`${ic('building-2', 18)}Outro depósito`, 'n'), { pos: [-13.5, 2.9, -4.4], rot: ROT, esc: .019, anc: [.5, 1] });
+  const tit = titulo('Vocabulário', 'Cliente e fornecedor');
+  const S1 = { x: 5.2, y: 2.9, z: 0, d: 27, az: .12, el: .2, oy: 62 }, S2 = { x: -7.4, y: 2.9, z: 0, d: 27, az: .08, el: .2, oy: 62 }, S3 = { x: -13.2, y: 2.9, z: 0, d: 27, az: .06, el: .2, oy: 62 };
+  const cam = [[t0 - 3, S1], [tFo - .5, { ...S1, x: 5.8, az: .1, d: 26.6 }, 'lin'], [tFo + .9, S2], [tOu - .5, { ...S2, x: -7.8, az: .07 }, 'lin'], [tOu + .6, S3], [tFim + 2.5, { ...S3, x: -13.4, az: .05 }, 'lin']];
+  const L = [...ceu, chPa, pC, pF, chTr, chCt, chCr, chOu];
+  const r = t => {
+    const xT = lerp(6.4, 19, eio(pr(t, tVe - .1, 5.5))); dirige(T, xT, h0, { arfa: -.006 * golpe(pr(t, tVe - .1, .7), 1.3) });
+    const xc = lerp(-13.5, -8.6, eio(pr(t, tFo + .2, 4.4))); CT.position.set(xc, 0, 1.8); const ph = pr(t, tFo + .2, 4.4) < 1 ? 1 : 0; CT.userData.anda(ph * xc * 5.2, .85); SC.position.set(xc + .62, .32, 1.9);
+    const xa = lerp(-17.5, -6.4, eio(pr(t, tCm + .2, 5.6))); puxa(CA, xa - 1.9); CA.position.z = 2.4; CR.position.set(xa, 0, 2.4); const pa = pr(t, tCm + .2, 5.6) < 1 ? 1 : 0; CR.userData.anda(pa * xa * 5.2, .5);
+    GP.scale.setScalar(Math.max(.001, .6 * eo(pr(t, tOu - .2, .55)))); GP.position.y = 0;
+    posTitulo(tit, t, t0 - .9, t0 - .45);
+    vis(chPa.e, t, tCl - .35, tFo - .3, { dy: 10, sc: .85 });
+    vis(pC.e, t, tCl - .1, tFo - .3, { dy: 18 }); pulso(pC.e, t, tVe, .05, .8);
+    chTr.pos[0] = xT; vis(chTr.e, t, tVe + .1, Math.min(tVe + 3.4, tFo - .3), { dy: 10, sc: .85 });
+    vis(pF.e, t, tFo - .1, tOu - .3, { dy: 18 }); pulso(pF.e, t, tCm, .05, .8);
+    chCt.pos[0] = xc; chCt.pos[2] = 1.8; vis(chCt.e, t, tCa - .1, tOu - .3, { dy: 10, sc: .85 });
+    chCr.pos[0] = xa; chCr.pos[2] = 2.4; vis(chCr.e, t, tCr - .1, tOu - .3, { dy: 10, sc: .85 });
+    vis(chOu.e, t, tOu - .05, NUNCA, { dy: 10, sc: .85 });
+  };
+  return { cam, L, r, claro: true };
+}
+const cartaoP = (icone, rot, sub, cls, cw = 190) => htmlFluxoCartoes({ cartoes: [[icone, rot, sub, cls]], cw });
+function glossario() {
+  const T = (l, p, n = 1, c = 's') => W(l, p, n, c), tP = T(2, 'pedido'), tCx = T(3, 'caixa'), tSa = T(4, 'saldo'), tTb = T(5, 'tabela'), tFi = T(6, 'ficha'), tOr = T(7, 'ordem'), tMt = T(8, 'mtr'), tCd = T(9, 'cada'), tFim = T(9, 'dizer', 1, 'e');
+  cores();
+  const { EIXO, X, ret, fundo, L } = escuro();
+  const G = (icone, rot, linhas) => `<div class="cartao" style="position:relative;width:410px;height:${96 + linhas.length * 32}px;padding:20px 24px;white-space:nowrap"><div style="display:flex;align-items:center;gap:14px">${selo(icone, 'n', 50)}<div class="rot" style="font-size:26px">${rot}</div></div>
+    <div style="margin-top:16px;display:grid;gap:7px">${linhas.map(l => `<div class="d-s" style="opacity:0;font-size:19px">${l}</div>`).join('')}</div></div>`;
+  const c = [['receipt', 'Pedido', ['Compra · Dona Cida', 'Alumínio latinha', '38 kg', 'R$ 235,60'], tP, [T(2, 'compra'), T(2, 'material'), T(2, 'peso'), T(2, 'valor')]],
+    ['wallet', 'Caixa', ['Entra', 'Sai', 'Abre de manhã', 'Fecha no fim do expediente'], tCx, [T(3, 'entra'), T(3, 'sai'), T(3, 'abre'), T(3, 'fecha')]],
+    ['hand-coins', 'Saldo (fiado)', ['Ficou pra depois', 'A receber · Cliente', 'Fundição Bandeira do Vale', 'A pagar · Fornecedor'], tSa, [T(4, 'ficou'), T(4, 'receber'), T(4, 'cliente'), T(4, 'pagar')]],
+    ['tag', 'Tabela de preço', ['Preço do quilo', 'Ferro pesado · R$ 0,95', 'Tabela Depósitos · outro preço'], tTb, [T(5, 'quilo'), T(5, 'material'), T(5, 'depositos')]],
+    ['clipboard-list', 'Ficha técnica', ['Receita da produção', 'Latinha solta → Fardo de alumínio'], tFi, [T(6, 'receita'), T(6, 'latinha')]],
+    ['truck', 'Ordem de coleta', ['FKD2E41', 'Parceiro'], tOr, [T(7, 'caminhao'), T(7, 'parceiro')]],
+    ['file-text', 'MTR', ['Documento ambiental', 'Resíduo'], tMt, [T(8, 'documento'), T(8, 'residuo')]]];
+  const cs = c.map(([i, r, ls, ti, tl]) => ({ p: X(G(i, r, ls), 0, -10), ti, tl }));
+  // no fim ("cada palavra..."), a lista das sete, uma embaixo da outra
+  const resumo = c.map(([i, r], k) => X(degrau(i, r, '', { w: 330, h: 54, selo: 36, fr: 19 }), 0, -218 + k * 66 + 30));
+  fundo(0, 0, { aneis: false });
+  const tit = titulo('Vocabulário', 'As palavras do pátio', 'escuro');
+  const S1 = enquadraRet(EIXO, ret(-210, -190, 210, 150), { ...K, az: -.02, max: MAX }), S2 = enquadraRet(EIXO, ret(-180, -218, 180, 270 + 20), { ...K, az: .0, max: MAX });
+  const cam = [[tP - 3, S1], [tCd - .6, { ...S1, az: .015, d: S1.d * .985 }, 'lin'], [tCd + .9, S2], [tFim + 2.5, { ...S2, az: .03, d: S2.d * .99 }, 'lin']];
+  const r = t => {
+    posTitulo(tit, t, tP - .9, tP - .45);
+    cs.forEach(({ p, ti, tl }, k) => {
+      const prox = k < 6 ? cs[k + 1].ti : tCd - .3;
+      vis(p.e, t, ti - .05, prox - .12, { dy: 22, sc: .95 });
+      p.e.querySelectorAll('.d-s').forEach((s, j) => { s.style.opacity = eo(pr(t, tl[Math.min(j, tl.length - 1)] - .1, .3)).toFixed(3); });
+    });
+    resumo.forEach((p, k) => vis(p.e, t, tCd + .2 + k * .22, NUNCA, { dy: 14, sc: .95 }));
+  };
+  return { cam, L, r, claro: false, resumo };
+}
+function cap09() {
+  const a = cliente(), b = glossario(), MEIO = (W(0, 'deposito', 1, 'e') + W(2, 'pedido')) / 2; camera([...a.cam, ...b.cam]);
+  return t => { const j2 = t > MEIO; clima(j2 ? 1 : 0); GL.style.visibility = j2 ? 'hidden' : 'visible'; for (const p of a.L) p.op = j2 ? 0 : 1; for (const p of [...b.L, ...b.resumo]) p.op = j2 ? 1 : 0; a.r(t); b.r(t); };
+}
+
+// =====================================================================================================================
+// CENA "selos" · cap10, linha 4 · escuro (a régua do mês em PÉ: em dia, os 7 últimos dias, depois do vencimento; cada selo acende na sua palavra)
+function selos() {
+  const t0 = W(4, 'faltando'), tPo = W(4, 'poucos'), tDi = W(4, 'dias'), tMu = W(4, 'muda'), tVe = W(4, 'vence'), tBr = W(4, 'breve'), tPa = W(4, 'passou'), tVm = W(4, 'vencimento'), tVi = W(4, 'vira'), tVd = W(4, 'vencida'), tFim = W(4, 'vencida', 1, 'e');
+  cores();
+  const { EIXO, X, ret, fundo } = escuro(), BX = -170, BH = 350, SA = 110, SB = 140, SC = 100, Y0 = -170;
+  const seg = (cor, h, id) => `<i data-m="${id}" style="display:block;width:100%;height:${h}px;background:${cor};opacity:.18"></i>`;
+  const regua = X(`<div style="position:relative;width:30px;height:${BH}px;border-radius:15px;overflow:hidden;display:flex;flex-direction:column;background:var(--fx);border:1px solid var(--ln)">
+    ${seg('linear-gradient(180deg,#2FB271,#6CF0A8)', SA, 'a')}${seg('linear-gradient(180deg,#E59A22,#F7CB68)', SB, 'b')}${seg('linear-gradient(180deg,#E5564A,#FF9A8C)', SC, 'c')}</div>`, BX, Y0 + BH / 2);
+  const m = id => regua.e.querySelector(`[data-m=${id}]`);
+  const CX = BX + 15 + 22;   // as etiquetas à direita da régua
+  const chA = X(htmlChip(`${ic('circle-check', 18)}Ativa`), CX, Y0 + SA / 2, { anc: [0, .5], z: 40 }), chB = X(htmlChip(`${ic('triangle-alert', 18)}Vence em breve`, 'am'), CX, Y0 + SA + 28, { anc: [0, .5], z: 40 }),
+        chC = X(htmlChip(`${ic('clock', 18)}Vencida`, 'vm'), CX, Y0 + SA + SB + SC / 2, { anc: [0, .5], z: 40 });
+  const sete = X(htmlChip('7 dias ou menos', 'n'), CX, Y0 + SA + 28 + 50, { anc: [0, .5], z: 40 });
+  const mk = X(htmlChip(`${ic('flag', 18)}Vencimento 05/12/2026`, 'n'), CX, Y0 + SA + SB, { anc: [0, .5], z: 40 });
+  const emp = X(htmlChip(`${ic('map-pin', 18)}Recicla Vale Metais Ltda`, 'n'), 0, Y0 - 24, { anc: [.5, 1], z: 40 });
+  fundo(0, Y0 + BH / 2, { aneis: false });
+  const tit = titulo('Assinatura', 'Os selos do status', 'escuro');
+  const S1 = enquadraRet(EIXO, uneRet(ret(BX - 20, Y0 - 24 - 40, CX + 290, Y0 + BH + 14)), { ...K, az: -.03, max: MAX });
+  camera([[t0 - 3, S1], [tFim + 2.5, { ...S1, az: .03, d: S1.d * .985 }, 'lin']]);
+  const luz = (e, t, a, b) => { e.style.opacity = (.18 + .82 * eo(pr(t, a, .45)) - .55 * eo(pr(t, b, .45))).toFixed(3); };
+  return t => {
+    STAND(t, tit, t0);
+    vis(emp.e, t, t0 - .5, NUNCA, { dy: 8, sc: .85 }); vis(regua.e, t, t0 - .45, NUNCA, { dy: 14 }); vis(chA.e, t, t0 - .4, NUNCA, { dy: 12 });
+    m('a').style.opacity = (.18 + .82 * eo(pr(t, t0 - .3, .4)) - .55 * eo(pr(t, tMu, .45))).toFixed(3); chA.op = 1; foco(chA.e, t, t0 - .5, tMu, { min: .55 });
+    luz(m('b'), t, tPo - .05, tPa + .05); vis(chB.e, t, tVe - .1, NUNCA, { dy: 12, sc: .85 }); foco(chB.e, t, tVe - .1, tPa + .05, { min: .55 }); vis(sete.e, t, tPo - .05, NUNCA, { dy: 8, sc: .85 }); pulso(chB.e, t, tBr, .05, .8);
+    vis(mk.e, t, tDi - .1, NUNCA, { dy: 8, sc: .85 });
+    luz(m('c'), t, tPa + .1, 1e9); vis(chC.e, t, tVi, NUNCA, { dy: 12, sc: .85 }); pulso(chC.e, t, tVd, .05, .8);
+  };
+}
+
+// =====================================================================================================================
+// CENA "modulos" · cap11, linhas 3 a 5 · escuro. Estação 1: os dois motivos, um embaixo do outro (o primeiro esmaece quando o segundo entra); estação 2 (a câmera desce): teste → assinatura.
+function modulos() {
+  const t0 = W(3, 'se'), tTe = W(3, 'tela'), tMo = W(3, 'motivos'), tOu1 = W(3, 'ou'), tMd = W(3, 'modulo', 1), tFz = W(3, 'faz'), tAt = W(3, 'ativar'),
+    tOu2 = W(4, 'ou'), tPm = W(4, 'permissao'), tLi = W(4, 'libera'), tAd = W(4, 'administrador'), tUP = W(4, 'usuarios'),
+    tNt = W(5, 'teste'), tTo = W(5, 'todos'), tAs = W(5, 'assinatura'), tCo = W(5, 'contratou'), tVo = W(5, 'volta'), tLg = W(5, 'ligar'), tFim = W(5, 'modulo', 2, 'e');
+  cores();
+  const { EIXO, X, ret, fundo } = escuro(), CWD = 410, Y1 = -108, Y1b = 104, Y2 = 470;
+  const card = (icone, rot, cls, id, h) => `<div class="cartao" style="position:relative;width:${CWD}px;height:${h}px;padding:20px 22px;white-space:nowrap">
+    <div style="display:flex;align-items:center;gap:13px">${selo(icone, cls, 50)}<div class="rot" style="font-size:22px">${rot}</div></div><div data-m="${id}" style="margin-top:16px;display:flex;flex-wrap:wrap;gap:10px"></div></div>`;
+  const c1 = X(card('lock', 'Módulo fora do plano', 'a', 'x', 150), 0, Y1), c2 = X(card('user-x', 'Usuário sem permissão', 'n', 'y', 200), 0, Y1b + 22);
+  const pill = (i, s, cls = 'n') => `<span class="chip ${cls}" style="position:relative;opacity:0;height:36px">${i ? ic(i, 16) : ''}${s}</span>`;
+  c1.e.querySelector('[data-m=x]').innerHTML = pill('', 'O que faz') + pill('', 'Como ativar');
+  c2.e.querySelector('[data-m=y]').innerHTML = pill('shield-check', 'Quem libera') + pill('user-round', 'Administrador') + pill('', 'Usuários e Permissões');
+  const pc = (e, i) => e.querySelectorAll('.chip')[i];
+  // estação 2: do teste à assinatura (em coluna)
+  const grupoMod = (tit, cls, id) => `<div class="cartao" style="position:relative;width:${CWD}px;height:150px;padding:18px 22px;white-space:nowrap" data-g="${id}"><div style="display:flex;align-items:center;gap:12px">${selo(cls === 'a' ? 'package' : 'circle-check', cls, 46)}<div class="rot" style="font-size:21px">${tit}</div></div>
+    <div style="margin-top:16px;display:flex;gap:9px">${['Notas fiscais', 'Coletas', 'Gerencial'].map((s, i) => `<span class="chip ${cls === 'a' ? 'n' : ''}" data-i="${i}" style="position:relative;opacity:.3;height:36px;padding:0 12px 0 10px;font-size:15.5px">${s}</span>`).join('')}</div></div>`;
+  const gT = X(grupoMod('Período de teste', 'a', 't'), 0, Y2 - 110), gA = X(grupoMod('Assinatura ativa', '', 'a'), 0, Y2 + 120);
+  const seta = X(htmlFluxo(40, 70, ['M20 5V65']), 0, Y2 + 5);
+  const chL = X(htmlChip(`${ic('plug-zap', 18)}Módulo ligado`), 0, Y2 + 120 - 75 - 12, { anc: [.5, 1], z: 40 });
+  const mi = (g, i) => g.e.querySelector(`[data-i="${i}"]`);
+  fundo(0, 240, { aneis: false });
+  const tit = titulo('Assinatura', 'Tela que não aparece', 'escuro');
+  const S1 = enquadraRet(EIXO, ret(-CWD / 2 - 6, Y1 - 75 - 8, CWD / 2 + 6, Y1b + 22 + 100 + 8), { ...K, az: -.03, max: MAX }),
+        S2 = enquadraRet(EIXO, ret(-CWD / 2 - 6, Y2 - 110 - 75 - 8, CWD / 2 + 6, Y2 + 120 + 75 + 8), { ...K, az: .03, max: MAX });
+  camera([[t0 - 3, S1], [tNt - .6, { ...S1, az: .0, d: S1.d * .985 }, 'lin'], [tNt + .7, S2], [tFim + 2.5, { ...S2, az: .0, d: S2.d * .985 }, 'lin']]);
+  return t => {
+    STAND(t, tit, t0);
+    vis(c1.e, t, tTe, NUNCA, { dy: 18 }); vis(c2.e, t, tOu2 - .05, NUNCA, { dy: 18 });
+    c1.op = c2.op = 1 - eo(pr(t, tNt - .9, .4));
+    foco(c1.e, t, tOu1, tOu2 - .1, { min: .6 }); foco(c2.e, t, tOu2 - .05, 1e9, { min: .6, d: .4 });
+    for (const [e, i, a] of [[c1.e, 0, tFz], [c1.e, 1, tAt], [c2.e, 0, tLi], [c2.e, 1, tAd], [c2.e, 2, tUP]]) { const p = pc(e, i); p.style.opacity = eo(pr(t, a - .05, .3)).toFixed(3); }
+    pulso(c1.e, t, tMd, .03, .8); pulso(c2.e, t, tPm, .03, .8);
+    vis(gT.e, t, tNt - .1, NUNCA, { dy: 18 }); vis(gA.e, t, tAs - .1, NUNCA, { dy: 18 }); seta.e.style.opacity = eo(pr(t, tAs - .5, .5)).toFixed(3); fluxo(seta.e, 0, t, tAs - .5, .5, {});
+    for (let i = 0; i < 3; i++) { mi(gT, i).style.opacity = (.3 + .7 * eo(pr(t, tTo + .1 + i * .2, .35))).toFixed(3); }
+    mi(gA, 0).style.opacity = (.3 + .7 * eo(pr(t, tCo - .5, .4))).toFixed(3); mi(gA, 1).style.opacity = (.3 + .7 * eo(pr(t, tCo - .3, .4))).toFixed(3);
+    mi(gA, 2).style.opacity = (.3 + .7 * eo(pr(t, tLg, .4))).toFixed(3); vis(chL.e, t, tLg + .15, NUNCA, { dy: 10, sc: .8 }); pulso(gA.e, t, tLg + .1, .03, .8);
+  };
+}
+
+// =====================================================================================================================
+// CENA "mudanca" · cap13, linhas 0 a 3 · escuro. Uma coluna e a câmera descendo: a régua do mês em pé (e a diferença, o módulo novo), o contador com os dois aparelhos, o aviso.
+function mudanca() {
+  const t0 = W(0, 'mudou'), tMe = W(0, 'mes'), tPl = W(0, 'plano'), tMi = W(0, 'meio'), tCb = W(0, 'cobranca'), tDf = W(0, 'diferenca'), tPe = W(0, 'pelos'), tDs = W(0, 'dias'), tVc = W(0, 'vencimento'),
+    tNv = W(1, 'novo'), tPg = W(1, 'pagamento'), tCf = W(1, 'confirma'),
+    tLi = W(2, 'limite'), tCd = W(2, 'cadastros'), tMu = W(2, 'usuario', 1), tCp = W(2, 'computador'), tCe = W(2, 'celular'),
+    tBa = W(3, 'bateu'), tCr = W(3, 'criar'), tAv = W(3, 'aviso'), tSe = W(3, 'sua'), tNm = W(3, 'nova'), tPz = W(3, 'personalizado'), tFim = W(3, 'personalizado', 1, 'e');
+  cores();
+  const { EIXO, X, ret, fundo } = escuro(), BH = 300, XH = 120, BX = -170, Y1 = 0, Y2 = 600, Y3 = 1010;
+  // ---- estação 1: a régua do mês em pé (05/11 último pagamento · hoje · 05/12 vencimento)
+  const regua = X(`<div style="position:relative;width:30px;height:${BH}px;border-radius:15px;overflow:hidden;background:var(--fx);border:1px solid var(--ln)">
+    <i data-m="f" style="position:absolute;left:0;right:0;top:${XH}px;height:${BH - XH}px;background:linear-gradient(180deg,#2FB271,#6CF0A8);transform-origin:50% 0;transform:scaleY(0)"></i></div>`, BX, Y1);
+  const fy0 = Y1 - BH / 2, fm = regua.e.querySelector('[data-m=f]'), CX = BX + 15 + 22;
+  const m1 = X(htmlChip(`${ic('calendar-days', 18)}05/11 · Último pagamento`, 'n'), CX, fy0, { anc: [0, .5], z: 40 }), mH = X(htmlChip(`${ic('flag', 18)}Hoje`, 'am'), CX, fy0 + XH, { anc: [0, .5], z: 40 }),
+        m2 = X(htmlChip(`${ic('calendar-days', 18)}05/12 · Vencimento`, 'n'), CX, fy0 + BH, { anc: [0, .5], z: 40 });
+  const YD = Y1 + BH / 2 + 90;
+  const cDif = X(htmlCartao('hand-coins', 'Só a diferença', 'pelos dias que faltam', 'Pagamento proporcional', { w: 400, h: 128, fn: 21, selo: 46, res: true }), 0, YD, { anc: [.5, 0] });
+  const nDif = cDif.e.querySelector('.num'), oDif = cDif.e.querySelector('.onda'); nDif.style.opacity = 0;
+  const cMod = X(degrau('package-plus', 'Módulo novo', '', { w: 260, cls: 'n' }), -70, YD + 128 + 50, { anc: [.5, .5] }), cPg = X(htmlChip(`${ic('circle-check', 18)}Pagamento confirmado`), 0, YD + 128 + 50 + 66, { anc: [.5, .5], z: 40 });
+  // ---- estação 2: um usuário, dois aparelhos, o contador
+  const cCont = X(htmlCartao('users', 'Usuários', 'Conta os cadastros', '1 / 3', { w: 330, h: 150, fn: 40, selo: 46 }), 0, Y2 - 40), nCont = cCont.e.querySelector('.num');
+  const cUsu = X(degrau('user-round', 'Rafael Nogueira', 'um usuário', { w: 380, cls: '' }), 0, Y2 + 90), cPc = X(htmlChip(`${ic('monitor', 18)}Computador`, 'n'), -95, Y2 + 90 + 42 + 86, { anc: [.5, .5], z: 40 }), cCe = X(htmlChip(`${ic('smartphone', 18)}Celular`, 'n'), 105, Y2 + 90 + 42 + 86, { anc: [.5, .5], z: 40 });
+  const fi = X(htmlFluxo(300, 72, ['M150 4V30Q150 36 144 36H76Q70 36 70 42V66', 'M150 4V30Q150 36 156 36H224Q230 36 230 42V66']), -150, Y2 + 90 + 42 + 8, { anc: [0, 0], z: -40 });
+  // ---- estação 3: o aviso
+  const cCo3 = X(htmlCartao('users', 'Usuários', 'o limite', '3 / 3', { w: 330, h: 150, fn: 40, selo: 46, cls: 'a' }), 0, Y3 - 120), nC3 = cCo3.e.querySelector('.num');
+  const cAv = X(`<div class="cartao" style="position:relative;width:430px;height:210px;padding:20px 24px;white-space:nowrap"><div style="display:flex;align-items:center;gap:13px">${selo('party-popper', '', 50)}<div class="rot" style="font-size:25px">Sua equipe cresceu!</div></div>
+    <div data-m="m" style="margin-top:22px;display:flex;align-items:center;justify-content:space-between;opacity:0"><span class="d-s" style="font-size:16px">Nova mensalidade (estimada):</span><i style="display:block;width:70px;height:30px;border-radius:9px;border:2px dashed var(--tr)"></i></div>
+    <div data-m="p" style="margin-top:22px;opacity:0"><span class="chip" style="position:relative">${ic('sparkles', 18)}Plano Personalizado</span></div></div>`, 0, Y3 + 80);
+  const aM = cAv.e.querySelector('[data-m=m]'), aP = cAv.e.querySelector('[data-m=p]');
+  for (const y of [Y1, Y2, Y3]) fundo(0, y, { aneis: false });
+  const tit = titulo('Assinatura', 'Mudança de plano e usuários', 'escuro');
+  const G1 = enquadraRet(EIXO, ret(BX - 20, fy0 - 30, CX + 300, fy0 + BH + 30), { ...K, az: -.03, max: MAX }),
+        G2 = enquadraRet(EIXO, ret(-210, YD - 30, 210, YD + 128 + 50 + 66 + 36), { ...K, az: .0, max: MAX }),
+        S2 = enquadraRet(EIXO, ret(-210, Y2 - 40 - 75 - 14, 210, Y2 + 90 + 42 + 86 + 36), { ...K, az: .02, max: MAX }),
+        S3 = enquadraRet(EIXO, ret(-215, Y3 - 120 - 75 - 14, 215, Y3 + 80 + 105 + 14), { ...K, az: -.02, max: MAX });
+  camera([[t0 - 3, G1], [tCb - .8, { ...G1, az: .0, d: G1.d * .985 }, 'lin'], [tCb + .6, G2], [tLi - .9, { ...G2, az: .01, d: G2.d * .99 }, 'lin'], [tLi + .5, S2], [tBa - .5, { ...S2, az: .0, d: S2.d * .985 }, 'lin'], [tBa + .8, S3], [tFim + 2.5, { ...S3, az: .02, d: S3.d * .985 }, 'lin']]);
+  return t => {
+    STAND(t, tit, t0);
+    for (const p of [regua, m1, mH, m2]) p.op = 1 - eo(pr(t, tCb - .35, .45));          // a régua sai quando a câmera desce para a diferença
+    for (const p of [cDif, cMod, cPg]) p.op = 1 - eo(pr(t, tLi - 1.0, .45));
+    for (const p of [cCont, cUsu, cPc, cCe, fi]) p.op = 1 - eo(pr(t, tBa - .1, .4));
+    vis(regua.e, t, t0 + .1, NUNCA, { dy: 12 }); vis(m1.e, t, tPl - .1, NUNCA, { dy: 8, sc: .85 }); vis(mH.e, t, tMi - .1, NUNCA, { dy: 8, sc: .85 }); pulso(mH.e, t, tMi + .1, .06, .8); vis(m2.e, t, tDs - .1, NUNCA, { dy: 8, sc: .85 });
+    vis(cDif.e, t, tCb - .1, NUNCA, { dy: 18, sc: .95 }); subDe(cDif, t, tPe - .05); fm.style.transform = `scaleY(${eio(pr(t, tDf - .1, 1.2)).toFixed(4)})`; nDif.style.opacity = eo(pr(t, tDf, .3)).toFixed(3); ondaEm(oDif, t, tDf + .3);
+    vis(cMod.e, t, tNv - .1, NUNCA, { dy: 14 }); foco(cMod.e, t, tCf - .1, 1e9, { min: .5, d: .5 }); vis(cPg.e, t, tPg - .1, NUNCA, { dy: 10, sc: .85 }); pulso(cMod.e, t, tCf + .1, .05, .8);
+    vis(cCont.e, t, tLi - .15, NUNCA, { dy: 20 }); subDe(cCont, t, tCd - .05); vis(cUsu.e, t, tMu - .1, NUNCA, { dy: 16 }); fi.e.style.opacity = eo(pr(t, tCp - .5, .4)).toFixed(3);
+    fluxo(fi.e, 0, t, tCp - .45, .5, { luz: [tCp - .45, .55], fica: .5 }); fluxo(fi.e, 1, t, tCe - .45, .5, { luz: [tCe - .45, .55], fica: .5 });
+    vis(cPc.e, t, tCp - .1, NUNCA, { dy: 10, sc: .85 }); vis(cCe.e, t, tCe - .1, NUNCA, { dy: 10, sc: .85 });
+    vis(cCo3.e, t, tBa - .1, NUNCA, { dy: 20 }); nC3.textContent = t < tCr ? '1 / 3' : t < tCr + .55 ? '2 / 3' : '3 / 3'; pulso(cCo3.e, t, tCr + .55, .05, .8);
+    vis(cAv.e, t, tAv - .1, NUNCA, { dy: 22, sc: .96 }); aM.style.opacity = eo(pr(t, tNm - .1, .35)).toFixed(3); aP.style.opacity = eo(pr(t, tPz - .15, .35)).toFixed(3); pulso(aP, t, tPz, .05, .8);
+  };
+}
+
+// =====================================================================================================================
+const CAPS = { 0: abertura, 4: mensagem, 5: caminho, 9: cap09, 10: selos, 11: modulos, 13: mudanca };
+cena(d => CAPS[d.cap](d), { fov: 26 });
+</script></body></html>

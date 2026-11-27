@@ -251,5 +251,8 @@ function duas() {
 
 // =====================================================================================================================
 const CAPS = { 0: mes, 1: saida, 2: frentes, 8: patio, 13: duas };
-cena(d => CAPS[d.cap](d), { fov: 26 });
+// o pátio (cap08) é a tabela cheia: sem a respiração da câmera (o texto tremia 1 px e piscava), as outras cenas ficam como são
+cena(d => CAPS[d.cap](d), { fov: 26, respira: 0 }); const setupFixo = window.setup;
+cena(d => CAPS[d.cap](d), { fov: 26 }); const setupResp = window.setup;
+window.setup = d => (d.cap === 8 ? setupFixo : setupResp)(d);
 </script></body></html>
