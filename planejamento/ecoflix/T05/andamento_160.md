@@ -46,3 +46,8 @@ Recap (cap12): a montagem ganha "Atualizar Versão" e a aba "Logs".
 ## Pronta para a voz
 Sim. Pode gerar a voz da T05 (cap00 a cap12). Depois: refazer os `at` das cenas de Windows 6, 9 e 10 e os gestos do robô com os tempos reais, trocar `navegador.pagina` das cenas pela gravação (`cap10` inteiro é a fonte das cenas 9 e 10; cap06w já existe), montar e renderizar.
 **Achados do app:** em `MELHORIAS_ECOSISTEMA.md` (T05, 26/11): "Atualizar Versão" trata a resposta `checking` como erro; frase de ajuda da correção e botão "Atualizar" da aba Logs cortados; selo só relê a versão ao montar. Diferença assumida: na captura o `check_update` responde só depois de 2 s, sem o `checking`.
+
+## Fechamento com a voz real (27/11)
+**Entregue:** `$TUT_HOME/t05/edit/out/T05/aula_final.mp4` (+ `legendas/aula_final.srt` e `.vtt`), 792,4 s, 1920x1080, -16,3 LUFS, pico -4,0 dBFS. Prévia 720p (27 MiB) em `entrega_previa/`.
+**Gravação final (robô, voz real):** maxLate por capítulo: 00 0,08 | 01 0,67 | 02 0,13 | 03 0,39 | 04 0,13 | 05 0,68 | 06 0,05 | 07 **1,00** | 08 0,07 | 09 0,06 | 10 0,06 | 11 0,05 | 12 0,10. Cenas de Windows regravadas e remontadas em trechos (robô | cena | robô) com a mesma voz.
+**Pendências:** (1) cap07 ficou com maxLate 1,00 s (acima de 0,8) após 2 rodadas; respiro de 3,2 s na voz + `acelera` 24,5 a 27,4 s (2x) com selo. (2) 9 ilustrações v3 do cap00 a cap12 sem cena: não foram desenhadas; cap00 mostra o painel parado por ~45 s. (3) Papel real mostrado: cap04 (PDF de teste 40x80 gerado pelo app, sai cortado como a fala diz) e cap05 (comprovante de exemplo 58 mm, inteiro). (4) "Atualizar Versão" mantém Verificando e depois Já atualizado, sem alteração.

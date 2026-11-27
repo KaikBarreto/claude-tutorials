@@ -134,7 +134,7 @@
     "name": "Organizar categorias",
     "exact": true
    },
-   "at": 5.6,
+   "at": 5.55,
    "label": "Organizar categorias"
   },
   {
@@ -162,7 +162,7 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 15.14
+   "at": 14.84
   },
   {
    "do": "eval",
@@ -175,7 +175,7 @@
    "target": {
     "selector": "[role=dialog] button[role=combobox] >> nth=0"
    },
-   "at": 19.7,
+   "at": 18.9,
    "label": "abre Natureza"
   },
   {
@@ -184,7 +184,7 @@
     "role": "option",
     "name": "06 · Despesas Operacionais"
    },
-   "at": 18.06,
+   "at": 19.82,
    "label": "06 · Despesas Operacionais"
   },
   {
@@ -193,7 +193,7 @@
     "selector": "#new-dre-group"
    },
    "text": "Despesas com pessoal",
-   "at": 21.28,
+   "at": 20.7,
    "label": "Novo subgrupo: Despesas com pessoal"
   },
   {
@@ -204,7 +204,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 24.08,
+   "at": 23.28,
    "label": "Adicionar"
   },
   {
@@ -215,7 +215,7 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 24.06
+   "at": 23.76
   },
   {
    "do": "eval",
@@ -228,7 +228,7 @@
    "target": {
     "selector": "[role=dialog] button[aria-label=\"Mover Folha salarial para outro grupo DRE\"]"
    },
-   "at": 28.08,
+   "at": 27.8,
    "label": "lista Mover Folha salarial"
   },
   {
@@ -237,7 +237,7 @@
     "role": "option",
     "name": "06 · Despesas com pessoal"
    },
-   "at": 29.2,
+   "at": 28.86,
    "label": "06 · Despesas com pessoal"
   },
   {
@@ -289,7 +289,7 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 41.59
+   "at": 41.29
   },
   {
    "do": "eval",
@@ -305,26 +305,13 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 42.82,
+   "at": 42.8,
    "label": "Outras visões"
   },
   {
    "do": "waitFor",
    "text": "Outras visões do mesmo DRE",
    "timeout": 10
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "DRE padrão do sistema",
-    "exact": true,
-    "within": "[role=dialog]"
-   },
-   "seconds": 0.8,
-   "at": 51.83,
-   "label": "DRE padrão do sistema (Em uso)",
-   "optional": true,
-   "timeout": 4
   },
   {
    "do": "hover",
@@ -340,9 +327,22 @@
    "timeout": 4
   },
   {
+   "do": "hover",
+   "target": {
+    "text": "DRE padrão do sistema",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "at": 51.83,
+   "label": "DRE padrão do sistema (Em uso)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
    "do": "mark",
    "name": "L7",
-   "at": 54.85
+   "at": 54.25
   },
   {
    "do": "click",
@@ -352,7 +352,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 55.35,
+   "at": 54.55,
    "label": "Voltar à organização padrão"
   },
   {
@@ -363,13 +363,13 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 55.15,
+   "at": 54.55,
    "label": "Fechar"
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.getClientRects().length&&(e=>e.children.length===0?e.textContent.trim():[...e.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent).join('').trim())(e)===\"Despesas com pessoal\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 56.31,
+   "at": 55.89,
    "label": "o grupo novo no DRE"
   },
   {
