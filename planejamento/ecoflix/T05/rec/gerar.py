@@ -566,16 +566,16 @@ def cap07():
     # L4: a tela real da exceção por pessoa (Configurações > Usuários, Editar do Marcos, "Peso dos pedidos": Herdar padrão da empresa,
     # Exigir peso da balança, Permitir digitação manual; o mesmo diálogo da T2). Volta às Integrações antes da L5.
     MAINX = 'main'
-    c._p({'do': 'goto', 'url': '/configuracoes?tab=users'}, c.A(4, 'Usuários', 0.7), 'abre Usuários e Permissões', {})
+    c._p({'do': 'goto', 'url': '/configuracoes?tab=users'}, c.A(4, 'Usuários', 3.4), 'abre Usuários e Permissões', {})
     c.waitfor(text='Marcos Antunes', timeout=25)
-    c.click(TXT('Marcos Antunes', within=MAINX), at=c.A(4, 'libera', 1.2), label='clica no Marcos')
+    c.click(TXT('Marcos Antunes', within=MAINX), at=c.A(4, 'Usuários', 1.8), label='clica no Marcos')
     c.waitfor(text='Perfil de acesso', timeout=10)
-    c.ev(js_topo(400), at=c.A(4, 'libera', 0.9), label='sobe ao topo do detalhe')
-    c.click(BTN('Editar', within=MAINX), at=c.A(4, 'libera', 0.4), label='Editar (detalhe do Marcos)')
+    c.ev(js_topo(400), at=c.A(4, 'Usuários', 1.2), label='sobe ao topo do detalhe')
+    c.click(BTN('Editar', within=MAINX), at=c.A(4, 'Permissões', 1.4), label='Editar (detalhe do Marcos)')
     c.waitfor(text='Peso dos pedidos', timeout=12)
-    c.hover(SEL(f"{DLG} label[for='scale-weight-policy']"), 0.4, at=c.A(4, 'digitação', 0.3), label='Peso dos pedidos')
-    c.click(SEL(f'{DLG} #scale-weight-policy'), at=c.A(4, 'digitação', -0.4), label='abre o Peso dos pedidos (Herdar padrão da empresa)')
-    c.registra(SEL('[role=listbox]'), at=c.A(4, 'usuário,', 0.6, nth=1), label='as três opções do Peso dos pedidos')
+    c.hover(SEL(f"{DLG} label[for='scale-weight-policy']"), 0.4, at=c.A(4, 'Permissões', 0.2), label='Peso dos pedidos')
+    c.click(SEL(f'{DLG} #scale-weight-policy'), at=c.A(4, 'você', 0.2), label='abre o Peso dos pedidos (Herdar padrão da empresa)')
+    c.registra(SEL('[role=listbox]'), at=c.A(4, 'digitação', 0.0), label='as três opções do Peso dos pedidos')
     c.hover(OPT('Permitir digitação manual'), 0.5, at=c.A(4, 'usuário,', 0.2, nth=1), label='Permitir digitação manual')
     c.hover(OPT('Exigir peso da balança'), 0.5, at=c.A(4, 'exige', -0.2), label='Exigir peso da balança')
     c.press('Escape', at=c.W(4, 'Isso') - 0.3, label='fecha a lista sem trocar')
@@ -629,7 +629,7 @@ def cap09():
     # e segura 3 s depois de cada falha (FAILED_THROTTLE_MS do ecotrayService): o link some durante a tentativa e, logo depois dela, o clique
     # cai no aviso de erro. O mouse só PARA no link (a impressora segue sem comandos); os comandos voltam no fim da linha 7.
     c.registra(RODAPE_BAL, at=c.A(7, 'sozinho', 0.2), label='rodapé: Balança do pátio · 312 kg (voltou sozinho)')
-    c.hover(BTN('Tentar conectar'), 0.8, at=c.A(7, 'Tentar', 0.9), label='Tentar conectar (sem clicar)', timeout=10)
+    c.hover(BTN('Tentar conectar'), 0.5, at=c.A(7, 'Tentar', 3.0), label='Tentar conectar (sem clicar)', timeout=10)
     c.ecotray(at=c.L(8) - 0.3, label='os comandos do EcoTray voltam (a impressora reconecta sozinha)', comandos=True)
     c.mark(8)
     c.ev(js_topo(900), at=c.L(8) - 0.2, label='volta ao topo')
@@ -673,7 +673,7 @@ def cap11():
     c.registra(TXTX('Troque pelo driver térmico real da sua impressora'), at=c.A(4, 'instalar', 0.2), label='Troque pelo driver térmico real da sua impressora')
     c.mark(5)
     c.click(COMBO, at=c.A(5, 'Volto', 1.4), label='abre Selecione a impressora')
-    c.click(OPT('POS-58'), at=c.A(5, 'nossa', 0.8), label='volta para a POS-58')
+    c.click(OPT('POS-58'), at=c.A(5, 'nossa', -0.25), label='volta para a POS-58')
     c.mark(6)
     c.cursor(NEUTRO, at=c.L(6) - 0.1, label='cursor descansa')
     c.mark(7)
