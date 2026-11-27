@@ -20,7 +20,7 @@ for C in "$@"; do
   bash rec/fila.sh --prio 15 -- bash -c '
     for vez in 1 2; do
       FAKE_PORT=54315 bash rec/run.sh fake | tail -1
-      rm -f /dev/shm/t15_rec/t15-cap$NN.*
+      for e in actions.json telemetry.json mp4 contact.jpg; do rm -f "/dev/shm/t15_rec/t15-cap$NN.$e"; done
       timeout $TMO node rec/record.mjs rec/t15/cap$NN.json --out /dev/shm/t15_rec > rec/t15/.cap$NN.out 2>&1
       for e in actions.json telemetry.json mp4 contact.jpg; do mv -f /dev/shm/t15_rec/t15-cap$NN.$e rec/t15/ 2>/dev/null; done
       python3 -I rec/t15/resumo.py $NN > rec/t15/cap$NN.resumo 2>&1

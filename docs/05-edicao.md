@@ -130,6 +130,8 @@ introdução obrigatória). Por isso o vertical tem de ter **a mesma linha do te
   capítulo de celular do 16:9, mais `"camera_9x16"` e `"scale9"` (opcionais). Alvo fora da janela = erro (`--aceitar-camera`).
   - A vista da câmera fica sempre DENTRO da tela gravada (T0 v2, 06/11: o "seguir" de um toque perto da borda deslocava a vista
     até 21 px e repetia a última coluna da tela numa faixa da janela).
+  - `CEL_SEGUIR_APONTAR=1` (ou `"camera_9x16": {"seguir_apontar": true}`): a câmera segue também os alvos de hover e digitação do
+    actions.json, não só os toques (EcoFlix T00, 27/11: a janela mostra 483 dos 844 px). Desligado por padrão (Domiflix congelado).
   - Aviso com `"y9": px` (topo do cartão, em px da janela 0 a 1160) e `"fs9"` (texto, padrão 44): posição própria no vertical,
     centrado na largura, numa faixa livre da tela em vez do pé (onde cobria o app). Os outros avisos seguem o `overlay.py`.
   - O render do celular NÃO desenha as `illustrations`: depois do render, `python3 -I compor_ilus_vertical.py caps/capNN.9x16.chapter.json`

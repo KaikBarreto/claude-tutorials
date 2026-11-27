@@ -8,6 +8,7 @@ Câmera do vertical: só desliza para o alvo (zoom 1 = largura inteira da tela =
   - entre dois alvos a câmera FICA onde estava (não volta ao centro da tela); "camera_9x16": {...} ajusta a câmera só do vertical;
   - alvo da ação fora da janela = erro (como no 16:9; --aceitar-camera, com motivo, para renderizar mesmo assim)."""
 import importlib.util
+import json
 import os
 import sys
 from functools import lru_cache
@@ -99,7 +100,22 @@ class CapituloCelular:
         self.ch, self.SW, self.SH, self.dur, self.t0, self.t1 = ch, SW, SH, dur, t0, t1
         M = modulos_da_janela(); cam_m, cur_m, ov_m = M["camera"], M["cursor"], M["overlay"]
         self.FPS = V.FPS
-        self.tele = Tele(rp(ch["telemetry"]), dur); self.T = np.arange(int((dur + 3) * RATE)) / RATE
+        self.tele = Tele(rp(ch["telemetry"]), dur)
+        # T00 (27/11): no celular a janela mostra 483 dos 844 px da tela e a câmera só seguia toques; a fala cita itens que o robô só aponta (hover) ou
+        # marca (type noClick), e eles ficavam fora da janela. Cada alvo desses entra como foco (como um toque pelo teclado): a câmera desce até ele
+        # quando ele sai dos 80% do meio da vista (sem vaivém: só desliza). Opcional, desligado por padrão para não mudar o Domiflix (T3 congelado):
+        # liga com CEL_SEGUIR_APONTAR=1 (perfil ecoflix) ou "camera_9x16": {"seguir_apontar": true} no capítulo
+        _seg = ch.get("camera_9x16", {}).get("seguir_apontar", os.environ.get("CEL_SEGUIR_APONTAR") == "1")
+        _ap = rp(ch["telemetry"]).replace(".telemetry.json", ".actions.json")
+        if _seg and os.path.exists(_ap):
+            _a = json.load(open(_ap)); _a = _a if isinstance(_a, list) else _a.get("actions", [])
+            for _x in _a:
+                _r, _t = _x.get("rect"), _x.get("tAct")
+                if _x.get("do") in ("hover", "type") and _r and _t is not None and _r["w"] > 4 and _r["h"] > 4 and _r["y"] > -50:
+                    self.tele.kbclicks.append((float(_t), _r, {}))
+            self.tele.kbclicks.sort(key=lambda e: e[0])
+        
+        self.T = np.arange(int((dur + 3) * RATE)) / RATE
         ccfg = {"show": False, "touch": True, "ring_alpha": 0.7, **ch.get("cursor", {})}  # só o anel do toque (como no T7)
         self.cur = self.tele.path(self.T, ccfg.get("smooth", 0.67))
         vp = self.tele.raw["video"].get("viewportCss", {}); ccfg.setdefault("dpr", SW / vp["width"] if vp.get("width") else 2.0)
@@ -114,7 +130,8 @@ class CapituloCelular:
         self.cam = cam_m.Camera(self.tele, g, self.cur, self.T, dur, cfg, zooms)
         self._segurar(dur)
         self._prender_na_tela(SW, SH)
-        self.problemas = list(getattr(self.cam, "problemas", [])) + self._fora_da_janela()
+        # "âncora no canto" só vale para o 16:9 (zoom que não chega ao canto); aqui a vista é presa à tela e o que importa é _fora_da_janela (cabeçalho e barra de baixo do celular ficam nas bordas)
+        self.problemas = [p for p in getattr(self.cam, "problemas", []) if "ancora no canto" not in p] + self._fora_da_janela()
         self.cursor = cur_m.CursorLayer(self.tele, g, self.T, self.cur, ccfg)
         # avisos com "y9" (06/11, T0 v2): posição própria no vertical = topo do cartão em px da janela da tela (0 a 1160), centrado na
         # largura, texto de "fs9" px (padrão 44); servem para pôr o aviso numa faixa livre da tela em vez do pé, onde cobria o app.

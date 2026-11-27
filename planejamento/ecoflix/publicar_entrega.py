@@ -70,10 +70,21 @@ def main():
         nome = f"EcoFlix {aula} - {tit[aula]}"
         pasta = DEST / nome
         alvo = pasta / f"{nome}.mp4"
+        vert = pasta / f"{nome} (vertical).mp4"
+        if (not pedidas or aula in pedidas) and pasta.exists():
+            # versão 9:16 opcional: out/TNN/entrega/*(vertical).mp4 (+ .srt/.vtt com o mesmo nome)
+            for v in sorted((out / "entrega").glob("*(vertical).mp4")):
+                feito = copiar(v, vert)
+                for ext in ("srt", "vtt"):
+                    lg = v.with_suffix("." + ext)
+                    if lg.exists():
+                        copiar(lg, pasta / f"{nome} (vertical).{ext}")
+                print(("copiada " if feito else "já estava ") + nome + " (vertical)", flush=True)
+        extra = "  + vertical 9:16" if vert.exists() else ""
         if not mp4.exists():
             # final local já liberado do disco: vale a cópia da entrega
             if alvo.exists():
-                linhas.append(f"{nome}  ({duracao(alvo)})")
+                linhas.append(f"{nome}  ({duracao(alvo)}){extra}")
             continue
         if not pedidas or aula in pedidas:
             pasta.mkdir(exist_ok=True)
@@ -85,7 +96,7 @@ def main():
             print(("copiada " if feito else "já estava ") + nome, flush=True)
             time.sleep(1)
         if mesma(mp4, alvo):
-            linhas.append(f"{nome}  ({duracao(mp4)})")
+            linhas.append(f"{nome}  ({duracao(mp4)}){extra}")
     (DEST / "LEIA-ME.txt").write_text(
         "Aulas EcoFlix prontas para subir (1080p, com legendas .srt e .vtt).\n"
         "Cada pasta tem o vídeo e as legendas da aula.\n\n" + "\n".join(linhas) + "\n", encoding="utf-8")

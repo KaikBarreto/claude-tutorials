@@ -122,7 +122,9 @@ A minutagem da fonte é alvo; a duração é a da fala (~790 caracteres de narra
 - Mundo: **Recicla Vale Metais** (`planejamento/ecoflix/MUNDO_FICTICIO.md`), `FAKE_NOW=2026-11-10T08:30:00-03:00`.
 - Integrações simuladas no backend falso, com a tela fiel ao código: EcoTray (peso e impressão), NF-e, NFS-e, MTR e CDF
   (sem SEFAZ, sem cota, sem queimar numeração), cobrança da assinatura, extrato OFX, respostas do Cato.
-- Celular (`device: phone`): T0 vertical; trechos do T5 (indicador de peso) e do T19 (ponto).
+- Celular (`device: phone`): T0 vertical; trechos do T5 (indicador de peso) e do T19 (ponto). No vertical, montar com
+  `CEL_SEGUIR_APONTAR=1` (`ferramentas/edit/celular_vertical.py`): a janela mostra só 483 dos 844 px da tela, e sem isso a
+  câmera segue apenas os toques e deixa fora o que o robô aponta (hover) ou digita. No Domiflix fica desligado.
 - **Cena de Windows** (Kaik, 10/11): nas aulas do EcoTray, o que acontece no Windows (baixar, instalar, a janela do
   EcoTray, a bandeja, os avisos) é uma tela de Windows simulada com a pessoa usando, junto do sistema no navegador. A
   janela do EcoTray é a do código (`ecotray/dashboard.py`, `tray_app.py`, `installer_win/installer_gui.py`): textos,
