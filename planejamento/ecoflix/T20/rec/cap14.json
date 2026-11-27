@@ -1,6 +1,6 @@
 {
  "name": "t20-cap14",
- "title": "T20 · Cap. 14 · As fotos do pedido (narração 74,4 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T15:00:00-03:00)",
+ "title": "T20 · Cap. 14 · As fotos do pedido (narração 68,3 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T15:00:00-03:00)",
  "seed": "t20-cap14",
  "pace": 0.5,
  "cps": 9,
@@ -126,24 +126,25 @@
     "nth": 0
    },
    "at": 35.18,
-   "label": "abre a foto em tela cheia"
+   "label": "abre a foto em tela cheia",
+   "noScroll": true
   },
   {
    "do": "press",
    "key": "Escape",
-   "at": 37.44,
+   "at": 38.24,
    "label": "fecha a foto"
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\":is(main,body) *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Dados do Pedido\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-150);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 44.48,
+   "at": 38.42,
    "label": "desce a Dados do Pedido"
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 44.78
+   "at": 38.72
   },
   {
    "do": "hover",
@@ -153,7 +154,7 @@
     "nth": 0
    },
    "seconds": 1.8,
-   "at": 49.04,
+   "at": 42.98,
    "label": "[ZOOM] Total R$ 3.700,00",
    "optional": true,
    "timeout": 4
@@ -161,12 +162,12 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 57.21
+   "at": 51.15
   },
   {
    "do": "mark",
    "name": "L7",
-   "at": 67.53
+   "at": 61.47
   },
   {
    "do": "scroll",
@@ -177,7 +178,7 @@
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 68.03,
+   "at": 61.97,
    "label": "cursor em repouso"
   },
   {
@@ -188,7 +189,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 74.38
+   "at": 68.32
   }
  ]
 }

@@ -1,6 +1,6 @@
 {
  "name": "t20-cap03",
- "title": "T20 · Cap. 3 · Escolher as abas (narração 84,2 s; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T15:00:00-03:00)",
+ "title": "T20 · Cap. 3 · Escolher as abas (narração 85,0 s; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T15:00:00-03:00)",
  "seed": "t20-cap03",
  "pace": 0.5,
  "cps": 9,
@@ -372,7 +372,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.6,
-   "at": 24.92,
+   "at": 24.42,
    "label": "Permitir solicitar coleta",
    "optional": true,
    "timeout": 4
@@ -380,13 +380,13 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim().startsWith(\"Formato do comprovante no portal\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-170);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 33.16,
+   "at": 32.66,
    "label": "rola até Formato do comprovante no portal"
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 33.86
+   "at": 33.36
   },
   {
    "do": "hover",
@@ -396,7 +396,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.5,
-   "at": 37.08,
+   "at": 36.58,
    "label": "Automático (marcado)",
    "optional": true,
    "timeout": 4
@@ -408,7 +408,7 @@
     "nth": 0
    },
    "seconds": 0.5,
-   "at": 39.8,
+   "at": 39.3,
    "label": "Térmico (80mm) (sem clicar)",
    "optional": true,
    "timeout": 4
@@ -419,13 +419,13 @@
     "selector": "[role=dialog] label:has-text('A4')",
     "nth": 0
    },
-   "at": 44.94,
+   "at": 44.44,
    "label": "A4"
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 46.22
+   "at": 45.72
   },
   {
    "do": "click",
@@ -435,7 +435,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 46.38,
+   "at": 45.88,
    "label": "Salvar exibição"
   },
   {
@@ -446,7 +446,7 @@
   {
    "do": "press",
    "key": "Escape",
-   "at": 49.22,
+   "at": 48.72,
    "label": "fecha o Editar Fornecedor"
   },
   {
@@ -465,7 +465,7 @@
    "target": {
     "selector": "main div.no-scrollbar > button:has-text('Clientes')"
    },
-   "at": 50.02,
+   "at": 49.52,
    "label": "aba Clientes"
   },
   {
@@ -480,7 +480,7 @@
    "target": {
     "selector": "main aside button:has-text('Aços Quiririm Ltda')"
    },
-   "at": 51.02,
+   "at": 50.52,
    "label": "Aços Quiririm Ltda"
   },
   {
@@ -493,7 +493,7 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 51.82
+   "at": 51.32
   },
   {
    "do": "click",
@@ -503,7 +503,7 @@
     "exact": true,
     "within": "main section[aria-label='Detalhes de Aços Quiririm Ltda']"
    },
-   "at": 52.78,
+   "at": 52.28,
    "label": "Editar"
   },
   {
@@ -524,7 +524,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 54.06,
+   "at": 53.56,
    "label": "aba Portal"
   },
   {
@@ -535,7 +535,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Valores financeiros (pre\\u00e7os e totais)\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 54.44,
+   "at": 54.27,
    "label": "rola até Valores financeiros"
   },
   {
@@ -543,7 +543,7 @@
    "target": {
     "selector": "[role=dialog] div:has(> span:text-is('Valores financeiros (preços e totais)')) button[role=switch]"
    },
-   "at": 55.38,
+   "at": 55.21,
    "label": "desliga Valores financeiros"
   },
   {
@@ -551,7 +551,7 @@
    "target": {
     "selector": "[role=dialog] #cfg-saldo"
    },
-   "at": 57.06,
+   "at": 56.89,
    "label": "desliga Aba Saldo"
   },
   {
@@ -562,7 +562,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 57.86,
+   "at": 57.69,
    "label": "Salvar exibição (Aços Quiririm)"
   },
   {
@@ -573,12 +573,12 @@
   {
    "do": "mark",
    "name": "L8",
-   "at": 58.9
+   "at": 59.64
   },
   {
    "do": "goto",
    "url": "/portal/recicla-vale-metais-acos-quiririm-IxULGLYEpfeEE65iXX3sLJ",
-   "at": 58.9,
+   "at": 59.64,
    "label": "navegador do parceiro: o portal da Aços Quiririm"
   },
   {
@@ -598,7 +598,7 @@
     "nth": 0
    },
    "seconds": 1.8,
-   "at": 62.92,
+   "at": 63.66,
    "label": "[ZOOM] R$ 0,00 e o cadeado",
    "optional": true,
    "timeout": 4
@@ -606,7 +606,7 @@
   {
    "do": "mark",
    "name": "L9",
-   "at": 66.58
+   "at": 67.32
   },
   {
    "do": "scroll",
@@ -617,13 +617,13 @@
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 67.28,
+   "at": 68.02,
    "label": "cursor em repouso (ilustração)"
   },
   {
    "do": "mark",
    "name": "L10",
-   "at": 77.94
+   "at": 78.68
   },
   {
    "do": "eval",
@@ -633,7 +633,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 84.22
+   "at": 84.96
   }
  ]
 }

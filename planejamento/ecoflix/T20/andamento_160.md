@@ -22,3 +22,15 @@
 - Rodada 3 (final_r3.log) fechada: maxLate 00 1.53, 02 1.09, 03 1.16, 04 3.26, 06 1.06, 08 1.78, 09 1.60, 10 3.19, 11 6.27, 14 3.34; ok 01 07 12 13. Cap05 tinha ancora errada (senha, 1a ocorrencia no lugar da 2a): corrigido no gerar.py, regravando so ele. 7 ilustracoes v3 renderizadas com a voz final (inclui ilu09_relatorio_pdf).
 - Gravacao final fechada (cap05 regravado: 2.22 s de atraso max). Montagem do cap15 (recap) feita, specs.json/chapters gerados (t20_specs.py, specs_ilus.py, montar_cap.py, auditar_camera: 3 avisos de camera, ver conferencia). Render dos capitulos + finish + legendas em andamento: `t20/edit/montar_t20.sh` (log out/montar.log); proj em /dev/shm/t20_proj.
 - ENTREGUE 27/11: aula_final 1080p (17:45, -16,4 LUFS, pico -3,7 dBTP) em t20/edit/out/T20/ + legendas; previa 720p 28,5 MB em entrega_previa/. Titulo do cap13 trocado para "WhatsApp" na tela. Atrasos de gesto residuais (maxLate): 00 1.53, 02 1.09, 03 1.16, 04 3.26, 05 2.22, 06 1.06, 08 1.78, 09 1.60, 10 3.19, 11 6.27, 14 3.34 (a corrigir em nova rodada; 01 07 12 13 ok). Camera aceita em 04 e 14 (alvo dentro do quadro).
+
+## 27/11 · remendo de atraso
+
+Meta: gestos com maxLate < 0.8 s (só `mark`/`eval` invisível até 1,2 s), até 2 rodadas por capítulo, sem gerar voz nova.
+
+- Robô (`rec/t20/gerar.py`): `noScroll` nos alvos do cabeçalho (cap11 sino, "Nova solicitação", "Voltar ao portal"; cap14 foto), pois o `ensureVisible` rolava ~6 s. Cadeias de preparação (reload, troca, goto) ancoradas na palavra anterior, não em `L(n)`. Helper novo `Cap.foco()` (foco por JS no lugar do clique no campo de senha) em cap04 e cap05; `digita` aceita `cps`. Âncoras ajustadas em cap00, 04, 05, 06, 09, 10, 11, 14.
+- Pausas: feitas com `t20/narracao/pausas_fino.py` (variante de `pausas.py` que divide o segmento do VAD no ponto; a `pausas.py` recusa inserir dentro de fala). Sempre a partir do original `emendas/capNN.orig.json`. Janelas de ilustração (`out/ilus/janelas.json`) reajustadas só em `at`.
+- Aceleração: `acelera` em `caps/extra.json` nos trechos mudos de preenchimento/navegação.
+- maxLate de gesto, antes -> depois: cap11 6.27 -> 0.67; cap14 3.34 -> 0.51; cap04 3.26 -> 1.15 (rodada 1; nav pós-ajuste não refeita); cap10 3.19 -> 1.34; cap05 2.22 -> 1.05; cap00 1.53 -> 0.68; cap02 1.09 -> 0.47; cap03 1.16 -> 0.64; cap06 1.06 -> 0.52; cap09 1.60 -> 0.69; cap08 1.78 (não refeito).
+- Desvios: cap10 teve 3 rodadas (a simulação da rodada B errou por causa de `wait`/`pause` contados como 0,3 s; a gravação da rodada A foi sobrescrita). cap05 fica em 1,05 s: digitar 14-17 caracteres custa ~1 s (CDP) e não há vão de voz para pausa. cap08 sem vão usável.
+- Voz (cap07, cap12), reconhecedor só no trecho: ouviu "um comprovante" nos dois. cap07 (54,0-59,6 s): "A venda de hoje saiu com um comprovante sem valores." cap12 (18,6-23,6 s): "Num pedido com um comprovante sem valores, o papel sai sem." Ou seja, o "o" virou "um" de fato; não regerado.
+- Remontado: finish (MIX_PY=t20_mix.py), legendas, capitulos.json, entregar.py --unico. Aula final 1057,5 s (17:37,5), 1080p; prévia 720p 26,5 MiB.

@@ -1,6 +1,6 @@
 {
  "name": "t20-cap05",
- "title": "T20 · Cap. 5 · Senha só no que é sensível (narração 48,3 s; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T15:00:00-03:00)",
+ "title": "T20 · Cap. 5 · Senha só no que é sensível (narração 46,3 s; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T15:00:00-03:00)",
  "seed": "t20-cap05",
  "pace": 0.5,
  "cps": 9,
@@ -193,7 +193,7 @@
    "target": {
     "selector": "#portal-password-enabled"
    },
-   "at": 3.28,
+   "at": 2.58,
    "label": "liga Pedir login no portal"
   },
   {
@@ -208,7 +208,7 @@
    "target": {
     "selector": "#portal-username"
    },
-   "at": 4.68,
+   "at": 3.78,
    "label": "Usuário: deposito.siqueira (campo)"
   },
   {
@@ -217,18 +217,16 @@
     "selector": "#portal-username"
    },
    "text": "deposito.siqueira",
-   "cps": 40,
-   "at": 5.43,
+   "cps": 80,
+   "at": 3.98,
    "label": "Usuário: deposito.siqueira",
    "noClick": true
   },
   {
-   "do": "click",
-   "target": {
-    "selector": "#portal-password"
-   },
+   "do": "eval",
+   "js": "(()=>{const e=document.querySelector(\"#portal-password\");if(e)e.focus();return e?'foco':'SEM CAMPO'})()",
    "at": 5.6,
-   "label": "Senha (campo)"
+   "label": "Senha (campo, foco sem clique)"
   },
   {
    "do": "type",
@@ -236,7 +234,7 @@
     "selector": "#portal-password"
    },
    "text": "$PORTAL_SENHA",
-   "cps": 40,
+   "cps": 80,
    "at": 6.15,
    "label": "Senha (pontinhos)",
    "noClick": true
@@ -273,20 +271,20 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim().startsWith(\"O que exibir no portal\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-130);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 15.08,
+   "at": 13.08,
    "label": "rola até O que exibir no portal"
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 15.68
+   "at": 13.68
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] [role=radiogroup][aria-label='Aba Histórico'] button[role=radio]:has-text('Livre')"
    },
-   "at": 17.44,
+   "at": 15.44,
    "label": "Aba Histórico: Livre"
   },
   {
@@ -295,7 +293,7 @@
     "selector": "[role=dialog] [role=radiogroup][aria-label='Aba Saldo']"
    },
    "seconds": 1.0,
-   "at": 18.34,
+   "at": 16.34,
    "label": "Aba Saldo segue Com senha",
    "optional": true,
    "timeout": 4
@@ -308,7 +306,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 23.22,
+   "at": 21.22,
    "label": "Salvar exibição"
   },
   {
@@ -317,9 +315,14 @@
    "timeout": 10
   },
   {
+   "do": "mark",
+   "name": "L3",
+   "at": 22.75
+  },
+  {
    "do": "goto",
    "url": "/portal/recicla-vale-metais-deposito-JPdFYgsge3iEphwmg3RJao",
-   "at": 24.45,
+   "at": 22.92,
    "label": "navegador do parceiro, sem nada salvo: o link do Depósito"
   },
   {
@@ -333,17 +336,12 @@
    "timeout": 25
   },
   {
-   "do": "mark",
-   "name": "L3",
-   "at": 24.75
-  },
-  {
    "do": "hover",
    "target": {
     "selector": "#tab-btn-saldo"
    },
    "seconds": 0.4,
-   "at": 29.67,
+   "at": 27.67,
    "label": "[ZOOM] as abas com cadeado: Saldo",
    "optional": true,
    "timeout": 4
@@ -354,7 +352,7 @@
     "selector": "#tab-btn-notas"
    },
    "seconds": 0.3,
-   "at": 30.27,
+   "at": 28.27,
    "label": "Notas Fiscais com cadeado",
    "optional": true,
    "timeout": 4
@@ -365,7 +363,7 @@
     "selector": "#tab-btn-relatorio"
    },
    "seconds": 0.3,
-   "at": 30.77,
+   "at": 28.77,
    "label": "Relatório com cadeado",
    "optional": true,
    "timeout": 4
@@ -376,7 +374,7 @@
     "selector": "#tab-btn-coletas"
    },
    "seconds": 0.3,
-   "at": 31.27,
+   "at": 29.27,
    "label": "Coletas com cadeado",
    "optional": true,
    "timeout": 4
@@ -384,14 +382,14 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 31.87
+   "at": 29.87
   },
   {
    "do": "click",
    "target": {
     "selector": "#tab-btn-saldo"
    },
-   "at": 32.01,
+   "at": 30.01,
    "label": "aba Saldo (travada)"
   },
   {
@@ -406,7 +404,7 @@
     "exact": true
    },
    "seconds": 2.4,
-   "at": 33.73,
+   "at": 31.73,
    "label": "[ZOOM] o cartão Acesso com senha: o resto do portal continua aberto",
    "optional": true,
    "timeout": 4
@@ -414,14 +412,14 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 38.35
+   "at": 36.35
   },
   {
    "do": "click",
    "target": {
     "selector": "#tab-btn-historico"
    },
-   "at": 38.75,
+   "at": 36.75,
    "label": "volta ao Histórico (aberto)"
   },
   {
@@ -432,7 +430,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 48.32
+   "at": 46.32
   }
  ]
 }
