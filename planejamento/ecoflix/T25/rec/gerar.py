@@ -206,8 +206,14 @@ class Cap:
     def wait(s, seconds):
         return s.add({'do': 'wait', 'seconds': seconds})
 
+    ROTAS = ('256.860,00', 'Relatório de Saldos', 'Gerencie suas tarefas e compromissos', 'Contas a Pagar/Receber', 'lembrete', 'Caixa',
+             'Olá, Rafael!', 'Configurações', 'Caixas Fechados', 'Vence em 7 dias', 'Vencimento (período)', 'Estoque')
+
     def waitfor(s, **kw):
-        return s.add({'do': 'waitFor', **kw})
+        r = s.add({'do': 'waitFor', **kw})
+        if kw.get('text') in s.ROTAS:   # depois de navegar: relógio simulado deixa o framer-motion em opacity:0 (tela em branco); reinicia as animações
+            s.add({'do': 'eval', 'js': ANIM})
+        return r
 
     def upload(s, target, arquivo, at=None, label=None, **kw):
         return s._p({'do': 'upload', 'target': target, 'file': arquivo}, at, label, kw)

@@ -34,3 +34,12 @@ Meta: gestos com maxLate < 0.8 s (só `mark`/`eval` invisível até 1,2 s), até
 - Desvios: cap10 teve 3 rodadas (a simulação da rodada B errou por causa de `wait`/`pause` contados como 0,3 s; a gravação da rodada A foi sobrescrita). cap05 fica em 1,05 s: digitar 14-17 caracteres custa ~1 s (CDP) e não há vão de voz para pausa. cap08 sem vão usável.
 - Voz (cap07, cap12), reconhecedor só no trecho: ouviu "um comprovante" nos dois. cap07 (54,0-59,6 s): "A venda de hoje saiu com um comprovante sem valores." cap12 (18,6-23,6 s): "Num pedido com um comprovante sem valores, o papel sai sem." Ou seja, o "o" virou "um" de fato; não regerado.
 - Remontado: finish (MIX_PY=t20_mix.py), legendas, capitulos.json, entregar.py --unico. Aula final 1057,5 s (17:37,5), 1080p; prévia 720p 26,5 MiB.
+
+### 27/11 · remendo da tela em branco (cap08, cap11, cap15)
+
+- Defeito: o portal ficava em branco por 18-35 s (cap08 57-86 s, cap11 62-65 s e 69-92 s da gravação crua; na aula 582-610, 814-821, 827-847 s). Os `eval` de conferência davam OK porque o DOM tinha o texto; só a animação do framer-motion (`opacity:0` inline, `currentTime < 0` com o relógio simulado) não rodava.
+- Causa: o `ANIM_FIX` (`setInterval` que acerta `startTime`) só era injetado no setup. Cada `goto`/`reload`/`location.assign` cria um documento novo e o conserto morria com o documento antigo. Segunda causa no cap08: o `reload` por `setTimeout(...,50)` saía depois do `waitFor`, que casava com a página velha, e o `ANIM_FIX` caía no documento que ia morrer.
+- Correção em `rec/t20/gerar.py`: `ANIM_FIX` logo depois de todo `troca_para` (goto), depois do `location.assign` do cap04 e do cap11, e depois do reload do cap08, precedido de `wait(1.0)`.
+- Regravados: cap11 (0.71 s maxLate, 1 rodada), cap08 (3 rodadas no dia: 2 + 2 do laço do `t20_final.sh`; maxLate 2.21 s, piorou por causa do `wait`; a aba Saldo saiu 2.1 s atrasada) e o cap15 (a montagem de recapitulação usa trechos das gravações finais e tinha herdado a tela em branco; refeita com `t20_montagem_cap15.py`).
+- Varredura: `branco2.py` (1 quadro/s, recorte do corpo do vídeo, média > 235 e desvio < 3). Calibrado no cap08 antigo (acha 62-70, 74-78, 84-86 s). Aula final: nenhum trecho >= 2 s; sobram 2 de 1 s (reload do cap08 e uma transição).
+- Para a lição (docs/08-licoes.md): o `ANIM_FIX` vale por documento; reaplicar após todo goto/reload/assign, e esperar o reload acontecer antes. Folha de contato do cru e varredura automática antes de entregar.

@@ -1,6 +1,6 @@
 {
  "name": "t25-cap07",
- "title": "T25 · Cap. 7 · Concluir, editar e excluir (narração 63,7 s; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T25 · Cap. 7 · Concluir, editar e excluir (narração 70,2 s; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t25-cap07",
  "pace": 0.5,
  "cps": 40,
@@ -252,7 +252,7 @@
    "target": {
     "selector": "[role=listbox][aria-label='Minutos'] button[role=option]:text-is('30')"
    },
-   "at": 25.54,
+   "at": 27.6,
    "label": "minuto 30"
   },
   {
@@ -262,7 +262,7 @@
     "name": "Concluir",
     "exact": true
    },
-   "at": 28.1,
+   "at": 30.16,
    "label": "Concluir o horário"
   },
   {
@@ -270,7 +270,7 @@
    "target": {
     "selector": "[role=dialog] button:has-text('Salvar')"
    },
-   "at": 29.2,
+   "at": 31.26,
    "label": "Salvar"
   },
   {
@@ -281,14 +281,14 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 29.54
+   "at": 34.91
   },
   {
    "do": "click",
    "target": {
     "selector": "main div.grid.grid-cols-7 > div:not(.opacity-40) > span:text-is('18')"
    },
-   "at": 29.64,
+   "at": 35.01,
    "label": "clica no dia 18"
   },
   {
@@ -302,7 +302,7 @@
     "selector": "main div.group.rounded-lg.border:has(> div.flex-1 > p:text-is('Buscar a lona nova do caminhão'))"
    },
    "seconds": 0.17,
-   "at": 31.07,
+   "at": 36.44,
    "label": "passa o mouse na lona",
    "optional": true,
    "timeout": 4
@@ -310,7 +310,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const acha=()=>{const p=[...document.querySelectorAll('main div.group.rounded-lg.border > div.flex-1 > p')].find(x=>x.textContent.trim()===\"Buscar a lona nova do caminh\\u00e3o\");return p?p.parentElement.parentElement:null};let c=acha();for(let i=0;i<30&&!c;i++){await new Promise(r=>setTimeout(r,100));c=acha();}if(!c)return 'SEM ALVO';const q=\"lixeira\";const b=q==='circulo'?c.querySelector(':scope > button.rounded-full'):[...c.querySelectorAll('button')].find(x=>x.querySelector(q==='lapis'?\"svg[class*='lucide-pencil']\":\"svg[class*='lucide-trash']\"));if(!b)return 'SEM ALVO (botão)';b.click();return 'ok: '+q})()",
-   "at": 32.19,
+   "at": 37.56,
    "label": "clica na lixeira"
   },
   {
@@ -323,7 +323,7 @@
    "target": {
     "selector": "[role=alertdialog] button:text-is('Excluir Tarefa')"
    },
-   "at": 35.93,
+   "at": 41.3,
    "label": "confirma: Excluir Tarefa"
   },
   {
@@ -334,7 +334,7 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 37.29
+   "at": 42.66
   },
   {
    "do": "hover",
@@ -342,7 +342,7 @@
     "selector": "main div.grid.grid-cols-7 button:has-text('Coleta na Auto Peças Vale Forte')"
    },
    "seconds": 1.0,
-   "at": 37.49,
+   "at": 42.86,
    "label": "cartão da tarefa Coleta (categoria e cor)",
    "optional": true,
    "timeout": 4
@@ -352,7 +352,7 @@
    "target": {
     "selector": "main div.grid.grid-cols-7 button:has-text('Coleta na Auto Peças Vale Forte')"
    },
-   "at": 39.87,
+   "at": 45.24,
    "label": "abre a tarefa Coleta em Editar Tarefa"
   },
   {
@@ -366,7 +366,7 @@
     "selector": "[role=dialog] label:text-is('Categoria')"
    },
    "seconds": 0.8,
-   "at": 40.61,
+   "at": 45.98,
    "label": "destaque: Categoria (Coleta)",
    "optional": true,
    "timeout": 4
@@ -377,7 +377,7 @@
     "selector": "[role=dialog] label:has-text('Cliente / Fornecedor')"
    },
    "seconds": 1.0,
-   "at": 42.53,
+   "at": 47.9,
    "label": "destaque: Cliente / Fornecedor",
    "optional": true,
    "timeout": 4
@@ -395,18 +395,18 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 45.81,
+   "at": 51.18,
    "label": "Cancelar"
   },
   {
    "do": "mark",
    "name": "L7",
-   "at": 46.81
+   "at": 52.18
   },
   {
    "do": "eval",
    "js": "(()=>{const e=[...document.querySelectorAll('span')].find(x=>x.textContent.trim()==='Legenda:');if(!e)return 'SEM ALVO';e.scrollIntoView({block:'center',behavior:'smooth'});return 'ok'})()",
-   "at": 47.81,
+   "at": 53.18,
    "label": "mostra a Legenda"
   },
   {
@@ -415,7 +415,7 @@
     "selector": "main span:text-is('Legenda:')"
    },
    "seconds": 0.82,
-   "at": 48.03,
+   "at": 53.4,
    "label": "destaque: Legenda",
    "optional": true,
    "timeout": 4
@@ -423,14 +423,14 @@
   {
    "do": "mark",
    "name": "L8",
-   "at": 49.8
+   "at": 55.17
   },
   {
    "do": "click",
    "target": {
     "selector": "main button:text-is('Semana')"
    },
-   "at": 52.2,
+   "at": 57.57,
    "label": "vista Semana"
   },
   {
@@ -438,7 +438,7 @@
    "target": {
     "selector": "main button:text-is('Dia')"
    },
-   "at": 53.18,
+   "at": 59.69,
    "label": "vista Dia"
   },
   {
@@ -446,7 +446,7 @@
    "target": {
     "selector": "main button:text-is('Mês')"
    },
-   "at": 54.3,
+   "at": 60.81,
    "label": "vista Mês"
   },
   {
@@ -454,20 +454,20 @@
    "target": {
     "selector": "main button:text-is('Hoje')"
    },
-   "at": 55.66,
+   "at": 62.17,
    "label": "botão Hoje"
   },
   {
    "do": "mark",
    "name": "L9",
-   "at": 58.04
+   "at": 64.55
   },
   {
    "do": "dblclick",
    "target": {
     "selector": "main div.grid.grid-cols-7 > div:not(.opacity-40) > span:text-is('19')"
    },
-   "at": 59.0,
+   "at": 65.51,
    "label": "duplo clique no dia 19"
   },
   {
@@ -488,7 +488,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 62.69,
+   "at": 69.2,
    "label": "Cancelar"
   },
   {
@@ -499,7 +499,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 63.69
+   "at": 70.2
   }
  ]
 }

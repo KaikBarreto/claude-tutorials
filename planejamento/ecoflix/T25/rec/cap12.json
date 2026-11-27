@@ -130,6 +130,10 @@
    "timeout": 15
   },
   {
+   "do": "eval",
+   "js": "(()=>{const a=document.getAnimations().filter(x=>x.currentTime<0);a.forEach(x=>x.startTime=document.timeline.currentTime);return a.length})()"
+  },
+  {
    "do": "click",
    "target": {
     "selector": "main .border-b > div > div > button:nth-of-type(2)"

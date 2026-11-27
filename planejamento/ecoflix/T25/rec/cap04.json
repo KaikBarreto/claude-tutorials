@@ -1,6 +1,6 @@
 {
  "name": "t25-cap04",
- "title": "T25 · Cap. 4 · Quem deve e como você paga (narração 60,6 s; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T25 · Cap. 4 · Quem deve e como você paga (narração 63,7 s; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t25-cap04",
  "pace": 0.5,
  "cps": 40,
@@ -212,7 +212,7 @@
    "target": {
     "selector": "main div.relative.group:has(> button.cursor-grab):has-text('Saldos em Aberto')"
    },
-   "seconds": 0.35,
+   "seconds": 1.0,
    "at": 28.6,
    "label": "o saldo de hoje, seja qual for o período",
    "optional": true,
@@ -221,14 +221,14 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 29.9
+   "at": 31.89
   },
   {
    "do": "click",
    "target": {
     "selector": "main div.relative.group:has(> button.cursor-grab):has-text('Saldos em Aberto') button:text-is('Ver relatório')"
    },
-   "at": 30.14,
+   "at": 32.13,
    "label": "Ver relatório"
   },
   {
@@ -237,11 +237,15 @@
    "timeout": 10
   },
   {
+   "do": "eval",
+   "js": "(()=>{const a=document.getAnimations().filter(x=>x.currentTime<0);a.forEach(x=>x.startTime=document.timeline.currentTime);return a.length})()"
+  },
+  {
    "do": "click",
    "target": {
     "selector": "[role=dialog] button:has-text('Exportar Relatório')"
    },
-   "at": 36.44,
+   "at": 38.43,
    "label": "abre o menu Exportar Relatório (sem escolher)"
   },
   {
@@ -252,24 +256,24 @@
   {
    "do": "press",
    "key": "Escape",
-   "at": 37.87,
+   "at": 40.98,
    "label": "fecha o menu de exportação"
   },
   {
    "do": "press",
    "key": "Escape",
-   "at": 38.37,
+   "at": 41.48,
    "label": "fecha o Relatório de Saldos"
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 38.37
+   "at": 41.48
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll('main div.relative.group')].filter(e=>e.offsetParent&&e.querySelector(':scope > button.cursor-grab')&&e.innerText.includes(\"M\\u00e9todos de Pagamento das Compras\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-130);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 39.47,
+   "at": 42.58,
    "label": "desce a tela até Métodos de Pagamento das Compras"
   },
   {
@@ -278,7 +282,7 @@
     "selector": "main div.relative.group:has(> button.cursor-grab):has-text('Métodos de Pagamento das Compras')"
    },
    "seconds": 0.8,
-   "at": 39.53,
+   "at": 42.64,
    "label": "o cartão Métodos de Pagamento das Compras",
    "optional": true,
    "timeout": 4
@@ -289,7 +293,7 @@
     "selector": "main div.relative.group:has(> button.cursor-grab):has-text('Métodos de Pagamento das Compras') span:text-is('Dinheiro')"
    },
    "seconds": 0.15,
-   "at": 42.41,
+   "at": 45.52,
    "label": "linha Dinheiro",
    "optional": true,
    "timeout": 4
@@ -300,7 +304,7 @@
     "selector": "main div.relative.group:has(> button.cursor-grab):has-text('Métodos de Pagamento das Compras') span:text-is('Pix/Transferência')"
    },
    "seconds": 0.6,
-   "at": 43.13,
+   "at": 46.24,
    "label": "linha Pix/Transferência",
    "optional": true,
    "timeout": 4
@@ -311,7 +315,7 @@
     "selector": "main div.relative.group:has(> button.cursor-grab):has-text('Métodos de Pagamento das Compras') span:text-is('Saldo')"
    },
    "seconds": 0.6,
-   "at": 45.05,
+   "at": 48.16,
    "label": "linha Saldo",
    "optional": true,
    "timeout": 4
@@ -319,13 +323,13 @@
   {
    "do": "eval",
    "js": "(()=>{const e=[...document.querySelectorAll('main div.relative.group')].find(x=>x.querySelector(':scope > button.cursor-grab')&&x.innerText.includes(\"M\\u00e9todos de Pagamento das Compras\"));return e?('LIDO: '+e.innerText.replace(/[\\n\\r\\t ]+/g,' ').slice(0,700)):'SEM ALVO'})()",
-   "at": 48.27,
+   "at": 51.38,
    "label": "LER Métodos de Pagamento das Compras"
   },
   {
    "do": "mark",
    "name": "L7",
-   "at": 48.53
+   "at": 51.64
   },
   {
    "do": "hover",
@@ -333,7 +337,7 @@
     "selector": "main div.relative.group:has(> button.cursor-grab):has-text('Métodos de Pagamento das Compras') span:text-is('Dinheiro')"
    },
    "seconds": 1.4,
-   "at": 49.37,
+   "at": 52.48,
    "label": "ZOOM linha Dinheiro",
    "optional": true,
    "timeout": 4
@@ -341,12 +345,12 @@
   {
    "do": "mark",
    "name": "L8",
-   "at": 52.93
+   "at": 56.04
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll('main div.relative.group')].filter(e=>e.offsetParent&&e.querySelector(':scope > button.cursor-grab')&&e.innerText.includes(\"Demonstrativo Financeiro (DRE)\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-110);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/1000),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 53.93,
+   "at": 57.04,
    "label": "desce a tela até o fim do painel: DRE"
   },
   {
@@ -355,7 +359,7 @@
     "selector": "main div.relative.group:has(> button.cursor-grab):has-text('Demonstrativo Financeiro (DRE)')"
    },
    "seconds": 1.0,
-   "at": 54.83,
+   "at": 57.94,
    "label": "o DRE resumido",
    "optional": true,
    "timeout": 4
@@ -366,7 +370,7 @@
     "selector": "main div.relative.group:has(> button.cursor-grab):has-text('Demonstrativo Financeiro (DRE)') :text-is('Regime de Caixa')"
    },
    "seconds": 1.0,
-   "at": 58.37,
+   "at": 61.48,
    "label": "destaque: Regime de Caixa (sem clicar)",
    "optional": true,
    "timeout": 4
@@ -379,7 +383,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 60.56
+   "at": 63.67
   }
  ]
 }

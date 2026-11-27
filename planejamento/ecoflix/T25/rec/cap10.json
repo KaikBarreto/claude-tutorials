@@ -1,6 +1,6 @@
 {
  "name": "t25-cap10",
- "title": "T25 · Cap. 10 · A rotina diária (narração 58,8 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T25 · Cap. 10 · A rotina diária (narração 66,0 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t25-cap10",
  "pace": 0.5,
  "cps": 40,
@@ -138,6 +138,10 @@
    "timeout": 15
   },
   {
+   "do": "eval",
+   "js": "(()=>{const a=document.getAnimations().filter(x=>x.currentTime<0);a.forEach(x=>x.startTime=document.timeline.currentTime);return a.length})()"
+  },
+  {
    "do": "hover",
    "target": {
     "selector": "main button:has-text('para hoje')"
@@ -187,6 +191,10 @@
    "timeout": 15
   },
   {
+   "do": "eval",
+   "js": "(()=>{const a=document.getAnimations().filter(x=>x.currentTime<0);a.forEach(x=>x.startTime=document.timeline.currentTime);return a.length})()"
+  },
+  {
    "do": "hover",
    "target": {
     "selector": "main thead th:has-text('Saldo Final')"
@@ -233,14 +241,18 @@
    "timeout": 15
   },
   {
+   "do": "eval",
+   "js": "(()=>{const a=document.getAnimations().filter(x=>x.currentTime<0);a.forEach(x=>x.startTime=document.timeline.currentTime);return a.length})()"
+  },
+  {
    "do": "hover",
    "target": {
     "text": "Vencidas",
     "exact": true,
     "within": "main"
    },
-   "seconds": 0.15,
-   "at": 35.48,
+   "seconds": 0.8,
+   "at": 36.99,
    "label": "cartão Vencidas",
    "optional": true,
    "timeout": 4
@@ -253,7 +265,7 @@
     "within": "main"
    },
    "seconds": 0.8,
-   "at": 36.28,
+   "at": 39.56,
    "label": "cartão Vence em 7 dias",
    "optional": true,
    "timeout": 4
@@ -261,14 +273,14 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 39.58
+   "at": 42.86
   },
   {
    "do": "click",
    "target": {
     "selector": "main button:has-text('Filtros')"
    },
-   "at": 39.82,
+   "at": 43.1,
    "label": "abre o painel de Filtros"
   },
   {
@@ -278,8 +290,12 @@
   },
   {
    "do": "eval",
+   "js": "(()=>{const a=document.getAnimations().filter(x=>x.currentTime<0);a.forEach(x=>x.startTime=document.timeline.currentTime);return a.length})()"
+  },
+  {
+   "do": "eval",
    "js": "(()=>{const b=[...document.querySelectorAll('[role=dialog] button')].find(x=>x.textContent.trim()==='Até o fim do mês');if(!b)return 'SEM ALVO';b.scrollIntoView({block:'center',behavior:'smooth'});return 'ok'})()",
-   "at": 41.28,
+   "at": 44.56,
    "label": "rola o painel até Vencimento (período)"
   },
   {
@@ -288,7 +304,7 @@
     "selector": "[role=dialog] button:text-is('Próximos 7 dias')"
    },
    "seconds": 0.25,
-   "at": 43.28,
+   "at": 46.56,
    "label": "destaque: Próximos 7 dias",
    "optional": true,
    "timeout": 4
@@ -299,7 +315,7 @@
     "selector": "[role=dialog] button:text-is('Até o fim do mês')"
    },
    "seconds": 0.15,
-   "at": 44.48,
+   "at": 47.76,
    "label": "destaque: Até o fim do mês",
    "optional": true,
    "timeout": 4
@@ -307,18 +323,18 @@
   {
    "do": "press",
    "key": "Escape",
-   "at": 45.32,
+   "at": 48.6,
    "label": "fecha o painel de Filtros"
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 45.42
+   "at": 48.7
   },
   {
    "do": "press",
    "key": "Shift+A",
-   "at": 46.52,
+   "at": 49.8,
    "label": "Shift+A abre a Agenda"
   },
   {
@@ -327,11 +343,15 @@
    "timeout": 15
   },
   {
+   "do": "eval",
+   "js": "(()=>{const a=document.getAnimations().filter(x=>x.currentTime<0);a.forEach(x=>x.startTime=document.timeline.currentTime);return a.length})()"
+  },
+  {
    "do": "click",
    "target": {
     "selector": "main div.grid.grid-cols-7 > div:not(.opacity-40):has(> span:text-is('11'))"
    },
-   "at": 47.2,
+   "at": 50.48,
    "label": "clica no dia 11"
   },
   {
@@ -340,7 +360,7 @@
     "selector": "main div.group.rounded-lg.border:has(> div.flex-1 > p:text-is('Coleta na Auto Peças Vale Forte'))"
    },
    "seconds": 1.2,
-   "at": 48.13,
+   "at": 55.36,
    "label": "ZOOM Coleta na Auto Peças Vale Forte, 08:00",
    "optional": true,
    "timeout": 4
@@ -348,7 +368,7 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 51.35
+   "at": 58.58
   },
   {
    "do": "eval",
@@ -358,7 +378,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 58.76
+   "at": 65.99
   }
  ]
 }
