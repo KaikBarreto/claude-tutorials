@@ -65,7 +65,8 @@ def storage(uid):
     """localStorage de quem entra pela tela de login: sem aviso de versão nova, sem convite para instalar, sem "Personalize sua
     experiência" e sem o lembrete das tarefas do dia (as chaves que a sessão pronta do robô poria)"""
     return {'app_version': VERSAO, 'notification_shown_version': VERSAO, 'pwa-install-dismissed': 'true', 'theme': 'light',
-            'initial-preferences-set': 'true', f'daily-tasks-reminder-last-shown-{uid}': HOJE, f'dominex:daily-tasks-shown:{uid}': HOJE}
+            'initial-preferences-set': 'true', f'daily-tasks-reminder-last-shown-{uid}': HOJE, f'dominex:daily-tasks-shown:{uid}': HOJE,
+            'support_widget_last_dismissed': '2026-11-10T09:00:00-03:00'}   # balão do WhatsApp (nome e foto de gente de verdade) aparece 15 s depois do login
 
 
 NOMES = ['Abertura', 'O que muda', 'O logo e o ícone', 'Ligar o White Label', 'A cor da marca', 'Onde a marca aparece',
@@ -103,7 +104,7 @@ class Cap:
         s.steps = []
         s.pace, s.cps, s.start, s.tail = pace, cps, start, tail
         s.uid = uid
-        s.setup = list(setup or []) + [{'do': 'eval', 'js': OBS}]
+        s.setup = list(setup or []) + [{'do': 'eval', 'js': OBS}, {'do': 'eval', 'js': ANIM_FIX}]
         s.anchors = []
         s.pending = []
 
@@ -297,6 +298,11 @@ RESET = BTN('Reset')
 SALVAR_WL = BTN('Salvar Personalizações')
 PEDIDOS_MENU = LINK('Pedidos')
 DASH_MENU = LINK('Dashboard')
+# Animação do framer-motion presa (currentTime < 0 com o relógio simulado): sem este conserto a tela fica em branco por segundos (27/11, T20).
+# Rodar depois de todo goto/recarga/troca de rota: aqui o `setup` termina sempre depois dos gotos.
+ANIM_FIX = ("(()=>{if(window.__animFix)return 'ja';window.__animFix=setInterval(()=>{for(const a of document.getAnimations())"
+            "if(a.currentTime!==null&&a.currentTime<0)a.startTime=document.timeline.currentTime},100);return 'anim fix'})()")
+
 MENU_LINHA1 = SEL("main tbody tr:first-child button[aria-haspopup=menu]")   # "⋮" do pedido mais recente (abre ao passar o mouse)
 VER_COMPROVANTE = {'role': 'menuitem', 'name': 'Ver comprovante'}
 

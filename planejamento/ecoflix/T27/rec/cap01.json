@@ -1,6 +1,6 @@
 {
  "name": "t27-cap01",
- "title": "T27 · Cap. 1 · O que muda (narração 49,8 s ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário Rafael Nogueira)",
+ "title": "T27 · Cap. 1 · O que muda (narração 40,8 s; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário Rafael Nogueira)",
  "seed": "t27-cap01",
  "pace": 0.5,
  "cps": 14,
@@ -20,7 +20,8 @@
   "theme": "light",
   "initial-preferences-set": "true",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
-  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10"
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "support_widget_last_dismissed": "2026-11-10T09:00:00-03:00"
  },
  "prewarm": [
   "/login"
@@ -73,20 +74,24 @@
   {
    "do": "eval",
    "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao carregar|Popup bloqueado|Personalize sua experi[êe]ncia|Voc[êe] j[áa] est[áa] conectado|Sistema atualizado|O rel[óo]gio deste computador|Sess[ãa]o expirou/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('LEMBRETE DA TRILHA'))window.__avisos.push('LEMBRETE DA TRILHA')},300);return 1})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__animFix)return 'ja';window.__animFix=setInterval(()=>{for(const a of document.getAnimations())if(a.currentTime!==null&&a.currentTime<0)a.startTime=document.timeline.currentTime},100);return 'anim fix'})()"
   }
  ],
  "steps": [
   {
    "do": "mark",
    "name": "L1",
-   "at": 0.4
+   "at": 0
   },
   {
    "do": "click",
    "target": {
     "selector": "button[aria-label='Configurações']"
    },
-   "at": 0.65,
+   "at": 0.06,
    "label": "Configurações (rodapé do menu)",
    "noScroll": true
   },
@@ -101,7 +106,7 @@
     "selector": "#tab-btn-company"
    },
    "seconds": 0.4,
-   "at": 3.47,
+   "at": 2.82,
    "label": "aba Empresa",
    "optional": true,
    "timeout": 3
@@ -113,7 +118,7 @@
     "exact": true
    },
    "seconds": 0.6,
-   "at": 5.01,
+   "at": 4.28,
    "label": "Identidade Visual",
    "optional": true,
    "timeout": 3
@@ -121,7 +126,7 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 6.3
+   "at": 5.22
   },
   {
    "do": "hover",
@@ -129,7 +134,7 @@
     "selector": "main button:has(h3:text-is('White Label'))"
    },
    "seconds": 0.2,
-   "at": 9.16,
+   "at": 7.58,
    "label": "gaveta White Label (Personalize o sistema com sua marca)",
    "optional": true,
    "timeout": 3
@@ -139,7 +144,7 @@
    "target": {
     "selector": "main button:has(h3:text-is('White Label'))"
    },
-   "at": 9.89,
+   "at": 8.34,
    "label": "abre a gaveta White Label"
   },
   {
@@ -154,7 +159,7 @@
     "exact": true
    },
    "seconds": 0.4,
-   "at": 11.04,
+   "at": 8.96,
    "label": "White Label Desativado e o interruptor desligado",
    "optional": true,
    "timeout": 3
@@ -167,7 +172,7 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 12.8
+   "at": 10.5
   },
   {
    "do": "hover",
@@ -175,7 +180,7 @@
     "selector": "main button:has(h3:text-is('White Label'))"
    },
    "seconds": 4.2,
-   "at": 13.71,
+   "at": 11.28,
    "label": "a gaveta White Label (só aparece com o módulo; no teste ele vem liberado)",
    "optional": true,
    "timeout": 3
@@ -183,12 +188,12 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 23.48
+   "at": 18.96
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 33.69
+   "at": 27.52
   },
   {
    "do": "eval",
@@ -198,7 +203,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 49.84
+   "at": 40.8
   }
  ]
 }

@@ -1,6 +1,6 @@
 {
  "name": "t27-cap08",
- "title": "T27 · Cap. 8 · Recapitulando (narração 45,0 s ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário Rafael Nogueira)",
+ "title": "T27 · Cap. 8 · Recapitulando (narração 34,5 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário Rafael Nogueira)",
  "seed": "t27-cap08",
  "pace": 0.5,
  "cps": 14,
@@ -22,7 +22,8 @@
   "theme": "light",
   "initial-preferences-set": "true",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
-  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10"
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "support_widget_last_dismissed": "2026-11-10T09:00:00-03:00"
  },
  "prewarm": [
   "/login"
@@ -120,13 +121,17 @@
   {
    "do": "eval",
    "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao carregar|Popup bloqueado|Personalize sua experi[êe]ncia|Voc[êe] j[áa] est[áa] conectado|Sistema atualizado|O rel[óo]gio deste computador|Sess[ãa]o expirou/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('LEMBRETE DA TRILHA'))window.__avisos.push('LEMBRETE DA TRILHA')},300);return 1})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__animFix)return 'ja';window.__animFix=setInterval(()=>{for(const a of document.getAnimations())if(a.currentTime!==null&&a.currentTime<0)a.startTime=document.timeline.currentTime},100);return 'anim fix'})()"
   }
  ],
  "steps": [
   {
    "do": "mark",
    "name": "L1",
-   "at": 0.4
+   "at": 0
   },
   {
    "do": "hover",
@@ -134,7 +139,7 @@
     "selector": "main button:has(h3:text-is('White Label'))"
    },
    "seconds": 1.0,
-   "at": 2.91,
+   "at": 2.08,
    "label": "a gaveta White Label na aba Empresa",
    "optional": true,
    "timeout": 3
@@ -145,7 +150,7 @@
     "selector": "main img[alt='Ícone']"
    },
    "seconds": 1.6,
-   "at": 7.39,
+   "at": 5.62,
    "label": "o logo e o ícone quadrado",
    "optional": true,
    "timeout": 3
@@ -153,15 +158,15 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 13.14
+   "at": 9.62
   },
   {
    "do": "hover",
    "target": {
     "selector": "main div.rounded-xl:has(p:text-is('White Label Desativado')) > button[role=switch], main div.rounded-xl:has(p:text-is('White Label Ativo')) > button[role=switch]"
    },
-   "seconds": 0.79,
-   "at": 14.04,
+   "seconds": 0.39,
+   "at": 10.48,
    "label": "o interruptor ligado",
    "optional": true,
    "timeout": 3
@@ -171,8 +176,8 @@
    "target": {
     "selector": "img[alt='EcoSistema']"
    },
-   "seconds": 1.8,
-   "at": 15.48,
+   "seconds": 1.69,
+   "at": 11.52,
    "label": "o logo da Recicla Vale no menu",
    "noScroll": true,
    "optional": true,
@@ -181,12 +186,12 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 18.34
+   "at": 13.86
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Personalizações\"&&e.offsetParent);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-250);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 18.34,
+   "at": 13.86,
    "label": "desce até as Personalizações"
   },
   {
@@ -194,8 +199,8 @@
    "target": {
     "selector": "input[placeholder='#22c55e']"
    },
-   "seconds": 0.8,
-   "at": 19.03,
+   "seconds": 0.39,
+   "at": 14.42,
    "label": "a Cor Primária #1F5FAD",
    "optional": true,
    "timeout": 3
@@ -209,13 +214,13 @@
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 20.76,
+   "at": 15.46,
    "label": "cursor vai ao menu"
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 21.96
+   "at": 16.66
   },
   {
    "do": "click",
@@ -224,7 +229,7 @@
     "name": "Pedidos",
     "exact": true
    },
-   "at": 22.06,
+   "at": 16.76,
    "label": "Pedidos no menu"
   },
   {
@@ -240,7 +245,7 @@
     "selector": "main tbody tr:first-child td:nth-child(2)"
    },
    "seconds": 1.2,
-   "at": 24.61,
+   "at": 18.8,
    "label": "o pedido mais recente da lista (sem abrir o menu)",
    "optional": true,
    "timeout": 3
@@ -248,7 +253,7 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 26.41
+   "at": 20.03
   },
   {
    "do": "scroll",
@@ -259,18 +264,18 @@
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 27.17,
+   "at": 20.89,
    "label": "cursor fora da tabela (montagem do interruptor × remover o logo)"
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 31.85
+   "at": 24.35
   },
   {
    "do": "mark",
    "name": "L7",
-   "at": 36.07
+   "at": 27.87
   },
   {
    "do": "eval",
@@ -280,7 +285,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 45.01
+   "at": 34.48
   }
  ]
 }

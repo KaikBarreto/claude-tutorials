@@ -1,6 +1,6 @@
 {
  "name": "t27-cap04",
- "title": "T27 · Cap. 4 · A cor da marca (narração 56,3 s ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário Rafael Nogueira)",
+ "title": "T27 · Cap. 4 · A cor da marca (narração 46,1 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário Rafael Nogueira)",
  "seed": "t27-cap04",
  "pace": 0.5,
  "cps": 14,
@@ -21,7 +21,8 @@
   "theme": "light",
   "initial-preferences-set": "true",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
-  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10"
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "support_widget_last_dismissed": "2026-11-10T09:00:00-03:00"
  },
  "prewarm": [
   "/login"
@@ -119,18 +120,22 @@
   {
    "do": "eval",
    "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao carregar|Popup bloqueado|Personalize sua experi[êe]ncia|Voc[êe] j[áa] est[áa] conectado|Sistema atualizado|O rel[óo]gio deste computador|Sess[ãa]o expirou/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('LEMBRETE DA TRILHA'))window.__avisos.push('LEMBRETE DA TRILHA')},300);return 1})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__animFix)return 'ja';window.__animFix=setInterval(()=>{for(const a of document.getAnimations())if(a.currentTime!==null&&a.currentTime<0)a.startTime=document.timeline.currentTime},100);return 'anim fix'})()"
   }
  ],
  "steps": [
   {
    "do": "mark",
    "name": "L1",
-   "at": 0.4
+   "at": 0
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Personalizações\"&&e.offsetParent);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-250);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 2.61,
+   "at": 2.02,
    "label": "desce até as Personalizações"
   },
   {
@@ -140,7 +145,7 @@
     "exact": true
    },
    "seconds": 0.4,
-   "at": 3.52,
+   "at": 2.82,
    "label": "Personalizações",
    "optional": true,
    "timeout": 3
@@ -148,7 +153,7 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 5.17
+   "at": 4.02
   },
   {
    "do": "hover",
@@ -156,7 +161,7 @@
     "selector": "#wl-company-name"
    },
    "seconds": 2.8,
-   "at": 5.62,
+   "at": 4.48,
    "label": "Nome Exibido no Sistema (vazio; sem zoom)",
    "optional": true,
    "timeout": 3
@@ -164,7 +169,7 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 12.88
+   "at": 10.66
   },
   {
    "do": "hover",
@@ -173,7 +178,7 @@
     "exact": true
    },
    "seconds": 0.6,
-   "at": 13.41,
+   "at": 11.12,
    "label": "Cor Primária",
    "optional": true,
    "timeout": 3
@@ -184,7 +189,7 @@
     "selector": "#wl-primary-color"
    },
    "seconds": 0.3,
-   "at": 15.66,
+   "at": 12.48,
    "label": "seletor de cor (sem abrir)",
    "optional": true,
    "timeout": 3
@@ -194,7 +199,7 @@
    "target": {
     "selector": "input[placeholder='#22c55e']"
    },
-   "at": 16.8,
+   "at": 13.74,
    "label": "campo do código da Cor Primária"
   },
   {
@@ -203,7 +208,7 @@
     "selector": "input[placeholder='#22c55e']"
    },
    "text": "#1F5FAD",
-   "at": 19.04,
+   "at": 15.67,
    "label": "digita #1F5FAD na Cor Primária",
    "noClick": true
   },
@@ -213,7 +218,7 @@
     "selector": "main div:text-is('Preview')"
    },
    "seconds": 2.2,
-   "at": 21.53,
+   "at": 17.6,
    "label": "Preview no azul da Recicla Vale",
    "optional": true,
    "timeout": 3
@@ -226,7 +231,7 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 24.69
+   "at": 19.7
   },
   {
    "do": "hover",
@@ -234,7 +239,7 @@
     "selector": "input[placeholder='#22c55e']"
    },
    "seconds": 6.0,
-   "at": 26.06,
+   "at": 21.12,
    "label": "zoom: o código #1F5FAD começa com o jogo da velha",
    "optional": true,
    "timeout": 3
@@ -242,7 +247,7 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 35.36
+   "at": 28.26
   },
   {
    "do": "click",
@@ -251,7 +256,7 @@
     "name": "Salvar Personalizações",
     "exact": true
    },
-   "at": 35.56,
+   "at": 28.46,
    "label": "Salvar Personalizações"
   },
   {
@@ -272,7 +277,7 @@
     "exact": true
    },
    "seconds": 0.2,
-   "at": 38.47,
+   "at": 31.52,
    "label": "botão no azul",
    "optional": true,
    "timeout": 3
@@ -282,8 +287,8 @@
    "target": {
     "selector": "main div.rounded-xl:has(p:text-is('White Label Desativado')) > button[role=switch], main div.rounded-xl:has(p:text-is('White Label Ativo')) > button[role=switch]"
    },
-   "seconds": 0.4,
-   "at": 39.21,
+   "seconds": 0.29,
+   "at": 32.15,
    "label": "interruptor no azul",
    "optional": true,
    "timeout": 3
@@ -294,7 +299,7 @@
     "selector": "button[aria-label='Configurações']"
    },
    "seconds": 1.2,
-   "at": 40.47,
+   "at": 33.09,
    "label": "barrinha azul do item ativo no menu (Configurações)",
    "noScroll": true,
    "optional": true,
@@ -308,7 +313,7 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 43.53
+   "at": 35.44
   },
   {
    "do": "hover",
@@ -316,7 +321,7 @@
     "selector": "input[placeholder='#22c55e']"
    },
    "seconds": 1.4,
-   "at": 45.2,
+   "at": 36.94,
    "label": "Cor Primária (vazia = cores padrão)",
    "optional": true,
    "timeout": 3
@@ -329,7 +334,7 @@
     "exact": true
    },
    "seconds": 1.6,
-   "at": 49.52,
+   "at": 40.3,
    "label": "Reset (sem clicar: só limpa o campo)",
    "optional": true,
    "timeout": 3
@@ -342,7 +347,7 @@
     "exact": true
    },
    "seconds": 1.2,
-   "at": 53.09,
+   "at": 43.82,
    "label": "Salvar Personalizações (a volta às cores padrão vale depois dele)",
    "optional": true,
    "timeout": 3
@@ -355,7 +360,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 56.27
+   "at": 46.08
   }
  ]
 }

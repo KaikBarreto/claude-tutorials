@@ -49,6 +49,9 @@ nos três): copie `t03/edit/t03_mix.py` e `t03_music_bed.py` (mesmo som, pouca m
 6. **Conferência** (`docs/07-conferencia.md`): folha de quadros da aula inteira, cada ilustração e cada zoom olhados;
    **varredura de tela parada** na aula final (1 quadro/s; 3 s ou mais com o corpo quase todo branco e sem detalhe = erro: na T20
    o portal ficou em branco 28 s por animação presa, `docs/08-licoes.md`; o `eval` OK não prova que a tela mostra);
+   **nenhuma pessoa real na tela**: o balão do WhatsApp do suporte (foto e nome de atendente) aparece 15 s depois do login de
+   usuário sem Cato; o `mundo.json` já o dispensa na sessão falsa, e no login pela tela ponha `support_widget_last_dismissed`
+   (`AAAA-MM-DDT12:00:00` do `FAKE_NOW`) no `storage` do capítulo;
    texto na tela sem travessão e sem dado real; título de capítulo certo; nada cortado; áudio sem estouro.
 7. **Entrega**: `entregar.py` → aula final 1080p em `tNN/edit/out/Tnn/aula_final.mp4` + legendas, e uma prévia 720p de até
    28 MB em `$TUT_HOME/entrega_previa/EcoFlix Tnn - <título> 1.60.22 (previa 720p).mp4`.

@@ -1065,7 +1065,7 @@ def cap12():
     c.mark(7)
     c.click(BTN('Fechar', within=FICHA), at=c.A(7, 'E', 0.4), label='fecha a ficha', noScroll=True)
     c.waitfor(gone={'selector': FICHA}, timeout=8)
-    c.hover(CARTAO(JEQ), 4.0, at=c.A(7, 'cartão', 0.6), label='o cartão mostra o contador de itens (zoom)')
+    c.hover(CARTAO(JEQ), 1.5, at=c.A(7, 'cartão', -0.3), label='o cartão mostra o contador de itens (zoom)')   # 28/11: o Fechar + espera já levam ~1 s; zoom curto fecha junto com a voz
     c.fim()
     return c
 
@@ -1309,7 +1309,7 @@ def cap15():
     c.click(TITULO_CARTAO(PAPELAO), at=c.A(9, 'motivo', 0.8), label='abre o cartão do Papelão (Perdido)')
     c.waitfor(text='Comentários e atividades', timeout=10)
     c.ev(FICHA_SCROLL('Observações', 300), label='a ficha desce até as Observações')
-    c.hover(SEL('#opportunity-notes'), 3.0, at=c.A(9, 'observações', 0.6), label='Observações: o motivo da perda (zoom)')
+    c.hover(SEL('#opportunity-notes'), 1.6, at=c.A(9, 'observações', 0.6), label='Observações: o motivo da perda (zoom)')
     c.fim()
     return c
 

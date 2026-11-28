@@ -21,3 +21,12 @@ Falta: reensaio completo de 06 e 03 (hovers encurtados); `cenas/tempos/` ficou c
 
 ## 21/11 16:56 · reensaio da coordenação
 - Completos: cap06 0 falho, maxLate 0,70; cap03 0 falho, 0,07. Instância 54327 derrubada. **T27 pronta para a voz.**
+
+## 28/11 · fechamento
+- Aula final 7:21,5 (441,5 s), 1080p, -16,3 LUFS, pico -3,6 dBTP; legendas 160. Prévia 720p 27,6 MiB em `entrega_previa/`. Aula: `t27/edit/out/T27/aula_final.mp4`. Gravação final: 9 caps, 0 falho, maxLate <= 0,78 (cap01 0,78; cap06 0,74).
+- Regravados: cap06 (respiros 1,38 s em T=16,64; 1,20 em 27,82; 1,52 em 47,68, `rec/t27/t27_respiros.py`; maxLate 1,27 -> 0,74) e cap07 (o balão do WhatsApp com nome e foto de gente de verdade aparecia 15 s depois do login da Juliana: `support_widget_last_dismissed` no `storage` do `gerar.py`). `ANIM_FIX` no `setup` do `gerar.py` (depois dos gotos).
+- Scripts: `rec/t27/t27_final.sh`, `t27_respiros.py`; edição em `t27/edit/` (`t27_specs.py`, `caps/extra.json`, `fechar_t27.sh`, `montar_t27.sh`, `render_ilus_v3.sh`, `t27_parada.py`).
+- Zooms (6, em `caps/extra.json`): cap02 ícone; cap03 interruptor e ícone recolhido; cap04 código #1F5FAD e barrinha do menu; cap06 interruptor. Sem destaques e sem acelerações (nenhum respiro >= 3 s).
+- Ilustrações v3 (5, todas encaixadas; as demais entradas do ilustracoes.json seguem tiradas): ilu01_muda (maior piscada 9 quadros, 1,0% da tela, em 26,07 s: câmera/cartões, como combinado), ilu03, ilu05_documentos (papel real do #1758), ilu05_portal_ponto, ilu06. 0 piscadas nas outras 4.
+- Conferência: folha de 3 s inteira olhada; varredura a 1 q/s: só 1 quadro quase branco (275 s, entrada dos cartões da ilustração de Documentos), nenhuma >= 3 s. Câmera: 3 instantes com alvo na borda (100% visível). Texto sem plano ou preço.
+- Disco no fim: / 2,8 GB livres, /dev/shm 6,4 GB livres. Instância 54327 derrubada; `out/capNN`, `proj` e `video_sem_audio` apagados.
