@@ -2,9 +2,14 @@
 
 - **Título:** Transporte, serviço e o contador (fonte). 🔒 módulo **Notas Fiscais** (dito na abertura, sem preço).
 - **Antes:** T16 Nota Fiscal de mercadoria (NF-e). **Próximo:** T18 Ambiental: MTR e CDF.
-- **Áreas das vinhetas:** TRANSPORTE · FROTA · MANIFESTO · SERVIÇO · RELATÓRIO FISCAL · ESTOQUE FISCAL · CONTADOR · RESUMO.
-- **App 1.60.10** (aplicação de 18/11). 20 capítulos; novos: 6, 13 e 15; o antigo 8 virou 9 e 10; o antigo 10 virou 12, 14 e 16.
-- **Alvo da fonte:** ~16 min. **Estimativa (app 1.60.10, 18/11):** ~23 min de vídeo (3.197 palavras, ~20,5 min de fala, + 19 vinhetas +
+- **Áreas das vinhetas:** TRANSPORTE · FROTA · MANIFESTO · SERVIÇO · COMPRA · RELATÓRIO FISCAL · ESTOQUE FISCAL · CONTADOR · RESUMO.
+- **App 1.60.39** (28/11; `andamento_160.md`, seção "28/11 · 1.60.39"). **21 capítulos**: novo o 11 (a NF-e recebida vira compra);
+  os de 11 a 19 viraram 12 a 20. Também do 1.60.15 ao 1.60.39 (a T17 só tinha sido ajustada ao 1.60.10): "Relatório/Estoque Fiscal" é
+  uma tela só, com sete abas (menu, caps 00, 12 e 13); o "Fiscal × operacional" separa entradas e saídas (cap17); o Novo MDF-e pergunta
+  a natureza da viagem, a categoria do transportador e "Esta viagem possui frete contratado?" (cap04); "Histórico" no menu do MDF-e e o
+  diálogo único de histórico; o bloco "IBS e CBS da NFS-e" (desligado) no Serviço da NFS-e. 3.526 palavras (eram 3.197).
+  Antes: aplicação de 18/11 (1.60.10), 20 capítulos; novos 6, 13 e 15 (hoje 6, 14 e 16).
+- **Alvo da fonte:** ~16 min. **Estimativa (app 1.60.39, 28/11):** ~25 min de vídeo (3.526 palavras, ~22,6 min de fala, + 20 vinhetas +
   esperas da SEFAZ simulada). Aula única mesmo longa (Kaik, 18/11 13:47); profundidade extra por ser fiscal.
 - Regime do exemplo **Lucro Real**; a fala mostra os campos e diz que quem define tributação (código do serviço, alíquota, retenção,
   crédito, devolução) é o contador. Nada de SEFAZ, prefeitura nem numeração de verdade: tudo no backend falso.
@@ -13,9 +18,9 @@
 - Base: `T17/inventario.md` (código 1.59.154) + `T17/cobertura_160.md` (o que mudou no 1.60.10). Desktop, logado como **Rafael
   Nogueira** (MASTER).
 - **FAKE_NOW:** `2026-11-10T09:30:00-03:00` nos capítulos 0 a 4; `14:20` do 5 ao 9 (a carga já foi entregue em Itamonte); `14:40` do
-  10 ao 19 (as NFS-e recebidas chegaram às 14:24). Em `rec/t17/fake_now.json`, escrito pelo `gerar.py`.
+  10 ao 20 (as NFS-e recebidas chegaram às 14:24). Em `rec/t17/fake_now.json`, escrito pelo `gerar.py`.
 
-## Capítulos (20: 0 a 19)
+## Capítulos (21: 0 a 20; 28/11)
 | # | Era | Vinheta (área / título) | O que se mostra | Ilustração | Estado de partida |
 |---|---|---|---|---|---|
 | 0 | 0 | (sem vinheta) | Abertura; menu "Fiscal & Ambiental" com "Transporte (MDF-e)", "Notas de Serviço (NFS-e)", "Estoque Fiscal", "Relatórios Fiscais"; 🔒; "Antes" | o dia da Recicla Vale | `inicio` |
@@ -29,21 +34,22 @@
 | 8 | 7 | SERVIÇO / Emitir e acompanhar | tela cheia "Nova NFS-e": competência, **série e "Próxima DPS: nº 14"**, tomador (e "Buscar pelo CNPJ"), código, valor R$ 1.850,00, alíquota 3 %, **ISS retido e retenções federais** (só mostra), pré-visualização, **rascunho** (cita), emitir, nº 14, menu (PDF, Histórico, Cancelar) | não | `apos-cap05` |
 | 9 | 8a | SERVIÇO / O serviço que você tomou | "Notas Recebidas" › "NFS-e": ativar; a faixa "Busca solicitada no Ambiente Nacional..."; ⚠️ só cidade do sistema nacional | não | `apos-cap08` |
 | 10 | 8b | SERVIÇO / Da nota recebida à despesa | (14:40) as 2 notas chegaram; "Sincronizar agora"; lançar a da balança como conta; "Lançada" | não | `apos-cap09` + `nfse-recebidas` |
-| 11 | 9 | RELATÓRIO FISCAL / Entrada, saída e saldo | menu **"Relatórios Fiscais"**: aba "NF-e" de outubro (cartões, **cartão Entrada aberto**, gráficos) e **aba "NFS-e"** | não | `apos-cap10` |
-| 12 | 10a | ESTOQUE FISCAL / O estoque pelas notas | **"Saldo atual"**: atualiza sozinho, busca, vermelho = negativo, faixa amarela | não | `apos-cap10` |
-| 13 | novo | ESTOQUE FISCAL / O saldo inicial | "Informar saldo inicial" da bateria: 31/10/2026, 3.320 kg; aba "Planilha"; a bateria vai a 3.960 kg | não | `apos-cap10` |
-| 14 | 10b | ESTOQUE FISCAL / Um dia do passado e as movimentações | "Posição em uma data" (31/10 18:00) ⚠️ só consulta; "Movimentações": Kardex do metal amarelo, "Filtros", "Geral (Todos)" | não | `apos-cap13` |
-| 15 | novo | ESTOQUE FISCAL / Cancelamento e devolução | Kardex: NF-e 1249 (saída e "Estorno" com o motivo); NF-e 1253 (devolução da Fundição, +40 kg de cobre mel) | régua do estorno; setas da devolução | `apos-cap13` |
-| 16 | 10c | ESTOQUE FISCAL / Fiscal e operacional | "Fiscal × operacional" de outubro: cartões, metal amarelo (Delta −1.100 = 600 da nota de 30/10 + 500 de compra sem nota), "Como ler o Delta", "Exportar" (PDF, Excel) | fiscal × operacional | `apos-cap13` |
-| 17 | 11 | CONTADOR / O pacote do mês | "Exportação Contábil": "Emitente / CNPJ", "Mês passado", **"Incluir notas destinadas ao CNPJ"** (zero em outubro), "Baixar Pacote" | não | `apos-cap13` |
-| 18 | 12 | CONTADOR / O que o contador faz | o conteúdo do ZIP (com "destinadas"); ⚠️ guardar os XMLs | o pacote | (só ilustração) |
-| 19 | 13 | RESUMO / Recapitulando | montagem; "Próximo: Ambiental: MTR e CDF" | não | `apos-cap13` + `mdfe2-rejeitado` |
+| 11 | novo (28/11) | COMPRA / Da nota recebida à compra | **1.60.39.** Notas Recebidas › NF-e: a Cooperativa Recomeço (importada pelo XML na T16), o "Importar XML" (sem clicar; também traz NFS-e), "Lançar compra…", os totais "Produtos" / "Encargos/descontos" / "Total da nota", o casamento já feito, "Registrar também no estoque fiscal (não altera o saldo físico)", "Conferir na tela de compra", Finalizar com Pix e o selo "Lançada como compra" | não | `apos-cap10` + `compra-coop` |
+| 12 | 9 | RELATÓRIO FISCAL / Entrada, saída e saldo | menu **"Relatório/Estoque Fiscal"** (uma tela só, 1.60.15): aba "NF-e" de outubro (cartões, **cartão Entrada aberto**, gráficos) e **aba "NFS-e"** | não | `apos-cap10` |
+| 13 | 10a | ESTOQUE FISCAL / O estoque pelas notas | **"Saldo atual"**: atualiza sozinho, busca, vermelho = negativo, faixa amarela | não | `apos-cap10` |
+| 14 | novo | ESTOQUE FISCAL / O saldo inicial | "Informar saldo inicial" da bateria: 31/10/2026, 3.320 kg; aba "Planilha"; a bateria vai a 3.960 kg | não | `apos-cap10` |
+| 15 | 10b | ESTOQUE FISCAL / Um dia do passado e as movimentações | "Posição em uma data" (31/10 18:00) ⚠️ só consulta; "Movimentações": Kardex do metal amarelo, "Filtros", "Geral (Todos)" | não | `apos-cap14` |
+| 16 | novo | ESTOQUE FISCAL / Cancelamento e devolução | Kardex: NF-e 1249 (saída e "Estorno" com o motivo); NF-e 1253 (devolução da Fundição, +40 kg de cobre mel) | régua do estorno; setas da devolução | `apos-cap14` |
+| 17 | 10c | ESTOQUE FISCAL / Fiscal e operacional | "Fiscal × operacional" de outubro (tela nova): cartões por direção, metal amarelo (Entradas: 500 comprados e 0 em nota, "sem nota"; Saídas: 500 vendidos e 1.100 em nota, +600 "nota a mais": a nota de 30/10 do pedido de 03/11), "Como ler a diferença", "Exportar" (PDF, Excel) | fiscal × operacional | `apos-cap14` |
+| 18 | 11 | CONTADOR / O pacote do mês | "Exportação Contábil": "Emitente / CNPJ", "Mês passado", **"Incluir notas destinadas ao CNPJ"** (zero em outubro), "Baixar Pacote" | não | `apos-cap14` |
+| 19 | 12 | CONTADOR / O que o contador faz | o conteúdo do ZIP (com "destinadas"); ⚠️ guardar os XMLs | o pacote | (só ilustração) |
+| 20 | 13 | RESUMO / Recapitulando | montagem (com a compra da Cooperativa); "Próximo: Ambiental: MTR e CDF" | não | `apos-cap14` + `mdfe2-rejeitado` |
 
 Transições faladas: 0→1 "Vamos começar pelo manifesto"; 1→2 "Antes do primeiro manifesto"; 2→3 "Com a frota pronta"; 3→4 "Hora de
 emitir"; 4→5 "À tarde, a carga foi entregue"; 5→6 "E quando a SEFAZ não aceita?"; 6→7 "Agora, a nota de serviço"; 7→8 "Vou cobrar a
-coleta"; 8→9 "E quando é a Recicla Vale que contrata"; 9→10 "Um pouco depois"; 10→11 "Antes de mandar o mês pro contador"; 11→12
-"Agora, o estoque fiscal"; 12→13 "Quando a empresa começa a usar o sistema"; 13→14 "Pra ver um dia do passado"; 14→15 "E quando uma
-nota é cancelada?"; 15→16 "Na última aba"; 16→17 "Agora, o pacote"; 17→18 "E o que vai dentro dele".
+coleta"; 8→9 "E quando é a Recicla Vale que contrata"; 9→10 "Um pouco depois"; 10→11 "E a nota de mercadoria que chega de um fornecedor?" (novo); 11→12 "Antes de mandar o mês pro contador"; 12→13
+"Agora, o estoque fiscal"; 13→14 "Quando a empresa começa a usar o sistema"; 14→15 "Pra ver um dia do passado"; 15→16 "E quando uma
+nota é cancelada?"; 16→17 "Agora, a aba que compara o fiscal com o operacional"; 17→18 "Agora, o pacote"; 18→19 "E o que vai dentro dele".
 
 **Cuidados (⚠️ da fonte), falados com "Uma dica:"**
 | Cuidado | Onde | Fala (resumo) |
@@ -51,9 +57,9 @@ nota é cancelada?"; 15→16 "Na última aba"; 16→17 "Agora, o pacote"; 17→1
 | Obrigatoriedade do MDF-e varia | cap01 | depende da operação e do estado; confirme com a contabilidade, principalmente entre estados; o sistema entrega a ferramenta |
 | Contingência não é jeito normal | cap04 | só com a SEFAZ fora do ar; pede motivo, tipo de carga, NCM e produto; o motorista só sai com o manifesto impresso; até 168 horas para regularizar |
 | Encerrar ≠ cancelar | cap05 | encerrar é o fim normal da viagem; cancelar anula o que não deveria existir: sem volta, motivo de 15 letras, prazo de 24 horas |
-| Posição histórica é só consulta | cap14 | não muda saldo, nota, movimentação nem o estoque de hoje; a data é sempre do passado |
-| Fiscal e operacional podem divergir | cap16 | o fiscal segue as notas; o operacional, compras, pedidos e pátio; um não corrige o outro (tela de comparação) |
-| Guardar os XMLs é da empresa | cap18 | baixar o pacote todo mês e guardar cópia própria além da do contador |
+| Posição histórica é só consulta | cap15 | não muda saldo, nota, movimentação nem o estoque de hoje; a data é sempre do passado |
+| Fiscal e operacional podem divergir | cap17 | o fiscal segue as notas; o operacional, compras, pedidos e pátio; um não corrige o outro (tela de comparação) |
+| Guardar os XMLs é da empresa | cap19 | baixar o pacote todo mês e guardar cópia própria além da do contador |
 Do código (não estão na fonte): peso sempre em quilos, a tela avisa se parecer tonelada (cap02); só chega NFS-e de cidade que entrou
 no sistema nacional (cap09); cada NFS-e recebida conta na cota (cap09, na tela do diálogo). Novos no 1.60.10: o saldo inicial é
 número fiscal, combinar com o contador (cap13); a devolução mexe nos impostos da nota original, isso é com o contador (cap15).
@@ -70,6 +76,12 @@ Vale a `JUNCAO_160.md` (18/11). A aula recebe da T16 as notas até a 1254 e cria
   a Fundição devolve 40 kg de cobre mel, R$ 1.916,00; CFOP de devolução de venda, o que a T16 fixar pela tela) e **1254**
   (complementar, R$ 250,00, sem efeito no estoque fiscal); 1246 e 1247 inutilizadas; Notas Recebidas (NF-e) ligado, com a 2157 (Auto
   Peças Vale Forte, **640 kg de bateria, lançada no estoque fiscal**) e a **884** (Depósito Irmãos Siqueira, R$ 2.100,00, chave válida).
+- **28/11 (1.60.39) · NF-e recebida da Cooperativa Recomeço (na `t17/inicio`):** a 3871 de 09/11 (850 kg de Alumínio latinha × R$ 6,20 e
+  1.200 kg de Plástico PET × R$ 1,90 = R$ 7.550,00), importada na T16 (cap23) pelo "Importar XML": `origem` "manual", com o XML, sem
+  número nem série (a edge real não grava), manifestação "nenhuma". **Lateral `compra-coop` (só no cap11):** o caixa #85 do Rafael
+  aberto às 08:31 com R$ 1.500,00 (o mesmo da T06). **Criado na tela (cap11):** a compra da Cooperativa, R$ 7.550,00 por Pix da Conta
+  Principal, com a nota carimbada ("Lançada como compra") e as duas linhas no estoque fiscal. Os capítulos seguintes partem da
+  `apos-cap10`/`apos-cap14` e não veem essa compra (nada do que eles falam muda).
 - **Duas NF-e de saída de hoje** (09:05 e 09:12) para a **Serra Fina Alumínio Reciclagem** (Itamonte, MG): **1255**, alumínio perfil
   3.200 kg × R$ 10,40 = R$ 33.280,00, e **1256**, alumínio bloco 2.600 kg × R$ 8,50 = R$ 22.100,00 (soma **R$ 55.380,00**, **5.800 kg**).
 - **MDF-e:** nenhum antes; série 1. **Criado na tela:** nº 1 (cap04, autorizado ~09:40; encerrado no cap05). **Lateral, só à tarde
@@ -93,17 +105,22 @@ Vale a `JUNCAO_160.md` (18/11). A aula recebe da T16 as notas até a 1254 e cria
   física sem nota").
 
 ## Gravação
-- **Rotas:** `/fiscal-ambiental/transporte`, `/transporte/frota`, `/nfse`, `/nfe/recebidas-nfse`, `/nfe/saida`,
-  `/relatorios/nfe` (menu "Relatórios Fiscais", abas "NF-e" e "NFS-e") e `/estoque-fiscal/posicao` (abas "Saldo atual", "Posição em
-  uma data", "Movimentações", "Fiscal × operacional"). Sempre entrando pelo menu quando a câmera precisa mostrar o caminho.
+- **Rotas:** `/fiscal-ambiental/transporte`, `/transporte/frota`, `/nfse`, `/nfe/recebidas`, `/nfe/recebidas-nfse`, `/nfe/saida`, `/compra`
+  (cap11) e `/estoque-fiscal/posicao` (menu "Relatório/Estoque Fiscal", desde o 1.60.15 uma tela só: abas "Saldo atual", "Posição em
+  uma data", "Movimentações", "Relatório de estoque", "Fiscal × operacional", "NF-e" (`/estoque-fiscal/relatorio-nfe`) e "NFS-e"). Sempre entrando pelo menu quando a câmera precisa mostrar o caminho.
+- **28/11 (1.60.39), mundo:** handlers novos `functions/inbound-xml-import.mjs` (o "Importar XML"), `rpc/list_fiscal_document_history.mjs`
+  (o Histórico de MDF-e, NFS-e, NF-e e MTR), `rpc/set_inbound_fiscal_entries.mjs` (a compra com "Registrar também no estoque fiscal");
+  mudados `lib/eco.mjs` (`criarPedido` carimba `inbound_nfe.purchase_id`), `rpc/get_invoices_paged.mjs` (`p_fiscal_config_ids`) e
+  `functions/plugnotas-nfse-dfe-sync.mjs` (o ramo "sefin" da função real: com o motor próprio a edge só avisa que a consulta é automática).
+  Sub-abas: `[aria-label='Navegação da seção']` (no 1.60.39 é uma div `role=navigation`, não mais `<nav>`).
 - **Handlers novos do 1.60.10 (só esta aula):** function `mdfe-contingency` (prepare, status, enclose, download, cancel); RPCs
   `get_invoice_dashboard_secure`, `get_nfse_dashboard`, `get_next_nfse_number`, `record_fiscal_inventory_entries`;
   `lib/estoque_fiscal.mjs` com os CFOP de devolução (2202, 5202, 6202) e as NF-e recebidas com lançamento fiscal. Continuam:
   `mdfe_contingency_availability`, `get_mdfe_stats`, `get_fiscal_inventory_position` (+ `_at`), `get_fiscal_inventory_history_paged`,
   `get_fiscal_inventory_report_data`, `get_inventory_report_data`, `count_invoices_for_export`, `fiscal_onboarding_status`,
   `plugnotas-nfse-servicos-municipio`, `plugnotas-emit-nfse`, `plugnotas-nfse-status`, `plugnotas-download`, `plugnotas-mdfe-download`.
-- **Sementes** (`rec/mundo/seeds-extra/t17/`): `inicio`, `mdfe2-rejeitado` e `nfse-recebidas` saem de `rec/t17/t17_sementes.py`; a
-  cadeia `apos-cap02`, `04`, `05`, `08`, `09`, `10`, `13` sai do estado do ensaio (`t17_semente.py`) ou, sem navegador, de
+- **Sementes** (`rec/mundo/seeds-extra/t17/`): `inicio`, `mdfe2-rejeitado`, `nfse-recebidas` e `compra-coop` (28/11) saem de `rec/t17/t17_sementes.py`; a
+  cadeia `apos-cap02`, `04`, `05`, `08`, `09`, `10`, `14` (era `13`; renomeada em 28/11) sai do estado do ensaio (`t17_semente.py`) ou, sem navegador, de
   `t17_semente_api.py`.
 - **Fora do app:** a lista de cidades vem da API do IBGE no navegador: resposta local para SP e MG.
 - **Download:** o ZIP da exportação é gerado no navegador; o robô só deixa o download acontecer. O conteúdo aparece na ilustração.

@@ -1,6 +1,6 @@
 {
  "name": "t17-cap17",
- "title": "T17 · Cap. 17 · O pacote do mês (narração 80,0 s ESTIMADA; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T14:40:00-03:00)",
+ "title": "T17 · Cap. 17 · Fiscal e operacional (narração 84,7 s ESTIMADA; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T14:40:00-03:00)",
  "seed": "t17-cap17",
  "pace": 0.5,
  "cps": 9,
@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
   "cato_adoption_nudge_38814e47-876a-5977-a5f7-53af364c17bb_34c36c63-0890-5e89-8963-7c77b7996908": "{\"count\":99,\"lastShownAt\":4102444800000}",
   "pwa-install-dismissed": "true",
@@ -22,7 +22,7 @@
  },
  "seedExtra": [
   "t17/inicio",
-  "t17/apos-cap13"
+  "t17/apos-cap14"
  ],
  "prewarm": [
   "/login"
@@ -71,24 +71,6 @@
   },
   {
    "do": "goto",
-   "url": "/fiscal-ambiental/nfe/saida"
-  },
-  {
-   "do": "waitFor",
-   "text": "Notas Recebidas",
-   "timeout": 30
-  },
-  {
-   "do": "waitFor",
-   "idle": true,
-   "timeout": 25
-  },
-  {
-   "do": "wait",
-   "seconds": 0.3
-  },
-  {
-   "do": "goto",
    "url": "/fiscal-ambiental/estoque-fiscal/posicao"
   },
   {
@@ -100,14 +82,6 @@
    "do": "waitFor",
    "idle": true,
    "timeout": 25
-  },
-  {
-   "do": "wait",
-   "seconds": 0.8
-  },
-  {
-   "do": "eval",
-   "js": "(()=>{const tem=[...document.querySelectorAll('aside a, [data-sidebar=sidebar] a')].some(a=>a.textContent.trim()===\"Notas Fiscais (NF-e)\");if(tem)return 'ja aberto';const b=[...document.querySelectorAll('aside button, [data-sidebar=sidebar] button')].find(b=>b.textContent.trim()===\"Fiscal & Ambiental\");if(!b)return 'SEM ALVO';b.click();return 'aberto'})()"
   },
   {
    "do": "wait",
@@ -131,93 +105,35 @@
   {
    "do": "click",
    "target": {
-    "role": "link",
-    "name": "Notas Fiscais (NF-e)",
-    "exact": true,
-    "within": "aside, [data-sidebar=sidebar]"
-   },
-   "at": 4.05,
-   "label": "Notas Fiscais (NF-e) no menu"
-  },
-  {
-   "do": "click",
-   "target": {
     "role": "button",
-    "name": "Saída",
+    "name": "Fiscal × operacional",
     "exact": true,
-    "within": "nav[aria-label='Navegação da seção']"
+    "within": "[aria-label='Navegação da seção']"
    },
-   "at": 5.41,
-   "label": "aba Saída"
+   "at": 1.14,
+   "label": "aba Fiscal × operacional"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Comparação por material",
+    "within": "main"
+   },
+   "seconds": 0.4,
+   "at": 6.25,
+   "label": "Comparação por material",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "click",
    "target": {
-    "selector": "main button[aria-label='Mais opções de NF-e']"
+    "selector": "main button[role=combobox]",
+    "hasText": "Este mês"
    },
-   "at": 6.46,
-   "label": "Mais opções de NF-e (⋮)"
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "menuitem",
-    "name": "Exportação Contábil"
-   },
-   "at": 7.92,
-   "label": "Exportação Contábil",
+   "at": 9.04,
+   "label": "período: Mês passado (abre)",
    "noScroll": true
-  },
-  {
-   "do": "waitFor",
-   "text": "Baixar Pacote",
-   "timeout": 10
-  },
-  {
-   "do": "mark",
-   "name": "L2",
-   "at": 10.27
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Gera um pacote ZIP com XMLs",
-    "within": "[role=dialog]"
-   },
-   "seconds": 1.2,
-   "at": 11.99,
-   "label": "descrição do pacote",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L3",
-   "at": 17.6
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "#export-fiscal-config"
-   },
-   "seconds": 1.2,
-   "at": 19.33,
-   "label": "Emitente / CNPJ: Todos os CNPJs",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L4",
-   "at": 23.42
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] button[role=combobox] >> nth=1"
-   },
-   "at": 23.42,
-   "label": "Período: Mês passado (abre)"
   },
   {
    "do": "click",
@@ -226,149 +142,124 @@
     "name": "Mês passado",
     "exact": true
    },
-   "at": 24.84,
-   "label": "Período: Mês passado"
+   "at": 10.4,
+   "label": "período: Mês passado"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 12.47
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Entradas com diferença",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 19.51,
+   "label": "Entradas com diferença (Compras × notas de entrada)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Saídas com diferença",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 21.25,
+   "label": "Saídas com diferença (Vendas × notas de saída)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Materiais conferindo",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 22.62,
+   "label": "Materiais conferindo (Pedidos e notas batem)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Alertas",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 23.68,
+   "label": "Alertas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 25.11
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.offsetParent!==null&&e.textContent.trim()===\"Metal amarelo (latão)\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-420);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 25.11,
+   "label": "rola até o metal amarelo"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Metal amarelo') td >> nth=3"
+   },
+   "seconds": 1.6,
+   "at": 27.02,
+   "label": "Metal amarelo, Entradas: compras 500, notas 0, diferença −500 sem nota",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 33.81
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Metal amarelo') td >> nth=3"
+   },
+   "seconds": 1.2,
+   "at": 40.4,
+   "label": "(continua) compra de pessoa física sem nota",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 25.97
-  },
-  {
-   "do": "click",
-   "target": {
-    "text": "Incluir notas destinadas ao CNPJ",
-    "exact": true,
-    "within": "[role=dialog]"
-   },
-   "at": 30.1,
-   "label": "marca Incluir notas destinadas ao CNPJ"
+   "at": 43.73
   },
   {
    "do": "hover",
    "target": {
-    "text": "XMLs de NF-e emitidas por fornecedores",
-    "within": "[role=dialog]"
+    "selector": "main tbody tr:has-text('Metal amarelo') td >> nth=6"
    },
-   "seconds": 1.5,
-   "at": 35.74,
-   "label": "XMLs de NF-e emitidas por fornecedores (xmls/destinadas)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L6",
-   "at": 40.75
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Tipo de nota",
-    "exact": true,
-    "within": "[role=dialog]"
-   },
-   "seconds": 0.5,
-   "at": 41.15,
-   "label": "Tipo de nota: Saída e Entrada",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Status",
-    "exact": true,
-    "within": "[role=dialog]"
-   },
-   "seconds": 0.8,
-   "at": 42.62,
-   "label": "Status: todos marcados",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L7",
-   "at": 48.38
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Incluir DANFEs (PDFs)",
-    "within": "[role=dialog]"
-   },
-   "seconds": 0.6,
-   "at": 50.26,
-   "label": "Incluir DANFEs (PDFs)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Incluir MDF-e",
-    "within": "[role=dialog]"
-   },
-   "seconds": 0.8,
-   "at": 52.39,
-   "label": "Incluir MDF-e's",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L8",
-   "at": 54.88
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "notas no período",
-    "within": "[role=dialog]"
-   },
-   "seconds": 0.8,
-   "at": 54.88,
-   "label": "prévia: 21 notas no período",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Destinadas:",
-    "within": "[role=dialog]"
-   },
-   "seconds": 1.5,
-   "at": 60.94,
-   "label": "Destinadas: 0 XML(s)",
+   "seconds": 1.6,
+   "at": 43.73,
+   "label": "Metal amarelo, Saídas: vendas 500, notas 1.100, diferença +600 nota a mais",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"21 notas no período\", \"12 saída\", \"9 entrada\", \"Destinadas: 0 XML(s)\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere prévia de outubro"
-  },
-  {
-   "do": "mark",
-   "name": "L9",
-   "at": 72.62
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Baixar Pacote",
-    "exact": true
-   },
-   "at": 72.62,
-   "label": "Baixar Pacote"
-  },
-  {
-   "do": "waitFor",
-   "text": "Exportação pronta",
-   "timeout": 40
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Metal amarelo (latão)\", \"sem nota\", \"nota a mais\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere metal amarelo: sem nota nas entradas e nota a mais nas saídas"
   },
   {
    "do": "scroll",
@@ -379,8 +270,90 @@
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 78.16,
-   "label": "cursor em repouso (download)"
+   "at": 47.47,
+   "label": "cursor em repouso (a ilustração fiscal × operacional entra)"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 58.58
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 68.19
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.offsetParent!==null&&e.textContent.trim().startsWith(\"Como ler a diferença (notas − pedidos)\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-260);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 68.19,
+   "label": "rola até Como ler a diferença"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Como ler a diferença",
+    "within": "main"
+   },
+   "seconds": 2.0,
+   "at": 70.9,
+   "label": "Como ler a diferença: Sem nota, Nota a mais, Pedidos não finalizados",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 77.04
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=document.querySelector('main h1, main h2, main table, main [role=tablist]');const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,t0=performance.now();if(y0<3)return 'ok';await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0*(1-e),behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo'})()",
+   "at": 77.04,
+   "label": "volta ao topo"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Exportar",
+    "exact": true
+   },
+   "at": 77.63,
+   "label": "Exportar (abre)",
+   "noScroll": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "PDF"
+   },
+   "seconds": 0.5,
+   "at": 79.55,
+   "label": "Exportar estoque fiscal: PDF",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Excel"
+   },
+   "seconds": 0.8,
+   "at": 80.77,
+   "label": "Exportar estoque fiscal: Excel",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 82.97,
+   "label": "fecha o menu (sem baixar)"
   },
   {
    "do": "eval",
@@ -390,7 +363,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 80.03
+   "at": 84.68
   }
  ]
 }

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# T16 (1.60.22, 1600x900) · lote de ensaios em sequência, um capítulo por vez pela fila (rec/fila.sh --prio 16), com MP4 ultrafast só
+# T16 (1.60.39 desde 28/11; era 1.60.22; 1600x900) · lote de ensaios em sequência, um capítulo por vez pela fila (rec/fila.sh --prio 16), com MP4 ultrafast só
 # para a folha de contato. Capítulo que mexe no banco e sai com 0 passo falho no rápido captura a semente apos-capNN na MESMA trava.
 #   bash rec/t16/t16_lote160.sh [--junto] 0 1 2 ... [--completo 15 16 ...]   (antes de --completo: rápido; depois: completo; --junto: a
 #   lista inteira numa senha só da fila, para a espera da fila não se repetir a cada capítulo)
@@ -12,7 +12,7 @@ MODO=rapido
 PORTA=54316
 export FAKE_NOW=2026-11-10T08:30:00-03:00 FAKE_URL=http://127.0.0.1:$PORTA TUT_USER=rafael@reciclavalemetais.example
 TUT_SENHA=$(head -c 12 /dev/urandom | base64 | tr -dc 'A-Za-z0-9' | head -c 14); export TUT_SENHA
-export T16_VERSAO=1.60.22   # a versão do build (app/dist/.versao-app) que o gerar.py espera (VERSAO)
+export T16_VERSAO=1.60.39   # a versão do build (app/dist/.versao-app) que o gerar.py espera (VERSAO)
 MUTA=" 3 4 5 6 7 9 11 12 14 15 16 17 18 19 21 22 23 "
 PID=$(cat rec/.runtime/fake$PORTA.pid 2>/dev/null)
 tr '\0' '\n' < /proc/$PID/environ 2>/dev/null | grep -qx "FAKE_PORT=$PORTA" || { echo "instância $PORTA fora do ar"; exit 3; }

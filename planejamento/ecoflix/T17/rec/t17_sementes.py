@@ -15,8 +15,9 @@ E o que é do T17 (T17/plano.md, "Mundo: o que esta aula precisa"; JUNCAO_160.md
    cima em 500 kg, mais 500 kg (nenhum material fica negativo no Saldo atual nem no Kardex). A BATERIA fica SEM saldo inicial
    (a faixa amarela do "Saldo atual"): a aula informa 3.320 kg em 31/10/2026 no capítulo do saldo inicial.
  - Série 1 da NFS-e (`nfse_series`, último número 13) e `nfse_dfe_fonte` = "sefin" (o motor próprio busca as NFS-e recebidas).
-Também escreve as sementes laterais: t17/mdfe2-rejeitado (o MDF-e nº 2 recusado, só à tarde) e t17/nfse-recebidas (as duas NFS-e
-que o motor trouxe depois de ativar o recurso).
+Também escreve as sementes laterais: t17/mdfe2-rejeitado (o MDF-e nº 2 recusado, só à tarde), t17/nfse-recebidas (as duas NFS-e
+que o motor trouxe depois de ativar o recurso) e, desde 28/11 (1.60.39), t17/compra-coop (o caixa #85 aberto, só no capítulo 11).
+28/11: a inicio ganhou a NF-e 3871 da Cooperativa Recomeço, importada pelo XML na T16 (cap23).
 Frota (FKD2E41 com tara 6.380 kg, motoristas só com nome e telefone), configuração fiscal (Taubaté, IM, certificado, MDF-e 0,
 NFS-e recebidas desligado) e as NFS-e 12 e 13 já vêm do mundo base.
 Uso: python3 -I rec/t17/t17_sementes.py"""
@@ -126,6 +127,17 @@ def laterais(porn, hoje):
             'inbound_nfse': recebidas,
             '_patch': {'company_fiscal_config': [{'match': {'id': FISCAL}, 'set': {'nfse_dfe_last_sync_at': utc(hoje, '14:24'), 'nfse_dfe_ultimo_erro': None}}]}}
     json.dump(lat2, open(os.path.join(os.path.dirname(SAIDA), 'nfse-recebidas.json'), 'w', encoding='utf8'), ensure_ascii=False, indent=1)
+    # 28/11 (1.60.39): o caixa #85 do Rafael aberto às 08:31 com R$ 1.500,00 (o mesmo da T06, apos-cap02): a tela de Compra do
+    # capítulo 11 pede caixa aberto. Só no 11 (a compra da Cooperativa sai por Pix, sem mexer no dinheiro do caixa).
+    lat3 = {'_doc': 'T17 · lateral (só no capítulo 11): o caixa #85 do Rafael aberto às 08:31 com R$ 1.500,00, como na T06. A NF-e 3871 da '
+                    'Cooperativa Recomeço vem da t17/inicio. Gerado por rec/t17/t17_sementes.py.',
+            'cash_register': [{'id': '@id:caixa.85', 'company_id': COMPANY, 'register_number': 85, 'status': 'open', 'opened_at': utc(hoje, '08:31'),
+                               'opened_by': '@id:user.rafael', 'initial_opening_balance': 1500, 'opening_balance': 1500, 'closing_balance': None,
+                               'closed_at': None, 'currency': 'BRL', 'created_at': utc(hoje, '08:31')}],
+            'cash_transactions': [{'id': '@id:ct.t17.abre85', 'company_id': COMPANY, 'cash_register_id': '@id:caixa.85', 'type': 'opening', 'amount': 1500,
+                                   'description': 'Abertura do Caixa #85', 'transaction_at': utc(hoje, '08:31'), 'transaction_date': hoje,
+                                   'created_at': utc(hoje, '08:31'), 'created_by': '@id:user.rafael', 'excluded_from_dre': False}]}
+    json.dump(lat3, open(os.path.join(os.path.dirname(SAIDA), 'compra-coop.json'), 'w', encoding='utf8'), ensure_ascii=False, indent=1)
 
 
 def main():
@@ -211,13 +223,24 @@ def main():
             'situacao_sefaz': 'autorizada', 'manifestacao': manif, 'manifestacao_data': utc(hoje, '08:59'), 'natureza': 'Venda de mercadorias',
             'cfop_principal': '5102', 'resumo': False, 'nsu': str(4180 + len(recebidas)), 'created_at': utc(hoje, '08:58'), 'updated_at': utc(hoje, '08:59')})
 
+    # 1.60.39 (28/11): a NF-e 3871 da Cooperativa Recomeço, importada na T16 (cap23) pelo "Importar XML". Mesmas colunas que a edge
+    # inbound-xml-import grava (sem número nem série: a edge não grava) + o fiscal_config_id do gatilho e a manifestação padrão.
+    # A compra dela é o capítulo 11 (lateral compra-coop).
+    xml_coop = open(os.path.join(HERE, '..', 't16', 'assets', 'NFe-3871-Cooperativa-Recomeco.xml'), encoding='utf8').read()
+    recebidas.append({
+        'id': '@id:t17.inbound_nfe.3871', 'company_id': COMPANY, 'fiscal_config_id': FISCAL, 'chave': '35261197250936000102550010000038711640291473',
+        'origem': 'manual', 'emitente_cnpj': '97250936000102', 'emitente_nome': 'Cooperativa Recomeço', 'valor': 7550.0,
+        'data_emissao': '2026-11-09T16:20:00-03:00', 'natureza': 'Venda de mercadoria', 'situacao_sefaz': 'autorizada', 'xml_content': xml_coop,
+        'resumo': False, 'manifestacao': 'nenhuma', 'purchase_id': None, 'created_at': utc(hoje, '09:02'), 'updated_at': utc(hoje, '09:02')})
+
     # a nota 2157 (bateria da Auto Peças Vale Forte, 640 kg a R$ 3,10) já foi lançada no estoque fiscal na T16
     lanc = [{'id': '@id:t17.inbound_fiscal.2157', 'company_id': COMPANY, 'inbound_nfe_id': '@id:t17.inbound_nfe.2157',
              'material_id': '@id:material.bateria', 'quantity': 640, 'unit': 'KG', 'valor': 1984.0, 'effect': 'entry',
              'created_by': '@id:user.rafael', 'created_at': utc(hoje, '08:59')}]
     out = {
-        '_doc': 'T17 · estado de partida (10/11 09:30, app 1.60.10): o fim do T16 que aparece no T17 (NF-e 1249 cancelada, 1250 a 1254, 1246 e '
-                '1247 inutilizadas, Notas Recebidas ligado, a 2157 lançada no estoque fiscal) + NF-e 1255 e 1256 da Serra Fina + saldo inicial '
+        '_doc': 'T17 · estado de partida (10/11 09:30, app 1.60.39): o fim do T16 que aparece no T17 (NF-e 1249 cancelada, 1250 a 1254, 1246 e '
+                '1247 inutilizadas, Notas Recebidas ligado, a 2157 lançada no estoque fiscal, a 3871 da Cooperativa importada pelo XML) + NF-e '
+                '1255 e 1256 da Serra Fina + saldo inicial '
                 'fiscal de 01/08 (menos a bateria) + série 1 da NFS-e. Gerado por rec/t17/t17_sementes.py.',
         'inbound_nfe_fiscal_entries': lanc,
         'nfse_series': [{'id': '@id:t17.nfse_serie.1', 'company_id': COMPANY, 'fiscal_config_id': FISCAL, 'serie_number': 1,

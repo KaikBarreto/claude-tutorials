@@ -3,7 +3,7 @@
 capítulo que grava faz na tela, e chama o t17_semente.py para gravar a semente cumulativa. Serve de reserva: o ensaio de cada
 capítulo regrava a mesma semente com o estado deixado pela tela (t17_lote.sh, quando o capítulo passa sem falha).
 Cadeia: inicio -> apos-cap02 (frota) -> apos-cap04 (MDF-e nº 1 autorizado, 09:3x) -> [14:20] apos-cap05 (encerrado) -> apos-cap08
-(NFS-e 14 autorizada) -> apos-cap09 (NFS-e recebidas ativado) -> apos-cap10 (+ as duas notas recebidas) -> apos-cap13 (saldo inicial
+(NFS-e 14 autorizada) -> apos-cap09 (NFS-e recebidas ativado) -> apos-cap10 (+ as duas notas recebidas) -> apos-cap14 (saldo inicial (capítulo 14 desde 28/11; era apos-cap13)
 fiscal da bateria, 3.320 kg em 31/10/2026).
 Uso (fora da fila: não abre navegador): TUT_SENHA=... python3 -I rec/t17/t17_semente_api.py"""
 import hashlib
@@ -128,8 +128,8 @@ def main():
         'p_entries': [{'material_id': sid('material.bateria'), 'quantity': 3320}], 'p_source': 'manual', 'p_reason': 'Saldo inicial informado',
         'p_client_request_id': sid('t17.saldo_inicial_bateria')})
     print(' saldo inicial:', r)
-    gravar('apos-cap13')
-    semear('t17/inicio', 't17/apos-cap13')
+    gravar('apos-cap14')
+    semear('t17/inicio', 't17/apos-cap14')
     pos = http('POST', '/rest/v1/rpc/get_fiscal_inventory_position', {'p_company_id': CID, 'p_fiscal_config_id': None})
     print(' bateria:', [(x['current_quantity'], x['has_opening_balance']) for x in pos if 'Bateria' in x['material_name']])
 

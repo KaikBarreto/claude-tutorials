@@ -7,6 +7,13 @@
 - **Regime do exemplo:** Lucro Real (Kaik, 10/11). A fala mostra os campos e diz que quem define é o contador; nenhum
   valor de imposto é explicado. **Emissão simulada:** não há SEFAZ, provedor, cota real nem numeração a queimar.
 - **Duração:** ~35 min de vídeo (5.241 palavras de fala, ~33,6 min), numa aula só (Kaik, 18/11: "uma aula só do fiscal, mesmo que grande"). Passada do app 1.60.10 em 18/11: `cobertura_160.md` aplicada, 25 capítulos (6 novos: 11, 13, 14, 15, 17 e 18).
+- **28/11: app 1.60.39** (`origin/main` de 26/11; detalhe e código em `andamento_160.md`, seção "28/11 · 1.60.39"). Mudou para a aula:
+  aba "Impostos" (era "Impostos (padrão)") com as abas "NF-e e NFC-e" e "NFS-e" (cap04); o "Histórico" da NF-e é o diálogo único
+  `FiscalDocumentHistoryDialog` (RPC `list_fiscal_document_history`, cap15); o "Filtros" da lista virou um painel com a seção "Status"
+  (cap20); Notas Recebidas ganhou, em cima, a escolha "NF-e" / "NFS-e" e o botão **"Importar XML"** (edge `inbound-xml-import`: confere
+  destinatário e protocolo; cap21 e cap23); a conferência do "Lançar compra…" mostra "Produtos", "Encargos/descontos" e "Total da nota"
+  e a caixa "Registrar também no estoque fiscal (não altera o saldo físico)" (a compra em si é o cap11 da T17). Motor fiscal próprio
+  (1.60.24) e ciência automática (1.60.33) não mudam a tela. 25 capítulos, 5.318 palavras (eram 5.264).
 - Base: `inventario.md` (código 1.59.154) + `cobertura_160.md` e a seção 15 do inventário (o que mudou no 1.60.10, conferido na tela). Usuário logado: Rafael Nogueira (MASTER), desktop 1280×800, tema claro.
   `FAKE_NOW=2026-11-10T08:30:00-03:00`; todos os capítulos no mesmo dia, em ordem.
 
@@ -37,7 +44,7 @@
 | 20 | DOCUMENTOS / DANFE e XML | Menu da 1250 (DANFE, XML, Comprovante), o DANFE novo e a Reforma em 1º/12, "Visualizar" › XML, "XML de Cancelamento", detalhes da linha, busca/período/"Filtros"/"Homologação", "Exportação Contábil". [ILUSTRAÇÃO] | `apos-cap19` |
 | 21 | NOTAS RECEBIDAS / As notas recebidas | "Ativar Notas Recebidas" → as duas notas. [ILUSTRAÇÃO] | `apos-cap19` |
 | 22 | NOTAS RECEBIDAS / Manifestar a nota | "Ciência"; "Buscar documento"; grupos "Financeiro" e "Manifestar"; "Confirmar operação". [ILUSTRAÇÃO] | `apos-cap21` |
-| 23 | NOTAS RECEBIDAS / Importar pelo XML | "Importar nota" (XML da Cooperativa) → "Lançar compra…": "alta" e "confira". [ILUSTRAÇÃO] | `apos-cap22` |
+| 23 | NOTAS RECEBIDAS / Importar pelo XML | **1.60.39:** "Importar XML" (XML da Cooperativa, toast "NF-e importada com sucesso."); "Importar nota" pela chave (só citado) → "Lançar compra…": "alta" e "confira"; "Conferir na tela de compra" sem clicar (a compra é o cap11 da T17). [ILUSTRAÇÃO] | `apos-cap22` |
 | 24 | RESUMO / Recapitulando | Montagem; o Cato fica no tutorial dele; "Próximo: Transporte, serviço e o contador". | `apos-cap23` |
 
 Transições faladas: 01→02 "Antes de qualquer nota, a configuração"; 02→03 "Então, o certificado"; 03→04 "Com o
@@ -88,7 +95,7 @@ Recebidas desligado (`dfe_ativo` false); `companies.nfe_tier` 1. Endereço da em
 | CC-e (cap 12) | 1250: "Onde se lê 'Placa FJR3B27', leia-se 'Placa GKM5D18'. A transportadora trocou o veículo da carga." |
 | Inutilização (cap 13) | Série 1, ano 2026, 1246 a 1247, justificativa "Numeração pulada na emissão de outubro e não utilizada" |
 | Notas recebidas (cap 15) | Auto Peças Vale Forte, NF-e nº 2157 de 05/11, "SUCATA DE BATERIA AUTOMOTIVA" 640 kg × R$ 3,10 = R$ 1.984,00 (a compra de 05/11, Pix da Conta Secundária); Depósito Irmãos Siqueira, nº 884 de 06/11, "FERRO PESADO" 1.200 kg × R$ 0,95, "FERRO MISTO" 320 kg × R$ 0,75 e "COBRE MISTO" 20 kg × R$ 36,00 = R$ 2.100,00 (a compra no saldo do T4). As duas "Autorizada", manifestação "Ciência", com XML |
-| XML importado (cap 17) | `NFe-3871-Cooperativa-Recomeco.xml`: Cooperativa Recomeço (CNPJ da semente), nº 3871 de 09/11, "ALUMINIO LATINHA" 850 KG × 6,20 e "PLASTICO PET PRENSADO" 1.200 KG × 1,90 = R$ 7.550,00 (dá "alta" e "confira" pela regra do inventário 13) |
+| XML importado (cap 23; 1.60.39 pelo "Importar XML", entra em `inbound_nfe` com `origem` "manual" e sem número nem série, como a edge real) | `NFe-3871-Cooperativa-Recomeco.xml`: Cooperativa Recomeço (CNPJ da semente), nº 3871 de 09/11, "ALUMINIO LATINHA" 850 KG × 6,20 e "PLASTICO PET PRENSADO" 1.200 KG × 1,90 = R$ 7.550,00 (dá "alta" e "confira" pela regra do inventário 13) |
 
 **Mundo novo do 1.60.10 (JUNCAO_160, seção 6):**
 
@@ -116,9 +123,12 @@ NFS-e, pacote do contador). Atualizar o `MUNDO_FICTICIO.md`.
   `ibge-cities` (só se faltar IBGE), `plugnotas-emit` (sucesso com `plugnotasId`), `plugnotas-status` (troca para
   `emitida` em ~5 s, com chave, protocolo e `authorized_at`), `plugnotas-cancel` (`confirmed` true), `plugnotas-cce`
   (envio e status `CONCLUIDO`), `plugnotas-inutilize` (sucesso; grava `nfe_inutilized_numbers`), `plugnotas-download`
-  (PDF de DANFE fictício com os dados da nota, XML da nota e XML de cancelamento), `plugnotas-enable-dfe`,
-  `plugnotas-dfe-sync`, `plugnotas-manifestar` (sem fila: "Operação confirmada junto à SEFAZ").
-- RPCs/tabelas: `certificate_vault_status`, `count_fiscal_documents_in_month` (0 no cap 08), `get_invoices_paged` (inclui
+  (PDF de DANFE fictício com os dados da nota, XML da nota e XML de cancelamento; **a cena do papel usa a DANFE de exemplo do Kaik,
+  pendente**), `plugnotas-enable-dfe`,
+  `plugnotas-dfe-sync`, `plugnotas-manifestar` (sem fila: "Operação confirmada junto à SEFAZ"); **1.60.39:** `inbound-xml-import`
+  (o "Importar XML", handler novo em 28/11).
+- RPCs/tabelas: **1.60.39:** `list_fiscal_document_history` (o Histórico, handler novo em 28/11) e `get_invoices_paged` com
+  `p_fiscal_config_ids` (filtro do emitente, só com mais de um CNPJ); `certificate_vault_status`, `count_fiscal_documents_in_month` (0 no cap 08), `get_invoices_paged` (inclui
   as inutilizadas de `nfe_inutilized_numbers` com `p_include_inutilizadas`), `dfe_inbound_import_enqueue` e a fila de jobs
   do import (fica "succeeded" em ~3 s), `company_fiscal_config`, `fiscal_scenarios`, `nfe_series`, `transportadoras`,
   `invoices`, `invoice_items`, `invoice_orders`, `nfe_module_tiers`, notas recebidas (`useInboundNfe`).
@@ -157,3 +167,8 @@ NFS-e, pacote do contador). Atualizar o `MUNDO_FICTICIO.md`.
 5. **"Conferir na tela de compra" não é clicado** no cap 17 (a tela de Compra pede caixa aberto, assunto do T7): a fala diz
    o que o botão faz, com o texto da própria dica.
 6. "Cancelado continua contando na cota" vem da fonte; a RPC não está na cópia (inventário 14.3).
+7. **(28/11) DANFE de exemplo do Kaik** nas cenas do papel (cap20 e cap24, `cenas/ilustracoes.json`, pendente): é de homologação
+   ("SEM VALOR FISCAL") e a nota da aula é de produção e autorizada. Conferir ao receber: modelo de antes de 01/12/2026 (sem IBS/CBS) e o
+   destinatário escrito como "Fundição Bandeira do Vale Ltda". Alternativa: usar só num trecho com a marca coberta.
+8. **(28/11) Importar XML × Importar nota**: o 1.60.39 deixa os dois botões na mesma tela. A aula ensina o "Importar XML" (o que o
+   changelog anuncia) e só cita o "Importar nota" para a chave de acesso.

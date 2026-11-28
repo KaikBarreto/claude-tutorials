@@ -1,6 +1,6 @@
 {
  "name": "t16-cap23",
- "title": "T16 · Cap. 23 · Importar pelo XML (narração ESTIMADA 75,7 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T16 · Cap. 23 · Importar pelo XML (narração ESTIMADA 93,7 s; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t16-cap23",
  "pace": 0.5,
  "cps": 40,
@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.22",
-  "notification_shown_version": "1.60.22",
+  "app_version": "1.60.39",
+  "notification_shown_version": "1.60.39",
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
@@ -100,13 +100,13 @@
    "do": "hover",
    "target": {
     "role": "button",
-    "name": "Importar nota recebida",
+    "name": "Importar XML",
     "exact": true,
     "within": "main"
    },
    "seconds": 0.15,
    "at": 11.42,
-   "label": "Importar nota",
+   "label": "Importar XML (1.60.39, em cima da lista)",
    "optional": true,
    "timeout": 4
   },
@@ -116,63 +116,21 @@
    "at": 12.15
   },
   {
-   "do": "click",
+   "do": "upload",
    "target": {
     "role": "button",
-    "name": "Importar nota recebida",
+    "name": "Importar XML",
     "exact": true,
     "within": "main"
    },
-   "at": 13.04,
-   "label": "Importar nota"
-  },
-  {
-   "do": "waitFor",
-   "text": "Importar nota recebida",
-   "timeout": 10
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] [role=tab]:has-text('Arquivo XML'), [role=dialog] button:has-text('Arquivo XML')"
-   },
-   "at": 15.26,
-   "label": "aba Arquivo XML"
-  },
-  {
-   "do": "upload",
-   "target": {
-    "selector": "[role=dialog] button:has-text('Selecione o XML'), [role=dialog] label:has-text('Selecione o XML')"
-   },
    "file": "assets/NFe-3871-Cooperativa-Recomeco.xml",
-   "at": 16.83,
-   "label": "o XML da Cooperativa (NFe-3871-Cooperativa-Recomeco.xml)"
-  },
-  {
-   "do": "mark",
-   "name": "L3",
-   "at": 19.56
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] button:text-is('Importar nota')"
-   },
-   "at": 19.77,
-   "label": "Importar nota (janela)"
+   "at": 13.04,
+   "label": "Importar XML: o XML da Cooperativa (NFe-3871-Cooperativa-Recomeco.xml)"
   },
   {
    "do": "waitFor",
-   "text": "Nota importada",
+   "text": "NF-e importada com sucesso.",
    "timeout": 15
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] button:text-is('Concluir')"
-   },
-   "at": 23.58,
-   "label": "Concluir"
   },
   {
    "do": "waitFor",
@@ -180,27 +138,67 @@
    "timeout": 10
   },
   {
+   "do": "mark",
+   "name": "L3",
+   "at": 17.52
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Cooperativa Recomeço')"
+   },
+   "seconds": 1.2,
+   "at": 20.02,
+   "label": "zoom: a linha Cooperativa Recomeço R$ 7.550,00",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"7.550,00\", \"Autorizada\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody tr\")].filter(e=>!true||e.innerText.includes(\"Cooperativa Recome\\u00e7o\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Cooperativa importada pelo XML, R$ 7.550,00, Autorizada"
+  },
+  {
    "do": "hover",
    "target": {
     "selector": "main tbody tr:has-text('Cooperativa Recomeço')"
    },
    "seconds": 0.15,
-   "at": 25.25,
-   "label": "a linha Cooperativa Recomeço R$ 7.550,00",
+   "at": 31.71,
+   "label": "a linha na lista com as outras",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 25.91
+   "at": 32.37
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Importar nota recebida",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.5,
+   "at": 35.7,
+   "label": "Importar nota (pela chave de acesso, sem clicar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 41.98
   },
   {
    "do": "click",
    "target": {
     "selector": "main tr:has-text('Cooperativa Recomeço') button[title='Ações']"
    },
-   "at": 26.21,
+   "at": 42.28,
    "label": "abre o menu da nota da Cooperativa"
   },
   {
@@ -209,7 +207,7 @@
     "role": "menuitem",
     "name": "Lançar compra…"
    },
-   "at": 26.89,
+   "at": 42.96,
    "label": "Lançar compra…",
    "noScroll": true
   },
@@ -224,15 +222,15 @@
     "selector": "[role=dialog] :text-matches('^Fornecedor:')"
    },
    "seconds": 0.77,
-   "at": 30.77,
+   "at": 46.83,
    "label": "Fornecedor: Cooperativa Recomeço por CNPJ/CPF",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
-   "name": "L5",
-   "at": 32.49
+   "name": "L6",
+   "at": 48.55
   },
   {
    "do": "type",
@@ -243,7 +241,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 33.24,
+   "at": 49.3,
    "label": "zoom: ALUMINIO LATINHA, selo alta, Alumínio latinha"
   },
   {
@@ -253,15 +251,15 @@
     "nth": 0
    },
    "seconds": 0.15,
-   "at": 42.13,
+   "at": 58.19,
    "label": "selo alta",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
-   "name": "L6",
-   "at": 42.63
+   "name": "L7",
+   "at": 58.7
   },
   {
    "do": "type",
@@ -272,7 +270,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 43.39,
+   "at": 59.45,
    "label": "zoom: PLASTICO PET PRENSADO, selo confira, Plástico PET"
   },
   {
@@ -282,15 +280,15 @@
     "nth": 0
    },
    "seconds": 1.0,
-   "at": 48.78,
+   "at": 64.84,
    "label": "selo confira",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
-   "name": "L7",
-   "at": 54.52
+   "name": "L8",
+   "at": 70.59
   },
   {
    "do": "hover",
@@ -298,7 +296,7 @@
     "selector": "[role=dialog] :text-matches('A NF-e traz só o peso líquido')"
    },
    "seconds": 0.15,
-   "at": 56.49,
+   "at": 72.56,
    "label": "zoom: A NF-e traz só o peso líquido",
    "optional": true,
    "timeout": 4
@@ -309,7 +307,7 @@
     "selector": "[role=dialog] button:has-text('Conferir na tela de compra')"
    },
    "seconds": 1.5,
-   "at": 57.33,
+   "at": 73.4,
    "label": "Conferir na tela de compra (sem clicar)",
    "noScroll": true,
    "optional": true,
@@ -323,7 +321,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 75.69
+   "at": 93.73
   }
  ]
 }

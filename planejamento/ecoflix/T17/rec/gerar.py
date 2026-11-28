@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""T17 · Transporte, serviço e o contador: gera rec/t17/cap00..cap19.json (roteiros do robô) a partir da voz (t17/narracao/capNN.json).
+"""T17 · Transporte, serviço e o contador: gera rec/t17/cap00..cap20.json (roteiros do robô) a partir da voz (t17/narracao/capNN.json).
 
-EcoSistema 1.60.18 no Supabase falso (mundo da Recicla Vale Metais), computador 1280x800, logado como Rafael Nogueira (MASTER).
+EcoSistema 1.60.39 desde 28/11 (era 1.60.18; andamento_160.md, seção "28/11 · 1.60.39") no Supabase falso (mundo da Recicla Vale Metais), computador 1280x800, logado como Rafael Nogueira (MASTER).
 Cada passo é preso a uma palavra da fala: `at` = início da palavra - folga (o custo do gesto, docs/04 "Custo real dos gestos"), e a marca
 Ln entra no início de cada linha. Quando a voz chegar, rodar de novo com o capNN.json da voz (nada a reescrever).
 Rodar de qualquer pasta: `python3 -I rec/t17/gerar.py [NN ...]`; ensaiar/gravar: `bash rec/t17/t17_grava.sh NN [--rapido]`.
@@ -11,9 +11,10 @@ Relógio: FAKE_NOW 10/11/2026 09:30 nos capítulos 0 a 4 (as NF-e 1255 e 1256 sa
 Cadeia de sementes (rec/mundo/seeds-extra/t17; inicio e as laterais = t17_sementes.py; as outras saem de t17_semente.py, do estado da
 instância 54317 logo depois do ensaio do capítulo, cumulativas; reserva sem navegador: t17_semente_api.py): inicio -> apos-cap02
 (FKD2E41 e Edson completos) -> apos-cap04 (MDF-e nº 1 autorizado) -> apos-cap05 (encerrado) -> apos-cap08 (NFS-e 14 autorizada) ->
-apos-cap09 (NFS-e recebidas ativado) -> [+ lateral nfse-recebidas] apos-cap10 (conta da Balanças Tremembé) -> apos-cap13 (saldo
-inicial fiscal da bateria). Lateral mdfe2-rejeitado: só nos capítulos 6 e 19. Os capítulos 11, 12 e 14 a 17 só leem; o 18 é só
-ilustração e o 19 é a montagem (o robô deixa uma tela parada com as marcas).
+apos-cap09 (NFS-e recebidas ativado) -> [+ lateral nfse-recebidas] apos-cap10 (conta da Balanças Tremembé) -> apos-cap14 (saldo
+inicial fiscal da bateria: capítulo 14 desde 28/11, semente apos-cap14, era apos-cap13). Lateral mdfe2-rejeitado: só nos
+capítulos 6 e 20; lateral compra-coop (o caixa #85 do Rafael aberto): só no 11 (1.60.39: a NF-e recebida da Cooperativa vira compra).
+Os capítulos 12, 13 e 15 a 18 só leem; o 19 é só ilustração e o 20 é a montagem (o robô deixa uma tela parada com as marcas).
 """
 import hashlib
 import json
@@ -27,7 +28,7 @@ NARR = os.path.join(TUT, 't17', 'narracao')
 N0930 = '2026-11-10T09:30:00-03:00'
 N1420 = '2026-11-10T14:20:00-03:00'
 N1440 = '2026-11-10T14:40:00-03:00'
-FAKE_NOW = {n: (N0930 if n <= 4 else N1420 if n <= 9 else N1440) for n in range(20)}
+FAKE_NOW = {n: (N0930 if n <= 4 else N1420 if n <= 9 else N1440) for n in range(21)}
 
 
 def stable_id(chave):
@@ -41,9 +42,9 @@ def stable_id(chave):
 
 RAFAEL = stable_id('user.rafael')
 try:
-    VERSAO = open(os.path.join(TUT, 'app', 'dist', '.versao-app'), encoding='utf8').read().strip() or '1.60.18'
+    VERSAO = open(os.path.join(TUT, 'app', 'dist', '.versao-app'), encoding='utf8').read().strip() or '1.60.39'
 except OSError:
-    VERSAO = '1.60.18'
+    VERSAO = '1.60.39'
 HOJE = '2026-11-10'
 STORAGE = {
     'app_version': VERSAO, 'notification_shown_version': VERSAO, f'dominex:daily-tasks-shown:{RAFAEL}': HOJE,
@@ -53,12 +54,14 @@ STORAGE = {
 }
 NOMES = ['Abertura', 'O que é o MDF-e', 'Veículo e motorista', 'Numeração e percurso', 'Emitir o manifesto', 'Encerrar no fim da viagem',
          'Quando o manifesto não passa', 'A nota de serviço', 'Emitir e acompanhar', 'O serviço que você tomou', 'Da nota recebida à despesa',
-         'Entrada, saída e saldo', 'O estoque pelas notas', 'O saldo inicial', 'Um dia do passado e as movimentações',
+         'Da nota recebida à compra', 'Entrada, saída e saldo', 'O estoque pelas notas', 'O saldo inicial', 'Um dia do passado e as movimentações',
          'Cancelamento e devolução', 'Fiscal e operacional', 'O pacote do mês', 'O que o contador faz', 'Recapitulando']
+# 28/11 (1.60.39): o capítulo 11 é novo (a NF-e recebida vira compra) e os de 11 a 19 viraram 12 a 20. A semente do saldo inicial
+# (capítulo 14, era o 13) virou apos-cap14 (o arquivo foi renomeado); o 11 não deixa semente (os seguintes não veem a compra).
 SEMENTE = {0: None, 1: None, 2: None, 3: 'apos-cap02', 4: 'apos-cap02', 5: 'apos-cap04', 6: 'apos-cap05', 7: 'apos-cap05', 8: 'apos-cap05',
-           9: 'apos-cap08', 10: 'apos-cap09', 11: 'apos-cap10', 12: 'apos-cap10', 13: 'apos-cap10', 14: 'apos-cap13', 15: 'apos-cap13',
-           16: 'apos-cap13', 17: 'apos-cap13', 18: 'apos-cap13', 19: 'apos-cap13'}
-LATERAL = {6: 'mdfe2-rejeitado', 10: 'nfse-recebidas', 19: 'mdfe2-rejeitado'}   # sementes que não seguem na cadeia
+           9: 'apos-cap08', 10: 'apos-cap09', 11: 'apos-cap10', 12: 'apos-cap10', 13: 'apos-cap10', 14: 'apos-cap10', 15: 'apos-cap14',
+           16: 'apos-cap14', 17: 'apos-cap14', 18: 'apos-cap14', 19: 'apos-cap14', 20: 'apos-cap14'}
+LATERAL = {6: 'mdfe2-rejeitado', 10: 'nfse-recebidas', 11: 'compra-coop', 20: 'mdfe2-rejeitado'}   # sementes que não seguem na cadeia
 
 
 def sementes(n):
@@ -308,7 +311,9 @@ PAGINAS = {
     '/fiscal-ambiental/nfse': 'Nota Fiscal de Serviço (NFS-e)',
     '/fiscal-ambiental/nfe/saida': 'Notas Recebidas',
     '/fiscal-ambiental/nfe/recebidas-nfse': 'Notas Recebidas',
-    '/fiscal-ambiental/relatorios/nfe': 'Pendentes + Rejeitadas',
+    '/fiscal-ambiental/nfe/recebidas': 'Notas emitidas contra o seu CNPJ',
+    '/fiscal-ambiental/estoque-fiscal/relatorio-nfe': 'Pendentes + Rejeitadas',   # 1.60.15+: Relatório/Estoque Fiscal, aba NF-e
+    '/compra': 'Voltar para o caixa',
     '/fiscal-ambiental/estoque-fiscal/posicao': 'Saldo fiscal atualizado, por material.',
 }
 
@@ -372,7 +377,7 @@ def capitulo(fn):
 
 
 # ---------------------------------------------------------------- alvos das telas fiscais (conferidos por exploração, rec/t17/_ex)
-NAV = "nav[aria-label='Navegação da seção']"
+NAV = "[aria-label='Navegação da seção']"   # 1.60.39: div role=navigation (HorizontalScrollArrows), não é mais <nav>
 SUBABA = lambda n: BTN(n, within=NAV)                                                  # sub-abas (Manifestos/Frota, Entrada/Saída...)
 NEUTRO = (900, 470)                                                                    # ponto neutro (fora de menu, cartão e botão)
 CARTAO = lambda t: TXT(t, within='main')
@@ -393,7 +398,8 @@ def escolhe(c, gatilho, opcao, at_g, at_o, label, teclas=None, fixo=False):
 
 @capitulo
 def cap00():
-    """Abertura: ilustração sobre o Dashboard; depois o menu Fiscal & Ambiental com Transporte, Notas de Serviço, Estoque Fiscal e Relatórios Fiscais."""
+    """Abertura: ilustração sobre o Dashboard; depois o menu Fiscal & Ambiental com Transporte, Notas de Serviço e Relatório/Estoque Fiscal
+    (uma tela só desde o 1.60.15)."""
     c = Cap(0, start=(760, 430), setup=setup_em('/dashboard'))
     c.mark(1)
     c.cursor((760, 440), at=0.5, label='cursor em repouso no Dashboard')
@@ -402,8 +408,7 @@ def cap00():
     c.click(GRUPO, at=c.A(3, 'Fiscal', 0.8), label='abre Fiscal & Ambiental', unless=ITEM_MENU('Transporte (MDF-e)'))
     c.hover(ITEM_MENU('Transporte (MDF-e)'), 0.4, at=c.A(3, 'Transporte,', 0.6), label='Transporte (MDF-e)')
     c.hover(ITEM_MENU('Notas de Serviço (NFS-e)'), 0.4, at=c.A(3, 'Notas', 0.6), label='Notas de Serviço (NFS-e)')
-    c.hover(ITEM_MENU('Estoque Fiscal'), 0.3, at=c.A(3, 'Estoque', 0.6), label='Estoque Fiscal')
-    c.hover(ITEM_MENU('Relatórios Fiscais'), 0.7, at=c.A(3, 'Relatórios', 0.6), label='Relatórios Fiscais')
+    c.hover(ITEM_MENU('Relatório/Estoque Fiscal'), 1.0, at=c.A(3, 'Relatório', 0.6), label='Relatório/Estoque Fiscal (uma tela só)')
     c.mark(4)
     c.cursor((760, 460), at=c.L(4) - 0.2, label='cursor sai do menu (cartão do módulo)')
     c.marca_ja(5)
@@ -527,8 +532,8 @@ JS_TOPO = ("(async()=>{" + ACHA_ROLAGEM + "const el=document.querySelector('main
 
 @capitulo
 def cap04():
-    """Novo MDF-e (tela cheia): as NF-e 1255 e 1256 da Serra Fina, a nota de outra empresa pela chave (entra e sai), FKD2E41 + Edson,
-    reboques e CIOT (só mostra), RJ no percurso, Itamonte/MG, 5.800 kg, contingência (abre e volta ao Normal); criar; autorizado."""
+    """Novo MDF-e (tela cheia): as NF-e 1255 e 1256 da Serra Fina, a nota de outra empresa pela chave (entra e sai), a natureza da viagem
+    e a categoria do transportador (1.60.39), FKD2E41 + Edson, reboques e CIOT (o "frete contratado?" vai a Sim e volta a Não), RJ no percurso, Itamonte/MG, 5.800 kg, contingência (abre e volta ao Normal); criar; autorizado."""
     c = Cap(4, start=(900, 440), setup=setup_em('/fiscal-ambiental/transporte'), obs=False)
     c.mark(1)
     c.click(BTN('Novo MDF-e'), at=c.A(1, 'Novo', 1.0), label='Novo MDF-e')
@@ -559,29 +564,35 @@ def cap04():
     c.confere('dlg', ['2 NF-e(s) vinculada(s)', '55.380,00'], 'de volta a duas notas')
     c.mark(7)
     c.click(BTN('Continuar'), at=c.A(7, 'Continuar.', 0.7), label='Continuar (veículo e motorista)', noScroll=True)
-    escolhe(c, SEL('[role=dialog] button[role=combobox]', hasText='Selecione um veículo'), OPTX('FKD2E41'), c.A(7, 'veículo,', 0.7), c.A(7, 'truck,', 0.4), 'Veículo: Caminhão truck FKD2E41')
-    escolhe(c, SEL('[role=dialog] button[role=combobox]', hasText='Selecione um motorista'), OPTX('Edson Moura'), c.A(7, 'motorista,', 0.7), c.A(7, 'Edson.', 0.4), 'Motorista: Edson Moura')
-    c.hover(TXTX('Veículo único', within=DLG), 0.6, at=c.A(7, 'completa,', 0.6), label='composição completa')
+    # 1.60.39: a etapa abre com a natureza da viagem e a categoria do transportador (os padrões já servem: Carga própria e Próprio)
+    c.waitfor(text='NATUREZA DA VIAGEM', timeout=10)
+    c.hover(SEL("[role=dialog] [data-testid='mdfe-operation-carga_propria']"), 1.2, at=c.A(7, 'própria,', 0.6), label='zoom: Natureza da viagem: Carga própria (já escolhida)')
+    c.hover(SEL("[role=dialog] [data-testid='mdfe-transporter-proprio']"), 1.2, at=c.A(7, 'Próprio,', 0.6), label='zoom: Categoria do transportador: Próprio')
     c.mark(8)
-    c.hover(TXT('Reboques / Carretas (opcional)', within=DLG), 0.8, at=c.A(8, 'carreta,', 0.6), label='Reboques / Carretas (opcional)')
-    c.hover(TXTX('Nenhuma carreta cadastrada', within=DLG), 1.0, at=c.A(8, 'Frota', 0.9), label='Nenhuma carreta cadastrada (Carreta / Reboque na Frota)')
+    escolhe(c, SEL('[role=dialog] button[role=combobox]', hasText='Selecione um veículo'), OPTX('FKD2E41'), c.A(8, 'veículo,', 0.7), c.A(8, 'truck,', 0.4), 'Veículo: Caminhão truck FKD2E41')
+    escolhe(c, SEL('[role=dialog] button[role=combobox]', hasText='Selecione um motorista'), OPTX('Edson Moura'), c.A(8, 'motorista,', 0.7), c.A(8, 'Edson.', 0.4), 'Motorista: Edson Moura')
+    c.hover(TXTX('Veículo único', within=DLG), 0.6, at=c.A(8, 'completa,', 0.6), label='composição completa')
     c.mark(9)
-    CIOT = SEL('[role=dialog] details > summary', hasText='Frete de terceiros (CIOT)')
-    c.click(CIOT, at=c.A(9, 'frete', 0.7), label='abre Frete de terceiros (CIOT)')
-    c.hover(TXTX('O CIOT é exigido no transporte rodoviário remunerado', within=DLG), 1.5, at=c.A(9, 'código', 0.6), label='O CIOT é exigido no transporte remunerado de cargas de terceiros')
+    c.hover(TXT('Reboques / Carretas (opcional)', within=DLG), 0.8, at=c.A(9, 'carreta,', 0.6), label='Reboques / Carretas (opcional)')
+    c.hover(TXTX('Nenhuma carreta cadastrada', within=DLG), 1.0, at=c.A(9, 'Frota', 0.9), label='Nenhuma carreta cadastrada (Carreta / Reboque na Frota)')
     c.mark(10)
-    c.hover(PH('00000000'), 0.6, at=c.A(10, 'registro', 0.6), label='RNTRC')
-    c.hover(PH('000000000000'), 0.8, at=c.A(10, 'código', 0.6), label='CIOT (12 dígitos)')
-    c.hover(SEL("[role=dialog] details input[placeholder='CPF ou CNPJ'] >> nth=0"), 0.8, at=c.A(10, 'CPF', 0.6), label='CPF/CNPJ do gerador do CIOT')
-    c.hover(TXT('Obrigatório junto do CIOT', within=DLG), 0.8, at=c.A(10, 'juntos:', 0.6), label='Obrigatório junto do CIOT')
+    FRETE = SEL("[role=dialog] [data-testid='mdfe-frete-contratado-control'] button[role=combobox]")
+    rola_ate(c, 'CIOT e contratação do frete', c.A(10, 'Embaixo', 0.9), 'desce ao CIOT e contratação do frete', y=300, escopo=DLG)
+    c.hover(TXT('Sem CIOT', within=DLG), 0.8, at=c.A(10, 'CIOT', 0.6), label='zoom: selo Sem CIOT')
+    c.hover(FRETE, 1.4, at=c.A(10, 'código', 0.6), label='Esta viagem possui frete contratado? Não')
     c.mark(11)
-    c.hover(SEL("[role=dialog] details input[placeholder='CPF ou CNPJ'] >> nth=1"), 0.4, at=c.A(11, 'quem', 0.6), label='Contratante — CPF/CNPJ')
-    c.hover(PH('Nome do contratante do frete'), 0.6, at=c.A(11, 'frete.', 0.6), label='Contratante — Nome')
+    escolhe(c, FRETE, OPTX('Sim — transporte remunerado'), c.A(11, 'resposta', 0.7), c.A(11, 'Sim.', 0.3), 'frete contratado: Sim (só para mostrar os campos)')
+    c.waitfor(text='Registro da operação de transporte', timeout=8)
+    c.hover(PH('000000000000'), 0.6, at=c.A(11, 'código', 0.6), label='CIOT * (12 dígitos)')
+    c.hover(TXT('CPF/CNPJ do gerador do CIOT *', within=DLG), 0.6, at=c.A(11, 'gerou', 0.6), label='CPF/CNPJ do gerador do CIOT *')
+    c.hover(TXT('Contratante — CPF/CNPJ *', within=DLG), 0.6, at=c.A(11, 'contratou', 0.6), label='Contratante — CPF/CNPJ * e Nome *')
+    c.hover(TXTX('RNTRC do emitente / transportador', within=DLG), 0.8, at=c.A(11, 'registro', 0.6), label='RNTRC do emitente / transportador *')
     c.mark(12)
     c.hover(PH('000000000000'), 1.2, at=c.A(12, 'código', 0.6), label='CIOT: gerado antes da viagem (sem abrir a ajuda)')
     c.mark(13)
-    c.click(CIOT, at=c.A(13, 'Hoje', 0.3), label='fecha Frete de terceiros (CIOT)')
-    c.hover(TXTX('Veículo único', within=DLG), 0.8, at=c.A(13, 'caminhão', 0.6), label='Caminhão truck FKD2E41, carga própria')
+    escolhe(c, FRETE, OPTX('Não — sem pagamento'), c.A(13, 'Hoje', 0.3), c.A(13, 'frete.', 0.3), 'frete contratado: Não (de volta)')
+    c.waitfor(text='CIOT não se aplica a esta viagem', timeout=8)
+    c.hover(TXT('CIOT não se aplica a esta viagem', within=DLG), 1.5, at=c.A(13, 'confirma:', 0.6), label='zoom: CIOT não se aplica a esta viagem')
     c.mark(14)
     c.click(BTN('Continuar'), at=c.A(14, 'Continuar.', 0.7), label='Continuar (trajeto e carga)', noScroll=True)
     c.hover(SEL(f'{ORIGEM} button[role=combobox] >> nth=1'), 0.8, at=c.A(14, 'Taubaté.', 0.6), label='origem: Taubaté/SP')
@@ -810,8 +821,9 @@ def cap09():
     c.hover(TXTX('cada nota de serviço recebida passa a contar', within='[role=alertdialog]'), 0.6, at=c.A(3, 'aviso:', 0.6), label='aviso da cota')
     c.mark(4)
     c.click(BTN('Ativar mesmo assim'), at=c.A(4, 'Ativar', 0.7), label='Ativar mesmo assim')
-    c.waitfor(text='Busca solicitada no Ambiente Nacional', timeout=15)
-    c.hover(TXTX('Busca solicitada no Ambiente Nacional', within='main'), 1.5, at=c.A(4, 'busca', 0.6), label='faixa: a lista atualiza em até 10 minutos')
+    # 28/11: com o motor próprio (nfse_dfe_fonte "sefin") a 1ª busca vai à edge plugnotas-nfse-dfe-sync, que só avisa que é automática
+    c.waitfor(text='A consulta direta ao Ambiente Nacional é automática', timeout=15)
+    c.hover(TXTX('A consulta direta ao Ambiente Nacional é automática', within='main'), 1.5, at=c.A(4, 'busca', 0.6), label='faixa: a consulta é automática')
     c.mark(5)
     c.hover(TXTX('A NFS-e é da prefeitura', within='main'), 1.2, at=c.A(5, 'cidade', 0.6), label='aviso: só chega nota de cidade do sistema nacional')
     c.fim()
@@ -853,18 +865,84 @@ def cap10():
     return c
 
 
-PERIODO = SEL('main button[role=combobox]', hasText='Este mês')   # filtro de período do cabeçalho (y ~92, fora da faixa 96..730: fixo=True)
+POSICAO = '/fiscal-ambiental/estoque-fiscal/posicao'
+COOP = 'Cooperativa Recomeço'
+TRIG_NFE = lambda t: SEL(f"main tr:has-text('{t}') button[title='Ações']")   # menu da NF-e recebida (DropdownMenu: abre no clique; T16)
+TILE = lambda n: SEL(f"[role=dialog] button:has(span:text-is('{n}'))")       # formas de pagamento do Finalizar Pedido (T07)
 
 
 @capitulo
 def cap11():
-    """Relatórios Fiscais (menu próprio no 1.60.18): aba NF-e de outubro (Entrada, Saída, Saldo R$ 71.625,00, Pendentes + Rejeitadas,
-    o cartão Entrada aberto, gráficos e rankings) e aba NFS-e (cartões e rankings)."""
-    c = Cap(11, start=(900, 440), setup=setup_em('/fiscal-ambiental/nfe/recebidas-nfse', aquece=['/fiscal-ambiental/relatorios/nfe'], menu='Relatórios Fiscais'))
+    """Da nota recebida à compra (1.60.39; 14:40): Notas Recebidas > NF-e com a Cooperativa Recomeço (importada pelo XML na T16), o
+    botão Importar XML (sem clicar), Lançar compra…, os totais (Produtos, Encargos/descontos, Total da nota), o casamento já feito,
+    "Registrar também no estoque fiscal" marcada, Conferir na tela de compra, Finalizar com Pix e o selo "Lançada como compra".
+    Lateral compra-coop: o caixa #85 do Rafael aberto (a tela de Compra pede caixa aberto). Não deixa semente."""
+    c = Cap(11, start=(900, 440), setup=setup_em('/fiscal-ambiental/nfe/recebidas', extra=[
+        {'do': 'waitFor', 'text': COOP, 'timeout': 20}, {'do': 'wait', 'seconds': 0.6}]))
     c.mark(1)
-    c.click(ITEM_MENU('Relatórios Fiscais'), at=c.A(1, 'Relatórios', 0.9), label='Relatórios Fiscais no menu')
+    c.hover(LINHA(COOP), 1.6, at=c.A(1, 'Cooperativa', 0.6), label='zoom: a nota da Cooperativa Recomeço (R$ 7.550,00, importada pelo XML na T16)')
+    c.confere('main', [COOP, '7.550,00'], 'a nota 3871 da Cooperativa na lista')
+    c.mark(2)
+    c.hover(BTN('Importar XML', within='main'), 2.5, at=c.A(2, 'Importar', 0.6), label='zoom: Importar XML (sem clicar)')
+    c.cursor(NEUTRO, at=c.A(2, 'serviço', 0.2), label='cursor em repouso (a NFS-e também entra pelo Importar XML)')
+    c.mark(3)
+    c.click(TRIG_NFE(COOP), at=c.A(3, 'linha', 0.7), label='Ações da nota da Cooperativa')
+    c.click(ITEM('Lançar compra…'), at=c.A(3, 'Lançar', 0.6), label='Lançar compra…', noScroll=True)
+    c.waitfor(text='Importar NF-e nº 3871', timeout=12)
+    c.hover(SEL(f"{DLG} :text-matches('^Fornecedor:')"), 0.8, label='Fornecedor: Cooperativa Recomeço (por CNPJ/CPF)')
+    c.mark(4)
+    c.hover(SEL(f"{DLG} [aria-label='Totais da NF-e']"), 2.2, at=c.A(4, 'produtos,', 0.6), label='zoom: Produtos, Encargos/descontos e Total da nota')
+    c.confere('dlg', ['Produtos', 'Encargos/descontos', 'Total da nota', '7.550,00'], 'os totais da NF-e (1.60.39)')
+    c.hover(SEL(f"{DLG} :text-is('Total da nota')"), 1.4, at=c.A(4, 'sete', 0.6), label='Total da nota R$ 7.550,00 (sem encargo)')
+    c.mark(5)
+    c.hover(SEL(f"{DLG} :text-is('ALUMINIO LATINHA')"), 0.8, at=c.A(5, 'casados', 0.6), label='ALUMINIO LATINHA: Alumínio latinha (alta)')
+    c.hover(SEL(f"{DLG} :text-is('PLASTICO PET PRENSADO')"), 0.8, at=c.A(5, 'PET.', 0.6), label='PLASTICO PET PRENSADO: Plástico PET (confira)')
+    c.mark(6)
+    c.hover(SEL(f"{DLG} label:has-text('Registrar também no estoque fiscal')"), 2.2, at=c.A(6, 'opção,', 0.6),
+            label='zoom: Registrar também no estoque fiscal (não altera o saldo físico), marcada', noScroll=True)
+    c.mark(7)
+    c.click(SEL(f"{DLG} button:has-text('Conferir na tela de compra')"), at=c.A(7, 'Conferir', 0.7), label='Conferir na tela de compra', noScroll=True)
+    c.waitfor(text='Voltar para o caixa', timeout=15)
+    c.waitfor(text='Plástico PET', timeout=10)
+    c.ev(ANIM_FIX, label='(animações da tela de Compra)')
+    c.hover(SEL("main tbody tr:has-text('Alumínio latinha')"), 0.8, at=c.A(7, 'oitocentos', 0.6), label='Alumínio latinha 850 kg x R$ 6,20')
+    c.hover(SEL("main tbody tr:has-text('Plástico PET')"), 0.8, at=c.A(7, 'PET.', 0.6), label='Plástico PET 1.200 kg x R$ 1,90')
+    c.confere('main', ['Alumínio latinha', 'Plástico PET', '7.550,00'], 'compra com os itens da nota: R$ 7.550,00')
+    c.mark(8)
+    c.hover(BTN('Finalizar'), 0.6, at=c.A(8, 'valores', 0.6), label='Finalizar (o caixa #85 está aberto)')
+    c.click(BTN('Finalizar'), at=c.A(8, 'Finalizar,', 0.7), label='Finalizar')
+    c.waitfor(text='Finalizar Pedido', timeout=10)
+    c.click(TILE('Pix/Transferência'), at=c.A(8, 'Pix,', 0.5, nth=1), label='Pix/Transferência (Conta Principal)')
+    c.click(BTNX('CONFIRMAR PAGAMENTO'), at=c.A(8, 'confirmo', 0.6), label='CONFIRMAR PAGAMENTO')
+    c.waitfor(text='Compra registrada!', timeout=12)
+    c.press('Escape', label='fecha a pergunta do comprovante (sem imprimir)', when=SEL(DLG))
+    # a volta pelo menu começa logo depois do pagamento (três cliques não cabem no começo da L9)
+    c.click(GRUPO, label='abre Fiscal & Ambiental', unless=ITEM_MENU('Notas Fiscais (NF-e)'))
+    c.click(ITEM_MENU('Notas Fiscais (NF-e)'), label='Notas Fiscais (NF-e) no menu')
+    c.mark(9)
+    c.click(SUBABA('Notas Recebidas'), at=c.A(9, 'volta', 0.4), label='aba Notas Recebidas')
+    c.waitfor(text='Lançada como compra', timeout=12)
+    c.hover(LINHA(COOP, ":text-is('Lançada como compra')"), 1.5, at=c.A(9, 'lançada', 0.6), label='zoom: selo Lançada como compra')
+    c.click(TRIG_NFE(COOP), at=c.A(9, 'tentar', 0.7), label='Ações da Cooperativa (de novo)')
+    c.hover(ITEM('Lançar compra de novo…'), 1.5, at=c.A(9, 'avisa', 0.6), label='Lançar compra de novo… (sem clicar)', noScroll=True)
+    c.press('Escape', at=c.A(9, 'estoque.', 0.2), label='fecha o menu')
+    c.fim()
+    return c
+
+
+PERIODO = SEL('main button[role=combobox]', hasText='Este mês')   # filtro de período do cabeçalho (y ~92, fora da faixa 96..730: fixo=True)
+
+
+@capitulo
+def cap12():
+    """Relatório/Estoque Fiscal (uma tela só desde o 1.60.15) > aba NF-e de outubro (Entrada, Saída, Saldo R$ 71.625,00, Pendentes + Rejeitadas,
+    o cartão Entrada aberto, gráficos e rankings) e aba NFS-e (cartões e rankings)."""
+    c = Cap(12, start=(900, 440), setup=setup_em('/fiscal-ambiental/nfe/recebidas-nfse', aquece=['/fiscal-ambiental/estoque-fiscal/relatorio-nfe'], menu='Relatório/Estoque Fiscal'))
+    c.mark(1)
+    c.click(ITEM_MENU('Relatório/Estoque Fiscal'), at=c.A(1, 'Relatório', 0.9), label='Relatório/Estoque Fiscal no menu (abre no Saldo atual)')
+    c.waitfor(text=PAGINAS[POSICAO], timeout=15)
+    c.click(SUBABA('NF-e'), at=c.A(1, 'aba', 0.6), label='aba NF-e')
     c.waitfor(text='Pendentes + Rejeitadas', timeout=15)
-    c.hover(SUBABA('NF-e'), 0.5, at=c.A(1, 'primeira', 0.6), label='aba NF-e')
     escolhe(c, PERIODO, 'Mês passado', c.A(1, 'Escolho', 0.7), c.A(1, 'passado,', 0.4), 'período: Mês passado', fixo=True)
     c.waitfor(text='R$ 71.625,00', timeout=15)
     c.mark(2)
@@ -890,7 +968,7 @@ def cap11():
     c.hover(TXTX('Top Clientes', within='main'), 0.6, at=c.A(7, 'clientes.', 0.6), label='Top Clientes')
     c.mark(8)
     c.ev(JS_TOPO, at=c.L(8) - 0.2, label='volta ao topo')
-    c.click(SUBABA('NFS-e'), at=c.A(8, 'segunda', 0.3), label='aba NFS-e')
+    c.click(SUBABA('NFS-e'), at=c.A(8, 'lado,', 0.3), label='aba NFS-e (do lado)')
     c.waitfor(text='Serviços autorizados', timeout=10)
     c.registra(CARTAO('ISS apurado'), label='cartões do relatório de NFS-e (zoom)')
     c.hover(CARTAO('Serviços autorizados'), 0.5, at=c.A(8, 'autorizado,', 0.6), label='Serviços autorizados')
@@ -905,19 +983,17 @@ def cap11():
     return c
 
 
-POSICAO = '/fiscal-ambiental/estoque-fiscal/posicao'
 MATERIAIS = "main section[aria-label='Materiais do Kardex fiscal']"
 SALDO = lambda nome, sub='': SEL(f"main tbody tr:has-text('{nome}') {sub}".strip())
 
 
 @capitulo
-def cap12():
-    """Estoque Fiscal > Saldo atual: a tabela, o alumínio já descontado, a busca, o saldo em vermelho (só fala) e a faixa amarela."""
-    c = Cap(12, start=(900, 440), setup=setup_em('/fiscal-ambiental/relatorios/nfe', aquece=[POSICAO], menu='Estoque Fiscal'))
+def cap13():
+    """Relatório/Estoque Fiscal > Saldo atual (a primeira aba, na mesma tela do relatório): a tabela, o alumínio já descontado, a busca, o saldo em vermelho (só fala) e a faixa amarela."""
+    c = Cap(13, start=(900, 440), setup=setup_em('/fiscal-ambiental/estoque-fiscal/relatorio-nfe', aquece=[POSICAO]))
     c.mark(1)
-    c.click(ITEM_MENU('Estoque Fiscal'), at=c.A(1, 'estoque', 0.9), label='Estoque Fiscal no menu')
+    c.click(SUBABA('Saldo atual'), at=c.A(1, 'primeira', 0.6), label='aba Saldo atual (a primeira da mesma tela)')
     c.waitfor(text=PAGINAS[POSICAO], timeout=15)
-    c.hover(SUBABA('Saldo atual'), 0.5, at=c.A(1, 'Saldo', 0.6), label='aba Saldo atual')
     c.hover(SEL("main thead th:has-text('Saldo fiscal')"), 0.8, at=c.A(1, 'material.', 0.9), label='tabela: Código, Material, Saldo fiscal')
     c.mark(2)
     c.registra(SALDO('Alumínio perfil'), at=c.A(2, 'atualiza', 0.3), label='linhas do alumínio (zoom)')
@@ -937,10 +1013,10 @@ def cap12():
 
 
 @capitulo
-def cap13():
+def cap14():
     """Informar saldo inicial da bateria: menu da linha, data-base 31/10/2026, 3.320 kg, a aba Planilha (só mostra), confirmar;
     a faixa amarela some e a bateria vai a 3.960 kg."""
-    c = Cap(13, start=(900, 440), setup=setup_em(POSICAO))
+    c = Cap(14, start=(900, 440), setup=setup_em(POSICAO))
     c.mark(1)
     c.hover(SALDO('Bateria automotiva', 'td >> nth=1'), 0.8, at=c.A(1, 'bateria.', 0.6), label='Bateria automotiva (sem saldo inicial)')
     c.hover(SALDO('Bateria automotiva', "button[aria-label='Ações de Bateria automotiva']"), 0.3, at=c.A(1, 'linha', 0.7), label='menu ⋯ da bateria')
@@ -970,9 +1046,9 @@ def cap13():
 
 
 @capitulo
-def cap14():
+def cap15():
     """Posição em uma data (31/10 18:00) e Movimentações: o Kardex do metal amarelo, os Filtros (só mostra) e Geral (Todos)."""
-    c = Cap(14, start=(900, 440), setup=setup_em(POSICAO))
+    c = Cap(15, start=(900, 440), setup=setup_em(POSICAO))
     c.mark(1)
     c.click(SUBABA('Posição em uma data'), at=c.A(1, 'Posição', 0.8), label='aba Posição em uma data')
     c.click(SEL('main button', hasText='10/11/2026'), at=c.A(1, 'Escolho', 0.5), label='Data da posição (abre)')
@@ -1008,10 +1084,10 @@ def cap14():
 
 
 @capitulo
-def cap15():
+def cap16():
     """Cancelamento e devolução no Kardex: a NF-e 1249 (saída e estorno de 320 kg, com o motivo) e a 1253 (devolução da Fundição,
     +40 kg de cobre mel); as duas ilustrações (régua do estorno, setas da devolução)."""
-    c = Cap(15, start=(900, 440), setup=setup_em(POSICAO, extra=[
+    c = Cap(16, start=(900, 440), setup=setup_em(POSICAO, extra=[
         {'do': 'click', 'target': SUBABA('Movimentações')}, {'do': 'waitFor', 'text': 'KARDEX FISCAL', 'timeout': 15}, {'do': 'wait', 'seconds': 0.8}]))
     c.mark(1)
     c.click(SEL(f"{MATERIAIS} button[aria-expanded]"), at=c.A(1, 'Lembra', 0.5), label='Filtros (abre)')
@@ -1043,28 +1119,33 @@ def cap15():
 
 
 @capitulo
-def cap16():
-    """Fiscal × operacional de outubro: os cartões, o metal amarelo (Delta −1.100), a ilustração, "Como ler o Delta" e Exportar."""
-    c = Cap(16, start=(900, 440), setup=setup_em(POSICAO))
+def cap17():
+    """Fiscal × operacional de outubro (tela nova desde o 1.60.15: entradas e saídas separadas, diferença = notas − pedidos): os cartões,
+    o metal amarelo (Entradas: compras 500 x notas 0 = −500 "sem nota"; Saídas: vendas 500 x notas 1.100 = +600 "nota a mais"; conferir
+    no ensaio), a ilustração, o quadro "Como ler a diferença (notas − pedidos)" e Exportar."""
+    c = Cap(17, start=(900, 440), setup=setup_em(POSICAO))
     c.mark(1)
-    c.click(SUBABA('Fiscal × operacional'), at=c.A(1, 'última', 0.7), label='aba Fiscal × operacional')
+    c.click(SUBABA('Fiscal × operacional'), at=c.A(1, 'compara', 0.7), label='aba Fiscal × operacional')
     c.hover(TXTX('Comparação por material', within='main'), 0.4, at=c.A(1, 'lado', 0.6), label='Comparação por material')
     escolhe(c, PERIODO, 'Mês passado', c.A(1, 'Escolho', 0.7), c.A(1, 'passado,', 0.4), 'período: Mês passado', fixo=True)
     c.mark(2)
-    c.hover(CARTAO('Materiais com divergência'), 1.0, at=c.A(2, 'diferença', 0.9), label='Materiais com divergência')
-    c.hover(CARTAO('Alertas'), 1.0, at=c.A(2, 'alerta,', 0.6), label='Alertas')
+    c.hover(CARTAO('Entradas com diferença'), 0.6, at=c.A(2, 'compras,', 0.6), label='Entradas com diferença (Compras × notas de entrada)')
+    c.hover(CARTAO('Saídas com diferença'), 0.6, at=c.A(2, 'vendas,', 0.6), label='Saídas com diferença (Vendas × notas de saída)')
+    c.hover(CARTAO('Materiais conferindo'), 0.6, at=c.A(2, 'conferem', 0.6), label='Materiais conferindo (Pedidos e notas batem)')
+    c.hover(CARTAO('Alertas'), 0.8, at=c.A(2, 'alertas.', 0.6), label='Alertas')
     c.mark(3)
     rola_ate(c, 'Metal amarelo (latão)', c.L(3) - 0.2, 'rola até o metal amarelo', y=420, dur_ms=900)
-    c.hover(LINHA('Metal amarelo', "td >> nth=-1"), 1.5, at=c.A(3, 'amarelo:', 0.5), label='Metal amarelo: Mov. Fiscal, Mov. Operacional e Delta')
-    c.confere('main', ['Metal amarelo (latão)', '1.100'], 'metal amarelo: Delta de 1.100 kg')
+    c.hover(LINHA('Metal amarelo', 'td >> nth=3'), 1.6, at=c.A(3, 'entradas,', 0.5), label='Metal amarelo, Entradas: compras 500, notas 0, diferença −500 sem nota')
     c.mark(4)
-    c.cursor(NEUTRO, at=c.L(4) - 0.1, label='cursor em repouso (ilustração fiscal × operacional)')
-    c.marca_ja(5)
+    c.hover(LINHA('Metal amarelo', 'td >> nth=3'), 1.2, at=c.A(4, 'pátio,', 0.6), label='(continua) compra de pessoa física sem nota')
+    c.mark(5)
+    c.hover(LINHA('Metal amarelo', 'td >> nth=6'), 1.6, at=c.A(5, 'saídas,', 0.5), label='Metal amarelo, Saídas: vendas 500, notas 1.100, diferença +600 nota a mais')
+    c.confere('main', ['Metal amarelo (latão)', 'sem nota', 'nota a mais'], 'metal amarelo: sem nota nas entradas e nota a mais nas saídas')
+    c.cursor(NEUTRO, at=c.A(5, 'Foi', 0.1), label='cursor em repouso (a ilustração fiscal × operacional entra)')
     c.mark(6)
-    rola_ate(c, 'Como ler o Delta (fiscal − operacional)', c.L(6) - 0.2, 'rola até Como ler o Delta', y=260, prefixo=True)
-    c.hover(TXTX('costuma indicar compra de', within='main'), 2.0, at=c.A(6, 'compra', 0.6), label='Delta negativo: compra de pessoa física sem nota')
     c.mark(7)
-    c.hover(TXTX('Pedidos ainda não finalizados', within='main'), 1.4, at=c.A(7, 'quadro,', 0.6), label='Como ler o Delta: pedidos não finalizados')
+    rola_ate(c, 'Como ler a diferença (notas − pedidos)', c.L(7) - 0.2, 'rola até Como ler a diferença', y=260, prefixo=True)
+    c.hover(TXTX('Como ler a diferença', within='main'), 2.0, at=c.A(7, 'quadro,', 0.6), label='Como ler a diferença: Sem nota, Nota a mais, Pedidos não finalizados')
     c.mark(8)
     c.ev(JS_TOPO, at=c.L(8) - 0.2, label='volta ao topo')
     c.click(BTN('Exportar'), at=c.A(8, 'exportar', 0.3), label='Exportar (abre)', noScroll=True)
@@ -1076,10 +1157,10 @@ def cap16():
 
 
 @capitulo
-def cap17():
+def cap18():
     """Exportação Contábil: Notas Fiscais > Saída > ⋮ > Exportação Contábil, Emitente / CNPJ, Mês passado, notas destinadas marcadas,
     tudo marcado, 21 notas e "Destinadas: 0 XML(s)", Baixar Pacote."""
-    c = Cap(17, start=(900, 440), setup=setup_em(POSICAO, aquece=['/fiscal-ambiental/nfe/saida'], menu='Notas Fiscais (NF-e)'))
+    c = Cap(18, start=(900, 440), setup=setup_em(POSICAO, aquece=['/fiscal-ambiental/nfe/saida'], menu='Notas Fiscais (NF-e)'))
     c.mark(1)
     c.click(ITEM_MENU('Notas Fiscais (NF-e)'), at=c.A(1, 'Notas', 0.9), label='Notas Fiscais (NF-e) no menu')
     c.click(SUBABA('Saída'), at=c.A(1, 'Fiscais,', 0.0), label='aba Saída')
@@ -1114,9 +1195,9 @@ def cap17():
 
 
 @capitulo
-def cap18():
+def cap19():
     """O que o contador faz: só ilustração (o pacote, o caminho até o contador, a cópia guardada); a tela fica parada na lista de Saída."""
-    c = Cap(18, start=(900, 470), setup=setup_em('/fiscal-ambiental/nfe/saida'))
+    c = Cap(19, start=(900, 470), setup=setup_em('/fiscal-ambiental/nfe/saida'))
     c.mark(1)
     c.cursor(NEUTRO, at=0.5, label='cursor em repouso (ilustração do pacote)')
     for i in (2, 3, 4):
@@ -1126,9 +1207,9 @@ def cap18():
 
 
 @capitulo
-def cap19():
-    """Recapitulando: montagem das gravações dos capítulos 2 a 17 por cima; a tela fica parada em Transporte com o nº 1 encerrado."""
-    c = Cap(19, start=(900, 470), setup=setup_em('/fiscal-ambiental/transporte'), obs=False)
+def cap20():
+    """Recapitulando: montagem das gravações dos capítulos 2 a 18 por cima; a tela fica parada em Transporte com o nº 1 encerrado."""
+    c = Cap(20, start=(900, 470), setup=setup_em('/fiscal-ambiental/transporte'), obs=False)
     c.mark(1)
     c.cursor(NEUTRO, at=0.5, label='cursor em repouso (montagem)')
     for i in (2, 3, 4):

@@ -1,6 +1,6 @@
 {
  "name": "t17-cap12",
- "title": "T17 · Cap. 12 · O estoque pelas notas (narração 41,4 s ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T14:40:00-03:00)",
+ "title": "T17 · Cap. 12 · Entrada, saída e saldo (narração 91,2 s ESTIMADA; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T14:40:00-03:00)",
  "seed": "t17-cap12",
  "pace": 0.5,
  "cps": 9,
@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
   "cato_adoption_nudge_38814e47-876a-5977-a5f7-53af364c17bb_34c36c63-0890-5e89-8963-7c77b7996908": "{\"count\":99,\"lastShownAt\":4102444800000}",
   "pwa-install-dismissed": "true",
@@ -71,25 +71,7 @@
   },
   {
    "do": "goto",
-   "url": "/fiscal-ambiental/estoque-fiscal/posicao"
-  },
-  {
-   "do": "waitFor",
-   "text": "Saldo fiscal atualizado, por material.",
-   "timeout": 30
-  },
-  {
-   "do": "waitFor",
-   "idle": true,
-   "timeout": 25
-  },
-  {
-   "do": "wait",
-   "seconds": 0.3
-  },
-  {
-   "do": "goto",
-   "url": "/fiscal-ambiental/relatorios/nfe"
+   "url": "/fiscal-ambiental/estoque-fiscal/relatorio-nfe"
   },
   {
    "do": "waitFor",
@@ -103,11 +85,29 @@
   },
   {
    "do": "wait",
+   "seconds": 0.3
+  },
+  {
+   "do": "goto",
+   "url": "/fiscal-ambiental/nfe/recebidas-nfse"
+  },
+  {
+   "do": "waitFor",
+   "text": "Notas Recebidas",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "wait",
    "seconds": 0.8
   },
   {
    "do": "eval",
-   "js": "(()=>{const tem=[...document.querySelectorAll('aside a, [data-sidebar=sidebar] a')].some(a=>a.textContent.trim()===\"Estoque Fiscal\");if(tem)return 'ja aberto';const b=[...document.querySelectorAll('aside button, [data-sidebar=sidebar] button')].find(b=>b.textContent.trim()===\"Fiscal & Ambiental\");if(!b)return 'SEM ALVO';b.click();return 'aberto'})()"
+   "js": "(()=>{const tem=[...document.querySelectorAll('aside a, [data-sidebar=sidebar] a')].some(a=>a.textContent.trim()===\"Relatório/Estoque Fiscal\");if(tem)return 'ja aberto';const b=[...document.querySelectorAll('aside button, [data-sidebar=sidebar] button')].find(b=>b.textContent.trim()===\"Fiscal & Ambiental\");if(!b)return 'SEM ALVO';b.click();return 'aberto'})()"
   },
   {
    "do": "wait",
@@ -132,12 +132,12 @@
    "do": "click",
    "target": {
     "role": "link",
-    "name": "Estoque Fiscal",
+    "name": "Relatório/Estoque Fiscal",
     "exact": true,
     "within": "aside, [data-sidebar=sidebar]"
    },
-   "at": 0.33,
-   "label": "Estoque Fiscal no menu"
+   "at": 5.42,
+   "label": "Relatório/Estoque Fiscal no menu (abre no Saldo atual)"
   },
   {
    "do": "waitFor",
@@ -145,142 +145,352 @@
    "timeout": 15
   },
   {
-   "do": "hover",
+   "do": "click",
    "target": {
     "role": "button",
-    "name": "Saldo atual",
+    "name": "NF-e",
     "exact": true,
-    "within": "nav[aria-label='Navegação da seção']"
+    "within": "[aria-label='Navegação da seção']"
    },
-   "seconds": 0.5,
-   "at": 5.49,
-   "label": "aba Saldo atual",
-   "optional": true,
-   "timeout": 4
+   "at": 8.53,
+   "label": "aba NF-e"
   },
   {
-   "do": "hover",
+   "do": "waitFor",
+   "text": "Pendentes + Rejeitadas",
+   "timeout": 15
+  },
+  {
+   "do": "click",
    "target": {
-    "selector": "main thead th:has-text('Saldo fiscal')"
+    "selector": "main button[role=combobox]",
+    "hasText": "Este mês"
    },
-   "seconds": 0.8,
-   "at": 8.38,
-   "label": "tabela: Código, Material, Saldo fiscal",
-   "optional": true,
-   "timeout": 4
+   "at": 11.84,
+   "label": "período: Mês passado (abre)",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Mês passado",
+    "exact": true
+   },
+   "at": 13.21,
+   "label": "período: Mês passado"
+  },
+  {
+   "do": "waitFor",
+   "text": "R$ 71.625,00",
+   "timeout": 15
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 10.19
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "main tbody tr:has-text('Alumínio perfil')"
-   },
-   "text": "",
-   "noClick": true,
-   "optional": true,
-   "timeout": 4,
-   "at": 11.15,
-   "label": "linhas do alumínio (zoom)"
+   "at": 15.27
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text('Alumínio bloco') td >> nth=2"
+    "text": "Entrada",
+    "exact": true,
+    "within": "main"
    },
    "seconds": 0.6,
-   "at": 13.13,
-   "label": "Alumínio bloco: já sem os 2.600 kg de hoje",
+   "at": 16.54,
+   "label": "cartão Entrada",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text('Alumínio perfil') td >> nth=2"
+    "text": "Saída",
+    "exact": true,
+    "within": "main"
    },
-   "seconds": 1.0,
-   "at": 16.4,
-   "label": "Alumínio perfil: já sem os 3.200 kg de hoje",
+   "seconds": 0.6,
+   "at": 17.68,
+   "label": "cartão Saída",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 18.51
-  },
-  {
-   "do": "click",
-   "target": {
-    "placeholder": "Buscar material ou código"
-   },
-   "at": 20.29,
-   "label": "busca: cobre (campo)"
-  },
-  {
-   "do": "type",
-   "target": {
-    "placeholder": "Buscar material ou código"
-   },
-   "text": "cobre",
-   "cps": 40,
-   "at": 21.6,
-   "label": "busca: cobre",
-   "noClick": true
-  },
-  {
-   "do": "press",
-   "key": "Control+a",
-   "at": 23.39,
-   "label": "limpa a busca (seleciona)"
-  },
-  {
-   "do": "press",
-   "key": "Backspace",
-   "label": "limpa a busca"
-  },
-  {
-   "do": "mark",
-   "name": "L4",
-   "at": 23.65
+   "at": 20.1
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main thead th:has-text('Saldo fiscal')"
+    "text": "Saldo (Saída − Entrada)",
+    "exact": true,
+    "within": "main"
    },
-   "seconds": 1.2,
-   "at": 25.3,
-   "label": "coluna Saldo fiscal (negativo aparece em vermelho)",
+   "seconds": 1.4,
+   "at": 20.1,
+   "label": "cartão Saldo (Saída − Entrada)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 29.64
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Pendentes + Rejeitadas",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.4,
+   "at": 29.64,
+   "label": "cartão Pendentes + Rejeitadas",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 31.28
+   "at": 40.54
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Entrada",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 40.95,
+   "label": "abre o cartão Entrada"
+  },
+  {
+   "do": "waitFor",
+   "text": "Emitidas por você",
+   "timeout": 8
   },
   {
    "do": "hover",
    "target": {
-    "text": "apurados pelas notas disponíveis",
+    "text": "Emitidas por você",
     "exact": true,
     "within": "main"
    },
-   "seconds": 2.0,
-   "at": 31.64,
-   "label": "faixa amarela: saldos sem saldo inicial informado",
+   "seconds": 1.5,
+   "at": 44.16,
+   "label": "Emitidas por você: 9 · R$ 97.315,00",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"apurados pelas notas disponíveis\", \"Bateria automotiva\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere faixa amarela e a bateria sem saldo inicial"
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Emitidas por você\", \"97.315,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere entrada de outubro: 9 notas próprias"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 57.82
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Emitidas por você",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "at": 60.08,
+   "label": "cartão Entrada aberto (notas de fornecedor entram em outra linha)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 65.77
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.offsetParent!==null&&e.textContent.trim().startsWith(\"Entrada × Saída no período\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-110);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 65.77,
+   "label": "rola até o gráfico do mês"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Entrada × Saída no período",
+    "within": "main"
+   },
+   "seconds": 0.3,
+   "at": 66.35,
+   "label": "Entrada × Saída no período",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Distribuição por status",
+    "within": "main"
+   },
+   "seconds": 0.3,
+   "at": 68.78,
+   "label": "Distribuição por status",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.offsetParent!==null&&e.textContent.trim().startsWith(\"Top Fornecedores\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-250);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 69.72,
+   "label": "rola até os rankings"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Top Fornecedores",
+    "within": "main"
+   },
+   "seconds": 0.3,
+   "at": 70.53,
+   "label": "Top Fornecedores",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Top Clientes",
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 71.97,
+   "label": "Top Clientes",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 73.48
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=document.querySelector('main h1, main h2, main table, main [role=tablist]');const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,t0=performance.now();if(y0<3)return 'ok';await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0*(1-e),behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo'})()",
+   "at": 73.48,
+   "label": "volta ao topo"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "NFS-e",
+    "exact": true,
+    "within": "[aria-label='Navegação da seção']"
+   },
+   "at": 74.06,
+   "label": "aba NFS-e (do lado)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Serviços autorizados",
+   "timeout": 10
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "ISS apurado",
+    "exact": true,
+    "within": "main"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "label": "cartões do relatório de NFS-e (zoom)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Serviços autorizados",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.5,
+   "at": 80.44,
+   "label": "Serviços autorizados",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "ISS apurado",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.5,
+   "at": 81.65,
+   "label": "ISS apurado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Retenções federais",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 83.93,
+   "label": "Retenções federais",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Serviços autorizados\", \"2.800,00\", \"Tudo em dia\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere NFS-e de outubro: R$ 2.800,00"
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 85.52
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.offsetParent!==null&&e.textContent.trim().startsWith(\"Top tomadores\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-250);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 85.52,
+   "label": "rola até os rankings de serviço"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Top tomadores",
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 86.86,
+   "label": "Top tomadores",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Top serviços",
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 88.23,
+   "label": "Top serviços",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "eval",
@@ -290,7 +500,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 41.42
+   "at": 91.25
   }
  ]
 }

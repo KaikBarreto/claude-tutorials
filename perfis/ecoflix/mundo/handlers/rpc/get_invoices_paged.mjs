@@ -1,6 +1,6 @@
 // RPC get_invoices_paged (hooks/useInvoices.tsx): a lista de NF-e da aba (entrada/saída) com filtros, busca, ordenação e página;
 // { rows, total_count }, cada linha com customers/suppliers/profiles embutidos. Com p_include_inutilizadas, só as inutilizadas: as
-// notas marcadas "inutilizada" e uma linha por número das faixas de nfe_inutilized_numbers homologadas.
+// notas marcadas "inutilizada" e uma linha por número das faixas de nfe_inutilized_numbers homologadas. 1.60.39: p_fiscal_config_ids.
 const semAcento = (s) => String(s ?? '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 
 export default (a, { store, companyId }) => {
@@ -27,6 +27,9 @@ export default (a, { store, companyId }) => {
     rows = rows.filter((n) => n.status !== 'inutilizada');
   }
   if (Array.isArray(a.p_statuses) && a.p_statuses.length) rows = rows.filter((n) => a.p_statuses.includes(n.status));
+  // 1.60.39 (migration 20261126180000_get_invoices_paged_emitente_filter): filtro por CNPJ emitente, antes da contagem e da página;
+  // null ou vazio = todos os emitentes (empresa de um CNPJ só nunca manda o filtro)
+  if (Array.isArray(a.p_fiscal_config_ids) && a.p_fiscal_config_ids.length) rows = rows.filter((n) => a.p_fiscal_config_ids.includes(n.fiscal_config_id));
   if (a.p_environment && a.p_environment !== 'all') rows = rows.filter((n) => (n.environment || 'producao') === a.p_environment);
   const quando = (n) => n.issue_date || n.created_at;
   if (a.p_date_start) rows = rows.filter((n) => String(quando(n)) >= String(a.p_date_start));

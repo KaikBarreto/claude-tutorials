@@ -1,6 +1,6 @@
 {
  "name": "t17-cap04",
- "title": "T17 · Cap. 4 · Emitir o manifesto (narração 226,0 s ESTIMADA; marcas L1..L25 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T09:30:00-03:00)",
+ "title": "T17 · Cap. 4 · Emitir o manifesto (narração 240,2 s ESTIMADA; marcas L1..L25 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T09:30:00-03:00)",
  "seed": "t17-cap04",
  "pace": 0.5,
  "cps": 9,
@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
   "cato_adoption_nudge_38814e47-876a-5977-a5f7-53af364c17bb_34c36c63-0890-5e89-8963-7c77b7996908": "{\"count\":99,\"lastShownAt\":4102444800000}",
   "pwa-install-dismissed": "true",
@@ -341,12 +341,44 @@
    "noScroll": true
   },
   {
+   "do": "waitFor",
+   "text": "NATUREZA DA VIAGEM",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] [data-testid='mdfe-operation-carga_propria']"
+   },
+   "seconds": 1.2,
+   "at": 62.64,
+   "label": "zoom: Natureza da viagem: Carga própria (já escolhida)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] [data-testid='mdfe-transporter-proprio']"
+   },
+   "seconds": 1.2,
+   "at": 69.24,
+   "label": "zoom: Categoria do transportador: Próprio",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 73.33
+  },
+  {
    "do": "click",
    "target": {
     "selector": "[role=dialog] button[role=combobox]",
     "hasText": "Selecione um veículo"
    },
-   "at": 59.58,
+   "at": 73.33,
    "label": "Veículo: Caminhão truck FKD2E41 (abre)"
   },
   {
@@ -355,7 +387,7 @@
     "role": "option",
     "name": "FKD2E41"
    },
-   "at": 61.55,
+   "at": 75.03,
    "label": "Veículo: Caminhão truck FKD2E41"
   },
   {
@@ -364,7 +396,7 @@
     "selector": "[role=dialog] button[role=combobox]",
     "hasText": "Selecione um motorista"
    },
-   "at": 62.38,
+   "at": 75.87,
    "label": "Motorista: Edson Moura (abre)"
   },
   {
@@ -373,7 +405,7 @@
     "role": "option",
     "name": "Edson Moura"
    },
-   "at": 63.82,
+   "at": 77.3,
    "label": "Motorista: Edson Moura"
   },
   {
@@ -383,15 +415,15 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.6,
-   "at": 65.52,
+   "at": 79.0,
    "label": "composição completa",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
-   "name": "L8",
-   "at": 68.93
+   "name": "L9",
+   "at": 82.41
   },
   {
    "do": "hover",
@@ -401,7 +433,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.8,
-   "at": 69.97,
+   "at": 83.45,
    "label": "Reboques / Carretas (opcional)",
    "optional": true,
    "timeout": 4
@@ -413,119 +445,126 @@
     "within": "[role=dialog]"
    },
    "seconds": 1.0,
-   "at": 76.73,
+   "at": 90.21,
    "label": "Nenhuma carreta cadastrada (Carreta / Reboque na Frota)",
    "optional": true,
    "timeout": 4
   },
   {
-   "do": "mark",
-   "name": "L9",
-   "at": 80.13
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] details > summary",
-    "hasText": "Frete de terceiros (CIOT)"
-   },
-   "at": 81.15,
-   "label": "abre Frete de terceiros (CIOT)"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "O CIOT é exigido no transporte rodoviário remunerado",
-    "within": "[role=dialog]"
-   },
-   "seconds": 1.5,
-   "at": 83.68,
-   "label": "O CIOT é exigido no transporte remunerado de cargas de terceiros",
-   "optional": true,
-   "timeout": 4
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].find(e=>e.children.length===0&&e.offsetParent!==null&&e.textContent.trim()===\"CIOT e contratação do frete\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 92.91,
+   "label": "desce ao CIOT e contratação do frete"
   },
   {
    "do": "mark",
    "name": "L10",
-   "at": 94.07
+   "at": 93.61
   },
   {
    "do": "hover",
    "target": {
-    "placeholder": "00000000"
-   },
-   "seconds": 0.6,
-   "at": 95.57,
-   "label": "RNTRC",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "placeholder": "000000000000"
-   },
-   "seconds": 0.8,
-   "at": 99.06,
-   "label": "CIOT (12 dígitos)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "[role=dialog] details input[placeholder='CPF ou CNPJ'] >> nth=0"
-   },
-   "seconds": 0.8,
-   "at": 102.25,
-   "label": "CPF/CNPJ do gerador do CIOT",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Obrigatório junto do CIOT",
+    "text": "Sem CIOT",
     "exact": true,
     "within": "[role=dialog]"
    },
    "seconds": 0.8,
-   "at": 106.65,
-   "label": "Obrigatório junto do CIOT",
+   "at": 94.35,
+   "label": "zoom: selo Sem CIOT",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] [data-testid='mdfe-frete-contratado-control'] button[role=combobox]"
+   },
+   "seconds": 1.4,
+   "at": 97.62,
+   "label": "Esta viagem possui frete contratado? Não",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L11",
-   "at": 110.13
+   "at": 108.01
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] [data-testid='mdfe-frete-contratado-control'] button[role=combobox]"
+   },
+   "at": 108.72,
+   "label": "frete contratado: Sim (só para mostrar os campos) (abre)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Sim — transporte remunerado"
+   },
+   "at": 110.34,
+   "label": "frete contratado: Sim (só para mostrar os campos)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Registro da operação de transporte",
+   "timeout": 8
   },
   {
    "do": "hover",
    "target": {
-    "selector": "[role=dialog] details input[placeholder='CPF ou CNPJ'] >> nth=1"
+    "placeholder": "000000000000"
    },
-   "seconds": 0.4,
-   "at": 111.1,
-   "label": "Contratante — CPF/CNPJ",
+   "seconds": 0.6,
+   "at": 111.71,
+   "label": "CIOT * (12 dígitos)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "hover",
    "target": {
-    "placeholder": "Nome do contratante do frete"
+    "text": "CPF/CNPJ do gerador do CIOT *",
+    "exact": true,
+    "within": "[role=dialog]"
    },
    "seconds": 0.6,
-   "at": 112.39,
-   "label": "Contratante — Nome",
+   "at": 116.26,
+   "label": "CPF/CNPJ do gerador do CIOT *",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Contratante — CPF/CNPJ *",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "at": 118.01,
+   "label": "Contratante — CPF/CNPJ * e Nome *",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "RNTRC do emitente / transportador",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "at": 119.68,
+   "label": "RNTRC do emitente / transportador *",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L12",
-   "at": 113.67
+   "at": 123.62
   },
   {
    "do": "hover",
@@ -533,7 +572,7 @@
     "placeholder": "000000000000"
    },
    "seconds": 1.2,
-   "at": 113.67,
+   "at": 123.62,
    "label": "CIOT: gerado antes da viagem (sem abrir a ajuda)",
    "optional": true,
    "timeout": 4
@@ -541,33 +580,47 @@
   {
    "do": "mark",
    "name": "L13",
-   "at": 124.8
+   "at": 134.75
   },
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] details > summary",
-    "hasText": "Frete de terceiros (CIOT)"
+    "selector": "[role=dialog] [data-testid='mdfe-frete-contratado-control'] button[role=combobox]"
    },
-   "at": 124.8,
-   "label": "fecha Frete de terceiros (CIOT)"
+   "at": 134.75,
+   "label": "frete contratado: Não (de volta) (abre)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Não — sem pagamento"
+   },
+   "at": 140.19,
+   "label": "frete contratado: Não (de volta)"
+  },
+  {
+   "do": "waitFor",
+   "text": "CIOT não se aplica a esta viagem",
+   "timeout": 8
   },
   {
    "do": "hover",
    "target": {
-    "text": "Veículo único",
+    "text": "CIOT não se aplica a esta viagem",
+    "exact": true,
     "within": "[role=dialog]"
    },
-   "seconds": 0.8,
-   "at": 127.82,
-   "label": "Caminhão truck FKD2E41, carga própria",
+   "seconds": 1.5,
+   "at": 142.7,
+   "label": "zoom: CIOT não se aplica a esta viagem",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L14",
-   "at": 132.89
+   "at": 147.09
   },
   {
    "do": "click",
@@ -576,7 +629,7 @@
     "name": "Continuar",
     "exact": true
    },
-   "at": 132.89,
+   "at": 147.09,
    "label": "Continuar (trajeto e carga)",
    "noScroll": true
   },
@@ -586,7 +639,7 @@
     "selector": "[role=dialog] div.rounded-xl:has(p:text-is('Carregamento (Origem)')) button[role=combobox] >> nth=1"
    },
    "seconds": 0.8,
-   "at": 136.59,
+   "at": 150.79,
    "label": "origem: Taubaté/SP",
    "optional": true,
    "timeout": 4
@@ -594,7 +647,7 @@
   {
    "do": "mark",
    "name": "L15",
-   "at": 138.03
+   "at": 152.22
   },
   {
    "do": "click",
@@ -603,7 +656,7 @@
     "name": "Adicionar UF ao percurso",
     "exact": true
    },
-   "at": 138.89,
+   "at": 153.09,
    "label": "Adicionar UF ao percurso"
   },
   {
@@ -612,13 +665,13 @@
     "selector": "[role=dialog] button[role=combobox]",
     "hasText": "Selecione a UF"
    },
-   "at": 139.73,
+   "at": 153.92,
    "label": "Percurso: 1ª UF RJ (abre)"
   },
   {
    "do": "press",
    "key": "R",
-   "at": 140.66,
+   "at": 154.86,
    "label": "Percurso: 1ª UF RJ"
   },
   {
@@ -633,26 +686,26 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].find(e=>e.children.length===0&&e.offsetParent!==null&&e.textContent.trim()===\"Descarregamento (Destino)\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-330);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 143.44,
+   "at": 157.64,
    "label": "tela sobe até o destino"
   },
   {
    "do": "mark",
    "name": "L16",
-   "at": 144.14
+   "at": 158.34
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] div.rounded-xl:has(p:text-is('Descarregamento (Destino)')) button[role=combobox] >> nth=0"
    },
-   "at": 144.14,
+   "at": 158.34,
    "label": "Destino: MG (abre)"
   },
   {
    "do": "press",
    "key": "M",
-   "at": 145.36,
+   "at": 159.56,
    "label": "Destino: MG"
   },
   {
@@ -669,7 +722,7 @@
    "target": {
     "selector": "[role=dialog] div.rounded-xl:has(p:text-is('Descarregamento (Destino)')) button[role=combobox] >> nth=1"
    },
-   "at": 146.17,
+   "at": 160.37,
    "label": "Destino: Itamonte (abre)"
   },
   {
@@ -679,19 +732,19 @@
     "name": "Itamonte",
     "exact": true
    },
-   "at": 146.93,
+   "at": 161.13,
    "label": "Destino: Itamonte"
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].find(e=>e.children.length===0&&e.offsetParent!==null&&e.textContent.trim()===\"Peso Bruto Total (kg)\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-330);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 147.89,
+   "at": 162.09,
    "label": "tela desce até o peso"
   },
   {
    "do": "mark",
    "name": "L17",
-   "at": 148.44
+   "at": 162.64
   },
   {
    "do": "hover",
@@ -699,7 +752,7 @@
     "selector": "[role=dialog] div:has(> label:text-is('Peso Bruto Total (kg)')) input"
    },
    "seconds": 0.8,
-   "at": 150.72,
+   "at": 164.92,
    "label": "Peso Bruto Total (kg): 5800",
    "optional": true,
    "timeout": 4
@@ -710,7 +763,7 @@
     "selector": "#mdfe-valor-carga"
    },
    "seconds": 0.8,
-   "at": 153.38,
+   "at": 167.58,
    "label": "Valor Total da Carga (R$): 55.380,00",
    "optional": true,
    "timeout": 4
@@ -722,7 +775,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 1.0,
-   "at": 155.02,
+   "at": 169.22,
    "label": "Sugerido pelas notas — pode ajustar.",
    "optional": true,
    "timeout": 4
@@ -730,7 +783,7 @@
   {
    "do": "mark",
    "name": "L18",
-   "at": 160.56
+   "at": 174.76
   },
   {
    "do": "hover",
@@ -738,7 +791,7 @@
     "selector": "[role=dialog] textarea"
    },
    "seconds": 1.0,
-   "at": 161.45,
+   "at": 175.65,
    "label": "OBSERVAÇÕES (saem no DAMDFE)",
    "optional": true,
    "timeout": 4
@@ -746,7 +799,7 @@
   {
    "do": "mark",
    "name": "L19",
-   "at": 166.53
+   "at": 180.72
   },
   {
    "do": "click",
@@ -755,7 +808,7 @@
     "name": "Continuar",
     "exact": true
    },
-   "at": 166.53,
+   "at": 180.72,
    "label": "Continuar (revisão e emissão)",
    "noScroll": true
   },
@@ -766,7 +819,7 @@
     "hasText": "Normal"
    },
    "seconds": 0.8,
-   "at": 169.16,
+   "at": 183.36,
    "label": "Como emitir: Normal",
    "optional": true,
    "timeout": 4
@@ -774,7 +827,7 @@
   {
    "do": "mark",
    "name": "L20",
-   "at": 172.87
+   "at": 187.07
   },
   {
    "do": "click",
@@ -782,7 +835,7 @@
     "selector": "[role=dialog] button[aria-pressed]",
     "hasText": "Contingência"
    },
-   "at": 173.44,
+   "at": 187.63,
    "label": "Contingência (só para mostrar)"
   },
   {
@@ -791,7 +844,7 @@
     "selector": "#contingency-reason"
    },
    "seconds": 0.4,
-   "at": 178.7,
+   "at": 192.9,
    "label": "Motivo da contingência *",
    "optional": true,
    "timeout": 4
@@ -802,7 +855,7 @@
     "selector": "#contingency-cargo"
    },
    "seconds": 0.3,
-   "at": 179.61,
+   "at": 193.81,
    "label": "Tipo de carga *",
    "optional": true,
    "timeout": 4
@@ -813,7 +866,7 @@
     "selector": "#contingency-ncm"
    },
    "seconds": 0.3,
-   "at": 181.15,
+   "at": 195.35,
    "label": "NCM do produto *",
    "optional": true,
    "timeout": 4
@@ -824,7 +877,7 @@
     "selector": "#contingency-product"
    },
    "seconds": 0.6,
-   "at": 182.29,
+   "at": 196.49,
    "label": "Produto predominante *",
    "optional": true,
    "timeout": 4
@@ -832,7 +885,7 @@
   {
    "do": "mark",
    "name": "L21",
-   "at": 185.07
+   "at": 199.26
   },
   {
    "do": "hover",
@@ -841,7 +894,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 2.0,
-   "at": 188.19,
+   "at": 202.38,
    "label": "Imprima o DAMDFE em papel; prazo de regularização: até 168 horas",
    "optional": true,
    "timeout": 4
@@ -849,7 +902,7 @@
   {
    "do": "mark",
    "name": "L22",
-   "at": 197.49
+   "at": 211.68
   },
   {
    "do": "click",
@@ -857,7 +910,7 @@
     "selector": "[role=dialog] button[aria-pressed]",
     "hasText": "Normal"
    },
-   "at": 199.72,
+   "at": 213.92,
    "label": "volta para Normal"
   },
   {
@@ -867,7 +920,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.6,
-   "at": 200.98,
+   "at": 215.18,
    "label": "Tudo pronto para criar e emitir o MDF-e",
    "optional": true,
    "timeout": 4
@@ -875,7 +928,7 @@
   {
    "do": "mark",
    "name": "L23",
-   "at": 201.94
+   "at": 216.13
   },
   {
    "do": "click",
@@ -884,7 +937,7 @@
     "name": "Criar MDF-e",
     "exact": true
    },
-   "at": 202.43,
+   "at": 216.62,
    "label": "Criar MDF-e",
    "noScroll": true
   },
@@ -901,7 +954,7 @@
     "selector": "main tbody tr:has-text('FKD2E41') td >> nth=1"
    },
    "seconds": 0.6,
-   "at": 207.56,
+   "at": 221.76,
    "label": "nº 1 Aguardando SEFAZ",
    "optional": true,
    "timeout": 4
@@ -916,7 +969,7 @@
   {
    "do": "mark",
    "name": "L24",
-   "at": 210.11
+   "at": 224.31
   },
   {
    "do": "type",
@@ -927,7 +980,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 210.11,
+   "at": 224.31,
    "label": "linha do nº 1 Autorizado"
   },
   {
@@ -936,7 +989,7 @@
     "selector": "main tbody tr:has-text('FKD2E41') td:has-text('Edson')"
    },
    "seconds": 0.2,
-   "at": 212.9,
+   "at": 227.09,
    "label": "Motorista",
    "optional": true,
    "timeout": 4
@@ -947,7 +1000,7 @@
     "selector": "main tbody tr:has-text('FKD2E41') td:has-text('FKD2E41')"
    },
    "seconds": 0.2,
-   "at": 214.03,
+   "at": 228.23,
    "label": "Placa",
    "optional": true,
    "timeout": 4
@@ -958,7 +1011,7 @@
     "selector": "main tbody tr:has-text('FKD2E41') td:has-text('Itamonte')"
    },
    "seconds": 0.2,
-   "at": 214.87,
+   "at": 229.07,
    "label": "Trajeto",
    "optional": true,
    "timeout": 4
@@ -969,7 +1022,7 @@
     "selector": "main tbody tr:has-text('FKD2E41') td:has-text('55.380')"
    },
    "seconds": 0.2,
-   "at": 215.85,
+   "at": 230.05,
    "label": "Valor",
    "optional": true,
    "timeout": 4
@@ -980,7 +1033,7 @@
     "selector": "main tbody tr:has-text('FKD2E41') td:has-text('5.800')"
    },
    "seconds": 0.3,
-   "at": 216.61,
+   "at": 230.81,
    "label": "Peso (kg)",
    "optional": true,
    "timeout": 4
@@ -988,7 +1041,7 @@
   {
    "do": "mark",
    "name": "L25",
-   "at": 217.82
+   "at": 232.02
   },
   {
    "do": "hover",
@@ -996,7 +1049,7 @@
     "selector": "main tbody tr:has-text('FKD2E41') button[aria-haspopup=menu]"
    },
    "seconds": 0.4,
-   "at": 218.46,
+   "at": 232.66,
    "label": "Ações do nº 1",
    "optional": true,
    "timeout": 4
@@ -1008,7 +1061,7 @@
     "name": "Baixar DAMDFE (PDF)"
    },
    "seconds": 1.0,
-   "at": 220.0,
+   "at": 234.2,
    "label": "Baixar DAMDFE (PDF)",
    "noScroll": true,
    "optional": true,
@@ -1017,7 +1070,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 225.98
+   "at": 240.18
   }
  ]
 }

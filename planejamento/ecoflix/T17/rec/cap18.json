@@ -1,18 +1,18 @@
 {
  "name": "t17-cap18",
- "title": "T17 · Cap. 18 · O que o contador faz (narração 48,1 s ESTIMADA; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T14:40:00-03:00)",
+ "title": "T17 · Cap. 18 · O pacote do mês (narração 80,0 s ESTIMADA; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T14:40:00-03:00)",
  "seed": "t17-cap18",
  "pace": 0.5,
  "cps": 9,
  "tail": 1.5,
  "start": {
   "x": 900,
-  "y": 470
+  "y": 440
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
   "cato_adoption_nudge_38814e47-876a-5977-a5f7-53af364c17bb_34c36c63-0890-5e89-8963-7c77b7996908": "{\"count\":99,\"lastShownAt\":4102444800000}",
   "pwa-install-dismissed": "true",
@@ -22,7 +22,7 @@
  },
  "seedExtra": [
   "t17/inicio",
-  "t17/apos-cap13"
+  "t17/apos-cap14"
  ],
  "prewarm": [
   "/login"
@@ -85,6 +85,32 @@
   },
   {
    "do": "wait",
+   "seconds": 0.3
+  },
+  {
+   "do": "goto",
+   "url": "/fiscal-ambiental/estoque-fiscal/posicao"
+  },
+  {
+   "do": "waitFor",
+   "text": "Saldo fiscal atualizado, por material.",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const tem=[...document.querySelectorAll('aside a, [data-sidebar=sidebar] a')].some(a=>a.textContent.trim()===\"Notas Fiscais (NF-e)\");if(tem)return 'ja aberto';const b=[...document.querySelectorAll('aside button, [data-sidebar=sidebar] button')].find(b=>b.textContent.trim()===\"Fiscal & Ambiental\");if(!b)return 'SEM ALVO';b.click();return 'aberto'})()"
+  },
+  {
+   "do": "wait",
    "seconds": 0.8
   },
   {
@@ -103,6 +129,248 @@
    "at": 0
   },
   {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Notas Fiscais (NF-e)",
+    "exact": true,
+    "within": "aside, [data-sidebar=sidebar]"
+   },
+   "at": 4.05,
+   "label": "Notas Fiscais (NF-e) no menu"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Saída",
+    "exact": true,
+    "within": "[aria-label='Navegação da seção']"
+   },
+   "at": 5.41,
+   "label": "aba Saída"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[aria-label='Mais opções de NF-e']"
+   },
+   "at": 6.46,
+   "label": "Mais opções de NF-e (⋮)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Exportação Contábil"
+   },
+   "at": 7.92,
+   "label": "Exportação Contábil",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Baixar Pacote",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 10.27
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Gera um pacote ZIP com XMLs",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.2,
+   "at": 11.99,
+   "label": "descrição do pacote",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 17.6
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#export-fiscal-config"
+   },
+   "seconds": 1.2,
+   "at": 19.33,
+   "label": "Emitente / CNPJ: Todos os CNPJs",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 23.42
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox] >> nth=1"
+   },
+   "at": 23.42,
+   "label": "Período: Mês passado (abre)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Mês passado",
+    "exact": true
+   },
+   "at": 24.84,
+   "label": "Período: Mês passado"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 25.97
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Incluir notas destinadas ao CNPJ",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 30.1,
+   "label": "marca Incluir notas destinadas ao CNPJ"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "XMLs de NF-e emitidas por fornecedores",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.5,
+   "at": 35.74,
+   "label": "XMLs de NF-e emitidas por fornecedores (xmls/destinadas)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 40.75
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Tipo de nota",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.5,
+   "at": 41.15,
+   "label": "Tipo de nota: Saída e Entrada",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Status",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "at": 42.62,
+   "label": "Status: todos marcados",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 48.38
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Incluir DANFEs (PDFs)",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "at": 50.26,
+   "label": "Incluir DANFEs (PDFs)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Incluir MDF-e",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "at": 52.39,
+   "label": "Incluir MDF-e's",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 54.88
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "notas no período",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "at": 54.88,
+   "label": "prévia: 21 notas no período",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Destinadas:",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.5,
+   "at": 60.94,
+   "label": "Destinadas: 0 XML(s)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"21 notas no período\", \"12 saída\", \"9 entrada\", \"Destinadas: 0 XML(s)\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere prévia de outubro"
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 72.62
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Baixar Pacote",
+    "exact": true
+   },
+   "at": 72.62,
+   "label": "Baixar Pacote"
+  },
+  {
+   "do": "waitFor",
+   "text": "Exportação pronta",
+   "timeout": 40
+  },
+  {
    "do": "scroll",
    "point": {
     "x": 900,
@@ -111,23 +379,8 @@
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 0.5,
-   "label": "cursor em repouso (ilustração do pacote)"
-  },
-  {
-   "do": "mark",
-   "name": "L2",
-   "at": 16.79
-  },
-  {
-   "do": "mark",
-   "name": "L3",
-   "at": 25.27
-  },
-  {
-   "do": "mark",
-   "name": "L4",
-   "at": 33.97
+   "at": 78.16,
+   "label": "cursor em repouso (download)"
   },
   {
    "do": "eval",
@@ -137,7 +390,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 48.13
+   "at": 80.03
   }
  ]
 }

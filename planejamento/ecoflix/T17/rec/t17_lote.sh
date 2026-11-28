@@ -1,13 +1,13 @@
 #!/bin/bash
 # T17 · lote de ensaios RÁPIDOS (ou completos) em sequência, um capítulo por vez na fila (rec/fila.sh --prio 17, pelo t17_fila.sh), com
 # o resumo.py e o prever.py de cada capítulo gravados em arquivo e uma linha por capítulo em rec/t17/_ens/<nome>.txt.
-# Capítulo que grava estado regrava a semente cumulativa quando passa (02, 04, 05, 08, 09, 10, 13).
+# Capítulo que grava estado regrava a semente cumulativa quando passa (02, 04, 05, 08, 09, 10, 14; 28/11: 1.60.39, 21 capítulos).
 # Uso (segundo plano, prazo 7200000): bash rec/t17/t17_lote.sh lote1 [NN[:c] ...]   (sem capítulos = todos, no rápido)
 set -u
 cd /home/claude/ecoflix
 NOME=$1; shift
-[ $# -gt 0 ] || set -- 00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19
-declare -A SEED=( [02]=apos-cap02 [04]=apos-cap04 [05]=apos-cap05 [08]=apos-cap08 [09]=apos-cap09 [10]=apos-cap10 [13]=apos-cap13 )
+[ $# -gt 0 ] || set -- 00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20
+declare -A SEED=( [02]=apos-cap02 [04]=apos-cap04 [05]=apos-cap05 [08]=apos-cap08 [09]=apos-cap09 [10]=apos-cap10 [14]=apos-cap14 )
 [ -n "${TUT_SENHA:-}" ] || export TUT_SENHA="$(head -c 12 /dev/urandom | base64)"
 SAIDA=rec/t17/_ens/$NOME.txt
 FIM=$(( $(date +%s) + 6500 ))   # o segundo plano morre em 2 h: não começa capítulo novo depois de 1 h 48

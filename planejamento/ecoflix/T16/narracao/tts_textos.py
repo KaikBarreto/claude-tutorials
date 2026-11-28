@@ -1,5 +1,6 @@
 # Texto enviado ao ElevenLabs (eleven_v4, voz Kaik Barreto) por capítulo do T16 "Nota Fiscal de mercadoria (NF-e)".
 # Gerado do roteiro.md (coluna Fala) por T16_gera_tts.py: cada linha do texto é uma linha da tabela Tela × Fala.
+# 28/11 (app 1.60.39): cap04 L6 e cap23 L2, L3, L4 (nova) e L8 trocados à mão, junto com o roteiro.md (andamento_160.md).
 # Trocas de pronúncia usadas (legenda -> fala; tabela do PERFIL de 10/11 01:20, com o IPA de NF-e, NFS-e e ICMS):
 #   Fiscal & Ambiental -> "Fiscal e Ambiental" | EcoSistema -> "Ecossistema" | NFS-e -> "/ˈẽːniˈɛːfiˈɛːsiˈeː/" | SEFAZ -> "sefás" | DANFE -> "dânfi" | NF-e -> "/ˈẽniˈɛfiˈe/" | CFOP -> "cê-éfe-ó-pê" | ICMS -> "/iˈseˈɛmiˈɛːsːi/" | CC-e -> "cê-cê-ê" | NCM -> "ene-cê-ême" | MTR -> "ême-tê-érre" | CDF -> "cê-dê-éfe" | XML -> "xis-ême-éle" | PDF -> "pê-dê-éfe" | DRE -> "dê-érri-ê" | pfx -> "pê-éfe-xis" | IBS -> "i-bê-ésse" | CBS -> "cê-bê-ésse" | A1 -> "á-um"
 # Novas desta aula (testar num trecho curto antes da voz): CC-e, A1, pfx, IBS, CBS, Fiscal & Ambiental.
@@ -36,7 +37,7 @@ O Importar dados traz o que já está no cadastro da empresa: o nome, o CNPJ, o 
 Confiro a razão social completa e digito a inscrição estadual. O CNPJ daqui é o que vai como emitente em toda nota.
 O endereço fiscal vem do cadastro da empresa, e pra mudar é em Configurações, Empresa. Se este CNPJ tiver um endereço diferente pra nota, é marcar Este CNPJ tem endereço próprio e preencher aqui.
 Mais embaixo dá pra enviar o logo que sai impresso na nota. E o responsável técnico só se preenche se o contador pedir, porque alguns estados exigem.
-Passo três, os impostos. Primeiro, o regime tributário. A Recicla Vale é Lucro Real, e quem define isso é o contador.
+Passo três, os impostos. Eles ficam separados por documento, e a gente fica na aba da /ˈẽniˈɛfiˈe/. Primeiro, o regime tributário. A Recicla Vale é Lucro Real, e quem define isso é o contador.
 Olha: escolhido o regime, a tela já ajusta os campos de PIS e COFINS.
 Mais embaixo vem o /iˈseˈɛmiˈɛːsːi/, o imposto do estado sobre a mercadoria, com a alíquota e os códigos que o contador passar. Aqui também fica o diferimento automático nas vendas pra indústria.
 Depois, o PIS e a COFINS. No Lucro Real o regime é o não cumulativo, e cada um tem o código da venda e o código da compra. Embaixo, o i-pê-í, só pra quem industrializa. Nada disso se escolhe no chute: é a planilha do contador, campo por campo.
@@ -193,12 +194,13 @@ As respostas ficam no grupo Manifestar. Confirmar operação diz que a compra é
 As duas últimas pedem uma justificativa e não podem ser desfeitas.
 A bateria da Auto Peças chegou certinho, então confirmo a operação. Pronto: confirmada.""",
 23: """E a nota que ainda não apareceu na lista? A Cooperativa Recomeço vendeu latinha e PET ontem e mandou o xis-ême-éle por e-mail. Dá pra trazer a nota pelo arquivo.
-Clico em Importar nota, vou na aba Arquivo xis-ême-éle e escolho o arquivo da cooperativa.
-Importar nota. Pronto: nota importada, e ela entra na lista com as outras.
+Clico em Importar xis-ême-éle e escolho o arquivo da cooperativa.
+Antes de salvar, o sistema confere se a nota foi emitida pro CNPJ da Recicla Vale e se ela está autorizada na sefás. Pronto: /ˈẽniˈɛfiˈe/ importada, e ela entra na lista com as outras.
+Se você só tem a chave de acesso, é o Importar nota, aqui embaixo: ele traz a nota pelos quarenta e quatro números.
 Agora, Lançar compra. O sistema lê o xis-ême-éle e acha o fornecedor pelo CNPJ.
 E casa cada item com um material do cadastro. A latinha do xis-ême-éle tem o mesmo nome do material, então a confiança é alta.
 O PET prensado tem palavras em comum com o Plástico PET, e o selo pede pra conferir. Quando a confiança é baixa, o material fica pra você escolher.
-A nota traz só o peso líquido. E Conferir na tela de compra leva os itens pra tela de Compra. Nada é lançado agora: lá você confere os valores e escolhe como pagou. No mesmo menu, a nota recebida também pode virar despesa ou ir pro saldo do fornecedor.""",
+A nota traz só o peso líquido. E Conferir na tela de compra leva os itens pra tela de Compra, onde você confere os valores e escolhe como pagou. No mesmo menu, a nota recebida também pode virar despesa ou ir pro saldo do fornecedor. No próximo tutorial, esta nota vira compra.""",
 24: """Pronto! Recapitulando: a gente subiu o certificado á-um, preencheu a empresa e os impostos no Lucro Real e criou um cenário, sempre com o que o contador passou.
 Continuou a numeração da série um, cadastrou a transportadora e viu a cota do mês, com a tolerância de cinco documentos.
 Emitiu a nota pelos três caminhos: do zero, a partir de um pedido e a partir de um caixa fechado. E conferiu os impostos e as parcelas antes de emitir.

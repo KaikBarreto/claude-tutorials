@@ -2,7 +2,7 @@
 """T16 · gera rec/t16/cap00..cap24.json (roteiros do robô) a partir da voz (t16/narracao/capNN.json).
 
 Nota Fiscal de mercadoria (NF-e) no COMPUTADOR (janela 1600x900, 20/11), logado como Rafael Nogueira (MASTER, Recicla Vale Metais), EcoSistema
-1.60.22 (25 capítulos desde a passada de 18/11: cobertura_160.md). FAKE_NOW 2026-11-10T08:30:00-03:00 (terça) em todos os capítulos. Emissão, certificado, SEFAZ e notas recebidas simulados no
+1.60.39 desde 28/11 (era 1.60.22; 25 capítulos desde a passada de 18/11: cobertura_160.md). FAKE_NOW 2026-11-10T08:30:00-03:00 (terça) em todos os capítulos. Emissão, certificado, SEFAZ e notas recebidas simulados no
 Supabase falso (rec/mundo/handlers: plugnotas-*, get_invoices_paged, get_next_invoice_number, search_orders_for_invoice,
 certificate_vault_status, dfe_inbound_import_enqueue + a fila dfe_inbound_import_jobs; lib/nfe.mjs): nada sai da máquina.
 Cada passo é preso a uma palavra da fala: `at` = início da palavra − o custo do gesto (A(linha, palavra, folga)), para o cursor CHEGAR
@@ -294,7 +294,7 @@ def stable_id(chave):
 
 
 RAFAEL = stable_id('user.rafael')
-VERSAO = '1.60.22'
+VERSAO = '1.60.39'   # 28/11: T16 refeita no 1.60.39 (andamento_160.md, seção "28/11 · 1.60.39"); o lote trava no T16_VERSAO
 HOJE = FAKE_NOW[:10]
 STORAGE = {'app_version': VERSAO, 'notification_shown_version': VERSAO, 'pwa-install-dismissed': 'true', 'theme': 'light',
            f'daily-tasks-reminder-last-shown-{RAFAEL}': HOJE, 'initial-preferences-set': 'true',
@@ -364,7 +364,8 @@ NOVA_NOTA = BTN('Nova Nota', MAIN)
 MAIS = SEL("main button[aria-label='Mais opções de NF-e']")
 COTA = SEL("main :text-matches('^[0-9.]+/[0-9.]+ Documentos$')")
 CARTAO = lambda t: SEL(f"main :text-is('{t}')")
-SECAO_ID = {'Certificado': 'certificado', 'Empresa': 'empresa', 'Impostos (padrão)': 'impostos', 'Cenários': 'cenarios',
+SECAO_ID = {'Certificado': 'certificado', 'Empresa': 'empresa', 'Impostos': 'impostos',   # 1.60.39: a aba virou "Impostos" (era "Impostos (padrão)")
+            'Cenários': 'cenarios',
             'Numeração': 'numeracao', 'Transportadora': 'transportadora', 'Serviços': 'servicos'}
 TRILHO = lambda t: SEL(f"#tab-btn-{SECAO_ID[t]}")                        # seções da Configuração Fiscal: abas no alto (underline; e2)
 VAZIO = 'Nenhuma nota fiscal encontrada'                                 # lista vazia (Entrada e Saída)
@@ -484,7 +485,7 @@ def cap02():
         c.hover(TRILHO('Serviços'), 0.8, at=c.A(2, 'serviços.', 0.6), label='até Serviços')
     c.mark(3)
     c.hover(TRILHO('Empresa'), 0.3, at=c.A(3, 'Empresa,', 0.6), label='Empresa (apagada)')
-    c.hover(TRILHO('Impostos (padrão)'), 0.3, at=c.A(3, 'Impostos,', 0.6), label='Impostos (apagada)')
+    c.hover(TRILHO('Impostos'), 0.3, at=c.A(3, 'Impostos,', 0.6), label='Impostos (apagada)')
     c.hover(TRILHO('Numeração'), 0.3, at=c.A(3, 'Numeração', 0.6), label='Numeração (apagada)')
     c.hover(TRILHO('Transportadora'), 0.6, at=c.A(3, 'Transportadora', 0.6), label='Transportadora (apagada)')
     c.marcar(TRILHO('Empresa'), at=c.A(3, 'abrem', 0.3), label='zoom: as seções apagadas (só abrem depois do certificado)')
@@ -574,8 +575,12 @@ def cap04():
     c.hover(TXT('Responsável técnico (CSRT)'), 1.0, at=c.A(5, 'responsável', 0.6), label='Responsável técnico (CSRT)')
     c.mark(6)
     c.ev(js_topo(400), at=round(c.L(6) - 0.5, 2), label='volta ao topo')
-    c.click(TRILHO('Impostos (padrão)'), at=c.A(6, 'impostos.', 0.7), label='Impostos (padrão)')
+    c.click(TRILHO('Impostos'), at=c.A(6, 'impostos.', 0.7), label='Impostos (1.60.39: era "Impostos (padrão)")')
     c.waitfor(text='Passo 3 de 3:', timeout=10)
+    # 1.60.39: os impostos ficam em abas por documento ("NF-e e NFC-e", aberta, e "NFS-e"); só o hover, sem trocar de aba
+    c.hover(SEL("main [role=tab]:text-is('NF-e e NFC-e')"), 0.4, at=c.A(6, 'documento,', 0.6), label='aba NF-e e NFC-e (aberta)')
+    c.hover(SEL("main [role=tab]:text-is('NFS-e')"), 0.4, at=c.A(6, 'documento,', -0.2), label='aba NFS-e (sem clicar)')
+    c.hover(SEL("main [role=tab]:text-is('NF-e e NFC-e')"), 0.4, at=c.A(6, 'aba', 0.5), label='a aba da NF-e')
     c.click(SEL("main button[role=combobox]", nth=0), at=c.A(6, 'regime', 0.7), label='Regime Tributário (abre a lista)')
     c.click(OPT('Lucro Real'), at=c.A(6, 'Lucro', 0.7), label='Lucro Real', noScroll=True)
     c.mark(7)
@@ -1247,11 +1252,12 @@ def cap15():
     c.mark(4)
     c.click(SEL(f"{DLG} button:has-text('Histórico')"), at=c.A(4, 'Histórico,', 0.7), label='Histórico (no alto do Visualizar)')
     c.waitfor(text='Histórico da NF-e', timeout=10)
-    c.hover(SEL("[role=dialog] :text-is('Envio para SEFAZ')"), 0.5, at=c.A(4, 'envio,', 0.6), label='Envio para SEFAZ (Enviado)')
-    c.hover(SEL("[role=dialog] :text-is('Rejeição')"), 0.8, at=c.A(4, 'recusa', 0.6), label='Rejeição (Erro)')
-    c.confere('dlg', ['Histórico da NF-e', 'Rejeição', 'Envio para SEFAZ'], 'histórico: envio e rejeição')
+    # 1.60.39: FiscalDocumentHistoryDialog (RPC list_fiscal_document_history): o mais novo em cima; títulos do SQL para os nfe_events
+    c.hover(SEL("[role=dialog] :text-is('Transmissão do documento fiscal')"), 0.5, at=c.A(4, 'envio,', 0.6), label='Transmissão do documento fiscal (Registro)')
+    c.hover(SEL("[role=dialog] :text-is('Documento rejeitado')"), 0.8, at=c.A(4, 'recusa', 0.6), label='Documento rejeitado (Erro)')
+    c.confere('dlg', ['Histórico da NF-e', 'Documento rejeitado', 'Transmissão do documento fiscal'], 'histórico: transmissão e rejeição (1.60.39)')
     c.mark(5)
-    c.click(SEL("[role=dialog] button:has(.sr-only)", nth=-1), at=round(c.L(5) - 1.6, 2), label='fecha o Histórico (X)')
+    c.click(SEL("[role=dialog] button:text-is('Fechar')", nth=-1), at=round(c.L(5) - 1.6, 2), label='fecha o Histórico (Fechar)')
     c.pause(0.6)
     c.press('Escape', label='fecha o Visualizar', when=SEL(DLG))
     c.pause(0.6)
@@ -1575,38 +1581,38 @@ def cap22():
 
 
 def cap23():
-    """Importar pelo XML: Importar nota (L1, L2), a aba Arquivo XML e o arquivo da cooperativa (L2), Importar nota > Processando > Nota
-    importada > Concluir (L3), Lançar compra… (L4), o casamento "alta" (L5) e "confira" (L6), a frase do peso líquido e Conferir na tela
-    de compra (L7, sem clicar)."""
+    """Importar pelo XML (1.60.39): o botão Importar XML em cima da lista (L1), o seletor de arquivo e o XML da cooperativa (L2), o toast
+    "NF-e importada com sucesso." e a linha da Cooperativa (L3, zoom), o Importar nota pela chave (L4, sem clicar), Lançar compra… (L5),
+    o casamento "alta" (L6) e "confira" (L7), a frase do peso líquido e Conferir na tela de compra (L8, sem clicar: a compra é da T17)."""
     c = Cap(23, setup=setup_nfe('recebidas', 'Notas emitidas contra o seu CNPJ'), start=(760, 400))
+    IMPORTAR_XML = BTN('Importar XML', MAIN)
     c.mark(1)
-    c.hover(BTN('Importar nota recebida', MAIN), 1.0, at=c.A(1, 'arquivo.', 0.6), label='Importar nota')
+    c.hover(IMPORTAR_XML, 1.0, at=c.A(1, 'arquivo.', 0.6), label='Importar XML (1.60.39, em cima da lista)')
     c.mark(2)
-    c.click(BTN('Importar nota recebida', MAIN), at=c.A(2, 'Importar', 0.7), label='Importar nota')
-    c.waitfor(text='Importar nota recebida', timeout=10)
-    c.click(SEL(f"{DLG} [role=tab]:has-text('Arquivo XML'), {DLG} button:has-text('Arquivo XML')"), at=c.A(2, 'Arquivo', 0.6), label='aba Arquivo XML')
-    c.upload(SEL(f"{DLG} button:has-text('Selecione o XML'), {DLG} label:has-text('Selecione o XML')"), XML_COOP, at=c.A(2, 'escolho', 0.7),
-             label='o XML da Cooperativa (NFe-3871-Cooperativa-Recomeco.xml)')
+    # o botão abre o seletor do navegador (input type=file escondido): o robô entrega o arquivo no filechooser
+    c.upload(IMPORTAR_XML, XML_COOP, at=c.A(2, 'Importar', 0.7), label='Importar XML: o XML da Cooperativa (NFe-3871-Cooperativa-Recomeco.xml)')
     c.mark(3)
-    c.click(SEL(f"{DLG} button:text-is('Importar nota')"), at=c.A(3, 'Importar', 0.7), label='Importar nota (janela)')
-    c.waitfor(text='Nota importada', timeout=15)
-    c.click(SEL(f"{DLG} button:text-is('Concluir')"), at=c.A(3, 'entra', 0.6), label='Concluir')
+    c.waitfor(text='NF-e importada com sucesso.', timeout=15)
     c.waitfor(text='Cooperativa Recomeço', timeout=10)
-    c.hover(LINHA('Cooperativa Recomeço'), 0.8, at=c.A(3, 'outras.', 0.6), label='a linha Cooperativa Recomeço R$ 7.550,00')
+    c.hover(LINHA('Cooperativa Recomeço'), 1.2, at=c.A(3, 'confere', 0.6), label='zoom: a linha Cooperativa Recomeço R$ 7.550,00')
+    c.confere('row:Cooperativa Recomeço', ['7.550,00', 'Autorizada'], 'Cooperativa importada pelo XML, R$ 7.550,00, Autorizada')
+    c.hover(LINHA('Cooperativa Recomeço'), 0.6, at=c.A(3, 'outras.', 0.6), label='a linha na lista com as outras')
     c.mark(4)
-    c.click(TRIG_REC('Cooperativa Recomeço'), at=c.A(4, 'Agora,', 0.6), label='abre o menu da nota da Cooperativa')
-    c.click(ITEM('Lançar compra…'), at=c.A(4, 'Lançar', 0.6), label='Lançar compra…', noScroll=True)
-    c.waitfor(text='Importar NF-e nº 3871', timeout=10)
-    c.hover(SEL(f"{DLG} :text-matches('^Fornecedor:')"), 1.0, at=c.A(4, 'fornecedor', 0.6), label='Fornecedor: Cooperativa Recomeço por CNPJ/CPF')
+    c.hover(BTN('Importar nota recebida', MAIN), 1.5, at=c.A(4, 'Importar', 0.6), label='Importar nota (pela chave de acesso, sem clicar)')
     c.mark(5)
-    c.marcar(SEL(f"{DLG} :text-is('ALUMINIO LATINHA')"), at=c.A(5, 'casa', 0.3), label='zoom: ALUMINIO LATINHA, selo alta, Alumínio latinha')
-    c.hover(SEL(f"{DLG} :text-is('alta')", nth=0), 1.0, at=c.A(5, 'alta.', 0.6), label='selo alta')
+    c.click(TRIG_REC('Cooperativa Recomeço'), at=c.A(5, 'Agora,', 0.6), label='abre o menu da nota da Cooperativa')
+    c.click(ITEM('Lançar compra…'), at=c.A(5, 'Lançar', 0.6), label='Lançar compra…', noScroll=True)
+    c.waitfor(text='Importar NF-e nº 3871', timeout=10)
+    c.hover(SEL(f"{DLG} :text-matches('^Fornecedor:')"), 1.0, at=c.A(5, 'fornecedor', 0.6), label='Fornecedor: Cooperativa Recomeço por CNPJ/CPF')
     c.mark(6)
-    c.marcar(SEL(f"{DLG} :text-is('PLASTICO PET PRENSADO')"), at=c.A(6, 'PET', 0.3, nth=0), label='zoom: PLASTICO PET PRENSADO, selo confira, Plástico PET')
-    c.hover(SEL(f"{DLG} :text-is('confira')", nth=0), 1.0, at=c.A(6, 'conferir.', 0.6), label='selo confira')
+    c.marcar(SEL(f"{DLG} :text-is('ALUMINIO LATINHA')"), at=c.A(6, 'casa', 0.3), label='zoom: ALUMINIO LATINHA, selo alta, Alumínio latinha')
+    c.hover(SEL(f"{DLG} :text-is('alta')", nth=0), 1.0, at=c.A(6, 'alta.', 0.6), label='selo alta')
     c.mark(7)
-    c.hover(SEL(f"{DLG} :text-matches('A NF-e traz só o peso líquido')"), 1.0, at=c.A(7, 'líquido.', 0.6), label='zoom: A NF-e traz só o peso líquido')
-    c.hover(SEL(f"{DLG} button:has-text('Conferir na tela de compra')"), 1.5, at=c.A(7, 'Conferir', 0.6), label='Conferir na tela de compra (sem clicar)', noScroll=True)
+    c.marcar(SEL(f"{DLG} :text-is('PLASTICO PET PRENSADO')"), at=c.A(7, 'PET', 0.3, nth=0), label='zoom: PLASTICO PET PRENSADO, selo confira, Plástico PET')
+    c.hover(SEL(f"{DLG} :text-is('confira')", nth=0), 1.0, at=c.A(7, 'conferir.', 0.6), label='selo confira')
+    c.mark(8)
+    c.hover(SEL(f"{DLG} :text-matches('A NF-e traz só o peso líquido')"), 1.0, at=c.A(8, 'líquido.', 0.6), label='zoom: A NF-e traz só o peso líquido')
+    c.hover(SEL(f"{DLG} button:has-text('Conferir na tela de compra')"), 1.5, at=c.A(8, 'Conferir', 0.6), label='Conferir na tela de compra (sem clicar)', noScroll=True)
     c.fim()
     return c
 
@@ -1617,7 +1623,7 @@ def cap24():
     c = Cap(24, setup=setup_cfg('certificado', 'Certificado validado!'), start=(760, 400))
     c.mark(1)
     c.hover(TXT('Certificado validado!'), 0.6, at=c.A(1, 'certificado', 0.6), label='Certificado validado!')
-    c.click(TRILHO('Impostos (padrão)'), at=c.A(1, 'impostos', 0.7), label='Impostos (padrão)')
+    c.click(TRILHO('Impostos'), at=c.A(1, 'impostos', 0.7), label='Impostos')
     c.hover(TXT('Lucro Real:'), 0.6, at=c.A(1, 'Lucro', 0.6), label='o quadro Lucro Real:')
     c.click(TRILHO('Cenários'), at=c.A(1, 'cenário,', 0.7), label='Cenários')
     c.mark(2)

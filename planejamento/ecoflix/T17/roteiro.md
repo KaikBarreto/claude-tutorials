@@ -3,17 +3,17 @@
 - **Título:** Transporte, serviço e o contador
 - **Antes:** Nota Fiscal de mercadoria (NF-e) (T16)
 - **Próximo:** Ambiental: MTR e CDF (T18)
-- **Vinhetas (áreas):** TRANSPORTE · FROTA · MANIFESTO · SERVIÇO · RELATÓRIO FISCAL · ESTOQUE FISCAL · CONTADOR · RESUMO (todo
+- **Vinhetas (áreas):** TRANSPORTE · FROTA · MANIFESTO · SERVIÇO · COMPRA · RELATÓRIO FISCAL · ESTOQUE FISCAL · CONTADOR · RESUMO (todo
   capítulo menos o 0)
-- **Duração estimada:** ~23 min de vídeo (3.191 palavras de fala, ~20,5 min a 2,6 palavras/s, mais a vinheta de abertura, 19
+- **Duração estimada:** ~25 min de vídeo (3.526 palavras de fala, ~22,6 min a 2,6 palavras/s, mais a vinheta de abertura, 20
   vinhetas de capítulo, as esperas da SEFAZ simulada e a cartela). Aula única, mesmo longa (Kaik, 18/11): nenhum capítulo sai
   para outra aula.
-- **App 1.60.10** (aplicação de 18/11 sobre o roteiro do 1.59.154; o que mudou e o que entrou: `T17/cobertura_160.md`).
-  **20 capítulos (0 a 19).** Novos: 6 (manifesto recusado), 13 (saldo inicial), 15 (cancelamento e devolução). O antigo 8 virou
-  9 e 10 (ativar; depois, as notas que chegaram) e o antigo 10 virou 12, 14 e 16. Renumerados: 6→7, 7→8, 8→9, 9→11, 10→12,
-  11→17, 12→18, 13→19.
+- **App 1.60.39** (28/11; `origin/main` de 26/11; o que mudou desde o 1.60.10 está em `andamento_160.md`, seção "28/11 · 1.60.39").
+  Antes: aplicação de 18/11 (1.60.10) sobre o roteiro do 1.59.154 (`T17/cobertura_160.md`).
+  **21 capítulos (0 a 20).** Novo em 28/11: 11 (a NF-e recebida que vira compra, 1.60.39); renumerados 11→12, 12→13, 13→14,
+  14→15, 15→16, 16→17, 17→18, 18→19, 19→20. De 18/11: 6 (manifesto recusado), 14 (saldo inicial) e 16 (cancelamento e devolução).
 - Coluna Fala = texto da narração na grafia da legenda; a grafia de pronúncia do TTS está em `narracao/tts_textos.py`. Coluna Tela =
-  o que o robô faz e onde a câmera foca, rótulos entre aspas como no código 1.60.10 (`T17/inventario.md` e `T17/cobertura_160.md`). Logado como Rafael
+  o que o robô faz e onde a câmera foca, rótulos entre aspas como no código 1.60.10 (`T17/inventario.md` e `T17/cobertura_160.md`), conferidos de novo no 1.60.39 em 28/11. Logado como Rafael
   Nogueira (MASTER), desktop. Mundo e sementes: `T17/plano.md`. FAKE_NOW 10/11/2026 09:30 nos capítulos 0 a 4, 14:20 do 5 ao 9 e 14:40 do 10 em
   diante (junção 1.60: depois das notas 1249 a 1254 do T16; as duas notas do alumínio são a 1255 e a 1256).
 - Exemplos em **Lucro Real**; **SPED Fiscal (BETA) fica fora**; no CIOT a tela não abre o balão "Como gerar o CIOT?" (ele cita a
@@ -28,7 +28,7 @@
 | Vinheta EcoFlix com o título "Transporte, serviço e o contador". | (sem fala) |
 | Dashboard do EcoSistema, logado como Rafael Nogueira. [ILUSTRAÇÃO: o dia da Recicla Vale: entra "Recicla Vale Metais · terça, 10 de novembro" e três cartões, um por trecho da frase: um caminhão com fardos de alumínio e a seta "Taubaté → Itamonte (MG)"; uma caçamba no pátio da "Aços Quiririm"; uma pasta "Outubro" indo para o "Contador".] | Oi! Neste tutorial a gente vai cuidar dos outros documentos da Recicla Vale Metais: o que acompanha a carga na estrada, o que cobra um serviço e o pacote que o contador pede todo mês. |
 | (ilustração: os três cartões acendem um a um, na ordem da frase) | Hoje sai um caminhão de alumínio pra Minas Gerais, a coleta com caçamba na Aços Quiririm vira cobrança, e outubro fecha com o contador. |
-| A ilustração sai; a câmera vai ao menu lateral e clica em "Fiscal & Ambiental"; o submenu abre e o destaque passa por "Transporte (MDF-e)", "Notas de Serviço (NFS-e)", "Estoque Fiscal" e "Relatórios Fiscais" (sem parar em "SPED Fiscal", se aparecer). | Tudo isso fica no menu Fiscal & Ambiental: em Transporte, em Notas de Serviço, no Estoque Fiscal e nos Relatórios Fiscais. |
+| A ilustração sai; a câmera vai ao menu lateral e clica em "Fiscal & Ambiental"; o submenu abre e o destaque passa por "Transporte (MDF-e)", "Notas de Serviço (NFS-e)" e "Relatório/Estoque Fiscal" (uma tela só desde o 1.60.15; sem parar em "SPED Fiscal"). | Tudo isso fica no menu Fiscal & Ambiental: em Transporte, em Notas de Serviço e no Relatório e Estoque Fiscal. |
 | Cartão discreto: "Módulo Notas Fiscais". | Essas telas fazem parte do módulo de Notas Fiscais, então dependem do plano contratado. |
 | Cartão discreto: "Antes: Nota Fiscal de mercadoria (NF-e)". | Se você ainda não viu o tutorial da nota fiscal de mercadoria, dá uma olhada antes. [pause] Vamos começar pelo manifesto. |
 
@@ -77,13 +77,13 @@
 | Cola a chave da NF-e nº 884 do Depósito Irmãos Siqueira em "Cole os 44 dígitos da chave" e clica em "Adicionar": toast "NF-e #884 encontrada em Notas Recebidas"; aparece a linha "NF-e #884 · Depósito Irmãos Siqueira", com o selo "Nota recebida" e o valor 2.100,00. [ZOOM: a linha com o selo "Nota recebida"] [BACKEND: `inbound_nfe` da 884 com chave válida, modelo 55] | Colo os quarenta e quatro dígitos e clico em Adicionar. Como essa nota já estava nas Notas Recebidas, o sistema preencheu quem emitiu e o valor. |
 | Zoom no rodapé "3 NF-e(s) vinculada(s) • Valor total: R$ 57.480,00". | Se a nota não estiver lá, ela entra do mesmo jeito, só com a chave, e o valor você digita se quiser. |
 | Clica no "X" da linha ("Remover NF-e 884"): volta a "2 NF-e(s) vinculada(s) • Valor total: R$ 55.380,00". | Hoje a carga é só da Recicla Vale, então eu tiro essa nota e sigo com as duas. |
-| Clica em "Continuar": etapa "Veículo e motorista"; em "Veículo (tração)", escolhe "Caminhão truck • FKD2E41 • SP" (selo "Veículo único"); em "Motorista", "Edson Moura (318.472.650-90)". | Continuar. No veículo, o caminhão truck, e no motorista, o Edson. Como a Frota está completa, não falta nenhum dado. |
+| Clica em "Continuar": etapa "Veículo e motorista". Em cima, "NATUREZA DA VIAGEM" ("Escolha como esta viagem acontece..."), com "Carga própria" já escolhida ("Mercadoria da própria empresa, com transporte próprio ou contratado."), ao lado de "Transporte para terceiros" e "CT-e globalizado"; embaixo, "CATEGORIA DO TRANSPORTADOR", com "Próprio" ("Sem proprietário externo") escolhido, "ETC", "TAC" e "CTC" (1.60.39). [ZOOM: "Carga própria" e "Próprio"] | Continuar. Primeiro, a natureza da viagem: carga própria, porque a mercadoria é da Recicla Vale. E na categoria do transportador fica Próprio, porque o caminhão também é dela. |
+| Em "COMPOSIÇÃO", "Veículo (tração)" → "Caminhão truck • FKD2E41 • SP" (selo "Veículo único"); "Motorista" → "Edson Moura (318.472.650-90)". | No veículo, o caminhão truck, e no motorista, o Edson. Como a Frota está completa, não falta nenhum dado. |
 | A câmera passa por "Reboques / Carretas (opcional)" e o texto "Nenhuma carreta cadastrada. Marque suas carretas como Carreta / Reboque em Transporte → Frota para montá-las aqui.". | Se o caminhão puxa carreta, ela entra aqui, em Reboques, até três. Pra isso, a carreta precisa estar na Frota como Carreta / Reboque. |
-| Clica em "Frete de terceiros (CIOT)", com o selo "Opcional": a seção abre. [ZOOM: "O CIOT é exigido no transporte rodoviário remunerado de cargas de terceiros. Não se aplica ao transporte de carga própria sem cobrança de frete."] | Aqui embaixo fica o frete de terceiros. O CIOT é um código exigido quando o transporte é pago: você contrata um caminhoneiro, ou leva a carga de outra empresa cobrando frete. |
-| A câmera passa por "RNTRC", "CIOT" ("Código numérico com 12 dígitos") e "CPF/CNPJ do gerador do CIOT" ("Obrigatório junto do CIOT"). Não abre o balão "?" ("Como gerar o CIOT"), que cita a marca de um parceiro. | Nesse caso, vão aqui o registro do transportador na ANTT, o código do CIOT, com doze dígitos, e o CPF ou CNPJ de quem gerou o código. Os dois últimos andam juntos: um não entra sem o outro. |
-| A câmera passa por "Contratante — CPF/CNPJ" e "Contratante — Nome". | E, se quiser, quem contratou o frete. |
-| O cursor fica no campo "CIOT" (vazio). | O código é gerado antes da viagem, numa instituição autorizada pela ANTT. Na dúvida se a sua viagem precisa, pergunte ao contador. |
-| Clica de novo em "Frete de terceiros (CIOT)": a seção fecha; a câmera volta ao veículo "Caminhão truck • FKD2E41 • SP". | Hoje a carga é da própria Recicla Vale, no caminhão dela, sem cobrar frete. Então fica em branco. |
+| A câmera desce a "CIOT e contratação do frete" ("Informe se existe pagamento de frete nesta viagem..."), com o selo verde "Sem CIOT" e a pergunta "Esta viagem possui frete contratado?" em "Não — sem pagamento de frete nesta viagem" (1.60.39: a seção fica sempre aberta). [ZOOM: o selo e a pergunta] | Embaixo fica o CIOT e a contratação do frete. O CIOT é um código exigido quando o transporte é pago: você contrata um caminhoneiro, ou leva a carga de outra empresa cobrando frete. |
+| Em "Esta viagem possui frete contratado?" escolhe "Sim — transporte remunerado por TAC, ETC ou CTC": o selo vira "CIOT obrigatório" e aparece "Registro da operação de transporte", com "CIOT *" ("Código numérico com 12 dígitos"), "CPF/CNPJ do gerador do CIOT *", "Contratante — CPF/CNPJ *" e "Contratante — Nome *"; o "RNTRC do emitente / transportador" ganha o "*". Não abre o balão "?" ("Como gerar o CIOT?"), que cita a marca de um parceiro. | Nesse caso, a resposta aqui é Sim. Aí a tela pede o código do CIOT, com doze dígitos, o CPF ou CNPJ de quem gerou o código, quem contratou o frete e o registro do transportador na ANTT. |
+| O cursor fica no campo "CIOT *" (vazio). | O código é gerado antes da viagem, numa instituição autorizada pela ANTT. Na dúvida se a sua viagem precisa, pergunte ao contador. |
+| Volta a pergunta para "Não — sem pagamento de frete nesta viagem": o selo volta a "Sem CIOT" e aparece o quadro verde "CIOT não se aplica a esta viagem" ("Carga própria em veículo próprio, sem frete remunerado e sem transportador externo."). [ZOOM: o quadro] | Hoje a carga é da própria Recicla Vale, no caminhão dela, sem cobrar frete. Então fica no Não, e a tela confirma: o CIOT não se aplica a esta viagem. |
 | Clica em "Continuar": etapa "Trajeto e carga"; o cartão "Carregamento (Origem)" já está com "SP" e "Taubaté". [BACKEND: cidades da API do IBGE respondidas localmente para SP e MG] | Continuar. A origem já vem com a cidade da empresa: Taubaté. |
 | Clica em "Adicionar UF ao percurso"; na linha "1ª UF", escolhe "RJ". | No Percurso, eu adiciono o Rio de Janeiro, o estado do meio do caminho. |
 | No cartão "Descarregamento (Destino)", troca a UF para "MG" e escolhe a cidade "Itamonte"; o "Resumo do MDF-e" mostra "Itamonte/MG" em "Destino". | E no destino, Minas Gerais, cidade de Itamonte. |
@@ -95,7 +95,7 @@
 | Clica de volta em "Normal"; o quadro verde "Tudo pronto para criar e emitir o MDF-e" reaparece. | Hoje a SEFAZ está no ar, então eu volto pro Normal. |
 | Clica em "Criar MDF-e": toasts "MDF-e #1 criado" e "MDF-e #1 enviado ao motor fiscal próprio"; a lista mostra o nº 1 com "Aguardando SEFAZ". [BACKEND: function `mdfe-contingency`, `action: "prepare"` → aguardando_sefaz] | Tudo pronto. Criar MDF-e. O manifesto número um foi criado e já foi enviado pra autorização. |
 | Espera a consulta automática (5 s): toast "MDF-e #1 autorizado!"; o selo vira "Autorizado"; a câmera fica na linha (Nº 1, Edson Moura, FKD2E41, o trajeto, R$ 55.380,00, 5.800). [ZOOM: linha do nº 1 com "Autorizado"] [BACKEND: `mdfe-contingency`, `action: "status"` → autorizado na 1ª consulta] | Pronto, autorizado. Na linha aparecem o motorista, a placa, o trajeto, o valor e o peso. |
-| Passa o mouse em "Ações" da linha: o menu mostra "Encerrar", "Cancelar", "Baixar DAMDFE (PDF)" e "Baixar XML" (sem clicar). | E pelo menu de ações você baixa o PDF do manifesto, que vai com o motorista na viagem. |
+| Passa o mouse em "Ações" da linha: o menu mostra "Histórico" (1.60.39), "Encerrar", "Cancelar", "Baixar DAMDFE (PDF)" e "Baixar XML" (sem clicar). | E pelo menu de ações você baixa o PDF do manifesto, que vai com o motorista na viagem. |
 
 ### cap05 · Encerrar no fim da viagem (vinheta: MANIFESTO)
 
@@ -114,7 +114,7 @@
 | --- | --- |
 | Transporte › "Manifestos": o nº 2 "Rejeitado" (GHT7B19, Jair Lopes, Taubaté/SP → Itamonte/MG, R$ 1.560,00, 150) em cima do nº 1 "Encerrado"; o cartão "MDF-e Rejeitados" em 1. [ZOOM: selo "Rejeitado" e cartão "MDF-e Rejeitados"] [BACKEND: semente lateral `mdfe2-rejeitado` por cima da `apos-cap05`] | E quando a SEFAZ não aceita? Olha o manifesto número dois, da viagem de amanhã: ele ficou como rejeitado, e conta aqui em cima, nos rejeitados. |
 | "Ações" da linha do nº 2 → "Ver Erro": diálogo "Erro no MDF-e #2", com "A SEFAZ recusou o MDF-e" e o detalhe "CPF do condutor: número inválido". [ZOOM: o detalhe] | No menu de ações, Ver Erro. O sistema mostra o motivo. Aqui, o CPF do motorista está errado. |
-| Clica em "Fechar"; passa o mouse em "Ações" de novo: "Ver Erro", "Reemitir" e "Excluir" (sem clicar). | Fechar. No mesmo menu ficam Reemitir e Excluir. |
+| Clica em "Fechar"; passa o mouse em "Ações" de novo: "Histórico" (1.60.39), "Ver Erro", "Reemitir" e "Excluir" (sem clicar). | Fechar. No mesmo menu ficam Reemitir e Excluir. |
 | O cursor passa por "Reemitir" e depois por "Excluir"; sai do menu. | Se a recusa foi uma falha de momento, é só Reemitir. Se o erro está num dado do manifesto, o caminho é excluir, corrigir o cadastro na Frota e criar outro. |
 | [ILUSTRAÇÃO: os selos de recusa, com os rótulos do código: à esquerda "Rejeitado" (o manifesto não vale: corrigir e criar outro); à direita "Encerramento recusado" e "Cancelamento recusado" (o manifesto continua "Autorizado": ver o erro e pedir de novo).] | E se a SEFAZ recusar um encerramento ou um cancelamento, o manifesto continua valendo. É só ver o erro e pedir de novo. |
 | A ilustração sai; o cursor vai a "Buscar por nº, placa ou motorista..." e depois clica na linha do nº 1: abre "Detalhes do MDF-e #1". | Pra achar um manifesto antigo, tem a busca por número, placa ou motorista. E clicando na linha, abrem os detalhes dele. |
@@ -136,7 +136,7 @@
 | Clica em "Nova NFS-e": a tela cheia "Nova NFS-e" ("Informe o tomador, o serviço e os valores antes de transmitir ao município."), quadro "Ambiente" / "Produção"; aba "Pessoas", "Data de competência" com 10/11/2026 e o selo de pendências na barra de cima. [BACKEND: RPC `fiscal_onboarding_status` com o certificado pronto] | Vou cobrar a coleta com caçamba que a Recicla Vale fez na Aços Quiririm. Nova NFS-e. |
 | Troca a "Data de competência" para 06/11/2026. A câmera passa por "Série da DPS" ("Série 1") e "Próxima DPS: nº 14". [ZOOM: "Próxima DPS: nº 14"] [BACKEND: `nfse_series` com a série 1; RPC `get_next_nfse_number` → 14] | Na data de competência vai o dia do serviço: seis de novembro. A série e o próximo número já aparecem aqui: esta vai ser a catorze. |
 | Em "Tomador do serviço", clica em "Cliente ou fornecedor": "Selecionar tomador"; digita "Aços" em "Buscar por nome, CNPJ/CPF ou código..." e escolhe "Aços Quiririm Ltda". O cursor passa por "Buscar pelo CNPJ". | No tomador, quem contratou, eu escolho a Aços Quiririm no cadastro. Se ele não tiver cadastro, dá pra buscar pelo CNPJ. |
-| Clica em "Avançar": aba "Serviço"; "Município" já com "Taubaté"; clica em "Selecionar código de tributação", digita "coleta" em "Buscar por código ou descrição..." e escolhe o código de coleta e remoção de resíduos; "Código do serviço (LC116)" se preenche sozinho. [BACKEND: `plugnotas-nfse-servicos-municipio` com a lista de Taubaté] | Avançar. O município já vem como Taubaté. O código do serviço é o seu contador que passa. Aqui, coleta e remoção de resíduos. |
+| Clica em "Avançar": aba "Serviço"; "Município" já com "Taubaté"; clica em "Selecionar código de tributação", digita "coleta" em "Buscar por código ou descrição..." e escolhe o código de coleta e remoção de resíduos; "Código do serviço (LC116)" se preenche sozinho. Mais embaixo, depois da descrição, fica o bloco novo "IBS e CBS da NFS-e" com o botão "Ativar IBS/CBS" desligado (1.60.39; a câmera não para nele). [BACKEND: `plugnotas-nfse-servicos-municipio` com a lista de Taubaté] | Avançar. O município já vem como Taubaté. O código do serviço é o seu contador que passa. Aqui, coleta e remoção de resíduos. |
 | Zoom em "Puxar serviço salvo", sem clicar. | Se a empresa emite sempre o mesmo serviço, ele pode ficar salvo, e aí é só puxar por aqui. |
 | Digita em "Descrição do serviço": "Coleta e remoção de resíduos metálicos com caçamba no pátio da Aços Quiririm em 06/11/2026." | Na descrição, o que foi feito, do jeito que vai aparecer na nota. |
 | Clica em "Avançar": aba "Valores"; digita "1850" em "Valor do serviço"; a barra de cima mostra "Total da nota" R$ 1.850,00. [ZOOM: "Valor do serviço"] | Avançar. O valor do serviço: mil oitocentos e cinquenta reais. |
@@ -147,7 +147,7 @@
 | O cursor passa pelo botão "Salvar rascunho", sem clicar. | Se ainda faltar alguma informação do contador, dá pra salvar o rascunho e continuar depois. |
 | Clica em "Emitir NFS-e": toast "NFS-e enviada. A confirmação oficial aparecerá na lista."; a lista mostra a nova linha "Processando". [BACKEND: `plugnotas-emit-nfse` → processando] | Emitir NFS-e. Ela foi enviada, e entra na lista como processando. |
 | Espera a consulta automática (8 s): selo "Autorizada" e "14" na coluna "Número". [ZOOM: "14" na coluna "Número" com "Autorizada"] [BACKEND: `plugnotas-nfse-status` → emitida, nº 14] | E em instantes fica autorizada: nota de serviço número catorze. |
-| Abre o menu "Ações" da linha e passa por "Baixar PDF", "Histórico" e "Cancelar" (sem clicar); fecha o menu. | Pelo menu, você baixa o PDF pra mandar pra Aços Quiririm, acompanha tudo no Histórico e, se a nota saiu errada, pede o cancelamento. |
+| Abre o menu "Ações" da linha e passa por "Baixar PDF", "Histórico" (1.60.39: o diálogo único de histórico fiscal) e "Cancelar" (sem clicar); fecha o menu. | Pelo menu, você baixa o PDF pra mandar pra Aços Quiririm, acompanha tudo no Histórico e, se a nota saiu errada, pede o cancelamento. |
 
 ### cap09 · O serviço que você tomou (vinheta: SERVIÇO)
 
@@ -156,8 +156,8 @@
 | Menu "Fiscal & Ambiental" › "Notas Fiscais (NF-e)"; sub-aba "Notas Recebidas"; aba "NFS-e": "Ative as Notas de Serviço Recebidas". [BACKEND: `nfse_dfe_ativo` desligado; `nfse_dfe_fonte` "sefin"] | E quando é a Recicla Vale que contrata um serviço? A nota chega em Notas Fiscais, nas Notas Recebidas, na aba NFS-e. |
 | Zoom no texto "...as notas de serviço (NFS-e) que prestadores emitem contra o CNPJ da sua empresa... passam a entrar aqui automaticamente, prontas pra virar despesa." | São as notas que outras empresas emitem contra o seu CNPJ: o contador, a manutenção, um frete. Elas entram aqui sozinhas, prontas pra virar despesa. |
 | Clica em "Ativar NFS-e Recebidas": diálogo "Ativar o recebimento de notas de serviço?". [ZOOM: "Ao ativar, cada nota de serviço recebida passa a contar na sua cota mensal de documentos fiscais..."] | Clico em Ativar NFS-e Recebidas. Repara no aviso: cada nota recebida conta na cota mensal de documentos fiscais, a mesma das notas que você emite. |
-| Clica em "Ativar mesmo assim": toast "Notas de serviço recebidas ativado"; a tela vira "Notas de serviço emitidas contra o seu CNPJ", com "Recurso ativo", a lista ainda vazia e a faixa "Busca solicitada no Ambiente Nacional. A lista atualiza automaticamente em até 10 minutos.". [ZOOM: a faixa] [BACKEND: update direto em `company_fiscal_config`] | Ativar mesmo assim. Pronto, ativado. A busca roda sozinha, e as notas chegam em alguns minutos. |
-| Zoom no aviso fixo "A NFS-e é da prefeitura, e só chega aqui a nota de cidade que entrou no sistema nacional...". | Uma dica: só chega aqui a nota de cidade que já entrou no sistema nacional. Se uma nota não aparecer, peça o PDF ao prestador e lance a despesa na mão. |
+| Clica em "Ativar mesmo assim": toast "Notas de serviço recebidas ativado"; a tela vira "Notas de serviço emitidas contra o seu CNPJ", com "Recurso ativo", a lista ainda vazia ("Nenhuma nota de serviço recebida ainda") e a faixa "A consulta direta ao Ambiente Nacional é automática. As novas NFS-e aparecerão após a próxima rodada do motor fiscal." (o app pede a primeira busca logo depois de ativar; com o motor próprio a edge só responde isso). [ZOOM: a faixa] [BACKEND: update direto em `company_fiscal_config`; edge `plugnotas-nfse-dfe-sync` com o ramo "sefin" da função real (corrigido em 28/11: o falso trazia as duas notas na hora)] | Ativar mesmo assim. Pronto, ativado. A busca roda sozinha, e as notas chegam em alguns minutos. |
+| Zoom no aviso fixo "A NFS-e é da prefeitura, e só chega aqui a nota de cidade que entrou no sistema nacional...". | Uma dica: só chega aqui a nota de cidade que já entrou no sistema nacional. Se uma nota não aparecer, peça o XML ao prestador: ela entra pelo Importar XML, que a gente vê daqui a pouco. |
 
 ### cap10 · Da nota recebida à despesa (vinheta: SERVIÇO) · era a 2ª metade do cap08
 
@@ -170,31 +170,45 @@
 | Escolhe 20/11/2026 em "Vencimento" e "Manutenção de máquinas" em "Categoria"; clica em "Criar conta": toast "Conta criada"; a linha ganha o selo "Lançada". | A conta já vem com o valor e os dados da nota. Falta o vencimento, dia vinte, e a categoria. Criar conta. E a nota fica marcada como lançada. |
 | Zoom no selo "Lançada" (o aviso "Lançar esta despesa de novo?" só é citado). | Se você tentar lançar a mesma nota de novo, o sistema avisa antes, pra despesa não entrar duas vezes. |
 
-### cap11 · Entrada, saída e saldo (vinheta: RELATÓRIO FISCAL)
+### cap11 · Da nota recebida à compra (vinheta: COMPRA) · NOVO (1.60.39)
 
 | Tela | Fala |
 | --- | --- |
-| Menu "Fiscal & Ambiental" › "Relatórios Fiscais": título "Relatórios Fiscais", sub-aba "NF-e"; no filtro de período do cabeçalho, escolhe "Mês passado". [BACKEND: RPC `get_invoice_dashboard_secure` com `can_view_values`] | Antes de mandar o mês pro contador, vale conferir os números. Em Relatórios Fiscais, a primeira aba é a das notas de mercadoria. Escolho o mês passado, outubro. |
+| Corte (FAKE_NOW 14:40): Menu "Fiscal & Ambiental" › "Notas Fiscais (NF-e)"; sub-aba "Notas Recebidas", aba "NF-e": "Notas emitidas contra o seu CNPJ" com a Auto Peças Vale Forte ("Confirmada"), o Depósito Irmãos Siqueira e a "Cooperativa Recomeço" (R$ 7.550,00, importada pelo XML na T16). [ZOOM: a linha da Cooperativa] [BACKEND: semente lateral `compra-coop` por cima da `apos-cap10`: o caixa #85 do Rafael aberto às 08:31 com R$ 1.500,00 (o mesmo da T06); a nota 3871 vem da `t17/inicio`, com `origem` "manual" e o XML] | E a nota de mercadoria que chega de um fornecedor? No tutorial anterior, a gente importou o XML da Cooperativa Recomeço. A carga de latinha e PET chegou ontem, e a compra ainda não foi lançada. |
+| Zoom no botão "Importar XML", em cima da lista, ao lado da escolha "NF-e" / "NFS-e" (sem clicar). | Ela entrou por este Importar XML. Por ele entra também a nota de serviço de uma cidade que ainda não está no sistema nacional. Com o recurso ativo, ela vai pra aba de serviço e vira despesa como as outras. |
+| Menu "Ações" da "Cooperativa Recomeço" → "Lançar compra…": diálogo "Importar NF-e nº 3871 — Cooperativa Recomeço", "Fornecedor: Cooperativa Recomeço" ("por CNPJ/CPF"). | Serviço vira despesa, mercadoria vira compra. Na linha da cooperativa, Lançar compra. |
+| Zoom nos totais da nota (1.60.39): "Produtos" R$ 7.550,00, "Encargos/descontos" R$ 0,00 e "Total da nota" R$ 7.550,00. [ZOOM: os três quadros, a frase inteira] | Em cima, a conferência separa o que veio dos produtos, os encargos e descontos, como frete e impostos, e o total da nota. Aqui não tem encargo: sete mil quinhentos e cinquenta reais. |
+| A câmera passa pelos dois cartões: "ALUMINIO LATINHA" ("alta", "Alumínio latinha") e "PLASTICO PET PRENSADO" ("confira", "Plástico PET" já escolhido). | Os itens já vêm casados com os materiais, como a gente viu no tutorial anterior: a latinha e o PET. |
+| Zoom em "Registrar também no estoque fiscal (não altera o saldo físico)", marcada (1.60.39: era "Contar também no estoque fiscal"). [ZOOM: a opção] | Repara nesta opção, que já vem marcada: registrar também no estoque fiscal. A nota entra no estoque pelas notas, e o estoque do pátio fica por conta da compra. |
+| Clique em "Conferir na tela de compra": a tela "Compra" abre num pedido novo com o rótulo "Cooperativa Recomeço", o caixa "Caixa #85", o fornecedor e os dois itens: "Alumínio latinha" 850 kg × R$ 6,20 = R$ 5.270,00 e "Plástico PET" 1.200 kg × R$ 1,90 = R$ 2.280,00; "Total da Compra" R$ 7.550,00. [ZOOM: os itens e o total] | Conferir na tela de compra. Os itens chegam prontos, sem redigitar a nota: oitocentos e cinquenta quilos de latinha e mil e duzentos de PET. |
+| Clique em "Finalizar": "Finalizar Pedido"; "Pix/Transferência" (conta "Conta Principal"); "CONFIRMAR PAGAMENTO": toast "Compra registrada!"; a pergunta do comprovante fecha sem imprimir. [BACKEND: RPC `create_purchase_atomic` com `p_inbound_nfe_id` (carimba `inbound_nfe.purchase_id`) e `set_inbound_fiscal_entries` (as duas linhas no estoque fiscal)] | Aqui você confere os valores e escolhe como pagou. A Recicla Vale pagou por Pix. Finalizar, Pix, e confirmo o pagamento. |
+| Volta a "Notas Recebidas" › "NF-e": a linha da Cooperativa com o selo "Lançada como compra"; o menu "Ações" mostra "Lançar compra de novo…" (sem clicar; o aviso "Lançar esta compra de novo?" só é citado). [ZOOM: o selo] | De volta às notas recebidas, a nota fica marcada como lançada como compra. Se alguém tentar lançar de novo, o sistema avisa antes, pra mesma nota não entrar duas vezes no estoque. |
+
+### cap12 · Entrada, saída e saldo (vinheta: RELATÓRIO FISCAL)
+
+| Tela | Fala |
+| --- | --- |
+| Menu "Fiscal & Ambiental" › "Relatório/Estoque Fiscal": título "Relatório/Estoque Fiscal", abas "Saldo atual", "Posição em uma data", "Movimentações", "Relatório de estoque", "Fiscal × operacional", "NF-e" e "NFS-e" (uma tela só desde o 1.60.15); clica em "NF-e"; no filtro de período do cabeçalho, escolhe "Mês passado". [BACKEND: RPC `get_invoice_dashboard_secure` com `can_view_values`] | Antes de mandar o mês pro contador, vale conferir os números. No menu, em Relatório e Estoque Fiscal, fica a aba NF-e, das notas de mercadoria. Escolho o mês passado, outubro. |
 | Zoom suave nos cartões "Entrada" e "Saída". | Aqui em cima, o que entrou e o que saiu em notas no mês. |
 | A câmera passa para o cartão "Saldo (Saída − Entrada)", com R$ 71.625,00 e "Positivo". [ZOOM: cartão "Saldo (Saída − Entrada)"] | O saldo é a saída menos a entrada. Em outubro, ficou positivo: setenta e um mil, seiscentos e vinte e cinco reais. |
 | A câmera passa para o cartão "Pendentes + Rejeitadas", com 0 e "Tudo em dia". [ZOOM: cartão "Pendentes + Rejeitadas"] | E o último cartão junta as notas pendentes e as rejeitadas. Aqui está tudo em dia. Se aparecer um número, resolve antes de fechar o mês. |
 | Clica no cartão "Entrada": abre a linha "Emitidas por você" com "9 · R$ 97.315,00". [ZOOM: a linha] | Clicando na Entrada, ela se abre. Em outubro, as nove notas foram emitidas pela própria Recicla Vale, nas compras de pessoa física. As notas que os fornecedores emitem contra ela aparecem aqui, numa linha separada. |
 | A câmera fica no cartão aberto. | No Lucro Real, é nessas notas de fornecedor que o contador costuma buscar os créditos de imposto. |
 | Rola até "Entrada × Saída no período", "Distribuição por status", "Top Fornecedores" e "Top Clientes". | Embaixo, o gráfico do mês, a divisão por status e o ranking dos fornecedores e dos clientes. |
-| Volta ao topo; sub-aba "NFS-e": cartões "Serviços autorizados" (R$ 2.800,00, "2 notas válidas"), "ISS apurado", "Retenções federais" ("PIS, COFINS, CSLL, INSS e IRRF") e "Pendentes + rejeitadas". [ZOOM: os quatro cartões] [BACKEND: RPC `get_nfse_dashboard`] | A segunda aba é o mesmo relatório pras notas de serviço: quanto foi autorizado, o ISS do período e as retenções. |
+| Volta ao topo; aba "NFS-e", do lado: cartões "Serviços autorizados" (R$ 2.800,00, "2 notas válidas"), "ISS apurado", "Retenções federais" ("PIS, COFINS, CSLL, INSS e IRRF") e "Pendentes + rejeitadas". [ZOOM: os quatro cartões] [BACKEND: RPC `get_nfse_dashboard`] | A aba do lado, NFS-e, é o mesmo relatório pras notas de serviço: quanto foi autorizado, o ISS do período e as retenções. |
 | Rola até "Top tomadores" e "Top serviços". | E embaixo, quem mais contratou e quais serviços mais saíram. |
 
-### cap12 · O estoque pelas notas (vinheta: ESTOQUE FISCAL)
+### cap13 · O estoque pelas notas (vinheta: ESTOQUE FISCAL)
 
 | Tela | Fala |
 | --- | --- |
-| Menu "Fiscal & Ambiental" › "Estoque Fiscal": sub-aba "Saldo atual", "Saldo fiscal atualizado, por material. Não altera o estoque operacional."; tabela "Código", "Material", "Saldo fiscal". [BACKEND: saldo inicial fiscal de 01/08 (menos a bateria) e notas de agosto a novembro] | Agora, o estoque fiscal: o estoque contado só pelas notas. Ele abre no Saldo atual, com o saldo fiscal de cada material. |
+| Na mesma tela, clica na primeira aba, "Saldo atual": "Saldo fiscal atualizado, por material. Não altera o estoque operacional."; tabela "Código", "Material", "Saldo fiscal". [BACKEND: saldo inicial fiscal de 01/08 (menos a bateria) e notas de agosto a novembro] | Agora, o estoque fiscal: o estoque contado só pelas notas. Ele fica na mesma tela, na primeira aba, Saldo atual, com o saldo fiscal de cada material. |
 | Zoom nas linhas "Alumínio bloco" e "Alumínio perfil" (já sem os 5.800 kg das notas de hoje). | Esse saldo se atualiza sozinho. As notas do alumínio que saíram hoje de manhã já estão descontadas aqui. |
 | Digita "cobre" em "Buscar material ou código": a tabela filtra (Cobre mel, Cobre misto, Fio de cobre encapado); limpa a busca. | Pra achar um material, é só buscar pelo nome ou pelo código. |
 | A câmera fica na coluna "Saldo fiscal". | Se algum saldo aparecer em vermelho, é porque ficou negativo: saiu mais nota do que entrou. |
 | Zoom na faixa amarela "Alguns saldos foram apurados pelas notas disponíveis, pois ainda não têm saldo inicial informado.". [ZOOM: a faixa] | Repara no aviso amarelo: tem material sem saldo inicial. Nesse caso, o sistema conta só pelas notas que ele conhece. |
 
-### cap13 · O saldo inicial (vinheta: ESTOQUE FISCAL) · NOVO
+### cap14 · O saldo inicial (vinheta: ESTOQUE FISCAL) · NOVO
 
 | Tela | Fala |
 | --- | --- |
@@ -205,7 +219,7 @@
 | Clica em "Confirmar saldo inicial": toast "Saldo inicial registrado"; a faixa amarela some. [BACKEND: RPC `record_fiscal_inventory_entries`, `opening_balance`] | Confirmar saldo inicial. O aviso amarelo some, e daqui pra frente as notas somam e descontam a partir desse saldo. |
 | Zoom na linha "Bateria automotiva", agora com 3.960 kg. [ZOOM: a linha] | A bateria passa a três mil novecentos e sessenta quilos: o saldo inicial mais a nota que entrou em novembro. |
 
-### cap14 · Um dia do passado e as movimentações (vinheta: ESTOQUE FISCAL) · era o meio do cap10
+### cap15 · Um dia do passado e as movimentações (vinheta: ESTOQUE FISCAL) · era o meio do cap10
 
 | Tela | Fala |
 | --- | --- |
@@ -216,7 +230,7 @@
 | Clica em "Filtros": "De", "Até", "Tipo" (abre: "Todos os tipos", "Entrada", "Saída", "Saldo inicial", "Ajuste", "Estorno"; fecha sem escolher) e "Nota, chave ou parceiro". | Nos filtros, dá pra fechar num período, num tipo de movimento, ou buscar por nota, chave ou parceiro. |
 | Clica em "Geral (Todos)": "KARDEX FISCAL — Geral". | E em Geral aparecem as movimentações de todos os materiais juntas. |
 
-### cap15 · Cancelamento e devolução (vinheta: ESTOQUE FISCAL) · NOVO
+### cap16 · Cancelamento e devolução (vinheta: ESTOQUE FISCAL) · NOVO
 
 | Tela | Fala |
 | --- | --- |
@@ -228,20 +242,20 @@
 | [ILUSTRAÇÃO: duas setas com os rótulos "devolução de venda: volta pro estoque" e "devolução de compra: sai do estoque".] | Devolução de venda, o material volta. Devolução de compra, o material sai. E vale igual pra dentro e pra fora do estado. |
 | A ilustração sai; a câmera volta ao Kardex do cobre mel. | Uma dica: no Lucro Real, a devolução também mexe nos impostos da nota original. Essa parte é com o contador. Aqui você confere a quantidade. |
 
-### cap16 · Fiscal e operacional (vinheta: ESTOQUE FISCAL) · era o fim do cap10
+### cap17 · Fiscal e operacional (vinheta: ESTOQUE FISCAL) · refeito em 28/11 (tela nova desde o 1.60.15)
 
 | Tela | Fala |
 | --- | --- |
-| Sub-aba "Fiscal × operacional"; no filtro de período do cabeçalho, escolhe "Mês passado"; "Comparação por material". | Na última aba, o fiscal e o operacional ficam lado a lado, material por material. Escolho o mês passado, outubro. |
-| Zoom nos cartões "Materiais com divergência" e "Alertas". | Aqui em cima, o sistema conta quantos materiais deram diferença e quantos têm alerta, como saldo fiscal negativo. |
-| A câmera desce até a linha "Metal amarelo (latão)": "Mov. Fiscal" −1.100, "Mov. Operacional" 0, "Delta" −1.100. [ZOOM: linha do metal amarelo, colunas "Mov. Fiscal", "Mov. Operacional" e "Delta"] | Repara no metal amarelo: mil e cem quilos de diferença. |
-| [ILUSTRAÇÃO: fiscal × operacional: duas réguas do calendário, de outubro a novembro; em cima, "Notas (fiscal)": a nota de 600 kg de metal amarelo para a "Fundição Bandeira do Vale" cai em 30/10; embaixo, "Pedidos e pátio (operacional)": o pedido da mesma venda só fecha em 03/11, depois da linha "fim de outubro"; os 600 kg acendem na diferença.] | Seiscentos são de uma venda pra Fundição Bandeira do Vale. A nota saiu no dia trinta de outubro, mas o pedido só foi finalizado no dia três de novembro. |
-| (ilustração: as réguas ganham os rótulos "segue as notas" e "segue compras, pedidos e pátio") | O fiscal segue as notas. O operacional segue as compras, os pedidos e o pátio. Por isso, os dois podem dar diferente. |
-| A ilustração sai; zoom no quadro "Como ler o Delta (fiscal − operacional)", na linha "Delta negativo costuma indicar compra de pessoa física sem nota: entrou material no pedido, mas não houve nota de entrada.". [ZOOM: a linha] | Os outros quinhentos vêm do caso mais comum no ferro-velho: compra de pessoa física sem nota. O material entra no pátio, mas não entra no fiscal. |
-| Zoom na linha "Pedidos ainda não finalizados não entram no movimento operacional, o que também gera diferença.". | Uma dica: um não corrige o outro. Este quadro, Como ler o Delta, ajuda a achar o motivo de cada diferença. |
+| Aba "Fiscal × operacional"; no filtro de período do cabeçalho, escolhe "Mês passado"; "Comparação por material", com as chaves "Só com diferença" e "Ocultar itens zerados". | Agora, a aba que compara o fiscal com o operacional: as notas e os pedidos ficam lado a lado, material por material. Escolho o mês passado, outubro. |
+| Zoom nos cartões "Entradas com diferença" ("Compras × notas de entrada"), "Saídas com diferença" ("Vendas × notas de saída"), "Materiais conferindo" ("Pedidos e notas batem") e "Alertas". | Aqui em cima, o sistema separa as entradas e as saídas: quantos materiais deram diferença nas compras, quantos nas vendas, quantos conferem e os alertas. |
+| A câmera desce até a linha "Metal amarelo (latão)", no grupo "Entradas": "Compras (pedidos)" 500, "Notas de entrada" 0, "Diferença" −500 com "sem nota". [ZOOM: as três colunas de Entradas da linha] (conferir os números no ensaio) | Repara no metal amarelo. Nas entradas, quinhentos quilos comprados e nenhuma nota: a tela marca sem nota. |
+| (o zoom continua) | É o caso mais comum no ferro-velho: compra de pessoa física sem nota. O material entra no pátio, mas não entra no fiscal. |
+| A câmera vai ao grupo "Saídas" da mesma linha: "Vendas (pedidos)" 500, "Notas de saída" 1.100, "Diferença" +600 com "nota a mais". [ZOOM: as três colunas de Saídas] (conferir no ensaio) | Nas saídas, seiscentos quilos de nota a mais. Foi uma venda pra Fundição Bandeira do Vale: a nota saiu no dia trinta de outubro, mas o pedido só foi finalizado no dia três de novembro. |
+| [ILUSTRAÇÃO: fiscal × operacional: duas réguas do calendário, de outubro a novembro; em cima, "Notas (fiscal)": a nota de 600 kg de metal amarelo para a "Fundição Bandeira do Vale" cai em 30/10; embaixo, "Pedidos e pátio (operacional)": o pedido da mesma venda só fecha em 03/11, depois da linha "fim de outubro"; os 600 kg acendem como "nota a mais"; as réguas ganham os rótulos "segue as notas" e "segue compras, pedidos e pátio"] | O fiscal segue as notas. O operacional segue as compras, os pedidos e o pátio. Por isso, os dois podem dar diferente. |
+| A ilustração sai; zoom no quadro "Como ler a diferença (notas − pedidos)", nas linhas "Sem nota", "Nota a mais" e "Pedidos não finalizados não entram na conferência.". [ZOOM: o quadro] | Uma dica: um não corrige o outro. Este quadro, Como ler a diferença, ajuda a achar o motivo de cada caso. |
 | Volta ao topo e clica em "Exportar": o menu "Exportar estoque fiscal" com "PDF" e "Excel" (sem baixar); fecha o menu. | E dá pra exportar essa comparação em PDF ou em Excel e mandar junto pro contador. |
 
-### cap17 · O pacote do mês (vinheta: CONTADOR)
+### cap18 · O pacote do mês (vinheta: CONTADOR)
 
 | Tela | Fala |
 | --- | --- |
@@ -255,7 +269,7 @@
 | A câmera vai à prévia "21 notas no período (12 saída · 9 entrada)" e à linha "Destinadas: 0 XML(s)". [ZOOM: a prévia] [BACKEND: `count_invoices_for_export`; nenhuma `inbound_nfe` em outubro] | A prévia conta vinte e uma notas em outubro: doze de saída e nove de entrada. E as destinadas vêm zeradas, porque em outubro a Recicla Vale ainda não recebia essas notas pelo sistema. No pacote de novembro, elas já entram. |
 | Clica em "Baixar Pacote": a barra de progresso da exportação e o toast "Exportação pronta" / "12 saída + 9 entrada + 0 destinada(s) baixados"; o navegador baixa "Exportação Contábil - Recicla Vale Metais - <período>.zip". [BACKEND: XML e DANFEs de outubro; `plugnotas-download`] | Baixar Pacote. Ele monta tudo aqui no navegador e baixa o arquivo zip no computador. |
 
-### cap18 · O que o contador faz (vinheta: CONTADOR)
+### cap19 · O que o contador faz (vinheta: CONTADOR)
 
 | Tela | Fala |
 | --- | --- |
@@ -264,11 +278,11 @@
 | (ilustração: no cartão "Contador", três marcas acendem uma por vez: "confere as notas", "lança na contabilidade", "chama se algo não bater") | Com ele, o contador confere as notas do mês, lança na contabilidade e te chama se alguma coisa não bater. |
 | (ilustração: uma pasta "Recicla Vale · notas de outubro" fica guardada do lado da empresa, ao lado da cópia que foi para o contador) | Uma dica: guardar os XML é responsabilidade da empresa, e não do sistema. Baixe o pacote todo mês e guarde uma cópia com você, além da que fica com o contador. |
 
-### cap19 · Recapitulando (vinheta: RESUMO)
+### cap20 · Recapitulando (vinheta: RESUMO)
 
 | Tela | Fala |
 | --- | --- |
 | Montagem rápida: "Veículo atualizado", a etapa "Trajeto e carga" com o RJ no percurso, o MDF-e nº 1 "Encerrado" e o "Erro no MDF-e #2". | Pronto! Recapitulando: a gente completou a frota com o caminhão e o motorista, emitiu o manifesto da carga de alumínio pra Minas, com o Rio de Janeiro no percurso, encerrou no fim da viagem e viu o que fazer quando a SEFAZ recusa. |
-| (montagem: a NFS-e nº 14 "Autorizada", "Notas de serviço recebidas ativado" e a nota da balança "Lançada") | Emitiu a nota de serviço da coleta com caçamba, ativou as notas de serviço recebidas e lançou uma delas como despesa. |
-| (montagem: o cartão "Saldo (Saída − Entrada)", "Saldo inicial registrado", o estorno da 1249, a linha do metal amarelo e o toast "Exportação pronta") | Conferiu os relatórios fiscais de outubro, informou um saldo inicial, viu o cancelamento e a devolução no Kardex, comparou o estoque fiscal com o do pátio e exportou o pacote do mês pro contador. |
+| (montagem: a NFS-e nº 14 "Autorizada", "Notas de serviço recebidas ativado", a nota da balança "Lançada" e a da Cooperativa "Lançada como compra") | Emitiu a nota de serviço da coleta com caçamba, ativou as notas de serviço recebidas, lançou uma delas como despesa e levou a nota da cooperativa até a compra. |
+| (montagem: o cartão "Saldo (Saída − Entrada)", "Saldo inicial registrado", o estorno da 1249, a linha do metal amarelo ("sem nota" e "nota a mais") e o toast "Exportação pronta") | Conferiu os relatórios fiscais de outubro, informou um saldo inicial, viu o cancelamento e a devolução no Kardex, comparou o estoque fiscal com o do pátio e exportou o pacote do mês pro contador. |
 | Cartão "Próximo: Ambiental: MTR e CDF". | No próximo tutorial, a gente cuida da parte que mantém a licença da sua empresa de pé. Até lá! |

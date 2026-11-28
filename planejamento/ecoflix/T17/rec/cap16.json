@@ -1,6 +1,6 @@
 {
  "name": "t17-cap16",
- "title": "T17 · Cap. 16 · Fiscal e operacional (narração 73,8 s ESTIMADA; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T14:40:00-03:00)",
+ "title": "T17 · Cap. 16 · Cancelamento e devolução (narração 78,0 s ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T14:40:00-03:00)",
  "seed": "t17-cap16",
  "pace": 0.5,
  "cps": 9,
@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
   "cato_adoption_nudge_38814e47-876a-5977-a5f7-53af364c17bb_34c36c63-0890-5e89-8963-7c77b7996908": "{\"count\":99,\"lastShownAt\":4102444800000}",
   "pwa-install-dismissed": "true",
@@ -22,7 +22,7 @@
  },
  "seedExtra": [
   "t17/inicio",
-  "t17/apos-cap13"
+  "t17/apos-cap14"
  ],
  "prewarm": [
   "/login"
@@ -88,6 +88,24 @@
    "seconds": 0.8
   },
   {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Movimentações",
+    "exact": true,
+    "within": "[aria-label='Navegação da seção']"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "KARDEX FISCAL",
+   "timeout": 15
+  },
+  {
+   "do": "wait",
+   "seconds": 0.8
+  },
+  {
    "do": "eval",
    "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|n[ãa]o encontrad|recusou|rejeitad[ao]!/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA ECOFLIX'))window.__avisos.push('TRILHA ECOFLIX')},300);return 1})()"
   },
@@ -105,108 +123,97 @@
   {
    "do": "click",
    "target": {
-    "role": "button",
-    "name": "Fiscal × operacional",
-    "exact": true,
-    "within": "nav[aria-label='Navegação da seção']"
+    "selector": "main section[aria-label='Materiais do Kardex fiscal'] button[aria-expanded]"
    },
-   "at": 0.0,
-   "label": "aba Fiscal × operacional"
+   "at": 2.25,
+   "label": "Filtros (abre)"
   },
   {
-   "do": "hover",
+   "do": "click",
    "target": {
-    "text": "Comparação por material",
-    "within": "main"
+    "selector": "#history-search"
    },
-   "seconds": 0.4,
-   "at": 3.44,
-   "label": "Comparação por material",
+   "at": 7.4,
+   "label": "Nota, chave ou parceiro: 1249 (campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#history-search"
+   },
+   "text": "1249",
+   "cps": 40,
+   "at": 8.96,
+   "label": "Nota, chave ou parceiro: 1249",
+   "noClick": true
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main tbody tr:has-text('Estorno')"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main tbody"
+   },
+   "text": "",
+   "noClick": true,
    "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "main button[role=combobox]",
-    "hasText": "Este mês"
-   },
-   "at": 6.23,
-   "label": "período: Mês passado (abre)",
-   "noScroll": true
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "option",
-    "name": "Mês passado",
-    "exact": true
-   },
-   "at": 7.59,
-   "label": "período: Mês passado"
+   "timeout": 4,
+   "at": 10.55,
+   "label": "as duas linhas da 1249 (zoom)"
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 9.66
+   "at": 11.1
   },
   {
    "do": "hover",
    "target": {
-    "text": "Materiais com divergência",
-    "exact": true,
-    "within": "main"
+    "selector": "main tbody tr:has-text('Nota fiscal') td >> nth=1"
    },
-   "seconds": 1.0,
-   "at": 13.21,
-   "label": "Materiais com divergência",
+   "seconds": 0.8,
+   "at": 11.1,
+   "label": "Nota fiscal 1249: saída de 320 kg",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "hover",
    "target": {
-    "text": "Alertas",
-    "exact": true,
-    "within": "main"
+    "selector": "main tbody tr:has-text('Estorno') td >> nth=1"
    },
-   "seconds": 1.0,
-   "at": 15.33,
-   "label": "Alertas",
+   "seconds": 0.8,
+   "at": 16.78,
+   "label": "Estorno 1249: +320 kg",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Pedido alterado pelo cliente",
+    "within": "main tbody"
+   },
+   "seconds": 1.0,
+   "at": 18.07,
+   "label": "motivo do cancelamento",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Estorno\", \"Pedido alterado pelo cliente antes de a mercadoria sair do pátio\", \"320\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere saída e estorno da 1249"
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 18.97
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.offsetParent!==null&&e.textContent.trim()===\"Metal amarelo (latão)\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-420);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 18.97,
-   "label": "rola até o metal amarelo"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('Metal amarelo') td >> nth=-1"
-   },
-   "seconds": 1.5,
-   "at": 19.88,
-   "label": "Metal amarelo: Mov. Fiscal, Mov. Operacional e Delta",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Metal amarelo (latão)\", \"1.100\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere metal amarelo: Delta de 1.100 kg"
-  },
-  {
-   "do": "mark",
-   "name": "L4",
-   "at": 23.72
+   "at": 20.64
   },
   {
    "do": "scroll",
@@ -217,107 +224,115 @@
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 23.82,
-   "label": "cursor em repouso (ilustração fiscal × operacional)"
+   "at": 20.74,
+   "label": "cursor em repouso (ilustração: régua do estorno)"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 34.2
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Estorno') td >> nth=-1"
+   },
+   "seconds": 1.5,
+   "at": 39.96,
+   "label": "coluna Depois do estorno",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 35.84
-  },
-  {
-   "do": "mark",
-   "name": "L6",
-   "at": 45.45
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.offsetParent!==null&&e.textContent.trim().startsWith(\"Como ler o Delta (fiscal − operacional)\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-260);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 45.45,
-   "label": "rola até Como ler o Delta"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "costuma indicar compra de",
-    "within": "main"
-   },
-   "seconds": 2.0,
-   "at": 49.76,
-   "label": "Delta negativo: compra de pessoa física sem nota",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L7",
-   "at": 57.19
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Pedidos ainda não finalizados",
-    "within": "main"
-   },
-   "seconds": 1.4,
-   "at": 59.9,
-   "label": "Como ler o Delta: pedidos não finalizados",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L8",
-   "at": 66.12
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=document.querySelector('main h1, main h2, main table, main [role=tablist]');const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,t0=performance.now();if(y0<3)return 'ok';await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0*(1-e),behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo'})()",
-   "at": 66.12,
-   "label": "volta ao topo"
+   "at": 42.15
   },
   {
    "do": "click",
    "target": {
     "role": "button",
-    "name": "Exportar",
+    "name": "Limpar filtros",
     "exact": true
    },
-   "at": 66.7,
-   "label": "Exportar (abre)",
-   "noScroll": true
+   "at": 42.15,
+   "label": "Limpar filtros"
   },
   {
-   "do": "hover",
+   "do": "click",
    "target": {
-    "role": "menuitem",
-    "name": "PDF"
+    "selector": "main section[aria-label='Materiais do Kardex fiscal'] button",
+    "hasText": "Cobre mel"
    },
-   "seconds": 0.5,
-   "at": 68.63,
-   "label": "Exportar estoque fiscal: PDF",
-   "noScroll": true,
-   "optional": true,
-   "timeout": 4
+   "at": 43.04,
+   "label": "Materiais: Cobre mel"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main tbody tr:has-text('1253')"
+   },
+   "timeout": 10
   },
   {
    "do": "hover",
    "target": {
-    "role": "menuitem",
-    "name": "Excel"
+    "selector": "main tbody tr:has-text('1253') td >> nth=1"
    },
    "seconds": 0.8,
-   "at": 69.84,
-   "label": "Exportar estoque fiscal: Excel",
-   "noScroll": true,
+   "at": 45.7,
+   "label": "NF-e 1253: devolução da Fundição",
    "optional": true,
    "timeout": 4
   },
   {
-   "do": "press",
-   "key": "Escape",
-   "at": 72.04,
-   "label": "fecha o menu (sem baixar)"
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('1253') td:has-text('CFOP')"
+   },
+   "seconds": 1.2,
+   "at": 48.12,
+   "label": "NF-e 1253, CFOP de devolução, +40 kg",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"1253\", \"CFOP 1202\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere devolução (NF-e 1253) no Kardex do cobre mel"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 56.16
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 900,
+    "y": 470
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 56.26,
+   "label": "cursor em repouso (ilustração: setas da devolução)"
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 66.0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('1253') td >> nth=-3"
+   },
+   "seconds": 1.5,
+   "at": 75.4,
+   "label": "Movimento: +40 kg",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "eval",
@@ -327,7 +342,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 73.75
+   "at": 77.96
   }
  ]
 }

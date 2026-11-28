@@ -1,13 +1,14 @@
-# Texto enviado ao ElevenLabs (eleven_v4, voz Kaik Barreto) por capítulo do T17 "Transporte, serviço e o contador" (app 1.60.10).
-# Gerado do roteiro.md (coluna Fala): cada linha do texto é uma linha da tabela Tela × Fala. 20 capítulos (0 a 19) depois da aplicação
-# do 1.60.10 (18/11): novos 6, 13 e 15; o antigo 8 virou 9 e 10; o antigo 10 virou 12, 14 e 16.
+# Texto enviado ao ElevenLabs (eleven_v4, voz Kaik Barreto) por capítulo do T17 "Transporte, serviço e o contador" (app 1.60.39 desde 28/11; era 1.60.10).
+# Gerado do roteiro.md (coluna Fala): cada linha do texto é uma linha da tabela Tela × Fala. 21 capítulos (0 a 20) depois do 1.60.39
+# (28/11): novo 11 (a NF-e recebida vira compra), renumerados 11..19 -> 12..20; trocadas cap00 L3, cap04 L7..L13, cap09 L5,
+# cap12 L1 e L8, cap13 L1, cap17 (tela nova do Fiscal × operacional) e cap20 L2 (andamento_160.md). 18/11 (1.60.10): novos 6, 14 e 16.
 # Trocas de pronúncia em relação ao roteiro (a legenda segue a grafia do roteiro, ver config_narracao.json):
 #   Fiscal & Ambiental -> "Fiscal e Ambiental" | NFS-e -> "/ˈẽːniˈɛːfiˈɛːsiˈeː/" | NF-e -> "/ˈẽniˈɛfiˈe/" | MDF-e -> "/ˈẽmiˈdeˈɛfiˈe/" | SEFAZ -> "sefás" | PDF -> "pê-dê-éfe" | XML -> "xis-ême-éle" | ISS -> "/iˈɛsiˈɛːsːi/" | Kardex -> "cardécs" | truck -> "trúqui"
 #   novas no 1.60.10 (TESTAR num trecho curto antes da voz): CFOP -> "cê-éfe-ó-pê" | NCM -> "ene-cê-ême" | CIOT -> "ciót" | ANTT -> "a-ene-tê-tê" | Carreta / Reboque -> "Carreta ou Reboque"
 CAPS = {
 0: """Oi! Neste tutorial a gente vai cuidar dos outros documentos da Recicla Vale Metais: o que acompanha a carga na estrada, o que cobra um serviço e o pacote que o contador pede todo mês.
 Hoje sai um caminhão de alumínio pra Minas Gerais, a coleta com caçamba na Aços Quiririm vira cobrança, e outubro fecha com o contador.
-Tudo isso fica no menu Fiscal e Ambiental: em Transporte, em Notas de Serviço, no Estoque Fiscal e nos Relatórios Fiscais.
+Tudo isso fica no menu Fiscal e Ambiental: em Transporte, em Notas de Serviço e no Relatório e Estoque Fiscal.
 Essas telas fazem parte do módulo de Notas Fiscais, então dependem do plano contratado.
 Se você ainda não viu o tutorial da nota fiscal de mercadoria, dá uma olhada antes. [pause] Vamos começar pelo manifesto.""",
 1: """O manifesto fica aqui, em Transporte, na aba Manifestos. A Recicla Vale ainda não emitiu nenhum.
@@ -36,13 +37,13 @@ E quando o seu caminhão leva carga com nota de outra empresa? Por exemplo, busc
 Colo os quarenta e quatro dígitos e clico em Adicionar. Como essa nota já estava nas Notas Recebidas, o sistema preencheu quem emitiu e o valor.
 Se a nota não estiver lá, ela entra do mesmo jeito, só com a chave, e o valor você digita se quiser.
 Hoje a carga é só da Recicla Vale, então eu tiro essa nota e sigo com as duas.
-Continuar. No veículo, o caminhão trúqui, e no motorista, o Edson. Como a Frota está completa, não falta nenhum dado.
+Continuar. Primeiro, a natureza da viagem: carga própria, porque a mercadoria é da Recicla Vale. E na categoria do transportador fica Próprio, porque o caminhão também é dela.
+No veículo, o caminhão trúqui, e no motorista, o Edson. Como a Frota está completa, não falta nenhum dado.
 Se o caminhão puxa carreta, ela entra aqui, em Reboques, até três. Pra isso, a carreta precisa estar na Frota como Carreta ou Reboque.
-Aqui embaixo fica o frete de terceiros. O ciót é um código exigido quando o transporte é pago: você contrata um caminhoneiro, ou leva a carga de outra empresa cobrando frete.
-Nesse caso, vão aqui o registro do transportador na a-ene-tê-tê, o código do ciót, com doze dígitos, e o CPF ou CNPJ de quem gerou o código. Os dois últimos andam juntos: um não entra sem o outro.
-E, se quiser, quem contratou o frete.
+Embaixo fica o ciót e a contratação do frete. O ciót é um código exigido quando o transporte é pago: você contrata um caminhoneiro, ou leva a carga de outra empresa cobrando frete.
+Nesse caso, a resposta aqui é Sim. Aí a tela pede o código do ciót, com doze dígitos, o CPF ou CNPJ de quem gerou o código, quem contratou o frete e o registro do transportador na a-ene-tê-tê.
 O código é gerado antes da viagem, numa instituição autorizada pela a-ene-tê-tê. Na dúvida se a sua viagem precisa, pergunte ao contador.
-Hoje a carga é da própria Recicla Vale, no caminhão dela, sem cobrar frete. Então fica em branco.
+Hoje a carga é da própria Recicla Vale, no caminhão dela, sem cobrar frete. Então fica no Não, e a tela confirma: o ciót não se aplica a esta viagem.
 Continuar. A origem já vem com a cidade da empresa: Taubaté.
 No Percurso, eu adiciono o Rio de Janeiro, o estado do meio do caminho.
 E no destino, Minas Gerais, cidade de Itamonte.
@@ -91,55 +92,64 @@ Pelo menu, você baixa o pê-dê-éfe pra mandar pra Aços Quiririm, acompanha t
 São as notas que outras empresas emitem contra o seu CNPJ: o contador, a manutenção, um frete. Elas entram aqui sozinhas, prontas pra virar despesa.
 Clico em Ativar /ˈẽːniˈɛːfiˈɛːsiˈeː/ Recebidas. Repara no aviso: cada nota recebida conta na cota mensal de documentos fiscais, a mesma das notas que você emite.
 Ativar mesmo assim. Pronto, ativado. A busca roda sozinha, e as notas chegam em alguns minutos.
-Uma dica: só chega aqui a nota de cidade que já entrou no sistema nacional. Se uma nota não aparecer, peça o pê-dê-éfe ao prestador e lance a despesa na mão.""",
+Uma dica: só chega aqui a nota de cidade que já entrou no sistema nacional. Se uma nota não aparecer, peça o xis-ême-éle ao prestador: ela entra pelo Importar xis-ême-éle, que a gente vê daqui a pouco.""",
 10: """Um pouco depois, chegaram duas notas.
 Os honorários do escritório de contabilidade, de mil seiscentos e cinquenta reais, e a aferição da balança rodoviária, de novecentos e oitenta.
 Aqui em cima aparece quando foi a última busca. E se você quiser adiantar, é só clicar em Sincronizar agora.
 Serviço não entra no estoque, então aqui o caminho é a despesa. Na linha da balança, Lançar despesa ou conta.
 A conta já vem com o valor e os dados da nota. Falta o vencimento, dia vinte, e a categoria. Criar conta. E a nota fica marcada como lançada.
 Se você tentar lançar a mesma nota de novo, o sistema avisa antes, pra despesa não entrar duas vezes.""",
-11: """Antes de mandar o mês pro contador, vale conferir os números. Em Relatórios Fiscais, a primeira aba é a das notas de mercadoria. Escolho o mês passado, outubro.
+11: """E a nota de mercadoria que chega de um fornecedor? No tutorial anterior, a gente importou o xis-ême-éle da Cooperativa Recomeço. A carga de latinha e PET chegou ontem, e a compra ainda não foi lançada.
+Ela entrou por este Importar xis-ême-éle. Por ele entra também a nota de serviço de uma cidade que ainda não está no sistema nacional. Com o recurso ativo, ela vai pra aba de serviço e vira despesa como as outras.
+Serviço vira despesa, mercadoria vira compra. Na linha da cooperativa, Lançar compra.
+Em cima, a conferência separa o que veio dos produtos, os encargos e descontos, como frete e impostos, e o total da nota. Aqui não tem encargo: sete mil quinhentos e cinquenta reais.
+Os itens já vêm casados com os materiais, como a gente viu no tutorial anterior: a latinha e o PET.
+Repara nesta opção, que já vem marcada: registrar também no estoque fiscal. A nota entra no estoque pelas notas, e o estoque do pátio fica por conta da compra.
+Conferir na tela de compra. Os itens chegam prontos, sem redigitar a nota: oitocentos e cinquenta quilos de latinha e mil e duzentos de PET.
+Aqui você confere os valores e escolhe como pagou. A Recicla Vale pagou por Pix. Finalizar, Pix, e confirmo o pagamento.
+De volta às notas recebidas, a nota fica marcada como lançada como compra. Se alguém tentar lançar de novo, o sistema avisa antes, pra mesma nota não entrar duas vezes no estoque.""",
+12: """Antes de mandar o mês pro contador, vale conferir os números. No menu, em Relatório e Estoque Fiscal, fica a aba /ˈẽniˈɛfiˈe/, das notas de mercadoria. Escolho o mês passado, outubro.
 Aqui em cima, o que entrou e o que saiu em notas no mês.
 O saldo é a saída menos a entrada. Em outubro, ficou positivo: setenta e um mil, seiscentos e vinte e cinco reais.
 E o último cartão junta as notas pendentes e as rejeitadas. Aqui está tudo em dia. Se aparecer um número, resolve antes de fechar o mês.
 Clicando na Entrada, ela se abre. Em outubro, as nove notas foram emitidas pela própria Recicla Vale, nas compras de pessoa física. As notas que os fornecedores emitem contra ela aparecem aqui, numa linha separada.
 No Lucro Real, é nessas notas de fornecedor que o contador costuma buscar os créditos de imposto.
 Embaixo, o gráfico do mês, a divisão por status e o ranking dos fornecedores e dos clientes.
-A segunda aba é o mesmo relatório pras notas de serviço: quanto foi autorizado, o /iˈɛsiˈɛːsːi/ do período e as retenções.
+A aba do lado, /ˈẽːniˈɛːfiˈɛːsiˈeː/, é o mesmo relatório pras notas de serviço: quanto foi autorizado, o /iˈɛsiˈɛːsːi/ do período e as retenções.
 E embaixo, quem mais contratou e quais serviços mais saíram.""",
-12: """Agora, o estoque fiscal: o estoque contado só pelas notas. Ele abre no Saldo atual, com o saldo fiscal de cada material.
+13: """Agora, o estoque fiscal: o estoque contado só pelas notas. Ele fica na mesma tela, na primeira aba, Saldo atual, com o saldo fiscal de cada material.
 Esse saldo se atualiza sozinho. As notas do alumínio que saíram hoje de manhã já estão descontadas aqui.
 Pra achar um material, é só buscar pelo nome ou pelo código.
 Se algum saldo aparecer em vermelho, é porque ficou negativo: saiu mais nota do que entrou.
 Repara no aviso amarelo: tem material sem saldo inicial. Nesse caso, o sistema conta só pelas notas que ele conhece.""",
-13: """Quando a empresa começa a usar o sistema, ela já tem material no pátio. Esse ponto de partida é o saldo inicial. Aqui, falta o da bateria. Na linha dela, Informar saldo inicial.
+14: """Quando a empresa começa a usar o sistema, ela já tem material no pátio. Esse ponto de partida é o saldo inicial. Aqui, falta o da bateria. Na linha dela, Informar saldo inicial.
 Escolho a data-base, que é o dia em que esse número valia: trinta e um de outubro. E a quantidade: três mil trezentos e vinte quilos.
 Uma dica: esse número é fiscal. No Lucro Real, o estoque entra no balanço, então combine o valor com o contador.
 Pra informar vários materiais de uma vez, tem a planilha: você baixa o modelo, preenche código e quantidade e envia. O sistema confere linha por linha antes de gravar.
 Confirmar saldo inicial. O aviso amarelo some, e daqui pra frente as notas somam e descontam a partir desse saldo.
 A bateria passa a três mil novecentos e sessenta quilos: o saldo inicial mais a nota que entrou em novembro.""",
-14: """Pra ver um dia do passado, a aba é a Posição em uma data. Escolho a data e a hora, aqui o fim de outubro, e clico em Ver posição.
+15: """Pra ver um dia do passado, a aba é a Posição em uma data. Escolho a data e a hora, aqui o fim de outubro, e clico em Ver posição.
 É o número que o contador costuma pedir no fechamento do mês e do ano.
 Uma dica: essa posição é só consulta. Ela não muda saldo, nota nem o estoque de hoje. E a data é sempre do passado.
 Em Movimentações fica o cardécs fiscal. Escolho o metal amarelo: cada linha é uma nota, com o cê-éfe-ó-pê, a quantidade e o saldo antes e depois.
 Nos filtros, dá pra fechar num período, num tipo de movimento, ou buscar por nota, chave ou parceiro.
 E em Geral aparecem as movimentações de todos os materiais juntas.""",
-15: """E quando uma nota é cancelada? Lembra da nota mil duzentos e quarenta e nove, cancelada hoje cedo? Eu busco por ela aqui, nos filtros.
+16: """E quando uma nota é cancelada? Lembra da nota mil duzentos e quarenta e nove, cancelada hoje cedo? Eu busco por ela aqui, nos filtros.
 A saída de trezentos e vinte quilos continua no cardécs, e logo acima entra o estorno, com o motivo do cancelamento.
 O sistema não apaga a nota. Ele devolve a quantidade na hora em que o cancelamento aconteceu. Assim, uma posição consultada entre os dois momentos mostra o saldo como era.
 O mesmo vale pra nota de fornecedor que foi cancelada depois de chegar: ela sai do saldo sozinha.
 E a devolução? A Fundição Bandeira do Vale devolveu quarenta quilos de cobre mel. A nota de devolução, a mil duzentos e cinquenta e três, entra no estoque fiscal como entrada.
 Devolução de venda, o material volta. Devolução de compra, o material sai. E vale igual pra dentro e pra fora do estado.
 Uma dica: no Lucro Real, a devolução também mexe nos impostos da nota original. Essa parte é com o contador. Aqui você confere a quantidade.""",
-16: """Na última aba, o fiscal e o operacional ficam lado a lado, material por material. Escolho o mês passado, outubro.
-Aqui em cima, o sistema conta quantos materiais deram diferença e quantos têm alerta, como saldo fiscal negativo.
-Repara no metal amarelo: mil e cem quilos de diferença.
-Seiscentos são de uma venda pra Fundição Bandeira do Vale. A nota saiu no dia trinta de outubro, mas o pedido só foi finalizado no dia três de novembro.
+17: """Agora, a aba que compara o fiscal com o operacional: as notas e os pedidos ficam lado a lado, material por material. Escolho o mês passado, outubro.
+Aqui em cima, o sistema separa as entradas e as saídas: quantos materiais deram diferença nas compras, quantos nas vendas, quantos conferem e os alertas.
+Repara no metal amarelo. Nas entradas, quinhentos quilos comprados e nenhuma nota: a tela marca sem nota.
+É o caso mais comum no ferro-velho: compra de pessoa física sem nota. O material entra no pátio, mas não entra no fiscal.
+Nas saídas, seiscentos quilos de nota a mais. Foi uma venda pra Fundição Bandeira do Vale: a nota saiu no dia trinta de outubro, mas o pedido só foi finalizado no dia três de novembro.
 O fiscal segue as notas. O operacional segue as compras, os pedidos e o pátio. Por isso, os dois podem dar diferente.
-Os outros quinhentos vêm do caso mais comum no ferro-velho: compra de pessoa física sem nota. O material entra no pátio, mas não entra no fiscal.
-Uma dica: um não corrige o outro. Este quadro, Como ler o Delta, ajuda a achar o motivo de cada diferença.
+Uma dica: um não corrige o outro. Este quadro, Como ler a diferença, ajuda a achar o motivo de cada caso.
 E dá pra exportar essa comparação em pê-dê-éfe ou em Excel e mandar junto pro contador.""",
-17: """Agora, o pacote que o contador pede todo mês. Ele fica em Notas Fiscais, no botão de três pontinhos: Exportação Contábil.
+18: """Agora, o pacote que o contador pede todo mês. Ele fica em Notas Fiscais, no botão de três pontinhos: Exportação Contábil.
 Ele junta num arquivo só os xis-ême-éle das notas, uma planilha e um pê-dê-éfe de resumo.
 Se a empresa tem mais de um CNPJ, dá pra gerar um pacote pra cada um.
 No período, o mês passado.
@@ -148,12 +158,12 @@ Saída e entrada, e todos os status, já vêm marcados. Assim o contador recebe 
 Nos extras, entram também o pê-dê-éfe de cada nota e os manifestos do período.
 A prévia conta vinte e uma notas em outubro: doze de saída e nove de entrada. E as destinadas vêm zeradas, porque em outubro a Recicla Vale ainda não recebia essas notas pelo sistema. No pacote de novembro, elas já entram.
 Baixar Pacote. Ele monta tudo aqui no navegador e baixa o arquivo zip no computador.""",
-18: """E o que vai dentro dele? Pastas com os xis-ême-éle de saída e de entrada, o pê-dê-éfe de cada nota, a planilha com a relação das notas, o resumo em pê-dê-éfe e, se você marcou, as notas dos fornecedores.
+19: """E o que vai dentro dele? Pastas com os xis-ême-éle de saída e de entrada, o pê-dê-éfe de cada nota, a planilha com a relação das notas, o resumo em pê-dê-éfe e, se você marcou, as notas dos fornecedores.
 Você manda o pacote pro contador do jeito que vocês já combinam, por e-mail ou numa pasta compartilhada.
 Com ele, o contador confere as notas do mês, lança na contabilidade e te chama se alguma coisa não bater.
 Uma dica: guardar os xis-ême-éle é responsabilidade da empresa, e não do sistema. Baixe o pacote todo mês e guarde uma cópia com você, além da que fica com o contador.""",
-19: """Pronto! Recapitulando: a gente completou a frota com o caminhão e o motorista, emitiu o manifesto da carga de alumínio pra Minas, com o Rio de Janeiro no percurso, encerrou no fim da viagem e viu o que fazer quando a sefás recusa.
-Emitiu a nota de serviço da coleta com caçamba, ativou as notas de serviço recebidas e lançou uma delas como despesa.
+20: """Pronto! Recapitulando: a gente completou a frota com o caminhão e o motorista, emitiu o manifesto da carga de alumínio pra Minas, com o Rio de Janeiro no percurso, encerrou no fim da viagem e viu o que fazer quando a sefás recusa.
+Emitiu a nota de serviço da coleta com caçamba, ativou as notas de serviço recebidas, lançou uma delas como despesa e levou a nota da cooperativa até a compra.
 Conferiu os relatórios fiscais de outubro, informou um saldo inicial, viu o cancelamento e a devolução no cardécs, comparou o estoque fiscal com o do pátio e exportou o pacote do mês pro contador.
 No próximo tutorial, a gente cuida da parte que mantém a licença da sua empresa de pé. Até lá!""",
 }
@@ -169,15 +179,16 @@ TITULOS = {1: "O que é o /ˈẽmiˈdeˈɛfiˈe/.",
            8: "Emitir e acompanhar.",
            9: "O serviço que você tomou.",
            10: "Da nota recebida à despesa.",
-           11: "Entrada, saída e saldo.",
-           12: "O estoque pelas notas.",
-           13: "O saldo inicial.",
-           14: "Um dia do passado e as movimentações.",
-           15: "Cancelamento e devolução.",
-           16: "Fiscal e operacional.",
-           17: "O pacote do mês.",
-           18: "O que o contador faz.",
-           19: "Recapitulando."}
+           11: "Da nota recebida à compra.",
+           12: "Entrada, saída e saldo.",
+           13: "O estoque pelas notas.",
+           14: "O saldo inicial.",
+           15: "Um dia do passado e as movimentações.",
+           16: "Cancelamento e devolução.",
+           17: "Fiscal e operacional.",
+           18: "O pacote do mês.",
+           19: "O que o contador faz.",
+           20: "Recapitulando."}
 # Rótulo de área em cima do título (vinheta).
 KICKERS = {1: "Transporte",
            2: "Frota",
@@ -189,15 +200,16 @@ KICKERS = {1: "Transporte",
            8: "Serviço",
            9: "Serviço",
            10: "Serviço",
-           11: "Relatório fiscal",
-           12: "Estoque fiscal",
+           11: "Compra",
+           12: "Relatório fiscal",
            13: "Estoque fiscal",
            14: "Estoque fiscal",
            15: "Estoque fiscal",
            16: "Estoque fiscal",
-           17: "Contador",
+           17: "Estoque fiscal",
            18: "Contador",
-           19: "Resumo"}
+           19: "Contador",
+           20: "Resumo"}
 
 if __name__ == "__main__":
     tot = 0

@@ -64,9 +64,9 @@ for it in range(40):
         bad.add(T0); print(f'  T={T0} não serve ({err.strip()[:60]}); outro vão'); ult = None
         err = aplicar()
         if err: sys.exit('pausas.py falhou: ' + err)
-    out = run([sys.executable, '-I', os.path.join(H, 'prever.py'), NN, '--ens'], TUT).stdout
+    out = run([sys.executable, '-I', os.path.join(H, 'prever.py'), NN], TUT).stdout
     pior = None; ats = []
-    for ln in subprocess.run([sys.executable, '-I', os.path.join(H, 'prever.py'), NN, '--tudo', '--ens'], cwd=TUT, capture_output=True, text=True).stdout.splitlines():
+    for ln in subprocess.run([sys.executable, '-I', os.path.join(H, 'prever.py'), NN, '--tudo'], cwd=TUT, capture_output=True, text=True).stdout.splitlines():
         m = re.match(r'\s*([\d.]+)->\s*([\d.]+) at=\s*([\d.]+) (\w+)\s+(.*?)(?:\s+<-- ATRASO ([\d.]+))?(?:\s+~ [\d.]+)?$', ln)
         if not m: continue
         at_, lab = float(m.group(3)), m.group(5)

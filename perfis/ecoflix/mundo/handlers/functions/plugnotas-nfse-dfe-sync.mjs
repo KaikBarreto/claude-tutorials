@@ -1,7 +1,8 @@
 // Sincronização das NFS-e recebidas (T17 cap08; supabase/functions/plugnotas-nfse-dfe-sync): o ambiente nacional simulado devolve
 // as duas notas de serviço emitidas contra o CNPJ da Recicla Vale (tomador), que ainda não estão na base: os honorários de outubro
 // da Contabilidade Manacá Ltda (R$ 1.650,00) e a aferição da balança rodoviária da Balanças Tremembé Manutenção Ltda (R$ 980,00).
-// Nenhum dos dois é fornecedor cadastrado. Só com o recurso ligado (como a função real).
+// Nenhum dos dois é fornecedor cadastrado. Só com o recurso ligado (como a função real). 28/11: com nfse_dfe_fonte "sefin" (T17), a
+// resposta é a da função real para o motor próprio (sem buscar nada).
 import { nowIso } from '../../../fakebase/core/util.mjs';
 
 const dv11 = (s) => { let t = 0; let w = 2; for (let i = s.length - 1; i >= 0; i--) { t += Number(s[i]) * w; w = w === 9 ? 2 : w + 1; } const r = t % 11; return r < 2 ? 0 : 11 - r; };
@@ -21,6 +22,12 @@ export default (body, { db, companyId }) => {
   const cfg = (body?.fiscalConfigId && db.first('company_fiscal_config', { id: body.fiscalConfigId, company_id: cid }))
     || db.first('company_fiscal_config', (c) => c.company_id === cid && c.is_default) || db.first('company_fiscal_config', { company_id: cid });
   if (!cfg || !cfg.nfse_dfe_ativo) return { synced: 0, error: 'Ative as NFS-e Recebidas antes de sincronizar.' };
+  // fonte "sefin" (motor fiscal próprio, a da T17): a edge real não busca nada aqui; só responde que a consulta é automática
+  // (supabase/functions/plugnotas-nfse-dfe-sync/index.ts). As notas chegam depois, pela rodada do motor (semente nfse-recebidas).
+  if (cfg.nfse_dfe_fonte === 'sefin') {
+    return { synced: 0, ignoradas: 0, detalhesPreenchidos: 0, janelas: 0, cursor: cfg.nfse_dfe_last_sync_at ?? null, source: 'sefin', queued: true,
+      aviso: 'A consulta direta ao Ambiente Nacional é automática. As novas NFS-e aparecerão após a próxima rodada do motor fiscal.' };
+  }
   const cnpj = String(cfg.cnpj).replace(/\D/g, '');
   let n = 0;
   for (const x of NOTAS) {

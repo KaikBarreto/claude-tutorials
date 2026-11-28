@@ -411,6 +411,16 @@ export function criarPedido(ctx, tipo, a) {
     driver_name: a.p_driver_name || null, vehicle_plate: a.p_vehicle_plate || null, status: 'completed', client_request_id: a.p_client_request_id || null,
     hide_financial_details: !!a.p_hide_financial_details, currency: a.p_currency || 'BRL',
   });
+  // nota recebida (DF-e) lançada como compra: carimba inbound_nfe.purchase_id (selo "Lançada como compra" e o aviso de lançar de novo;
+  // "FATIA B" do create_purchase_atomic, migration 20261116155500; T17 cap11)
+  if (isC && a.p_inbound_nfe_id) {
+    const nf = store.rows('inbound_nfe').find((x) => x.id === a.p_inbound_nfe_id && x.company_id === cid);
+    if (nf) {
+      nf.purchase_id = head.id;
+      nf.updated_at = new Date(agoraMs()).toISOString();
+      store.table('inbound_nfe').touch();
+    }
+  }
   const rot = isC ? 'Compra' : 'Venda';
   const itens = Array.isArray(a.p_items) ? a.p_items : [];
   for (const it of itens) {
