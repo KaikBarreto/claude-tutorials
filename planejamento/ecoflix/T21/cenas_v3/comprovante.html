@@ -43,14 +43,14 @@ function comprovante(d) {
   const P = papel(`${d.anexo}/cap07-1.png`, HPT, { ped: [60, 133.5, 168, 148.5], forn: [31.5, 156.5, 196, 170] });
   const pp = plano(P.html, { pos: [0, YC, 0], esc: E, sangra: true }), sp = mancha(5.2, 1.6, [0, 0, .1], { op: 0 });
   const yv = pt => YC + (P.h / 2 - pt * K) * E;   // altura (m) de uma linha do papel
-  const c1 = plano(htmlChip(`${ic('file-text', 18)}PDF`), { pos: [2.45, yv(150), 0], esc: E * 1.05, anc: [0, .5] }),
-    c2 = plano(htmlChip(`${ic('archive', 18)}Pronto pra guardar`, 'n'), { pos: [2.45, yv(150) - .62, 0], esc: E * 1.05, anc: [0, .5] });
+  const c1 = plano(htmlChip(`${ic('file-text', 18)}PDF`), { pos: [2.15, yv(150), 0], esc: E * 1.05, anc: [0, .5] }),
+    c2 = plano(htmlChip(`${ic('archive', 18)}Pronto pra guardar`, 'n'), { pos: [2.15, yv(150) - .62, 0], esc: E * 1.05, anc: [0, .5] });
   const tit = titulo('Comprovante', 'O PDF da compra');
-  const TUDO = enquadraRet(null, faixa(P.h, 0, 430.87), { topo: 150, margem: 40, el: .02, az: .05 });
+  const TUDO = enquadraRet(null, faixa(P.h, 0, 430.87), { topo: 150, margem: 56, el: .02, az: .05 });
   const F1 = enquadraRet(null, uneRet(faixa(P.h, 125, 215), c1.ret(), c2.ret()), { topo: 70, margem: 56, max: LEITURA, el: .015, az: .035 });
   camera([[t0 - 3, TUDO], [tab - .45, { ...TUDO, d: TUDO.d * .975, az: .045 }, 'lin'], [tcm + .45, F1], [tfim + 2, { ...F1, d: F1.d * .98, az: -.03 }, 'lin']]);
   return t => {
-    GL.style.opacity = eo(pr(t, t0 + .08, .5)).toFixed(3); posTitulo(tit, t, t0 - .9, t0 - .45, tab - .55);   // sai antes do mergulho
+    GL.style.opacity = eo(pr(t, t0 + .08, .5)).toFixed(3); posTitulo(tit, t, t0 - 1.5, t0 - 1.05, tab - .55);   // sai antes do mergulho
     vis(pp.e, t, t0 - .15, 1e9, { dy: 30 }); sp.material.uniforms.uOp.value = .55 * (+pp.e.style.opacity || 0);
     marca(pp.e, 'ped', t, tcm - .1); marca(pp.e, 'forn', t, tde - .1);
     vis(c1.e, t, tpdf - .1, 1e9, { dy: 10 }); vis(c2.e, t, tgu - .1, 1e9, { dy: 10 });

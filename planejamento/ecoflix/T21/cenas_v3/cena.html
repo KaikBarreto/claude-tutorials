@@ -147,14 +147,15 @@ function saldoMov() {
   const b = X(htmlCartao('wallet', 'Saldo em aberto', 'o que ela deve', 'R$ 14.370', { w: CW, h: 132, res: true }), CX, -20);
   const qa = chip(X, 'arrow-left-right', 'De quem mais comprou, pra quem mais vendeu', -CX, 86, '', CW), qb = chip(X, 'users', 'Quanto alguém te deve', CX, 86, '', CW);
   const dp = chip(X, 'split', 'Duas perguntas diferentes', 0, 168, 'n');
+  const na = a.e.querySelector('.num'), nb = b.e.querySelector('.num');
   const tit = titulo('Perguntas', 'Saldo ou movimentado', 'escuro');
   const S = enquadraRet(EIXO, uneRet(fu.ret(), a.ret(), b.ret(), qa.ret(), qb.ret(), dp.ret()), { az: -.02, max: 1.3 / EE });
   camera([[tFu - 3, S], [tSa, deriva(S, .985, .03), 'lin'], [tfim + 2.5, deriva(S, .985, -.015), 'lin']]);
   return t => {
     clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, tFu - .9, tFu - .45);
-    um(fu, t, tFu); um(a, t, tCe); pulso(a.e, t, tCe + .35, .03, .7);
-    um(b, t, tCa - .55); pulso(b.e, t, tCa + .1, .03, .7);
-    um(qb, t, tQu); um(qa, t, tDe); pulso(a.e, t, tMo, .03, .7); um(dp, t, tDu);
+    um(fu, t, tFu); um(a, t, tCe); pulso(na, t, tCe + .35, .05, .7);   // o pulso vai no número (dentro do cartão): pulso no cartão inteiro faz a sombra de vidro piscar
+    um(b, t, tCa - .55); pulso(nb, t, tCa + .1, .05, .7);
+    um(qb, t, tQu); um(qa, t, tDe); pulso(na, t, tMo, .05, .7); um(dp, t, tDu);
   };
 }
 
@@ -173,7 +174,7 @@ function regraCartao() {
   const bt = car.e.querySelector('.num span');
   const clique = chip(X, 'mouse-pointer-click', 'Você clica', CX, 108, '', 260);
   const tit = titulo('Pedidos', 'Quem confirma é o botão', 'escuro');
-  const S = enquadraRet(EIXO, uneRet(bal.ret(), nao.ret(), car.ret(), clique.ret()), { az: -.02, max: 1.3 / EE });
+  const S = enquadraRet(EIXO, uneRet(bal.ret(), nao.ret(), car.ret(), clique.ret()), { az: -.02, max: 1.7 / EE });
   camera([[t0 - 3, S], [tQu, deriva(S, .985, .03), 'lin'], [tfim + 2.5, deriva(S, .97, -.015), 'lin']]);
   return t => {
     clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, t0 - .45);
@@ -221,7 +222,7 @@ function ficaNasTelas() {
     .map(([i, r, x, y]) => X(cartaoP(i, r, '', 'n', CW), x, y));
   const ex = chip(X, 'route', 'Ele explica o caminho na tela', 0, 146);
   const tit = titulo('Limites', 'O que fica nas telas', 'escuro');
-  const S = enquadraRet(EIXO, uneRet(hd.ret(), ...c.map(p => p.ret()), ex.ret()), { az: -.02, max: 1.3 / EE });
+  const S = enquadraRet(EIXO, uneRet(hd.ret(), ...c.map(p => p.ret()), ex.ret()), { az: -.02, max: 1.6 / EE });
   camera([[t0 - 3, S], [tRe, deriva(S, .985, .03), 'lin'], [tfim + 2.5, deriva(S, .97, -.015), 'lin']]);
   return t => {
     clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, t0 - .45);

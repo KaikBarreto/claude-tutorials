@@ -26,3 +26,15 @@ Lote (fundo, `TUT_SENHA` aleatória no ambiente): `bash rec/t18/t18_lote.sh 04:s
 - `ilu05_pdf_mtr` e `ilu10_pdf_cdf` seguem **tiradas** (decisão de 21/11 e 25/11: o PDF é do órgão, o do robô é papel inventado; sem molde do Kaik não entra papel real).
 - Auditoria `--larg 1422`: 4 janelas aprovadas. Piscadas: 0 em 3 cenas; 1 no cap 9 (ilu09, ~19,5 s do capítulo, 1 quadro, 0,5% da tela, provável ponto de luz do último fio; repetiu no re-render). Prévia: `previa_ilustracoes/T18_v3.mp4` + `T18_v3.jpg`. Render: `cenas_v3/render_previa.sh`.
 - Fechamento: nenhuma pendência de objeto novo; sem alteração em `perfis/`.
+
+## 28/11 · fechamento
+- **Aula final:** `$TUT_HOME/t18/edit/out/T18/aula_final.mp4` (16:15,7, 1080p, 193 MiB, -16,3 LUFS, pico real -3,9 dBTP) + `legendas/aula_final.srt|vtt`; prévia 720p de 26,2 MiB em `$TUT_HOME/entrega_previa/EcoFlix T18 - Ambiental MTR e CDF 1.60.22 (previa 720p).mp4`. Mix de pouca memória (`t18_mix.py`, `t18_music_bed.py`, `finish.py` com as 3 linhas do T03/T15).
+- **gerar.py:** `support_widget_last_dismissed` no storage; PDF_FETCH tirado dos caps 5 e 10 (sem papel do órgão); cap 0 sem o hover do grupo (clique direto); `mark` de linha sai junto do clique longo (Avançar/Emitir esperam ~7 s o SIGOR falso), sem isso o maxLate marcava 6 s à toa.
+- **Respiros** (`t18_respiros.py`, estado em `rec/t18/_resp/`): cap0 2,2 s; cap3 5,4 s; cap4 20,4 s; cap5 1,1 s; cap6 16,2 s; cap9 26,2 s. Todos em vãos reais entre frases; os de 3 s ou mais viram 2x na edição.
+- **Gravação final** (`rec/t18/t18_final.sh`): 14 caps; regravados 0, 6, 9 (rodada 2) e 0, 6 (rodada 3). maxLate final: 0,05 / 0,72 / 0,15 / 0,77 / 4: 6,61 (só as marcas L7 e L11, o app leva 7 s no Avançar; passos na hora) / 5: 1,10 (só a marca L3) / 0,08 / 0,63 / 0,61 / 0,56 / 0,05 / 0,50 / 0,73 / 0,10. 0 passo falho.
+- **Câmera:** cap3 com `camera {dwell 0.2, ant 1.0}` (extra.json) e `rect` das 8 teclas de 104,7 a 105,0 s do telemetry corrigido (o app media o campo de busca do IBAMA em y=-10 durante a montagem do popover); cap4 com `--aceitar-camera` (ACEITAR=04): 1 s a 76-88% visível no deslize da câmera depois do Avançar de 7 s.
+- **Ilustrações:** 4 encaixadas (ilu01 cadeia, ilu09, ilu10, ilu12), sem `ilu05_pdf_mtr` e `ilu10_pdf_cdf` (decisão de 21/25-11). Piscada de 1 quadro do cap9 (14,4 s da janela, ~19,5 s do cap) NÃO corrigida: repete no re-render, é o ponto de luz do último fio, 0,5% da tela.
+- **Conferência:** 11 folhas de 3 s olhadas; varredura de tela parada (1 quadro/s): nenhum trecho de 3 s ou mais em branco; nenhum balão do suporte nem pessoa real; sem travessão nas cenas.
+- **Zoom:** 4 manuais + rótulos `(zoom)` do robô (cap3: 4, cap4: 9, cap5: 1, cap6: 4, cap7: 3, cap8: 6, cap9: 6, cap10: 1, cap11: 2, cap12: 1, cap1: 1).
+- **Voz:** nenhuma palavra errada; "fraca" do log era o reconhecedor (CNPJ, vírgula, Auto, Ver).
+- **Disco:** `proj`, `video_sem_audio` e `out/cap00..13` apagados; instância 54318 derrubada; / com 2,3 GB livres, /dev/shm 6,2 GB.
