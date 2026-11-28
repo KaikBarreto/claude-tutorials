@@ -20,3 +20,13 @@ Lote (fundo, `TUT_SENHA` aleatória no ambiente): `bash rec/t26/t26_lote.sh 14:c
 
 **Achados para o MELHORIAS:** as achados 1, 2, 6 e o histórico vazio estão corrigidos no 1.60.22 (cartão travado volta sozinho, selo/atividades atualizam). Agenda: o chip da tarefa deixou de ser `button` (usar texto). Calendário da aba Tarefas: Mês/Semana/Dia são botões de texto.
 Droppable do kanban de tarefas é só a faixa de 80 px abaixo do cabeçalho (coluna vazia: soltar fora dela não muda a situação).
+
+## 28/11 · fechamento
+**Entregue:** aula final 1080p 20:45,8 (`$TUT_HOME/t26/edit/out/T26/aula_final.mp4`, 250 MiB, -16,4 LUFS, pico -3,5 dBTP, legendas em `out/T26/legendas/` e `entrega/`) e prévia 720p de 27,2 MiB em `$TUT_HOME/entrega_previa/EcoFlix T26 - CRM e Kanban 1.60.22 (previa 720p).mp4`.
+**Voz:** `proc_1.60.22.log` e `titulos_1.60.22.log` sem palavra trocada (Jequitibá, "quer", "de" e "Recapitulando" são artefato do reconhecedor). Mixagem de pouca memória (`t26_mix.py`, `t26_music_bed.py`).
+**Robô:** `rec/t26/t26_final.sh` (fila prio 26, guarda de disco e /dev/shm), `rec/t26/t26_plano_pausas.py` (propõe respiros). `ANIMA_SEMPRE` no fim do `setup` e depois de todo `goto` do `vai()`; `support_widget_last_dismissed` no `storage` (regra da T27: balão do WhatsApp com gente real). Conferido por varredura: nenhum balão na aula.
+**Respiros (`pausas_fino.py`, copiado da T22):** cap04 1, cap06 1, cap07 2, cap08 6, cap09 5, cap13 6, cap14 6, cap15 5. Cap12 sem respiro (hover final encurtado). Lição: o respiro tem de cair DEPOIS do passo lento e ANTES da palavra que ancora o primeiro atrasado (antes do passo lento só atrasa o trecho todo); passos a menos de ~1 s de distância na fala (ex.: apagar a busca + Filtros, Adicionar ação + 2 cliques + Mover) não aceitam respiro: aparar o robô (adiantar o `at` do passo lento, encurtar hover).
+**Ajustes de robô (gerar.py):** cap08 (Prazo, Adicionar ação, Mover/Copiar), cap12 (zoom final curto), cap15 (apagar a busca mais cedo, hover final de 1 s). maxLate final: todos < 0,8 (maior: cap16 0,79; cap04 0,76; cap07 0,77; cap03 0,75), 0 falho.
+**Ilustrações v3:** 5 (cap00, 01, 06 avança, 08 reentrada, 10 regra), todas encaixadas; as 7 "tirada" ficam de fora (a tela já mostra). Aulas sem PDF/comprovante: nenhuma cena `comprovante`.
+**Câmera:** 4 zooms do cap08 e 1 do cap15 soltam 0,1 s depois do hover (antes seguravam 1 s com o robô clicando longe, alvo 52-67% visível); cap03 com `--aceitar-camera` (tecla, 78-87%). Acelerações: 8 trechos de respiro (~8 s).
+**Achado do app para o MELHORIAS:** o clique no link Agenda do menu lateral não navegou em 1 gravação do cap14 (CRM > Tarefas > calendário), sem repetir depois; o clique em "Enviar proposta" abriu a edição da tarefa. Esporádico.

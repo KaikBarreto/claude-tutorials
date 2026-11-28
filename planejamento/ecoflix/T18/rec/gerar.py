@@ -43,6 +43,7 @@ HOJE = '2026-11-10'
 STORAGE = {
     'app_version': VERSAO, 'notification_shown_version': VERSAO, f'dominex:daily-tasks-shown:{RAFAEL}': HOJE,
     'pwa-install-dismissed': 'true', 'theme': 'light', f'daily-tasks-reminder-last-shown-{RAFAEL}': HOJE, 'initial-preferences-set': 'true',
+    'support_widget_last_dismissed': '2026-11-10T12:00:00-03:00',   # balão do WhatsApp (nome e foto de gente de verdade) aparece 15 s depois do login pela tela
 }
 NOMES = ['Abertura', 'O que é MTR e CDF', 'Licença e fiscalização', 'Acesso e resíduos', 'Emitir o MTR da carga', 'Acompanhar e baixar o PDF',
          'O próximo manifesto mais rápido', 'Cancelar um MTR', 'Quando o envio não passa', 'O certificado do destino', 'Baixar e guardar',
@@ -123,6 +124,8 @@ class Cap:
     def add(s, d):
         if d.get('at') is not None:
             lim = 0.8 if d.get('do') == 'hover' else 0.25
+            if d.get('do') == 'click':   # clique longo (Avançar/Emitir esperam o SIGOR falso, ~7 s) começa até 1 s antes da linha: a marca da linha sai junto dele, não depois
+                s.pending = [((min(mt, d['at']), mi) if d['at'] < mt <= d['at'] + 1.0 else (mt, mi)) for mt, mi in s.pending]
             for mt, mi in s.pending:
                 if d['at'] < mt <= d['at'] + lim:
                     d['at'] = round(mt, 2)
@@ -416,8 +419,7 @@ def cap00():
     c.cursor((760, 440), at=0.5, label='cursor em repouso no Dashboard')
     c.marca_ja(2)
     c.mark(3)
-    c.hover(GRUPO, 0.3, at=c.A(3, 'menu', 0.6), label='menu Fiscal & Ambiental')
-    c.click(GRUPO, at=c.A(3, 'Fiscal', 0.3), label='abre Fiscal & Ambiental', unless=ITEM_MENU('Ambiental (MTR/CDF)'))
+    c.click(GRUPO, at=c.A(3, 'menu', 1.3), label='abre Fiscal & Ambiental', unless=ITEM_MENU('Ambiental (MTR/CDF)'))
     c.click(ITEM_MENU('Ambiental (MTR/CDF)'), at=c.A(3, 'Ambiental.', 0.8), label='Ambiental (MTR/CDF)')
     c.waitfor(text=PAGINAS[ROTA_MTR], timeout=20)
     c.mark(4)
@@ -638,8 +640,7 @@ def cap05():
     c.click(SEL("[role=dialog] button:text-is('Fechar') >> nth=-1"), at=c.L(3) - 0.8, label='Fechar')
     c.mark(3)
     c.click(LINHA('2611000318', "button[title='Baixar PDF']"), at=c.A(3, 'Baixar', 0.7), label='Baixar PDF (abre aba nova)')
-    c.ev(PDF_FETCH('t18/mtr-2611000318.pdf'), at=c.A(3, 'abre', 0.0), label='PDF do MTR 2611000318 (aba nova, para a ilustração)')
-    c.cursor(NEUTRO, at=c.A(3, 'motorista,', 0.1), label='cursor em repouso (ilustração do PDF com o motorista)')
+    c.cursor(NEUTRO, at=c.A(3, 'motorista,', 0.1), label='cursor em repouso')
     c.mark(4)
     c.hover(LINHA('2611000318', "button[title='Baixar PDF']"), 0.5, at=c.A(4, 'PDF', 0.6), label='Baixar PDF da linha')
     c.hover(LINHA('2611000318', "button[title='Usar como modelo']"), 1.2, at=c.A(4, 'ícone', 0.7), label='ícone Usar como modelo (zoom, sem clicar)')
@@ -817,8 +818,7 @@ def cap10():
     c.mark(1)
     c.click(LINHA('2611000041', "button[title='Ações']"), at=c.A(1, 'menu', 0.8), label='Ações da linha do CDF')
     c.click(ITEM('Baixar PDF'), at=c.A(1, 'Baixar', 0.6), label='Baixar PDF (abre aba nova)', noScroll=True)
-    c.ev(PDF_FETCH('t18/cdf-2611000041.pdf'), at=c.A(1, 'abre', 0.0), label='PDF do CDF 2611000041 (aba nova, para a ilustração)')
-    c.cursor(NEUTRO, at=c.A(1, 'pronto,', 0.3), label='cursor em repouso (ilustração do certificado)')
+    c.cursor(NEUTRO, at=c.A(1, 'sistema.', 0.3), label='cursor em repouso')
     for i in range(2, len(c.linhas) + 1):
         c.marca_ja(i)
     c.fim()

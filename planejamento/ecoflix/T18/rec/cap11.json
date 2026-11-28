@@ -1,6 +1,6 @@
 {
  "name": "t18-cap11",
- "title": "T18 · Cap. 11 · Quando o certificado não sai (narração 47,3 s ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T10:40:00-03:00)",
+ "title": "T18 · Cap. 11 · Quando o certificado não sai (narração 38,3 s; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T10:40:00-03:00)",
  "seed": "t18-cap11",
  "pace": 0.5,
  "cps": 9,
@@ -17,7 +17,8 @@
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
-  "initial-preferences-set": "true"
+  "initial-preferences-set": "true",
+  "support_widget_last_dismissed": "2026-11-10T12:00:00-03:00"
  },
  "seedExtra": [
   "t18/inicio",
@@ -110,7 +111,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 0.05,
+   "at": 0.0,
    "label": "a lista de CDF com os três casos"
   },
   {
@@ -119,7 +120,7 @@
     "selector": "main tbody tr:has(:text-is('Erro')) td >> nth=3"
    },
    "seconds": 0.3,
-   "at": 4.21,
+   "at": 3.52,
    "label": "status Erro",
    "optional": true,
    "timeout": 4
@@ -130,7 +131,7 @@
     "selector": "main tbody tr:has(:text-is('Rascunho')) td >> nth=3"
    },
    "seconds": 0.3,
-   "at": 5.04,
+   "at": 4.08,
    "label": "status Rascunho",
    "optional": true,
    "timeout": 4
@@ -141,23 +142,23 @@
     "selector": "main tbody tr:has-text('2611000037') td >> nth=3"
    },
    "seconds": 0.3,
-   "at": 6.1,
+   "at": 5.2,
    "label": "emitido sem PDF",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 6.96
   },
   {
    "do": "click",
    "target": {
     "selector": "main tbody tr:has(:text-is('Erro')) button[title='Ações']"
    },
-   "at": 8.54,
+   "at": 6.96,
    "label": "Ações da linha com erro"
-  },
-  {
-   "do": "mark",
-   "name": "L2",
-   "at": 9.51
   },
   {
    "do": "click",
@@ -165,7 +166,7 @@
     "role": "menuitem",
     "name": "Ver erro"
    },
-   "at": 9.74,
+   "at": 8.18,
    "label": "Ver erro",
    "noScroll": true
   },
@@ -184,13 +185,13 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 13.87,
+   "at": 12.04,
    "label": "motivo: MTR ainda sem baixa no SIGOR (zoom)"
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 18.97
+   "at": 15.92
   },
   {
    "do": "click",
@@ -200,7 +201,7 @@
     "exact": true,
     "within": "[role=alertdialog]"
    },
-   "at": 22.5,
+   "at": 18.7,
    "label": "Tentar novamente (no diálogo)"
   },
   {
@@ -217,20 +218,20 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 26.29,
+   "at": 22.28,
    "label": "CDF reenviado, já com número"
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 27.44
+   "at": 23.04
   },
   {
    "do": "click",
    "target": {
     "selector": "main tbody tr:has(:text-is('Rascunho')) button[title='Ações']"
    },
-   "at": 31.23,
+   "at": 25.92,
    "label": "Ações do rascunho"
   },
   {
@@ -239,7 +240,7 @@
     "role": "menuitem",
     "name": "Excluir rascunho"
    },
-   "at": 32.43,
+   "at": 27.12,
    "label": "Excluir rascunho",
    "noScroll": true
   },
@@ -258,7 +259,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 35.04,
+   "at": 29.04,
    "label": "confirmação do rascunho (zoom)"
   },
   {
@@ -269,7 +270,7 @@
     "exact": true,
     "within": "[role=alertdialog]"
    },
-   "at": 35.98,
+   "at": 29.54,
    "label": "Excluir"
   },
   {
@@ -280,14 +281,14 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 36.68
+   "at": 30.24
   },
   {
    "do": "click",
    "target": {
     "selector": "main tbody tr:has-text('2611000037') button[title='Ações']"
    },
-   "at": 40.48,
+   "at": 33.08,
    "label": "Ações do emitido sem PDF"
   },
   {
@@ -297,7 +298,7 @@
     "name": "Gerar PDF"
    },
    "seconds": 0.8,
-   "at": 42.27,
+   "at": 34.8,
    "label": "Gerar PDF",
    "optional": true,
    "timeout": 4
@@ -308,7 +309,7 @@
     "role": "menuitem",
     "name": "Gerar PDF"
    },
-   "at": 43.82,
+   "at": 36.04,
    "label": "Gerar PDF (busca o arquivo de novo)",
    "noScroll": true
   },
@@ -325,7 +326,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 47.27
+   "at": 38.32
   }
  ]
 }

@@ -1,6 +1,6 @@
 {
  "name": "t18-cap08",
- "title": "T18 · Cap. 8 · Quando o envio não passa (narração 64,7 s ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T10:40:00-03:00)",
+ "title": "T18 · Cap. 8 · Quando o envio não passa (narração 52,5 s; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T10:40:00-03:00)",
  "seed": "t18-cap08",
  "pace": 0.5,
  "cps": 9,
@@ -17,7 +17,8 @@
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
-  "initial-preferences-set": "true"
+  "initial-preferences-set": "true",
+  "support_widget_last_dismissed": "2026-11-10T12:00:00-03:00"
  },
  "seedExtra": [
   "t18/inicio",
@@ -119,7 +120,7 @@
     "selector": "main tbody :text-is('Emitido')"
    },
    "seconds": 0.3,
-   "at": 4.81,
+   "at": 3.6,
    "label": "status Emitido",
    "optional": true,
    "timeout": 4
@@ -130,7 +131,7 @@
     "selector": "main tbody :text-is('Cancelado')"
    },
    "seconds": 0.3,
-   "at": 5.8,
+   "at": 4.4,
    "label": "status Cancelado",
    "optional": true,
    "timeout": 4
@@ -141,7 +142,7 @@
     "selector": "main tbody tr:has(:text-is('Erro')) td >> nth=4"
    },
    "seconds": 0.3,
-   "at": 7.62,
+   "at": 5.92,
    "label": "status Erro (zoom)",
    "optional": true,
    "timeout": 4
@@ -152,7 +153,7 @@
     "selector": "main tbody tr:has(:text-is('Confirmar no órgão')) td >> nth=4"
    },
    "seconds": 0.3,
-   "at": 8.76,
+   "at": 6.96,
    "label": "status Confirmar no órgão (zoom)",
    "optional": true,
    "timeout": 4
@@ -163,7 +164,7 @@
     "selector": "main tbody tr:has(:text-is('Rascunho')) td >> nth=4"
    },
    "seconds": 0.3,
-   "at": 10.58,
+   "at": 8.48,
    "label": "status Rascunho (zoom)",
    "optional": true,
    "timeout": 4
@@ -171,14 +172,14 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 16.03
+   "at": 12.96
   },
   {
    "do": "click",
    "target": {
     "selector": "main tbody tr:has(:text-is('Erro')) button[title='Ver tentativas']"
    },
-   "at": 16.42,
+   "at": 13.32,
    "label": "Ver tentativas (Erro)"
   },
   {
@@ -193,7 +194,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.6,
-   "at": 17.76,
+   "at": 14.64,
    "label": "MTR ainda sem número oficial",
    "optional": true,
    "timeout": 4
@@ -208,7 +209,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 19.25,
+   "at": 15.66,
    "label": "tentativa Rejeitada e a mensagem do órgão (zoom)"
   },
   {
@@ -216,13 +217,13 @@
    "target": {
     "selector": "[role=dialog] button:text-is('Fechar') >> nth=-1"
    },
-   "at": 20.34,
+   "at": 16.36,
    "label": "Fechar"
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 20.94
+   "at": 16.96
   },
   {
    "do": "hover",
@@ -230,7 +231,7 @@
     "selector": "main tbody tr:has(:text-is('Erro')) button[title='Corrigir e tentar novamente']"
    },
    "seconds": 0.8,
-   "at": 22.19,
+   "at": 18.07,
    "label": "ícone Corrigir e tentar novamente",
    "optional": true,
    "timeout": 4
@@ -240,7 +241,7 @@
    "target": {
     "selector": "main tbody tr:has(:text-is('Erro')) button[title='Tentar novamente']"
    },
-   "at": 29.55,
+   "at": 24.23,
    "label": "Tentar novamente (ícone)"
   },
   {
@@ -258,7 +259,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 33.19,
+   "at": 27.57,
    "label": "A data de expedição venceu (zoom)"
   },
   {
@@ -269,13 +270,13 @@
     "exact": true,
     "within": "[role=alertdialog]"
    },
-   "at": 38.1,
+   "at": 31.27,
    "label": "Voltar (não reenvia)"
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 38.6
+   "at": 31.77
   },
   {
    "do": "hover",
@@ -283,28 +284,28 @@
     "selector": "main tbody tr:has(:text-is('Confirmar no órgão')) td >> nth=5"
    },
    "seconds": 1.4,
-   "at": 46.3,
+   "at": 37.85,
    "label": "a linha só tem Ver tentativas",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 43.59
   },
   {
    "do": "click",
    "target": {
     "selector": "main tbody tr:has(:text-is('Confirmar no órgão')) button[title='Ver tentativas']"
    },
-   "at": 53.31,
+   "at": 43.59,
    "label": "Ver tentativas (Confirmar no órgão)"
   },
   {
    "do": "waitFor",
    "text": "Não reenvie antes de conferir",
    "timeout": 10
-  },
-  {
-   "do": "mark",
-   "name": "L5",
-   "at": 53.91
   },
   {
    "do": "type",
@@ -316,7 +317,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 55.56,
+   "at": 45.23,
    "label": "Não reenvie antes de conferir no portal (zoom)"
   },
   {
@@ -324,7 +325,7 @@
    "target": {
     "selector": "[role=dialog] button:text-is('Fechar') >> nth=-1"
    },
-   "at": 63.13,
+   "at": 50.88,
    "label": "Fechar"
   },
   {
@@ -335,7 +336,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 64.73
+   "at": 52.48
   }
  ]
 }
