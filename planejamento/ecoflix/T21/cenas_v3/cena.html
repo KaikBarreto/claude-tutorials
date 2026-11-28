@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- T21 "O Cato: o agente de IA do EcoSistema" · ilustrações no kit v3 (perfis/ecoflix/cenas_v3/LEIA.md). Só as ideias que a conversa
+     com o Cato na tela não conta sozinha. Voz real 1.60.22 ($TUT_HOME/t21/narracao). O papel do comprovante (cap07) está em comprovante.html.
+       cap01 · ondeFica         ilu01_onde_fica          "No computador, ele fica à direita. No celular, à esquerda, logo acima da barra de baixo." (clima claro:
+                                                         os aparelhos são mundo físico; a tela escura do aparelho é a porta dos dados)
+       cap02 · caminho          ilu02_caminho            "Pra responder, ele lê os dados da sua conta... serviços de inteligência artificial... não usam os seus dados" (escuro)
+       cap06 · saldoMov         ilu06_saldo_movimentado  "A Fundição vem na frente, com cento e doze mil e oitocentos reais... São duas perguntas diferentes." (escuro)
+       cap07 · regraCartao      ilu07_regra_cartao       "Uma dica: escrever sim na conversa não confirma nada. Quem lança é o botão do cartão..." (escuro)
+       cap10 · acertoPagamento  ilu10_acerto_pagamento   "Uma dica: acerto muda só o saldo. Pagamento ou recebimento muda o saldo e o dinheiro..." (escuro)
+       cap15 · ficaNasTelas     ilu15_fica_nas_telas     "E o que ele ainda não faz: editar ou excluir cadastro, ajustar estoque, cancelar nota e reabrir caixa..." (escuro)
+     Saíram (a tela já mostra ou a ideia se repete): ver "T21/andamento_160.md", seção "28/11 · ilustrações v3".
+     Ícones lucide usados: 'sparkles' 'shopping-cart' 'receipt' 'package' 'wallet' 'banknote' 'database' 'brain-circuit' 'file-text' 'shield-check'
+     'monitor' 'smartphone' 'panel-bottom' 'factory' 'trending-up' 'users' 'arrow-left-right' 'split' 'user' 'circle-x' 'mouse-pointer-click' 'check'
+     'scale' 'message-circle' 'pencil-line' 'file-x' 'lock-open' 'route' 'house' 'search'
+     Auditoria: auditar.cjs --aula planejamento/ecoflix/T21 --larg 1422 -->
+</head><body>
+<script type="module">
+import { pr, eo, eio, eo5, W, ic, vis, pulso, ondaEm, titulo, posTitulo, GL, camera, cena, clima, lugar, plano, piso, U, mancha, htmlChip, htmlCartao, htmlFluxo, fluxo, enquadraRet, uneRet }
+  from '../../../../perfis/ecoflix/cenas_v3/motor.js';
+import { ceuClaro, mundoEscuro } from '../../../../perfis/ecoflix/cenas_v3/fundo.js';
+import { htmlFluxoCartoes, fluxoCartoes, parte } from '../../../../perfis/ecoflix/cenas_v3/dados/fluxoCartoes.js';
+import { htmlBalao, balao } from '../../../../perfis/ecoflix/cenas_v3/dados/balao.js';
+
+const EE = .0112, CH = 38;   // CH: altura do chip
+// o mundo escuro: planos no eixo (0,0,0); X = posição em px do desenho (y para baixo); ret = retângulo em metros
+function mundo() {
+  const EIXO = lugar([0, 0, 0]), E = mundoEscuro(EIXO, 0, EE), X = (html, x, y, o = {}) => E(html, x * EE, -y * EE, 0, o);
+  return { EIXO, E, X };
+}
+const cartaoP = (icone, rot, sub, cls, cw = 190) => htmlFluxoCartoes({ cartoes: [[icone, rot, sub, cls]], cw });
+const um = (p, t, T, b = 1e9) => p.e.querySelector('.cartao') ? fluxoCartoes(p.e, t, T - .4, b, { tempos: [T - .1] }) : vis(p.e, t, T - .1, b, { dy: 10 });   // um cartão (ou chip) que entra na palavra T
+const subDe = (card, t, T) => { const s = card.querySelector('.d-s'); if (s) s.style.opacity = eo(pr(t, T - .1, .4)).toFixed(3); };   // a legenda chega na palavra T
+const chip = (X, icone, txt, x, y, cls = '', w = 0) => X(`<div class="chip ${cls}" style="position:relative${w ? `;width:${w}px;box-sizing:border-box` : ''}">${ic(icone, 18)}${txt}</div>`, x, y);
+const pth = (q, r = 22) => { let d = `M${q[0][0]} ${q[0][1]}`;
+  for (let i = 1; i < q.length - 1; i++) { const [a, b, c] = [q[i - 1], q[i], q[i + 1]], l1 = Math.hypot(b[0] - a[0], b[1] - a[1]), l2 = Math.hypot(c[0] - b[0], c[1] - b[1]), rr = Math.min(r, l1 / 2, l2 / 2);
+    d += `L${b[0] - (b[0] - a[0]) / l1 * rr} ${b[1] - (b[1] - a[1]) / l1 * rr}Q${b[0]} ${b[1]} ${b[0] + (c[0] - b[0]) / l2 * rr} ${b[1] + (c[1] - b[1]) / l2 * rr}`; }
+  const z = q[q.length - 1]; return d + `L${z[0]} ${z[1]}`; };
+function fios(X, L, o = {}) {   // L = [{ pts, cv }]: cv = curva em S entre o primeiro e o último ponto
+  const all = L.flatMap(l => l.pts), pad = 12, x0 = Math.min(...all.map(p => p[0])) - pad, y0 = Math.min(...all.map(p => p[1])) - pad,
+    w = Math.max(...all.map(p => p[0])) + pad - x0, h = Math.max(...all.map(p => p[1])) + pad - y0;
+  const ds = L.map(l => { const q = l.pts.map(p => [p[0] - x0, p[1] - y0]); const m = (q[0][0] + q[1][0]) / 2;
+    return l.cv ? `M${q[0][0]} ${q[0][1]}C${m} ${q[0][1]} ${m} ${q[1][1]} ${q[1][0]} ${q[1][1]}` : pth(q); });
+  return X(htmlFluxo(w, h, ds, o), x0, y0, { anc: [0, 0], z: -40 });
+}
+const aparece = (p, t, a) => { p.e.style.opacity = eo(pr(t, a, .4)).toFixed(3); };   // o fio só aparece quando vai se desenhar
+const deriva = (S, k = .985, az = 0) => ({ ...S, d: S.d * k, az: S.az + az });
+
+// =====================================================================================================================
+// cap01, linha 1 · clima CLARO (aparelhos: mundo físico; a tela escura é a porta dos dados)
+// 1 "No computador, ele fica à direita. No celular, à esquerda, logo acima da barra de baixo."
+// O monitor entra na palavra "computador" e o botão redondo acende à direita; o celular entra em "celular" e o botão acende à esquerda;
+// a barra de baixo ganha o marca-texto em "barra". As telas são esquemas (faixas cinza), não a tela do app.
+const Ea = .0105;
+const faixas = L => L.map(([x, y, w, h]) => `<div style="position:absolute;left:${x}px;top:${y}px;width:${w}px;height:${h}px;border-radius:8px;background:rgba(255,255,255,.075)"></div>`).join('');
+const botao = (px, extra = '') => `<div class="bt" style="position:absolute;width:${px}px;height:${px}px;${extra}opacity:0"><i class="an" style="position:absolute;inset:-5px;border-radius:50%;border:3px solid #50D088;opacity:0"></i><div style="width:100%;height:100%;border-radius:50%;background:linear-gradient(150deg,#63D99B,#2FB271);box-shadow:0 10px 20px -6px rgba(47,178,113,.65),inset 0 1px 0 rgba(255,255,255,.45);display:flex;align-items:center;justify-content:center;color:#fff">${ic('sparkles', Math.round(px * .5))}</div></div>`;
+const SOMBRA = 'box-shadow:0 34px 60px -18px rgba(30,80,60,.38),0 8px 16px -6px rgba(30,80,60,.14)';
+function htmlMonitor() {
+  return `<div data-caixa style="position:relative;width:560px;height:410px">
+    <div style="position:absolute;left:0;top:0;width:560px;height:336px;box-sizing:border-box;border-radius:22px;border:10px solid #F6F9F7;background:linear-gradient(160deg,#2B3036,#14171A);${SOMBRA};overflow:hidden">
+      <div style="position:absolute;left:0;top:0;right:0;height:34px;background:rgba(255,255,255,.08)"></div>
+      <div style="position:absolute;left:0;top:34px;bottom:0;width:92px;background:rgba(255,255,255,.04)"></div>
+      ${faixas([[112, 56, 200, 20], [112, 96, 380, 74], [112, 186, 182, 74], [310, 186, 182, 74], [112, 276, 380, 18]])}
+      ${botao(62, 'right:22px;bottom:20px;')}
+    </div>
+    <div style="position:absolute;left:236px;top:336px;width:88px;height:48px;background:linear-gradient(90deg,#DCE4DF,#F8FAF9 45%,#DCE4DF)"></div>
+    <div style="position:absolute;left:170px;top:380px;width:220px;height:16px;border-radius:9px;background:linear-gradient(#F8FAF9,#DCE4DF);box-shadow:0 14px 22px -8px rgba(30,80,60,.3)"></div>
+  </div>`;
+}
+function htmlCelular() {
+  return `<div data-caixa style="position:relative;width:216px;height:410px">
+    <div style="position:absolute;left:0;top:0;width:216px;height:410px;box-sizing:border-box;border-radius:36px;border:9px solid #F6F9F7;background:linear-gradient(160deg,#2B3036,#14171A);${SOMBRA};overflow:hidden">
+      <div style="position:absolute;left:62px;top:9px;width:60px;height:7px;border-radius:4px;background:rgba(255,255,255,.14)"></div>
+      <div style="position:absolute;left:0;top:28px;right:0;height:30px;background:rgba(255,255,255,.07)"></div>
+      ${faixas([[16, 74, 150, 18], [16, 106, 150, 64], [16, 184, 150, 64], [16, 262, 150, 64]])}
+      <div class="barra" style="position:absolute;left:0;right:0;bottom:0;height:52px;background:rgba(255,255,255,.09);display:flex;align-items:center;justify-content:space-around;padding:0 14px">
+        ${[0, 1, 2, 3].map(() => '<i style="width:22px;height:22px;border-radius:7px;background:rgba(255,255,255,.28)"></i>').join('')}
+        <i class="mk" style="position:absolute;inset:0;background:rgba(80,208,136,.4);border:2px solid #50D088;opacity:0"></i></div>
+      ${botao(54, 'left:14px;bottom:66px;')}
+    </div>
+  </div>`;
+}
+function ondeFica() {
+  const t0 = W(1, 'no'), tCo = W(1, 'computador'), tDi = W(1, 'direita'), tCe = W(1, 'celular'), tEs = W(1, 'esquerda'), tBa = W(1, 'barra'), tfim = W(1, 'baixo', 1, 'e');
+  piso({ r: 24, x: 0, z: -2, passo: 1.3 }); U.uNevoa.value.set(.955, .975, .965, .8); ceuClaro({ halo: [.4, 3.4, -12] });
+  const YC = 4.35, mon = plano(htmlMonitor(), { pos: [-1.95, YC, 0], esc: Ea }), cel = plano(htmlCelular(), { pos: [3.7, YC, 0], esc: Ea });
+  const yc = YC - 205 * Ea - .72, c1 = plano(htmlChip(`${ic('monitor', 18)}Computador · à direita`), { pos: [-1.95, yc, 0], esc: Ea }),
+    c2 = plano(htmlChip(`${ic('smartphone', 18)}Celular · à esquerda`), { pos: [3.7, yc, 0], esc: Ea }),
+    c3 = plano(htmlChip(`${ic('panel-bottom', 18)}Acima da barra de baixo`, 'n'), { pos: [3.7, yc - .62, 0], esc: Ea });
+  const bm = mon.e.querySelector('.bt'), bc = cel.e.querySelector('.bt'), mk = cel.e.querySelector('.mk'), tit = titulo('Cato', 'Onde fica o botão');
+  const S = enquadraRet(null, uneRet(mon.ret(), cel.ret(), c1.ret(), c2.ret(), c3.ret()), { topo: 150, margem: 64, max: 1.4 / Ea, el: .02, az: .03 });
+  camera([[t0 - 3, deriva(S, 1, -.05)], [tfim + 2.5, deriva(S, .975, .03), 'lin']]);
+  const aceso = (b, t, a) => { const p = eo5(pr(t, a, .5)); b.style.opacity = eo(pr(t, a, .25)).toFixed(3); b.style.transform = `scale(${(.6 + .4 * p).toFixed(3)})`; ondaEm(b.querySelector('.an'), t, a + .1, 1.1); };
+  return t => {
+    GL.style.opacity = eo(pr(t, t0 + .08, .5)).toFixed(3); posTitulo(tit, t, t0 - .9, t0 - .45);
+    vis(mon.e, t, tCo - .1, 1e9, { dy: 24 }); aceso(bm, t, tDi - .05); vis(c1.e, t, tDi - .1, 1e9, { dy: 10 });
+    vis(cel.e, t, tCe - .1, 1e9, { dy: 24 }); aceso(bc, t, tEs - .05); vis(c2.e, t, tEs - .1, 1e9, { dy: 10 });
+    mk.style.opacity = eo(pr(t, tBa - .05, .4)).toFixed(3); vis(c3.e, t, tBa - .1, 1e9, { dy: 10 });
+  };
+}
+
+// =====================================================================================================================
+// cap02, linha 1 · clima escuro
+// 1 "Pra responder, ele lê os dados da sua conta: compras, vendas, estoque, saldos e contas. Esses trechos passam por serviços de inteligência
+//    artificial contratados pela EcoSistema, que não usam os seus dados pra treinar os modelos deles."
+// À esquerda os cinco tipos de dado (cada um entra na palavra) e um fio de cada um até o Cato; do Cato sai o fio dos trechos até os serviços
+// de IA; embaixo deles, a promessa de não treinar.
+function caminho() {
+  const t0 = W(1, 'pra'), tEle = W(1, 'ele'), tLe = W(1, 'le'), tDa = W(1, 'dados'), D = [W(1, 'compras'), W(1, 'vendas'), W(1, 'estoque'), W(1, 'saldos'), W(1, 'contas', 1)],
+    tTr = W(1, 'trechos'), tSv = W(1, 'servicos'), tCt = W(1, 'contratados'), tNa = W(1, 'nao'), tfim = W(1, 'deles', 1, 'e');
+  const { EIXO, E, X } = mundo(); E.fundo(0, 0, { aneis: false });
+  const CX = -430, CW = 210, YS = [-112, -50, 12, 74, 136], YC = 12, XC = -40, XI = 440;
+  const hd = chip(X, 'database', 'Dados da sua conta', CX - CW / 2 + 125, YS[0] - 62, 'n', 250);
+  const ds = [['shopping-cart', 'Compras'], ['receipt', 'Vendas'], ['package', 'Estoque'], ['wallet', 'Saldos'], ['banknote', 'Contas']].map(([i, r], k) => chip(X, i, r, CX, YS[k], '', CW));
+  const cato = X(cartaoP('sparkles', 'Cato', 'lê os dados da conta', 'res', 230), XC, YC);
+  const ia = X(cartaoP('brain-circuit', 'Serviços de inteligência artificial', 'contratados pela EcoSistema', 'n', 300), XI, YC);
+  const xa = CX + CW / 2 + 10, xb = XC - cato.w / 2 - 10, xc = XC + cato.w / 2 + 10, xd = XI - ia.w / 2 - 10;
+  const F = fios(X, YS.map((y, i) => ({ pts: [[xa, y], [xb, YC + (i - 2) * 9]], cv: true }))), G = fios(X, [{ pts: [[xc, YC], [xd, YC]] }]);
+  const tr = chip(X, 'file-text', 'Trechos', (xc + xd) / 2, YC - 62);
+  const nt = chip(X, 'shield-check', 'Não usa seus dados pra treinar', XI, YC + 36 + 28 + CH / 2 + 4, 'n');
+  const tit = titulo('Privacidade', 'Para onde vão os dados', 'escuro');
+  const S = enquadraRet(EIXO, uneRet(hd.ret(), ...ds.map(c => c.ret()), cato.ret(), ia.ret(), tr.ret(), nt.ret(), F.ret(), G.ret()), { az: -.02, max: 1.3 / EE });
+  camera([[t0 - 3, S], [tSv, deriva(S, .985, .03), 'lin'], [tfim + 2.5, deriva(S, .985, -.015), 'lin']]);
+  return t => {
+    clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, t0 - .45);
+    um(cato, t, tEle); subDe(parte(cato.e, 0), t, tLe); um(hd, t, tDa);
+    ds.forEach((c, i) => { um(c, t, D[i]); });
+    aparece(F, t, D[0] - .3); D.forEach((T, i) => fluxo(F.e, i, t, T - .1, .7, { luz: [T + .05, .8], fica: .5 }));
+    aparece(G, t, tTr - .3); fluxo(G.e, 0, t, tTr - .2, .9, { luz: [tTr + .1, 1.2], fica: .55 }); um(tr, t, tTr);
+    um(ia, t, tSv); subDe(parte(ia.e, 0), t, tCt); um(nt, t, tNa);
+    pulso(parte(cato.e, 0), t, D[4] + .5, .035, .7);
+  };
+}
+
+// =====================================================================================================================
+// cap06, linhas 2 a 4 · clima escuro
+// 2 "Agora, pra quem eu mais vendi em outubro. A Fundição vem na frente, com cento e doze mil e oitocentos reais."
+// 3 "Uma dica: isso é o valor vendido no mês, não é o que ela deve. O saldo em aberto da Fundição, que apareceu lá em cima, é de catorze mil, trezentos e setenta."
+// 4 "Quanto alguém te deve é o saldo. De quem você mais comprou, ou pra quem mais vendeu, é o valor movimentado no período. São duas perguntas diferentes."
+// A Fundição no alto; à esquerda o valor movimentado (112.800), à direita o saldo em aberto (14.370), cada um com a pergunta que ele responde.
+function saldoMov() {
+  const tFu = W(2, 'fundicao'), tCe = W(2, 'cento'), tSa = W(3, 'saldo'), tCa = W(3, 'catorze'), tQu = W(4, 'quanto'), tDe = W(4, 'de'), tMo = W(4, 'movimentado'), tDu = W(4, 'duas'), tfim = W(4, 'diferentes', 1, 'e');
+  const { EIXO, E, X } = mundo(); E.fundo(0, 0, { aneis: false });
+  const CX = 270, CW = 500;
+  const fu = chip(X, 'factory', 'Fundição Bandeira do Vale', 0, -150, 'n');
+  const a = X(htmlCartao('trending-up', 'Valor movimentado', 'vendido em outubro', 'R$ 112.800', { w: CW, h: 132 }), -CX, -20);
+  const b = X(htmlCartao('wallet', 'Saldo em aberto', 'o que ela deve', 'R$ 14.370', { w: CW, h: 132, res: true }), CX, -20);
+  const qa = chip(X, 'arrow-left-right', 'De quem mais comprou, pra quem mais vendeu', -CX, 86, '', CW), qb = chip(X, 'users', 'Quanto alguém te deve', CX, 86, '', CW);
+  const dp = chip(X, 'split', 'Duas perguntas diferentes', 0, 168, 'n');
+  const tit = titulo('Perguntas', 'Saldo ou movimentado', 'escuro');
+  const S = enquadraRet(EIXO, uneRet(fu.ret(), a.ret(), b.ret(), qa.ret(), qb.ret(), dp.ret()), { az: -.02, max: 1.3 / EE });
+  camera([[tFu - 3, S], [tSa, deriva(S, .985, .03), 'lin'], [tfim + 2.5, deriva(S, .985, -.015), 'lin']]);
+  return t => {
+    clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, tFu - .9, tFu - .45);
+    um(fu, t, tFu); um(a, t, tCe); pulso(a.e, t, tCe + .35, .03, .7);
+    um(b, t, tCa - .55); pulso(b.e, t, tCa + .1, .03, .7);
+    um(qb, t, tQu); um(qa, t, tDe); pulso(a.e, t, tMo, .03, .7); um(dp, t, tDu);
+  };
+}
+
+// =====================================================================================================================
+// cap07, linha 4 · clima escuro
+// 4 "Uma dica: escrever sim na conversa não confirma nada. Quem lança é o botão do cartão, e é você quem clica."
+// À esquerda o "sim" no balão, que não confirma nada; à direita o cartão com o botão Lançar compra (o rótulo do botão é o da tela), que o clique aciona.
+function regraCartao() {
+  const t0 = W(4, 'uma'), tEs = W(4, 'escrever'), tCo = W(4, 'confirma'), tQu = W(4, 'quem'), tBo = W(4, 'botao'), tVo = W(4, 'voce'), tCl = W(4, 'clica'), tfim = W(4, 'clica', 1, 'e');
+  const { EIXO, E, X } = mundo(); E.fundo(0, 0, { aneis: false });
+  const CX = 290, CW = 380;
+  const bal = X(htmlBalao({ lado: 'd', icone: 'user', nome: 'Você', texto: 'sim', w: 60 }), -CX, -10);
+  const nao = chip(X, 'circle-x', 'Não confirma nada', -CX, 108, 'n', 260);
+  const btn = '<span style="display:inline-block;padding:9px 22px;border-radius:14px;background:linear-gradient(150deg,#63D99B,#2FB271);color:#fff;font-size:21px;font-weight:800;box-shadow:0 10px 20px -8px rgba(47,178,113,.7)">Lançar compra</span>';
+  const car = X(htmlCartao('shopping-cart', 'Cartão da compra', 'o resumo pra conferir', btn, { w: CW, h: 148, fn: 21, mt: 14 }), CX, -10);
+  const bt = car.e.querySelector('.num span');
+  const clique = chip(X, 'mouse-pointer-click', 'Você clica', CX, 108, '', 260);
+  const tit = titulo('Pedidos', 'Quem confirma é o botão', 'escuro');
+  const S = enquadraRet(EIXO, uneRet(bal.ret(), nao.ret(), car.ret(), clique.ret()), { az: -.02, max: 1.3 / EE });
+  camera([[t0 - 3, S], [tQu, deriva(S, .985, .03), 'lin'], [tfim + 2.5, deriva(S, .97, -.015), 'lin']]);
+  return t => {
+    clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, t0 - .45);
+    balao(bal.e, t, tEs - .15, 1e9, { pensa: .25, d: .15 }); um(nao, t, tCo);
+    um(car, t, tQu); pulso(bt, t, tBo, .06, .8); um(clique, t, tVo); pulso(bt, t, tCl - .05, .09, .7);
+  };
+}
+
+// =====================================================================================================================
+// cap10, linha 3 · clima escuro
+// 3 "Uma dica: acerto muda só o saldo. Pagamento ou recebimento muda o saldo e o dinheiro. Diga qual dos dois você quer."
+// Duas fileiras: o acerto chega só no saldo do parceiro; o pagamento ou recebimento chega no saldo e no dinheiro da conta.
+function acertoPagamento() {
+  const t0 = W(3, 'uma'), tAc = W(3, 'acerto'), tS1 = W(3, 'saldo', 1), tPg = W(3, 'pagamento'), tS2 = W(3, 'saldo', 2), tDi = W(3, 'dinheiro'), tDg = W(3, 'diga'), tfim = W(3, 'quer', 1, 'e');
+  const { EIXO, E, X } = mundo(); E.fundo(0, 0, { aneis: false });
+  const XL = -330, XR = 300, CWL = 360, CWR = 280, Y1 = -150, Y2 = 60, YS2 = -10, YD = 130;
+  const ac = X(cartaoP('scale', 'Acerto', 'muda só o saldo', 'n', CWL), XL, Y1), pg = X(cartaoP('arrow-left-right', 'Pagamento ou recebimento', 'muda o saldo e o dinheiro', 'n', CWL), XL, Y2);
+  const s1 = X(cartaoP('wallet', 'Saldo do parceiro', '', 'res', CWR), XR, Y1), s2 = X(cartaoP('wallet', 'Saldo do parceiro', '', 'res', CWR), XR, YS2), dn = X(cartaoP('banknote', 'Dinheiro na conta', '', 'res', CWR), XR, YD);
+  const xa = XL + Math.max(ac.w, pg.w) / 2 + 10, xb = XR - s1.w / 2 - 10;
+  const F1 = fios(X, [{ pts: [[xa, Y1], [xb, Y1]], cv: true }]), F2 = fios(X, [{ pts: [[xa, Y2 - 12], [xb, YS2]], cv: true }, { pts: [[xa, Y2 + 12], [xb, YD]], cv: true }]);
+  const dg = chip(X, 'message-circle', 'Diga qual dos dois você quer', 0, 224, 'n');
+  const tit = titulo('Saldo do parceiro', 'Acerto ou pagamento', 'escuro');
+  const S = enquadraRet(EIXO, uneRet(ac.ret(), pg.ret(), s1.ret(), s2.ret(), dn.ret(), dg.ret(), F1.ret(), F2.ret()), { az: -.02, max: 1.3 / EE });
+  camera([[t0 - 3, S], [tPg, deriva(S, .985, .03), 'lin'], [tfim + 2.5, deriva(S, .97, -.015), 'lin']]);
+  return t => {
+    clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, t0 - .45);
+    um(ac, t, tAc); aparece(F1, t, tS1 - .45); fluxo(F1.e, 0, t, tS1 - .4, .8, { luz: [tS1 - .2, .9], fica: .55 }); um(s1, t, tS1);
+    um(pg, t, tPg); aparece(F2, t, tS2 - .5);
+    fluxo(F2.e, 0, t, tS2 - .45, .8, { luz: [tS2 - .25, .9], fica: .55 }); um(s2, t, tS2);
+    fluxo(F2.e, 1, t, tDi - .45, .8, { luz: [tDi - .25, .9], fica: .55 }); um(dn, t, tDi);
+    um(dg, t, tDg);
+  };
+}
+
+// =====================================================================================================================
+// cap15, linha 4 · clima escuro
+// 4 "E o que ele ainda não faz: editar ou excluir cadastro, ajustar estoque, cancelar nota e reabrir caixa. Nesses casos, ele explica o caminho na tela."
+// Quatro cartões (um por palavra) sob "O Cato ainda não faz"; no fim, o Cato explica o caminho na tela.
+function ficaNasTelas() {
+  const t0 = W(4, 'e'), tAi = W(4, 'ainda'), tEd = W(4, 'editar'), tAj = W(4, 'ajustar'), tCa = W(4, 'cancelar'), tRe = W(4, 'reabrir'), tEx = W(4, 'explica'), tfim = W(4, 'tela', 1, 'e');
+  const { EIXO, E, X } = mundo(); E.fundo(0, 0, { aneis: false });
+  const CW = 340, DX = 205, Y1 = -48, Y2 = 52;
+  const hd = chip(X, 'circle-x', 'O Cato ainda não faz', 0, -140, 'n');
+  const c = [['pencil-line', 'Editar ou excluir cadastro', -DX, Y1], ['package', 'Ajustar estoque', DX, Y1], ['file-x', 'Cancelar nota', -DX, Y2], ['lock-open', 'Reabrir caixa', DX, Y2]]
+    .map(([i, r, x, y]) => X(cartaoP(i, r, '', 'n', CW), x, y));
+  const ex = chip(X, 'route', 'Ele explica o caminho na tela', 0, 146);
+  const tit = titulo('Limites', 'O que fica nas telas', 'escuro');
+  const S = enquadraRet(EIXO, uneRet(hd.ret(), ...c.map(p => p.ret()), ex.ret()), { az: -.02, max: 1.3 / EE });
+  camera([[t0 - 3, S], [tRe, deriva(S, .985, .03), 'lin'], [tfim + 2.5, deriva(S, .97, -.015), 'lin']]);
+  return t => {
+    clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, t0 - .9, t0 - .45);
+    um(hd, t, tAi); [tEd, tAj, tCa, tRe].forEach((T, i) => um(c[i], t, T)); um(ex, t, tEx);
+  };
+}
+
+const CAPS = { 1: ondeFica, 2: caminho, 6: saldoMov, 7: regraCartao, 10: acertoPagamento, 15: ficaNasTelas };
+cena(d => CAPS[d.cap](d), { fov: 26 });
+</script></body></html>

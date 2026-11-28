@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- T21 "O Cato" · o COMPROVANTE REAL na tela (kit v3, clima claro: papel é mundo físico). Molde: T08/cenas_v3/comprovante.html.
+     cap07, linha 6 · "Pronto, a compra entrou, e o botão Abrir comprovante abre o comprovante dela, em PDF, pronto pra guardar."
+     O app abre o PDF numa aba nova; o robô devolveu esse PDF no ensaio ($TUT_HOME/rec/t21/_ens/t21-cap07.actions.json, ação 31, pedido #1759
+     da Aparecida Ramos, Alumínio latinha, 120 kg, R$ 744,00). Rasterizado em $TUT_HOME/t21/edit/out/comprovantes/cap07-1.png (pdftoppm -r 720),
+     sem redesenho: só a câmera passeia e o marca-texto verde acompanha a fala. Papel de 226,77 x 430,87 pt, 1,5 px por pt.
+     Coordenadas (pt, pdftotext -bbox): Pedido N° #1759 [60,133.5,168,148.5]; Fornecedor: Aparecida Ramos [31.5,156.5,196,170].
+     Estações: (1) o papel inteiro sobe sob o título; (2) a câmera mergulha no bloco do pedido e do fornecedor (o título sai antes), com os
+     chips "PDF" e "Pronto pra guardar" ao lado.
+     Render: render_cenas.cjs 7 cap07.json saida.mp4 --html .../comprovante.html --anexo $TUT_HOME/t21/edit/out/comprovantes
+             --larg 1422 --dsf 1.35 --de <s> --ate <s>.  Auditoria: auditar.cjs --aula planejamento/ecoflix/T21 --larg 1422
+     Ícones lucide usados: 'file-text' 'archive' -->
+</head><body>
+<script type="module">
+import { pr, eo, W, ic, vis, titulo, posTitulo, GL, mancha, piso, U, camera, plano, cena, estilo, enquadraRet, uneRet, htmlChip }
+  from '../../../../perfis/ecoflix/cenas_v3/motor.js';
+import { ceuClaro } from '../../../../perfis/ecoflix/cenas_v3/fundo.js';
+
+const K = 1.5, LP = 226.77, HPT = 430.866, WP = Math.round(LP * K), E = .01, YC = 4.35;   // px por pt, largura da página (pt e px), metros por px
+const LEITURA = 2.87 / E;
+
+function papel(src, hpt, marcas) {
+  estilo('cupom', `
+.cupom{position:relative;width:${WP}px;background:#fff;border-radius:7px 7px 0 0;box-shadow:0 34px 60px -18px rgba(30,80,60,.38),0 8px 16px -6px rgba(30,80,60,.14)}
+.cupom img{display:block;width:${WP}px;border-radius:7px 7px 0 0}
+.cupom .z{position:absolute;left:0;bottom:-8px;display:block}
+.cupom .mk{position:absolute;border-radius:4px;background:rgba(80,208,136,.46);mix-blend-mode:multiply;transform-origin:0 50%;transform:scaleX(0)}`);
+  const h = Math.round(hpt * K), n = Math.round(WP / 14), z = Array.from({ length: n + 1 }, (_, i) => `${(i * WP / n).toFixed(1)},${i % 2 ? 8 : 0}`).join(' ');
+  const mk = Object.entries(marcas).map(([id, [x0, y0, x1, y1]]) =>
+    `<i class="mk" data-m="${id}" style="left:${(x0 * K).toFixed(1)}px;top:${(y0 * K).toFixed(1)}px;width:${((x1 - x0) * K).toFixed(1)}px;height:${((y1 - y0) * K).toFixed(1)}px"></i>`).join('');
+  return { h, html: `<div class="cupom" style="height:${h}px"><img src="${src}" style="height:${h}px" alt="">${mk}<svg class="z" width="${WP}" height="8"><polygon points="0,0 ${z} ${WP},0" fill="#fff"/></svg></div>` };
+}
+const marca = (e, id, t, a) => { const m = (e._mk ??= {})[id] ??= e.querySelector(`[data-m="${id}"]`); m.style.transform = `scaleX(${eo(pr(t, a, .45)).toFixed(4)})`; };
+const faixa = (h, y0, y1) => [-WP / 2 * E, YC + (h / 2 - y1 * K) * E, WP / 2 * E, YC + (h / 2 - y0 * K) * E];
+const palco = () => { piso({ r: 24, x: 0, z: -2, passo: 1.3 }); U.uNevoa.value.set(.955, .975, .965, .8); ceuClaro({ halo: [.2, 3.4, -12] }); };
+
+// cap07, linha 6 · o papel sobe inteiro sob o título; no "abre" a câmera mergulha no bloco do pedido e do fornecedor; o marca-texto
+// acompanha "comprovante" (o pedido) e "dela" (o fornecedor); "PDF" e "pronto pra guardar" entram como chips ao lado.
+function comprovante(d) {
+  const t0 = W(6, 'abrir'), tab = W(6, 'abre'), tcm = W(6, 'comprovante', 2), tde = W(6, 'dela'), tpdf = W(6, 'pdf'), tgu = W(6, 'guardar'), tfim = W(6, 'guardar', 1, 'e');
+  palco();
+  const P = papel(`${d.anexo}/cap07-1.png`, HPT, { ped: [60, 133.5, 168, 148.5], forn: [31.5, 156.5, 196, 170] });
+  const pp = plano(P.html, { pos: [0, YC, 0], esc: E, sangra: true }), sp = mancha(5.2, 1.6, [0, 0, .1], { op: 0 });
+  const yv = pt => YC + (P.h / 2 - pt * K) * E;   // altura (m) de uma linha do papel
+  const c1 = plano(htmlChip(`${ic('file-text', 18)}PDF`), { pos: [2.45, yv(150), 0], esc: E * 1.05, anc: [0, .5] }),
+    c2 = plano(htmlChip(`${ic('archive', 18)}Pronto pra guardar`, 'n'), { pos: [2.45, yv(150) - .62, 0], esc: E * 1.05, anc: [0, .5] });
+  const tit = titulo('Comprovante', 'O PDF da compra');
+  const TUDO = enquadraRet(null, faixa(P.h, 0, 430.87), { topo: 150, margem: 40, el: .02, az: .05 });
+  const F1 = enquadraRet(null, uneRet(faixa(P.h, 125, 215), c1.ret(), c2.ret()), { topo: 70, margem: 56, max: LEITURA, el: .015, az: .035 });
+  camera([[t0 - 3, TUDO], [tab - .45, { ...TUDO, d: TUDO.d * .975, az: .045 }, 'lin'], [tcm + .45, F1], [tfim + 2, { ...F1, d: F1.d * .98, az: -.03 }, 'lin']]);
+  return t => {
+    GL.style.opacity = eo(pr(t, t0 + .08, .5)).toFixed(3); posTitulo(tit, t, t0 - .9, t0 - .45, tab - .55);   // sai antes do mergulho
+    vis(pp.e, t, t0 - .15, 1e9, { dy: 30 }); sp.material.uniforms.uOp.value = .55 * (+pp.e.style.opacity || 0);
+    marca(pp.e, 'ped', t, tcm - .1); marca(pp.e, 'forn', t, tde - .1);
+    vis(c1.e, t, tpdf - .1, 1e9, { dy: 10 }); vis(c2.e, t, tgu - .1, 1e9, { dy: 10 });
+  };
+}
+
+const CAPS = { 7: comprovante };
+cena(d => CAPS[d.cap](d), { fov: 26 });
+</script></body></html>
