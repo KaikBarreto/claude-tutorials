@@ -1,6 +1,6 @@
 {
  "name": "t26-cap14",
- "title": "T26 · Cap. 14 · Tarefas e Agenda (narração 102,1 s, ESTIMADA; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T26 · Cap. 14 · Tarefas e Agenda (narração 84,4 s, da voz; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "fakeNow": "2026-11-10T08:30:00-03:00",
  "seed": "t26-cap14",
  "pace": 0.5,
@@ -90,6 +90,10 @@
    "timeout": 30
   },
   {
+   "do": "eval",
+   "js": "(()=>{if(window.__anima)return 'ja';window.__anima=setInterval(()=>{try{document.getAnimations().forEach(x=>{if(x.currentTime!==null&&x.currentTime<0)x.startTime=document.timeline.currentTime})}catch(e){}},60);return 'ok'})()"
+  },
+  {
    "do": "waitFor",
    "idle": true,
    "timeout": 15
@@ -102,6 +106,10 @@
    "do": "waitFor",
    "text": "Agenda",
    "timeout": 30
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__anima)return 'ja';window.__anima=setInterval(()=>{try{document.getAnimations().forEach(x=>{if(x.currentTime!==null&&x.currentTime<0)x.startTime=document.timeline.currentTime})}catch(e){}},60);return 'ok'})()"
   },
   {
    "do": "waitFor",
@@ -118,6 +126,10 @@
    "timeout": 30
   },
   {
+   "do": "eval",
+   "js": "(()=>{if(window.__anima)return 'ja';window.__anima=setInterval(()=>{try{document.getAnimations().forEach(x=>{if(x.currentTime!==null&&x.currentTime<0)x.startTime=document.timeline.currentTime})}catch(e){}},60);return 'ok'})()"
+  },
+  {
    "do": "waitFor",
    "idle": true,
    "timeout": 15
@@ -125,6 +137,10 @@
   {
    "do": "eval",
    "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Something went wrong/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);return 1})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__anima)return 'ja';window.__anima=setInterval(()=>{try{document.getAnimations().forEach(x=>{if(x.currentTime!==null&&x.currentTime<0)x.startTime=document.timeline.currentTime})}catch(e){}},60);return 'ok'})()"
   }
  ],
  "steps": [
@@ -140,7 +156,7 @@
     "name": "Tarefas",
     "exact": true
    },
-   "at": 0.74,
+   "at": 0.52,
    "label": "aba Tarefas"
   },
   {
@@ -153,8 +169,8 @@
    "target": {
     "selector": "main div:has(> h3:text-is('Pendente'))"
    },
-   "seconds": 0.14,
-   "at": 8.53,
+   "seconds": 0.12,
+   "at": 7.68,
    "label": "coluna Pendente",
    "optional": true,
    "timeout": 4
@@ -165,7 +181,7 @@
     "selector": "main div:has(> h3:text-is('Em andamento'))"
    },
    "seconds": 0.1,
-   "at": 9.67,
+   "at": 8.8,
    "label": "coluna Em andamento",
    "optional": true,
    "timeout": 4
@@ -176,7 +192,7 @@
     "selector": "main div:has(> h3:text-is('Concluída'))"
    },
    "seconds": 0.1,
-   "at": 10.65,
+   "at": 9.52,
    "label": "coluna Concluída (a tarefa da visita)",
    "optional": true,
    "timeout": 4
@@ -187,7 +203,7 @@
     "selector": "main div:has(> h3:text-is('Cancelada'))"
    },
    "seconds": 0.1,
-   "at": 11.56,
+   "at": 10.4,
    "label": "coluna Cancelada",
    "optional": true,
    "timeout": 4
@@ -195,7 +211,7 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 12.45
+   "at": 11.14
   },
   {
    "do": "click",
@@ -204,7 +220,7 @@
     "name": "Nova tarefa",
     "exact": true
    },
-   "at": 15.18,
+   "at": 13.62,
    "label": "Nova tarefa"
   },
   {
@@ -219,7 +235,7 @@
    },
    "text": "Enviar proposta",
    "cps": 30,
-   "at": 16.42,
+   "at": 14.84,
    "label": "Título: Enviar proposta"
   },
   {
@@ -228,7 +244,7 @@
     "selector": "[role=dialog]:has(#crm-task-form-dialog) button[role=combobox]",
     "hasText": "Selecionar..."
    },
-   "at": 17.86,
+   "at": 15.96,
    "label": "Oportunidade * (abre a busca)"
   },
   {
@@ -236,7 +252,7 @@
    "target": {
     "selector": "[role=option]:has-text('Retalho de chapa da Metalúrgica Jequitibá')"
    },
-   "at": 19.96,
+   "at": 17.44,
    "label": "Retalho de chapa da Metalúrgica Jequitibá",
    "noScroll": true
   },
@@ -246,7 +262,7 @@
     "selector": "[role=dialog]:has(#crm-task-form-dialog) button[role=combobox]",
     "hasText": "Sem responsável"
    },
-   "at": 20.74,
+   "at": 18.12,
    "label": "Responsável (abre a busca)"
   },
   {
@@ -254,7 +270,7 @@
    "target": {
     "selector": "[role=option]:has-text('Rafael Nogueira')"
    },
-   "at": 21.5,
+   "at": 18.66,
    "label": "Rafael Nogueira",
    "noScroll": true
   },
@@ -263,7 +279,7 @@
    "target": {
     "selector": "[role=dialog]:has(#crm-task-form-dialog) button:has-text('/2026')"
    },
-   "at": 22.26,
+   "at": 19.24,
    "label": "Data * (abre o calendário)"
   },
   {
@@ -271,7 +287,7 @@
    "target": {
     "selector": "[data-radix-popper-content-wrapper] button[name=day]:text-is('12')"
    },
-   "at": 23.52,
+   "at": 20.32,
    "label": "dia 12",
    "noScroll": true
   },
@@ -282,7 +298,7 @@
     "hasText": "Média"
    },
    "option": "Alta",
-   "at": 23.83,
+   "at": 20.5,
    "label": "Prioridade: Alta"
   },
   {
@@ -303,7 +319,7 @@
     "exact": true,
     "within": "[role=dialog]:has(#crm-task-form-dialog)"
    },
-   "at": 25.22,
+   "at": 21.88,
    "label": "Salvar (Nova tarefa)"
   },
   {
@@ -314,7 +330,7 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 26.08
+   "at": 22.51
   },
   {
    "do": "hover",
@@ -322,7 +338,7 @@
     "selector": "main div.rounded-xl:has(> div > h3:text-is('Pendente')) p:text-is('Enviar proposta')"
    },
    "seconds": 0.8,
-   "at": 27.36,
+   "at": 23.77,
    "label": "Enviar proposta em Pendente",
    "optional": true,
    "timeout": 4
@@ -339,7 +355,7 @@
    "to": {
     "selector": "main div.rounded-xl:has(> div > h3:text-is('Em andamento')) div.flex-1.rounded-lg"
    },
-   "at": 31.66,
+   "at": 27.65,
    "label": "arrasta Enviar proposta para Em andamento",
    "hold": 0.5
   },
@@ -353,14 +369,14 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 34.93
+   "at": 30.27
   },
   {
    "do": "click",
    "target": {
     "selector": "main p:text-is('Enviar proposta')"
    },
-   "at": 35.03,
+   "at": 30.37,
    "label": "clique na tarefa (abre a edição)"
   },
   {
@@ -374,7 +390,7 @@
     "selector": "[role=dialog]:has(#crm-task-form-dialog) label:has-text('Hora')"
    },
    "seconds": 0.1,
-   "at": 39.02,
+   "at": 33.61,
    "label": "Hora",
    "optional": true,
    "timeout": 4
@@ -385,7 +401,7 @@
     "selector": "[role=dialog]:has(#crm-task-form-dialog) textarea[placeholder^='Detalhes']"
    },
    "seconds": 0.1,
-   "at": 39.63,
+   "at": 34.09,
    "label": "Descrição",
    "optional": true,
    "timeout": 4
@@ -396,7 +412,7 @@
     "selector": "[role=dialog]:has(#crm-task-form-dialog) label:has-text('Lembrar no dia')"
    },
    "seconds": 0.8,
-   "at": 40.54,
+   "at": 34.81,
    "label": "Lembrar no dia",
    "optional": true,
    "timeout": 4
@@ -409,8 +425,8 @@
     "exact": true,
     "within": "[role=dialog]:has(#crm-task-form-dialog)"
    },
-   "seconds": 1.53,
-   "at": 43.12,
+   "seconds": 1.0,
+   "at": 36.97,
    "label": "Excluir (zoom, sem clicar)",
    "optional": true,
    "timeout": 4
@@ -423,7 +439,7 @@
     "exact": true,
     "within": "[role=dialog]:has(#crm-task-form-dialog)"
    },
-   "at": 45.65,
+   "at": 38.97,
    "label": "Cancelar"
   },
   {
@@ -436,7 +452,7 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 45.83
+   "at": 38.91
   },
   {
    "do": "click",
@@ -445,7 +461,7 @@
     "name": "Filtrar",
     "exact": true
    },
-   "at": 46.16,
+   "at": 39.23,
    "label": "Filtrar"
   },
   {
@@ -455,8 +471,8 @@
     "name": "Responsável",
     "within": "main"
    },
-   "seconds": 0.14,
-   "at": 48.63,
+   "seconds": 0.1,
+   "at": 41.13,
    "label": "Filtrar: Responsável",
    "optional": true,
    "timeout": 4
@@ -469,7 +485,7 @@
     "within": "main"
    },
    "seconds": 0.1,
-   "at": 49.77,
+   "at": 42.09,
    "label": "Filtrar: Status",
    "optional": true,
    "timeout": 4
@@ -482,7 +498,7 @@
     "within": "main"
    },
    "seconds": 0.1,
-   "at": 50.68,
+   "at": 42.89,
    "label": "Filtrar: Prioridade",
    "optional": true,
    "timeout": 4
@@ -495,7 +511,7 @@
     "within": "main"
    },
    "seconds": 0.56,
-   "at": 51.67,
+   "at": 43.85,
    "label": "Filtrar: Oportunidade",
    "optional": true,
    "timeout": 4
@@ -505,8 +521,8 @@
    "target": {
     "selector": "main input[placeholder^='Buscar']"
    },
-   "seconds": 0.68,
-   "at": 53.23,
+   "seconds": 0.13,
+   "at": 45.41,
    "label": "busca por título",
    "optional": true,
    "timeout": 4
@@ -514,14 +530,14 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 54.91
+   "at": 46.54
   },
   {
    "do": "click",
    "target": {
     "selector": "[aria-label='Lista']"
    },
-   "at": 55.23,
+   "at": 47.04,
    "label": "visão Lista"
   },
   {
@@ -529,8 +545,8 @@
    "target": {
     "selector": "main th:has-text('Oportunidade')"
    },
-   "seconds": 0.36,
-   "at": 59.46,
+   "seconds": 0.1,
+   "at": 50.36,
    "label": "coluna Oportunidade",
    "optional": true,
    "timeout": 4
@@ -540,8 +556,8 @@
    "target": {
     "selector": "main th:has-text('Responsável')"
    },
-   "seconds": 0.29,
-   "at": 60.82,
+   "seconds": 0.1,
+   "at": 51.4,
    "label": "coluna Responsável",
    "optional": true,
    "timeout": 4
@@ -552,7 +568,7 @@
     "selector": "main th:has-text('Data')"
    },
    "seconds": 0.1,
-   "at": 62.11,
+   "at": 52.44,
    "label": "coluna Data",
    "optional": true,
    "timeout": 4
@@ -563,7 +579,7 @@
     "selector": "main th:has-text('Prioridade')"
    },
    "seconds": 0.6,
-   "at": 62.79,
+   "at": 53.08,
    "label": "coluna Prioridade",
    "optional": true,
    "timeout": 4
@@ -573,20 +589,20 @@
    "target": {
     "selector": "main th:has-text('Data')"
    },
-   "at": 65.63,
+   "at": 55.36,
    "label": "clica no cabeçalho Data (ordena)"
   },
   {
    "do": "mark",
    "name": "L7",
-   "at": 66.49
+   "at": 55.9
   },
   {
    "do": "click",
    "target": {
     "selector": "[aria-label='Calendário']"
    },
-   "at": 66.89,
+   "at": 56.24,
    "label": "visão Calendário"
   },
   {
@@ -595,7 +611,7 @@
     "selector": "main button:text-is('Mês')"
    },
    "seconds": 0.1,
-   "at": 68.76,
+   "at": 57.72,
    "label": "Mês",
    "optional": true,
    "timeout": 4
@@ -606,7 +622,7 @@
     "selector": "main button:text-is('Semana')"
    },
    "seconds": 0.1,
-   "at": 69.29,
+   "at": 58.28,
    "label": "Semana",
    "optional": true,
    "timeout": 4
@@ -617,7 +633,7 @@
     "selector": "main button:text-is('Dia')"
    },
    "seconds": 0.1,
-   "at": 70.05,
+   "at": 59.08,
    "label": "Dia",
    "optional": true,
    "timeout": 4
@@ -627,8 +643,8 @@
    "target": {
     "selector": "main button[title^='Enviar proposta']"
    },
-   "seconds": 0.87,
-   "at": 70.58,
+   "seconds": 0.38,
+   "at": 59.48,
    "label": "Enviar proposta no dia 12 (calendário)",
    "optional": true,
    "timeout": 4
@@ -636,14 +652,14 @@
   {
    "do": "mark",
    "name": "L8",
-   "at": 72.45
+   "at": 60.86
   },
   {
    "do": "click",
    "target": {
     "selector": "a[href='/agenda']:visible"
    },
-   "at": 74.58,
+   "at": 62.62,
    "label": "Agenda (menu lateral)",
    "noScroll": true
   },
@@ -661,8 +677,8 @@
     "text": "Enviar proposta",
     "exact": true
    },
-   "seconds": 2.4,
-   "at": 76.09,
+   "seconds": 2.16,
+   "at": 63.72,
    "label": "Enviar proposta no dia 12, selo CRM (zoom)",
    "optional": true,
    "timeout": 4
@@ -670,7 +686,7 @@
   {
    "do": "mark",
    "name": "L9",
-   "at": 80.32
+   "at": 66.88
   },
   {
    "do": "hover",
@@ -679,7 +695,7 @@
     "exact": true
    },
    "seconds": 3.0,
-   "at": 80.97,
+   "at": 67.7,
    "label": "uma tarefa só (zoom)",
    "optional": true,
    "timeout": 4
@@ -687,7 +703,7 @@
   {
    "do": "mark",
    "name": "L10",
-   "at": 86.82
+   "at": 72.16
   },
   {
    "do": "click",
@@ -695,7 +711,7 @@
     "text": "Enviar proposta",
     "exact": true
    },
-   "at": 86.92,
+   "at": 72.26,
    "label": "clique na tarefa (leva ao CRM)"
   },
   {
@@ -708,8 +724,8 @@
    "target": {
     "selector": "#crm-title"
    },
-   "seconds": 1.0,
-   "at": 90.31,
+   "seconds": 0.64,
+   "at": 74.86,
    "label": "Editar oportunidade da Jequitibá",
    "optional": true,
    "timeout": 4
@@ -722,7 +738,7 @@
     "exact": true,
     "within": "[role=dialog]:has(#crm-title)"
    },
-   "at": 92.31,
+   "at": 76.5,
    "label": "Cancelar"
   },
   {
@@ -740,7 +756,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 102.05
+   "at": 84.4
   }
  ]
 }

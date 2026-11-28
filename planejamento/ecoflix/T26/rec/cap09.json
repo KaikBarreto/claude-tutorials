@@ -1,6 +1,6 @@
 {
  "name": "t26-cap09",
- "title": "T26 · Cap. 9 · Nova oportunidade (narração 114,4 s, ESTIMADA; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T26 · Cap. 9 · Nova oportunidade (narração 94,4 s, da voz; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "fakeNow": "2026-11-10T08:30:00-03:00",
  "seed": "t26-cap09",
  "pace": 0.5,
@@ -90,6 +90,10 @@
    "timeout": 30
   },
   {
+   "do": "eval",
+   "js": "(()=>{if(window.__anima)return 'ja';window.__anima=setInterval(()=>{try{document.getAnimations().forEach(x=>{if(x.currentTime!==null&&x.currentTime<0)x.startTime=document.timeline.currentTime})}catch(e){}},60);return 'ok'})()"
+  },
+  {
    "do": "waitFor",
    "idle": true,
    "timeout": 15
@@ -97,6 +101,10 @@
   {
    "do": "eval",
    "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Something went wrong/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);return 1})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__anima)return 'ja';window.__anima=setInterval(()=>{try{document.getAnimations().forEach(x=>{if(x.currentTime!==null&&x.currentTime<0)x.startTime=document.timeline.currentTime})}catch(e){}},60);return 'ok'})()"
   }
  ],
  "steps": [
@@ -110,8 +118,8 @@
    "target": {
     "selector": "main button:has-text('Sucata industrial')"
    },
-   "seconds": 0.9,
-   "at": 2.99,
+   "seconds": 0.44,
+   "at": 1.92,
    "label": "o quadro abre no Sucata industrial",
    "optional": true,
    "timeout": 4
@@ -121,8 +129,8 @@
    "target": {
     "selector": "main section > header:has(h2:text-is('Visita técnica'))"
    },
-   "seconds": 1.4,
-   "at": 5.04,
+   "seconds": 0.78,
+   "at": 3.36,
    "label": "coluna Visita técnica no lugar certo",
    "optional": true,
    "timeout": 4
@@ -130,7 +138,7 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 7.44
+   "at": 5.14
   },
   {
    "do": "click",
@@ -140,7 +148,7 @@
     "exact": true,
     "nth": 0
    },
-   "at": 12.6,
+   "at": 9.94,
    "label": "Nova oportunidade"
   },
   {
@@ -155,7 +163,7 @@
    },
    "text": "Retalho de chapa da Metalúrgica Jequitibá",
    "cps": 40,
-   "at": 14.68,
+   "at": 12.1,
    "label": "Título: Retalho de chapa da Metalúrgica Jequitibá"
   },
   {
@@ -165,7 +173,7 @@
     "hasText": "Novo"
    },
    "seconds": 1.0,
-   "at": 18.75,
+   "at": 15.76,
    "label": "Etapa *: Novo",
    "optional": true,
    "timeout": 4
@@ -173,14 +181,14 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 22.9
+   "at": 19.38
   },
   {
    "do": "click",
    "target": {
     "selector": "#crm-value"
    },
-   "at": 23.15,
+   "at": 19.64,
    "label": "Valor"
   },
   {
@@ -195,14 +203,14 @@
    },
    "text": "8400",
    "cps": 12,
-   "at": 25.22,
+   "at": 21.31,
    "label": "Valor 8400 (zoom)",
    "noClick": true
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 27.73
+   "at": 23.28
   },
   {
    "do": "hover",
@@ -211,7 +219,7 @@
     "hasText": "Rafael Nogueira"
    },
    "seconds": 0.8,
-   "at": 28.18,
+   "at": 23.82,
    "label": "Responsável: Rafael Nogueira (vem preenchido)",
    "optional": true,
    "timeout": 4
@@ -223,13 +231,13 @@
     "hasText": "Rafael Nogueira"
    },
    "option": "Sem responsável",
-   "at": 33.35,
+   "at": 27.52,
    "label": "Responsável: Sem responsável"
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 35.45
+   "at": 29.12
   },
   {
    "do": "click",
@@ -237,7 +245,7 @@
     "selector": "[role=dialog]:has(#crm-title) [role=combobox]",
     "hasText": "Selecionar empresa"
    },
-   "at": 35.77,
+   "at": 29.54,
    "label": "Empresa (abre a busca)"
   },
   {
@@ -247,7 +255,7 @@
    },
    "text": "Metalúrgica Jequitibá",
    "cps": 30,
-   "at": 47.71,
+   "at": 39.22,
    "label": "busca: Metalúrgica Jequitibá",
    "noClick": true
   },
@@ -256,7 +264,7 @@
    "target": {
     "selector": "[role=option]:has-text('como empresa avulsa')"
    },
-   "at": 53.56,
+   "at": 43.88,
    "label": "Usar \"Metalúrgica Jequitibá\" como empresa avulsa",
    "noScroll": true
   },
@@ -267,7 +275,7 @@
    },
    "text": "Paulo Lacerda",
    "cps": 30,
-   "at": 56.65,
+   "at": 46.61,
    "label": "Contato: Paulo Lacerda"
   },
   {
@@ -277,7 +285,7 @@
    },
    "text": "Suprimentos",
    "cps": 30,
-   "at": 58.17,
+   "at": 48.05,
    "label": "Área/Setor: Suprimentos"
   },
   {
@@ -294,7 +302,7 @@
   {
    "do": "eval",
    "js": "(()=>{const e=document.querySelector(\"#crm-phone\");if(!e)return 'SEM ALVO';e.focus();return 'foco ok'})()",
-   "at": 59.91,
+   "at": 49.39,
    "label": "foco no Telefone"
   },
   {
@@ -326,12 +334,12 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 61.3
+   "at": 50.59
   },
   {
    "do": "eval",
    "js": "(async()=>{const d=[...document.querySelectorAll(\"[role=dialog]:has(#crm-title)\")].pop();if(!d)return 'SEM JANELA';const el=[...d.querySelectorAll('label, p, h3, span, button')].filter(e=>e.textContent.trim().startsWith(\"Opera\\u00e7\\u00e3o\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';let c=el.parentElement;while(c&&c!==d.parentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)break;c=c.parentElement;}if(!c||c===d.parentElement)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-150);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 61.83,
+   "at": 51.13,
    "label": "a janela desce até Operação"
   },
   {
@@ -340,7 +348,7 @@
     "selector": "[role=dialog]:has(#crm-title) [role=combobox]",
     "hasText": "Selecionar material"
    },
-   "at": 62.69,
+   "at": 51.73,
    "label": "Tipo de material (abre a busca)"
   },
   {
@@ -358,7 +366,7 @@
    "target": {
     "selector": "[role=option]:has-text('Chaparia')"
    },
-   "at": 63.83,
+   "at": 52.75,
    "label": "Chaparia",
    "noScroll": true
   },
@@ -368,7 +376,7 @@
     "selector": "[role=dialog]:has(#crm-title) button[aria-label='Novo material']"
    },
    "seconds": 1.2,
-   "at": 70.69,
+   "at": 58.23,
    "label": "o mais ao lado do material (cadastrar)",
    "optional": true,
    "timeout": 4
@@ -380,7 +388,7 @@
    },
    "text": "12000",
    "cps": 14,
-   "at": 73.7,
+   "at": 61.41,
    "label": "Quantidade estimada 12000 Kg (zoom)"
   },
   {
@@ -390,13 +398,13 @@
     "hasText": "Não definido"
    },
    "option": "Frota própria",
-   "at": 77.14,
+   "at": 64.01,
    "label": "Meio de transporte: Frota própria"
   },
   {
    "do": "mark",
    "name": "L7",
-   "at": 78.73
+   "at": 65.23
   },
   {
    "do": "hover",
@@ -404,7 +412,7 @@
     "selector": "#crm-start-date"
    },
    "seconds": 0.8,
-   "at": 79.56,
+   "at": 66.09,
    "label": "Data inicial (zoom)",
    "optional": true,
    "timeout": 4
@@ -414,7 +422,7 @@
    "target": {
     "selector": "#crm-date"
    },
-   "at": 84.53,
+   "at": 70.34,
    "label": "Previsão de fechamento"
   },
   {
@@ -432,7 +440,7 @@
    "target": {
     "selector": "#crm-notes"
    },
-   "at": 86.5,
+   "at": 71.86,
    "label": "Observações"
   },
   {
@@ -442,7 +450,7 @@
    },
    "text": "Quer retirada a cada quinze dias, com caçamba.",
    "cps": 40,
-   "at": 89.58,
+   "at": 74.44,
    "label": "Observações: Quer retirada a cada quinze dias, com caçamba.",
    "noClick": true
   },
@@ -459,7 +467,7 @@
   {
    "do": "mark",
    "name": "L8",
-   "at": 92.67
+   "at": 77.12
   },
   {
    "do": "click",
@@ -469,7 +477,7 @@
     "exact": true,
     "within": "[role=dialog]:has(#crm-title)"
    },
-   "at": 92.77,
+   "at": 77.22,
    "label": "Salvar (Nova oportunidade)"
   },
   {
@@ -495,7 +503,7 @@
     "selector": "main section div.rounded-lg:has(> div p:text-is('Retalho de chapa da Metalúrgica Jequitibá'))"
    },
    "seconds": 2.4,
-   "at": 94.03,
+   "at": 78.38,
    "label": "o cartão no Novo: material, valor e previsão",
    "optional": true,
    "timeout": 4
@@ -508,7 +516,7 @@
     "exact": true
    },
    "seconds": 2.2,
-   "at": 99.35,
+   "at": 83.1,
    "label": "o mais da coluna Em contato (cria direto nela)",
    "optional": true,
    "timeout": 4
@@ -516,7 +524,7 @@
   {
    "do": "mark",
    "name": "L9",
-   "at": 104.1
+   "at": 86.8
   },
   {
    "do": "hover",
@@ -524,7 +532,7 @@
     "selector": "main section div.rounded-lg:has(> div p:text-is('Retalho de chapa da Metalúrgica Jequitibá'))"
    },
    "seconds": 5.0,
-   "at": 104.7,
+   "at": 87.4,
    "label": "o cartão (a compra se lança no caixa)",
    "optional": true,
    "timeout": 4
@@ -537,7 +545,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 114.41
+   "at": 94.4
   }
  ]
 }

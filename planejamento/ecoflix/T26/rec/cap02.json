@@ -1,6 +1,6 @@
 {
  "name": "t26-cap02",
- "title": "T26 · Cap. 2 · Funil, Tarefas e os cartões (narração 56,4 s, ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T26 · Cap. 2 · Funil, Tarefas e os cartões (narração 46,6 s, da voz; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "fakeNow": "2026-11-10T08:30:00-03:00",
  "seed": "t26-cap02",
  "pace": 0.5,
@@ -90,6 +90,10 @@
    "timeout": 30
   },
   {
+   "do": "eval",
+   "js": "(()=>{if(window.__anima)return 'ja';window.__anima=setInterval(()=>{try{document.getAnimations().forEach(x=>{if(x.currentTime!==null&&x.currentTime<0)x.startTime=document.timeline.currentTime})}catch(e){}},60);return 'ok'})()"
+  },
+  {
    "do": "waitFor",
    "idle": true,
    "timeout": 15
@@ -97,6 +101,10 @@
   {
    "do": "eval",
    "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Something went wrong/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);return 1})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__anima)return 'ja';window.__anima=setInterval(()=>{try{document.getAnimations().forEach(x=>{if(x.currentTime!==null&&x.currentTime<0)x.startTime=document.timeline.currentTime})}catch(e){}},60);return 'ok'})()"
   }
  ],
  "steps": [
@@ -113,7 +121,7 @@
     "exact": true
    },
    "seconds": 1.0,
-   "at": 2.3,
+   "at": 1.68,
    "label": "aba Funil (zoom nas abas)",
    "optional": true,
    "timeout": 4
@@ -125,8 +133,8 @@
     "name": "Tarefas",
     "exact": true
    },
-   "seconds": 1.6,
-   "at": 4.73,
+   "seconds": 1.5,
+   "at": 3.68,
    "label": "aba Tarefas",
    "optional": true,
    "timeout": 4
@@ -134,7 +142,7 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 8.42
+   "at": 6.18
   },
   {
    "do": "type",
@@ -143,7 +151,7 @@
    },
    "text": "",
    "noClick": true,
-   "at": 9.4,
+   "at": 7.18,
    "label": "os quatro cartões (zoom)",
    "optional": true,
    "timeout": 4
@@ -154,7 +162,7 @@
     "selector": "main div.rounded-lg:has(> div > p:text-is('Total de oportunidades'))"
    },
    "seconds": 0.6,
-   "at": 10.47,
+   "at": 8.0,
    "label": "Total de oportunidades 0",
    "optional": true,
    "timeout": 4
@@ -164,8 +172,8 @@
    "target": {
     "selector": "main div.rounded-lg:has(> div > p:text-is('Valor total'))"
    },
-   "seconds": 0.14,
-   "at": 12.44,
+   "seconds": 0.12,
+   "at": 9.6,
    "label": "Valor total R$ 0,00",
    "optional": true,
    "timeout": 4
@@ -176,7 +184,7 @@
     "selector": "main div.rounded-lg:has(> div > p:text-is('Ganhos'))"
    },
    "seconds": 0.1,
-   "at": 13.58,
+   "at": 10.72,
    "label": "Ganhos R$ 0,00",
    "optional": true,
    "timeout": 4
@@ -187,7 +195,7 @@
     "selector": "main div.rounded-lg:has(> div > p:text-is('Em negociação'))"
    },
    "seconds": 1.6,
-   "at": 14.36,
+   "at": 11.62,
    "label": "Em negociação R$ 0,00",
    "optional": true,
    "timeout": 4
@@ -200,7 +208,7 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 17.65
+   "at": 14.26
   },
   {
    "do": "scroll",
@@ -211,13 +219,13 @@
    "by": 0,
    "duration": 0.2,
    "after": 0,
-   "at": 18.4,
+   "at": 15.02,
    "label": "cursor descansa (ilustração)"
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 29.77
+   "at": 24.42
   },
   {
    "do": "hover",
@@ -225,7 +233,7 @@
     "selector": "main input[placeholder^='Buscar por título']"
    },
    "seconds": 0.1,
-   "at": 31.29,
+   "at": 25.92,
    "label": "busca",
    "optional": true,
    "timeout": 4
@@ -237,7 +245,7 @@
     "name": "Filtros"
    },
    "seconds": 0.2,
-   "at": 32.2,
+   "at": 26.72,
    "label": "Filtros",
    "optional": true,
    "timeout": 4
@@ -251,7 +259,7 @@
     "nth": 0
    },
    "seconds": 0.6,
-   "at": 33.56,
+   "at": 27.92,
    "label": "Nova oportunidade",
    "optional": true,
    "timeout": 4
@@ -262,7 +270,7 @@
     "selector": "main button:has-text('Funil de vendas')"
    },
    "seconds": 0.1,
-   "at": 35.62,
+   "at": 29.76,
    "label": "barra dos funis: Funil de vendas",
    "optional": true,
    "timeout": 4
@@ -275,7 +283,7 @@
     "exact": true
    },
    "seconds": 0.1,
-   "at": 36.52,
+   "at": 30.32,
    "label": "engrenagem Configurar estágios",
    "optional": true,
    "timeout": 4
@@ -288,7 +296,7 @@
     "exact": true
    },
    "seconds": 0.4,
-   "at": 37.21,
+   "at": 31.04,
    "label": "+ Criar funil",
    "optional": true,
    "timeout": 4
@@ -296,7 +304,7 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 43.03
+   "at": 35.86
   },
   {
    "do": "scroll",
@@ -307,7 +315,7 @@
    "by": 0,
    "duration": 0.2,
    "after": 0,
-   "at": 43.63,
+   "at": 36.46,
    "label": "cursor sai (plano geral)"
   },
   {
@@ -318,7 +326,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 56.37
+   "at": 46.64
   }
  ]
 }

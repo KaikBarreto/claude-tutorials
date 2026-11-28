@@ -1,6 +1,6 @@
 {
  "name": "t26-cap04",
- "title": "T26 · Cap. 4 · Nome, cor e orientação (narração 58,3 s, ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T26 · Cap. 4 · Nome, cor e orientação (narração 47,8 s, da voz; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "fakeNow": "2026-11-10T08:30:00-03:00",
  "seed": "t26-cap04",
  "pace": 0.5,
@@ -90,6 +90,10 @@
    "timeout": 30
   },
   {
+   "do": "eval",
+   "js": "(()=>{if(window.__anima)return 'ja';window.__anima=setInterval(()=>{try{document.getAnimations().forEach(x=>{if(x.currentTime!==null&&x.currentTime<0)x.startTime=document.timeline.currentTime})}catch(e){}},60);return 'ok'})()"
+  },
+  {
    "do": "waitFor",
    "idle": true,
    "timeout": 15
@@ -127,6 +131,10 @@
   {
    "do": "eval",
    "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Something went wrong/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);return 1})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__anima)return 'ja';window.__anima=setInterval(()=>{try{document.getAnimations().forEach(x=>{if(x.currentTime!==null&&x.currentTime<0)x.startTime=document.timeline.currentTime})}catch(e){}},60);return 'ok'})()"
   }
  ],
  "steps": [
@@ -142,7 +150,7 @@
     "name": "Editar estágio Visita técnica",
     "exact": true
    },
-   "at": 1.8,
+   "at": 0.84,
    "label": "lápis Editar estágio Visita técnica"
   },
   {
@@ -157,7 +165,7 @@
     "name": "Coluna"
    },
    "seconds": 0.1,
-   "at": 6.93,
+   "at": 5.36,
    "label": "aba Coluna",
    "optional": true,
    "timeout": 4
@@ -169,7 +177,7 @@
     "name": "Regras"
    },
    "seconds": 0.1,
-   "at": 7.69,
+   "at": 6.08,
    "label": "aba Regras",
    "optional": true,
    "timeout": 4
@@ -181,7 +189,7 @@
     "name": "Automações"
    },
    "seconds": 0.1,
-   "at": 8.38,
+   "at": 6.88,
    "label": "aba Automações",
    "optional": true,
    "timeout": 4
@@ -189,15 +197,15 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 9.34
+   "at": 7.78
   },
   {
    "do": "hover",
    "target": {
     "selector": "#crm-stage-name"
    },
-   "seconds": 0.22,
-   "at": 11.0,
+   "seconds": 0.3,
+   "at": 9.36,
    "label": "Nome * Visita técnica",
    "optional": true,
    "timeout": 4
@@ -208,7 +216,7 @@
     "selector": "#crm-stage-color"
    },
    "seconds": 0.9,
-   "at": 12.22,
+   "at": 10.72,
    "label": "Cor * (veio cinza)",
    "optional": true,
    "timeout": 4
@@ -216,20 +224,20 @@
   {
    "do": "eval",
    "js": "(()=>{const i=document.querySelector(\"#crm-stage-color\");if(!i)return 'SEM ALVO';const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;set.call(i,\"#0d9488\");i.dispatchEvent(new Event('input',{bubbles:true}));i.dispatchEvent(new Event('change',{bubbles:true}));return i.value})()",
-   "at": 14.56,
+   "at": 12.84,
    "label": "Cor: verde-azulado #0d9488"
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 19.1
+   "at": 15.7
   },
   {
    "do": "click",
    "target": {
     "selector": "#crm-stage-description"
    },
-   "at": 19.58,
+   "at": 16.28,
    "label": "Orientação para o time"
   },
   {
@@ -239,7 +247,7 @@
    },
    "text": "Visitar a indústria, ver o volume e o tipo de sucata e combinar a retirada.",
    "cps": 40,
-   "at": 23.87,
+   "at": 19.72,
    "label": "Orientação: Visitar a indústria, ver o volume e o tipo de sucata e combinar a retirada.",
    "noClick": true
   },
@@ -251,7 +259,7 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 29.55
+   "at": 24.24
   },
   {
    "do": "click",
@@ -260,7 +268,7 @@
     "name": "Salvar etapa",
     "exact": true
    },
-   "at": 29.65,
+   "at": 24.34,
    "label": "Salvar etapa"
   },
   {
@@ -282,7 +290,7 @@
     "name": "Editar estágio Visita técnica",
     "exact": true
    },
-   "at": 32.61,
+   "at": 27.14,
    "label": "lápis de novo: o texto fica na configuração da etapa"
   },
   {
@@ -295,8 +303,8 @@
    "target": {
     "selector": "#crm-stage-description"
    },
-   "seconds": 0.8,
-   "at": 33.64,
+   "seconds": 0.3,
+   "at": 27.9,
    "label": "Orientação para o time salva (zoom)",
    "optional": true,
    "timeout": 4
@@ -304,12 +312,12 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 35.44
+   "at": 29.2
   },
   {
    "do": "press",
    "key": "Escape",
-   "at": 36.04,
+   "at": 29.8,
    "label": "fecha a configuração (Esc)"
   },
   {
@@ -335,7 +343,7 @@
     "name": "Excluir estágio Visita técnica",
     "exact": true
    },
-   "at": 36.75,
+   "at": 30.5,
    "label": "lixeira Excluir estágio Visita técnica"
   },
   {
@@ -349,7 +357,7 @@
     "selector": "[role=alertdialog]"
    },
    "seconds": 3.0,
-   "at": 40.39,
+   "at": 33.34,
    "label": "confirmação: Excluir este estágio? (zoom)",
    "noScroll": true,
    "optional": true,
@@ -363,7 +371,7 @@
     "exact": true,
     "within": "[role=alertdialog]"
    },
-   "at": 45.13,
+   "at": 37.46,
    "label": "Cancelar (o estágio fica)"
   },
   {
@@ -376,12 +384,12 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 45.43
+   "at": 37.76
   },
   {
    "do": "press",
    "key": "Escape",
-   "at": 46.03,
+   "at": 38.36,
    "label": "fecha as Configurações"
   },
   {
@@ -407,8 +415,8 @@
     "name": "Orientação para o time: etapa Visita técnica",
     "exact": true
    },
-   "seconds": 0.4,
-   "at": 49.37,
+   "seconds": 0.13,
+   "at": 41.02,
    "label": "ícone de informação na coluna Visita técnica (zoom)",
    "optional": true,
    "timeout": 4
@@ -420,7 +428,7 @@
     "name": "Orientação para o time: etapa Visita técnica",
     "exact": true
    },
-   "at": 50.77,
+   "at": 42.15,
    "label": "clica no ícone: a orientação aparece ali mesmo"
   },
   {
@@ -428,8 +436,8 @@
    "target": {
     "selector": "[data-radix-popper-content-wrapper]"
    },
-   "seconds": 1.07,
-   "at": 55.09,
+   "seconds": 0.7,
+   "at": 45.81,
    "label": "orientação da Visita técnica (zoom)",
    "noScroll": true,
    "optional": true,
@@ -438,7 +446,7 @@
   {
    "do": "press",
    "key": "Escape",
-   "at": 57.16,
+   "at": 47.51,
    "label": "fecha a orientação"
   },
   {
@@ -449,7 +457,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 58.31
+   "at": 47.84
   }
  ]
 }

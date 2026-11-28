@@ -1,6 +1,6 @@
 {
  "name": "t26-cap07",
- "title": "T26 · Cap. 7 · Checklists e etiquetas (narração 88,5 s, ESTIMADA; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T26 · Cap. 7 · Checklists e etiquetas (narração 76,7 s, da voz; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "fakeNow": "2026-11-10T08:30:00-03:00",
  "seed": "t26-cap07",
  "pace": 0.5,
@@ -90,6 +90,10 @@
    "timeout": 30
   },
   {
+   "do": "eval",
+   "js": "(()=>{if(window.__anima)return 'ja';window.__anima=setInterval(()=>{try{document.getAnimations().forEach(x=>{if(x.currentTime!==null&&x.currentTime<0)x.startTime=document.timeline.currentTime})}catch(e){}},60);return 'ok'})()"
+  },
+  {
    "do": "waitFor",
    "idle": true,
    "timeout": 15
@@ -110,6 +114,10 @@
   {
    "do": "eval",
    "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Something went wrong/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);return 1})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__anima)return 'ja';window.__anima=setInterval(()=>{try{document.getAnimations().forEach(x=>{if(x.currentTime!==null&&x.currentTime<0)x.startTime=document.timeline.currentTime})}catch(e){}},60);return 'ok'})()"
   }
  ],
  "steps": [
@@ -123,7 +131,7 @@
    "target": {
     "selector": "#tab-btn-checklists"
    },
-   "at": 1.42,
+   "at": 1.4,
    "label": "menu Checklists"
   },
   {
@@ -137,8 +145,8 @@
     "text": "O modelo é só o ponto de partida",
     "within": "[role=dialog]:has(#tab-btn-funis)"
    },
-   "seconds": 1.2,
-   "at": 3.67,
+   "seconds": 1.1,
+   "at": 3.44,
    "label": "aviso: o modelo é só o ponto de partida",
    "optional": true,
    "timeout": 4
@@ -146,7 +154,7 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 6.76
+   "at": 5.54
   },
   {
    "do": "click",
@@ -155,7 +163,7 @@
     "name": "Nova checklist",
     "exact": true
    },
-   "at": 6.76,
+   "at": 5.54,
    "label": "Nova checklist"
   },
   {
@@ -170,7 +178,7 @@
    },
    "text": "Documentos do fornecedor",
    "cps": 40,
-   "at": 8.72,
+   "at": 7.5,
    "label": "Nome: Documentos do fornecedor",
    "noClick": true
   },
@@ -181,7 +189,7 @@
     "name": "Adicionar item",
     "exact": true
    },
-   "at": 10.65,
+   "at": 8.92,
    "label": "Adicionar item (1)"
   },
   {
@@ -203,7 +211,7 @@
     "name": "Adicionar item",
     "exact": true
    },
-   "at": 12.38,
+   "at": 11.18,
    "label": "Adicionar item (2)"
   },
   {
@@ -225,7 +233,7 @@
     "name": "Adicionar item",
     "exact": true
    },
-   "at": 14.66,
+   "at": 13.34,
    "label": "Adicionar item (3)"
   },
   {
@@ -253,7 +261,7 @@
     "exact": true,
     "within": "[role=dialog]:has(#crm-checklist-name)"
    },
-   "at": 17.89,
+   "at": 16.3,
    "label": "Salvar (Nova checklist)"
   },
   {
@@ -264,7 +272,7 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 18.65
+   "at": 17.06
   },
   {
    "do": "hover",
@@ -273,7 +281,7 @@
     "within": "[role=dialog]:has(#tab-btn-funis)"
    },
    "seconds": 2.0,
-   "at": 19.1,
+   "at": 17.6,
    "label": "o modelo Documentos do fornecedor na lista",
    "optional": true,
    "timeout": 4
@@ -281,7 +289,7 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 28.79
+   "at": 25.63
   },
   {
    "do": "click",
@@ -290,7 +298,7 @@
     "name": "Editar checklist Documentos do fornecedor",
     "exact": true
    },
-   "at": 29.12,
+   "at": 25.97,
    "label": "lápis Editar checklist"
   },
   {
@@ -304,8 +312,8 @@
     "selector": "[role=dialog]:has(#crm-checklist-name) button[aria-label='Mover item para baixo']",
     "nth": 0
    },
-   "seconds": 0.37,
-   "at": 32.81,
+   "seconds": 0.1,
+   "at": 28.97,
    "label": "setas: trocar a ordem dos itens",
    "optional": true,
    "timeout": 4
@@ -317,7 +325,7 @@
     "nth": 0
    },
    "seconds": 0.1,
-   "at": 34.18,
+   "at": 30.01,
    "label": "lixeira do item: tirar item",
    "optional": true,
    "timeout": 4
@@ -328,7 +336,7 @@
     "selector": "[role=dialog]:has(#crm-checklist-name) button",
     "hasText": "Cancelar"
    },
-   "at": 34.27,
+   "at": 30.09,
    "label": "Cancelar (o modelo fica como está)"
   },
   {
@@ -345,7 +353,7 @@
     "name": "Excluir checklist Documentos do fornecedor",
     "exact": true
    },
-   "at": 35.37,
+   "at": 31.19,
    "label": "lixeira Excluir checklist"
   },
   {
@@ -359,7 +367,7 @@
     "selector": "[role=alertdialog]"
    },
    "seconds": 3.0,
-   "at": 36.8,
+   "at": 32.51,
    "label": "confirmação: Excluir este modelo de checklist? (zoom)",
    "noScroll": true,
    "optional": true,
@@ -373,7 +381,7 @@
     "exact": true,
     "within": "[role=alertdialog]"
    },
-   "at": 41.75,
+   "at": 36.53,
    "label": "Cancelar (o modelo fica)"
   },
   {
@@ -386,14 +394,14 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 42.05
+   "at": 36.83
   },
   {
    "do": "click",
    "target": {
     "selector": "#tab-btn-etiquetas"
    },
-   "at": 42.37,
+   "at": 37.25,
    "label": "menu Etiquetas"
   },
   {
@@ -408,7 +416,7 @@
     "name": "Nova etiqueta",
     "exact": true
    },
-   "at": 44.93,
+   "at": 39.47,
    "label": "Nova etiqueta"
   },
   {
@@ -423,7 +431,7 @@
    },
    "text": "Indústria",
    "cps": 30,
-   "at": 46.52,
+   "at": 41.05,
    "label": "Nome: Indústria",
    "noClick": true
   },
@@ -433,7 +441,7 @@
     "selector": "#crm-label-color"
    },
    "seconds": 0.1,
-   "at": 47.4,
+   "at": 41.75,
    "label": "Cor (o seletor de cor)",
    "optional": true,
    "timeout": 4
@@ -451,7 +459,7 @@
     "exact": true,
     "within": "[role=dialog]:has(#crm-label-name)"
    },
-   "at": 48.19,
+   "at": 42.59,
    "label": "Salvar (Nova etiqueta)"
   },
   {
@@ -474,7 +482,7 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 49.15
+   "at": 43.47
   },
   {
    "do": "click",
@@ -483,7 +491,7 @@
     "name": "Editar etiqueta Indústria",
     "exact": true
    },
-   "at": 51.75,
+   "at": 45.65,
    "label": "lápis Editar etiqueta"
   },
   {
@@ -507,7 +515,7 @@
     "selector": "[role=dialog]:has(#crm-label-name) button",
     "hasText": "Cancelar"
    },
-   "at": 52.69,
+   "at": 46.72,
    "label": "Cancelar (a etiqueta fica como está)"
   },
   {
@@ -524,7 +532,7 @@
     "name": "Excluir etiqueta Indústria",
     "exact": true
    },
-   "at": 54.03,
+   "at": 47.68,
    "label": "lixeira Excluir etiqueta"
   },
   {
@@ -537,8 +545,8 @@
    "target": {
     "selector": "[role=alertdialog]"
    },
-   "seconds": 2.81,
-   "at": 55.56,
+   "seconds": 1.98,
+   "at": 49.18,
    "label": "confirmação: Excluir esta etiqueta? (zoom)",
    "noScroll": true,
    "optional": true,
@@ -552,7 +560,7 @@
     "exact": true,
     "within": "[role=alertdialog]"
    },
-   "at": 59.37,
+   "at": 52.16,
    "label": "Cancelar (a etiqueta fica)"
   },
   {
@@ -565,7 +573,7 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 59.67
+   "at": 52.46
   },
   {
    "do": "scroll",
@@ -576,13 +584,13 @@
    "by": 0,
    "duration": 0.2,
    "after": 0,
-   "at": 60.37,
+   "at": 53.16,
    "label": "cursor sai (plano geral da janela)"
   },
   {
    "do": "mark",
    "name": "L8",
-   "at": 70.65
+   "at": 61.5
   },
   {
    "do": "eval",
@@ -592,7 +600,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 88.54
+   "at": 76.72
   }
  ]
 }

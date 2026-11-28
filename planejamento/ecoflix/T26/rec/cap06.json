@@ -1,6 +1,6 @@
 {
  "name": "t26-cap06",
- "title": "T26 · Cap. 6 · Automações (narração 107,7 s, ESTIMADA; marcas L1..L11 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T26 · Cap. 6 · Automações (narração 95,9 s, da voz; marcas L1..L11 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "fakeNow": "2026-11-10T08:30:00-03:00",
  "seed": "t26-cap06",
  "pace": 0.5,
@@ -90,6 +90,10 @@
    "timeout": 30
   },
   {
+   "do": "eval",
+   "js": "(()=>{if(window.__anima)return 'ja';window.__anima=setInterval(()=>{try{document.getAnimations().forEach(x=>{if(x.currentTime!==null&&x.currentTime<0)x.startTime=document.timeline.currentTime})}catch(e){}},60);return 'ok'})()"
+  },
+  {
    "do": "waitFor",
    "idle": true,
    "timeout": 15
@@ -144,6 +148,10 @@
   {
    "do": "eval",
    "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Something went wrong/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);return 1})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__anima)return 'ja';window.__anima=setInterval(()=>{try{document.getAnimations().forEach(x=>{if(x.currentTime!==null&&x.currentTime<0)x.startTime=document.timeline.currentTime})}catch(e){}},60);return 'ok'})()"
   }
  ],
  "steps": [
@@ -173,7 +181,7 @@
     "exact": true
    },
    "seconds": 0.6,
-   "at": 1.47,
+   "at": 1.2,
    "label": "Novas automações nascem pausadas para revisão.",
    "optional": true,
    "timeout": 4
@@ -185,7 +193,7 @@
     "exact": true
    },
    "seconds": 1.0,
-   "at": 4.36,
+   "at": 3.6,
    "label": "Nenhuma automação nesta etapa",
    "optional": true,
    "timeout": 4
@@ -193,7 +201,7 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 7.44
+   "at": 5.62
   },
   {
    "do": "scroll",
@@ -204,13 +212,13 @@
    "by": 0,
    "duration": 0.2,
    "after": 0,
-   "at": 8.29,
+   "at": 6.56,
    "label": "cursor descansa (ilustração)"
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 15.84
+   "at": 13.46
   },
   {
    "do": "click",
@@ -219,7 +227,7 @@
     "name": "Nova automação",
     "exact": true
    },
-   "at": 15.84,
+   "at": 13.46,
    "label": "Nova automação"
   },
   {
@@ -234,7 +242,7 @@
    },
    "text": "Agendar a visita",
    "cps": 30,
-   "at": 17.74,
+   "at": 15.7,
    "label": "Nome: Agendar a visita"
   },
   {
@@ -243,7 +251,7 @@
     "selector": "[role=dialog]:has([role=tab][id$='-trigger-rules']) button[role=combobox]",
     "hasText": "Ao entrar nesta etapa"
    },
-   "at": 19.73,
+   "at": 17.94,
    "label": "Gatilho (abre a lista)"
   },
   {
@@ -252,7 +260,7 @@
     "selector": "[role=option]:has-text('Ao entrar nesta etapa')"
    },
    "seconds": 0.3,
-   "at": 22.9,
+   "at": 20.16,
    "label": "Ao entrar nesta etapa",
    "noScroll": true,
    "optional": true,
@@ -264,7 +272,7 @@
     "selector": "[role=option]:has-text('Ao concluir uma tarefa')"
    },
    "seconds": 0.1,
-   "at": 25.1,
+   "at": 21.8,
    "label": "Ao concluir uma tarefa",
    "noScroll": true,
    "optional": true,
@@ -276,7 +284,7 @@
     "selector": "[role=option]:has-text('Ao concluir um checklist')"
    },
    "seconds": 0.3,
-   "at": 26.08,
+   "at": 22.6,
    "label": "Ao concluir um checklist",
    "noScroll": true,
    "optional": true,
@@ -288,7 +296,7 @@
     "selector": "[role=option]:has-text('Quando tudo estiver concluído')"
    },
    "seconds": 0.6,
-   "at": 28.74,
+   "at": 24.52,
    "label": "Quando tudo estiver concluído",
    "noScroll": true,
    "optional": true,
@@ -299,14 +307,14 @@
    "target": {
     "selector": "[role=option]:has-text('Ao entrar nesta etapa')"
    },
-   "at": 30.56,
+   "at": 26.12,
    "label": "fica em Ao entrar nesta etapa",
    "noScroll": true
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 33.04
+   "at": 28.46
   },
   {
    "do": "click",
@@ -314,7 +322,7 @@
     "selector": "[role=dialog]:has([role=tab][id$='-trigger-rules']) button[role=combobox]",
     "hasText": "Criar tarefa"
    },
-   "at": 33.37,
+   "at": 28.72,
    "label": "ação 1 (abre a lista das ações)"
   },
   {
@@ -323,7 +331,7 @@
     "selector": "[role=option]:has-text('Criar tarefa')"
    },
    "seconds": 0.1,
-   "at": 35.01,
+   "at": 30.36,
    "label": "Criar tarefa",
    "noScroll": true,
    "optional": true,
@@ -335,7 +343,7 @@
     "selector": "[role=option]:has-text('Aplicar checklist')"
    },
    "seconds": 0.3,
-   "at": 36.23,
+   "at": 31.64,
    "label": "Aplicar checklist",
    "noScroll": true,
    "optional": true,
@@ -347,7 +355,7 @@
     "selector": "[role=option]:has-text('Definir prazo do cartão')"
    },
    "seconds": 0.5,
-   "at": 37.82,
+   "at": 33.08,
    "label": "Definir prazo do cartão",
    "noScroll": true,
    "optional": true,
@@ -359,7 +367,7 @@
     "selector": "[role=option]:has-text('Atribuir responsável')"
    },
    "seconds": 0.5,
-   "at": 39.87,
+   "at": 34.92,
    "label": "Atribuir responsável",
    "noScroll": true,
    "optional": true,
@@ -371,7 +379,7 @@
     "selector": "[role=option]:has-text('Adicionar etiqueta')"
    },
    "seconds": 0.4,
-   "at": 41.69,
+   "at": 36.6,
    "label": "Adicionar etiqueta",
    "noScroll": true,
    "optional": true,
@@ -382,8 +390,8 @@
    "target": {
     "selector": "[role=option]:has-text('Mover cartão')"
    },
-   "seconds": 0.14,
-   "at": 43.36,
+   "seconds": 0.2,
+   "at": 38.12,
    "label": "Mover cartão",
    "noScroll": true,
    "optional": true,
@@ -395,7 +403,7 @@
     "selector": "[role=option]:has-text('Copiar cartão')"
    },
    "seconds": 0.4,
-   "at": 44.5,
+   "at": 39.48,
    "label": "Copiar cartão",
    "noScroll": true,
    "optional": true,
@@ -406,21 +414,21 @@
    "target": {
     "selector": "[role=option]:has-text('Criar tarefa')"
    },
-   "at": 47.08,
+   "at": 42.36,
    "label": "fica em Criar tarefa",
    "noScroll": true
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 48.19
+   "at": 43.25
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog]:has([role=tab][id$='-trigger-rules']) input[placeholder='Ex.: Ligar para {NOME}']"
    },
-   "at": 48.52,
+   "at": 43.59,
    "label": "Título da tarefa *"
   },
   {
@@ -430,7 +438,7 @@
    },
    "text": "Agendar visita na ",
    "cps": 30,
-   "at": 51.37,
+   "at": 46.09,
    "label": "título: Agendar visita na",
    "noClick": true,
    "clear": true
@@ -442,7 +450,7 @@
    },
    "text": "{CLIENTE}",
    "cps": 22,
-   "at": 53.47,
+   "at": 48.45,
    "label": "título: {CLIENTE}",
    "noClick": true
   },
@@ -457,8 +465,8 @@
     "text": "Use {NOME} e {CLIENTE} nos textos dinâmicos.",
     "exact": true
    },
-   "seconds": 1.6,
-   "at": 55.85,
+   "seconds": 0.86,
+   "at": 50.59,
    "label": "Use {NOME} e {CLIENTE} nos textos dinâmicos. (zoom)",
    "optional": true,
    "timeout": 4
@@ -466,7 +474,7 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 58.48
+   "at": 52.45
   },
   {
    "do": "hover",
@@ -474,7 +482,7 @@
     "selector": "[role=dialog]:has([role=tab][id$='-trigger-rules']) input[type=number]"
    },
    "seconds": 0.1,
-   "at": 58.53,
+   "at": 52.51,
    "label": "Prazo em dias: 1",
    "optional": true,
    "timeout": 4
@@ -486,13 +494,13 @@
     "hasText": "Dias corridos"
    },
    "option": "Dias úteis",
-   "at": 60.4,
+   "at": 54.37,
    "label": "Contagem: Dias úteis"
   },
   {
    "do": "mark",
    "name": "L7",
-   "at": 60.81
+   "at": 54.69
   },
   {
    "do": "hover",
@@ -500,7 +508,7 @@
     "selector": "[role=dialog]:has([role=tab][id$='-trigger-rules']) div.rounded-xl.shadow-sm:has(input[type=number])"
    },
    "seconds": 3.0,
-   "at": 61.26,
+   "at": 55.15,
    "label": "a ação inteira (título, prazo e contagem)",
    "optional": true,
    "timeout": 4
@@ -508,7 +516,7 @@
   {
    "do": "mark",
    "name": "L8",
-   "at": 69.89
+   "at": 62.05
   },
   {
    "do": "hover",
@@ -516,7 +524,7 @@
     "selector": "[role=dialog]:has([role=tab][id$='-trigger-rules']) label[for=automation-enabled]"
    },
    "seconds": 1.6,
-   "at": 73.08,
+   "at": 65.15,
    "label": "chave em Pausada (zoom)",
    "optional": true,
    "timeout": 4
@@ -526,7 +534,7 @@
    "target": {
     "selector": "#automation-enabled"
    },
-   "at": 76.67,
+   "at": 68.37,
    "label": "liga a chave (Ativa)"
   },
   {
@@ -541,7 +549,7 @@
   {
    "do": "mark",
    "name": "L9",
-   "at": 78.13
+   "at": 69.87
   },
   {
    "do": "click",
@@ -550,7 +558,7 @@
     "name": "Salvar automação",
     "exact": true
    },
-   "at": 78.23,
+   "at": 69.97,
    "label": "Salvar automação"
   },
   {
@@ -568,8 +576,8 @@
    "target": {
     "selector": "[role=dialog]:has([role=tab][id$='-trigger-rules']) div.rounded-xl:has(p:text-is('Agendar a visita'))"
    },
-   "seconds": 0.26,
-   "at": 81.02,
+   "seconds": 0.1,
+   "at": 72.33,
    "label": "Agendar a visita, Ativa (zoom)",
    "optional": true,
    "timeout": 4
@@ -577,7 +585,7 @@
   {
    "do": "mark",
    "name": "L10",
-   "at": 82.28
+   "at": 73.23
   },
   {
    "do": "hover",
@@ -586,8 +594,8 @@
     "name": "Salvar etapa",
     "exact": true
    },
-   "seconds": 0.97,
-   "at": 88.96,
+   "seconds": 0.92,
+   "at": 79.85,
    "label": "Salvar etapa (zoom)",
    "optional": true,
    "timeout": 4
@@ -598,8 +606,8 @@
     "selector": "[role=dialog]:has([role=tab][id$='-trigger-rules']) button",
     "hasText": "Fechar"
    },
-   "seconds": 2.0,
-   "at": 90.93,
+   "seconds": 1.66,
+   "at": 81.77,
    "label": "Fechar (zoom, sem clicar)",
    "optional": true,
    "timeout": 4
@@ -607,7 +615,7 @@
   {
    "do": "mark",
    "name": "L11",
-   "at": 94.02
+   "at": 84.43
   },
   {
    "do": "hover",
@@ -615,7 +623,7 @@
     "selector": "[role=dialog]:has([role=tab][id$='-trigger-rules']) div.rounded-xl:has(p:text-is('Agendar a visita'))"
    },
    "seconds": 4.0,
-   "at": 95.43,
+   "at": 85.97,
    "label": "Ao entrar nesta etapa · 1 ação (zoom)",
    "optional": true,
    "timeout": 4
@@ -628,7 +636,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 107.66
+   "at": 95.92
   }
  ]
 }

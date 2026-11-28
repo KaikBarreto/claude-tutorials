@@ -24,3 +24,10 @@ Nada de PDF na fala (o menu Exportar Relatório só abre).
 
 ## 21/11 15:50 · reensaio da coordenação
 - Completos com voz estimada: cap04 0 falho, maxLate 0,27; cap07 0 falho, 3,03; cap10 0 falho, 2,21 (atrasos ficam para as âncoras da voz real). Instância 54325 derrubada. **T25 pronta para a voz.**
+
+## 27/11 · fechamento
+- Aula final 12:42,6 (762,6 s), 1080p, -16,4 LUFS, pico -3,8 dBTP; legendas 255. Prévia 720p 25,7 MiB em `entrega_previa/`. Gravação final: 14 caps, 0 falho, maxLate <= 0,75 (cap03 0,75; cap12 0,56).
+- Regravados: 00 (hover do menu Dashboard rolava ~7 s: o centro do link cai acima de y=96; `noScroll` no `gerar.py`), 03/04/05/06/07/09/10/12 (respiros e âncoras), 01/08/11 (eval de animações após navegar).
+- Respiros (`t25_respiros.py`): cap01 1,27 s; 03 2,12; 04 6,31; 06 6,62; 07 10,44 (4 seguidos em "dez e meia"; acelerado 2x); 09 4,77; 10 11,19; 12 4,98. Âncoras trocadas no gerar.py (cap03 L6/L7, 05 arrasto, 06/07/12 Concluir o horário, 10 Enter e cps).
+- Ilustrações: 4 cenas v3 (caps 01, 02, 12, 13), 0 piscadas; as 4 tiradas seguem tiradas. Sem PDF na fala.
+- Conferência: folha de 3 s inteira olhada; varredura a 1 q/s: só telas de "Carregando" de até ~1 s (9:12, 9:25, 11:00), nenhuma >= 3 s. Câmera: 5 instantes com alvo na borda (84 a 100% visível), nenhum fora. `lacunas`: cap09 36 s e cap13 22 s sem zoom (fala sobre atalhos/recap).

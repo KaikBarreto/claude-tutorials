@@ -110,7 +110,7 @@ class Cap:
         s.steps = []
         s.pace, s.cps, s.start = pace, cps, start
         s.prewarm = prewarm or ['/login']
-        s.setup = LOGIN + ([RECOLHE, {'do': 'wait', 'seconds': 0.7}] if recolhe else []) + list(setup or []) + [{'do': 'eval', 'js': OBS}]
+        s.setup = LOGIN + ([RECOLHE, {'do': 'wait', 'seconds': 0.7}] if recolhe else []) + list(setup or []) + [{'do': 'eval', 'js': OBS}, {'do': 'eval', 'js': ANIMA_SEMPRE}]
         s.anchors = []
         s.ambiguas = []
         s.pending = []
@@ -341,10 +341,14 @@ LOGIN = [
 RECOLHE = {'do': 'eval', 'js': ("(()=>{const sb=document.querySelector('[data-state][data-collapsible]');if(sb&&sb.getAttribute('data-state')==='collapsed')"
                                 "return 'ja recolhido';const b=document.querySelector('header button.h-8.w-8');if(!b)return 'SEM ALVO';b.click();return 'recolhido'})()")}
 AGUARDA = {'do': 'waitFor', 'idle': True, 'timeout': 15}
+# 28/11 (molde da T20/T22): documento novo (goto) perde o conserto da animação; sem ele a página pode ficar em branco na gravação
+# (o relógio falso deixa animação framer-motion/WAAPI parada antes do início). Entra no fim do `setup` e depois de todo `goto` de `vai()`.
+ANIMA_SEMPRE = ("(()=>{if(window.__anima)return 'ja';window.__anima=setInterval(()=>{try{document.getAnimations().forEach(x=>{"
+                "if(x.currentTime!==null&&x.currentTime<0)x.startTime=document.timeline.currentTime})}catch(e){}},60);return 'ok'})()")
 
 
 def vai(url, espera):
-    return [{'do': 'goto', 'url': url}, {'do': 'waitFor', 'text': espera, 'timeout': 30}, AGUARDA]
+    return [{'do': 'goto', 'url': url}, {'do': 'waitFor', 'text': espera, 'timeout': 30}, {'do': 'eval', 'js': ANIMA_SEMPRE}, AGUARDA]
 
 
 CRM = vai('/crm', 'Gerencie oportunidades e acompanhe seu processo comercial.')

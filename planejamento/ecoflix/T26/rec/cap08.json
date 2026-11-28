@@ -1,6 +1,6 @@
 {
  "name": "t26-cap08",
- "title": "T26 · Cap. 8 · Automação com várias ações (narração 127,1 s, ESTIMADA; marcas L1..L11 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T26 · Cap. 8 · Automação com várias ações (narração 105,2 s, da voz; marcas L1..L11 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "fakeNow": "2026-11-10T08:30:00-03:00",
  "seed": "t26-cap08",
  "pace": 0.5,
@@ -90,6 +90,10 @@
    "timeout": 30
   },
   {
+   "do": "eval",
+   "js": "(()=>{if(window.__anima)return 'ja';window.__anima=setInterval(()=>{try{document.getAnimations().forEach(x=>{if(x.currentTime!==null&&x.currentTime<0)x.startTime=document.timeline.currentTime})}catch(e){}},60);return 'ok'})()"
+  },
+  {
    "do": "waitFor",
    "idle": true,
    "timeout": 15
@@ -144,6 +148,10 @@
   {
    "do": "eval",
    "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Something went wrong/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);return 1})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__anima)return 'ja';window.__anima=setInterval(()=>{try{document.getAnimations().forEach(x=>{if(x.currentTime!==null&&x.currentTime<0)x.startTime=document.timeline.currentTime})}catch(e){}},60);return 'ok'})()"
   }
  ],
  "steps": [
@@ -158,7 +166,7 @@
     "role": "tab",
     "name": "Automações"
    },
-   "at": 5.14,
+   "at": 3.32,
    "label": "aba Automações da Visita técnica"
   },
   {
@@ -169,7 +177,7 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 7.59
+   "at": 5.22
   },
   {
    "do": "click",
@@ -178,7 +186,7 @@
     "name": "Nova automação",
     "exact": true
    },
-   "at": 7.65,
+   "at": 5.28,
    "label": "Nova automação"
   },
   {
@@ -193,7 +201,7 @@
    },
    "text": "Preparar a proposta",
    "cps": 30,
-   "at": 8.48,
+   "at": 6.22,
    "label": "Nome: Preparar a proposta"
   },
   {
@@ -203,7 +211,7 @@
     "hasText": "Ao entrar nesta etapa"
    },
    "seconds": 0.8,
-   "at": 10.63,
+   "at": 7.92,
    "label": "Gatilho: Ao entrar nesta etapa",
    "optional": true,
    "timeout": 4
@@ -214,7 +222,7 @@
     "selector": "[role=dialog]:has([role=tab][id$='-trigger-rules']) button[role=combobox]",
     "hasText": "Criar tarefa"
    },
-   "at": 14.63,
+   "at": 11.6,
    "label": "ação 1 (abre a lista das ações)"
   },
   {
@@ -222,14 +230,14 @@
    "target": {
     "selector": "[role=option]:has-text('Aplicar checklist')"
    },
-   "at": 15.74,
+   "at": 12.66,
    "label": "Aplicar checklist",
    "noScroll": true
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 16.52
+   "at": 13.3
   },
   {
    "do": "click",
@@ -237,7 +245,7 @@
     "selector": "[role=dialog]:has([role=tab][id$='-trigger-rules']) button[role=combobox]",
     "hasText": "Selecione um modelo"
    },
-   "at": 16.85,
+   "at": 13.56,
    "label": "Modelo de checklist (abre a lista)"
   },
   {
@@ -245,7 +253,7 @@
    "target": {
     "selector": "[role=option]:has-text('Documentos do fornecedor')"
    },
-   "at": 18.44,
+   "at": 14.82,
    "label": "Documentos do fornecedor",
    "noScroll": true
   },
@@ -254,7 +262,7 @@
    "target": {
     "selector": "[role=dialog]:has([role=tab][id$='-trigger-rules']) input[placeholder='Ex.: Documentos de {NOME}']"
    },
-   "at": 20.5,
+   "at": 16.6,
    "label": "Nome no cartão"
   },
   {
@@ -264,7 +272,7 @@
    },
    "text": "Documentos da ",
    "cps": 30,
-   "at": 22.95,
+   "at": 18.44,
    "label": "Nome no cartão: Documentos da",
    "noClick": true,
    "clear": true
@@ -276,7 +284,7 @@
    },
    "text": "{CLIENTE}",
    "cps": 22,
-   "at": 24.31,
+   "at": 19.62,
    "label": "Nome no cartão: {CLIENTE}",
    "noClick": true
   },
@@ -288,14 +296,14 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 25.23
+   "at": 20.0
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog]:has([role=tab][id$='-trigger-rules']) div.rounded-lg:has(> div > label:text-is('Criar tarefa vinculada')) button[role=switch]"
    },
-   "at": 25.93,
+   "at": 20.9,
    "label": "liga Criar tarefa vinculada"
   },
   {
@@ -304,7 +312,7 @@
     "selector": "[role=dialog]:has([role=tab][id$='-trigger-rules']) div.rounded-lg:has(> div > label:text-is('Criar tarefa vinculada'))"
    },
    "seconds": 3.0,
-   "at": 31.68,
+   "at": 25.5,
    "label": "Concluir a tarefa marca o checklist e vice-versa (zoom)",
    "optional": true,
    "timeout": 4
@@ -312,7 +320,7 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 39.47
+   "at": 31.84
   },
   {
    "do": "click",
@@ -321,7 +329,7 @@
     "name": "Adicionar ação",
     "exact": true
    },
-   "at": 39.57,
+   "at": 31.94,
    "label": "Adicionar ação"
   },
   {
@@ -330,7 +338,7 @@
     "selector": "[role=dialog]:has([role=tab][id$='-trigger-rules']) button[role=combobox]",
     "hasText": "Criar tarefa"
    },
-   "at": 41.2,
+   "at": 33.84,
    "label": "ação 2 (abre a lista das ações)"
   },
   {
@@ -338,7 +346,7 @@
    "target": {
     "selector": "[role=option]:has-text('Definir prazo do cartão')"
    },
-   "at": 42.2,
+   "at": 34.84,
    "label": "Definir prazo do cartão",
    "noScroll": true
   },
@@ -347,7 +355,7 @@
    "target": {
     "selector": "[role=dialog]:has([role=tab][id$='-trigger-rules']) input[type=number]"
    },
-   "at": 43.69,
+   "at": 36.16,
    "label": "Prazo em dias"
   },
   {
@@ -357,7 +365,7 @@
    },
    "text": "15",
    "cps": 10,
-   "at": 44.44,
+   "at": 36.68,
    "label": "Prazo: 15",
    "noClick": true,
    "clear": true
@@ -369,7 +377,7 @@
     "hasText": "Dias corridos"
    },
    "seconds": 1.0,
-   "at": 44.86,
+   "at": 37.02,
    "label": "Contagem: Dias corridos",
    "optional": true,
    "timeout": 4
@@ -377,7 +385,7 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 51.89
+   "at": 42.26
   },
   {
    "do": "click",
@@ -386,7 +394,7 @@
     "name": "Adicionar ação",
     "exact": true
    },
-   "at": 52.48,
+   "at": 43.12,
    "label": "Adicionar ação (3)"
   },
   {
@@ -402,7 +410,7 @@
    "target": {
     "selector": "[role=option]:has-text('Mover cartão')"
    },
-   "at": 53.38,
+   "at": 44.02,
    "label": "Mover cartão",
    "noScroll": true
   },
@@ -412,7 +420,7 @@
     "selector": "[role=dialog]:has([role=tab][id$='-trigger-rules']) button[role=combobox]",
     "hasText": "Mover cartão"
    },
-   "at": 53.61,
+   "at": 44.32,
    "label": "ação 3 (abre a lista)"
   },
   {
@@ -420,7 +428,7 @@
    "target": {
     "selector": "[role=option]:has-text('Copiar cartão')"
    },
-   "at": 54.41,
+   "at": 45.12,
    "label": "Copiar cartão",
    "noScroll": true
   },
@@ -431,7 +439,7 @@
     "nth": 2
    },
    "seconds": 3.0,
-   "at": 57.23,
+   "at": 47.86,
    "label": "Copiar cartão: funil e etapa de destino (zoom)",
    "optional": true,
    "timeout": 4
@@ -439,7 +447,7 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 65.6
+   "at": 54.82
   },
   {
    "do": "click",
@@ -447,7 +455,7 @@
     "selector": "[role=dialog]:has([role=tab][id$='-trigger-rules']) button[aria-label='Remover ação']",
     "nth": 2
    },
-   "at": 68.44,
+   "at": 56.92,
    "label": "Remover ação (a terceira)"
   },
   {
@@ -456,7 +464,7 @@
     "selector": "[role=dialog]:has([role=tab][id$='-trigger-rules']) button[aria-label='Mover ação para baixo']",
     "nth": 0
    },
-   "at": 70.49,
+   "at": 58.68,
    "label": "seta para baixo: troca a ordem das ações"
   },
   {
@@ -465,20 +473,20 @@
     "selector": "[role=dialog]:has([role=tab][id$='-trigger-rules']) button[aria-label='Mover ação para cima']",
     "nth": 1
    },
-   "at": 72.6,
+   "at": 60.56,
    "label": "seta para cima: volta a ordem"
   },
   {
    "do": "mark",
    "name": "L8",
-   "at": 73.55
+   "at": 61.06
   },
   {
    "do": "click",
    "target": {
     "selector": "#automation-enabled"
    },
-   "at": 73.65,
+   "at": 61.16,
    "label": "liga a chave (Ativa)"
   },
   {
@@ -496,7 +504,7 @@
     "selector": "[role=dialog]:has([role=tab][id$='-trigger-rules']) input[placeholder='Ex.: Preparar contato comercial']"
    },
    "text": "",
-   "at": 75.09,
+   "at": 62.76,
    "label": "apaga o nome (para mostrar o aviso)",
    "clear": true
   },
@@ -507,7 +515,7 @@
     "name": "Salvar automação",
     "exact": true
    },
-   "at": 77.79,
+   "at": 64.72,
    "label": "Salvar automação sem nome"
   },
   {
@@ -528,7 +536,7 @@
    },
    "text": "Preparar a proposta",
    "cps": 30,
-   "at": 80.1,
+   "at": 66.45,
    "label": "Nome: Preparar a proposta",
    "clear": true
   },
@@ -539,7 +547,7 @@
     "name": "Salvar automação",
     "exact": true
    },
-   "at": 81.26,
+   "at": 67.67,
    "label": "Salvar automação"
   },
   {
@@ -550,15 +558,15 @@
   {
    "do": "mark",
    "name": "L9",
-   "at": 82.78
+   "at": 68.83
   },
   {
    "do": "hover",
    "target": {
     "selector": "[role=dialog]:has([role=tab][id$='-trigger-rules']) div.rounded-xl:has(p:text-is('Preparar a proposta'))"
    },
-   "seconds": 1.0,
-   "at": 83.3,
+   "seconds": 0.92,
+   "at": 69.37,
    "label": "Preparar a proposta na lista",
    "optional": true,
    "timeout": 4
@@ -571,8 +579,8 @@
     "exact": true,
     "within": "[role=dialog]:has([role=tab][id$='-trigger-rules'])"
    },
-   "seconds": 0.5,
-   "at": 85.58,
+   "seconds": 0.36,
+   "at": 71.29,
    "label": "Editar",
    "optional": true,
    "timeout": 4
@@ -584,7 +592,7 @@
     "nth": 0
    },
    "seconds": 0.9,
-   "at": 87.17,
+   "at": 72.65,
    "label": "botão de pausar",
    "optional": true,
    "timeout": 4
@@ -596,7 +604,7 @@
     "nth": 0
    },
    "seconds": 3.0,
-   "at": 90.21,
+   "at": 75.13,
    "label": "lixeira Excluir automação (sem clicar)",
    "optional": true,
    "timeout": 4
@@ -604,7 +612,7 @@
   {
    "do": "mark",
    "name": "L10",
-   "at": 95.04
+   "at": 79.14
   },
   {
    "do": "click",
@@ -613,7 +621,7 @@
     "name": "Nova automação",
     "exact": true
    },
-   "at": 95.95,
+   "at": 79.86,
    "label": "Nova automação (só para mostrar os gatilhos)"
   },
   {
@@ -634,7 +642,7 @@
    "target": {
     "selector": "[role=option]:has-text('Ao concluir uma tarefa')"
    },
-   "at": 97.51,
+   "at": 81.62,
    "label": "Ao concluir uma tarefa",
    "noScroll": true
   },
@@ -645,7 +653,7 @@
     "within": "[role=dialog]:has([role=tab][id$='-trigger-rules'])"
    },
    "seconds": 0.1,
-   "at": 98.53,
+   "at": 82.38,
    "label": "Nome exato da tarefa * (zoom)",
    "optional": true,
    "timeout": 4
@@ -656,7 +664,7 @@
     "selector": "[role=dialog]:has([role=tab][id$='-trigger-rules']) button[role=combobox]",
     "hasText": "Ao concluir uma tarefa"
    },
-   "at": 99.35,
+   "at": 82.82,
    "label": "Gatilho (abre a lista)"
   },
   {
@@ -664,7 +672,7 @@
    "target": {
     "selector": "[role=option]:has-text('Ao concluir um checklist')"
    },
-   "at": 100.35,
+   "at": 83.82,
    "label": "Ao concluir um checklist",
    "noScroll": true
   },
@@ -674,8 +682,8 @@
     "text": "Nome exato do checklist",
     "within": "[role=dialog]:has([role=tab][id$='-trigger-rules'])"
    },
-   "seconds": 0.93,
-   "at": 101.79,
+   "seconds": 0.88,
+   "at": 85.04,
    "label": "Nome exato do checklist * (zoom)",
    "optional": true,
    "timeout": 4
@@ -686,7 +694,7 @@
     "selector": "[role=dialog]:has([role=tab][id$='-trigger-rules']) button[role=combobox]",
     "hasText": "Ao concluir um checklist"
    },
-   "at": 103.72,
+   "at": 86.92,
    "label": "Gatilho (abre a lista)"
   },
   {
@@ -694,7 +702,7 @@
    "target": {
     "selector": "[role=option]:has-text('Quando tudo estiver concluído')"
    },
-   "at": 104.42,
+   "at": 87.62,
    "label": "Quando tudo estiver concluído",
    "noScroll": true
   },
@@ -721,7 +729,7 @@
   {
    "do": "mark",
    "name": "L11",
-   "at": 113.77
+   "at": 94.9
   },
   {
    "do": "hover",
@@ -729,7 +737,7 @@
     "selector": "[role=dialog]:has([role=tab][id$='-trigger-rules']) div.rounded-xl:has(p:text-is('Preparar a proposta'))"
    },
    "seconds": 4.0,
-   "at": 114.17,
+   "at": 95.3,
    "label": "Preparar a proposta, Ativa (zoom)",
    "optional": true,
    "timeout": 4
@@ -742,7 +750,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 127.11
+   "at": 105.2
   }
  ]
 }

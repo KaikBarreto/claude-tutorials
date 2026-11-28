@@ -1,6 +1,6 @@
 {
  "name": "t26-cap13",
- "title": "T26 · Cap. 13 · Probabilidade, origem e tarefas (narração 124,7 s, ESTIMADA; marcas L1..L11 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T26 · Cap. 13 · Probabilidade, origem e tarefas (narração 99,8 s, da voz; marcas L1..L11 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "fakeNow": "2026-11-10T08:30:00-03:00",
  "seed": "t26-cap13",
  "pace": 0.5,
@@ -90,6 +90,10 @@
    "timeout": 30
   },
   {
+   "do": "eval",
+   "js": "(()=>{if(window.__anima)return 'ja';window.__anima=setInterval(()=>{try{document.getAnimations().forEach(x=>{if(x.currentTime!==null&&x.currentTime<0)x.startTime=document.timeline.currentTime})}catch(e){}},60);return 'ok'})()"
+  },
+  {
    "do": "waitFor",
    "idle": true,
    "timeout": 15
@@ -97,6 +101,10 @@
   {
    "do": "eval",
    "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Something went wrong/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);return 1})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__anima)return 'ja';window.__anima=setInterval(()=>{try{document.getAnimations().forEach(x=>{if(x.currentTime!==null&&x.currentTime<0)x.startTime=document.timeline.currentTime})}catch(e){}},60);return 'ok'})()"
   }
  ],
  "steps": [
@@ -121,7 +129,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const d=[...document.querySelectorAll(\"[role=dialog]:has(textarea[placeholder^=\\\"Escreva um coment\\\"])\")].pop();if(!d)return 'SEM JANELA';const el=[...d.querySelectorAll('label, p, h3, span, button')].filter(e=>e.textContent.trim().startsWith(\"Probabilidade\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';let c=el.parentElement;while(c&&c!==d.parentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)break;c=c.parentElement;}if(!c||c===d.parentElement)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-200);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 1.54,
+   "at": 0.88,
    "label": "a ficha desce até Probabilidade e Origem"
   },
   {
@@ -132,7 +140,7 @@
     "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
    },
    "seconds": 1.6,
-   "at": 3.44,
+   "at": 2.72,
    "label": "Probabilidade 50% (zoom)",
    "optional": true,
    "timeout": 4
@@ -140,14 +148,14 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 9.49
+   "at": 7.54
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"]) input[type=number]"
    },
-   "at": 11.69,
+   "at": 9.22,
    "label": "Probabilidade"
   },
   {
@@ -157,7 +165,7 @@
    },
    "text": "80",
    "cps": 8,
-   "at": 12.88,
+   "at": 10.52,
    "label": "Probabilidade: 80",
    "noClick": true,
    "clear": true
@@ -170,7 +178,7 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 13.41
+   "at": 10.58
   },
   {
    "do": "hover",
@@ -178,7 +186,7 @@
     "selector": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"]) input[placeholder='Ex.: WhatsApp']"
    },
    "seconds": 1.2,
-   "at": 14.02,
+   "at": 11.28,
    "label": "Origem: texto livre, exemplo WhatsApp (zoom)",
    "optional": true,
    "timeout": 4
@@ -188,7 +196,7 @@
    "target": {
     "selector": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"]) input[placeholder='Ex.: WhatsApp']"
    },
-   "at": 19.51,
+   "at": 15.9,
    "label": "Origem"
   },
   {
@@ -198,7 +206,7 @@
    },
    "text": "Telefone",
    "cps": 10,
-   "at": 20.31,
+   "at": 16.7,
    "label": "Origem: Telefone",
    "noClick": true
   },
@@ -210,7 +218,7 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 21.89
+   "at": 17.78
   },
   {
    "do": "click",
@@ -220,7 +228,7 @@
     "exact": true,
     "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
    },
-   "at": 22.19,
+   "at": 18.08,
    "label": "fecha a ficha",
    "noScroll": true
   },
@@ -237,7 +245,7 @@
     "selector": "main section div.rounded-lg:has(> div p:text-is('Retalho de chapa da Metalúrgica Jequitibá'))"
    },
    "seconds": 5.0,
-   "at": 25.07,
+   "at": 20.32,
    "label": "o cartão: barra de probabilidade verde, 80% (zoom)",
    "optional": true,
    "timeout": 4
@@ -245,14 +253,14 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 35.98
+   "at": 28.99
   },
   {
    "do": "click",
    "target": {
     "selector": "main section button:has(> p:text-is('Retalho de chapa da Metalúrgica Jequitibá'))"
    },
-   "at": 36.08,
+   "at": 29.09,
    "label": "clique no cartão (abre a ficha)"
   },
   {
@@ -266,7 +274,7 @@
     "selector": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"]) textarea[placeholder^='Escreva um coment']"
    },
    "seconds": 0.1,
-   "at": 38.17,
+   "at": 30.73,
    "label": "comentários (lado direito)",
    "optional": true,
    "timeout": 4
@@ -276,7 +284,7 @@
    "target": {
     "selector": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"]) textarea[placeholder^='Escreva um coment']"
    },
-   "at": 39.19,
+   "at": 31.49,
    "label": "caixa de comentário"
   },
   {
@@ -286,7 +294,7 @@
    },
    "text": "Paulo pediu a proposta até sexta.",
    "cps": 24,
-   "at": 40.6,
+   "at": 32.49,
    "label": "comentário: Paulo pediu a proposta até sexta.",
    "noClick": true
   },
@@ -298,7 +306,7 @@
     "exact": true,
     "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
    },
-   "at": 43.97,
+   "at": 35.49,
    "label": "Comentar"
   },
   {
@@ -312,8 +320,8 @@
     "text": "Paulo pediu a proposta até sexta.",
     "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
    },
-   "seconds": 2.2,
-   "at": 46.07,
+   "seconds": 1.5,
+   "at": 37.45,
    "label": "comentário com nome e hora (zoom)",
    "optional": true,
    "timeout": 4
@@ -321,7 +329,7 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 49.92
+   "at": 39.95
   },
   {
    "do": "click",
@@ -331,7 +339,7 @@
     "exact": true,
     "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
    },
-   "at": 51.53,
+   "at": 41.09,
    "label": "Criar Tarefa (pela ficha)"
   },
   {
@@ -346,7 +354,7 @@
    },
    "text": "Ligar pro Paulo",
    "cps": 30,
-   "at": 55.1,
+   "at": 44.22,
    "label": "Título: Ligar pro Paulo"
   },
   {
@@ -354,7 +362,7 @@
    "target": {
     "selector": "[role=dialog]:has(#crm-task-form-dialog) button:has-text('/2026')"
    },
-   "at": 57.38,
+   "at": 46.16,
    "label": "Data * (abre o calendário)"
   },
   {
@@ -362,7 +370,7 @@
    "target": {
     "selector": "[data-radix-popper-content-wrapper] button[name=day]:text-is('13')"
    },
-   "at": 58.08,
+   "at": 47.04,
    "label": "dia 13",
    "noScroll": true
   },
@@ -374,7 +382,7 @@
     "exact": true,
     "within": "[role=dialog]:has(#crm-task-form-dialog)"
    },
-   "at": 58.21,
+   "at": 47.12,
    "label": "Salvar (Nova tarefa)"
   },
   {
@@ -385,7 +393,7 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 59.07
+   "at": 47.82
   },
   {
    "do": "click",
@@ -393,7 +401,7 @@
     "role": "tab",
     "name": "Tarefas"
    },
-   "at": 60.1,
+   "at": 48.96,
    "label": "aba Tarefas"
   },
   {
@@ -406,7 +414,7 @@
    "target": {
     "selector": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"]) div.rounded-lg:has(button > p:text-is('Ligar pro Paulo')) button[aria-label='Mais ações da tarefa']"
    },
-   "at": 61.34,
+   "at": 49.88,
    "label": "os três pontinhos da tarefa"
   },
   {
@@ -416,7 +424,7 @@
     "name": "Editar"
    },
    "seconds": 0.2,
-   "at": 63.54,
+   "at": 51.8,
    "label": "Editar",
    "noScroll": true,
    "optional": true,
@@ -429,7 +437,7 @@
     "name": "Marcar em andamento"
    },
    "seconds": 0.1,
-   "at": 65.06,
+   "at": 53.24,
    "label": "Marcar em andamento",
    "noScroll": true,
    "optional": true,
@@ -442,7 +450,7 @@
     "name": "Concluir"
    },
    "seconds": 0.1,
-   "at": 66.05,
+   "at": 54.04,
    "label": "Concluir",
    "noScroll": true,
    "optional": true,
@@ -455,7 +463,7 @@
     "name": "Cancelar tarefa"
    },
    "seconds": 0.1,
-   "at": 66.96,
+   "at": 54.84,
    "label": "Cancelar tarefa",
    "noScroll": true,
    "optional": true,
@@ -467,8 +475,8 @@
     "role": "menuitem",
     "name": "Excluir"
    },
-   "seconds": 0.38,
-   "at": 67.87,
+   "seconds": 0.6,
+   "at": 55.8,
    "label": "Excluir",
    "noScroll": true,
    "optional": true,
@@ -477,13 +485,13 @@
   {
    "do": "press",
    "key": "Escape",
-   "at": 69.25,
+   "at": 57.4,
    "label": "fecha o menu"
   },
   {
    "do": "mark",
    "name": "L8",
-   "at": 74.14
+   "at": 61.34
   },
   {
    "do": "click",
@@ -491,7 +499,7 @@
     "role": "tab",
     "name": "Detalhes"
    },
-   "at": 74.64,
+   "at": 61.84,
    "label": "aba Detalhes"
   },
   {
@@ -506,7 +514,7 @@
     "hasText": "Visita técnica"
    },
    "seconds": 1.2,
-   "at": 76.95,
+   "at": 63.4,
    "label": "Estágio (muda sem arrastar)",
    "optional": true,
    "timeout": 4
@@ -518,7 +526,7 @@
     "hasText": "Sucata industrial"
    },
    "seconds": 1.6,
-   "at": 82.87,
+   "at": 67.98,
    "label": "Funil (trocar manda pra primeira etapa do outro)",
    "optional": true,
    "timeout": 4
@@ -526,12 +534,12 @@
   {
    "do": "mark",
    "name": "L9",
-   "at": 87.63
+   "at": 71.52
   },
   {
    "do": "eval",
    "js": "(async()=>{const d=[...document.querySelectorAll(\"[role=dialog]:has(textarea[placeholder^=\\\"Escreva um coment\\\"])\")].pop();if(!d)return 'SEM JANELA';const el=[...d.querySelectorAll('label, p, h3, span, button')].filter(e=>e.textContent.trim().startsWith(\"Contato do\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';let c=el.parentElement;while(c&&c!==d.parentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)break;c=c.parentElement;}if(!c||c===d.parentElement)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-200);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 88.13,
+   "at": 72.02,
    "label": "a ficha desce até o contato"
   },
   {
@@ -539,8 +547,8 @@
    "target": {
     "selector": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"]) a:has-text('WhatsApp')"
    },
-   "seconds": 2.0,
-   "at": 92.03,
+   "seconds": 1.84,
+   "at": 74.86,
    "label": "botão WhatsApp do contato (zoom, sem clicar)",
    "optional": true,
    "timeout": 4
@@ -553,7 +561,7 @@
     "exact": true,
     "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
    },
-   "at": 95.85,
+   "at": 77.7,
    "label": "Editar (abre o cadastro completo)",
    "noScroll": true
   },
@@ -565,7 +573,7 @@
   {
    "do": "eval",
    "js": "(()=>{const d=[...document.querySelectorAll('[role=dialog]:has(#crm-title)')].pop();const sc=[...d.querySelectorAll('*')].find(e=>e.scrollHeight>e.clientHeight+10&&/(auto|scroll)/.test(getComputedStyle(e).overflowY));if(sc)sc.scrollTop=sc.scrollHeight;return sc?'fim':'sem rolagem'})()",
-   "at": 102.25,
+   "at": 82.7,
    "label": "o cadastro desce até as Tarefas (no fim)"
   },
   {
@@ -576,7 +584,7 @@
     "exact": true,
     "within": "[role=dialog]:has(#crm-title)"
    },
-   "at": 102.09,
+   "at": 82.26,
    "label": "Cancelar"
   },
   {
@@ -589,14 +597,14 @@
   {
    "do": "mark",
    "name": "L10",
-   "at": 103.92
+   "at": 83.84
   },
   {
    "do": "click",
    "target": {
     "selector": "main section button:has(> p:text-is('Retalho de chapa da Metalúrgica Jequitibá'))"
    },
-   "at": 104.62,
+   "at": 84.54,
    "label": "clique no cartão (reabre a ficha: o Cancelar do cadastro fecha as duas janelas)"
   },
   {
@@ -613,7 +621,7 @@
     "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
    },
    "seconds": 0.1,
-   "at": 105.96,
+   "at": 85.34,
    "label": "lixeira Excluir oportunidade",
    "noScroll": true,
    "optional": true,
@@ -627,7 +635,7 @@
     "exact": true,
     "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
    },
-   "at": 106.77,
+   "at": 86.18,
    "label": "lixeira (abre a confirmação)",
    "noScroll": true
   },
@@ -641,8 +649,8 @@
    "target": {
     "selector": "[role=alertdialog]"
    },
-   "seconds": 3.18,
-   "at": 109.02,
+   "seconds": 2.53,
+   "at": 88.22,
    "label": "confirmação: Excluir esta oportunidade? (zoom)",
    "noScroll": true,
    "optional": true,
@@ -656,7 +664,7 @@
     "exact": true,
     "within": "[role=alertdialog]"
    },
-   "at": 113.2,
+   "at": 91.75,
    "label": "Cancelar (a oportunidade fica)"
   },
   {
@@ -669,7 +677,7 @@
   {
    "do": "mark",
    "name": "L11",
-   "at": 118.16
+   "at": 95.25
   },
   {
    "do": "click",
@@ -679,7 +687,7 @@
     "exact": true,
     "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
    },
-   "at": 118.26,
+   "at": 95.35,
    "label": "fecha a ficha",
    "noScroll": true
   },
@@ -701,7 +709,7 @@
     "selector": "main section div.rounded-lg:has(> div p:text-is('Retalho de chapa da Metalúrgica Jequitibá'))"
    },
    "seconds": 3.0,
-   "at": 119.52,
+   "at": 96.35,
    "label": "o cartão: 80% e Telefone (zoom)",
    "optional": true,
    "timeout": 4
@@ -714,7 +722,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 124.67
+   "at": 99.84
   }
  ]
 }
