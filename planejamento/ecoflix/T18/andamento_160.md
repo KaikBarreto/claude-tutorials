@@ -19,3 +19,10 @@ Lote (fundo, `TUT_SENHA` aleatória no ambiente): `bash rec/t18/t18_lote.sh 04:s
 
 ## 25/11 · PDFs do órgão resolvidos sem papel
 - Sem exemplo do MTR/CDF, a fala só cita o botão: cap05 L2 "Baixar pê-dê-éfe. Ele baixa o manifesto que o órgão devolveu, pra ir com o motorista, junto com a carga."; cap10 L0 "...Baixar pê-dê-éfe, pra salvar fora do sistema.". `ilu05_pdf_mtr` e `ilu10_pdf_cdf` tiradas. O robô segue clicando no Baixar (a aba nova não aparece). **T18 pronta para a voz.**
+
+## 28/11 · ilustrações v3
+- `cenas_v3/cena.html` (um `CAPS`, clima escuro) com 4 cenas na voz real 1.60.22, tempos de `$TUT_HOME/t18/narracao`: **ilu01_cadeia** (cap 1, linhas 1 a 5: papéis, MTR que vai e CDF que volta, Recicla Vale nos dois papéis, ordem no tempo; funde as antigas `ilu01_cadeia` e `ilu01_ordem`), **ilu09_cargas_outubro** (cap 9), **ilu10_onde_guardar** (cap 10), **ilu12_tres_documentos** (cap 12).
+- Saíram: `ilu00_dia` (abertura, a tela basta), `ilu01_ordem` (virou estação da cadeia), `ilu02_licenca` (a mesma ideia de `ilu10_onde_guardar`), `ilu05_pdf_motorista` (o botão Baixar já mostra; a fala não promete o papel).
+- `ilu05_pdf_mtr` e `ilu10_pdf_cdf` seguem **tiradas** (decisão de 21/11 e 25/11: o PDF é do órgão, o do robô é papel inventado; sem molde do Kaik não entra papel real).
+- Auditoria `--larg 1422`: 4 janelas aprovadas. Piscadas: 0 (uma no cap 9 re-renderizada). Prévia: `previa_ilustracoes/T18_v3.mp4` + `T18_v3.jpg`. Render: `cenas_v3/render_previa.sh`.
+- Fechamento: nenhuma pendência de objeto novo; sem alteração em `perfis/`.

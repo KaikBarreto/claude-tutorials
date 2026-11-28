@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- T18 "MTR e CDF: documentos ambientais" · ilustrações no kit v3 (perfis/ecoflix/cenas_v3/LEIA.md), clima escuro (mundo dos
+     dados: documento, fluxo, lista). Só as ideias que a gravação não mostra. Voz real 1.60.22 ($TUT_HOME/t18/narracao).
+       cap01 · cadeia           ilu01_cadeia           "Gerador é quem produz... Um não substitui o outro" (linhas 1 a 5): os três papéis,
+                                                       o MTR que vai e o CDF que volta, a Recicla Vale nos dois papéis e a ordem no tempo
+       cap09 · cargasOutubro    ilu09_cargas_outubro   "Em outubro, a Auto Peças Vale Forte mandou três cargas..." + "sai um CDF só, que junta os três"
+       cap10 · ondeGuardar      ilu10_onde_guardar     "o CDF é documento de fiscalização. Guarde o PDF fora do sistema..." (linhas 1 e 2)
+       cap12 · tresDocumentos   ilu12_tres_documentos  "São três documentos da mesma carga..." (linhas 1 a 3)
+     Sem papel de PDF: o MTR e o CDF reais vêm do órgão ambiental e o do mundo falso é inventado (decisão de 21/11 e 25/11 no
+     andamento_160.md: ilu05_pdf_mtr e ilu10_pdf_cdf ficam tiradas).
+     Ícones lucide usados: 'factory' 'truck' 'recycle' 'file-text' 'file-badge' 'layers' 'arrow-left-right' 'circle-check' 'folder-open'
+     'hard-drive' 'clipboard-check' 'landmark' 'leaf' 'key-round' 'calendar-days'
+     Auditoria: auditar.cjs --aula planejamento/ecoflix/T18 --larg 1422 -->
+</head><body>
+<script type="module">
+import { pr, eo, eio, W, ic, vis, pulso, titulo, posTitulo, GL, camera, cena, clima, lugar, htmlChip, htmlFluxo, fluxo, enquadraRet, uneRet }
+  from '../../../../perfis/ecoflix/cenas_v3/motor.js';
+import { mundoEscuro } from '../../../../perfis/ecoflix/cenas_v3/fundo.js';
+import { htmlFluxoCartoes, fluxoCartoes, parte } from '../../../../perfis/ecoflix/cenas_v3/dados/fluxoCartoes.js';
+import { htmlLinhaTempo, linhaTempo } from '../../../../perfis/ecoflix/cenas_v3/dados/linhaTempo.js';
+
+const EE = .0112, CH = 38;   // CH: altura do chip
+// o mundo escuro: planos no eixo (0,0,0); X = posição em px do desenho (y para baixo); ret = retângulo em metros
+function mundo() {
+  const EIXO = lugar([0, 0, 0]), E = mundoEscuro(EIXO, 0, EE), X = (html, x, y, o = {}) => E(html, x * EE, -y * EE, 0, o);
+  return { EIXO, E, X };
+}
+const cartaoP = (icone, rot, sub, cls, cw = 190) => htmlFluxoCartoes({ cartoes: [[icone, rot, sub, cls]], cw });
+const um = (p, t, T, b = 1e9) => p.e.querySelector('.cartao') ? fluxoCartoes(p.e, t, T - .4, b, { tempos: [T - .1] }) : vis(p.e, t, T - .1, b, { dy: 10 });   // um cartão (ou chip) que entra na palavra T
+const subDe = (card, t, T) => { const s = card.querySelector('.d-s'); if (s) s.style.opacity = eo(pr(t, T - .1, .4)).toFixed(3); };   // a legenda chega na palavra T
+const chip = (X, icone, txt, x, y, cls = '') => X(htmlChip(`${ic(icone, 18)}${txt}`, cls), x, y);
+// fio de cantos redondos por uma lista de pontos (px do desenho); o svg nasce no canto da caixa que cobre os fios
+const pth = (q, r = 22) => { let d = `M${q[0][0]} ${q[0][1]}`;
+  for (let i = 1; i < q.length - 1; i++) { const [a, b, c] = [q[i - 1], q[i], q[i + 1]], l1 = Math.hypot(b[0] - a[0], b[1] - a[1]), l2 = Math.hypot(c[0] - b[0], c[1] - b[1]), rr = Math.min(r, l1 / 2, l2 / 2);
+    d += `L${b[0] - (b[0] - a[0]) / l1 * rr} ${b[1] - (b[1] - a[1]) / l1 * rr}Q${b[0]} ${b[1]} ${b[0] + (c[0] - b[0]) / l2 * rr} ${b[1] + (c[1] - b[1]) / l2 * rr}`; }
+  const z = q[q.length - 1]; return d + `L${z[0]} ${z[1]}`; };
+function fios(X, L, o = {}) {   // L = [{ pts, cv }]: cv = curva em S entre o primeiro e o último ponto
+  const all = L.flatMap(l => l.pts), pad = 12, x0 = Math.min(...all.map(p => p[0])) - pad, y0 = Math.min(...all.map(p => p[1])) - pad,
+    w = Math.max(...all.map(p => p[0])) + pad - x0, h = Math.max(...all.map(p => p[1])) + pad - y0;
+  const ds = L.map(l => { const q = l.pts.map(p => [p[0] - x0, p[1] - y0]); const m = (q[0][0] + q[1][0]) / 2;
+    return l.cv ? `M${q[0][0]} ${q[0][1]}C${m} ${q[0][1]} ${m} ${q[1][1]} ${q[1][0]} ${q[1][1]}` : pth(q); });
+  const p = X(htmlFluxo(w, h, ds, o), x0, y0, { anc: [0, 0], z: -40 });
+  if (o.ambar) for (const g of p.e.children) { g.querySelector('.ft').setAttribute('stroke', '#F7C55A'); g.querySelector('.fh').setAttribute('fill', '#F7C55A'); }
+  return p;
+}
+const aparece = (p, t, a) => { p.e.style.opacity = eo(pr(t, a, .4)).toFixed(3); };   // o fio só aparece quando vai se desenhar
+
+// =====================================================================================================================
+// cap01, linhas 1 a 5 · clima escuro · quatro estações com câmera contínua
+// 1 "Gerador é quem produz o resíduo. Transportador é quem leva. E destinador é quem recebe e dá o destino, como reciclar."
+// 2 "O MTR, o manifesto de transporte de resíduos, acompanha a carga do gerador até o destino."
+// 3 "E o CDF, o certificado de destinação final, é o destinador confirmando que recebeu e deu o destino."
+// 4 "A Recicla Vale faz os dois papéis. Quando manda chaparia pra Aços Quiririm, ela é a geradora e emite o MTR. Quando a Auto Peças
+//    Vale Forte manda sucata pra cá, ela é a destinadora e emite o CDF."
+// 5 "Uma dica: a ordem no tempo é sempre essa. Primeiro sai o MTR, junto com a carga. Depois que o destinador recebe e dá baixa, sai o
+//    CDF, que cobre um período e junta os MTR desse período. Um não substitui o outro."
+// S1/S2: três papéis numa fileira; o MTR corre por baixo (gerador -> destino), o CDF volta por cima. S3: a Recicla Vale nos dois
+// papéis (duas fileiras). S4: a ordem no tempo (linha do tempo). A câmera viaja entre elas; o que ficou para trás some antes.
+function cadeia() {
+  const tG = W(1, 'gerador'), tTr = W(1, 'transportador'), tDe = W(1, 'destinador'),
+    tMT = W(2, 'mtr'), tAc = W(2, 'acompanha'), tCD = W(3, 'cdf'), tCf = W(3, 'confirmando'),
+    tRV = W(4, 'recicla'), tAcos = W(4, 'acos'), tGe = W(4, 'geradora'), tMT4 = W(4, 'mtr'), tAP = W(4, 'auto'), tCa = W(4, 'ca'), tDs = W(4, 'destinadora'), tCD4 = W(4, 'cdf'),
+    tOrd = W(5, 'ordem'), tM5 = W(5, 'mtr'), tDd = W(5, 'destinador'), tC5 = W(5, 'cdf'), tJu = W(5, 'junta'), tUm = W(5, 'um', 2), tfim = W(5, 'outro', 1, 'e');
+  const tV1 = W(4, 'a') - .65, tV2 = W(5, 'uma') - .55, tAll = W(4, 'quando', 2) - .4;   // os dois deslocamentos de câmera e a abertura para as duas fileiras
+  const { EIXO, X, E } = mundo();
+  const OX3 = 1900, OX4 = 3800;
+  E.fundo(0, 0, { aneis: false }); E.fundo(OX3 * EE, 0, { aneis: false }); E.fundo(OX4 * EE, 0, { aneis: false });
+
+  // ---- S1 e S2: a fileira dos três papéis, o MTR por baixo e o CDF por cima
+  const row = X(htmlFluxoCartoes({ cartoes: [['factory', 'Gerador', 'produz o resíduo', 'n'], ['truck', 'Transportador', 'leva', 'n'], ['recycle', 'Destinador', 'dá o destino', 'res']], cw: 250, vao: 64 }), 0, 0);
+  const w = row.w, h = row.h, cwc = (w - 128) / 3, xs = [0, 1, 2].map(i => -w / 2 + cwc / 2 + i * (cwc + 64)), D = 62, yb = h / 2 + 10, yt = -(h / 2 + 10);
+  const fM = fios(X, [{ pts: [[xs[0], yb], [xs[0], yb + D], [xs[2], yb + D], [xs[2], yb]] }]);
+  const fC = fios(X, [{ pts: [[xs[2], yt], [xs[2], yt - D], [xs[0], yt - D], [xs[0], yt]] }], { ambar: true });
+  const cM = chip(X, 'file-text', 'MTR · acompanha a carga', 0, yb + D + 14 + CH / 2), cC = chip(X, 'file-badge', 'CDF · confirma o destino', 0, yt - D - 14 - CH / 2, 'n');
+  const G1 = [row, fM, fC, cM, cC];
+
+  // ---- S3: a Recicla Vale nos dois papéis
+  const cw3 = 300, vao3 = 110, hh = h, tot = 2 * (CH + 10 + hh) + 34, top = -tot / 2;
+  const y1c = top + CH / 2, y1 = top + CH + 10 + hh / 2, y2c = y1 + hh / 2 + 34 + CH / 2, y2 = y2c + CH / 2 + 10 + hh / 2;
+  const r1 = X(htmlFluxoCartoes({ cartoes: [['factory', 'Recicla Vale', 'geradora', 'n'], ['recycle', 'Aços Quiririm', 'recebe a chaparia', 'n']], cw: cw3, vao: vao3 }), OX3, y1);
+  const r2 = X(htmlFluxoCartoes({ cartoes: [['truck', 'Auto Peças Vale Forte', 'manda a sucata', 'n'], ['recycle', 'Recicla Vale', 'destinadora', 'n']], cw: cw3, vao: vao3 }), OX3, y2);
+  const k1 = chip(X, 'file-text', 'MTR · emitido pela geradora', OX3, y1c), k2 = chip(X, 'file-badge', 'CDF · emitido pela destinadora', OX3, y2c, 'n');
+
+  // ---- S4: a ordem no tempo
+  const tl = X(htmlLinhaTempo({ etapas: [['truck', 'MTR', 'sai com a carga'], ['circle-check', 'Recebido e baixa', 'pelo destinador'], ['file-badge', 'CDF', 'cobre um período']], w: 900 }), OX4, -30);
+  const yc = -30 + tl.h / 2 + 34 + CH / 2;
+  const j1 = chip(X, 'layers', 'junta os MTR desse período', OX4 + 375, yc), j2 = chip(X, 'arrow-left-right', 'Um não substitui o outro', OX4 - 135, yc, 'n');
+
+  const tit = titulo('Ambiental', 'A cadeia do resíduo', 'escuro'), tit2 = titulo('Ambiental', 'A ordem no tempo', 'escuro');
+  const S1 = enquadraRet(EIXO, uneRet(row.ret(), fM.ret(), fC.ret(), cM.ret(), cC.ret()), { az: -.02, max: 1.3 / EE });
+  const S3a = enquadraRet(EIXO, uneRet(k1.ret(), r1.ret()), { az: .02, max: 1.2 / EE }), S3b = enquadraRet(EIXO, uneRet(k1.ret(), r1.ret(), r2.ret(), k2.ret()), { az: .02, max: 1.2 / EE });
+  const S4 = enquadraRet(EIXO, uneRet(tl.ret(), j1.ret(), j2.ret()), { az: -.02, max: 1.3 / EE });
+  const dr = (S, k = .985, az = 0) => ({ ...S, d: S.d * k, az: S.az + az });
+  camera([[tG - 3, S1], [tV1, dr(S1, .985, .03), 'lin'], [tV1 + 1.3, S3a], [tAll - .1, dr(S3a, .985, -.015), 'lin'], [tAll + 1.2, S3b], [tV2, dr(S3b, .985, .02), 'lin'], [tV2 + 1.3, S4], [tfim + 2.5, dr(S4, .985, .03), 'lin']]);
+  return t => {
+    clima(1); GL.style.visibility = 'hidden';
+    posTitulo(tit, t, tG - .9, tG - .45, tV2 + .2); posTitulo(tit2, t, tV2 + .5, tV2 - 1.4);
+    // S1 e S2
+    const f1 = 1 - eo(pr(t, tV1 - .1, .5)); for (const p of G1) p.op = f1;
+    fluxoCartoes(row.e, t, tG - .4, 1e9, { tempos: [tG - .1, tTr - .1, tDe - .1] });
+    um(cM, t, tMT); um(cC, t, tCD);
+    aparece(fM, t, tAc - .4); fluxo(fM.e, 0, t, tAc - .3, .9, { luz: [tAc - .1, 2.2], fica: .55 });
+    aparece(fC, t, tCf - .5); fluxo(fC.e, 0, t, tCf - .4, .9, { luz: [tCf - .2, 1.9], fica: .55 });
+    // S3
+    const f3 = 1 - eo(pr(t, tV2 - .1, .5)); for (const p of [r1, r2, k1, k2]) p.op = f3;
+    fluxoCartoes(r1.e, t, tRV - .4, 1e9, { tempos: [tRV - .1, tAcos - .1] }); subDe(parte(r1.e, 0), t, tGe); um(k1, t, tMT4);
+    fluxoCartoes(r2.e, t, tAP - .4, 1e9, { tempos: [tAP - .1, tCa - .1] }); subDe(parte(r2.e, 1), t, tDs); um(k2, t, tCD4);
+    // S4
+    linhaTempo(tl.e, t, tOrd - .3, 1e9, { tempos: [tM5 - .1, tDd - .1, tC5 - .1] }); um(j1, t, tJu); um(j2, t, tUm);
+  };
+}
+
+// =====================================================================================================================
+// cap09, linhas 1 e 2 · clima escuro
+// 1 "Em outubro, a Auto Peças Vale Forte mandou três cargas de sucata pra cá, cada uma com o MTR dela. A Recicla Vale recebeu e deu baixa no SIGOR."
+// 2 "Agora sai um CDF só, que cobre outubro e junta os três."
+// À esquerda, as três cargas (cada uma com o seu MTR, os números da lista); recebidas, com baixa no SIGOR. À direita o CDF de outubro,
+// e os três fios que se juntam nele.
+function cargasOutubro() {
+  const tAP = W(1, 'auto'), tTr = W(1, 'tres'), tMT = W(1, 'mtr'), tRe = W(1, 'recebeu'), tBx = W(1, 'baixa'), tCD = W(2, 'cdf'), tOu = W(2, 'outubro'), tJu = W(2, 'junta'), tfim = W(2, 'tres', 1, 'e');
+  const { EIXO, E, X } = mundo(); E.fundo(0, 0, { aneis: false });
+  const CX = 300, CW = 300, ys = [-125, 0, 125], NUM = ['2610001542', '2610001877', '2610002203'];
+  const orig = chip(X, 'factory', 'Auto Peças Vale Forte', -CX, -125 - 44 - 12 - CH / 2, 'n');
+  const M = ys.map((y, i) => X(cartaoP('truck', 'Carga de sucata', `MTR ${NUM[i]}`, 'n', CW), -CX, y));
+  const baixa = chip(X, 'circle-check', 'Recebido, com baixa no SIGOR', -CX, 125 + 44 + 12 + CH / 2);
+  const cdf = X(cartaoP('file-badge', 'CDF', 'cobre outubro', 'res', CW), CX, 0);
+  const xa = -CX + M[0].w / 2 + 10, xb = CX - cdf.w / 2 - 10;
+  const F = fios(X, ys.map((y, i) => ({ pts: [[xa, y], [xb, (i - 1) * 16]], cv: true })));
+  const tit = titulo('CDF', 'As cargas de outubro', 'escuro');
+  const S = enquadraRet(EIXO, uneRet(orig.ret(), M[0].ret(), M[2].ret(), baixa.ret(), cdf.ret(), F.ret()), { az: -.02, max: 1.25 / EE });
+  camera([[tAP - 3, S], [tJu, { ...S, d: S.d * .985, az: .03 }, 'lin'], [tfim + 2.5, { ...S, d: S.d * .97, az: -.015 }, 'lin']]);
+  return t => {
+    clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, tAP - .9, tAP - .45);
+    um(orig, t, tAP);
+    M.forEach((m, i) => { um(m, t, tTr + i * .55); subDe(parte(m.e, 0), t, tMT + i * .16); });
+    um(baixa, t, tRe); M.forEach((m, i) => pulso(parte(m.e, 0), t, tBx + i * .14, .035, .7));
+    um(cdf, t, tCD); subDe(parte(cdf.e, 0), t, tOu);
+    aparece(F, t, tJu - .3); ys.forEach((_, i) => fluxo(F.e, i, t, tJu - .2 + i * .1, .8, { luz: [tJu + i * .1, .9] })); pulso(parte(cdf.e, 0), t, tJu + .9, .04, .8);
+  };
+}
+
+// =====================================================================================================================
+// cap10, linhas 1 e 2 · clima escuro
+// 1 "Uma dica: o CDF é documento de fiscalização. Guarde o PDF fora do sistema, na pasta da licença, e deixe os MTR do mesmo período por perto."
+// 2 "Na fiscalização, os dois costumam ser pedidos juntos."
+// O PDF do CDF sai do sistema para a pasta da licença; os MTR do mesmo período ficam por perto; a fiscalização pede os dois juntos.
+function ondeGuardar() {
+  const tCd = W(1, 'cdf'), tPd = W(1, 'pdf'), tFo = W(1, 'fora'), tPa = W(1, 'pasta'), tLi = W(1, 'licenca'), tMT = W(1, 'mtr'), tFi = W(2, 'fiscalizacao'), tDo = W(2, 'dois'), tfim = W(2, 'juntos', 1, 'e');
+  const { EIXO, E, X } = mundo(); E.fundo(0, 0, { aneis: false });
+  const PX = -120, PY = -70, CW = 280, VAO = 90;
+  const par = X(htmlFluxoCartoes({ cartoes: [['file-badge', 'PDF do CDF', 'documento de fiscalização', 'n'], ['folder-open', 'Pasta da licença', 'Licença ambiental', 'res']], cw: CW, vao: VAO }), PX, PY);
+  const cw = (par.w - VAO) / 2, hp = par.h, xp = PX - par.w / 2 + cw / 2, xf = PX + par.w / 2 - cw / 2;   // centros do PDF e da pasta
+  const fora = chip(X, 'hard-drive', 'Fora do sistema', PX, PY - hp / 2 - 12 - CH / 2, 'n');
+  const yM = PY + hp + 60, mtr = X(cartaoP('file-text', 'MTR do mesmo período', 'por perto', 'n', CW), xf, yM);
+  const fv = fios(X, [{ pts: [[xf, PY + hp / 2 + 10], [xf, yM - hp / 2 - 10]] }]);
+  const xs = xf + cw / 2 + 160 + 150, fis = X(cartaoP('clipboard-check', 'Fiscalização', 'pede os dois juntos', 'a', 300), xs, (PY + yM) / 2);
+  const fz = fios(X, [{ pts: [[xf + cw / 2 + 10, PY], [xs - 150 - 10, (PY + yM) / 2 - 14]], cv: true }, { pts: [[xf + cw / 2 + 10, yM], [xs - 150 - 10, (PY + yM) / 2 + 14]], cv: true }]);
+  const tit = titulo('CDF', 'Onde guardar', 'escuro');
+  const S = enquadraRet(EIXO, uneRet(fora.ret(), par.ret(), mtr.ret(), fis.ret(), fz.ret()), { az: -.02, max: 1.25 / EE });
+  camera([[tCd - 3, S], [tFi, { ...S, d: S.d * .985, az: .03 }, 'lin'], [tfim + 2.5, { ...S, d: S.d * .97, az: -.015 }, 'lin']]);
+  return t => {
+    clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, tCd - .9, tCd - .45);
+    fluxoCartoes(par.e, t, tCd - .4, 1e9, { tempos: [tCd - .1, tPa - .1] }); subDe(parte(par.e, 1), t, tLi);
+    um(fora, t, tFo);
+    aparece(fv, t, tMT - .4); fluxo(fv.e, 0, t, tMT - .35, .5, { luz: [tMT - .3, .6] }); um(mtr, t, tMT);
+    um(fis, t, tFi);
+    aparece(fz, t, tDo - .4); fluxo(fz.e, 0, t, tDo - .3, .8, { luz: [tDo - .1, .9] }); fluxo(fz.e, 1, t, tDo - .2, .8, { luz: [tDo, .9] }); pulso(parte(fis.e, 0), t, tDo + .8, .04, .8);
+  };
+}
+
+// =====================================================================================================================
+// cap12, linhas 1 a 3 · clima escuro
+// 1 "São três documentos da mesma carga, cada um com o seu papel. A nota fiscal é a venda, e vai pra SEFAZ. O MTR é o transporte do resíduo, e vai pro órgão ambiental."
+// 2 "E o CDF vem depois, do destinador, confirmando o destino."
+// 3 "Eles são independentes: cada um é emitido na sua tela. O que o MTR aproveita da nota é o que a gente viu: os itens, pelo Puxar da nota fiscal, e a chave, na observação."
+// Três colunas (documento e para onde vai); depois o MTR aproveita da nota os itens e a chave.
+function tresDocumentos() {
+  const tSa = W(1, 'sao'), tCa = W(1, 'tres'), tNo = W(1, 'nota'), tSe = W(1, 'sefaz'), tMT = W(1, 'mtr'), tOr = W(1, 'orgao'), tCD = W(2, 'cdf'), tDs = W(2, 'destinador'),
+    tIn = W(3, 'independentes'), tAp = W(3, 'aproveita'), tIt = W(3, 'itens'), tCh = W(3, 'chave'), tfim = W(3, 'observacao', 1, 'e');
+  const { EIXO, E, X } = mundo(); E.fundo(0, 0, { aneis: false });
+  const CX = 440, CW = 300, VAO = 56;
+  const col = (x, a, b) => X(htmlFluxoCartoes({ cartoes: [a, b], cw: CW, vao: VAO, vertical: true }), x, 0);
+  const c1 = col(-CX, ['file-text', 'NF-e', 'a venda', 'n'], ['landmark', 'SEFAZ', 'em Notas Fiscais', 'n']),
+        c2 = col(0, ['truck', 'MTR', 'o transporte do resíduo', 'n'], ['leaf', 'Órgão ambiental', 'em Ambiental', 'n']),
+        c3 = col(CX, ['file-badge', 'CDF', 'o destino, depois', 'a'], ['factory', 'Destinador', 'confirma o destino', 'n']);
+  const hd = c1.h / 2, ht = -hd, hc = (c1.h - VAO) / 2;   // topo da coluna; altura de um cartão
+  const carga = chip(X, 'package-open', 'A mesma carga de chaparia', 0, ht - 14 - CH / 2, 'n');
+  const ARC = 60, yTop = ht - 10, yArc = yTop - ARC;
+  const F = fios(X, [{ pts: [[-CX, yTop], [-CX, yArc], [0, yArc], [0, yTop]] }]);
+  const cB = chip(X, 'key-round', 'A chave · na observação', -CX / 2, yArc - 14 - CH / 2, 'n'), cA = chip(X, 'layers', 'Os itens · Puxar da nota fiscal', -CX / 2, yArc - 14 - CH - 10 - CH / 2);
+  const tit = titulo('Nota fiscal', 'Uma carga, três documentos', 'escuro');
+  const S = enquadraRet(EIXO, uneRet(c1.ret(), c2.ret(), c3.ret(), cA.ret(), cB.ret(), carga.ret(), F.ret()), { az: -.02, max: 1.2 / EE, margem: 84 });
+  camera([[tSa - 3, S], [tIn, { ...S, d: S.d * .985, az: .03 }, 'lin'], [tfim + 2.5, { ...S, d: S.d * .97, az: -.015 }, 'lin']]);
+  return t => {
+    clima(1); GL.style.visibility = 'hidden'; posTitulo(tit, t, tSa - .9, tSa - .45);
+    um(carga, t, tCa, tIn - .4);
+    fluxoCartoes(c1.e, t, tNo - .4, 1e9, { tempos: [tNo - .1, tSe - .1] });
+    fluxoCartoes(c2.e, t, tMT - .4, 1e9, { tempos: [tMT - .1, tOr - .1] });
+    fluxoCartoes(c3.e, t, tCD - .4, 1e9, { tempos: [tCD - .1, tDs - .1] });
+    [c1, c2, c3].forEach((c, i) => pulso(parte(c.e, 0), t, tIn + .1 + i * .25, .035, .7));
+    aparece(F, t, tAp - .4); fluxo(F.e, 0, t, tAp - .3, 1.0, { luz: [tAp - .1, 1.3], fica: .55 });
+    um(cA, t, tIt); um(cB, t, tCh);
+  };
+}
+
+const CAPS = { 1: cadeia, 9: cargasOutubro, 10: ondeGuardar, 12: tresDocumentos };
+cena(d => CAPS[d.cap](d), { fov: 26 });
+</script></body></html>
