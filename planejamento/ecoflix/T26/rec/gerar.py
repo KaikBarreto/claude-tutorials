@@ -821,14 +821,14 @@ def cap08():
     c.click(COMBO('Criar tarefa', ETAPA), at=c.A(5, 'Definir', 1.3), label='ação 2 (abre a lista das ações)')
     c.click(OPC('Definir prazo do cartão'), at=c.A(5, 'Definir', 0.3), label='Definir prazo do cartão', noScroll=True)
     prazo = SEL(f"{ETAPA} input[type=number]")
-    c.click(prazo, at=c.A(5, 'cartão:', 0.1), label='Prazo em dias')
-    c.type(prazo, '15', at=c.A(5, 'quinze', 0.1), noClick=True, clear=True, cps=10, label='Prazo: 15')
-    c.hover(COMBO('Dias corridos', ETAPA), 1.0, at=c.A(5, 'corridos.', 0.6), label='Contagem: Dias corridos')
+    c.click(prazo, at=c.A(5, 'cartão:', 0.8), label='Prazo em dias')
+    c.type(prazo, '15', at=c.A(5, 'quinze', 0.5), noClick=True, clear=True, cps=10, label='Prazo: 15')
+    c.hover(COMBO('Dias corridos', ETAPA), 1.0, at=c.A(5, 'corridos.', -0.4), label='Contagem: Dias corridos')
     c.mark(6)
-    c.click(BTN('Adicionar ação'), at=c.A(6, 'Mover', 1.0), label='Adicionar ação (3)')
+    c.click(BTN('Adicionar ação'), at=c.A(6, 'Mover', 2.1), label='Adicionar ação (3)')
     c.click(COMBO('Criar tarefa', ETAPA), label='ação 3 (abre a lista das ações)')
-    c.click(OPC('Mover cartão'), at=c.A(6, 'Mover', 0.1), label='Mover cartão', noScroll=True)
-    c.click(COMBO('Mover cartão', ETAPA), at=c.A(6, 'Copiar', 1.0), label='ação 3 (abre a lista)')
+    c.click(OPC('Mover cartão'), at=c.A(6, 'Mover', 0.6), label='Mover cartão', noScroll=True)
+    c.click(COMBO('Mover cartão', ETAPA), at=c.A(6, 'Copiar', 1.3), label='ação 3 (abre a lista)')
     c.click(OPC('Copiar cartão'), at=c.A(6, 'Copiar', 0.2), label='Copiar cartão', noScroll=True)
     c.hover(SEL(f"{ETAPA} div.rounded-xl.shadow-sm", nth=2), 3.0, at=c.A(6, 'destino.', 0.5), label='Copiar cartão: funil e etapa de destino (zoom)')
     c.mark(7)
@@ -1267,7 +1267,7 @@ def cap15():
     c.hover(CARTAO(ESQ), 1.0, at=c.A(3, 'Esquadrias', 0.6), label='o cartão da Esquadrias Horizonte')
     c.hover(METRICA_X('Total de oportunidades (filtrado)'), 1.6, at=c.A(3, 'cima', 0.6), label='cartões de cima dizem filtrado')
     c.mark(4)
-    c.type(busca, '', at=c.A(4, 'Nos', 1.5), clear=True, label='apaga a busca')   # 28/11: apagar leva ~1,3 s e o Filtros vem 0,2 s depois da palavra
+    c.type(busca, '', at=c.A(4, 'Nos', 2.0), clear=True, label='apaga a busca')   # 28/11: apagar leva ~1,3 s e o Filtros vem 0,2 s depois da palavra
     c.click(BTNX('Filtros'), at=c.A(4, 'Filtros,', 0.8), label='Filtros')
     c.waitfor(selector=FILTROS, timeout=8)
     c.hover(FILTRO_COMBO(0), 0.3, at=c.A(4, 'situação,', 0.6), label='Status')
@@ -1310,7 +1310,7 @@ def cap15():
     c.click(TITULO_CARTAO(PAPELAO), at=c.A(9, 'motivo', 0.8), label='abre o cartão do Papelão (Perdido)')
     c.waitfor(text='Comentários e atividades', timeout=10)
     c.ev(FICHA_SCROLL('Observações', 300), label='a ficha desce até as Observações')
-    c.hover(SEL('#opportunity-notes'), 1.6, at=c.A(9, 'observações', 0.6), label='Observações: o motivo da perda (zoom)')
+    c.hover(SEL('#opportunity-notes'), 1.0, at=c.A(9, 'observações', 0.6), label='Observações: o motivo da perda (zoom)')
     c.fim()
     return c
 

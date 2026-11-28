@@ -104,6 +104,8 @@ def storage(n, extra=None):
     # os capítulos 4 e 15 trocam de usuário no meio (Sandra e Rafael): a dica diária de tarefas fica calada para os dois
     d = {'app_version': VERSAO, 'notification_shown_version': VERSAO, 'pwa-install-dismissed': 'true', 'theme': 'light',
          f'daily-tasks-reminder-last-shown-{SANDRA}': HOJE, f'daily-tasks-reminder-last-shown-{RAFAEL}': HOJE, 'initial-preferences-set': 'true'}
+    if n in (3, 4, 15):   # login da Sandra pela tela: o balão do WhatsApp do suporte (foto e nome de atendente real) sairia 15 s depois; o mundo.json só o cala na sessão falsa
+        d['support_widget_last_dismissed'] = HOJE + 'T12:00:00'
     d.update(extra or {})
     return d
 
