@@ -290,6 +290,7 @@ def storage(n):
         'app_version': VERSAO, 'notification_shown_version': VERSAO, 'pwa-install-dismissed': 'true', 'theme': 'light',
         f'daily-tasks-reminder-last-shown-{RAFAEL}': HOJE[n], 'initial-preferences-set': 'true',
         f'dominex:daily-tasks-shown:{RAFAEL}': HOJE[n],
+        'support_widget_last_dismissed': f'{HOJE[n]}T12:00:00',   # 28/11 (regra da T27): o balão do WhatsApp do suporte mostra nome e foto de gente real
     }
 
 
@@ -1266,7 +1267,7 @@ def cap15():
     c.hover(CARTAO(ESQ), 1.0, at=c.A(3, 'Esquadrias', 0.6), label='o cartão da Esquadrias Horizonte')
     c.hover(METRICA_X('Total de oportunidades (filtrado)'), 1.6, at=c.A(3, 'cima', 0.6), label='cartões de cima dizem filtrado')
     c.mark(4)
-    c.type(busca, '', at=c.A(4, 'Nos', 0.8), clear=True, label='apaga a busca')
+    c.type(busca, '', at=c.A(4, 'Nos', 1.5), clear=True, label='apaga a busca')   # 28/11: apagar leva ~1,3 s e o Filtros vem 0,2 s depois da palavra
     c.click(BTNX('Filtros'), at=c.A(4, 'Filtros,', 0.8), label='Filtros')
     c.waitfor(selector=FILTROS, timeout=8)
     c.hover(FILTRO_COMBO(0), 0.3, at=c.A(4, 'situação,', 0.6), label='Status')
