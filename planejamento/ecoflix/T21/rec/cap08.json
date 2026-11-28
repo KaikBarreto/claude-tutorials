@@ -1,6 +1,6 @@
 {
  "name": "t21-cap08",
- "title": "T21 · Cap. 8 · Venda, ticket e preços (narração ESTIMADA 84,1 s; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T21 · Cap. 8 · Venda, ticket e preços (narração 71,8 s; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t21-cap08",
  "pace": 0.5,
  "cps": 40,
@@ -16,7 +16,8 @@
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
-  "initial-preferences-set": "true"
+  "initial-preferences-set": "true",
+  "support_widget_last_dismissed": "2026-11-10T12:00:00"
  },
  "seedExtra": [
   "t14/inicio",
@@ -90,6 +91,10 @@
    "url": "/materiais"
   },
   {
+   "do": "eval",
+   "js": "(()=>{if(window.__animFix)return 'ja';window.__animFix=setInterval(()=>{for(const a of document.getAnimations())if(a.currentTime!==null&&a.currentTime<0)a.startTime=document.timeline.currentTime},100);return 'anim fix'})()"
+  },
+  {
    "do": "waitFor",
    "selector": "button[aria-label=\"Abrir o Cato\"]",
    "timeout": 30
@@ -114,6 +119,10 @@
   {
    "do": "eval",
    "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|indispon[ií]vel|SEM RESPOSTA SIMULADA|Deu um problema|N[ãa]o consegui/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__animFix)return 'ja';window.__animFix=setInterval(()=>{for(const a of document.getAnimations())if(a.currentTime!==null&&a.currentTime<0)a.startTime=document.timeline.currentTime},100);return 'anim fix'})()"
   }
  ],
  "steps": [
@@ -127,14 +136,14 @@
    "target": {
     "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
    },
-   "at": 7.88,
+   "at": 4.2,
    "label": "campo Pergunte ao Cato (A2)",
    "noScroll": true
   },
   {
    "do": "eval",
    "js": "(()=>{const t=document.querySelector('textarea[aria-label=\"Mensagem para o Cato\"]');if(!t)return 'SEM ALVO: campo';t.focus();return document.activeElement===t?'foco no campo':'SEM FOCO'})()",
-   "at": 8.28,
+   "at": 4.6,
    "label": "foco no campo (a digitação nunca vai para a página)"
   },
   {
@@ -144,7 +153,7 @@
    },
    "text": "Lança uma venda de 500 kg de alumínio perfil pra Serra Fina, a 10,40, no saldo, vencimento 10/12",
    "cps": 40,
-   "at": 8.63,
+   "at": 4.95,
    "label": "digita: Lança uma venda de 500 kg de alumínio perfil pra Serra Fina, a 10,40, no saldo, vencimento 10/12",
    "noClick": true
   },
@@ -153,7 +162,7 @@
    "target": {
     "selector": "button[aria-label=\"Enviar\"]"
    },
-   "at": 15.8,
+   "at": 12.12,
    "label": "Enviar (A2)",
    "noScroll": true
   },
@@ -165,7 +174,7 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 18.9
+   "at": 15.22
   },
   {
    "do": "hover",
@@ -173,7 +182,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] :text(\"Total da venda\") >> nth=-1"
    },
    "seconds": 0.8,
-   "at": 21.78,
+   "at": 17.68,
    "label": "cartão da venda: Total da venda R$ 5.200,00",
    "optional": true,
    "timeout": 4
@@ -181,7 +190,7 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 23.12
+   "at": 18.5
   },
   {
    "do": "hover",
@@ -189,7 +198,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] :text(\"Vencimento\") >> nth=-1"
    },
    "seconds": 0.5,
-   "at": 24.12,
+   "at": 19.5,
    "label": "cartão: Forma de pagamento Saldo com cliente e Vencimento",
    "optional": true,
    "timeout": 4
@@ -199,7 +208,7 @@
    "target": {
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:has-text(\"Lançar venda\") >> nth=-1"
    },
-   "at": 23.42,
+   "at": 18.8,
    "label": "clique em Lançar venda",
    "noScroll": true
   },
@@ -213,7 +222,7 @@
    "target": {
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:has-text(\"Próximos passos\") >> nth=-1"
    },
-   "at": 29.8,
+   "at": 24.12,
    "label": "Próximos passos do pedido (abre)",
    "optional": true,
    "noScroll": true
@@ -224,7 +233,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] :text(\"A receber\") >> nth=-1"
    },
    "seconds": 1.0,
-   "at": 29.5,
+   "at": 23.82,
    "label": "Próximos passos: A receber R$ 5.200,00",
    "optional": true,
    "timeout": 4
@@ -232,21 +241,21 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 30.23
+   "at": 26.27
   },
   {
    "do": "click",
    "target": {
     "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
    },
-   "at": 33.03,
+   "at": 28.93,
    "label": "campo Pergunte ao Cato (A3)",
    "noScroll": true
   },
   {
    "do": "eval",
    "js": "(()=>{const t=document.querySelector('textarea[aria-label=\"Mensagem para o Cato\"]');if(!t)return 'SEM ALVO: campo';t.focus();return document.activeElement===t?'foco no campo':'SEM FOCO'})()",
-   "at": 33.43,
+   "at": 29.33,
    "label": "foco no campo (a digitação nunca vai para a página)"
   },
   {
@@ -254,26 +263,26 @@
    "target": {
     "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
    },
-   "text": "Faz um ticket de compra da Cooperativa Recomeço: plástico PET, bruto 1.480, tara 60,",
+   "text": "Faz um ticket de compra da Cooperativa Recomeço: plástic",
    "cps": 40,
-   "at": 33.78,
-   "label": "digita: Faz um ticket de compra da Cooperativa Recomeço: plástico PET, bruto 1.480, tara 60,",
+   "at": 29.68,
+   "label": "digita: Faz um ticket de compra da Cooperativa Recomeço: plástic",
    "noClick": true
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 40.0
+   "at": 33.95
   },
   {
    "do": "type",
    "target": {
     "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
    },
-   "text": " motorista Jair Lopes, placa GHT7B19",
+   "text": "o PET, bruto 1.480, tara 60, motorista Jair Lopes, placa GHT7B19",
    "cps": 40,
-   "at": 40.0,
-   "label": "digita (continua):  motorista Jair Lopes, placa GHT7B19",
+   "at": 33.95,
+   "label": "digita (continua): o PET, bruto 1.480, tara 60, motorista Jair Lopes, placa GHT7B19",
    "noClick": true
   },
   {
@@ -281,7 +290,7 @@
    "target": {
     "selector": "button[aria-label=\"Enviar\"]"
    },
-   "at": 42.97,
+   "at": 38.88,
    "label": "Enviar (A3)",
    "noScroll": true
   },
@@ -296,7 +305,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] :text(\"Peso líquido\") >> nth=-1"
    },
    "seconds": 1.0,
-   "at": 47.02,
+   "at": 42.93,
    "label": "cartão do ticket: Peso líquido 1.420 kg",
    "optional": true,
    "timeout": 4
@@ -304,7 +313,7 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 49.08
+   "at": 44.57
   },
   {
    "do": "hover",
@@ -312,7 +321,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] :text(\"Ao confirmar, o ticket recebe número\") >> nth=-1"
    },
    "seconds": 2.0,
-   "at": 50.13,
+   "at": 45.75,
    "label": "ZOOM Ao confirmar, o ticket recebe número. Estoque e financeiro não mudam até a valorização.",
    "optional": true,
    "timeout": 4
@@ -322,7 +331,7 @@
    "target": {
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:has-text(\"Finalizar ticket\") >> nth=-1"
    },
-   "at": 55.07,
+   "at": 49.7,
    "label": "clique em Finalizar ticket",
    "noScroll": true
   },
@@ -336,14 +345,14 @@
    "target": {
     "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
    },
-   "at": 61.02,
+   "at": 51.77,
    "label": "campo Pergunte ao Cato (A4)",
    "noScroll": true
   },
   {
    "do": "eval",
    "js": "(()=>{const t=document.querySelector('textarea[aria-label=\"Mensagem para o Cato\"]');if(!t)return 'SEM ALVO: campo';t.focus();return document.activeElement===t?'foco no campo':'SEM FOCO'})()",
-   "at": 61.42,
+   "at": 52.17,
    "label": "foco no campo (a digitação nunca vai para a página)"
   },
   {
@@ -351,26 +360,26 @@
    "target": {
     "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
    },
-   "text": "Sobe 50 centavos o preço",
+   "text": "Sobe 50 centavos o preço de compra do cobr",
    "cps": 40,
-   "at": 61.77,
-   "label": "digita: Sobe 50 centavos o preço",
+   "at": 52.52,
+   "label": "digita: Sobe 50 centavos o preço de compra do cobr",
    "noClick": true
   },
   {
    "do": "mark",
    "name": "L7",
-   "at": 63.78
+   "at": 55.8
   },
   {
    "do": "type",
    "target": {
     "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
    },
-   "text": " de compra do cobre mel e do cobre misto",
+   "text": "e mel e do cobre misto",
    "cps": 40,
-   "at": 63.78,
-   "label": "digita (continua):  de compra do cobre mel e do cobre misto",
+   "at": 55.8,
+   "label": "digita (continua): e mel e do cobre misto",
    "noClick": true
   },
   {
@@ -378,7 +387,7 @@
    "target": {
     "selector": "button[aria-label=\"Enviar\"]"
    },
-   "at": 67.03,
+   "at": 57.79,
    "label": "Enviar (A4)",
    "noScroll": true
   },
@@ -393,7 +402,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] :text(\"Cobre mel\") >> nth=-1"
    },
    "seconds": 1.0,
-   "at": 72.15,
+   "at": 62.28,
    "label": "cartão de preços: Cobre mel R$ 42,50 → R$ 43,00",
    "optional": true,
    "timeout": 4
@@ -401,14 +410,14 @@
   {
    "do": "mark",
    "name": "L8",
-   "at": 74.38
+   "at": 63.96
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:has-text(\"Sim, atualizar\") >> nth=-1"
    },
-   "at": 74.68,
+   "at": 64.26,
    "label": "clique em Sim, atualizar",
    "noScroll": true
   },
@@ -425,7 +434,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 84.07
+   "at": 71.77
   }
  ]
 }

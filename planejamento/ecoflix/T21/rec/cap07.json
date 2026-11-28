@@ -1,6 +1,6 @@
 {
  "name": "t21-cap07",
- "title": "T21 · Cap. 7 · Lançar uma compra pela conversa (narração ESTIMADA 91,8 s; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T21 · Cap. 7 · Lançar uma compra pela conversa (narração 73,8 s; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t21-cap07",
  "pace": 0.5,
  "cps": 40,
@@ -16,7 +16,8 @@
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
-  "initial-preferences-set": "true"
+  "initial-preferences-set": "true",
+  "support_widget_last_dismissed": "2026-11-10T12:00:00"
  },
  "seedExtra": [
   "t14/inicio",
@@ -90,6 +91,10 @@
    "url": "/materiais"
   },
   {
+   "do": "eval",
+   "js": "(()=>{if(window.__animFix)return 'ja';window.__animFix=setInterval(()=>{for(const a of document.getAnimations())if(a.currentTime!==null&&a.currentTime<0)a.startTime=document.timeline.currentTime},100);return 'anim fix'})()"
+  },
+  {
    "do": "waitFor",
    "selector": "button[aria-label=\"Abrir o Cato\"]",
    "timeout": 30
@@ -106,6 +111,10 @@
    "do": "goto",
    "url": "/materiais",
    "reload": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__animFix)return 'ja';window.__animFix=setInterval(()=>{for(const a of document.getAnimations())if(a.currentTime!==null&&a.currentTime<0)a.startTime=document.timeline.currentTime},100);return 'anim fix'})()"
   },
   {
    "do": "waitFor",
@@ -148,6 +157,10 @@
   {
    "do": "eval",
    "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|indispon[ií]vel|SEM RESPOSTA SIMULADA|Deu um problema|N[ãa]o consegui/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__animFix)return 'ja';window.__animFix=setInterval(()=>{for(const a of document.getAnimations())if(a.currentTime!==null&&a.currentTime<0)a.startTime=document.timeline.currentTime},100);return 'anim fix'})()"
   }
  ],
  "steps": [
@@ -161,7 +174,7 @@
    "target": {
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] [role=toolbar] button[aria-label=\"Nova conversa\"]"
    },
-   "at": 0.63,
+   "at": 0.16,
    "label": "Nova (conversa limpa)",
    "noScroll": true
   },
@@ -175,14 +188,14 @@
    "target": {
     "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
    },
-   "at": 3.97,
+   "at": 3.48,
    "label": "campo Pergunte ao Cato (A1a)",
    "noScroll": true
   },
   {
    "do": "eval",
    "js": "(()=>{const t=document.querySelector('textarea[aria-label=\"Mensagem para o Cato\"]');if(!t)return 'SEM ALVO: campo';t.focus();return document.activeElement===t?'foco no campo':'SEM FOCO'})()",
-   "at": 4.37,
+   "at": 3.88,
    "label": "foco no campo (a digitação nunca vai para a página)"
   },
   {
@@ -192,7 +205,7 @@
    },
    "text": "Lança uma compra de 120 kg de alumínio latinha da Aparecida Ramos, a 6,20",
    "cps": 40,
-   "at": 4.72,
+   "at": 4.23,
    "label": "digita: Lança uma compra de 120 kg de alumínio latinha da Aparecida Ramos, a 6,20",
    "noClick": true
   },
@@ -201,14 +214,14 @@
    "target": {
     "selector": "button[aria-label=\"Enviar\"]"
    },
-   "at": 10.28,
+   "at": 9.79,
    "label": "Enviar (A1a)",
    "noScroll": true
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 12.98
+   "at": 10.1
   },
   {
    "do": "waitFor",
@@ -220,14 +233,14 @@
    "target": {
     "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
    },
-   "at": 19.66,
+   "at": 15.26,
    "label": "campo Pergunte ao Cato (A1b)",
    "noScroll": true
   },
   {
    "do": "eval",
    "js": "(()=>{const t=document.querySelector('textarea[aria-label=\"Mensagem para o Cato\"]');if(!t)return 'SEM ALVO: campo';t.focus();return document.activeElement===t?'foco no campo':'SEM FOCO'})()",
-   "at": 20.06,
+   "at": 15.66,
    "label": "foco no campo (a digitação nunca vai para a página)"
   },
   {
@@ -237,23 +250,23 @@
    },
    "text": "Pix, pela Conta Principal",
    "cps": 40,
-   "at": 20.41,
+   "at": 16.01,
    "label": "digita: Pix, pela Conta Principal",
    "noClick": true
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 17.86
   },
   {
    "do": "click",
    "target": {
     "selector": "button[aria-label=\"Enviar\"]"
    },
-   "at": 22.61,
+   "at": 18.21,
    "label": "Enviar (A1b)",
    "noScroll": true
-  },
-  {
-   "do": "mark",
-   "name": "L3",
-   "at": 23.2
   },
   {
    "do": "waitFor",
@@ -266,7 +279,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] :text(\"Fornecedor: Aparecida Ramos\") >> nth=-1"
    },
    "seconds": 0.5,
-   "at": 26.8,
+   "at": 22.41,
    "label": "cartão: Fornecedor",
    "optional": true,
    "timeout": 4
@@ -277,7 +290,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] :text(\"Preços informados nesta conversa\") >> nth=-1"
    },
    "seconds": 0.5,
-   "at": 29.82,
+   "at": 23.49,
    "label": "cartão: material, quantidade e preço",
    "optional": true,
    "timeout": 4
@@ -288,7 +301,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] :text(\"Total da compra\") >> nth=-1"
    },
    "seconds": 0.5,
-   "at": 30.5,
+   "at": 24.13,
    "label": "cartão: Total da compra R$ 744,00",
    "optional": true,
    "timeout": 4
@@ -299,7 +312,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] :text(\"Forma de pagamento\") >> nth=-1"
    },
    "seconds": 0.8,
-   "at": 31.26,
+   "at": 24.93,
    "label": "cartão: Forma de pagamento Pix e Conta Principal",
    "optional": true,
    "timeout": 4
@@ -307,7 +320,7 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 35.01
+   "at": 27.49
   },
   {
    "do": "hover",
@@ -315,7 +328,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] :text(\"Estoque entra e o financeiro registra\") >> nth=-1"
    },
    "seconds": 2.0,
-   "at": 36.3,
+   "at": 28.67,
    "label": "ZOOM Estoque entra e o financeiro registra R$ 744,00.",
    "optional": true,
    "timeout": 4
@@ -323,19 +336,19 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 44.01
+   "at": 35.17
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 52.79
+   "at": 42.93
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:has-text(\"Corrigir dados\") >> nth=-1"
    },
-   "at": 54.61,
+   "at": 44.41,
    "label": "Corrigir dados (o pedido volta ao campo)",
    "noScroll": true
   },
@@ -350,7 +363,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:has-text(\"Agora não\") >> nth=-1"
    },
    "seconds": 0.6,
-   "at": 60.68,
+   "at": 49.29,
    "label": "Agora não (sem clicar)",
    "optional": true,
    "timeout": 4,
@@ -359,12 +372,12 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 63.24
+   "at": 51.39
   },
   {
    "do": "eval",
    "js": "(async()=>{const c=document.querySelector(\"[role=dialog][aria-label^=\\\"Cato.ai\\\"] div.h-full.overflow-y-auto\");if(!c)return 'SEM PAINEL';const y0=c.scrollTop,dy=c.scrollHeight-c.clientHeight-y0;c.scrollTop=y0+dy;return 'fim '+Math.round(c.scrollTop)})()",
-   "at": 65.93,
+   "at": 53.87,
    "label": "rola a conversa até o cartão (o campo cresceu com o pedido de volta)"
   },
   {
@@ -372,7 +385,7 @@
    "target": {
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:has-text(\"Lançar compra\") >> nth=-1"
    },
-   "at": 65.43,
+   "at": 53.37,
    "label": "clique em Lançar compra",
    "noScroll": true
   },
@@ -386,7 +399,7 @@
    "target": {
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:has-text(\"Abrir comprovante\") >> nth=-1"
    },
-   "at": 69.98,
+   "at": 57.29,
    "label": "clique em Abrir comprovante (o PDF abre em aba nova)",
    "optional": true,
    "noScroll": true
@@ -394,20 +407,20 @@
   {
    "do": "eval",
    "js": "(async()=>{const w=(window.__pops||[]).slice(-1)[0];if(!w)return 'SEM JANELA';for(let i=0;i<40;i++){let f=null;try{f=w.document&&w.document.querySelector('#pdf-frame')}catch(e){return 'ERRO '+e}if(f&&f.src){const b=await (await fetch(f.src.split('#')[0])).blob();const u=new Uint8Array(await b.arrayBuffer());let s='';for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'PDF:'+btoa(s)}await new Promise(r=>setTimeout(r,250))}return 'SEM PDF'})()",
-   "at": 74.94,
+   "at": 61.37,
    "label": "PDF do comprovante da compra (aba nova, para a ilustração)"
   },
   {
    "do": "mark",
    "name": "L8",
-   "at": 75.27
+   "at": 61.39
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:has-text(\"Próximos passos\") >> nth=-1"
    },
-   "at": 78.61,
+   "at": 63.77,
    "label": "Próximos passos do pedido (abre)",
    "optional": true,
    "noScroll": true
@@ -415,7 +428,7 @@
   {
    "do": "mark",
    "name": "L9",
-   "at": 80.25
+   "at": 64.72
   },
   {
    "do": "eval",
@@ -425,7 +438,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 91.77
+   "at": 73.76
   }
  ]
 }

@@ -1,6 +1,6 @@
 {
  "name": "t21-cap15",
- "title": "T21 · Cap. 15 · Limites e permissões (narração ESTIMADA 101,1 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T21 · Cap. 15 · Limites e permissões (narração 83,4 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t21-cap15",
  "pace": 0.5,
  "cps": 40,
@@ -16,7 +16,8 @@
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
-  "initial-preferences-set": "true"
+  "initial-preferences-set": "true",
+  "support_widget_last_dismissed": "2026-11-10T12:00:00"
  },
  "seedExtra": [
   "t14/inicio",
@@ -90,6 +91,10 @@
    "url": "/materiais"
   },
   {
+   "do": "eval",
+   "js": "(()=>{if(window.__animFix)return 'ja';window.__animFix=setInterval(()=>{for(const a of document.getAnimations())if(a.currentTime!==null&&a.currentTime<0)a.startTime=document.timeline.currentTime},100);return 'anim fix'})()"
+  },
+  {
    "do": "waitFor",
    "selector": "button[aria-label=\"Abrir o Cato\"]",
    "timeout": 30
@@ -114,6 +119,10 @@
   {
    "do": "eval",
    "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|indispon[ií]vel|SEM RESPOSTA SIMULADA|Deu um problema|N[ãa]o consegui/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__animFix)return 'ja';window.__animFix=setInterval(()=>{for(const a of document.getAnimations())if(a.currentTime!==null&&a.currentTime<0)a.startTime=document.timeline.currentTime},100);return 'anim fix'})()"
   }
  ],
  "steps": [
@@ -127,14 +136,14 @@
    "target": {
     "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
    },
-   "at": 2.9,
+   "at": 1.72,
    "label": "campo Pergunte ao Cato (A18)",
    "noScroll": true
   },
   {
    "do": "eval",
    "js": "(()=>{const t=document.querySelector('textarea[aria-label=\"Mensagem para o Cato\"]');if(!t)return 'SEM ALVO: campo';t.focus();return document.activeElement===t?'foco no campo':'SEM FOCO'})()",
-   "at": 3.3,
+   "at": 2.12,
    "label": "foco no campo (a digitação nunca vai para a página)"
   },
   {
@@ -144,7 +153,7 @@
    },
    "text": "O que você consegue fazer?",
    "cps": 40,
-   "at": 3.65,
+   "at": 2.47,
    "label": "digita: O que você consegue fazer?",
    "noClick": true
   },
@@ -153,7 +162,7 @@
    "target": {
     "selector": "button[aria-label=\"Enviar\"]"
    },
-   "at": 5.92,
+   "at": 4.74,
    "label": "Enviar (A18)",
    "noScroll": true
   },
@@ -170,7 +179,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const el=[...document.querySelectorAll(\"[role=dialog][aria-label^=\\\"Cato.ai\\\"] *\")].find(e=>e.children.length===0&&e.getClientRects().length&&e.textContent.includes(\"Pagamentos registram a operação\"));if(!el)return 'SEM ALVO';let c=el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)break;c=c.parentElement;}if(!c||c===document.body)c=document.scrollingElement;const dy=Math.round(el.getBoundingClientRect().top-260);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});await new Promise(r=>setTimeout(r,60));return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 14.81,
+   "at": 13.63,
    "label": "sobe até o aviso sobre pagamentos"
   },
   {
@@ -179,7 +188,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] :text(\"Pagamentos registram a operação\") >> nth=-1"
    },
    "seconds": 1.5,
-   "at": 16.04,
+   "at": 13.63,
    "label": "Pagamentos registram a operação no EcoSistema; não transferem dinheiro pela sua conta bancária.",
    "optional": true,
    "timeout": 4
@@ -187,30 +196,34 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 22.09
+   "at": 17.06
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 36.26
+   "at": 28.66
   },
   {
    "do": "press",
    "key": "Escape",
-   "at": 50.23,
+   "at": 40.4,
    "label": "fecha o painel",
    "optional": true
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 50.73
+   "at": 40.9
   },
   {
    "do": "goto",
    "url": "/configuracoes?tab=users",
-   "at": 51.03,
+   "at": 41.2,
    "label": "Usuários e Permissões"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__animFix)return 'ja';window.__animFix=setInterval(()=>{for(const a of document.getAnimations())if(a.currentTime!==null&&a.currentTime<0)a.startTime=document.timeline.currentTime},100);return 'anim fix'})()"
   },
   {
    "do": "waitFor",
@@ -228,7 +241,7 @@
     "text": "Marcos Antunes",
     "exact": true
    },
-   "at": 51.74,
+   "at": 42.93,
    "label": "escolhe Marcos Antunes na lista"
   },
   {
@@ -249,7 +262,7 @@
     "name": "Editar",
     "exact": true
    },
-   "at": 52.42,
+   "at": 43.57,
    "label": "Editar (permissões do Marcos)"
   },
   {
@@ -260,7 +273,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const el=[...document.querySelectorAll(\"[role=dialog] *\")].find(e=>e.children.length===0&&e.getClientRects().length&&e.textContent.trim()===\"Ver somente os pedidos que lançar\");if(!el)return 'SEM ALVO';let c=el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)break;c=c.parentElement;}if(!c||c===document.body)c=document.scrollingElement;const dy=Math.round(el.getBoundingClientRect().top-330);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});await new Promise(r=>setTimeout(r,60));return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 55.74,
+   "at": 46.03,
    "label": "desce até Ver somente os pedidos que lançar"
   },
   {
@@ -270,7 +283,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 3.0,
-   "at": 60.97,
+   "at": 50.39,
    "label": "ZOOM o Cato fica indisponível para evitar exposição indireta",
    "optional": true,
    "timeout": 4
@@ -278,25 +291,29 @@
   {
    "do": "press",
    "key": "Escape",
-   "at": 63.83,
+   "at": 54.0,
    "label": "fecha a janela de edição",
    "optional": true
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 65.5
+   "at": 53.71
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 77.69
+   "at": 64.27
   },
   {
    "do": "goto",
    "url": "/materiais",
-   "at": 90.1,
+   "at": 73.77,
    "label": "volta à tela Estoque"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__animFix)return 'ja';window.__animFix=setInterval(()=>{for(const a of document.getAnimations())if(a.currentTime!==null&&a.currentTime<0)a.startTime=document.timeline.currentTime},100);return 'anim fix'})()"
   },
   {
    "do": "waitFor",
@@ -306,14 +323,14 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 92.7
+   "at": 76.37
   },
   {
    "do": "click",
    "target": {
     "selector": "button[aria-label=\"Abrir o Cato\"]"
    },
-   "at": 92.7,
+   "at": 76.37,
    "label": "abre o Cato",
    "noScroll": true
   },
@@ -323,7 +340,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] p:has-text(\"O Cato.ai pode cometer erros\")"
    },
    "seconds": 1.5,
-   "at": 95.05,
+   "at": 78.37,
    "label": "rodapé O Cato.ai pode cometer erros",
    "noScroll": true,
    "optional": true,
@@ -337,7 +354,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 101.1
+   "at": 83.41
   }
  ]
 }

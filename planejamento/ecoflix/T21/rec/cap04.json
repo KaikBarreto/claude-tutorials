@@ -1,6 +1,6 @@
 {
  "name": "t21-cap04",
- "title": "T21 · Cap. 4 · Conhecendo o painel (narração ESTIMADA 66,9 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T21 · Cap. 4 · Conhecendo o painel (narração 53,6 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t21-cap04",
  "pace": 0.5,
  "cps": 40,
@@ -16,7 +16,8 @@
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
-  "initial-preferences-set": "true"
+  "initial-preferences-set": "true",
+  "support_widget_last_dismissed": "2026-11-10T12:00:00"
  },
  "seedExtra": [
   "t14/inicio",
@@ -89,6 +90,10 @@
    "url": "/materiais"
   },
   {
+   "do": "eval",
+   "js": "(()=>{if(window.__animFix)return 'ja';window.__animFix=setInterval(()=>{for(const a of document.getAnimations())if(a.currentTime!==null&&a.currentTime<0)a.startTime=document.timeline.currentTime},100);return 'anim fix'})()"
+  },
+  {
    "do": "waitFor",
    "selector": "button[aria-label=\"Abrir o Cato\"]",
    "timeout": 30
@@ -100,6 +105,10 @@
   {
    "do": "eval",
    "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|indispon[ií]vel|SEM RESPOSTA SIMULADA|Deu um problema|N[ãa]o consegui/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__animFix)return 'ja';window.__animFix=setInterval(()=>{for(const a of document.getAnimations())if(a.currentTime!==null&&a.currentTime<0)a.startTime=document.timeline.currentTime},100);return 'anim fix'})()"
   }
  ],
  "steps": [
@@ -133,7 +142,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] [role=group][aria-label=\"1 de 4\"]"
    },
    "seconds": 0.3,
-   "at": 2.0,
+   "at": 0.88,
    "label": "as quatro perguntas prontas (1ª)",
    "optional": true,
    "timeout": 4
@@ -141,7 +150,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const b=document.querySelector('button[aria-label=\"Próximo em Sugestões para começar\"]');if(!b)return 'SEM ALVO: seta do carrossel';for(let i=0;i<3;i++){if(!b.disabled)b.click();await new Promise(r=>setTimeout(r,420))}return 'quarta pergunta à vista'})()",
-   "at": 4.73,
+   "at": 2.64,
    "label": "o carrossel passa até a 4ª pergunta pronta"
   },
   {
@@ -150,7 +159,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] [role=group][aria-label=\"4 de 4\"]"
    },
    "seconds": 0.4,
-   "at": 6.43,
+   "at": 4.34,
    "label": "as quatro perguntas prontas (4ª)",
    "optional": true,
    "timeout": 4
@@ -158,7 +167,7 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 8.5
+   "at": 5.86
   },
   {
    "do": "hover",
@@ -166,7 +175,7 @@
     "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
    },
    "seconds": 0.6,
-   "at": 10.17,
+   "at": 7.12,
    "label": "campo Pergunte ao Cato…",
    "noScroll": true,
    "optional": true,
@@ -178,7 +187,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button[aria-label=\"Anexar foto, arquivo ou planilha\"]"
    },
    "seconds": 0.6,
-   "at": 12.37,
+   "at": 8.96,
    "label": "clipe Anexar foto, arquivo ou planilha",
    "noScroll": true,
    "optional": true,
@@ -190,7 +199,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button[aria-label=\"Falar\"]"
    },
    "seconds": 0.6,
-   "at": 15.03,
+   "at": 11.44,
    "label": "microfone Falar (sem clicar)",
    "noScroll": true,
    "optional": true,
@@ -202,7 +211,7 @@
     "selector": "button[aria-label=\"Enviar\"]"
    },
    "seconds": 0.6,
-   "at": 20.04,
+   "at": 14.8,
    "label": "botão Enviar",
    "noScroll": true,
    "optional": true,
@@ -211,7 +220,7 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 20.7
+   "at": 15.22
   },
   {
    "do": "hover",
@@ -219,7 +228,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] [role=toolbar] button:has-text(\"Conversas\")"
    },
    "seconds": 0.4,
-   "at": 23.35,
+   "at": 17.28,
    "label": "botão Conversas",
    "noScroll": true,
    "optional": true,
@@ -230,7 +239,7 @@
    "target": {
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] [role=toolbar] button:has-text(\"Conversas\")"
    },
-   "at": 23.95,
+   "at": 17.88,
    "label": "abre Conversas",
    "noScroll": true
   },
@@ -246,7 +255,7 @@
     "exact": true
    },
    "seconds": 0.8,
-   "at": 26.77,
+   "at": 20.0,
    "label": "Suas conversas (Retome uma análise de onde parou)",
    "optional": true,
    "timeout": 4
@@ -254,7 +263,7 @@
   {
    "do": "press",
    "key": "Escape",
-   "at": 27.37,
+   "at": 20.6,
    "label": "fecha Suas conversas",
    "optional": true
   },
@@ -264,7 +273,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] [role=toolbar] button[aria-label=\"Nova conversa\"]"
    },
    "seconds": 0.5,
-   "at": 26.97,
+   "at": 20.2,
    "label": "botão Nova (nova conversa)",
    "noScroll": true,
    "optional": true,
@@ -276,7 +285,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] [role=toolbar] button:has-text(\"Memória\")"
    },
    "seconds": 0.8,
-   "at": 27.45,
+   "at": 20.72,
    "label": "botão Memória",
    "noScroll": true,
    "optional": true,
@@ -285,14 +294,14 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 28.19
+   "at": 20.96
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button[aria-label=\"Mais opções do Cato\"]"
    },
-   "at": 29.12,
+   "at": 24.01,
    "label": "três pontinhos (Mais opções do Cato)",
    "noScroll": true
   },
@@ -307,7 +316,7 @@
     "selector": "[role=menuitem]:has-text(\"Notificações\")"
    },
    "seconds": 0.5,
-   "at": 30.79,
+   "at": 25.59,
    "label": "menu: Notificações",
    "noScroll": true,
    "optional": true,
@@ -319,7 +328,7 @@
     "selector": "[role=menuitemcheckbox]:has-text(\"Ler respostas automaticamente\")"
    },
    "seconds": 0.5,
-   "at": 31.47,
+   "at": 26.15,
    "label": "menu: Ler respostas automaticamente",
    "noScroll": true,
    "optional": true,
@@ -331,7 +340,7 @@
     "selector": "[role=menuitem]:has-text(\"Acompanhar pedidos\")"
    },
    "seconds": 0.5,
-   "at": 34.51,
+   "at": 28.63,
    "label": "menu: Acompanhar pedidos",
    "noScroll": true,
    "optional": true,
@@ -343,7 +352,7 @@
     "selector": "[role=menuitem]:has-text(\"Falar com atendente\")"
    },
    "seconds": 0.5,
-   "at": 35.42,
+   "at": 29.51,
    "label": "menu: Falar com atendente",
    "noScroll": true,
    "optional": true,
@@ -352,21 +361,21 @@
   {
    "do": "press",
    "key": "Escape",
-   "at": 37.36,
+   "at": 31.29,
    "label": "fecha o menu",
    "optional": true
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 38.25
+   "at": 31.91
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:has-text(\"Como tá indo meu negócio esse mês?\")"
    },
-   "at": 39.52,
+   "at": 32.99,
    "label": "clique em Como tá indo meu negócio esse mês?"
   },
   {
@@ -377,7 +386,7 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 43.92
+   "at": 36.23
   },
   {
    "do": "waitFor",
@@ -390,7 +399,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] li:has-text(\"Vendas: R$ 118.620,20\")"
    },
    "seconds": 1.2,
-   "at": 49.38,
+   "at": 41.6,
    "label": "ZOOM Vendas R$ 118.620,20",
    "optional": true,
    "timeout": 4
@@ -401,7 +410,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] strong:has-text(\"R$ 62.454,55\")"
    },
    "seconds": 1.5,
-   "at": 53.7,
+   "at": 44.29,
    "label": "ZOOM resultado R$ 62.454,55",
    "optional": true,
    "timeout": 4
@@ -414,7 +423,7 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 58.54
+   "at": 47.48
   },
   {
    "do": "waitFor",
@@ -427,7 +436,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:has-text(\"Compara com outubro\")"
    },
    "seconds": 0.4,
-   "at": 60.2,
+   "at": 49.06,
    "label": "sugestões de próxima pergunta (1ª)",
    "optional": true,
    "timeout": 4
@@ -438,7 +447,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:has-text(\"Quais despesas tive esse mês?\")"
    },
    "seconds": 1.2,
-   "at": 62.86,
+   "at": 51.22,
    "label": "sugestões (2ª; a 3ª fica fora da faixa, que rola de lado)",
    "optional": true,
    "timeout": 4
@@ -451,7 +460,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 66.94
+   "at": 53.59
   }
  ]
 }

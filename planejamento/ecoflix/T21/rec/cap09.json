@@ -1,6 +1,6 @@
 {
  "name": "t21-cap09",
- "title": "T21 · Cap. 9 · Contas, caixa e banco (narração ESTIMADA 72,9 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T21 · Cap. 9 · Contas, caixa e banco (narração 65,0 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t21-cap09",
  "pace": 0.5,
  "cps": 90,
@@ -16,7 +16,8 @@
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
-  "initial-preferences-set": "true"
+  "initial-preferences-set": "true",
+  "support_widget_last_dismissed": "2026-11-10T12:00:00"
  },
  "seedExtra": [
   "t14/inicio",
@@ -90,6 +91,10 @@
    "url": "/materiais"
   },
   {
+   "do": "eval",
+   "js": "(()=>{if(window.__animFix)return 'ja';window.__animFix=setInterval(()=>{for(const a of document.getAnimations())if(a.currentTime!==null&&a.currentTime<0)a.startTime=document.timeline.currentTime},100);return 'anim fix'})()"
+  },
+  {
    "do": "waitFor",
    "selector": "button[aria-label=\"Abrir o Cato\"]",
    "timeout": 30
@@ -114,6 +119,10 @@
   {
    "do": "eval",
    "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|indispon[ií]vel|SEM RESPOSTA SIMULADA|Deu um problema|N[ãa]o consegui/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__animFix)return 'ja';window.__animFix=setInterval(()=>{for(const a of document.getAnimations())if(a.currentTime!==null&&a.currentTime<0)a.startTime=document.timeline.currentTime},100);return 'anim fix'})()"
   }
  ],
  "steps": [
@@ -127,14 +136,14 @@
    "target": {
     "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
    },
-   "at": 2.56,
+   "at": 1.86,
    "label": "campo Pergunte ao Cato (A5)",
    "noScroll": true
   },
   {
    "do": "eval",
    "js": "(()=>{const t=document.querySelector('textarea[aria-label=\"Mensagem para o Cato\"]');if(!t)return 'SEM ALVO: campo';t.focus();return document.activeElement===t?'foco no campo':'SEM FOCO'})()",
-   "at": 2.96,
+   "at": 2.26,
    "label": "foco no campo (a digitação nunca vai para a página)"
   },
   {
@@ -144,7 +153,7 @@
    },
    "text": "Dá baixa na primeira parcela da Fundição Bandeira do Vale, recebi por Pix na Conta Principal",
    "cps": 90,
-   "at": 3.31,
+   "at": 2.61,
    "label": "digita: Dá baixa na primeira parcela da Fundição Bandeira do Vale, recebi por Pix na Conta Principal",
    "noClick": true
   },
@@ -153,7 +162,7 @@
    "target": {
     "selector": "button[aria-label=\"Enviar\"]"
    },
-   "at": 8.16,
+   "at": 7.46,
    "label": "Enviar (A5)",
    "noScroll": true
   },
@@ -168,7 +177,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] :text(\"Fatura venda #1731\") >> nth=-1"
    },
    "seconds": 0.6,
-   "at": 12.21,
+   "at": 11.5,
    "label": "cartão: Registrar recebimento, Fatura venda #1731 (parcela 1/3), R$ 4.790,00",
    "optional": true,
    "timeout": 4
@@ -176,14 +185,14 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 17.0
+   "at": 13.7
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:has-text(\"Confirmar registro\") >> nth=-1"
    },
-   "at": 17.3,
+   "at": 14.0,
    "label": "clique em Confirmar registro",
    "noScroll": true
   },
@@ -195,21 +204,21 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 20.85
+   "at": 16.82
   },
   {
    "do": "click",
    "target": {
     "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
    },
-   "at": 31.69,
+   "at": 25.62,
    "label": "campo Pergunte ao Cato (A6)",
    "noScroll": true
   },
   {
    "do": "eval",
    "js": "(()=>{const t=document.querySelector('textarea[aria-label=\"Mensagem para o Cato\"]');if(!t)return 'SEM ALVO: campo';t.focus();return document.activeElement===t?'foco no campo':'SEM FOCO'})()",
-   "at": 32.09,
+   "at": 26.02,
    "label": "foco no campo (a digitação nunca vai para a página)"
   },
   {
@@ -217,26 +226,26 @@
    "target": {
     "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
    },
-   "text": "Abre o",
+   "text": "Abre o caixa com 1",
    "cps": 90,
-   "at": 32.44,
-   "label": "digita: Abre o",
+   "at": 26.37,
+   "label": "digita: Abre o caixa com 1",
    "noClick": true
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 33.04
+   "at": 27.55
   },
   {
    "do": "type",
    "target": {
     "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
    },
-   "text": " caixa com 1.500 reais",
+   "text": ".500 reais",
    "cps": 90,
-   "at": 33.04,
-   "label": "digita (continua):  caixa com 1.500 reais",
+   "at": 27.55,
+   "label": "digita (continua): .500 reais",
    "noClick": true
   },
   {
@@ -244,7 +253,7 @@
    "target": {
     "selector": "button[aria-label=\"Enviar\"]"
    },
-   "at": 34.54,
+   "at": 28.48,
    "label": "Enviar (A6)",
    "noScroll": true
   },
@@ -258,7 +267,7 @@
    "target": {
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:has-text(\"Confirmar abertura\") >> nth=-1"
    },
-   "at": 38.12,
+   "at": 32.01,
    "label": "clique em Confirmar abertura",
    "noScroll": true
   },
@@ -272,14 +281,14 @@
    "target": {
     "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
    },
-   "at": 38.5,
+   "at": 31.85,
    "label": "campo Pergunte ao Cato (A7)",
    "noScroll": true
   },
   {
    "do": "eval",
    "js": "(()=>{const t=document.querySelector('textarea[aria-label=\"Mensagem para o Cato\"]');if(!t)return 'SEM ALVO: campo';t.focus();return document.activeElement===t?'foco no campo':'SEM FOCO'})()",
-   "at": 38.9,
+   "at": 32.25,
    "label": "foco no campo (a digitação nunca vai para a página)"
   },
   {
@@ -289,14 +298,14 @@
    },
    "text": "Lança uma saída de 85",
    "cps": 90,
-   "at": 39.25,
+   "at": 32.6,
    "label": "digita: Lança uma saída de 85",
    "noClick": true
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 40.6
+   "at": 33.95
   },
   {
    "do": "type",
@@ -305,7 +314,7 @@
    },
    "text": " reais no caixa, gás da empilhadeira, categoria Combustível",
    "cps": 90,
-   "at": 40.6,
+   "at": 33.95,
    "label": "digita (continua):  reais no caixa, gás da empilhadeira, categoria Combustível",
    "noClick": true
   },
@@ -314,7 +323,7 @@
    "target": {
     "selector": "button[aria-label=\"Enviar\"]"
    },
-   "at": 43.87,
+   "at": 37.22,
    "label": "Enviar (A7)",
    "noScroll": true
   },
@@ -328,7 +337,7 @@
    "target": {
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:has-text(\"Confirmar lançamento\") >> nth=-1"
    },
-   "at": 46.52,
+   "at": 40.67,
    "label": "clique em Confirmar lançamento",
    "noScroll": true
   },
@@ -342,14 +351,14 @@
    "target": {
     "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
    },
-   "at": 51.38,
+   "at": 44.14,
    "label": "campo Pergunte ao Cato (A8)",
    "noScroll": true
   },
   {
    "do": "eval",
    "js": "(()=>{const t=document.querySelector('textarea[aria-label=\"Mensagem para o Cato\"]');if(!t)return 'SEM ALVO: campo';t.focus();return document.activeElement===t?'foco no campo':'SEM FOCO'})()",
-   "at": 51.78,
+   "at": 44.54,
    "label": "foco no campo (a digitação nunca vai para a página)"
   },
   {
@@ -359,14 +368,14 @@
    },
    "text": "Transfere 2.000 da Co",
    "cps": 90,
-   "at": 52.13,
+   "at": 44.89,
    "label": "digita: Transfere 2.000 da Co",
    "noClick": true
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 53.48
+   "at": 46.24
   },
   {
    "do": "type",
@@ -375,7 +384,7 @@
    },
    "text": "nta Secundária pra Conta Principal",
    "cps": 90,
-   "at": 53.48,
+   "at": 46.24,
    "label": "digita (continua): nta Secundária pra Conta Principal",
    "noClick": true
   },
@@ -384,7 +393,7 @@
    "target": {
     "selector": "button[aria-label=\"Enviar\"]"
    },
-   "at": 55.55,
+   "at": 48.31,
    "label": "Enviar (A8)",
    "noScroll": true
   },
@@ -399,7 +408,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] :text(\"Conta Secundária\") >> nth=-1"
    },
    "seconds": 0.8,
-   "at": 59.6,
+   "at": 52.36,
    "label": "cartão: saldo de cada conta antes e depois",
    "optional": true,
    "timeout": 4
@@ -409,7 +418,7 @@
    "target": {
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:has-text(\"Confirmar transferência\") >> nth=-1"
    },
-   "at": 61.07,
+   "at": 54.81,
    "label": "clique em Confirmar transferência",
    "noScroll": true
   },
@@ -423,20 +432,20 @@
    "target": {
     "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
    },
-   "at": 60.71,
+   "at": 55.54,
    "label": "campo Pergunte ao Cato (A9)",
    "noScroll": true
   },
   {
    "do": "eval",
    "js": "(()=>{const t=document.querySelector('textarea[aria-label=\"Mensagem para o Cato\"]');if(!t)return 'SEM ALVO: campo';t.focus();return document.activeElement===t?'foco no campo':'SEM FOCO'})()",
-   "at": 61.11,
+   "at": 55.94,
    "label": "foco no campo (a digitação nunca vai para a página)"
   },
   {
    "do": "mark",
    "name": "L7",
-   "at": 61.72
+   "at": 56.64
   },
   {
    "do": "type",
@@ -445,7 +454,7 @@
    },
    "text": "Fecha o caixa, contei 1.415",
    "cps": 90,
-   "at": 61.72,
+   "at": 56.64,
    "label": "digita: Fecha o caixa, contei 1.415",
    "noClick": true
   },
@@ -454,7 +463,7 @@
    "target": {
     "selector": "button[aria-label=\"Enviar\"]"
    },
-   "at": 63.46,
+   "at": 58.38,
    "label": "Enviar (A9)",
    "noScroll": true
   },
@@ -469,7 +478,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] :text(\"Saldo esperado\") >> nth=-1"
    },
    "seconds": 1.0,
-   "at": 67.5,
+   "at": 62.43,
    "label": "cartão: Saldo esperado e Saldo contado (diferença R$ 0,00)",
    "optional": true,
    "timeout": 4
@@ -480,7 +489,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:has-text(\"Confirmar fechamento\") >> nth=-1"
    },
    "seconds": 1.2,
-   "at": 70.75,
+   "at": 63.74,
    "label": "Confirmar fechamento (sem clicar)",
    "optional": true,
    "timeout": 4,
@@ -494,7 +503,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 72.94
+   "at": 64.98
   }
  ]
 }

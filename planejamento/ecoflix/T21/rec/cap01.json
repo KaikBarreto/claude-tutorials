@@ -1,6 +1,6 @@
 {
  "name": "t21-cap01",
- "title": "T21 · Cap. 1 · Onde o Cato fica (narração ESTIMADA 50,1 s; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T21 · Cap. 1 · Onde o Cato fica (narração 42,2 s; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t21-cap01",
  "pace": 0.6,
  "cps": 40,
@@ -17,6 +17,7 @@
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
   "initial-preferences-set": "true",
+  "support_widget_last_dismissed": "2026-11-10T12:00:00",
   "__mostrarCato": "1"
  },
  "seedExtra": [
@@ -88,6 +89,10 @@
    "url": "/materiais"
   },
   {
+   "do": "eval",
+   "js": "(()=>{if(window.__animFix)return 'ja';window.__animFix=setInterval(()=>{for(const a of document.getAnimations())if(a.currentTime!==null&&a.currentTime<0)a.startTime=document.timeline.currentTime},100);return 'anim fix'})()"
+  },
+  {
    "do": "waitFor",
    "selector": "button[aria-label=\"Abrir o Cato\"]",
    "timeout": 30
@@ -99,6 +104,10 @@
   {
    "do": "eval",
    "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|indispon[ií]vel|SEM RESPOSTA SIMULADA|Deu um problema|N[ãa]o consegui/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__animFix)return 'ja';window.__animFix=setInterval(()=>{for(const a of document.getAnimations())if(a.currentTime!==null&&a.currentTime<0)a.startTime=document.timeline.currentTime},100);return 'anim fix'})()"
   }
  ],
  "steps": [
@@ -113,7 +122,7 @@
     "selector": "button[aria-label=\"Abrir o Cato\"]"
    },
    "seconds": 2.2,
-   "at": 4.1,
+   "at": 2.54,
    "label": "ZOOM botão redondo do Cato (Abrir o Cato)",
    "noScroll": true,
    "optional": true,
@@ -128,26 +137,30 @@
    "by": 0,
    "duration": 0.8,
    "after": 100,
-   "at": 7.61,
+   "at": 5.1,
    "label": "cursor solta o botão (em qualquer tela)"
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 9.34
+   "at": 7.34
   },
   {
    "do": "eval",
    "js": "(()=>{try{localStorage.removeItem('cato_adoption_nudge_38814e47-876a-5977-a5f7-53af364c17bb_34c36c63-0890-5e89-8963-7c77b7996908')}catch(e){}return 'chave do balão removida'})()",
-   "at": 10.54,
+   "at": 8.54,
    "label": "sob a ilustração: o balão volta a ser inédito"
   },
   {
    "do": "goto",
    "url": "/materiais",
    "reload": true,
-   "at": 10.84,
+   "at": 8.84,
    "label": "sob a ilustração: recarrega a tela Estoque"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__animFix)return 'ja';window.__animFix=setInterval(()=>{for(const a of document.getAnimations())if(a.currentTime!==null&&a.currentTime<0)a.startTime=document.timeline.currentTime},100);return 'anim fix'})()"
   },
   {
    "do": "waitFor",
@@ -157,12 +170,12 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 16.9
+   "at": 13.26
   },
   {
    "do": "clock",
    "forward": "00:00:16",
-   "at": 17.3,
+   "at": 13.66,
    "label": "avança o relógio: o balão de dica aparece"
   },
   {
@@ -171,7 +184,7 @@
     "selector": "[role=status]:has-text(\"Abrir Cato\")"
    },
    "seconds": 1.0,
-   "at": 19.93,
+   "at": 15.54,
    "label": "balão de dica do Cato",
    "noScroll": true,
    "optional": true,
@@ -183,7 +196,7 @@
     "selector": "button[aria-label=\"Fechar dica do Cato\"]"
    },
    "seconds": 1.2,
-   "at": 24.87,
+   "at": 19.48,
    "label": "ZOOM xis Fechar dica do Cato (sem clicar)",
    "noScroll": true,
    "optional": true,
@@ -192,13 +205,17 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 25.3
+   "at": 21.54
   },
   {
    "do": "goto",
    "url": "/configuracoes?tab=users",
-   "at": 26.0,
+   "at": 22.24,
    "label": "Usuários e Permissões"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__animFix)return 'ja';window.__animFix=setInterval(()=>{for(const a of document.getAnimations())if(a.currentTime!==null&&a.currentTime<0)a.startTime=document.timeline.currentTime},100);return 'anim fix'})()"
   },
   {
    "do": "waitFor",
@@ -211,7 +228,7 @@
     "text": "Marcos Antunes",
     "exact": true
    },
-   "at": 27.83,
+   "at": 23.88,
    "label": "escolhe Marcos Antunes na lista"
   },
   {
@@ -222,7 +239,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.getClientRects().length&&e.textContent.trim()===\"Usar o Cato (assistente de IA)\");if(!el)return 'SEM ALVO';let c=el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)break;c=c.parentElement;}if(!c||c===document.body)c=document.scrollingElement;const dy=Math.round(el.getBoundingClientRect().top-430);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});await new Promise(r=>setTimeout(r,60));return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 29.64,
+   "at": 25.44,
    "label": "desce até a permissão Usar o Cato (assistente de IA)"
   },
   {
@@ -231,7 +248,7 @@
     "selector": "main p:text-is(\"Usar o Cato (assistente de IA)\")"
    },
    "seconds": 3.0,
-   "at": 31.79,
+   "at": 27.68,
    "label": "ZOOM descrição de Usar o Cato (assistente de IA): o Cato responde sobre dados gerais da empresa, mesmo de telas que este usuário não pode abrir",
    "optional": true,
    "timeout": 4
@@ -239,13 +256,17 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 41.67
+   "at": 35.54
   },
   {
    "do": "goto",
    "url": "/materiais",
-   "at": 42.37,
+   "at": 36.24,
    "label": "volta à tela Estoque"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__animFix)return 'ja';window.__animFix=setInterval(()=>{for(const a of document.getAnimations())if(a.currentTime!==null&&a.currentTime<0)a.startTime=document.timeline.currentTime},100);return 'anim fix'})()"
   },
   {
    "do": "waitFor",
@@ -257,7 +278,7 @@
    "target": {
     "selector": "button[aria-label^=\"Abrir\"][aria-label*=\"Cato\"]"
    },
-   "at": 43.13,
+   "at": 36.76,
    "label": "clique no botão do Cato",
    "noScroll": true
   },
@@ -273,7 +294,7 @@
     "exact": true
    },
    "seconds": 1.2,
-   "at": 47.63,
+   "at": 40.54,
    "label": "janela Antes da primeira conversa com o Cato",
    "optional": true,
    "timeout": 4
@@ -286,7 +307,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 50.07
+   "at": 42.16
   }
  ]
 }

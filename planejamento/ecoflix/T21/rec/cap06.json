@@ -1,6 +1,6 @@
 {
  "name": "t21-cap06",
- "title": "T21 · Cap. 6 · Gráfico, tabela e de onde vêm os números (narração ESTIMADA 117,9 s; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T21 · Cap. 6 · Gráfico, tabela e de onde vêm os números (narração 101,5 s; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t21-cap06",
  "pace": 0.5,
  "cps": 40,
@@ -16,7 +16,8 @@
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
-  "initial-preferences-set": "true"
+  "initial-preferences-set": "true",
+  "support_widget_last_dismissed": "2026-11-10T12:00:00"
  },
  "seedExtra": [
   "t14/inicio",
@@ -89,6 +90,10 @@
    "url": "/materiais"
   },
   {
+   "do": "eval",
+   "js": "(()=>{if(window.__animFix)return 'ja';window.__animFix=setInterval(()=>{for(const a of document.getAnimations())if(a.currentTime!==null&&a.currentTime<0)a.startTime=document.timeline.currentTime},100);return 'anim fix'})()"
+  },
+  {
    "do": "waitFor",
    "selector": "button[aria-label=\"Abrir o Cato\"]",
    "timeout": 30
@@ -105,6 +110,10 @@
    "do": "goto",
    "url": "/materiais",
    "reload": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__animFix)return 'ja';window.__animFix=setInterval(()=>{for(const a of document.getAnimations())if(a.currentTime!==null&&a.currentTime<0)a.startTime=document.timeline.currentTime},100);return 'anim fix'})()"
   },
   {
    "do": "waitFor",
@@ -143,6 +152,10 @@
   {
    "do": "eval",
    "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|indispon[ií]vel|SEM RESPOSTA SIMULADA|Deu um problema|N[ãa]o consegui/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__animFix)return 'ja';window.__animFix=setInterval(()=>{for(const a of document.getAnimations())if(a.currentTime!==null&&a.currentTime<0)a.startTime=document.timeline.currentTime},100);return 'anim fix'})()"
   }
  ],
  "steps": [
@@ -156,14 +169,14 @@
    "target": {
     "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
    },
-   "at": 0.79,
+   "at": 0.48,
    "label": "campo Pergunte ao Cato (R6)",
    "noScroll": true
   },
   {
    "do": "eval",
    "js": "(()=>{const t=document.querySelector('textarea[aria-label=\"Mensagem para o Cato\"]');if(!t)return 'SEM ALVO: campo';t.focus();return document.activeElement===t?'foco no campo':'SEM FOCO'})()",
-   "at": 1.19,
+   "at": 0.88,
    "label": "foco no campo (a digitação nunca vai para a página)"
   },
   {
@@ -173,7 +186,7 @@
    },
    "text": "Compras e vendas dos últimos três meses",
    "cps": 40,
-   "at": 1.54,
+   "at": 1.23,
    "label": "digita: Compras e vendas dos últimos três meses",
    "noClick": true
   },
@@ -182,7 +195,7 @@
    "target": {
     "selector": "button[aria-label=\"Enviar\"]"
    },
-   "at": 5.16,
+   "at": 4.44,
    "label": "Enviar (R6)",
    "noScroll": true
   },
@@ -194,7 +207,7 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 9.19
+   "at": 8.1
   },
   {
    "do": "hover",
@@ -202,7 +215,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] div.rounded-2xl:has-text(\"Compras e vendas por mês\") circle.recharts-dot >> nth=1"
    },
    "seconds": 1.5,
-   "at": 10.97,
+   "at": 10.26,
    "label": "outubro: as compras quase alcançam as vendas (dica do gráfico)",
    "optional": true,
    "timeout": 4
@@ -213,7 +226,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] div.rounded-2xl:has-text(\"Compras e vendas por mês\") circle.recharts-dot >> nth=5"
    },
    "seconds": 1.5,
-   "at": 16.01,
+   "at": 13.84,
    "label": "novembro: as vendas passam longe das compras (dica do gráfico)",
    "optional": true,
    "timeout": 4
@@ -223,30 +236,41 @@
    "target": {
     "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
    },
-   "at": 20.24,
+   "at": 16.35,
    "label": "campo Pergunte ao Cato (R7)",
    "noScroll": true
   },
   {
    "do": "eval",
    "js": "(()=>{const t=document.querySelector('textarea[aria-label=\"Mensagem para o Cato\"]');if(!t)return 'SEM ALVO: campo';t.focus();return document.activeElement===t?'foco no campo':'SEM FOCO'})()",
-   "at": 20.64,
+   "at": 16.75,
    "label": "foco no campo (a digitação nunca vai para a página)"
-  },
-  {
-   "do": "mark",
-   "name": "L3",
-   "at": 21.22
   },
   {
    "do": "type",
    "target": {
     "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
    },
-   "text": "Pra quem eu mais vendi em outubro?",
+   "text": "Pra quem eu ",
    "cps": 40,
-   "at": 21.22,
-   "label": "digita: Pra quem eu mais vendi em outubro?",
+   "at": 17.1,
+   "label": "digita: Pra quem eu ",
+   "noClick": true
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 18.26
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
+   },
+   "text": "mais vendi em outubro?",
+   "cps": 40,
+   "at": 18.26,
+   "label": "digita (continua): mais vendi em outubro?",
    "noClick": true
   },
   {
@@ -254,7 +278,7 @@
    "target": {
     "selector": "button[aria-label=\"Enviar\"]"
    },
-   "at": 24.05,
+   "at": 20.25,
    "label": "Enviar (R7)",
    "noScroll": true
   },
@@ -266,7 +290,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const c=document.querySelector(\"[role=dialog][aria-label^=\\\"Cato.ai\\\"] div.h-full.overflow-y-auto\");if(!c)return 'SEM PAINEL';const el=[...document.querySelectorAll(\"[role=dialog][aria-label^=\\\"Cato.ai\\\"] div.h-full.overflow-y-auto div.items-end\")].filter(e=>e.getClientRects().length).pop();if(!el)return 'SEM ALVO';const dy=Math.round(el.getBoundingClientRect().top-165);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});await new Promise(r=>setTimeout(r,60));return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 28.57,
+   "at": 24.77,
    "label": "a conversa sobe até o começo da resposta (o gráfico empurrou)"
   },
   {
@@ -275,7 +299,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] li:has-text(\"Fundição Bandeira do Vale: R$ 112.800,00\")"
    },
    "seconds": 0.7,
-   "at": 29.17,
+   "at": 25.37,
    "label": "ZOOM Fundição Bandeira do Vale: R$ 112.800,00",
    "optional": true,
    "timeout": 4
@@ -283,31 +307,31 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 30.15
+   "at": 25.87
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 43.25
+   "at": 36.75
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 55.3
+   "at": 47.22
   },
   {
    "do": "click",
    "target": {
     "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
    },
-   "at": 55.3,
+   "at": 47.22,
    "label": "campo Pergunte ao Cato (R8)",
    "noScroll": true
   },
   {
    "do": "eval",
    "js": "(()=>{const t=document.querySelector('textarea[aria-label=\"Mensagem para o Cato\"]');if(!t)return 'SEM ALVO: campo';t.focus();return document.activeElement===t?'foco no campo':'SEM FOCO'})()",
-   "at": 55.7,
+   "at": 47.62,
    "label": "foco no campo (a digitação nunca vai para a página)"
   },
   {
@@ -317,7 +341,7 @@
    },
    "text": "Lista meu estoque em tabela",
    "cps": 40,
-   "at": 56.05,
+   "at": 47.97,
    "label": "digita: Lista meu estoque em tabela",
    "noClick": true
   },
@@ -326,7 +350,7 @@
    "target": {
     "selector": "button[aria-label=\"Enviar\"]"
    },
-   "at": 58.39,
+   "at": 50.31,
    "label": "Enviar (R8)",
    "noScroll": true
   },
@@ -338,7 +362,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const c=document.querySelector(\"[role=dialog][aria-label^=\\\"Cato.ai\\\"] div.h-full.overflow-y-auto\");if(!c)return 'SEM PAINEL';const el=[...document.querySelectorAll(\"[role=dialog][aria-label^=\\\"Cato.ai\\\"] div.h-full.overflow-y-auto div.items-end\")].filter(e=>e.getClientRects().length).pop();if(!el)return 'SEM ALVO';const dy=Math.round(el.getBoundingClientRect().top-165);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});await new Promise(r=>setTimeout(r,60));return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 62.16,
+   "at": 54.08,
    "label": "a conversa sobe até o começo da resposta (a tabela empurrou)"
   },
   {
@@ -347,7 +371,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] th:has-text(\"Material\") >> nth=-1"
    },
    "seconds": 0.15,
-   "at": 62.76,
+   "at": 54.68,
    "label": "tabela: Material",
    "optional": true,
    "timeout": 4
@@ -358,7 +382,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] th:has-text(\"Quantidade\") >> nth=-1"
    },
    "seconds": 0.15,
-   "at": 63.41,
+   "at": 55.33,
    "label": "tabela: Quantidade (kg)",
    "optional": true,
    "timeout": 4
@@ -369,7 +393,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] th:has-text(\"Valor em estoque\") >> nth=-1"
    },
    "seconds": 0.15,
-   "at": 64.06,
+   "at": 55.98,
    "label": "tabela: Valor em estoque",
    "optional": true,
    "timeout": 4
@@ -377,17 +401,17 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 63.08
+   "at": 56.67
   },
   {
    "do": "mark",
    "name": "L8",
-   "at": 75.05
+   "at": 67.79
   },
   {
    "do": "eval",
    "js": "(async()=>{const c=document.querySelector(\"[role=dialog][aria-label^=\\\"Cato.ai\\\"] div.h-full.overflow-y-auto\");if(!c)return 'SEM PAINEL';const el=[...document.querySelectorAll(\"[role=dialog][aria-label^=\\\"Cato.ai\\\"] div.h-full.overflow-y-auto div.items-start\")].filter(e=>e.getClientRects().length&&e.innerText.includes(\"Aqui está o seu estoque de agora\")).pop();if(!el)return 'SEM ALVO';const dy=Math.round(el.getBoundingClientRect().top-150);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});await new Promise(r=>setTimeout(r,60));return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 76.74,
+   "at": 69.09,
    "label": "sobe a conversa até o topo da resposta da tabela"
   },
   {
@@ -396,7 +420,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] p:text-is(\"Consultei seu estoque\") >> nth=-1"
    },
    "seconds": 0.6,
-   "at": 79.75,
+   "at": 71.49,
    "label": "ZOOM Consultei seu estoque",
    "optional": true,
    "timeout": 4
@@ -407,7 +431,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] span:has-text(\"Período 10 nov. 2026\") >> nth=-1"
    },
    "seconds": 0.5,
-   "at": 81.37,
+   "at": 72.87,
    "label": "ZOOM linha do período",
    "optional": true,
    "timeout": 4
@@ -418,7 +442,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] span:has-text(\"Atualizado às\") >> nth=-1"
    },
    "seconds": 0.8,
-   "at": 82.28,
+   "at": 73.75,
    "label": "ZOOM Atualizado às",
    "optional": true,
    "timeout": 4
@@ -426,7 +450,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const c=document.querySelector(\"[role=dialog][aria-label^=\\\"Cato.ai\\\"] div.h-full.overflow-y-auto\");if(!c)return 'SEM PAINEL';const y0=c.scrollTop,dy=c.scrollHeight-c.clientHeight-y0;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'fim '+Math.round(c.scrollTop)})()",
-   "at": 84.68,
+   "at": 75.89,
    "label": "desce pela tabela"
   },
   {
@@ -435,7 +459,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:has-text(\"Abrir posição de estoque\") >> nth=-1"
    },
    "seconds": 1.0,
-   "at": 89.92,
+   "at": 80.05,
    "label": "botão Abrir posição de estoque",
    "optional": true,
    "timeout": 4
@@ -443,14 +467,14 @@
   {
    "do": "mark",
    "name": "L9",
-   "at": 93.84
+   "at": 83.11
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:has-text(\"Abrir posição de estoque\") >> nth=-1"
    },
-   "at": 94.37,
+   "at": 83.65,
    "label": "clique em Abrir posição de estoque"
   },
   {
@@ -463,7 +487,7 @@
    "target": {
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button[aria-label=\"Fechar\"]"
    },
-   "at": 95.51,
+   "at": 84.59,
    "label": "Fechar o painel",
    "noScroll": true,
    "when": {
@@ -480,7 +504,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.getClientRects().length&&e.textContent.trim()===\"Total geral\");if(!el)return 'SEM ALVO';let c=el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)break;c=c.parentElement;}if(!c||c===document.body)c=document.scrollingElement;const dy=Math.round(el.getBoundingClientRect().top-430);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});await new Promise(r=>setTimeout(r,60));return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 96.79,
+   "at": 85.61,
    "label": "desce até o Total geral"
   },
   {
@@ -489,7 +513,7 @@
     "selector": "main tr:has-text(\"Total geral\")"
    },
    "seconds": 1.8,
-   "at": 97.99,
+   "at": 86.67,
    "label": "ZOOM Total geral com Valor R$ 96.076,00",
    "optional": true,
    "timeout": 4
@@ -502,14 +526,14 @@
   {
    "do": "mark",
    "name": "L10",
-   "at": 105.73
+   "at": 92.43
   },
   {
    "do": "click",
    "target": {
     "selector": "button[aria-label=\"Abrir o Cato\"]"
    },
-   "at": 106.23,
+   "at": 92.93,
    "label": "abre o Cato de novo (a conversa volta)",
    "noScroll": true
   },
@@ -524,7 +548,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] p:has-text(\"O Cato.ai pode cometer erros\")"
    },
    "seconds": 1.5,
-   "at": 109.91,
+   "at": 95.63,
    "label": "rodapé O Cato.ai pode cometer erros",
    "noScroll": true,
    "optional": true,
@@ -536,7 +560,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:has-text(\"Abrir posição de estoque\") >> nth=-1"
    },
    "seconds": 1.0,
-   "at": 115.98,
+   "at": 100.41,
    "label": "confira na tela, por aquele botão",
    "optional": true,
    "timeout": 4
@@ -549,7 +573,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 117.86
+   "at": 101.45
   }
  ]
 }

@@ -161,7 +161,8 @@ MARCOS = stable_id('user.marcos')
 
 def storage(uid=RAFAEL, mostrar_cato=False):
     d = {'app_version': VERSAO, 'notification_shown_version': VERSAO, 'pwa-install-dismissed': 'true', 'theme': 'light',
-         f'daily-tasks-reminder-last-shown-{uid}': HOJE, 'initial-preferences-set': 'true'}
+         f'daily-tasks-reminder-last-shown-{uid}': HOJE, 'initial-preferences-set': 'true',
+         'support_widget_last_dismissed': HOJE + 'T12:00:00'}   # balão do WhatsApp (nome e foto de gente de verdade) aparece 15 s depois do login
     if mostrar_cato:   # o gravador cala o balão de dica do Cato no login pela tela; aqui ele tem de aparecer (browser.mjs, __mostrarCato)
         d['__mostrarCato'] = '1'
     return d
@@ -176,6 +177,21 @@ OBS = ("(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tent
        "{childList:true,subtree:true,characterData:true});chk(document.body.innerText);"
        "setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);"
        "if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()")
+
+
+# Animação do framer-motion presa no futuro pelo relógio simulado (08-licoes, T20): a cada 100 ms, a animação presa começa agora.
+# Rodar depois de TODA navegação (goto/recarga): `com_anim()` põe o conserto logo depois de cada `goto`, no setup e nos passos.
+ANIM_FIX = ("(()=>{if(window.__animFix)return 'ja';window.__animFix=setInterval(()=>{for(const a of document.getAnimations())"
+            "if(a.currentTime!==null&&a.currentTime<0)a.startTime=document.timeline.currentTime},100);return 'anim fix'})()")
+
+
+def com_anim(passos):
+    r = []
+    for st in passos:
+        r.append(st)
+        if st.get('do') == 'goto':
+            r.append({'do': 'eval', 'js': ANIM_FIX})
+    return r
 
 
 class Cap:
@@ -199,7 +215,7 @@ class Cap:
         s.prewarm = list(prewarm)
         s.user = user
         s.mostrar_cato = mostrar_cato
-        s.setup = list(setup) + [{'do': 'eval', 'js': OBS}]
+        s.setup = list(setup) + [{'do': 'eval', 'js': OBS}, {'do': 'eval', 'js': ANIM_FIX}]
 
     # ---- tempo
     def L(s, i):
@@ -384,7 +400,7 @@ class Cap:
             'start': {'x': s.start[0], 'y': s.start[1]},
             'anonymous': True, 'storage': storage(MARCOS if s.user == 'marcos' else RAFAEL, s.mostrar_cato),
             'seedExtra': list(SEMENTE[s.n]),
-            'prewarm': s.prewarm, 'setup': s.setup, 'steps': s.steps,
+            'prewarm': s.prewarm, 'setup': com_anim(s.setup), 'steps': com_anim(s.steps),
         }
         if s.voz_inicio:
             d['voz_inicio'] = s.voz_inicio      # a edição e o resumo.py contam a voz a partir daqui

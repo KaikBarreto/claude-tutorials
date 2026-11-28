@@ -1,6 +1,6 @@
 {
  "name": "t21-cap10",
- "title": "T21 · Cap. 10 · Saldo de cliente e fornecedor (narração ESTIMADA 46,9 s; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T21 · Cap. 10 · Saldo de cliente e fornecedor (narração 45,5 s; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t21-cap10",
  "pace": 0.5,
  "cps": 90,
@@ -16,7 +16,8 @@
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
-  "initial-preferences-set": "true"
+  "initial-preferences-set": "true",
+  "support_widget_last_dismissed": "2026-11-10T12:00:00"
  },
  "seedExtra": [
   "t14/inicio",
@@ -90,6 +91,10 @@
    "url": "/materiais"
   },
   {
+   "do": "eval",
+   "js": "(()=>{if(window.__animFix)return 'ja';window.__animFix=setInterval(()=>{for(const a of document.getAnimations())if(a.currentTime!==null&&a.currentTime<0)a.startTime=document.timeline.currentTime},100);return 'anim fix'})()"
+  },
+  {
    "do": "waitFor",
    "selector": "button[aria-label=\"Abrir o Cato\"]",
    "timeout": 30
@@ -114,6 +119,10 @@
   {
    "do": "eval",
    "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|indispon[ií]vel|SEM RESPOSTA SIMULADA|Deu um problema|N[ãa]o consegui/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__animFix)return 'ja';window.__animFix=setInterval(()=>{for(const a of document.getAnimations())if(a.currentTime!==null&&a.currentTime<0)a.startTime=document.timeline.currentTime},100);return 'anim fix'})()"
   }
  ],
  "steps": [
@@ -127,14 +136,14 @@
    "target": {
     "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
    },
-   "at": 6.55,
+   "at": 5.16,
    "label": "campo Pergunte ao Cato (A10a)",
    "noScroll": true
   },
   {
    "do": "eval",
    "js": "(()=>{const t=document.querySelector('textarea[aria-label=\"Mensagem para o Cato\"]');if(!t)return 'SEM ALVO: campo';t.focus();return document.activeElement===t?'foco no campo':'SEM FOCO'})()",
-   "at": 6.95,
+   "at": 5.56,
    "label": "foco no campo (a digitação nunca vai para a página)"
   },
   {
@@ -144,7 +153,7 @@
    },
    "text": "Abate 100 reais do saldo do Valdir Pereira, ele entregou uma bateria em troca",
    "cps": 90,
-   "at": 7.3,
+   "at": 5.91,
    "label": "digita: Abate 100 reais do saldo do Valdir Pereira, ele entregou uma bateria em troca",
    "noClick": true
   },
@@ -153,7 +162,7 @@
    "target": {
     "selector": "button[aria-label=\"Enviar\"]"
    },
-   "at": 11.43,
+   "at": 10.04,
    "label": "Enviar (A10a)",
    "noScroll": true
   },
@@ -167,14 +176,14 @@
    "target": {
     "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
    },
-   "at": 15.02,
+   "at": 14.24,
    "label": "campo Pergunte ao Cato (A10b)",
    "noScroll": true
   },
   {
    "do": "eval",
    "js": "(()=>{const t=document.querySelector('textarea[aria-label=\"Mensagem para o Cato\"]');if(!t)return 'SEM ALVO: campo';t.focus();return document.activeElement===t?'foco no campo':'SEM FOCO'})()",
-   "at": 15.42,
+   "at": 14.64,
    "label": "foco no campo (a digitação nunca vai para a página)"
   },
   {
@@ -184,21 +193,21 @@
    },
    "text": "fornecedor",
    "cps": 90,
-   "at": 15.77,
+   "at": 14.99,
    "label": "digita: fornecedor",
    "noClick": true
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 16.62
+   "at": 15.84
   },
   {
    "do": "click",
    "target": {
     "selector": "button[aria-label=\"Enviar\"]"
    },
-   "at": 16.7,
+   "at": 15.92,
    "label": "Enviar (A10b)",
    "noScroll": true
   },
@@ -213,7 +222,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] :text(\"Hoje: Ele te deve\") >> nth=-1"
    },
    "seconds": 0.6,
-   "at": 20.75,
+   "at": 19.97,
    "label": "cartão: Hoje: Ele te deve R$ 300,00.",
    "optional": true,
    "timeout": 4
@@ -224,7 +233,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] :text(\"Ele ficará te devendo\") >> nth=-1"
    },
    "seconds": 0.8,
-   "at": 20.75,
+   "at": 19.97,
    "label": "cartão: Ele ficará te devendo R$ 200,00.",
    "optional": true,
    "timeout": 4
@@ -235,7 +244,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] :text(\"Não movimenta caixa nem banco\") >> nth=-1"
    },
    "seconds": 1.5,
-   "at": 21.2,
+   "at": 22.29,
    "label": "ZOOM Não movimenta caixa nem banco.",
    "optional": true,
    "timeout": 4
@@ -245,7 +254,7 @@
    "target": {
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:text-is(\"Confirmar\") >> nth=-1"
    },
-   "at": 23.61,
+   "at": 24.75,
    "label": "clique em Confirmar",
    "noScroll": true
   },
@@ -254,30 +263,41 @@
    "target": {
     "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
    },
-   "at": 23.93,
+   "at": 24.18,
    "label": "campo Pergunte ao Cato (A11)",
    "noScroll": true
   },
   {
    "do": "eval",
    "js": "(()=>{const t=document.querySelector('textarea[aria-label=\"Mensagem para o Cato\"]');if(!t)return 'SEM ALVO: campo';t.focus();return document.activeElement===t?'foco no campo':'SEM FOCO'})()",
-   "at": 24.33,
+   "at": 24.58,
    "label": "foco no campo (a digitação nunca vai para a página)"
-  },
-  {
-   "do": "mark",
-   "name": "L3",
-   "at": 25.18
   },
   {
    "do": "type",
    "target": {
     "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
    },
-   "text": "Registra o recebimento de 1.000 reais do saldo da Aços Quiririm, por Pix na Conta Principal",
+   "text": "Registra o recebime",
    "cps": 90,
-   "at": 25.18,
-   "label": "digita: Registra o recebimento de 1.000 reais do saldo da Aços Quiririm, por Pix na Conta Principal",
+   "at": 24.93,
+   "label": "digita: Registra o recebime",
+   "noClick": true
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 26.16
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
+   },
+   "text": "nto de 1.000 reais do saldo da Aços Quiririm, por Pix na Conta Principal",
+   "cps": 90,
+   "at": 26.16,
+   "label": "digita (continua): nto de 1.000 reais do saldo da Aços Quiririm, por Pix na Conta Principal",
    "noClick": true
   },
   {
@@ -285,7 +305,7 @@
    "target": {
     "selector": "button[aria-label=\"Enviar\"]"
    },
-   "at": 29.98,
+   "at": 30.05,
    "label": "Enviar (A11)",
    "noScroll": true
   },
@@ -300,7 +320,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] :text(\"Saldo do parceiro\") >> nth=-1"
    },
    "seconds": 1.0,
-   "at": 34.03,
+   "at": 34.1,
    "label": "cartão: Saldo do parceiro R$ 1.000,00",
    "optional": true,
    "timeout": 4
@@ -310,14 +330,14 @@
    "target": {
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:has-text(\"Confirmar\") >> nth=-1"
    },
-   "at": 36.13,
+   "at": 35.74,
    "label": "clique em Confirmar",
    "noScroll": true
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 36.31
+   "at": 35.68
   },
   {
    "do": "eval",
@@ -327,7 +347,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 46.92
+   "at": 45.47
   }
  ]
 }
