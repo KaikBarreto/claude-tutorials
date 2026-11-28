@@ -1,6 +1,6 @@
 {
  "name": "t22-cap11",
- "title": "T22 · Cap. 11 · Corrigir o estoque de uma unidade (narração ESTIMADA 72,0 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira (matriz))",
+ "title": "T22 · Cap. 11 · Corrigir o estoque de uma unidade (narração 59,8 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira (matriz))",
  "seed": "t22-cap11",
  "pace": 0.5,
  "cps": 40,
@@ -81,6 +81,10 @@
    "timeout": 25
   },
   {
+   "do": "eval",
+   "js": "(()=>{if(window.__anima)return 'ja';window.__anima=setInterval(()=>{try{document.getAnimations().forEach(x=>{if(x.currentTime!==null&&x.currentTime<0)x.startTime=document.timeline.currentTime})}catch(e){}},60);return 'ok'})()"
+  },
+  {
    "do": "waitFor",
    "idle": true
   },
@@ -92,6 +96,10 @@
    "do": "waitFor",
    "text": "Dashboard Gerencial",
    "timeout": 25
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__anima)return 'ja';window.__anima=setInterval(()=>{try{document.getAnimations().forEach(x=>{if(x.currentTime!==null&&x.currentTime<0)x.startTime=document.timeline.currentTime})}catch(e){}},60);return 'ok'})()"
   },
   {
    "do": "waitFor",
@@ -116,6 +124,10 @@
    "do": "waitFor",
    "text": "Tabela Unificada de Materiais",
    "timeout": 25
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__anima)return 'ja';window.__anima=setInterval(()=>{try{document.getAnimations().forEach(x=>{if(x.currentTime!==null&&x.currentTime<0)x.startTime=document.timeline.currentTime})}catch(e){}},60);return 'ok'})()"
   },
   {
    "do": "waitFor",
@@ -160,7 +172,7 @@
     "selector": "main tbody tr:has-text(\"Papelão\")"
    },
    "seconds": 0.8,
-   "at": 3.39,
+   "at": 2.58,
    "label": "a linha do Papelão",
    "optional": true,
    "timeout": 4
@@ -170,7 +182,7 @@
    "target": {
     "selector": "main button[aria-label^=\"Ações de Papelão\"]"
    },
-   "at": 10.2,
+   "at": 8.74,
    "label": "⋯ da coluna Ações do Papelão"
   },
   {
@@ -186,7 +198,7 @@
     "selector": "[role=menuitem]:has-text(\"Transferir entre materiais\")"
    },
    "seconds": 0.8,
-   "at": 10.91,
+   "at": 9.24,
    "label": "Corrigir saldo, Transferir entre unidades, Transferir entre materiais",
    "optional": true,
    "timeout": 4
@@ -194,14 +206,14 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 12.08
+   "at": 10.44
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=menuitem]:has-text(\"Corrigir saldo\")"
    },
-   "at": 12.38,
+   "at": 10.74,
    "label": "Corrigir saldo"
   },
   {
@@ -218,7 +230,7 @@
    "target": {
     "selector": "[role=dialog] #adjust-unit"
    },
-   "at": 13.59,
+   "at": 12.1,
    "label": "Unidade"
   },
   {
@@ -226,20 +238,20 @@
    "target": {
     "selector": "[role=option]:has-text(\"Filial Pindamonhangaba\")"
    },
-   "at": 15.44,
+   "at": 13.56,
    "label": "Unidade: Filial Pindamonhangaba"
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 15.99
+   "at": 13.88
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] button:has-text(\"Saída\")"
    },
-   "at": 16.75,
+   "at": 14.58,
    "label": "Saída"
   },
   {
@@ -247,7 +259,7 @@
    "target": {
     "selector": "[role=dialog] #adjust-quantity"
    },
-   "at": 17.43,
+   "at": 15.3,
    "label": "Quantidade"
   },
   {
@@ -256,7 +268,7 @@
     "selector": "[role=dialog] #adjust-quantity"
    },
    "text": "30",
-   "at": 17.98,
+   "at": 15.85,
    "label": "Quantidade 30",
    "noClick": true
   },
@@ -268,7 +280,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 1.4,
-   "at": 20.04,
+   "at": 17.48,
    "label": "Saldo atual e Depois do ajuste (ZOOM)",
    "optional": true,
    "timeout": 4
@@ -281,20 +293,20 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 22.95
+   "at": 19.64
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] #adjust-description"
    },
-   "at": 23.25,
+   "at": 19.94,
    "label": "Motivo da correção"
   },
   {
    "do": "eval",
    "js": "(()=>{const el=document.querySelector(\"[role=dialog] #adjust-description\");if(!el)return 'SEM ALVO';el.focus();el.select&&el.select();document.execCommand('insertText',false,\"Invent\\u00e1rio conferido no p\\u00e1tio\");return el.value})()",
-   "at": 24.41,
+   "at": 21.06,
    "label": "Motivo: Inventário conferido no pátio"
   },
   {
@@ -304,7 +316,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 1.6,
-   "at": 25.78,
+   "at": 22.4,
    "label": "A correção fica no kardex da unidade (ZOOM)",
    "optional": true,
    "timeout": 4
@@ -312,14 +324,14 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 33.55
+   "at": 28.72
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] button:has-text(\"Registrar saída\")"
    },
-   "at": 33.85,
+   "at": 29.02,
    "label": "Registrar saída"
   },
   {
@@ -341,14 +353,14 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 38.38
+   "at": 33.04
   },
   {
    "do": "click",
    "target": {
     "selector": "main button[aria-label^=\"Ações de Papelão\"]"
    },
-   "at": 39.36,
+   "at": 33.9,
    "label": "⋯ da linha Papelão (de novo)"
   },
   {
@@ -356,7 +368,7 @@
    "target": {
     "selector": "[role=menuitem]:has-text(\"Transferir entre materiais\")"
    },
-   "at": 40.12,
+   "at": 34.94,
    "label": "Transferir entre materiais"
   },
   {
@@ -371,7 +383,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 1.4,
-   "at": 42.27,
+   "at": 36.56,
    "label": "Move saldo de Papelão para outro material da MESMA unidade (ZOOM)",
    "optional": true,
    "timeout": 4
@@ -384,13 +396,13 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 51.03,
+   "at": 42.9,
    "label": "Cancelar"
   },
   {
    "do": "mark",
    "name": "L7",
-   "at": 51.33
+   "at": 43.2
   },
   {
    "do": "eval",
@@ -400,7 +412,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 72.04
+   "at": 59.78
   }
  ]
 }

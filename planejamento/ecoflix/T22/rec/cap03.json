@@ -1,6 +1,6 @@
 {
  "name": "t22-cap03",
- "title": "T22 · Cap. 3 · Do lado da filial (narração ESTIMADA 33,8 s; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Sandra Pires (Filial Pindamonhangaba))",
+ "title": "T22 · Cap. 3 · Do lado da filial (narração 28,2 s; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Sandra Pires (Filial Pindamonhangaba))",
  "seed": "t22-cap03",
  "pace": 0.5,
  "cps": 40,
@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-65255bb0-aea3-508c-8383-5c426f18b774": "2026-11-10",
@@ -78,6 +78,10 @@
    "timeout": 25
   },
   {
+   "do": "eval",
+   "js": "(()=>{if(window.__anima)return 'ja';window.__anima=setInterval(()=>{try{document.getAnimations().forEach(x=>{if(x.currentTime!==null&&x.currentTime<0)x.startTime=document.timeline.currentTime})}catch(e){}},60);return 'ok'})()"
+  },
+  {
    "do": "waitFor",
    "idle": true
   },
@@ -89,6 +93,10 @@
    "do": "waitFor",
    "text": "Olá, Sandra!",
    "timeout": 25
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__anima)return 'ja';window.__anima=setInterval(()=>{try{document.getAnimations().forEach(x=>{if(x.currentTime!==null&&x.currentTime<0)x.startTime=document.timeline.currentTime})}catch(e){}},60);return 'ok'})()"
   },
   {
    "do": "waitFor",
@@ -115,7 +123,7 @@
     "selector": "button[aria-label='Configurações']"
    },
    "seconds": 0.8,
-   "at": 5.57,
+   "at": 4.56,
    "label": "Configurações (rodapé do menu)",
    "noScroll": true,
    "optional": true,
@@ -126,7 +134,7 @@
    "target": {
     "selector": "button[aria-label='Configurações']"
    },
-   "at": 7.39,
+   "at": 5.92,
    "label": "Configurações (rodapé do menu)",
    "noScroll": true
   },
@@ -141,7 +149,7 @@
     "selector": "#tab-btn-company"
    },
    "seconds": 0.3,
-   "at": 8.68,
+   "at": 6.88,
    "label": "aba Empresa",
    "optional": true,
    "timeout": 4
@@ -149,12 +157,12 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 9.94
+   "at": 8.18
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Se esta empresa \\u00e9 uma filial, vincule-a \\u00e0 empresa-m\\u00e3e usando o c\\u00f3digo de convite\"&&e.getClientRects().length)||[...document.querySelectorAll('main *')].find(e=>[...e.childNodes].some(n=>n.nodeType===3&&n.textContent.trim()===\"Se esta empresa \\u00e9 uma filial, vincule-a \\u00e0 empresa-m\\u00e3e usando o c\\u00f3digo de convite\")&&e.getClientRects().length);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-260);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 9.94,
+   "at": 8.18,
    "label": "desce até o cartão Filial"
   },
   {
@@ -169,7 +177,7 @@
     "within": "main"
    },
    "seconds": 0.5,
-   "at": 12.24,
+   "at": 10.26,
    "label": "cartão Filial",
    "optional": true,
    "timeout": 4
@@ -179,7 +187,7 @@
    "target": {
     "selector": "main div.flex:has(> div > label:text-is(\"É Filial\")) > button[role=switch]"
    },
-   "at": 13.05,
+   "at": 11.2,
    "label": "liga É Filial"
   },
   {
@@ -192,26 +200,26 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 14.39
+   "at": 12.66
   },
   {
    "do": "click",
    "target": {
     "placeholder": "GRP-XXXXXX"
    },
-   "at": 14.85,
+   "at": 13.12,
    "label": "campo do código"
   },
   {
    "do": "eval",
    "js": "(()=>{const el=document.querySelector(\"main input[placeholder=\\\"GRP-XXXXXX\\\"]\");if(!el)return 'SEM ALVO';el.focus();el.select&&el.select();document.execCommand('insertText',false,\"GRP-7C4E9A\");return el.value})()",
-   "at": 15.88,
+   "at": 14.18,
    "label": "cola o código GRP-7C4E9A (ZOOM: o campo)"
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 17.71
+   "at": 15.3
   },
   {
    "do": "click",
@@ -219,7 +227,7 @@
     "role": "button",
     "name": "Vincular"
    },
-   "at": 18.01,
+   "at": 15.6,
    "label": "Vincular"
   },
   {
@@ -235,7 +243,7 @@
     "within": "main"
    },
    "seconds": 0.4,
-   "at": 20.31,
+   "at": 17.94,
    "label": "Vinculada ao grupo · Grupo Recicla Vale · Ativa",
    "optional": true,
    "timeout": 4
@@ -243,7 +251,7 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 22.38
+   "at": 19.54
   },
   {
    "do": "eval",
@@ -253,7 +261,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 33.83
+   "at": 28.16
   }
  ]
 }

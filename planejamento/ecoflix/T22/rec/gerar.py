@@ -278,7 +278,8 @@ def login(email='$TUT_USER', espera='Olá, Rafael!'):
 
 
 def vai(url, espera, timeout=25):
-    return [{'do': 'goto', 'url': url}, {'do': 'waitFor', 'text': espera, 'timeout': timeout}, AGUARDA]
+    # 27/11 (molde da T20): documento novo = sem o conserto da animação; ANIMA_SEMPRE logo depois do goto, senão a página fica em branco
+    return [{'do': 'goto', 'url': url}, {'do': 'waitFor', 'text': espera, 'timeout': timeout}, {'do': 'eval', 'js': ANIMA_SEMPRE}, AGUARDA]
 
 
 # ---------------------------------------------------------------- rolagem roteirizada (eval: o cursor não se mexe)
@@ -448,7 +449,7 @@ def cap02():
     c.mark(4)
     c.click(BTNX('Como funciona'), at=c.A(4, 'Como', 0.6), label='Como funciona')
     c.waitfor(text='Relação Matriz × Filial', timeout=8)
-    c.hover(TXTP('Como funciona o Gerencial de Filiais', within=DLG), 0.6, at=c.A(4, 'resumo', 0.5), label='janela Como funciona o Gerencial de Filiais')
+    # 27/11: hover no título da janela tirado (a espera do alvo estável levava 6 s na gravação final e atrasava a rolagem seguinte)
     c.ev(js_rola_texto('Relação Matriz × Filial', 380, 1800, escopo=DLG), at=c.A(4, 'passos,', 0.2), label='a janela desce pelos cinco passos até Relação Matriz × Filial')
     c.press('Escape', at=round(c.L(5) - 1.5, 2), label='fecha a janela')
     c.mark(5)
@@ -508,6 +509,7 @@ def troca_para_rafael(c, at):
     """Sandra -> Rafael no meio do capítulo (a fala cobre com a ilustração): sai da sessão, entra como Rafael, abre o Gerencial; tudo rápido"""
     c.ev(JS_SAI_SESSAO, at=at, label='troca de usuário: sai da sessão da Sandra (coberto pela ilustração)')
     c.waitfor(target={'label': 'E-mail'}, timeout=25)
+    c.add({'do': 'eval', 'js': ANIMA_SEMPRE})   # 27/11: location.assign = documento novo (molde da T20)
     c.type({'label': 'E-mail'}, '$TUT_USER', cps=90, label='troca de usuário: e-mail do Rafael')
     c.type({'label': 'Senha', 'exact': True}, '$TUT_SENHA', cps=90, label='troca de usuário: senha')
     c.click(BTN('Entrar'), label='troca de usuário: Entrar')
@@ -1136,16 +1138,17 @@ def cap16():
     c.hover(TXTP('Usar estoque de outras unidades na venda', within=MAIN), 1.2, at=c.A(1, 'Usar', 0.5, nth=0), label='Usar estoque de outras unidades na venda (ZOOM)')
     c.click(SEL('main div.flex:has(> div > p:text-is("Recicla Vale Metais")) button[role=switch]'), at=c.A(1, 'Ligo', 0.6), label='liga a chave da matriz')
     c.waitfor(text='Configuração atualizada', timeout=8)
-    c.mark(2)
+    # 27/11: a marca L2 e a ida ao Caixa saem logo (at = fim da L1), para o respiro depois de 'matriz.' comprar o tempo da ida (a marca L2 antes travava a ida até a L2)
     # o Caixa mora dentro do grupo Financeiro do menu: a troca de tela é de bastidor (clique no menu, sem cursor), até o botão Nova Venda
     c.ev("(async()=>{let a=document.querySelector('a[href=\"/caixa\"]');if(!a){const b=[...document.querySelectorAll('button')].find(e=>e.textContent.trim().startsWith('Financeiro'));"
          "if(b){b.click();await new Promise(r=>setTimeout(r,500));a=document.querySelector('a[href=\"/caixa\"]')}}"
-         "if(!a)return 'SEM ALVO';a.click();return 'ok'})()", at=c.L(2) - 0.5, label='Caixa (menu, bastidor)')
+         "if(!a)return 'SEM ALVO';a.click();return 'ok'})()", at=c.A(1, 'matriz', 0.0), label='Caixa (menu, bastidor)')
     c.waitfor(text='Nova Venda', timeout=20)
     c.click(BTN('Nova Venda'), label='Nova Venda')
     c.waitfor(text='Voltar para o caixa', timeout=25)
     c.add(AGUARDA)
     c.ev(ANIMA_SEMPRE)
+    c.mark(2)
     c.click(V_CLIENTE, at=c.A(2, 'numa', 0.6), label='Cliente')
     c.waitfor(target=V_BUSCA, timeout=10)
     c.type(V_BUSCA, 'Serra', cps=40, label='busca: Serra')

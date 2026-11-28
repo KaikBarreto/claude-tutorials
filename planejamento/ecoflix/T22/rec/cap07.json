@@ -1,6 +1,6 @@
 {
  "name": "t22-cap07",
- "title": "T22 · Cap. 7 · A DRE do grupo (narração ESTIMADA 55,2 s; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira (matriz))",
+ "title": "T22 · Cap. 7 · A DRE do grupo (narração 44,4 s; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira (matriz))",
  "seed": "t22-cap07",
  "pace": 0.5,
  "cps": 40,
@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.60.18",
-  "notification_shown_version": "1.60.18",
+  "app_version": "1.60.22",
+  "notification_shown_version": "1.60.22",
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-65255bb0-aea3-508c-8383-5c426f18b774": "2026-11-10",
@@ -80,6 +80,10 @@
    "timeout": 25
   },
   {
+   "do": "eval",
+   "js": "(()=>{if(window.__anima)return 'ja';window.__anima=setInterval(()=>{try{document.getAnimations().forEach(x=>{if(x.currentTime!==null&&x.currentTime<0)x.startTime=document.timeline.currentTime})}catch(e){}},60);return 'ok'})()"
+  },
+  {
    "do": "waitFor",
    "idle": true
   },
@@ -91,6 +95,10 @@
    "do": "waitFor",
    "text": "Dashboard Gerencial",
    "timeout": 25
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__anima)return 'ja';window.__anima=setInterval(()=>{try{document.getAnimations().forEach(x=>{if(x.currentTime!==null&&x.currentTime<0)x.startTime=document.timeline.currentTime})}catch(e){}},60);return 'ok'})()"
   },
   {
    "do": "waitFor",
@@ -140,7 +148,7 @@
    "target": {
     "selector": "main button[role=combobox]:has-text(\"Este mês\")"
    },
-   "at": 2.15,
+   "at": 2.3,
    "label": "período",
    "noScroll": true
   },
@@ -150,7 +158,7 @@
     "role": "option",
     "name": "Mês passado"
    },
-   "at": 4.05,
+   "at": 3.9,
    "label": "Mês passado"
   },
   {
@@ -165,7 +173,7 @@
     "name": "Consolidado"
    },
    "seconds": 0.6,
-   "at": 6.35,
+   "at": 5.62,
    "label": "Consolidado: a DRE do grupo",
    "optional": true,
    "timeout": 4
@@ -173,7 +181,7 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 7.44
+   "at": 6.34
   },
   {
    "do": "click",
@@ -181,7 +189,7 @@
     "role": "tab",
     "name": "Regime de Caixa"
    },
-   "at": 9.41,
+   "at": 7.92,
    "label": "Regime de Caixa"
   },
   {
@@ -195,7 +203,7 @@
     "selector": "main :is(div,button).flex:has(> span:text-is(\"Vendas de Material\"))"
    },
    "seconds": 1.0,
-   "at": 12.98,
+   "at": 11.12,
    "label": "vendas e compras de material (ZOOM)",
    "optional": true,
    "timeout": 4
@@ -206,7 +214,7 @@
     "selector": "main :is(div,button).flex:has(> span:text-is(\"Compras de Material\"))"
    },
    "seconds": 1.0,
-   "at": 18.01,
+   "at": 14.82,
    "label": "Compras de Material",
    "optional": true,
    "timeout": 4
@@ -219,12 +227,12 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 23.28
+   "at": 18.75
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"(-) Impostos e Dedu\\u00e7\\u00f5es\"&&e.getClientRects().length)||[...document.querySelectorAll('main *')].find(e=>[...e.childNodes].some(n=>n.nodeType===3&&n.textContent.trim()===\"(-) Impostos e Dedu\\u00e7\\u00f5es\")&&e.getClientRects().length);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-200);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 23.28,
+   "at": 18.75,
    "label": "desce até impostos e resultado"
   },
   {
@@ -233,7 +241,7 @@
     "selector": "main :is(div,button).flex:has(> span:text-is(\"(-) Impostos e Deduções\"))"
    },
    "seconds": 0.3,
-   "at": 24.51,
+   "at": 19.87,
    "label": "impostos, despesas, outras receitas e resultado (ZOOM)",
    "optional": true,
    "timeout": 4
@@ -244,7 +252,7 @@
     "selector": "main :is(div,button).flex:has(> span:text-is(\"Total Despesas\"))"
    },
    "seconds": 0.8,
-   "at": 25.58,
+   "at": 20.67,
    "label": "Total Despesas",
    "optional": true,
    "timeout": 4
@@ -255,7 +263,7 @@
     "selector": "main :is(div,button).flex:has(> span:text-is(\"Receitas Diversas (Caixa + Banco)\"))"
    },
    "seconds": 0.8,
-   "at": 28.31,
+   "at": 22.67,
    "label": "Outras Receitas (aluguel de caçamba)",
    "optional": true,
    "timeout": 4
@@ -266,7 +274,7 @@
     "selector": "main div.flex:has(> div > div > span:text-is(\"(=) Resultado do Período\"))"
    },
    "seconds": 1.2,
-   "at": 31.12,
+   "at": 24.99,
    "label": "Resultado do Período",
    "optional": true,
    "timeout": 4
@@ -279,12 +287,12 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 36.23
+   "at": 29.07
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=document.querySelector('main h1')||document.querySelector('main *');const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;if(y0<3)return 'ok';const dy=-y0;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo'})()",
-   "at": 36.23,
+   "at": 29.07,
    "label": "sobe para o alto da DRE"
   },
   {
@@ -293,7 +301,7 @@
     "role": "button",
     "name": "Comparativo"
    },
-   "at": 36.91,
+   "at": 29.77,
    "label": "Comparativo"
   },
   {
@@ -309,7 +317,7 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 41.44
+   "at": 33.31
   },
   {
    "do": "hover",
@@ -317,7 +325,7 @@
     "selector": "main tbody tr:has-text(\"Resultado\")"
    },
    "seconds": 0.6,
-   "at": 41.99,
+   "at": 33.87,
    "label": "linha Resultado (ZOOM)",
    "optional": true,
    "timeout": 4
@@ -328,7 +336,7 @@
     "selector": "main tbody tr:has-text(\"Resultado\") td:nth-child(2)"
    },
    "seconds": 1.0,
-   "at": 43.89,
+   "at": 35.31,
    "label": "Resultado da matriz",
    "optional": true,
    "timeout": 4
@@ -339,7 +347,7 @@
     "selector": "main tbody tr:has-text(\"Resultado\") td:nth-child(3)"
    },
    "seconds": 1.0,
-   "at": 50.41,
+   "at": 40.59,
    "label": "Resultado da filial",
    "optional": true,
    "timeout": 4
@@ -357,7 +365,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 55.23
+   "at": 44.4
   }
  ]
 }

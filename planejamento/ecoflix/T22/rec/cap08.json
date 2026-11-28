@@ -1,6 +1,6 @@
 {
  "name": "t22-cap08",
- "title": "T22 · Cap. 8 · Caixa e competência (narração ESTIMADA 76,2 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira (matriz))",
+ "title": "T22 · Cap. 8 · Caixa e competência (narração 62,2 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira (matriz))",
  "seed": "t22-cap08",
  "pace": 0.5,
  "cps": 40,
@@ -80,6 +80,10 @@
    "timeout": 25
   },
   {
+   "do": "eval",
+   "js": "(()=>{if(window.__anima)return 'ja';window.__anima=setInterval(()=>{try{document.getAnimations().forEach(x=>{if(x.currentTime!==null&&x.currentTime<0)x.startTime=document.timeline.currentTime})}catch(e){}},60);return 'ok'})()"
+  },
+  {
    "do": "waitFor",
    "idle": true
   },
@@ -93,6 +97,10 @@
    "timeout": 25
   },
   {
+   "do": "eval",
+   "js": "(()=>{if(window.__anima)return 'ja';window.__anima=setInterval(()=>{try{document.getAnimations().forEach(x=>{if(x.currentTime!==null&&x.currentTime<0)x.startTime=document.timeline.currentTime})}catch(e){}},60);return 'ok'})()"
+  },
+  {
    "do": "waitFor",
    "idle": true
   },
@@ -104,6 +112,10 @@
    "do": "waitFor",
    "text": "Financeiro Gerencial",
    "timeout": 25
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__anima)return 'ja';window.__anima=setInterval(()=>{try{document.getAnimations().forEach(x=>{if(x.currentTime!==null&&x.currentTime<0)x.startTime=document.timeline.currentTime})}catch(e){}},60);return 'ok'})()"
   },
   {
    "do": "waitFor",
@@ -157,7 +169,7 @@
     "name": "Regime de Competência"
    },
    "seconds": 0.6,
-   "at": 2.56,
+   "at": 1.86,
    "label": "Regime de Competência (o padrão)",
    "optional": true,
    "timeout": 4
@@ -168,7 +180,7 @@
     "selector": "main :is(div,button).flex:has(> span:text-is(\"CMV (Custo da Mercadoria Vendida)\"))"
    },
    "seconds": 1.0,
-   "at": 5.75,
+   "at": 4.82,
    "label": "CMV e Lucro Bruto (ZOOM)",
    "optional": true,
    "timeout": 4
@@ -179,7 +191,7 @@
     "selector": "main div.flex:has(> span:text-is(\"CMV (Custo da Mercadoria Vendida)\")) > span:last-child"
    },
    "seconds": 1.2,
-   "at": 9.92,
+   "at": 8.5,
    "label": "CMV R$ 273.873,30",
    "optional": true,
    "timeout": 4
@@ -192,12 +204,12 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 16.4
+   "at": 13.54
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"(=) Resultado do Per\\u00edodo\"&&e.getClientRects().length)||[...document.querySelectorAll('main *')].find(e=>[...e.childNodes].some(n=>n.nodeType===3&&n.textContent.trim()===\"(=) Resultado do Per\\u00edodo\")&&e.getClientRects().length);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-420);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 16.4,
+   "at": 13.54,
    "label": "desce até o resultado"
   },
   {
@@ -206,7 +218,7 @@
     "selector": "main div.flex:has(> div > div > span:text-is(\"(=) Resultado do Período\"))"
    },
    "seconds": 1.2,
-   "at": 17.11,
+   "at": 14.26,
    "label": "Resultado do Período (ZOOM)",
    "optional": true,
    "timeout": 4
@@ -219,12 +231,12 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 24.72
+   "at": 20.5
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 40.25
+   "at": 33.12
   },
   {
    "do": "hover",
@@ -232,7 +244,7 @@
     "selector": "main div.flex:has(> div > div > span:text-is(\"(=) Resultado do Período\"))"
    },
    "seconds": 0.4,
-   "at": 40.55,
+   "at": 33.42,
    "label": "o resultado (a câmera fica nele)",
    "optional": true,
    "timeout": 4
@@ -240,24 +252,24 @@
   {
    "do": "eval",
    "js": "(async()=>{for(let i=0;i<32;i++){const b=[...document.querySelectorAll('[role=tab]')].find(e=>e.innerText.replace(/\\s+/g,' ').includes(\"Regime de Caixa\"));if(b){b.click();return 'ok'}await new Promise(r=>setTimeout(r,250))}return 'SEM ALVO'})()",
-   "at": 41.21,
+   "at": 34.16,
    "label": "Regime de Caixa (o resultado vai para -R$ 26.650,00)"
   },
   {
    "do": "eval",
    "js": "(async()=>{for(let i=0;i<32;i++){const b=[...document.querySelectorAll('[role=tab]')].find(e=>e.innerText.replace(/\\s+/g,' ').includes(\"Regime de Compet\\u00eancia\"));if(b){b.click();return 'ok'}await new Promise(r=>setTimeout(r,250))}return 'SEM ALVO'})()",
-   "at": 43.79,
+   "at": 36.4,
    "label": "Regime de Competência (volta ao resultado positivo)"
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 51.08
+   "at": 42.21
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=document.querySelector('main h1')||document.querySelector('main *');const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;if(y0<3)return 'ok';const dy=-y0;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo'})()",
-   "at": 51.08,
+   "at": 42.21,
    "label": "sobe para o alto da DRE"
   },
   {
@@ -266,7 +278,7 @@
     "role": "button",
     "name": "Comparativo"
    },
-   "at": 51.69,
+   "at": 42.91,
    "label": "Comparativo (em competência)"
   },
   {
@@ -290,7 +302,7 @@
     "selector": "main tbody tr:has-text(\"(-) CMV\")"
    },
    "seconds": 2.5,
-   "at": 54.87,
+   "at": 45.55,
    "label": "linha CMV de cada unidade (ZOOM)",
    "optional": true,
    "timeout": 4
@@ -303,7 +315,7 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 59.4
+   "at": 49.33
   },
   {
    "do": "eval",
@@ -313,7 +325,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 76.24
+   "at": 62.16
   }
  ]
 }

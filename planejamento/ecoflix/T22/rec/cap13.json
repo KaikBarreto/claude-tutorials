@@ -1,6 +1,6 @@
 {
  "name": "t22-cap13",
- "title": "T22 · Cap. 13 · Preço diferente por unidade (narração ESTIMADA 66,9 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira (matriz))",
+ "title": "T22 · Cap. 13 · Preço diferente por unidade (narração 58,5 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira (matriz))",
  "seed": "t22-cap13",
  "pace": 0.5,
  "cps": 40,
@@ -80,6 +80,10 @@
    "timeout": 25
   },
   {
+   "do": "eval",
+   "js": "(()=>{if(window.__anima)return 'ja';window.__anima=setInterval(()=>{try{document.getAnimations().forEach(x=>{if(x.currentTime!==null&&x.currentTime<0)x.startTime=document.timeline.currentTime})}catch(e){}},60);return 'ok'})()"
+  },
+  {
    "do": "waitFor",
    "idle": true
   },
@@ -127,7 +131,7 @@
    "target": {
     "selector": "main div.cursor-pointer:has-text(\"Principal\")"
    },
-   "at": 2.38,
+   "at": 1.68,
    "label": "abre a tabela Principal"
   },
   {
@@ -143,7 +147,7 @@
     "within": "main"
    },
    "seconds": 1.2,
-   "at": 7.87,
+   "at": 5.86,
    "label": "Material, Preço Compra e Preço Venda (ZOOM)",
    "optional": true,
    "timeout": 4
@@ -151,12 +155,12 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 9.42
+   "at": 7.6
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Alum\\u00ednio latinha\"&&e.getClientRects().length)||[...document.querySelectorAll('main *')].find(e=>[...e.childNodes].some(n=>n.nodeType===3&&n.textContent.trim()===\"Alum\\u00ednio latinha\")&&e.getClientRects().length);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-330);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 9.42,
+   "at": 7.6,
    "label": "desce até a linha do Alumínio latinha"
   },
   {
@@ -164,7 +168,7 @@
    "target": {
     "selector": "main tbody tr:has-text(\"Alumínio latinha\") td:nth-child(2) input"
    },
-   "at": 12.3,
+   "at": 10.06,
    "label": "Preço Compra da latinha"
   },
   {
@@ -173,7 +177,7 @@
     "selector": "main tbody tr:has-text(\"Alumínio latinha\") td:nth-child(2) input"
    },
    "text": "6,30",
-   "at": 14.47,
+   "at": 11.9,
    "label": "compra 6,30 (ZOOM: a linha)",
    "noClick": true,
    "clear": true
@@ -183,7 +187,7 @@
    "target": {
     "selector": "main tbody tr:has-text(\"Alumínio latinha\") button:has-text(\"Salvar\")"
    },
-   "at": 15.19,
+   "at": 12.78,
    "label": "Salvar"
   },
   {
@@ -194,12 +198,12 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 15.77
+   "at": 13.76
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Vincula\\u00e7\\u00e3o por Unidade\"&&e.getClientRects().length)||[...document.querySelectorAll('main *')].find(e=>[...e.childNodes].some(n=>n.nodeType===3&&n.textContent.trim()===\"Vincula\\u00e7\\u00e3o por Unidade\")&&e.getClientRects().length);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-220);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 15.77,
+   "at": 13.76,
    "label": "desce até a Vinculação por Unidade"
   },
   {
@@ -210,7 +214,7 @@
     "within": "main"
    },
    "seconds": 0.8,
-   "at": 17.31,
+   "at": 15.2,
    "label": "Vinculação por Unidade",
    "optional": true,
    "timeout": 4
@@ -220,7 +224,7 @@
    "target": {
     "selector": "main div.rounded-lg:has(> div > span:text-is(\"Filial Pindamonhangaba\")) button[role=switch]"
    },
-   "at": 23.05,
+   "at": 20.76,
    "label": "liga a Filial Pindamonhangaba: Vinculada"
   },
   {
@@ -231,14 +235,14 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 24.24
+   "at": 21.64
   },
   {
    "do": "click",
    "target": {
     "selector": "main div.rounded-lg:has(> div > span:text-is(\"Filial Pindamonhangaba\")) div:has(> label:text-is(\"Direção\")) button[role=combobox]"
    },
-   "at": 34.19,
+   "at": 30.34,
    "label": "Direção"
   },
   {
@@ -246,7 +250,7 @@
    "target": {
     "selector": "[role=option]:has-text(\"- (abaixo)\")"
    },
-   "at": 35.12,
+   "at": 31.32,
    "label": "- (abaixo)"
   },
   {
@@ -255,7 +259,7 @@
     "selector": "main div.rounded-lg:has(> div > span:text-is(\"Filial Pindamonhangaba\")) input[type=number]"
    },
    "text": "5",
-   "at": 36.21,
+   "at": 33.54,
    "label": "Valor 5 (ZOOM: os três campos)",
    "clear": true
   },
@@ -264,7 +268,7 @@
    "target": {
     "selector": "main div.rounded-lg:has(> div > span:text-is(\"Filial Pindamonhangaba\")) button:has-text(\"Salvar\")"
    },
-   "at": 36.84,
+   "at": 34.28,
    "label": "Salvar"
   },
   {
@@ -275,14 +279,14 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 37.5
+   "at": 34.86
   },
   {
    "do": "click",
    "target": {
     "selector": "main div.rounded-lg:has(> div > span:text-is(\"Filial Pindamonhangaba\")) button:has-text(\"Aplicar\")"
    },
-   "at": 38.1,
+   "at": 35.56,
    "label": "Aplicar"
   },
   {
@@ -298,17 +302,17 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 42.4
+   "at": 38.86
   },
   {
    "do": "mark",
    "name": "L7",
-   "at": 54.22
+   "at": 48.57
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Pre\\u00e7o Compra (R$)\"&&e.getClientRects().length)||[...document.querySelectorAll('main *')].find(e=>[...e.childNodes].some(n=>n.nodeType===3&&n.textContent.trim()===\"Pre\\u00e7o Compra (R$)\")&&e.getClientRects().length);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 54.22,
+   "at": 48.57,
    "label": "sobe até a barra de ações da tabela"
   },
   {
@@ -317,7 +321,7 @@
     "selector": "main button[role=combobox]:has-text(\"Importar da matriz\")"
    },
    "seconds": 1.0,
-   "at": 56.44,
+   "at": 50.33,
    "label": "Importar da matriz... (ZOOM, sem escolher)",
    "optional": true,
    "timeout": 4
@@ -328,7 +332,7 @@
     "selector": "main button.bg-destructive:has-text(\"Excluir\"), main button:has-text(\"Excluir\")"
    },
    "seconds": 1.5,
-   "at": 61.07,
+   "at": 54.25,
    "label": "o botão vermelho Excluir (ZOOM, sem clicar)",
    "optional": true,
    "timeout": 4
@@ -341,7 +345,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 66.88
+   "at": 58.46
   }
  ]
 }
